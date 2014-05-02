@@ -1,0 +1,9 @@
+- IE 9 placeholder
+
+- Update myimua.org to point to imua.herokuapp.com
+- Update staging.myimua.org with new site
+- Create imuadev github with dev and master branch
+- Setup pipeline from imuastaging to imua
+
+- Set up devise
+- Set up user

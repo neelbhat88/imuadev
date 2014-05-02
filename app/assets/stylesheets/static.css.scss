@@ -44,7 +44,9 @@
 		.form-field:focus {
 		
 			background: #ffffff;			
-		
+			border-color: $blue;
+			
+			outline: none; // Chrome adds a square outline which looks weird
 		}
 		
 		.button {
