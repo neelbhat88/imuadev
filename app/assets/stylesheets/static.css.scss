@@ -43,8 +43,7 @@
 		
 		.form-field:focus {
 		
-			background: #ffffff;
-			border-color: $blue;
+			background: #ffffff;			
 		
 		}
 		
@@ -56,7 +55,8 @@
 			border:0 none;
 			cursor:pointer;
 			@include border-radius(10px);
-		
+			
+			&:hover { background: #ffffff; }
 		}
 	
 	}	
