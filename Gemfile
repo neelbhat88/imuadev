@@ -7,9 +7,9 @@ gem 'rails', '3.2.11'
 
 gem 'pg'
 gem 'thin'
-gem 'debugger'
 
 group :development do		
+	gem 'debugger'
 	gem 'rspec-rails'
 end
 
