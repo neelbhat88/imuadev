@@ -1,0 +1,83 @@
+/* ===============================================
+   *****************  Variables  *****************
+   =============================================== */
+
+/* Breakpoints */
+
+@mixin respond-to($breakpoint) {
+    @media only screen and (max-width: $breakpoint + px) { @content; }
+}
+
+@mixin respond-to-min($breakpoint) {
+    @media only screen and (min-width: $breakpoint + px) { @content; }
+}
+
+
+/* Colors */
+
+@function black($opacity){
+    @return rgba(0,0,0,$opacity)
+}
+
+@function white($opacity){
+    @return rgba(255,255,255,$opacity)
+}
+
+$green: rgb(65,173,73);
+$red: rgb(239,65,61);
+$blue: rgb(39,170,225);
+$yellow: rgb(232,190,40);
+$purple: rgb(150,101,170);
+$darkgrey: rgb(40,40,40);
+
+
+/* Fonts */
+
+@mixin headline-font($size) {
+		font-family: "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
+   		font-size: $size;
+   		line-height: 1.2;
+   		font-weight: 100;
+}
+
+@mixin body-font($size) {
+
+		font-family: "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
+		font-weight: 300;
+		font-style: normal;
+		font-size: $size;
+		line-height: 1.5;
+
+}
+
+.bold {font-weight: 700;}
+
+/* Other Variables */
+
+@mixin bgcover() {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+@mixin border-radius($radius) {
+
+	-moz-border-radius: $radius;
+	-webkit-border-radius: $radius;
+	border-radius: $radius; /* future proofing */
+	-khtml-border-radius: $radius; /* for old Konqueror browsers */
+
+}
+
+
+body {
+
+	background-color: $darkgrey;
+	background: image-url("bg.jpg") no-repeat center top fixed;
+	@include bgcover();
+	color: white;
+	text-align: center;
+	@include body-font(22px);
+
+}
