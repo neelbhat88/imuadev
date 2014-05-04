@@ -1,6 +1,4 @@
-- Update staging.myimua.org with new site
-- Create imuadev github with dev and master branch
-- Setup pipeline from imuastaging to imua
+- Also why is login page bg loading so slow
 
 - Set up devise
 - Set up user

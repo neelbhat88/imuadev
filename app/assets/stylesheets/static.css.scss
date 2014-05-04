@@ -1,16 +1,15 @@
 .login-container {
 
 	width: 100%;
-	position: absolute;
-	top: 50%;
-	margin-top: -220px;
-	@include respond-to(800) { margin-top: -160px; }
+	margin-top: 40px;
+	@include respond-to(800) { margin-top: 20px; }
 
 	.login-form {
 	
 		width: 50%;
 		max-width: 500px;
 		margin: 0 auto;
+		padding-bottom: 20px;
 	
 		.logo {
 		
@@ -32,7 +31,6 @@
 		
 			border: 1px solid #bdbdbd;
 			background: #ebebeb;
-			//text-align: center;
 			@include border-radius(10px);
 			padding: 8px;
 			margin-bottom: 15px;
@@ -45,7 +43,7 @@
 		
 			background: #ffffff;			
 			border-color: $blue;
-			
+
 			outline: none; // Chrome adds a square outline which looks weird
 		}
 		
@@ -68,8 +66,7 @@
 .footer-container {
 
 	width: 100%;
-	position: absolute;
-	bottom: 10px;
+	padding-bottom: 20px;
 	color: #909090;
 	@include body-font(12px);
 	

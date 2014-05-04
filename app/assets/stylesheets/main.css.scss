@@ -74,7 +74,7 @@ $darkgrey: rgb(40,40,40);
 body {
 
 	background-color: $darkgrey;
-	background: image-url("bg.jpg") no-repeat center top fixed;
+	background: image-url("bg.jpg") no-repeat center center fixed;
 	@include bgcover();
 	color: white;
 	text-align: center;
