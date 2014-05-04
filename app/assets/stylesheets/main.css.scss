@@ -5,7 +5,8 @@
 /* Breakpoints */
 
 @mixin respond-to($breakpoint) {
-    @media only screen and (max-width: $breakpoint + px) { @content; }
+    @media only screen and (max-width: $breakpoint + px),
+    			screen and (max-height: $breakpoint + px) { @content; }
 }
 
 @mixin respond-to-min($breakpoint) {

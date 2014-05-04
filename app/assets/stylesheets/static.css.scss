@@ -1,12 +1,12 @@
 .login-container {
 
 	width: 100%;
-	//margin-top: 40px;
 	position: absolute;
 	top: 50%;
 	margin-top: -220px;
-	//@include respond-to(800) { margin-top: 20px; }
-	@include respond-to(800) { margin-top: -160px; }
+
+	@include respond-to(640) { margin-top: -180px; }
+	@include respond-to(400) { margin-top: -100px; }
 
 	.login-form {
 	
