@@ -1,8 +1,12 @@
 .login-container {
 
 	width: 100%;
-	margin-top: 40px;
-	@include respond-to(800) { margin-top: 20px; }
+	//margin-top: 40px;
+	position: absolute;
+	top: 50%;
+	margin-top: -220px;
+	//@include respond-to(800) { margin-top: 20px; }
+	@include respond-to(800) { margin-top: -160px; }
 
 	.login-form {
 	
@@ -59,27 +63,25 @@
 			&:hover { background: #ffffff; }
 		}
 	
-	}	
+	}
 
-}
-
-.footer-container {
-
-	width: 100%;
-	padding-bottom: 20px;
-	color: #909090;
-	@include body-font(12px);
-	
-	a {
-	
-		color: #666666;
+	.login-links {
+		width: 100%;
+		padding-bottom: 20px;
+		color: #909090;
+		@include body-font(12px);
 		
-		&:hover {
+		a {
 		
-			color: white;
+			color: #666666;
+			
+			&:hover {
+			
+				color: white;
+			
+			}
 		
 		}
-	
-	}
+	}	
 
 }
