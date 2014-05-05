@@ -87,3 +87,15 @@ body {
 	@include body-font(22px);
 	min-height: 100%;
 }
+
+.flash-container {	
+	padding: 20px;
+
+	position: absolute;
+	left: 50%;
+	margin-left: -150px;
+	width: 300px;
+
+	.alert-notice { @extend .alert-success; }
+	.alert-alert, .alert-error { @extend .alert-danger; }
+}

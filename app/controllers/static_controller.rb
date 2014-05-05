@@ -1,4 +1,5 @@
 class StaticController < ApplicationController
-  def index
+  def index 
+  	reset_session	
   end
 end
