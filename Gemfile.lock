@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    angularjs-rails (1.2.16)
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (3.1.1.0)
@@ -68,6 +69,8 @@ GEM
     mime-types (1.25.1)
     multi_json (1.9.3)
     newrelic_rpm (3.6.6.147)
+    ngmin-rails (0.4.0)
+      rails (>= 3.1)
     orm_adapter (0.4.0)
     pg (0.17.1)
     polyglot (0.3.4)
@@ -138,6 +141,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  angularjs-rails
   bootstrap-sass (~> 3.1.1)
   debugger
   devise
@@ -145,6 +149,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   newrelic_rpm
+  ngmin-rails
   pg
   rails (= 3.2.11)
   rspec-rails

@@ -1,4 +1,7 @@
 - Also why is login page bg loading so slow
 
-- Set up devise
-- Set up user
+- Add name, phone, role to User.
+- Create SuperAdmin sign in page
+- Profile page to update info
+
+- If info not updated then redirect to update info page

@@ -31,6 +31,8 @@ $yellow: rgb(232,190,40);
 $purple: rgb(150,101,170);
 $darkgrey: rgb(40,40,40);
 
+$ink: #374347;
+
 
 /* Fonts */
 
@@ -51,7 +53,9 @@ $darkgrey: rgb(40,40,40);
 
 }
 
-.bold {font-weight: 700;}
+.font-size-normal { font-size: 14px; }
+
+.bold { font-weight: 700; }
 
 /* Other Variables */
 
@@ -79,17 +83,24 @@ html {
 
 body {
 
-	background-color: $darkgrey;
-	background: image-url("bg.jpg") no-repeat center center fixed;
-	@include bgcover();
-	color: white;
-	text-align: center;
-	@include body-font(22px);
-	min-height: 100%;
+	&.static-pages {
+		background-color: $darkgrey;
+		background: image-url("bg.jpg") no-repeat center center fixed;
+		@include bgcover();
+		color: $ink;
+		text-align: center;
+		@include body-font(22px);
+		min-height: 100%;
+	}
+
+	@include body-font(14px);
+
 }
 
 .flash-container {	
 	padding: 20px;
+	@extend .font-size-normal;
+	z-index: 10000;
 
 	position: absolute;
 	left: 50%;

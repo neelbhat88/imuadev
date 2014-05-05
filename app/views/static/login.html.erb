@@ -8,33 +8,33 @@
 		
 		</div>
 		
-		<form class="form-container">
-		
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class=>"form-container") do |f| %>
+
 			<div class="element">
 			
-				<input type="text" class="form-field" name="username" placeholder="Email">
+				<%= f.email_field :email, :autofocus => true, :class=>"form-field", :placeholder=>"Email" %>
 			
 			</div>
 			
 			<div class="element">
 			
-				<input type="password" class="form-field" name="username" placeholder="Password">
+				<%= f.password_field :password, :class=>"form-field", :placeholder=>"Password" %>
 			
 			</div>
 		
 			<div class="element">
 			
-				<input type="submit" class="button" value="Log In">
+				<%= f.submit "Log In", :class=>"button" %>
 			
 			</div>
 		
-		</form>
+		<% end %>
 	
 	</div>
 
 	<div class="login-links">
 	
-		<a href="#">Forgot your password?</a>
+		<!-- <a href="#">Forgot your password?</a> -->
 	
 	</div>
 

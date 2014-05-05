@@ -34,6 +34,7 @@
 			
 		.form-field {
 		
+			font-size: 14px;
 			border: 1px solid #bdbdbd;
 			background: #ebebeb;
 			@include border-radius(10px);
@@ -41,16 +42,19 @@
 			margin-bottom: 15px;
 			width: 90%;
 			max-width: 250px;
-		
-		}
-		
-		.form-field:focus {
-		
-			background: #ffffff;			
-			border-color: $blue;
 
-			outline: none; // Chrome adds a square outline which looks weird
-		}
+			&:-moz-placeholder {
+			    color: #999999;
+			}
+
+			&:focus {		
+				background: #ffffff;			
+				border-color: $blue;
+
+				outline: none; // Chrome adds a square outline which looks weird
+			}
+		
+		}	
 		
 		.button {
 		

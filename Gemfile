@@ -32,6 +32,9 @@ gem 'bootstrap-sass', '~>3.1.1'
 
 gem 'newrelic_rpm'
 
+gem 'angularjs-rails'
+gem 'ngmin-rails'
+
 # Used for authentication
 gem 'devise'
 

@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder
+//= require angular
+//= require angular-route
+//= require angular-resource
 //= require bootstrap
 //= require_tree .
 
