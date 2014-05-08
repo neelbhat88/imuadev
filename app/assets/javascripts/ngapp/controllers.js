@@ -1,7 +1,7 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', ['$scope', 'session', 'UsersService',
-	function($scope, session, UsersService) {
+.controller('ProfileController', ['$scope', 'session', 'UsersService', 'SessionService',
+	function($scope, session, UsersService, SessionService) {
 
 		$scope.user = session.user;
 

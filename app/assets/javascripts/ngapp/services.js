@@ -1,6 +1,6 @@
-angular.module('myApp.services', [])
+angular.module('myApp.services', []);
 
-.factory('SessionService', ['$http', '$q',
+angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 	function($http, $q) {
 		
 		var service = {
