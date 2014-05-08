@@ -1,6 +1,6 @@
 angular.module('myApp.services', [])
 
-.factory('SessionService', 
+.factory('SessionService', ['$http', '$q',
 	function($http, $q) {
 		
 		var service = {
@@ -28,9 +28,9 @@ angular.module('myApp.services', [])
 		return service;
 	}
 
-)
+])
 
-.factory('UsersService', function($http, $q){
+.factory('UsersService', ['$http', '$q', function($http, $q){
 
 	var service = {
 		getUserInfo: function() {
@@ -53,4 +53,4 @@ angular.module('myApp.services', [])
 
 	return service;
 
-});
+}]);

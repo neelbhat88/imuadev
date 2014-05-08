@@ -1,6 +1,6 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', 
+.controller('ProfileController', ['$scope', 'session', 'UsersService',
 	function($scope, session, UsersService) {
 
 		$scope.user = session.user;
@@ -21,4 +21,4 @@ angular.module('myApp.controllers', [])
 
 	}
 
-);
+]);
