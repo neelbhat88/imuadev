@@ -1,7 +1,14 @@
 - Also why is login page bg loading so slow
 
-- Add name, phone, role to User.
 - Create SuperAdmin sign in page
 - Profile page to update info
 
 - If info not updated then redirect to update info page
+
+
+===================================
+===================================
+DEBT and QUESTIONS
+===================================
+===================================
+- UsersController -> How to correctly send a 401 Unauthorized if the authenciate_user! fails in the application controller

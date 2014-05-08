@@ -1,12 +1,14 @@
 Imua::Application.routes.draw do
-  devise_for :users, :skip => [:registrations]
+  devise_for :users, :skip => [:registrations]  
 
-  devise_scope :user do
-    get '/api/v1/current_user' => 'users/sessions#show_current_user'
-  end
+  namespace :api do
+    namespace :v1 do
+      devise_scope :user do
+        get 'current_user' => 'sessions#show_current_user'
+      end
 
-  namespace :users do
-
+      resources :users
+    end
   end
 
   get 'logout' => 'static#logout'

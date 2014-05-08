@@ -1,0 +1,40 @@
+.profileContainer {	
+
+	padding-top: 40px;
+	font-size: 18px;
+	text-align: center;
+
+	.avatar {
+
+		padding: 10px;
+		display: inline-block;
+		vertical-align: middle;
+
+		.img-thumbnail { border-radius: 65px; }
+
+		img { height: 140px; width: 140px; }
+
+	}
+
+	.fields { 
+
+		padding-left: 10px;
+
+		display: inline-block; 
+		vertical-align: middle;
+		text-align: left;
+
+		.field {
+			@extend .pbs;
+		}
+
+	}
+
+	.field-label { 
+
+		color: grey;
+		padding-right: 10px;
+
+	}
+
+}

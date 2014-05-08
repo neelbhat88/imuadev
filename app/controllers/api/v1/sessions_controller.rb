@@ -1,4 +1,4 @@
-class Users::SessionsController < Devise::SessionsController
+class Api::V1::SessionsController < Devise::SessionsController
 	respond_to :json
 
 	def show_current_user

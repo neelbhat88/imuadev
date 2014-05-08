@@ -5,6 +5,10 @@
 /* Breakpoints */
 
 @mixin respond-to($breakpoint) {
+    @media only screen and (max-width: $breakpoint + px) { @content; }
+}
+
+@mixin respond-to-with-height($breakpoint) {
     @media only screen and (max-width: $breakpoint + px),
     			screen and (max-height: $breakpoint + px) { @content; }
 }
@@ -16,11 +20,11 @@
 
 /* Colors */
 
-@function black($opacity){
+@function black($opacity:1){
     @return rgba(0,0,0,$opacity)
 }
 
-@function white($opacity){
+@function white($opacity:1){
     @return rgba(255,255,255,$opacity)
 }
 
@@ -35,9 +39,13 @@ $ink: #374347;
 
 
 /* Fonts */
+$font-stack: "jaf-facitweb", "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
+$light: 300;
+$regular: 400;
+$bold: 700;
 
 @mixin headline-font($size) {
-		font-family: "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
+			font-family: $font-stack;
    		font-size: $size;
    		line-height: 1.2;
    		font-weight: 100;
@@ -45,17 +53,22 @@ $ink: #374347;
 
 @mixin body-font($size) {
 
-		font-family: "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
-		font-weight: 300;
+		font-family: $font-stack;
+		font-weight: $light;
 		font-style: normal;
 		font-size: $size;
 		line-height: 1.5;
 
 }
 
-.font-size-normal { font-size: 14px; }
+@mixin font-size($size:1.6, $line: $size * 1.4){
+    font-size:   ($size * 10) + px;
+    line-height: ($line * 10) + px;
+    font-size:   $size + rem;
+		line-height: $line + rem;
+}
 
-.bold { font-weight: 700; }
+
 
 /* Other Variables */
 
@@ -79,23 +92,279 @@ $ink: #374347;
 html {
 	height: 100%;
 	min-height: 100%;
-}
 
-body {
+	body {
 
-	&.static-pages {
-		background-color: $darkgrey;
-		background: image-url("bg.jpg") no-repeat center center fixed;
-		@include bgcover();
-		color: $ink;
-		text-align: center;
-		@include body-font(22px);
-		min-height: 100%;
+		&.static-pages {
+			background-color: $darkgrey;
+			background: image-url("bg.jpg") no-repeat center center fixed;
+			@include bgcover();
+			color: $ink;
+			text-align: center;
+			@include body-font(22px);
+			min-height: 100%;
+		}
+
+		@include body-font(14px);
+
 	}
 
-	@include body-font(14px);
+}
+
+
+
+.clear:before,
+.clear:after {
+    content: " ";
+    display: table;
+}
+
+.clear:after {
+    clear: both;
+}
+
+.left {
+
+	float: left;
 
 }
+
+.right {
+
+	float: right;
+
+}
+
+/* ===============================================
+   Typography
+   =============================================== */
+
+h1 {
+
+	@include font-size(12);
+	font-weight: $bold;
+
+}
+
+h2 {
+
+	@include font-size(8);
+	font-weight: $bold;
+
+}
+
+h3 {
+
+	@include font-size(6);
+	font-weight: $bold;
+
+}
+
+
+h4 {
+
+	@include font-size(4);
+	font-weight: $light;
+
+}
+
+h5 {
+
+	@include font-size(2.4);
+	font-weight: $light;
+
+}
+
+h6 {
+
+	@include font-size(1.2);
+	font-weight: $light;
+
+}
+
+.bold {
+
+	font-weight: $bold;
+
+}
+
+.light {
+
+	font-weight: $light;
+
+}
+
+.italic { font-style: italic; }
+
+.font-size-normal { font-size: 16px; }
+
+/* ===============================================
+   Header
+   =============================================== */
+
+header {
+
+	width: 100%;
+	background: $blue;
+	color: white();
+	border-bottom: 1px white(0.25) solid;
+	position: relative;
+	z-index: 1000;
+
+	min-width: 415px;
+	@include respond-to(415) { min-width: 345px; }
+	
+	a {
+	
+		color: white;
+		text-decoration: none;
+			
+	}
+	
+	.wrapper {
+	
+		margin: 0 45px;
+		@include respond-to(415) { margin: 0 10px; }
+		
+		.imua-logo {
+		
+			margin: 20px 0;
+		
+		}
+		
+		nav {
+		
+			margin: 45px 0;
+		
+			li {
+			
+				float: left;
+
+				cursor: pointer;
+				
+				margin-left: 100px;
+				@include respond-to(840) { margin-left: 50px; }
+				@include respond-to(660) { margin-left: 20px; }
+			
+			}
+		
+		}
+	
+	}
+	
+}
+
+/* ===============================================
+   Helper Classes
+   =============================================== */
+.maxl,.mvxl,.mbxl {margin-bottom: 20px}
+.mal,.mvl,.mbl {margin-bottom: 15px}
+.mam,.mvm,.mbm {margin-bottom: 10px}
+.mas,.mvs,.mbs {margin-bottom: 5px}
+
+.maxl,.mvxl,.mtxl {margin-top: 20px}
+.mal,.mvl,.mtl {margin-top: 15px}
+.mam,.mvm,.mtm {margin-top: 10px}
+.mas,.mvs,.mts {margin-top: 5px}
+
+.maxl,.mhxl,.mrxl {margin-right: 20px}
+.mal,.mhl,.mrl {margin-right: 15px}
+.mam,.mhm,.mrm {margin-right: 10px}
+.mas,.mhs,.mrs {margin-right: 5px}
+
+.maxl,.mhxl,.mlxl {margin-left: 20px}
+.mal,.mhl,.mll {margin-left: 15px}
+.mam,.mhm,.mlm {margin-left: 10px}
+.mas,.mhs,.mls {margin-left: 5px}
+
+.paxl,.pvxl,.pbxl {padding-bottom: 20px}
+.pal,.pvl,.pbl {padding-bottom: 15px}
+.pam,.pvm,.pbm {padding-bottom: 10px}
+.pas,.pvs,.pbs {padding-bottom: 5px}
+
+.paxl,.pvxl,.ptxl {padding-top: 20px}
+.pal,.pvl,.ptl {padding-top: 15px}
+.pam,.pvm,.ptm {padding-top: 10px}
+.pas,.pvs,.pts {padding-top: 5px}
+
+.paxl,.phxl,.prxl {padding-right: 20px}
+.pal,.phl,.prl {padding-right: 15px}
+.pam,.phm,.prm {padding-right: 10px}
+.pas,.phs,.prs {padding-right: 5px}
+
+.paxl,.phxl,.plxl {padding-left: 20px}
+.pal,.phl,.pll {padding-left: 15px}
+.pam,.phm,.plm {padding-left: 10px}
+.pas,.phs,.pls {padding-left: 5px}
+
+/* ===============================================
+   Forms
+   =============================================== */
+
+.form-field {
+	
+	font-size: 14px;
+	min-width: 250px;
+	border: 1px solid #bdbdbd;
+	@include border-radius(5px);
+	padding: 8px;
+	line-height: 1;
+
+	&:-moz-placeholder {
+	    color: #999999;
+	}
+
+	&:focus {		
+		border-color: $blue;
+
+		outline: none; // Chrome adds a square outline which looks weird
+	}
+
+}
+
+.buttonGroup {
+
+	.submit, .cancel {
+
+		display: inline-block;
+		vertical-align: middle;
+		padding-left: 10px;
+
+	}
+
+}
+
+.submit {
+
+	border: 1px solid $blue;
+	background-color: $blue;
+	color: white;
+	min-width: 80px;
+
+	padding: 10px;
+	cursor: pointer;
+
+	&:hover {border-color: $darkgrey;}
+
+}
+
+.cancel {
+
+	border: 1px solid grey;
+	background-color: grey;
+	color: white;
+	min-width: 80px;
+
+	padding: 10px;
+	cursor: pointer;
+
+	&:hover {border-color: $darkgrey;}	
+
+}
+
+/* ===============================================
+   Misc
+   =============================================== */
 
 .flash-container {	
 	padding: 20px;

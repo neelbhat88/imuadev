@@ -18,9 +18,23 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </head>
   <body>
+    <header>   
+      <div class="wrapper clear">   
+        <div class="imua-logo left">   
+          <a href="/">
+            <%= image_tag "imua-wchs.png", :alt => "IMUA - Wai'anae Coast High School" %>
+          </a>
+        </div>
+       
+        <nav class="right">   
+          <ul>            
+            <li>Profile</li>
+          </ul>   
+        </nav>   
+      </div>      
+    </header>
 
     <div class="container">
-      <h1>Text!</h1>
       <div data-ng-view></div>
     </div> <!-- /container -->
     

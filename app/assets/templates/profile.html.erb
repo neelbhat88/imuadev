@@ -1,0 +1,54 @@
+<div class="profileContainer">	
+	<div class="form">
+		<div class="avatar">
+			<%= image_tag "default-avatar.png", :alt => "Avatar", :class=>"img-thumbnail" %>
+		</div>
+
+		<div class="fields">
+
+			<div class="field">
+				<span class="field-label">Email: </span> <span>{{user.email}}</span>	
+			</div>
+
+			<div class="field">				
+				<div ng-hide="editing">
+					<span class="field-label">First Name: </span> 				
+					<span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
+				</div>
+
+				<input class="form-field" ng-show="editing" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+			</div>
+
+			<div class="field">
+				<div ng-hide="editing">
+					<span class="field-label">Last Name: </span> 				
+					<span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
+				</div>
+				
+				<input class="form-field" ng-show="editing" ng-model="user.last_name" placeholder="Last Name">
+			</div>
+
+			<div class="field">
+				<div ng-hide="editing">
+					<span class="field-label">Phone Number: </span> 				
+					<span ng-hide="editing" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+				</div>
+
+				<input class="form-field" ng-show="editing" ng-model="user.phone" placeholder="Phone Number">
+			</div>
+
+		</div>		
+
+	</div>
+
+	<div class="buttonGroup pvl">
+		<span class="submit" ng-hide="editing" ng-click="editing=true">Update Info</span>
+		<span class="submit" ng-show="editing" ng-click="editing=false; updateUserInfo() ">Save</span>
+		<span class="cancel" ng-show="editing" ng-click="editing=false">Cancel</span>
+	</div>
+
+</div>
+
+<script>
+	$(function() { $('input, textarea').placeholder();});
+</script>
