@@ -1,6 +1,7 @@
 angular.module('myApp', ['ngRoute', 'ngResource', 'myApp.controllers', 'myApp.services'])
 
-.config(function($routeProvider) {
+.config(['$routeProvider', 
+	function($routeProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl: '/assets/profile.html',
@@ -13,4 +14,4 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'myApp.controllers', 'myApp.se
 	})
 	.otherwise({redirectTo: '/'});
 
-});
+}]);
