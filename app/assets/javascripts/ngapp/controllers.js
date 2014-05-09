@@ -54,8 +54,9 @@ angular.module('myApp.controllers', [])
 			UsersService.updateUserPassword($scope.user, $scope.password)
 				.then(
 					function Success(data) {
-						alert(data.info);
+						// ToDo: Add Success message here
 						clearPasswordFields();
+						$scope.editingPassword = false;
 					}, 
 					function Error(data) {
 						$scope.errors = data.info;
