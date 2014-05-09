@@ -11,7 +11,9 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services'])
 				return $http.get('/api/v1/current_user').then(function(resp){
 						return resp.data;
 					});
-			}//function(SessionService) {
+			}
+			// ** WHY DIDN'T THE FOLLOWING WORK?? **
+			//function(SessionService) {
 			// 	return SessionService.getCurrentUser();
 			// }
 		]}
@@ -19,3 +21,10 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services'])
 	.otherwise({redirectTo: '/'});
 
 }]);
+
+// HTTP statuses used by Rest calls
+var Status = new function() {
+	this.Success = 200;
+
+	this.Error = 500;
+}

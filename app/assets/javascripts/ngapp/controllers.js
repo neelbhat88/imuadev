@@ -1,21 +1,23 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', ['$scope', 'session', 'UsersService', 'SessionService',
-	function($scope, session, UsersService, SessionService) {
+.controller('ProfileController', ['$scope', 'session', 'UsersService',
+	function($scope, session, UsersService) {
 
 		$scope.user = session.user;
 
 		$scope.updateUserInfo = function() {
 			
-			UsersService.updateUserInfo()
-			.then(function(data){
-				var newUser = {
-					email: "nbhat@",
-					first_name: "Neel"
-				};
+			UsersService.updateUserInfo($scope.user)
+			.then(
+				function(data) {
+					// ToDo: Success message here
+				},
+				function(data) {
+					$scope.user = data.user;
 
-				$scope.user = newUser;
-			});
+					// ToDo: Error message here
+				}
+			);
 
 		};
 

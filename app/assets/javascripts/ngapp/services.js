@@ -33,19 +33,21 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 .factory('UsersService', ['$http', '$q', function($http, $q){
 
 	var service = {
-		getUserInfo: function() {
+		getUserInfo: function(userId) {
 
 		},
 
-		updateUserInfo: function() {
+		updateUserInfo: function(user) {
 			var defer = $q.defer();
 
-			$http.post('/api/v1/users').then(function(data, status){
-				if (data.status === 200)
-					defer.resolve(data.data.user);
-				else
-					defer.reject(data);
-			});
+			$http.put('/api/v1/users/' + user.id, {user: user})
+				.then(function(resp, status){
+					if (resp.data.success)
+						defer.resolve(resp.data);
+					else
+						defer.reject(resp.data);
+				}	
+			);
 
 			return defer.promise;
 		}

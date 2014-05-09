@@ -3,6 +3,7 @@
 - Create SuperAdmin sign in page
 - Profile page to update info
 
+- Status messages
 - If info not updated then redirect to update info page
 
 
@@ -12,3 +13,7 @@ DEBT and QUESTIONS
 ===================================
 ===================================
 - UsersController -> How to correctly send a 401 Unauthorized if the authenciate_user! fails in the application controller
+
+- ng-min not working with Heroku minifier -> had to use the [] notation
+
+- Can't call a ng Service from app.js in the resolve, why??
