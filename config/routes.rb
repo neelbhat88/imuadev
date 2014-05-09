@@ -11,7 +11,6 @@ Imua::Application.routes.draw do
     end
   end
 
-  get 'logout' => 'static#logout'
   get '/dashboard' => 'static#dashboard', as: 'dashboard'
   root :to => 'static#index'
   # The priority is based upon order of creation:

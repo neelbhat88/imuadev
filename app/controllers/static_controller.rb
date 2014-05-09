@@ -10,14 +10,7 @@ class StaticController < ApplicationController
 
   def dashboard
   end
-
-  def logout
-  	# Reset session when user comes to login page
-  	reset_session
-
-  	redirect_to root_path
-  end
-
+  
   def choose_layout
   	user_signed_in? ? "angular" : "application"
   end

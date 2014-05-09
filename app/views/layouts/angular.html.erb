@@ -33,7 +33,10 @@
        
         <nav class="right">   
           <ul>            
-            <li>Profile</li>
+            <li><a>Profile</a></li>
+            <li>
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+            </li>
           </ul>   
         </nav>   
       </div>      

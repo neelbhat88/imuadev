@@ -1,5 +1,5 @@
 <div class="profileContainer">
-	<div class="form">
+	<form class="form">
 		<div class="avatar">
 			<%= image_tag "default-avatar.png", :alt => "Avatar", :class=>"img-thumbnail" %>
 		</div>
@@ -39,13 +39,13 @@
 
 		</div>		
 
-	</div>
+		<div class="buttonGroup pvl">
+			<input value="Update Info" type="button" class="submit" ng-hide="editing" ng-click="editing=true">
+			<input value="Save" type="submit" class="submit" ng-show="editing" ng-click="editing=false; updateUserInfo() ">
+			<input value="Cancel" type="button" class="cancel" ng-show="editing" ng-click="editing=false">
+		</div>
 
-	<div class="buttonGroup pvl">
-		<span class="submit" ng-hide="editing" ng-click="editing=true">Update Info</span>
-		<span class="submit" ng-show="editing" ng-click="editing=false; updateUserInfo() ">Save</span>
-		<span class="cancel" ng-show="editing" ng-click="editing=false">Cancel</span>
-	</div>
+	</form>	
 
 </div>
 
