@@ -1,51 +1,101 @@
 <div class="profileContainer">
-	<form class="form">
+	
+	<div>
+
 		<div class="avatar">
 			<%= image_tag "default-avatar.png", :alt => "Avatar", :class=>"img-thumbnail" %>
 		</div>
 
-		<div class="fields">
+		<!-- UserInfo form -->
+		<form class="fields" ng-hide="editingPassword">
 
 			<div class="field">
 				<span class="field-label">Email: </span> <span>{{user.email}}</span>	
 			</div>
 
 			<div class="field">				
-				<div ng-hide="editing">
+
+				<div ng-hide="editingInfo">
 					<span class="field-label">First Name: </span> 				
 					<span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
 				</div>
 
-				<input class="form-field" ng-show="editing" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+				<input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+
 			</div>
 
 			<div class="field">
-				<div ng-hide="editing">
+
+				<div ng-hide="editingInfo">
 					<span class="field-label">Last Name: </span> 				
 					<span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
 				</div>
 				
-				<input class="form-field" ng-show="editing" ng-model="user.last_name" placeholder="Last Name">
+				<input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
+
 			</div>
 
 			<div class="field">
-				<div ng-hide="editing">
+
+				<div ng-hide="editingInfo">
 					<span class="field-label">Phone Number: </span> 				
-					<span ng-hide="editing" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+					<span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
 				</div>
 
-				<input class="form-field" ng-show="editing" ng-model="user.phone" placeholder="Phone Number">
+				<input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
+
 			</div>
 
-		</div>		
+			<div class="buttonGroup pvl">		
 
-		<div class="buttonGroup pvl">
-			<input value="Update Info" type="button" class="submit" ng-hide="editing" ng-click="editing=true">
-			<input value="Save" type="submit" class="submit" ng-show="editing" ng-click="editing=false; updateUserInfo() ">
-			<input value="Cancel" type="button" class="cancel" ng-show="editing" ng-click="editing=false">
+				<input value="Save" type="submit" class="submit" ng-show="editingInfo" ng-click="updateUserInfo() ">
+
+				<input value="Cancel" type="button" class="cancel" ng-show="editingInfo" ng-click="cancelUpdateUserInfo()">
+
+			</div>
+
+		</form>				
+		<!-- UserInfo form -->
+
+		<!-- Password Form -->
+	<form class="fields" ng-show="editingPassword">
+
+		<div class="field">
+			<input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" required>
 		</div>
 
-	</form>	
+		<div class="field">
+			<input type="password" class="form-field" ng-model="password.new" placeholder="New Password" required>
+		</div>
+
+		<div class="field">
+			<input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" required>
+		</div>
+
+		<ul class="errorText ptm">
+			<li ng-repeat="error in errors">{{error}}</li>
+		</ul>
+
+		<div class="buttonGroup pvl">
+
+			<input value="Save" type="submit" class="submit" ng-click="updateUserPassword()">
+
+			<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdatePassword()">
+
+		</div>
+
+	</form>
+	<!-- Password Form -->
+
+	</div>	
+
+	<div class="buttonGroup pvl" ng-hide="editing()" >
+		<input value="Update Info" type="button" class="submit" ng-click="editUserInfo()">
+
+		<input value="Change Password" type="button" class="submit" ng-click="editUserPassword()">
+	</div>
+
+	
 
 </div>
 

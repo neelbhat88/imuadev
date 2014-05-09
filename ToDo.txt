@@ -1,11 +1,13 @@
-- Also why is login page bg loading so slow
-
 - Create SuperAdmin sign in page
 - Profile page to update info
+- Change password
+- Upload picture
+- Tests -> add , only: [:edit] to resources :users and see if test fails
 
 - Status messages
 - If info not updated then redirect to update info page
 
+- Global exception handling with ReferenceId
 
 ===================================
 ===================================
@@ -17,3 +19,6 @@ DEBT and QUESTIONS
 - ng-min not working with Heroku minifier -> had to use the [] notation
 
 - Can't call a ng Service from app.js in the resolve, why??
+
+neel
+$2a$10$kDK0UKYhiHveSeoUxo5Pu.Hfj9j8mcfCPE49Gr4sOdJpHqY0e5uuO

@@ -326,6 +326,10 @@ header {
 
 }
 
+.field {
+	@extend .pbs;
+}
+
 .buttonGroup {
 
 	.submit, .cancel {
@@ -365,6 +369,8 @@ header {
 	&:hover {border-color: $darkgrey;}	
 
 }
+
+.errorText { color: red; }
 
 /* ===============================================
    Misc

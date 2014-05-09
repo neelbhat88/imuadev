@@ -8,7 +8,7 @@
 
 		padding: 10px;
 		display: inline-block;
-		vertical-align: middle;
+		vertical-align: top;
 
 		.img-thumbnail { border-radius: 65px; }
 
@@ -19,14 +19,11 @@
 	.fields { 
 
 		padding-left: 10px;
+		padding-top: 10px;
 
 		display: inline-block; 
-		vertical-align: middle;
-		text-align: left;
-
-		.field {
-			@extend .pbs;
-		}
+		vertical-align: top;
+		text-align: left;		
 
 	}
 

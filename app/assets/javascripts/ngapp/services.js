@@ -50,6 +50,31 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 			);
 
 			return defer.promise;
+		},
+
+		updateUserPassword: function(user, password) {
+			var defer = $q.defer();
+			
+			if (!password.current || !password.new || !password.confirm)
+				return;
+
+			var user = {
+				id: user.id,
+				current_password: password.current,
+				password: password.new,
+				password_confirmation: password.confirm
+			};
+
+			$http.put('/api/v1/users/' + user.id + '/update_password', {user: user})
+				.then(function(resp, status){
+					if (resp.data.success)
+						defer.resolve(resp.data);
+					else
+						defer.reject(resp.data);
+				}			
+			);
+
+			return defer.promise;
 		}
 	};
 
