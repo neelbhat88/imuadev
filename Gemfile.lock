@@ -148,6 +148,7 @@ DEPENDENCIES
   jquery-placeholder-rails
   jquery-rails
   jquery-ui-rails
+  mail
   newrelic_rpm
   ngmin-rails
   pg

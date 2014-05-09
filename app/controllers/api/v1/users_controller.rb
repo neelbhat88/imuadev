@@ -34,6 +34,8 @@ class Api::V1::UsersController < ApplicationController
 
 		result = UserRepository.new.update_user_info(user)
 
+		UserMailer.welcome(current_user, 'password').deliver
+
 		render status: 200,
 		json: {
 			success: result[:success],
@@ -79,7 +81,7 @@ class UserRepository
 																			:last_name => user[:last_name],
 																			:phone => user[:phone] )
 
-		if (result)
+		if (result)			
 			return { :success => true, :info => "User info updated successfully!", :user => user }
 		
 		else

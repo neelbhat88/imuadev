@@ -35,6 +35,8 @@ gem 'newrelic_rpm'
 gem 'angularjs-rails'
 gem 'ngmin-rails'
 
+gem 'mail'
+
 # Used for authentication
 gem 'devise'
 
