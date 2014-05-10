@@ -16,12 +16,23 @@ class Api::V1::UsersController < ApplicationController
 
 	# POST /users
 	def create
+		email = params[:email]
+		first_name = params[:first_name]
+		last_name = params[:last_name]
+		role = params[:role].to_i
+
+		user = { :first_name => first_name,
+						 :last_name => last_name,
+						 :email => email,
+						 :role => role	}
+
+		result = UserRepository.new.create_user(user)
+
 		render status: 200,
-			json: {
-				success: true,
-				info: "User",
-				user: "Create on User"
-			}
+		json: {
+			success: result[:success],
+			info: result[:info]
+		}
 	end
 
 	# GET /users/:id
@@ -32,9 +43,7 @@ class Api::V1::UsersController < ApplicationController
 	def update
 		user = params[:user]
 
-		result = UserRepository.new.update_user_info(user)
-
-		UserMailer.welcome(current_user, 'password').deliver
+		result = UserRepository.new.update_user_info(user)		
 
 		render status: 200,
 		json: {
@@ -104,6 +113,25 @@ class UserRepository
 		else
 			return { :success => false, :info => user.errors.full_messages, :user=>user }
 		end
+	end
+
+	def create_user(user_obj)
+		password = Devise.friendly_token.first(8)
+
+		success = User.create(:email => user_obj[:email], 
+								:first_name => user_obj[:first_name], 
+								:last_name => user_obj[:last_name], 								
+								:role => user_obj[:role],
+								:password => password)
+
+		if success
+			user = User.find_by_email(user_obj[:email])
+			UserMailer.welcome(user, password).deliver
+
+			return { :success => true, :info => "User created successfully. Email has been sent." }
+		end
+
+		return { :success => false, :info => "Failed to create user." }
 	end
 end
 
