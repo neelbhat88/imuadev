@@ -16,6 +16,14 @@ class Api::V1::UsersController < ApplicationController
 
 	# POST /users
 	def create
+		# Temporary security check
+		if !current_user.super_admin?
+			render status: 401,
+				json: {
+					success: false
+				}
+		end
+
 		email = params[:email]
 		first_name = params[:first_name]
 		last_name = params[:last_name]
@@ -26,7 +34,7 @@ class Api::V1::UsersController < ApplicationController
 						 :email => email,
 						 :role => role	}
 
-		result = UserRepository.new.create_user(user)
+		result = UserRepository.new.create_user(user, current_user)
 
 		render status: 200,
 		json: {
@@ -55,6 +63,21 @@ class Api::V1::UsersController < ApplicationController
 
 	# DELETE /users/:id
 	def delete
+		# Temporary security check
+		if !current_user.super_admin?
+			render status: 401,
+				json: {
+					success: false
+				}
+		end
+
+		result = UserRepository.new.delete_user(params[:id])
+
+		render status: 200,
+		json: {
+			success: result[:success],
+			info: result[:info]
+		}
 	end
 
 	# PUT /users/:id/update_password
@@ -115,7 +138,7 @@ class UserRepository
 		end
 	end
 
-	def create_user(user_obj)
+	def create_user(user_obj, current_user)
 		password = Devise.friendly_token.first(8)
 
 		success = User.create(:email => user_obj[:email], 
@@ -127,11 +150,20 @@ class UserRepository
 		if success
 			user = User.find_by_email(user_obj[:email])
 			UserMailer.welcome(user, password).deliver
+			UserMailer.new_user(user, current_user).deliver
 
 			return { :success => true, :info => "User created successfully. Email has been sent." }
 		end
 
 		return { :success => false, :info => "Failed to create user." }
+	end
+
+	def delete_user(userId)
+		if User.find(userId).destroy
+			return { :success => true, :info => "User deleted successfully" }
+		else
+			return { :success => false, :info => "Failed to delete user." }
+		end
 	end
 end
 
