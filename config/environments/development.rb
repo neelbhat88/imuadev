@@ -29,6 +29,8 @@ Imua::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 
+  Mail.register_interceptor(DevelopmentMailInterceptor)
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
