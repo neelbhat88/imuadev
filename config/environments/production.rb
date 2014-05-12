@@ -62,7 +62,7 @@ Imua::Application.configure do
   config.active_support.deprecation = :notify
 
   # Default mailer for Devise
-  config.action_mailer.default_url_options = { host: 'hokuscholars.org' }
+  config.action_mailer.default_url_options = { host: ENV['ROOT_URL'] }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
