@@ -1,10 +1,8 @@
-- Create SuperAdmin sign in page
-- Profile page to update info
-- Change password
 - Upload picture
 - Tests -> add , only: [:edit] to resources :users and see if test fails
 
 - Status messages
+- Loading gif
 - If info not updated then redirect to update info page
 
 - Global exception handling with ReferenceId
@@ -20,5 +18,4 @@ DEBT and QUESTIONS
 
 - Can't call a ng Service from app.js in the resolve, why??
 
-neel
-$2a$10$kDK0UKYhiHveSeoUxo5Pu.Hfj9j8mcfCPE49Gr4sOdJpHqY0e5uuO
+- In Profile.html.erb need to do 'assets/{{avatar_url}}', how can I get the full path from the server?

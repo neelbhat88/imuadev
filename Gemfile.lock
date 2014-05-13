@@ -30,10 +30,17 @@ GEM
       multi_json (~> 1.0)
     angularjs-rails (1.2.16)
     arel (3.0.3)
+    aws-sdk (1.40.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     builder (3.0.4)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.4)
+      climate_control (>= 0.0.3, < 1.0)
     columnize (0.3.6)
     daemons (1.1.9)
     debugger (1.6.5)
@@ -67,11 +74,19 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_portile (0.5.3)
     multi_json (1.9.3)
     newrelic_rpm (3.6.6.147)
     ngmin-rails (0.4.0)
       rails (>= 3.1)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
+    paperclip (4.1.1)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     pg (0.17.1)
     polyglot (0.3.4)
     rack (1.4.5)
@@ -99,6 +114,7 @@ GEM
     rake (10.3.1)
     rdoc (3.12.2)
       json (~> 1.4)
+    rmagick (2.13.2)
     rspec-core (2.14.7)
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -142,6 +158,7 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  aws-sdk
   bootstrap-sass (~> 3.1.1)
   debugger
   devise
@@ -151,8 +168,10 @@ DEPENDENCIES
   mail
   newrelic_rpm
   ngmin-rails
+  paperclip
   pg
   rails (= 3.2.11)
+  rmagick (= 2.13.2)
   rspec-rails
   sass-rails (~> 3.2.3)
   thin

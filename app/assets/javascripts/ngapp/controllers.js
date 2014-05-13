@@ -17,26 +17,40 @@ angular.module('myApp.controllers', [])
 		};
 
 		$scope.cancelUpdateUserInfo = function() {
+			$scope.files = null;
+			$('.upload')[0].value = ""; // sort of hacky but it'll do for now
 			$scope.user = angular.copy($scope.origUser);
 			$scope.editingInfo = false;
+			$scope.errors = {};
 		};
 
-		$scope.updateUserInfo = function() {
+		$scope.updateUserInfo = function() {		
 
-			UsersService.updateUserInfo($scope.user)
+			var fd = new FormData();
+			angular.forEach($scope.files, function(file) {
+				fd.append('user[avatar]', file);
+			});
+
+			UsersService.updateUserInfoWithPicture($scope.user, fd)
 			.then(
 				function Success(data) {
-					// ToDo: Success message here					
+					// ToDo: Success message here	
+					$scope.user = data.user;
+
+					$scope.files = null;
+					$('.upload')[0].value = ""; // sort of hacky but it'll do for now
+					$scope.editingInfo = false;
+					$scope.origUser = angular.copy($scope.user);
+					$scope.errors = {};
 				},
 				function Error(data) {
-					$scope.user = data.user;
+					$scope.errors = data.info;
 
 					// ToDo: Error message here
 				}
 			)
 			.finally(function() { 
-				$scope.editingInfo = false;
-				$scope.origUser = angular.copy($scope.user);
+				
 			});
 
 		};
@@ -62,7 +76,7 @@ angular.module('myApp.controllers', [])
 						$scope.errors = data.info;
 					}
 				);
-		};
+		};		
 
 		function clearPasswordFields()
 		{

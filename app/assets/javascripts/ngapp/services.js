@@ -33,14 +33,23 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 .factory('UsersService', ['$http', '$q', function($http, $q){
 
 	var service = {
+
 		getUserInfo: function(userId) {
 
 		},
 
-		updateUserInfo: function(user) {
+		updateUserInfoWithPicture: function(user, formData) {
 			var defer = $q.defer();
 
-			$http.put('/api/v1/users/' + user.id, {user: user})
+			formData.append("user[first_name]", user.first_name);
+			formData.append("user[last_name]", user.last_name);
+			formData.append("user[phone]", user.phone);
+
+			$http.put('/api/v1/users/' + user.id, formData,
+				{
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
 				.then(function(resp, status){
 					if (resp.data.success)
 						defer.resolve(resp.data);
@@ -75,8 +84,28 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 			);
 
 			return defer.promise;
+		},
+
+		updateProfilePicture: function(user, formData) {
+			var defer = $q.defer();
+
+			$http.put('/api/v1/users/' + user.id, formData,
+				{
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
+				.then(function(resp, status){
+					if (resp.data.success)
+						defer.resolve(resp.data);
+					else
+						defer.reject(resp.data);
+				}	
+			);
+
+			return defer.promise;
 		}
-	};
+
+	}
 
 	return service;
 

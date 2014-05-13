@@ -52,6 +52,7 @@ class Api::V1::UsersController < ApplicationController
 	# PUT /users/:id
 	def update
 		user = params[:user]
+		user[:id] = params[:id]
 
 		result = UserRepository.new.update_user_info(user)		
 
@@ -106,22 +107,42 @@ class UserRepository
 	end
 
 	def get_user(userId)
-		return User.find(userId)
+		return ViewUser.new(User.find(userId))
 	end
 
-	def update_user_info(user)
-		result = User.find(user[:id])
-									.update_attributes( :first_name => user[:first_name], 
-																			:last_name => user[:last_name],
-																			:phone => user[:phone] )
+	def update_user_info(userObj)		
+		id = userObj[:id]
+		first_name = userObj[:first_name]
+		last_name = userObj[:last_name]
+		phone = userObj[:phone]
+		avatar = userObj[:avatar]
+
+		user = User.find(id)
+
+		if avatar == nil
+			result = user.update_attributes(
+																	:first_name => first_name,
+																	:last_name => last_name,
+																	:phone => phone
+																)								
+		else
+			result = user.update_attributes(
+																	:first_name => first_name,
+																	:last_name => last_name,
+																	:phone => phone,
+																	:avatar => avatar
+																)								
+		end
 
 		if (result)			
-			return { :success => true, :info => "User info updated successfully!", :user => user }
+			new_user = get_user(id)
+
+			return { :success => true, :info => "User info updated successfully!", :user => new_user }
 		
 		else
-			old_user = get_user(user[:id])
+			old_user = get_user(id)
 
-			return { :success => false, :info => "Failed to update user info.", :user => old_user}
+			return { :success => false, :info => user.errors.messages[:avatar], :user => old_user}
 		end
 	end
 
@@ -131,12 +152,16 @@ class UserRepository
 		password = user_obj[:password]
 		password_confirmation = user_obj[:password_confirmation]
 
-		user = get_user(id)
+		user = User.find(id)
 
 		if (user.update_with_password(user_obj))
-			return { :success => true, :info => "Password updated successfully!", :user=>user }
+			new_user = get_user(id)
+
+			return { :success => true, :info => "Password updated successfully!", :user=>new_user }
 		else
-			return { :success => false, :info => user.errors.full_messages, :user=>user }
+			old_user = get_user(id)
+			
+			return { :success => false, :info => user.errors.full_messages, :user=>old_user }
 		end
 	end
 

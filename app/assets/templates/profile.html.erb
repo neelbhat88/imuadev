@@ -1,22 +1,27 @@
 <div class="profileContainer">
 	
-	<div>
+	<div class="pbm">
 
-		<div class="avatar">
-			<%= image_tag "default-avatar.png", :alt => "Avatar", :class=>"img-thumbnail" %>
+		<div class="avatar">			
+			<img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="img-thumbnail" />
+
+			<div class="field ptl" ng-show="editingInfo">
+				<input class="upload" ng-show="editingInfo" type="file" file-input="files" />
+			</div>			
 		</div>
 
-		<!-- UserInfo form -->
+		<!-- UserInfo form -->		
 		<form class="fields" ng-hide="editingPassword">
 
 			<div class="field">
-				<span class="field-label">Email: </span> <span>{{user.email}}</span>	
+				<span ng-hide="editingInfo" class="field-label">Email: </span> 
+				<span>{{user.email}}</span>	
 			</div>
 
 			<div class="field">				
 
 				<div ng-hide="editingInfo">
-					<span class="field-label">First Name: </span> 				
+					<span class="field-label">First Name: </span>
 					<span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
 				</div>
 
@@ -46,47 +51,51 @@
 
 			</div>
 
-			<div class="buttonGroup pvl">		
+			<ul class="errorText ptm" ng-show="editingInfo" >
+				<li ng-repeat="error in errors">{{error}}</li>
+			</ul>
 
-				<input value="Save" type="submit" class="submit" ng-show="editingInfo" ng-click="updateUserInfo() ">
+			<div class="buttonGroup pvl" ng-show="editingInfo" >		
 
-				<input value="Cancel" type="button" class="cancel" ng-show="editingInfo" ng-click="cancelUpdateUserInfo()">
+				<input value="Save" type="submit" class="submit" ng-click="updateUserInfo() ">
+
+				<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdateUserInfo()">
 
 			</div>
 
-		</form>				
+		</form>		
 		<!-- UserInfo form -->
 
 		<!-- Password Form -->
-	<form class="fields" ng-show="editingPassword">
-		<h4>Change Password</h4>
+		<form class="fields" ng-show="editingPassword">
+			<h4>Change Password</h4>
 
-		<div class="field">
-			<input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" required>
-		</div>
+			<div class="field">
+				<input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" required>
+			</div>
 
-		<div class="field">
-			<input type="password" class="form-field" ng-model="password.new" placeholder="New Password" required>
-		</div>
+			<div class="field">
+				<input type="password" class="form-field" ng-model="password.new" placeholder="New Password" required>
+			</div>
 
-		<div class="field">
-			<input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" required>
-		</div>
+			<div class="field">
+				<input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" required>
+			</div>
 
-		<ul class="errorText ptm">
-			<li ng-repeat="error in errors">{{error}}</li>
-		</ul>
+			<ul class="errorText ptm">
+				<li ng-repeat="error in errors">{{error}}</li>
+			</ul>
 
-		<div class="buttonGroup pvl">
+			<div class="buttonGroup pvl">
 
-			<input value="Save" type="submit" class="submit" ng-click="updateUserPassword()">
+				<input value="Save" type="submit" class="submit" ng-click="updateUserPassword()">
 
-			<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdatePassword()">
+				<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdatePassword()">
 
-		</div>
+			</div>
 
-	</form>
-	<!-- Password Form -->
+		</form>
+		<!-- Password Form -->
 
 	</div>	
 

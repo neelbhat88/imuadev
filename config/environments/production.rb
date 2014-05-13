@@ -74,6 +74,17 @@ Imua::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 
+  # Paperclip
+  config.paperclip_defaults = {
+    :default_url => "/assets/default-avatar.png",
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['AWS_BUCKET'],
+      :access_key_id => ENV['AWS_ACCESS_KEY'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5

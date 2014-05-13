@@ -38,9 +38,9 @@ gem 'ngmin-rails'
 gem 'mail'
 
 # Images
-# gem 'rmagick', '2.13.2'
-# gem 'paperclip'
-# gem 'aws-sdk'
+gem 'rmagick', '2.13.2'
+gem 'paperclip'
+gem 'aws-sdk'
 
 # Used for authentication
 gem 'devise'

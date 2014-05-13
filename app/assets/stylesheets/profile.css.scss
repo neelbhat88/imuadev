@@ -7,12 +7,20 @@
 	.avatar {
 
 		padding: 10px;
-		display: inline-block;
-		vertical-align: top;
 
 		.img-thumbnail { border-radius: 65px; }
 
 		img { height: 140px; width: 140px; }
+
+		.upload { 
+
+			width: 230px;
+			margin: auto;
+			display: inline-block;
+
+		}
+
+		.field-label { display: inline-block; vertical-align: middle; }
 
 	}
 
@@ -20,10 +28,8 @@
 
 		padding-left: 10px;
 		padding-top: 10px;
-
-		display: inline-block; 
-		vertical-align: top;
-		text-align: left;		
+		
+		text-align: center;
 
 	}
 
