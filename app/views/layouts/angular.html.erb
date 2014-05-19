@@ -21,9 +21,11 @@
     
     <script type="text/javascript" src="//use.typekit.net/nck0oiv.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <base href="/">
   </head>
   <body>
-    <header>   
+    <header ng-controller="HeaderController">
       <div class="wrapper clear">   
         <div class="imua-logo left">   
           <a href="/">
@@ -32,8 +34,13 @@
         </div>
        
         <nav class="right">   
-          <ul>            
-            <li><a href="/">Profile</a></li>
+          <ul>
+            <li>
+              <a href="#/roadmap">Roadmap</a>
+            </li>
+            <li>
+              <a href="#/profile">Profile</a>
+            </li>
             <li>
               <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
             </li>

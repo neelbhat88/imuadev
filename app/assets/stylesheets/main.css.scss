@@ -35,6 +35,10 @@ $yellow: rgb(232,190,40);
 $purple: rgb(150,101,170);
 $darkgrey: rgb(40,40,40);
 
+$grey: #666;
+$grey-hover: #888;
+$blue-hover: #53b5e6;
+
 $ink: #374347;
 
 
@@ -346,27 +350,29 @@ header {
 
 	border: 1px solid $blue;
 	background-color: $blue;
+	border-radius: 2px;
 	color: white;
 	min-width: 80px;
 
-	padding: 10px;
+	padding: 6px 10px;
 	cursor: pointer;
 
-	&:hover {border-color: $darkgrey;}
+	&:hover { background-color: $blue-hover; }	
 
 }
 
 .cancel {
 
-	border: 1px solid grey;
-	background-color: grey;
+	border: 1px solid $grey;
+	background-color: $grey;
+	border-radius: 2px;	
 	color: white;
 	min-width: 80px;
 
-	padding: 10px;
+	padding: 6px 10px;
 	cursor: pointer;
 
-	&:hover {border-color: $darkgrey;}	
+	&:hover { background-color: $grey-hover; }
 
 }
 

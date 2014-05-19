@@ -1,9 +1,9 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', ['$scope', 'session', 'UsersService',
-	function($scope, session, UsersService) {
+.controller('ProfileController', ['$scope', 'SessionService', 'UsersService',
+	function($scope, SessionService, UsersService) {
 
-		$scope.user = session.user;
+		$scope.user = SessionService.currentUser;
 		$scope.origUser = angular.copy($scope.user)
 		$scope.editingInfo = false;
 		$scope.editingPassword = false;
@@ -86,4 +86,16 @@ angular.module('myApp.controllers', [])
 
 	}
 
+])
+
+.controller('RoadmapController', ['$scope', 'SessionService', 'UsersService',
+	function($scope, SessionService, UsersService) {
+		$scope.user = SessionService.currentUser;		
+	}
+])
+
+.controller('HeaderController', ['$scope', 'SessionService',
+	function($scope, SessionService) {
+		$scope.user = SessionService.currentUser;	// ToDo: This is null, need to figure out why	
+	}
 ]);

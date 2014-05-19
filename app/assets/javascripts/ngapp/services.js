@@ -17,12 +17,18 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 				}
 				else {
 					return $http.get('/api/v1/current_user').then(function(resp){
-						return service.currentUser = resp.data;
-					});
-				}
+						service.currentUser = resp.data.user;
 
-			}
+						return service.currentUser;
+					});					
+				}
 		
+			},
+
+			isSuperAdmin: function() {
+				return !!(service.currentUser && service.currentUser.is_super_admin)
+			}
+
 		};
 
 		return service;
@@ -55,8 +61,7 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 						defer.resolve(resp.data);
 					else
 						defer.reject(resp.data);
-				}	
-			);
+				});
 
 			return defer.promise;
 		},
@@ -80,8 +85,7 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 						defer.resolve(resp.data);
 					else
 						defer.reject(resp.data);
-				}			
-			);
+				});
 
 			return defer.promise;
 		},

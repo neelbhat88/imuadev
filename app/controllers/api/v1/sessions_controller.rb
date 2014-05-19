@@ -28,7 +28,7 @@ private
 end
 
 class ViewUser
-	attr_accessor :id, :email, :first_name, :last_name, :phone, :role, :avatar_url
+	attr_accessor :id, :email, :first_name, :last_name, :phone, :role, :avatar_url, :is_super_admin
 
 	def initialize(user)
 		@id = user.id
@@ -38,5 +38,7 @@ class ViewUser
 		@phone = user.phone
 		@role = user.role
 		@square_avatar_url = user.avatar.url(:square)
+
+		@is_super_admin = user.super_admin?
 	end
 end

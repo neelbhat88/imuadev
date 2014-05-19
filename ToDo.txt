@@ -1,4 +1,3 @@
-- Upload picture
 - Tests -> add , only: [:edit] to resources :users and see if test fails
 
 - Status messages

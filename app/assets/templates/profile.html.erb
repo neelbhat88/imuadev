@@ -57,9 +57,9 @@
 
 			<div class="buttonGroup pvl" ng-show="editingInfo" >		
 
-				<input value="Save" type="submit" class="submit" ng-click="updateUserInfo() ">
+				<button type="submit" class="submit" ng-click="updateUserInfo()"><span>Save</span></button>
 
-				<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdateUserInfo()">
+				<button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
 
 			</div>
 
@@ -88,10 +88,9 @@
 
 			<div class="buttonGroup pvl">
 
-				<input value="Save" type="submit" class="submit" ng-click="updateUserPassword()">
+				<button type="submit" class="submit" ng-click="updateUserPassword()"><span>Save</span></button>
 
-				<input value="Cancel" type="button" class="cancel" ng-click="cancelUpdatePassword()">
-
+				<button class="cancel" ng-click="cancelUpdatePassword()"><span>Cancel</span></button>				
 			</div>
 
 		</form>
@@ -100,9 +99,11 @@
 	</div>	
 
 	<div class="buttonGroup pvl" ng-hide="editing()" >
+
 		<input value="Update Info" type="button" class="submit" ng-click="editUserInfo()">
 
 		<input value="Change Password" type="button" class="submit" ng-click="editUserPassword()">
+
 	</div>
 
 	
