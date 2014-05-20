@@ -3,6 +3,7 @@ Imua::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+
       devise_scope :user do
         get 'current_user' => 'sessions#show_current_user'
       end
@@ -12,8 +13,15 @@ Imua::Application.routes.draw do
           put '/:id/update_password' => 'users#update_password'
         end
       end
-    end
-  end
+      
+      get  '/organization/:id/roadmap' => 'roadmap#show'
+      post '/organization/:id/roadmap' => 'roadmap#create'
+      post '/organization/:orgId/roadmap/:rId/time_unit' => 'roadmap#create_time_unit'
+
+      post '/time_unit/:id/milestone' => 'roadmap#create_milestone'
+
+    end # end :v1    
+  end # end :api
 
   get '/dashboard' => 'static#dashboard', as: 'dashboard'
   root :to => 'static#index'

@@ -1,0 +1,21 @@
+class TimeUnit < ActiveRecord::Base
+  attr_accessible :name, :organization_id, :roadmap_id
+
+  has_many :milestones
+  
+  belongs_to :roadmap
+end
+
+class ViewTimeUnit
+	attr_accessor :id, :name, :milestones
+
+	def initialize(time_unit)
+		@id = time_unit.id
+		@name = time_unit.name
+
+		@milestones = []
+		time_unit.milestones.each do | m |
+			@milestones << ViewMilestone.new(m)
+		end
+	end
+end

@@ -11,7 +11,48 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140512184559) do
+ActiveRecord::Schema.define(:version => 20140520183520) do
+
+  create_table "milestone_levels", :force => true do |t|
+    t.integer  "milestone_id"
+    t.string   "value"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "milestone_levels", ["milestone_id"], :name => "IDX_MilestoneLevel_MilestoneId"
+
+  create_table "milestones", :force => true do |t|
+    t.string   "module"
+    t.string   "submodule"
+    t.integer  "importance"
+    t.integer  "time_unit_id"
+    t.integer  "points"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
+
+  create_table "roadmaps", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "organization_id"
+  end
+
+  create_table "time_units", :force => true do |t|
+    t.string   "name"
+    t.integer  "roadmap_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "time_units", ["roadmap_id"], :name => "IDX_TimeUnit_RoadmapId"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
