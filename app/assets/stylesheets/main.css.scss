@@ -31,7 +31,7 @@
 $green: rgb(65,173,73);
 $red: rgb(239,65,61);
 $blue: rgb(39,170,225);
-$yellow: rgb(232,190,40);
+$yellow: rgb(232,190,40); // #e8be28
 $purple: rgb(150,101,170);
 $darkgrey: rgb(40,40,40);
 
@@ -311,8 +311,7 @@ header {
 
 .form-field {
 	
-	font-size: 14px;
-	min-width: 250px;
+	font-size: 14px;	
 	border: 1px solid #bdbdbd;
 	@include border-radius(5px);
 	padding: 8px;

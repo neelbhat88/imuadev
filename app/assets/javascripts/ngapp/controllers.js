@@ -88,9 +88,91 @@ angular.module('myApp.controllers', [])
 
 ])
 
-.controller('RoadmapController', ['$scope', 'SessionService', 'UsersService',
-	function($scope, SessionService, UsersService) {
-		$scope.user = SessionService.currentUser;		
+.controller('RoadmapController', ['$scope', 'RoadmapService', 'SessionService', '$filter',
+	function($scope, RoadmapService, SessionService, $filter) {
+		$scope.user = SessionService.currentUser;
+		// This will come from the org the user is part of
+		RoadmapService.getRoadmap(-1).then(
+			function Success(data) {
+				$scope.roadmap = data.roadmap;
+			},
+			function Error(data) {
+			}
+		);
+
+		$scope.addTimeUnit = function(tu) {
+			if (tu && tu.id)
+			{
+				tu.original = angular.copy(tu);
+				tu.editing = true;
+			}
+			else 
+			{
+				var newTimeUnit = { name: "", editing: true };
+				$scope.roadmap.time_units.push(newTimeUnit);
+			}
+		};
+
+		$scope.saveAddTimeUnit = function(tu) {
+			if (!tu.name)
+				return;			
+
+			if (tu.id) {
+				RoadmapService.updateTimeUnit(tu).then(
+					function Success(data) {
+						tu.editing = false;
+					}
+				)
+			}
+			else {
+				RoadmapService.addTimeUnit(-1, $scope.roadmap.id, tu).then(
+					function Success(data){
+						// Remove the temp object and push the newly added one on
+						$scope.roadmap.time_units.pop();
+						$scope.roadmap.time_units.push(data.time_unit);
+					},
+					function Error(data){}
+				);
+			}
+
+		};
+
+		$scope.cancelAddTimeUnit = function(tu) {
+			if (tu.id) // Editing an existing time_unit
+			{
+				tu.editing = false;
+				tu.name = tu.original.name;
+			}
+			else
+			{
+				$scope.roadmap.time_units.pop();
+			}
+		};
+
+		$scope.deleteTimeUnit = function(tu) 
+		{
+			if (window.confirm("Are you sure? Deleting this will delete all milestones within it also.")) 
+			{			
+				RoadmapService.deleteTimeUnit(tu.id).then(
+					function Success(data) 
+					{
+						$.each($scope.roadmap.time_units, function(index) {
+							if ($scope.roadmap.time_units[index].id == tu.id)
+							{
+								$scope.roadmap.time_units.splice(index, 1);
+								return false;
+							}								
+						});
+					}
+				)
+			}
+		};
+
+		$scope.addMilestone = function(tu)
+		{
+			alert("Patience " + $scope.user.first_name + "! This is coming next. You can add, remove and edit time units for now.");
+		}
+
 	}
 ])
 

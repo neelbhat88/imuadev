@@ -1,3 +1,54 @@
 <div class="roadmapContainer">
-	<h1>Roadmap</h1>
+	<h1>{{roadmap.name}}</h1>
+	<h4 class="plm">{{roadmap.description}}</h4>
+
+	<div class="tuContainer ptl">
+
+		<div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
+
+			<!-- TimeUnit Header -->
+			<div class="tu-header">
+
+				<span class="title" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
+				
+				<div ng-show="tu.editing">
+					<form>
+						<input class="form-field" ng-model="tu.name" placeholder="Time Unit Name">
+
+						<div class="buttonGroup pvs">
+							<button type="submit" class="submit" ng-click="saveAddTimeUnit(tu)"><span>Save</span></button>
+							<button class="cancel" ng-click="cancelAddTimeUnit(tu)"><span>Cancel</span></button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+			<!-- TimeUnit Header -->
+
+			<!-- TimeUnit Milestones -->
+			<div class="tu-milestones" ng-hide="tu.editing">
+
+				<div class="tu-milestone" ng-repeat="milestone in tu.milestones">
+					<div class="title">{{milestone.title}}</div>
+					<div class="footer"></div>
+				</div>
+
+			</div>
+			<!-- TimeUnit Header -->
+			
+			<!-- TimeUnit Footer -->
+			<div class="tu-footer" ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
+			<div class="tu-footer" ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
+			<!-- TimeUnit Footer -->
+		</div>
+
+		<div class="tu tu-add-new">
+			<div class="tu-footer"><a href="#" ng-click="addTimeUnit()">Add Time Unit</a></div>
+		</div>
+	</div>
+
 </div>
+
+<script>
+	$(function() { $('input, textarea').placeholder();});
+</script>

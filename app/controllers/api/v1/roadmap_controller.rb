@@ -18,9 +18,9 @@ class Api::V1::RoadmapController < ApplicationController
 			}
 	end
 
-	# POST /organization/:id/roadmap
+	# POST roadmap
 	def create
-		orgId = params[:id].to_i
+		orgId = params[:roadmap][:organization_id].to_i
 		name = params[:roadmap][:name]
 		desc = params[:roadmap][:description]
 
@@ -41,11 +41,11 @@ class Api::V1::RoadmapController < ApplicationController
 
 	end
 
-	# POST /organization/:orgId/roadmap/:rId/time_unit
+	# POST /time_unit
 	def create_time_unit
-		orgId = params[:orgId].to_i
-		rId = params[:rId].to_i
-		name = params[:timeunit][:name]
+		orgId = params[:time_unit][:organization_id].to_i
+		rId = params[:time_unit][:roadmap_id].to_i
+		name = params[:time_unit][:name]
 
 		time_unit = { 
 								:organization_id => orgId,
@@ -63,9 +63,36 @@ class Api::V1::RoadmapController < ApplicationController
 			}
 	end
 
-	# POST /time_unit/:id/milestone
-	def create_milestone
+	# PUT /time_unit/:id
+	def update_time_unit
+		time_unit = params[:time_unit]
+
+		result = RoadmapRepository.new.update_time_unit(time_unit)
+
+		render status: 200,
+			json: {
+				success: result[:success],
+				info: result[:info],
+				time_unit: ViewTimeUnit.new(result[:time_unit])
+			}
+	end
+
+	# DELETE /time_unit/:id
+	def delete_time_unit
 		tuId = params[:id]
+
+		result = RoadmapRepository.new.delete_time_unit(tuId)
+
+		render status: 200,
+			json: {
+				success: result[:success],
+				info: result[:info]				
+			}
+	end
+
+	# POST milestone
+	def create_milestone
+		tuId = params[:milestone][:time_unit_id]
 		mod = params[:milestone][:module]
 		submod = params[:milestone][:submodule]
 		importance = params[:milestone][:importance]
@@ -126,11 +153,32 @@ class RoadmapRepository
 		end
 
 		if new_time_unit.save
-			return { :success => true, :info => "Time unit created successfully.", :time_units => new_time_unit }
+			return { :success => true, :info => "Time unit created successfully.", :time_unit => new_time_unit }
 		else
-			return { :success => false, :info => "Failed to create time unit.", :time_units => nil }
+			return { :success => false, :info => "Failed to create time unit.", :time_unit => nil }
 		end
+	end
 
+	def update_time_unit(time_unit)
+		result = TimeUnit.find(time_unit[:id]).update_attributes(:name => time_unit[:name])
+
+		if result	
+			new_time_unit = TimeUnit.find(time_unit[:id])
+
+			return { :success => true, :info => "Successfully updated Time Unit id:#{time_unit[:id]}.", :time_unit => new_time_unit }
+		else
+			old_time_unit = TimeUnit.find(time_unit[:id])
+
+			return { :success => false, :info => "Failed to update Time Unit id:#{time_unit[:id]}.", :time_unit => old_time_unit }
+		end
+	end
+
+	def delete_time_unit(time_unit_id)
+		if TimeUnit.find(time_unit_id).destroy()
+			return { :success => true, :info => "Successfully deleted Time Unit id:#{time_unit_id} and all of its milestones." }
+		else
+			return { :success => false, :info => "Failed to delete Time Unit id:#{time_unit_id}." }
+		end
 	end
 
 	def create_milestone(milestone)

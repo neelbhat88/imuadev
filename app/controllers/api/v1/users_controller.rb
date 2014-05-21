@@ -6,8 +6,6 @@ class Api::V1::UsersController < ApplicationController
 
 	# GET /users
 	def index
-		UserMailer.welcome(current_user, 'ThisIsATest').deliver
-
 		render status: 200,
 			json: {
 				success: true,

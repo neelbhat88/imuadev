@@ -1,7 +1,7 @@
 class TimeUnit < ActiveRecord::Base
   attr_accessible :name, :organization_id, :roadmap_id
 
-  has_many :milestones
+  has_many :milestones, dependent: :destroy
   
   belongs_to :roadmap
 end

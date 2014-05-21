@@ -15,15 +15,20 @@ Imua::Application.routes.draw do
       end
       
       get  '/organization/:id/roadmap' => 'roadmap#show'
-      post '/organization/:id/roadmap' => 'roadmap#create'
-      post '/organization/:orgId/roadmap/:rId/time_unit' => 'roadmap#create_time_unit'
 
-      post '/time_unit/:id/milestone' => 'roadmap#create_milestone'
+      post '/roadmap' => 'roadmap#create'
+
+      post '/time_unit' => 'roadmap#create_time_unit'
+      put  '/time_unit/:id' => 'roadmap#update_time_unit'
+      delete '/time_unit/:id' => 'roadmap#delete_time_unit'
+
+      post '/milestone' => 'roadmap#create_milestone'
 
     end # end :v1    
   end # end :api
 
   get '/dashboard' => 'static#dashboard', as: 'dashboard'
+  get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.

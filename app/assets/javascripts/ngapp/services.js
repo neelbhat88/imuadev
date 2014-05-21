@@ -1,6 +1,8 @@
 angular.module('myApp.services', []);
 
-angular.module('myApp.services').factory('SessionService', ['$http', '$q',
+angular.module('myApp.services')
+
+.factory('SessionService', ['$http', '$q',
 	function($http, $q) {
 		
 		var service = {
@@ -34,6 +36,77 @@ angular.module('myApp.services').factory('SessionService', ['$http', '$q',
 		return service;
 	}
 
+])
+
+.factory('RoadmapService', ['$http', '$q',
+	function($http, $q){
+		
+		var service = {
+			getRoadmap: function(orgId) {
+				var defer = $q.defer();
+
+				$http.get('/api/v1/organization/' + orgId + '/roadmap')
+					.then(function(resp, status){
+						if (resp.data.success)
+							defer.resolve(resp.data);
+						else
+							defer.reject(resp.data);
+					});
+
+				return defer.promise;
+			},
+
+			addTimeUnit: function(orgId, rId, tu_obj){
+				var defer = $q.defer();
+
+				var time_unit = {
+					organization_id: orgId,
+					roadmap_id: rId,
+					name: tu_obj.name
+				};
+
+				$http.post('/api/v1/time_unit', { time_unit: time_unit } )
+					.then(function(resp, status) {
+						if (resp.data.success)
+							defer.resolve(resp.data);
+						else
+							defer.reject(resp.data);
+					});
+
+				return defer.promise;
+			},
+
+			updateTimeUnit: function(time_unit) {
+				var defer = $q.defer();				
+
+				$http.put('/api/v1/time_unit/' + time_unit.id, { time_unit: time_unit } )
+					.then(function(resp, status) {
+						if (resp.data.success)
+							defer.resolve(resp.data);
+						else
+							defer.reject(resp.data);
+					});
+
+				return defer.promise;
+			},
+
+			deleteTimeUnit: function(time_unit_id) {
+				var defer = $q.defer();				
+
+				$http.delete('/api/v1/time_unit/' + time_unit_id)
+					.then(function(resp, status) {
+						if (resp.data.success)
+							defer.resolve(resp.data);
+						else
+							defer.reject(resp.data);
+					});
+
+				return defer.promise;
+			}
+		};
+
+		return service;
+	}
 ])
 
 .factory('UsersService', ['$http', '$q', function($http, $q){

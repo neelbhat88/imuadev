@@ -1,0 +1,58 @@
+.tuContainer {
+	
+	.tu {
+
+		width: 220px;
+		
+		display: inline-block;
+		vertical-align: top;
+
+		margin: 5px;
+
+		border: 1px solid #bbb;
+		background-color: #ddd;
+		@include border-radius(5px);		
+
+		.tu-header {
+
+			font-size: 14px;			
+			padding: 10px;
+
+			.title { 
+				font-weight: bold; cursor: pointer;
+
+				&:hover { border-bottom: 1px solid; }
+			}
+
+		}
+
+		.tu-milestones {
+
+			min-height: 100px;
+			padding: 10px;
+
+			.tu-milestone {
+				background-color: white;
+				padding: 5px;
+				@include border-radius(5px);
+			}
+
+		}
+
+		.tu-footer {
+
+			padding: 10px;
+
+			a { 
+
+				color: $grey; text-decoration: none; 
+
+				&:hover { color: $ink; }
+
+			}
+
+		}
+
+	} // .tu
+
+} // .tuContainer
