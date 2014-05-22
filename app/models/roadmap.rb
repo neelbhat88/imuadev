@@ -5,18 +5,18 @@ class Roadmap < ActiveRecord::Base
 end
 
 class ViewRoadmap
-	attr_accessor :id, :name, :description, :organization_id, :time_units
+  attr_accessor :id, :name, :description, :organization_id, :time_units
 
-	def initialize(roadmap)
-		@id = roadmap.id
-		@name = roadmap.name
-		@description = roadmap.description
-		@organization_id = roadmap.organization_id
+  def initialize(roadmap)
+    @id = roadmap.id
+    @name = roadmap.name
+    @description = roadmap.description
+    @organization_id = roadmap.organization_id
 
-		@time_units = []
-		roadmap.time_units.each do | t |
-			@time_units << ViewTimeUnit.new(t)
-		end
-			
-	end
+    @time_units = []
+    roadmap.time_units.each do | t |
+      @time_units << ViewTimeUnit.new(t)
+    end
+      
+  end
 end
