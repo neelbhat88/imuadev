@@ -6,7 +6,7 @@ class UserRepository
     return ViewUser.new(User.find(userId))
   end
 
-  def update_user_info(userObj)   
+  def update_user_info(userObj)
     id = userObj[:id]
     first_name = userObj[:first_name]
     last_name = userObj[:last_name]
@@ -20,21 +20,21 @@ class UserRepository
                                   :first_name => first_name,
                                   :last_name => last_name,
                                   :phone => phone
-                                )               
+                                )
     else
       result = user.update_attributes(
                                   :first_name => first_name,
                                   :last_name => last_name,
                                   :phone => phone,
                                   :avatar => avatar
-                                )               
+                                )
     end
 
-    if (result)     
+    if (result)
       new_user = get_user(id)
 
       return { :success => true, :info => "User info updated successfully!", :user => new_user }
-    
+
     else
       old_user = get_user(id)
 
@@ -56,7 +56,7 @@ class UserRepository
       return { :success => true, :info => "Password updated successfully!", :user=>new_user }
     else
       old_user = get_user(id)
-      
+
       return { :success => false, :info => user.errors.full_messages, :user=>old_user }
     end
   end
@@ -64,9 +64,9 @@ class UserRepository
   def create_user(user_obj, current_user)
     password = Devise.friendly_token.first(8)
 
-    success = User.create(:email => user_obj[:email], 
-                :first_name => user_obj[:first_name], 
-                :last_name => user_obj[:last_name],                 
+    success = User.create(:email => user_obj[:email],
+                :first_name => user_obj[:first_name],
+                :last_name => user_obj[:last_name],
                 :role => user_obj[:role],
                 :password => password)
 

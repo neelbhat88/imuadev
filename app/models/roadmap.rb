@@ -17,6 +17,6 @@ class ViewRoadmap
     roadmap.time_units.each do | t |
       @time_units << ViewTimeUnit.new(t)
     end
-      
+
   end
 end

@@ -4,27 +4,27 @@ angular.module('myApp.services')
 
 .factory('SessionService', ['$http', '$q',
   function($http, $q) {
-    
+
     var service = {
-      
+
       currentUser: null,
-      
+
       isAuthenticated: function() {
         return !!service.currentUser;
       },
-      
+
       getCurrentUser: function(){
         if (service.isAuthenticated()) {
-          return $q.when(service.currentUser);          
+          return $q.when(service.currentUser);
         }
         else {
           return $http.get('/api/v1/current_user').then(function(resp){
             service.currentUser = resp.data.user;
 
             return service.currentUser;
-          });         
+          });
         }
-    
+
       },
 
       isSuperAdmin: function() {
@@ -40,7 +40,7 @@ angular.module('myApp.services')
 
 .factory('RoadmapService', ['$http', '$q',
   function($http, $q){
-    
+
     var service = {
       getRoadmap: function(orgId) {
         var defer = $q.defer();
@@ -77,7 +77,7 @@ angular.module('myApp.services')
       },
 
       updateTimeUnit: function(time_unit) {
-        var defer = $q.defer();       
+        var defer = $q.defer();
 
         $http.put('/api/v1/time_unit/' + time_unit.id, { time_unit: time_unit } )
           .then(function(resp, status) {
@@ -91,7 +91,7 @@ angular.module('myApp.services')
       },
 
       deleteTimeUnit: function(time_unit_id) {
-        var defer = $q.defer();       
+        var defer = $q.defer();
 
         $http.delete('/api/v1/time_unit/' + time_unit_id)
           .then(function(resp, status) {
@@ -141,7 +141,7 @@ angular.module('myApp.services')
 
     updateUserPassword: function(user, password) {
       var defer = $q.defer();
-      
+
       if (!password.current || !password.new || !password.confirm)
         return;
 
@@ -176,7 +176,7 @@ angular.module('myApp.services')
             defer.resolve(resp.data);
           else
             defer.reject(resp.data);
-        } 
+        }
       );
 
       return defer.promise;

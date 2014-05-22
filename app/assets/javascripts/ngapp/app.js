@@ -6,7 +6,7 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services', 'myAp
     $routeProvider.when('/', {
       templateUrl: '/assets/roadmap.html',
       controller: 'RoadmapController',
-      resolve: {      
+      resolve: {
         currentUser: ['SessionService', function(SessionService) {
           return SessionService.getCurrentUser();
         }]
@@ -24,12 +24,12 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services', 'myAp
         }
       }
     })
-    
+
     .when('/profile', {
       templateUrl: '/assets/profile.html',
-      controller: 'ProfileController'     
+      controller: 'ProfileController'
     })
-    
+
     .otherwise({redirectTo: '/'});
 
     $locationProvider.html5Mode(true); // Removes the /#/ from the URL

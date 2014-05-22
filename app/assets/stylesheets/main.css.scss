@@ -62,7 +62,7 @@ $bold: 700;
     font-style: normal;
     font-size: $size;
     line-height: 1.5;
-    
+
 }
 
 @mixin font-size($size:1.6, $line: $size * 1.4){
@@ -217,49 +217,49 @@ header {
 
   min-width: 415px;
   @include respond-to(415) { min-width: 345px; }
-  
+
   a {
-  
+
     color: white;
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: none;
       color: $purple;
     }
   }
-  
+
   .wrapper {
-  
+
     margin: 0 45px;
     @include respond-to(415) { margin: 0 10px; }
-    
+
     .imua-logo {
-    
+
       margin: 20px 0;
-    
+
     }
-    
+
     nav {
-    
+
       margin: 45px 0;
-    
+
       li {
-      
+
         float: left;
 
         cursor: pointer;
-        
+
         margin-left: 100px;
         @include respond-to(840) { margin-left: 50px; }
         @include respond-to(660) { margin-left: 20px; }
-      
+
       }
-    
+
     }
-  
+
   }
-  
+
 }
 
 /* ===============================================
@@ -310,8 +310,8 @@ header {
    =============================================== */
 
 .form-field {
-  
-  font-size: 14px;  
+
+  font-size: 14px;
   border: 1px solid #bdbdbd;
   @include border-radius(5px);
   padding: 8px;
@@ -321,7 +321,7 @@ header {
       color: #999999;
   }
 
-  &:focus {   
+  &:focus {
     border-color: $blue;
 
     outline: none; // Chrome adds a square outline which looks weird
@@ -356,7 +356,7 @@ header {
   padding: 6px 10px;
   cursor: pointer;
 
-  &:hover { background-color: $blue-hover; }  
+  &:hover { background-color: $blue-hover; }
 
 }
 
@@ -381,7 +381,7 @@ header {
    Misc
    =============================================== */
 
-.flash-container {  
+.flash-container {
   padding: 20px;
   @extend .font-size-normal;
   z-index: 10000;

@@ -1,5 +1,5 @@
 Imua::Application.routes.draw do
-  devise_for :users, :skip => [:registrations]  
+  devise_for :users, :skip => [:registrations]
 
   namespace :api do
     namespace :v1 do
@@ -13,7 +13,7 @@ Imua::Application.routes.draw do
           put '/:id/update_password' => 'users#update_password'
         end
       end
-      
+
       get  '/organization/:id/roadmap' => 'roadmap#show'
 
       post '/roadmap' => 'roadmap#create'
@@ -24,7 +24,7 @@ Imua::Application.routes.draw do
 
       post '/milestone' => 'roadmap#create_milestone'
 
-    end # end :v1    
+    end # end :v1
   end # end :api
 
   get '/dashboard' => 'static#dashboard', as: 'dashboard'
@@ -75,7 +75,7 @@ Imua::Application.routes.draw do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
-  #   end  
+  #   end
 
   # See how all your routes lay out with "rake routes"
 

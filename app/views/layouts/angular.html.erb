@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -12,13 +12,13 @@
     </script>    -->
 
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "application", :media => "all" %>    
+    <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    
+
     <script type="text/javascript" src="//use.typekit.net/nck0oiv.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
@@ -26,14 +26,14 @@
   </head>
   <body>
     <header ng-controller="HeaderController">
-      <div class="wrapper clear">   
-        <div class="imua-logo left">   
+      <div class="wrapper clear">
+        <div class="imua-logo left">
           <a href="/">
             <%= image_tag "logo-white_small.png", :alt => "IMUA" %>
           </a>
         </div>
-       
-        <nav class="right">   
+
+        <nav class="right">
           <ul>
             <li>
               <a href="#/roadmap">Roadmap</a>
@@ -44,14 +44,14 @@
             <li>
               <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
             </li>
-          </ul>   
-        </nav>   
-      </div>      
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <div class="container">
       <div data-ng-view></div>
     </div> <!-- /container -->
-    
+
   </body>
 </html>

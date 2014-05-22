@@ -24,7 +24,7 @@ class Api::V1::RoadmapController < ApplicationController
     name = params[:roadmap][:name]
     desc = params[:roadmap][:description]
 
-    roadmap = { 
+    roadmap = {
                 :organization_id => orgId,
                 :name => name,
                 :description => desc
@@ -35,7 +35,7 @@ class Api::V1::RoadmapController < ApplicationController
     render status: 200,
       json: {
         success: result[:success],
-        info: result[:info]       
+        info: result[:info]
       }
 
   end
@@ -46,7 +46,7 @@ class Api::V1::RoadmapController < ApplicationController
     rId = params[:time_unit][:roadmap_id].to_i
     name = params[:time_unit][:name]
 
-    time_unit = { 
+    time_unit = {
                 :organization_id => orgId,
                 :name => name,
                 :roadmap_id => rId
@@ -85,7 +85,7 @@ class Api::V1::RoadmapController < ApplicationController
     render status: 200,
       json: {
         success: result[:success],
-        info: result[:info]       
+        info: result[:info]
       }
   end
 
@@ -131,7 +131,7 @@ class RoadmapRepository
 
     newroadmap = Roadmap.new do | r |
       r.name = roadmap[:name]
-      r.description = roadmap[:description], 
+      r.description = roadmap[:description],
       r.organization_id = roadmap[:organization_id]
     end
 
@@ -145,7 +145,7 @@ class RoadmapRepository
 
   def create_time_unit(time_unit)
     roadmap = Roadmap.find(time_unit[:roadmap_id])
-    
+
     new_time_unit = roadmap.time_units.new do | tu |
       tu.name = time_unit[:name]
       tu.organization_id = time_unit[:organization_id]
@@ -161,7 +161,7 @@ class RoadmapRepository
   def update_time_unit(time_unit)
     result = TimeUnit.find(time_unit[:id]).update_attributes(:name => time_unit[:name])
 
-    if result 
+    if result
       new_time_unit = TimeUnit.find(time_unit[:id])
 
       return { :success => true, :info => "Successfully updated Time Unit id:#{time_unit[:id]}.", :time_unit => new_time_unit }

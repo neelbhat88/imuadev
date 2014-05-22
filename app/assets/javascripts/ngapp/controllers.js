@@ -34,7 +34,7 @@ angular.module('myApp.controllers', [])
       UsersService.updateUserInfoWithPicture($scope.user, fd)
       .then(
         function Success(data) {
-          // ToDo: Success message here 
+          // ToDo: Success message here
           $scope.user = data.user;
 
           $scope.files = null;
@@ -49,8 +49,8 @@ angular.module('myApp.controllers', [])
           // ToDo: Error message here
         }
       )
-      .finally(function() { 
-        
+      .finally(function() {
+
       });
 
     };
@@ -59,7 +59,7 @@ angular.module('myApp.controllers', [])
       $scope.editingPassword = true;
     };
 
-    $scope.cancelUpdatePassword = function() {      
+    $scope.cancelUpdatePassword = function() {
       $scope.editingPassword = false;
       clearPasswordFields();
     };
@@ -71,12 +71,12 @@ angular.module('myApp.controllers', [])
             // ToDo: Add Success message here
             clearPasswordFields();
             $scope.editingPassword = false;
-          }, 
+          },
           function Error(data) {
             $scope.errors = data.info;
           }
         );
-    };    
+    };
 
     function clearPasswordFields()
     {
@@ -106,7 +106,7 @@ angular.module('myApp.controllers', [])
         tu.original = angular.copy(tu);
         tu.editing = true;
       }
-      else 
+      else
       {
         var newTimeUnit = { name: "", editing: true };
         $scope.roadmap.time_units.push(newTimeUnit);
@@ -115,7 +115,7 @@ angular.module('myApp.controllers', [])
 
     $scope.saveAddTimeUnit = function(tu) {
       if (!tu.name)
-        return;     
+        return;
 
       if (tu.id) {
         RoadmapService.updateTimeUnit(tu).then(
@@ -149,19 +149,19 @@ angular.module('myApp.controllers', [])
       }
     };
 
-    $scope.deleteTimeUnit = function(tu) 
+    $scope.deleteTimeUnit = function(tu)
     {
-      if (window.confirm("Are you sure? Deleting this will delete all milestones within it also.")) 
-      {     
+      if (window.confirm("Are you sure? Deleting this will delete all milestones within it also."))
+      {
         RoadmapService.deleteTimeUnit(tu.id).then(
-          function Success(data) 
+          function Success(data)
           {
             $.each($scope.roadmap.time_units, function(index) {
               if ($scope.roadmap.time_units[index].id == tu.id)
               {
                 $scope.roadmap.time_units.splice(index, 1);
                 return false;
-              }               
+              }
             });
           }
         )
@@ -178,6 +178,6 @@ angular.module('myApp.controllers', [])
 
 .controller('HeaderController', ['$scope', 'SessionService',
   function($scope, SessionService) {
-    $scope.user = SessionService.currentUser; // ToDo: This is null, need to figure out why 
+    $scope.user = SessionService.currentUser; // ToDo: This is null, need to figure out why
   }
 ]);

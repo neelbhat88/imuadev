@@ -10,7 +10,7 @@
       <div class="tu-header">
 
         <span class="title" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
-        
+
         <div ng-show="tu.editing">
           <form>
             <input class="form-field" ng-model="tu.name" placeholder="Time Unit Name">
@@ -35,7 +35,7 @@
 
       </div>
       <!-- TimeUnit Header -->
-      
+
       <!-- TimeUnit Footer -->
       <div class="tu-footer" ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
       <div class="tu-footer" ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
