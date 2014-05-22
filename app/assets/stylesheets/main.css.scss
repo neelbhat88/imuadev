@@ -349,7 +349,7 @@ header {
 
 	border: 1px solid $blue;
 	background-color: $blue;
-	border-radius: 2px;
+	@include border-radius(5px);
 	color: white;
 	min-width: 80px;
 
@@ -364,7 +364,7 @@ header {
 
 	border: 1px solid $grey;
 	background-color: $grey;
-	border-radius: 2px;	
+	@include border-radius(5px);
 	color: white;
 	min-width: 80px;
 

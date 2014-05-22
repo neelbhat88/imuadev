@@ -31,13 +31,12 @@ class Api::V1::RoadmapController < ApplicationController
 							}
 
 		result = RoadmapRepository.new.create_roadmap(roadmap)
-debugger
+
 		render status: 200,
 			json: {
 				success: result[:success],
-				info: result[:info],
-				roadmap: ViewRoadmap.new(result[:roadmap])
-			}		
+				info: result[:info]				
+			}
 
 	end
 
