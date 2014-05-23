@@ -56,6 +56,20 @@ angular.module('myApp.services')
         return defer.promise;
       },
 
+      getEnabledModules: function(orgId) {
+        var defer = $q.defer();
+
+        $http.get('api/v1/organization/' + orgId + '/modules')
+          .then(function(resp, status){
+            if (resp.data.success)
+              defer.resolve(resp.data);
+            else
+              defer.reject(resp.data);
+          });
+
+        return defer.promise;
+      },
+
       addTimeUnit: function(orgId, rId, tu_obj){
         var defer = $q.defer();
 
@@ -94,6 +108,20 @@ angular.module('myApp.services')
         var defer = $q.defer();
 
         $http.delete('/api/v1/time_unit/' + time_unit_id)
+          .then(function(resp, status) {
+            if (resp.data.success)
+              defer.resolve(resp.data);
+            else
+              defer.reject(resp.data);
+          });
+
+        return defer.promise;
+      },
+
+      addMilestone: function(milestone) {
+        var defer = $q.defer();
+
+        $http.post('/api/v1/milestone', {milestone: milestone})
           .then(function(resp, status) {
             if (resp.data.success)
               defer.resolve(resp.data);

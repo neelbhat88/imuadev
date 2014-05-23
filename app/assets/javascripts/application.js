@@ -16,7 +16,7 @@
 //= require angular
 //= require angular-route
 //= require angular-resource
-//= require bootstrap
+//= require angular-ui-bootstrap-tpls
 //= require_tree .
 
 $(document).ready(function(){

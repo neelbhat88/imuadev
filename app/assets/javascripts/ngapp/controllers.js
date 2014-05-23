@@ -89,10 +89,14 @@ angular.module('myApp.controllers', [])
 ])
 
 .controller('RoadmapController', ['$scope', 'RoadmapService', 'SessionService', '$filter',
-  function($scope, RoadmapService, SessionService, $filter) {
+                                  '$modal',
+  function($scope, RoadmapService, SessionService, $filter, $modal)
+  {
     $scope.user = SessionService.currentUser;
+    var orgId = -1; // TODO: Hardcoding this for now, change when organizations are added
+
     // This will come from the org the user is part of
-    RoadmapService.getRoadmap(-1).then(
+    RoadmapService.getRoadmap(orgId).then(
       function Success(data) {
         $scope.roadmap = data.roadmap;
       },
@@ -100,7 +104,14 @@ angular.module('myApp.controllers', [])
       }
     );
 
+    RoadmapService.getEnabledModules(orgId).then(
+      function Success(data) {
+        $scope.enabled_modules = data.enabled_modules;
+      }
+    );
+
     $scope.addTimeUnit = function(tu) {
+      $scope.addingTimeUnit = true;
       if (tu && tu.id)
       {
         tu.original = angular.copy(tu);
@@ -121,6 +132,7 @@ angular.module('myApp.controllers', [])
         RoadmapService.updateTimeUnit(tu).then(
           function Success(data) {
             tu.editing = false;
+            $scope.addingTimeUnit = false;
           }
         )
       }
@@ -130,6 +142,8 @@ angular.module('myApp.controllers', [])
             // Remove the temp object and push the newly added one on
             $scope.roadmap.time_units.pop();
             $scope.roadmap.time_units.push(data.time_unit);
+
+            $scope.addingTimeUnit = false;
           },
           function Error(data){}
         );
@@ -147,6 +161,8 @@ angular.module('myApp.controllers', [])
       {
         $scope.roadmap.time_units.pop();
       }
+
+      $scope.addingTimeUnit = false;
     };
 
     $scope.deleteTimeUnit = function(tu)
@@ -160,18 +176,68 @@ angular.module('myApp.controllers', [])
               if ($scope.roadmap.time_units[index].id == tu.id)
               {
                 $scope.roadmap.time_units.splice(index, 1);
+                $scope.addingTimeUnit = false;
                 return false;
               }
             });
           }
-        )
+        );
       }
     };
 
     $scope.addMilestone = function(tu)
     {
-      alert("Patience " + $scope.user.first_name + "! This is coming next. You can add, remove and edit time units for now.");
+      var modalInstance = $modal.open({
+        templateUrl: 'milestoneModal.html',
+        controller: 'MilestoneModalController',
+        resolve: {
+          timeUnit: function() {
+            return tu;
+          },
+          enabledModules: function() {
+            return $scope.enabled_modules;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (milestone){
+        RoadmapService.addMilestone(milestone).then(
+          function Success(data)
+          {
+            tu.milestones.push(data.milestone);
+          }
+        );
+      });
     }
+
+  }
+])
+
+.controller('MilestoneModalController', ['$scope', '$modalInstance', 'timeUnit', 'enabledModules',
+  function($scope, $modalInstance, timeUnit, enabledModules) {
+    $scope.selected = {};
+
+    $scope.modules = [];
+    $.each(enabledModules, function(index, val) {
+      var moduleTitle = this.title;
+
+      $.each(this.submodules, function(index, val) {
+        var new_milestone = angular.copy(this.default_milestone);
+        new_milestone.id = null;
+        new_milestone.is_default = false;
+        new_milestone.time_unit_id = timeUnit.id;
+
+        $scope.modules.push( { module: moduleTitle, submodule: this.title, milestone: new_milestone } );
+      });
+    });
+
+    $scope.add = function() {
+      $modalInstance.close($scope.selected.module.milestone);
+    };
+
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
 
   }
 ])

@@ -87,9 +87,9 @@ class RoadmapRepository
     newmilestone.title = milestone[:title]
     newmilestone.description = milestone[:description]
 
-    milestone[:levels].each do | l |
+    milestone[:milestone_levels].each do | l |
       newmilestone.milestone_levels.new do | ml |
-        ml.value = l
+        ml.value = l[:value]
       end
     end
 
@@ -109,7 +109,7 @@ class RoadmapRepository
 
     if milestones.count > 1
       error = "ERROR: There is more than one default milestone for Module: #{mod}, SubModule: #{submod}"
-      logger.error error
+      Rails.logger.error error
       UserMailer.log_error(error).deliver
     end
 

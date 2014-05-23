@@ -1,115 +1,115 @@
 <div class="profileContainer">
-	
-	<div class="pbm">
 
-		<div class="avatar">			
-			<img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="img-thumbnail" />
+  <div class="pbm">
 
-			<div class="field ptl" ng-show="editingInfo">
-				<input class="upload" ng-show="editingInfo" type="file" file-input="files" />
-			</div>			
-		</div>
+    <div class="avatar">
+      <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="img-thumbnail" />
 
-		<!-- UserInfo form -->		
-		<form class="fields" ng-hide="editingPassword">
+      <div class="field ptl" ng-show="editingInfo">
+        <input class="upload" ng-show="editingInfo" type="file" file-input="files" />
+      </div>
+    </div>
 
-			<div class="field">
-				<span ng-hide="editingInfo" class="field-label">Email: </span> 
-				<span>{{user.email}}</span>	
-			</div>
+    <!-- UserInfo form -->
+    <form class="fields" ng-hide="editingPassword">
 
-			<div class="field">				
+      <div class="field">
+        <span ng-hide="editingInfo" class="field-label">Email: </span>
+        <span>{{user.email}}</span>
+      </div>
 
-				<div ng-hide="editingInfo">
-					<span class="field-label">First Name: </span>
-					<span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
-				</div>
+      <div class="field">
 
-				<input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+        <div ng-hide="editingInfo">
+          <span class="field-label">First Name: </span>
+          <span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
+        </div>
 
-			</div>
+        <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
 
-			<div class="field">
+      </div>
 
-				<div ng-hide="editingInfo">
-					<span class="field-label">Last Name: </span> 				
-					<span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
-				</div>
-				
-				<input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
+      <div class="field">
 
-			</div>
+        <div ng-hide="editingInfo">
+          <span class="field-label">Last Name: </span>
+          <span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
+        </div>
 
-			<div class="field">
+        <input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
 
-				<div ng-hide="editingInfo">
-					<span class="field-label">Phone Number: </span> 				
-					<span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
-				</div>
+      </div>
 
-				<input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
+      <div class="field">
 
-			</div>
+        <div ng-hide="editingInfo">
+          <span class="field-label">Phone Number: </span>
+          <span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+        </div>
 
-			<ul class="errorText ptm" ng-show="editingInfo" >
-				<li ng-repeat="error in errors">{{error}}</li>
-			</ul>
+        <input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
 
-			<div class="buttonGroup pvl" ng-show="editingInfo" >		
+      </div>
 
-				<button type="submit" class="submit" ng-click="updateUserInfo()"><span>Save</span></button>
+      <ul class="errorText ptm" ng-show="editingInfo" >
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
 
-				<button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
+      <div class="buttonGroup pvl" ng-show="editingInfo" >
 
-			</div>
+        <button type="submit" class="submit" ng-click="updateUserInfo()"><span>Save</span></button>
 
-		</form>		
-		<!-- UserInfo form -->
+        <button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
 
-		<!-- Password Form -->
-		<form class="fields" ng-show="editingPassword">
-			<h4>Change Password</h4>
+      </div>
 
-			<div class="field">
-				<input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" required>
-			</div>
+    </form>
+    <!-- UserInfo form -->
 
-			<div class="field">
-				<input type="password" class="form-field" ng-model="password.new" placeholder="New Password" required>
-			</div>
+    <!-- Password Form -->
+    <form class="fields" ng-show="editingPassword">
+      <h4>Change Password</h4>
 
-			<div class="field">
-				<input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" required>
-			</div>
+      <div class="field">
+        <input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" name="current" required>
+      </div>
 
-			<ul class="errorText ptm">
-				<li ng-repeat="error in errors">{{error}}</li>
-			</ul>
+      <div class="field">
+        <input type="password" class="form-field" ng-model="password.new" placeholder="New Password" name="new" required>
+      </div>
 
-			<div class="buttonGroup pvl">
+      <div class="field">
+        <input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
+      </div>
 
-				<button type="submit" class="submit" ng-click="updateUserPassword()"><span>Save</span></button>
+      <ul class="errorText ptm">
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
 
-				<button class="cancel" ng-click="cancelUpdatePassword()"><span>Cancel</span></button>				
-			</div>
+      <div class="buttonGroup pvl">
 
-		</form>
-		<!-- Password Form -->
+        <button type="submit" class="submit" ng-click="updateUserPassword()"><span>Save</span></button>
 
-	</div>	
+        <button class="cancel" ng-click="cancelUpdatePassword()"><span>Cancel</span></button>
+      </div>
 
-	<div class="buttonGroup pvl" ng-hide="editing()" >
+    </form>
+    <!-- Password Form -->
 
-		<input value="Update Info" type="button" class="submit" ng-click="editUserInfo()">
+  </div>
 
-		<input value="Change Password" type="button" class="submit" ng-click="editUserPassword()">
+  <div class="buttonGroup pvl" ng-hide="editing()" >
 
-	</div>
+    <input value="Update Info" type="button" class="submit" ng-click="editUserInfo()">
 
-	
+    <input value="Change Password" type="button" class="submit" ng-click="editUserPassword()">
+
+  </div>
+
+
 
 </div>
 
 <script>
-	$(function() { $('input, textarea').placeholder();});
+  $(function() { $('input, textarea').placeholder();});
 </script>

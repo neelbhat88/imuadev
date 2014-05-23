@@ -28,7 +28,7 @@
       <!-- TimeUnit Milestones -->
       <div class="tu-milestones" ng-hide="tu.editing">
 
-        <div class="tu-milestone" ng-repeat="milestone in tu.milestones">
+        <div class="tu-milestone" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer"></div>
         </div>
@@ -37,12 +37,15 @@
       <!-- TimeUnit Header -->
 
       <!-- TimeUnit Footer -->
-      <div class="tu-footer" ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
-      <div class="tu-footer" ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
+      <div class="tu-footer">
+        <div ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
+
+        <div ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
+      </div>
       <!-- TimeUnit Footer -->
     </div>
 
-    <div class="tu tu-add-new">
+    <div class="tu tu-add-new" ng-hide="addingTimeUnit">
       <div class="tu-footer"><a href="#" ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
@@ -55,4 +58,39 @@
 
 <script>
   $(function() { $('input, textarea').placeholder();});
+</script>
+
+<script type="text/ng-template" id="milestoneModal.html">
+    <div class="modal-body">
+        <select ng-model="selected.module" ng-options="mod.submodule group by mod.module for mod in modules">
+          <option value="">-- choose sub-module --</option>
+        </select>
+
+        <div ng-show="selected.module" class="milestone ptl">
+          <div class="field">
+            <input class="form-field" ng-model="selected.module.milestone.title" placeholder="Milestone Title">
+          </div>
+
+          <div class="field">
+            <textarea class="form-field" ng-model="selected.module.milestone.description" placeholder="Milestone Description" cols="30" rows="5"></textarea>
+          </div>
+
+          <div class="btn-group">
+            <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="1">Somewhat Important</label>
+            <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="2">Important</label>
+            <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
+          </div>
+
+          <div class="ms-levels">
+            <li ng-repeat="level in selected.module.milestone.milestone_levels">{{level.value}}</li>
+          </div>
+          <div>ToDo: Ability to add/remove levels here</div>
+          <div>Also probably want more clarity on what the level is: "Earn a GPA of at least" or "Math credits earned until now"</div>
+
+          <div class="buttonGroup pvs">
+            <button type="submit" class="submit" ng-click="add()"><span>Add</span></button>
+            <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+          </div>
+        </div>
+    </div>
 </script>

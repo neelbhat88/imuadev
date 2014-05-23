@@ -1,3 +1,5 @@
+- Add description to Milestone level and show that in UI
+
 - Tests -> add , only: [:edit] to resources :users and see if test fails
 
 - Status messages

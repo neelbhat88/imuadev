@@ -76,7 +76,7 @@ class Api::V1::RoadmapController < ApplicationController
       }
   end
 
-  # POST milestone
+  # POST /milestone
   def create_milestone
     tuId = params[:milestone][:time_unit_id]
     mod = params[:milestone][:module]
@@ -85,10 +85,10 @@ class Api::V1::RoadmapController < ApplicationController
     title = params[:milestone][:title]
     desc = params[:milestone][:description]
     is_default = params[:milestone][:is_default]
-    levels = params[:milestone][:levels] # Array of values e.g. ['3.25', '3.5'] or ['Math|2', 'History|1']
+    levels = params[:milestone][:milestone_levels] # Array of values e.g. ['3.25', '3.5'] or ['Math|2', 'History|1']
 
     milestone = { :module => mod, :submodule=> submod, :importance => importance,
-                  :title => title, :description => desc, :levels => levels, :time_unit_id => tuId,
+                  :title => title, :description => desc, :milestone_levels => levels, :time_unit_id => tuId,
                   :is_default => is_default }
 
     result = RoadmapRepository.new.create_milestone(milestone)
