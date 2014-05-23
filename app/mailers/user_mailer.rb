@@ -14,4 +14,10 @@ class UserMailer < ActionMailer::Base
 
   	mail(:to => 'neel@hokuscholars.org', :subject=>"New User Created In Imua")
   end
+
+  def log_error(error)
+    @error = error
+
+    mail(:to => 'neel@hokuscholars.org', :subject=>"Log Error in Imua #{ENV['ROOT_URL']}")
+  end
 end

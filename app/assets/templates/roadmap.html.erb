@@ -1,4 +1,4 @@
-<div class="roadmapContainer">
+<div class="roadmapContainer" ng-show="roadmap">
   <h1>{{roadmap.name}}</h1>
   <h4 class="plm">{{roadmap.description}}</h4>
 
@@ -47,6 +47,10 @@
     </div>
   </div>
 
+</div>
+
+<div ng-hide="roadmap" class="ptl">
+  <h4 style="font-style: italic;">No roadmap created. Please contact your Imua admin.</h4>
 </div>
 
 <script>

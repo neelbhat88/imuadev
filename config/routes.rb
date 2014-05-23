@@ -1,4 +1,6 @@
 Imua::Application.routes.draw do
+  get "organization/roadmap"
+
   devise_for :users, :skip => [:registrations]
 
   namespace :api do
@@ -14,7 +16,8 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  '/organization/:id/roadmap' => 'roadmap#show'
+      get  '/organization/:id/roadmap' => 'organization#roadmap'
+      get  '/organization/:id/modules' => 'organization#modules'
 
       post '/roadmap' => 'roadmap#create'
 
@@ -23,6 +26,7 @@ Imua::Application.routes.draw do
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
       post '/milestone' => 'roadmap#create_milestone'
+      #get  '/milestone/defaults' => 'roadmap#default_milestones'
 
     end # end :v1
   end # end :api
