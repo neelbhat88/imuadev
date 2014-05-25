@@ -15,8 +15,8 @@ DEBT and QUESTIONS
 ===================================
 - UsersController -> How to correctly send a 401 Unauthorized if the authenciate_user! fails in the application controller
 
+
+Angular Stuff
 - ng-min not working with Heroku minifier -> had to use the [] notation
 
-- Can't call a ng Service from app.js in the resolve, why??
-
-- In Profile.html.erb need to do 'assets/{{avatar_url}}', how can I get the full path from the server?
+- Page load blip

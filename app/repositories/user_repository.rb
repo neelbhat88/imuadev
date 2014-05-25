@@ -3,7 +3,7 @@ class UserRepository
   end
 
   def get_user(userId)
-    return ViewUser.new(User.find(userId))
+    return User.find(userId)
   end
 
   def update_user_info(userObj)

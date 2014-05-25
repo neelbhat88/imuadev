@@ -92,6 +92,7 @@ angular.module('myApp.controllers', [])
                                   '$modal',
   function($scope, RoadmapService, SessionService, $filter, $modal)
   {
+    $scope.loading = true;
     $scope.user = SessionService.currentUser;
     var orgId = -1; // TODO: Hardcoding this for now, change when organizations are added
 
@@ -99,6 +100,7 @@ angular.module('myApp.controllers', [])
     RoadmapService.getRoadmap(orgId).then(
       function Success(data) {
         $scope.roadmap = data.roadmap;
+        $scope.loading = false;
       },
       function Error(data) {
       }

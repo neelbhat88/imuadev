@@ -58,7 +58,7 @@ class Api::V1::UsersController < ApplicationController
     json: {
       success: result[:success],
       info: result[:info],
-      user: result[:user]
+      user: ViewUser.new(result[:user])
     }
   end
 
