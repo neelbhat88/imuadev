@@ -43,16 +43,12 @@ class RoadmapRepository
   end
 
   def update_time_unit(time_unit)
-    result = TimeUnit.find(time_unit[:id]).update_attributes(:name => time_unit[:name])
+    tu = TimeUnit.find(time_unit[:id])
 
-    if result
-      new_time_unit = TimeUnit.find(time_unit[:id])
-
-      return { :success => true, :info => "Successfully updated Time Unit id:#{time_unit[:id]}.", :time_unit => new_time_unit }
+    if tu.update_attributes(:name => time_unit[:name])
+      return { :success => true, :info => "Successfully updated Time Unit id:#{time_unit[:id]}.", :time_unit => tu }
     else
-      old_time_unit = TimeUnit.find(time_unit[:id])
-
-      return { :success => false, :info => "Failed to update Time Unit id:#{time_unit[:id]}.", :time_unit => old_time_unit }
+      return { :success => false, :info => "Failed to update Time Unit id:#{time_unit[:id]}.", :time_unit => tu }
     end
   end
 
@@ -114,6 +110,27 @@ class RoadmapRepository
     end
 
     return milestones[0]
+  end
+
+  def update_milestone(ms)
+    milestone = Milestone.find(ms[:id])
+
+    if milestone.update_attributes(:title => ms[:title], :description=>ms[:description],
+                                    :importance => ms[:importance])
+
+      ms[:milestone_levels].each do |ml|
+        level = milestone.milestone_levels.find(ml[:id])
+
+        if !level.update_attributes(:title => ml[:title], :value => ml[:value])
+          return { :success => false, :info=>"Milestone level id: #{level.id} failed to update", :milestone=>milestone }
+        end
+      end
+
+      return { :success => true, :info=>"Milestone updated successfully", :milestone=>milestone }
+
+    end
+
+    return { :success => false, :info=>"Milestone failed to update", :milestone=>milestone }
   end
 
 end

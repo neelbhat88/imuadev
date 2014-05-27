@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140522192138) do
+ActiveRecord::Schema.define(:version => 20140527141716) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
     t.string   "value"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "title"
   end
 
   add_index "milestone_levels", ["milestone_id"], :name => "IDX_MilestoneLevel_MilestoneId"

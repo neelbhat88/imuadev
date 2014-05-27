@@ -130,6 +130,20 @@ angular.module('myApp.services')
           });
 
         return defer.promise;
+      },
+
+      updateMilestone: function(milestone) {
+        var defer = $q.defer();
+
+        $http.put('/api/v1/milestone/' + milestone.id, { milestone: milestone })
+          .then(function(resp, status) {
+            if (resp.data.success)
+              defer.resolve(resp.data);
+            else
+              defer.reject(resp.data);
+          });
+
+        return defer.promise;
       }
     };
 

@@ -76,6 +76,21 @@ class Api::V1::RoadmapController < ApplicationController
       }
   end
 
+  # GET /milestone/default/:module/:submodule
+  def default_milestone
+    mod = params[:module]
+    submod = params[:submodule]
+
+    milestone = RoadmapRepository.new.get_default_milestone({ :module => mod, :submodule=> submod })
+
+    render status: 200,
+      json: {
+        success: true,
+        info: "Default milestone",
+        milestone: ViewMilestone.new(milestone)
+      }
+  end
+
   # POST /milestone
   def create_milestone
     tuId = params[:milestone][:time_unit_id]
@@ -92,6 +107,25 @@ class Api::V1::RoadmapController < ApplicationController
                   :is_default => is_default }
 
     result = RoadmapRepository.new.create_milestone(milestone)
+
+    render status: 200,
+      json: {
+        success: result[:success],
+        info: result[:info],
+        milestone: ViewMilestone.new(result[:milestone])
+      }
+  end
+
+  # PUT /milestone/:id
+  def update_milestone
+    milestoneId = params[:id]
+    milestone = params[:milestone]
+
+    if milestone[:id].nil?
+      milestone[:id] = milestoneId
+    end
+
+    result = RoadmapRepository.new.update_milestone(milestone)
 
     render status: 200,
       json: {

@@ -190,8 +190,9 @@ angular.module('myApp.controllers', [])
     $scope.addMilestone = function(tu)
     {
       var modalInstance = $modal.open({
-        templateUrl: 'milestoneModal.html',
-        controller: 'MilestoneModalController',
+        templateUrl: 'addMilestoneModal.html',
+        controller: 'AddMilestoneModalController',
+        backdrop: 'static',
         resolve: {
           timeUnit: function() {
             return tu;
@@ -210,12 +211,35 @@ angular.module('myApp.controllers', [])
           }
         );
       });
+    },
+
+    $scope.viewMilestone = function(milestone)
+    {
+      var modalInstance = $modal.open({
+        templateUrl: 'editMilestoneModal.html',
+        controller: 'EditMilestoneModalController',
+        backdrop: 'static',
+        resolve: {
+          selectedMilestone: function() {
+            return milestone;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (updated_milestone){
+        RoadmapService.updateMilestone(updated_milestone).then(
+          function Success(data)
+          {
+            milestone.title = data.milestone.title;
+          }
+        );
+      });
     }
 
   }
 ])
 
-.controller('MilestoneModalController', ['$scope', '$modalInstance', 'timeUnit', 'enabledModules',
+.controller('AddMilestoneModalController', ['$scope', '$modalInstance', 'timeUnit', 'enabledModules',
   function($scope, $modalInstance, timeUnit, enabledModules) {
     $scope.selected = {};
 
@@ -241,6 +265,20 @@ angular.module('myApp.controllers', [])
       $modalInstance.dismiss('cancel');
     };
 
+  }
+])
+
+.controller('EditMilestoneModalController', ['$scope', '$modalInstance', 'selectedMilestone',
+  function($scope, $modalInstance, selectedMilestone) {
+    $scope.milestone = angular.copy(selectedMilestone);
+
+    $scope.save = function() {
+      $modalInstance.close($scope.milestone);
+    };
+
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
   }
 ])
 

@@ -25,8 +25,9 @@ Imua::Application.routes.draw do
       put  '/time_unit/:id' => 'roadmap#update_time_unit'
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
+      get '/milestone/default/:module/:submodule' => 'roadmap#default_milestone'
       post '/milestone' => 'roadmap#create_milestone'
-      #get  '/milestone/defaults' => 'roadmap#default_milestones'
+      put  '/milestone/:id' => 'roadmap#update_milestone'
 
     end # end :v1
   end # end :api
