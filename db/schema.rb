@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140527141716) do
+ActiveRecord::Schema.define(:version => 20140527204449) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20140527141716) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.boolean  "is_default",   :default => false
+    t.string   "value"
   end
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"

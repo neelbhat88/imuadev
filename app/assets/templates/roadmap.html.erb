@@ -68,23 +68,17 @@
 
         <div ng-show="selected.module" class="milestone ptl">
           <div class="field">
-            <input class="form-field" ng-model="selected.module.milestone.title" placeholder="Milestone Title">
+            <input class="form-field milestone-title" ng-model="selected.module.milestone.title" placeholder="Milestone Title">
           </div>
 
           <div class="field">
-            <textarea class="form-field" ng-model="selected.module.milestone.description" placeholder="Milestone Description" cols="30" rows="5"></textarea>
+            <input class="form-field" ng-model="selected.module.milestone.value" placeholder="GPA Value">
           </div>
 
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="1">Less Important</label>
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="2">Important</label>
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
-          </div>
-
-          <div class="ms-levels">
-            <li ng-repeat="level in selected.module.milestone.milestone_levels">
-              {{level.title}} - {{level.value}}
-            </li>
           </div>
 
           <div class="buttonGroup pvs">
@@ -99,11 +93,7 @@
     <div class="modal-body">
         <div class="milestone ptl">
           <div class="field">
-            <input class="form-field" ng-model="milestone.title" placeholder="Milestone Title">
-          </div>
-
-          <div class="field">
-            <textarea class="form-field" ng-model="milestone.description" placeholder="Why is this milestone important?" cols="30" rows="5"></textarea>
+            <input class="form-field milestone-title" ng-model="milestone.title" placeholder="Milestone Title">
           </div>
 
           <div class="field">

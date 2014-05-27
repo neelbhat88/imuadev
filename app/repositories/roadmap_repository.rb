@@ -82,12 +82,7 @@ class RoadmapRepository
     newmilestone.points = default_points
     newmilestone.title = milestone[:title]
     newmilestone.description = milestone[:description]
-
-    milestone[:milestone_levels].each do | l |
-      newmilestone.milestone_levels.new do | ml |
-        ml.value = l[:value]
-      end
-    end
+    newmilestone.value = milestone[:value]
 
     if newmilestone.save
       return { :success => true, :info => "Milestone created successfully.", :milestone => newmilestone }
@@ -115,19 +110,11 @@ class RoadmapRepository
   def update_milestone(ms)
     milestone = Milestone.find(ms[:id])
 
-    if milestone.update_attributes(:title => ms[:title], :description=>ms[:description],
-                                    :importance => ms[:importance])
-
-      ms[:milestone_levels].each do |ml|
-        level = milestone.milestone_levels.find(ml[:id])
-
-        if !level.update_attributes(:title => ml[:title], :value => ml[:value])
-          return { :success => false, :info=>"Milestone level id: #{level.id} failed to update", :milestone=>milestone }
-        end
-      end
-
+    if milestone.update_attributes(:title => ms[:title],
+                                    :description=>ms[:description],
+                                    :importance => ms[:importance],
+                                    :value => ms[:value])
       return { :success => true, :info=>"Milestone updated successfully", :milestone=>milestone }
-
     end
 
     return { :success => false, :info=>"Milestone failed to update", :milestone=>milestone }

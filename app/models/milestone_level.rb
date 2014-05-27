@@ -1,16 +1,10 @@
+############################################
+########### THIS HAS BEEN DELETED ##########
+############################################
+#ToDo: Actually remove this table from the DB
+# 5/27 - waiting to make sure we don't need this before removing
 class MilestoneLevel < ActiveRecord::Base
   attr_accessible :milestone_id, :value, :title
 
   belongs_to :milestone
-end
-
-class ViewMilestoneLevel
-  attr_accessor :value, :title, :id
-
-  def initialize(milestone_level)
-    @id = milestone_level.id
-    @value = milestone_level.value
-    @title = milestone_level.title
-  end
-
 end

@@ -8,6 +8,8 @@ class GpaSubModule
                                   :submodule => Constants.SubModules[:ACADEMICS_GPA] } )
 
     @title = Constants.SubModules[:ACADEMICS_GPA]
+    @description = "The reason why this sub module is important"
+
     @default_milestone = ViewMilestone.new(milestone)
   end
 
