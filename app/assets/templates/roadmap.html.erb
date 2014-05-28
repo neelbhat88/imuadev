@@ -28,7 +28,7 @@
       <!-- TimeUnit Milestones -->
       <div class="tu-milestones" ng-hide="tu.editing">
 
-        <div class="tu-milestone" ng-click="viewMilestone(milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <div class="tu-milestone" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer"></div>
         </div>
@@ -62,7 +62,7 @@
 
 <script type="text/ng-template" id="addMilestoneModal.html">
     <div class="modal-body">
-        <select ng-model="selected.module" ng-options="mod.submodule group by mod.module for mod in modules">
+        <select ng-model="selected.module" ng-options="mod.submodule group by mod.module for mod in dd_modules">
           <option value="">-- choose sub-module --</option>
         </select>
 
@@ -80,6 +80,10 @@
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="2">Important</label>
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
           </div>
+
+          <ul class="errorText ptm">
+            <li ng-repeat="error in errors">{{error}}</li>
+          </ul>
 
           <div class="buttonGroup pvs">
             <button type="submit" class="submit" ng-click="add()"><span>Add</span></button>
@@ -105,6 +109,10 @@
             <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="2">Important</label>
             <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="3">Extremely Important</label>
           </div>
+
+          <ul class="errorText ptm">
+            <li ng-repeat="error in errors">{{error}}</li>
+          </ul>
 
           <div class="buttonGroup pvs">
             <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>

@@ -112,12 +112,12 @@ angular.module('myApp.controllers', [])
       }
     );
 
-    $scope.addTimeUnit = function(tu) {
+    $scope.addTimeUnit = function(timeUnit) {
       $scope.addingTimeUnit = true;
-      if (tu && tu.id)
+      if (timeUnit && timeUnit.id)
       {
-        tu.original = angular.copy(tu);
-        tu.editing = true;
+        timeUnit.original = angular.copy(timeUnit);
+        timeUnit.editing = true;
       }
       else
       {
@@ -126,20 +126,20 @@ angular.module('myApp.controllers', [])
       }
     };
 
-    $scope.saveAddTimeUnit = function(tu) {
-      if (!tu.name)
+    $scope.saveAddTimeUnit = function(timeUnit) {
+      if (!timeUnit.name)
         return;
 
-      if (tu.id) {
-        RoadmapService.updateTimeUnit(tu).then(
+      if (timeUnit.id) {
+        RoadmapService.updateTimeUnit(timeUnit).then(
           function Success(data) {
-            tu.editing = false;
+            timeUnit.editing = false;
             $scope.addingTimeUnit = false;
           }
         )
       }
       else {
-        RoadmapService.addTimeUnit(-1, $scope.roadmap.id, tu).then(
+        RoadmapService.addTimeUnit(-1, $scope.roadmap.id, timeUnit).then(
           function Success(data){
             // Remove the temp object and push the newly added one on
             $scope.roadmap.time_units.pop();
@@ -153,11 +153,11 @@ angular.module('myApp.controllers', [])
 
     };
 
-    $scope.cancelAddTimeUnit = function(tu) {
-      if (tu.id) // Editing an existing time_unit
+    $scope.cancelAddTimeUnit = function(timeUnit) {
+      if (timeUnit.id) // Editing an existing time_unit
       {
-        tu.editing = false;
-        tu.name = tu.original.name;
+        timeUnit.editing = false;
+        timeUnit.name = timeUnit.original.name;
       }
       else
       {
@@ -167,15 +167,15 @@ angular.module('myApp.controllers', [])
       $scope.addingTimeUnit = false;
     };
 
-    $scope.deleteTimeUnit = function(tu)
+    $scope.deleteTimeUnit = function(timeUnit)
     {
       if (window.confirm("Are you sure? Deleting this will delete all milestones within it also."))
       {
-        RoadmapService.deleteTimeUnit(tu.id).then(
+        RoadmapService.deleteTimeUnit(timeUnit.id).then(
           function Success(data)
           {
             $.each($scope.roadmap.time_units, function(index) {
-              if ($scope.roadmap.time_units[index].id == tu.id)
+              if ($scope.roadmap.time_units[index].id == timeUnit.id)
               {
                 $scope.roadmap.time_units.splice(index, 1);
                 $scope.addingTimeUnit = false;
@@ -187,7 +187,7 @@ angular.module('myApp.controllers', [])
       }
     };
 
-    $scope.addMilestone = function(tu)
+    $scope.addMilestone = function(timeUnit)
     {
       var modalInstance = $modal.open({
         templateUrl: 'addMilestoneModal.html',
@@ -195,7 +195,7 @@ angular.module('myApp.controllers', [])
         backdrop: 'static',
         resolve: {
           timeUnit: function() {
-            return tu;
+            return timeUnit;
           },
           enabledModules: function() {
             return $scope.enabled_modules;
@@ -207,13 +207,13 @@ angular.module('myApp.controllers', [])
         RoadmapService.addMilestone(milestone).then(
           function Success(data)
           {
-            tu.milestones.push(data.milestone);
+            timeUnit.milestones.push(data.milestone);
           }
         );
       });
     },
 
-    $scope.viewMilestone = function(milestone)
+    $scope.viewMilestone = function(timeUnit, milestone)
     {
       var modalInstance = $modal.open({
         templateUrl: 'editMilestoneModal.html',
@@ -222,6 +222,9 @@ angular.module('myApp.controllers', [])
         resolve: {
           selectedMilestone: function() {
             return milestone;
+          },
+          timeUnit: function() {
+            return timeUnit;
           }
         }
       });
@@ -230,7 +233,7 @@ angular.module('myApp.controllers', [])
         RoadmapService.updateMilestone(updated_milestone).then(
           function Success(data)
           {
-            milestone.title = data.milestone.title;
+            angular.copy(data.milestone, milestone);
           }
         );
       });
@@ -239,11 +242,14 @@ angular.module('myApp.controllers', [])
   }
 ])
 
-.controller('AddMilestoneModalController', ['$scope', '$modalInstance', 'timeUnit', 'enabledModules',
+.controller('AddMilestoneModalController', ['$scope', '$modalInstance', 'timeUnit',
+                                            'enabledModules',
   function($scope, $modalInstance, timeUnit, enabledModules) {
     $scope.selected = {};
+    $scope.errors = [];
 
-    $scope.modules = [];
+    // Build up the dd-modules array for a dropdown
+    $scope.dd_modules = [];
     $.each(enabledModules, function(index, val) {
       var moduleTitle = this.title;
 
@@ -253,12 +259,19 @@ angular.module('myApp.controllers', [])
         new_milestone.is_default = false;
         new_milestone.time_unit_id = timeUnit.id;
 
-        $scope.modules.push( { module: moduleTitle, submodule: this.title, milestone: new_milestone } );
+        $scope.dd_modules.push( { module: moduleTitle, submodule: this.title, milestone: new_milestone } );
       });
     });
 
-    $scope.add = function() {
-      $modalInstance.close($scope.selected.module.milestone);
+    $scope.add = function()
+    {
+      $scope.errors = [];
+      new_milestone = $scope.selected.module.milestone;
+
+      $scope.errors = validateMilestone(timeUnit, new_milestone);
+
+      if ($scope.errors.length == 0)
+        $modalInstance.close($scope.selected.module.milestone);
     };
 
     $scope.cancel = function() {
@@ -269,11 +282,18 @@ angular.module('myApp.controllers', [])
 ])
 
 .controller('EditMilestoneModalController', ['$scope', '$modalInstance', 'selectedMilestone',
-  function($scope, $modalInstance, selectedMilestone) {
+                                              'timeUnit',
+  function($scope, $modalInstance, selectedMilestone, timeUnit) {
+    $scope.errors = [];
     $scope.milestone = angular.copy(selectedMilestone);
 
     $scope.save = function() {
-      $modalInstance.close($scope.milestone);
+      $scope.errors = [];
+
+      $scope.errors = validateMilestone(timeUnit, $scope.milestone);
+
+      if ($scope.errors.length == 0)
+        $modalInstance.close($scope.milestone);
     };
 
     $scope.cancel = function() {
@@ -287,3 +307,18 @@ angular.module('myApp.controllers', [])
     $scope.user = SessionService.currentUser; // ToDo: This is null, need to figure out why
   }
 ]);
+
+function validateMilestone(timeUnit, milestone)
+{
+  var errors = [];
+
+  $.each(timeUnit.milestones, function(index, val) {
+    if (this.id != milestone.id && (this.title == milestone.title || this.value == milestone.value))
+    {
+      errors.push("A milestone with the same title or value already exists in " + timeUnit.name);
+      return false;
+    }
+  });
+
+  return errors;
+}

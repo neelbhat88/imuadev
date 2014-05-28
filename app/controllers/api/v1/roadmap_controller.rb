@@ -41,11 +41,12 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.create_time_unit(time_unit)
 
+    viewTimeUnit = ViewTimeUnit.new(result[:time_unit]) unless result[:time_unit].nil?
     render status: 200,
       json: {
         success: result[:success],
         info: result[:info],
-        time_unit: ViewTimeUnit.new(result[:time_unit])
+        time_unit: viewTimeUnit
       }
   end
 
@@ -55,11 +56,12 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.update_time_unit(time_unit)
 
+    viewTimeUnit = ViewTimeUnit.new(result[:time_unit]) unless result[:time_unit].nil?
     render status: 200,
       json: {
         success: result[:success],
         info: result[:info],
-        time_unit: ViewTimeUnit.new(result[:time_unit])
+        time_unit: viewTimeUnit
       }
   end
 
@@ -83,11 +85,12 @@ class Api::V1::RoadmapController < ApplicationController
 
     milestone = RoadmapRepository.new.get_default_milestone({ :module => mod, :submodule=> submod })
 
+    viewMilestone = ViewMilestone.new(milestone) unless milestone.nil?
     render status: 200,
       json: {
         success: true,
         info: "Default milestone",
-        milestone: ViewMilestone.new(milestone)
+        milestone: viewMilestone
       }
   end
 
@@ -108,11 +111,12 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.create_milestone(milestone)
 
+    viewMilestone = ViewMilestone.new(result[:milestone]) unless result[:milestone].nil?
     render status: 200,
       json: {
         success: result[:success],
         info: result[:info],
-        milestone: ViewMilestone.new(result[:milestone])
+        milestone: viewMilestone
       }
   end
 
@@ -127,11 +131,12 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.update_milestone(milestone)
 
+    viewMilestone = ViewMilestone.new(result[:milestone]) unless result[:milestone].nil?
     render status: 200,
       json: {
         success: result[:success],
         info: result[:info],
-        milestone: ViewMilestone.new(result[:milestone])
+        milestone: viewMilestone
       }
   end
 

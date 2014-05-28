@@ -69,11 +69,20 @@ class RoadmapRepository
       newmilestone = Milestone.new
 
       # Only set is_default if this is not associated with a time_unit
-      newmilestone.is_default = milestone[:is_default] if !milestone[:is_default].nil?
+      if milestone[:is_default].nil?
+        return { :success => false, :info => "Must pass either a time_unit_id or is_default = true.", :milestone => nil }
+      end
+
+      newmilestone.is_default = milestone[:is_default]
     else
       time_unit = TimeUnit.find(milestone[:time_unit_id])
       newmilestone = time_unit.milestones.new # This automatically sets the time_unit_id on the Milestone
 
+      time_unit.milestones.each do | m |
+        if m.title == milestone[:title] || m.value == milestone[:value]
+          return { :success => false, :info => "A milestone with the same title or description already exists in #{time_unit.name}.", :milestone => nil }
+        end
+      end
     end
 
     newmilestone.module = milestone[:module]
@@ -109,6 +118,14 @@ class RoadmapRepository
 
   def update_milestone(ms)
     milestone = Milestone.find(ms[:id])
+
+    if !milestone.time_unit_id.nil? # Default milestones don't have a time_unit
+      milestone.time_unit.milestones.each do | m |
+        if m.id != ms[:id] && (m.title == ms[:title] || m.value == ms[:value])
+          return { :success => false, :info => "A milestone with the same title or value already exists in #{milestone.time_unit.name}.", :milestone => nil }
+        end
+      end
+    end
 
     if milestone.update_attributes(:title => ms[:title],
                                     :description=>ms[:description],
