@@ -229,13 +229,7 @@ angular.module('myApp.controllers', [])
         }
       });
 
-      modalInstance.result.then(function (updated_milestone){
-        RoadmapService.updateMilestone(updated_milestone).then(
-          function Success(data)
-          {
-            angular.copy(data.milestone, milestone);
-          }
-        );
+      modalInstance.result.then(function (){
       });
     }
 
@@ -281,9 +275,9 @@ angular.module('myApp.controllers', [])
   }
 ])
 
-.controller('EditMilestoneModalController', ['$scope', '$modalInstance', 'selectedMilestone',
-                                              'timeUnit',
-  function($scope, $modalInstance, selectedMilestone, timeUnit) {
+.controller('EditMilestoneModalController', ['$scope', '$modalInstance', 'RoadmapService',
+                                              'selectedMilestone', 'timeUnit',
+  function($scope, $modalInstance, RoadmapService, selectedMilestone, timeUnit) {
     $scope.errors = [];
     $scope.milestone = angular.copy(selectedMilestone);
 
@@ -293,12 +287,41 @@ angular.module('myApp.controllers', [])
       $scope.errors = validateMilestone(timeUnit, $scope.milestone);
 
       if ($scope.errors.length == 0)
-        $modalInstance.close($scope.milestone);
+      {
+        RoadmapService.updateMilestone($scope.milestone).then(
+          function Success(data)
+          {
+            angular.copy(data.milestone, selectedMilestone);
+
+            $modalInstance.close();
+          }
+        );
+      }
     };
 
     $scope.cancel = function() {
       $modalInstance.dismiss('cancel');
     };
+
+    $scope.delete = function() {
+      if (window.confirm("Are you sure you want to delete this milestone?"))
+      {
+        RoadmapService.deleteMilestone($scope.milestone.id).then(
+          function Success(data)
+          {
+            $.each(timeUnit.milestones, function(index, val) {
+              if (this.id == $scope.milestone.id)
+              {
+                timeUnit.milestones.splice(index, 1);
+                return false;
+              }
+            });
+
+            $modalInstance.close();
+          }
+        );
+      }
+    }
   }
 ])
 

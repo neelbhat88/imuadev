@@ -28,6 +28,7 @@ Imua::Application.routes.draw do
       get '/milestone/default/:module/:submodule' => 'roadmap#default_milestone'
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
+      delete '/milestone/:id' => 'roadmap#delete_milestone'
 
     end # end :v1
   end # end :api

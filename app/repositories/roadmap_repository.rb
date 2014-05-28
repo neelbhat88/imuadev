@@ -137,4 +137,12 @@ class RoadmapRepository
     return { :success => false, :info=>"Milestone failed to update", :milestone=>milestone }
   end
 
+  def delete_milestone(milestoneId)
+    if Milestone.find(milestoneId).destroy()
+      return { :success => true, :info => "Successfully deleted Milestone id:#{milestoneId}." }
+    else
+      return { :success => false, :info => "Failed to delete Milestone id:#{milestoneId}." }
+    end
+  end
+
 end

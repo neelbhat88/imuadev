@@ -144,6 +144,20 @@ angular.module('myApp.services')
           });
 
         return defer.promise;
+      },
+
+      deleteMilestone: function(milestoneId) {
+        var defer = $q.defer();
+
+        $http.delete('/api/v1/milestone/' + milestoneId)
+          .then(function(resp, status) {
+            if (resp.data.success)
+              defer.resolve(resp.data);
+            else
+              defer.reject(resp.data);
+          });
+
+        return defer.promise;
       }
     };
 

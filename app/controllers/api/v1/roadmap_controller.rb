@@ -140,4 +140,17 @@ class Api::V1::RoadmapController < ApplicationController
       }
   end
 
+  # DELETE /milestone/:id
+  def delete_milestone
+    milestoneId = params[:id]
+
+    result = RoadmapRepository.new.delete_milestone(milestoneId)
+
+    render status: 200,
+      json: {
+        success: result[:success],
+        info: result[:info]
+      }
+  end
+
 end
