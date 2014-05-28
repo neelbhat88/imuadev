@@ -1,4 +1,4 @@
-<div class="roadmapContainer" ng-hide="!roadmap && loading">
+<div class="roadmapContainer pbxl" ng-hide="!roadmap && loading">
   <h1>{{roadmap.name}}</h1>
   <h4 class="plm">{{roadmap.description}}</h4>
 
@@ -84,11 +84,11 @@
           <ul class="errorText ptm">
             <li ng-repeat="error in errors">{{error}}</li>
           </ul>
+        </div>
 
-          <div class="buttonGroup pvs">
-            <button type="submit" class="submit" ng-click="add()"><span>Add</span></button>
-            <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-          </div>
+        <div class="buttonGroup pvs">
+          <button type="submit" class="submit" ng-show="selected.module" ng-click="add()"><span>Add</span></button>
+          <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
         </div>
     </div>
 </script>
