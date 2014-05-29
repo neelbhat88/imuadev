@@ -13,36 +13,37 @@
     background-color: #ddd;
     @include border-radius(5px);
 
-    .tu-header {
+    .tu__header {
 
       font-size: 14px;
       padding: 10px;
 
-      .title {
-        font-weight: bold; cursor: pointer;
-
-        &:hover { border-bottom: 1px solid; }
-      }
-
     }
 
-    .tu-milestones {
+    .tu__header-title {
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover { border-bottom: 1px solid; }
+    }
+
+    .tu__milestones-container {
 
       min-height: 100px;
       padding: 10px;
 
-      .tu-milestone {
-        background-color: white;
-        padding: 5px;
-        @include border-radius(5px);
-        margin-bottom: 10px;
-
-        cursor: pointer;
-      }
-
     }
 
-    .tu-footer {
+    .tu__milestone {
+      background-color: white;
+      padding: 5px;
+      @include border-radius(5px);
+      margin-bottom: 10px;
+
+      cursor: pointer;
+    }
+
+    .tu__footer {
 
       padding: 10px;
 

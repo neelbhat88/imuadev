@@ -7,9 +7,9 @@
     <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
 
       <!-- TimeUnit Header -->
-      <div class="tu-header">
+      <div class="tu__header">
 
-        <span class="title" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
+        <span class="tu__header-title" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
 
         <div ng-show="tu.editing">
           <form>
@@ -26,9 +26,9 @@
       <!-- TimeUnit Header -->
 
       <!-- TimeUnit Milestones -->
-      <div class="tu-milestones" ng-hide="tu.editing">
+      <div class="tu__milestones-container" ng-hide="tu.editing">
 
-        <div class="tu-milestone" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <div class="tu__milestone" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer"></div>
         </div>
@@ -37,7 +37,7 @@
       <!-- TimeUnit Header -->
 
       <!-- TimeUnit Footer -->
-      <div class="tu-footer">
+      <div class="tu__footer">
         <div ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
 
         <div ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
@@ -45,8 +45,8 @@
       <!-- TimeUnit Footer -->
     </div>
 
-    <div class="tu tu-add-new" ng-hide="addingTimeUnit">
-      <div class="tu-footer"><a href="#" ng-click="addTimeUnit()">Add Time Unit</a></div>
+    <div class="tu" ng-hide="addingTimeUnit">
+      <div class="tu__footer"><a href="#" ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
 
@@ -67,11 +67,11 @@
         </select>
 
         <div ng-show="selected.module" class="milestone ptl">
-          <div class="field">
+          <div class="pbs">
             <input class="form-field milestone-title" ng-model="selected.module.milestone.title" placeholder="Milestone Title">
           </div>
 
-          <div class="field">
+          <div class="pbs">
             <input class="form-field" ng-model="selected.module.milestone.value" placeholder="GPA Value">
           </div>
 
@@ -96,11 +96,11 @@
 <script type="text/ng-template" id="editMilestoneModal.html">
     <div class="modal-body">
         <div class="milestone ptl">
-          <div class="field">
+          <div class="pbs">
             <input class="form-field milestone-title" ng-model="milestone.title" placeholder="Milestone Title">
           </div>
 
-          <div class="field">
+          <div class="pbs">
             <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
           </div>
 

@@ -18,7 +18,7 @@ angular.module('myApp.controllers', [])
 
     $scope.cancelUpdateUserInfo = function() {
       $scope.files = null;
-      $('.upload')[0].value = ""; // sort of hacky but it'll do for now
+      $('.js-upload')[0].value = ""; // sort of hacky but it'll do for now
       $scope.user = angular.copy($scope.origUser);
       $scope.editingInfo = false;
       $scope.errors = {};
@@ -38,7 +38,7 @@ angular.module('myApp.controllers', [])
           $scope.user = data.user;
 
           $scope.files = null;
-          $('.upload')[0].value = ""; // sort of hacky but it'll do for now
+          $('.js-upload')[0].value = ""; // sort of hacky but it'll do for now
           $scope.editingInfo = false;
           $scope.origUser = angular.copy($scope.user);
           $scope.errors = {};

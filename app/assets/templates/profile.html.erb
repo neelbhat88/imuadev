@@ -2,52 +2,52 @@
 
   <div class="pbm">
 
-    <div class="avatar">
-      <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="img-thumbnail" />
+    <div class="avatar-block">
+      <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
 
-      <div class="field ptl" ng-show="editingInfo">
-        <input class="upload" ng-show="editingInfo" type="file" file-input="files" />
+      <div class="ptl" ng-show="editingInfo">
+        <input class="avatar-block__upload js-upload" ng-show="editingInfo" type="file" file-input="files" />
       </div>
     </div>
 
     <!-- UserInfo form -->
-    <form class="fields" ng-hide="editingPassword">
+    <form class="form--profile" ng-hide="editingPassword">
 
-      <div class="field">
-        <span ng-hide="editingInfo" class="field-label">Email: </span>
+      <div class="pbs">
+        <span ng-hide="editingInfo" class="form--profile__field-label">Email: </span>
         <span>{{user.email}}</span>
       </div>
 
-      <div class="field">
+      <div class="pbs">
 
         <div ng-hide="editingInfo">
-          <span class="field-label">First Name: </span>
+          <span class="form--profile__field-label">First Name: </span>
           <span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
         </div>
 
-        <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
 
       </div>
 
-      <div class="field">
+      <div class="pbs">
 
         <div ng-hide="editingInfo">
-          <span class="field-label">Last Name: </span>
+          <span class="form--profile__field-label">Last Name: </span>
           <span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
         </div>
 
-        <input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
+        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
 
       </div>
 
-      <div class="field">
+      <div class="pbs">
 
         <div ng-hide="editingInfo">
-          <span class="field-label">Phone Number: </span>
+          <span class="form--profile__field-label">Phone Number: </span>
           <span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
         </div>
 
-        <input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
+        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
 
       </div>
 
@@ -67,19 +67,19 @@
     <!-- UserInfo form -->
 
     <!-- Password Form -->
-    <form class="fields" ng-show="editingPassword">
+    <form class="form--profile" ng-show="editingPassword">
       <h4>Change Password</h4>
 
-      <div class="field">
-        <input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" name="current" required>
+      <div class="pbs">
+        <input type="password" class="form-field form-field--profile" ng-model="password.current" placeholder="Current Password" name="current" required>
       </div>
 
-      <div class="field">
-        <input type="password" class="form-field" ng-model="password.new" placeholder="New Password" name="new" required>
+      <div class="pbs">
+        <input type="password" class="form-field form-field--profile" ng-model="password.new" placeholder="New Password" name="new" required>
       </div>
 
-      <div class="field">
-        <input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
+      <div class="pbs">
+        <input type="password" class="form-field form-field--profile" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
       </div>
 
       <ul class="errorText ptm">
