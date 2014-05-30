@@ -1,8 +1,7 @@
 <div class="roadmapContainer pbxl" ng-hide="!roadmap && loading">
-  <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
-  <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
-
   <div class="tuContainer ptl">
+    <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+    <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
 
     <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
 
