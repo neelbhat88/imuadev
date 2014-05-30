@@ -13,14 +13,17 @@ class Constants
 
   def self.Modules
     return {
-      ACADEMICS: "Academics"
+      ACADEMICS: "Academics",
+      SERVICE: "Service"
     }
   end
 
   def self.SubModules
     return {
       ACADEMICS_GPA: "GPA",
-      ACADEMICS_COURSES: "Courses"
+      ACADEMICS_COURSES: "Courses",
+
+      SERVICE_TOTAL_HOURS: "TotalHours"
     }
   end
 end

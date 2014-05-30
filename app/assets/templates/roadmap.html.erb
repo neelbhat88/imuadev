@@ -27,7 +27,7 @@
       <!-- TimeUnit Milestones -->
       <div class="tu__milestones-container" ng-hide="tu.editing">
 
-        <div class="tu__milestone" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <div class="tu__milestone" ng-class="getMilestoneClass(milestone)" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer">{{milestone.points * milestone.importance}}</div>
         </div>

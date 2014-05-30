@@ -42,8 +42,14 @@ class EnabledModules
   def get_modules(orgId)
     # Query DB to get enabled modules/submodules for an organization
     mod_array = [
-        { :title => "Academics", :submodules => ["GPA"] },
-        #{ :title => "Service", :submodules => ["Hours"] }
+        {
+          :title => Constants.Modules[:ACADEMICS],
+          :submodules => [Constants.SubModules[:ACADEMICS_GPA]]
+        },
+        {
+          :title => Constants.Modules[:SERVICE],
+          :submodules => [Constants.SubModules[:SERVICE_TOTAL_HOURS]]
+        }
       ]
 
     mods = []
@@ -81,6 +87,8 @@ class SubModuleFactory
     case sub_module
     when Constants.SubModules[:ACADEMICS_GPA]
       return GpaSubModule.new
+    when Constants.SubModules[:SERVICE_TOTAL_HOURS]
+      return TotalHoursSubModule.new
     end
 
   end
