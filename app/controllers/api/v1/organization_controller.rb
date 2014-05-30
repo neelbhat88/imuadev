@@ -48,7 +48,7 @@ class EnabledModules
         },
         {
           :title => Constants.Modules[:SERVICE],
-          :submodules => [Constants.SubModules[:SERVICE_TOTAL_HOURS]]
+          :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS]]
         }
       ]
 
@@ -86,9 +86,9 @@ class SubModuleFactory
 
     case sub_module
     when Constants.SubModules[:ACADEMICS_GPA]
-      return GpaSubModule.new
-    when Constants.SubModules[:SERVICE_TOTAL_HOURS]
-      return TotalHoursSubModule.new
+      return AcademicsGpa.new
+    when Constants.SubModules[:SERVICE_DEPTH_HOURS]
+      return ServiceDepthHours.new
     end
 
   end

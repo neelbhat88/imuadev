@@ -20,10 +20,10 @@ class Constants
 
   def self.SubModules
     return {
-      ACADEMICS_GPA: "GPA",
-      ACADEMICS_COURSES: "Courses",
+      ACADEMICS_GPA: "Academics_GPA",
+      ACADEMICS_COURSES: "Academics_Courses",
 
-      SERVICE_TOTAL_HOURS: "TotalHours"
+      SERVICE_DEPTH_HOURS: "Service_DepthHours",
     }
   end
 end

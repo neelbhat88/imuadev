@@ -1,13 +1,13 @@
-class GpaSubModule
+class ServiceDepthHours
 
   attr_accessor :title, :default_milestone
 
   def initialize
     milestone = RoadmapRepository.new.get_default_milestone(
-                                { :module => Constants.Modules[:ACADEMICS],
-                                  :submodule => Constants.SubModules[:ACADEMICS_GPA] } )
+                                { :module => Constants.Modules[:SERVICE],
+                                  :submodule => Constants.SubModules[:SERVICE_DEPTH_HOURS] } )
 
-    @title = Constants.SubModules[:ACADEMICS_GPA]
+    @title = "Depth of Hours"
     @description = "The reason why this sub module is important"
 
     @default_milestone = ViewMilestone.new(milestone)
