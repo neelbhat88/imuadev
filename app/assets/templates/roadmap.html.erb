@@ -1,6 +1,6 @@
 <div class="roadmapContainer pbxl" ng-hide="!roadmap && loading">
-  <h1>{{roadmap.name}}</h1>
-  <h4 class="plm">{{roadmap.description}}</h4>
+  <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+  <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
 
   <div class="tuContainer ptl">
 
@@ -30,7 +30,7 @@
 
         <div class="tu__milestone" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
-          <div class="footer"></div>
+          <div class="footer">{{milestone.points * milestone.importance}}</div>
         </div>
 
       </div>

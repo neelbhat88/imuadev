@@ -236,13 +236,13 @@ header {
 
     .imua-logo {
 
-      margin: 20px 0;
+      margin: 11px 0;
 
     }
 
     nav {
 
-      margin: 45px 0;
+      margin: 37px 0;
 
       li {
 
@@ -312,6 +312,7 @@ header {
 .form-field {
 
   font-size: 14px;
+  color: $ink;
   border: 1px solid #bdbdbd;
   @include border-radius(5px);
   padding: 8px;
