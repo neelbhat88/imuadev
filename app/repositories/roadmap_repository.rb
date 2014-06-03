@@ -11,6 +11,8 @@ class RoadmapRepository
   def create_roadmap(roadmap)
     if Roadmap.where(:organization_id => roadmap[:organization_id]).length != 0
       return { :success => false, :info => "Roadmap for the organization already exists.", :roadmap => nil }
+    elsif roadmap[:name] == "" || roadmap[:organization_id] = ""
+      return { :success => false, :info => "Incorrect arguments received to create a roadmap.", :roadmap => nil }
     end
 
     newroadmap = Roadmap.new do | r |

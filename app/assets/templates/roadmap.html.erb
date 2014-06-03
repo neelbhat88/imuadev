@@ -61,11 +61,13 @@
 
 <script type="text/ng-template" id="addMilestoneModal.html">
     <div class="modal-body">
-        <select ng-model="selected.module" ng-options="mod.submodule group by mod.module for mod in dd_modules">
+        <select ng-model="selected.module" ng-options="mod.submoduleTitle group by mod.module for mod in dd_modules">
           <option value="">-- choose sub-module --</option>
         </select>
 
-        <div ng-show="selected.module" class="milestone ptl">
+        // QUESTION
+        <div ng-show="selected.module" class="milestone ptl" ng-include-why-doesnt-this-work="'/assets/add_'+selected.module.submoduleType.toLowerCase()+'.html'">
+
           <div class="pbs">
             <input class="form-field milestone-title" ng-model="selected.module.milestone.title" placeholder="Milestone Title">
           </div>

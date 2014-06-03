@@ -1,8 +1,9 @@
 class ServiceDepthHours
 
-  attr_accessor :title, :default_milestone
+  attr_accessor :title, :default_milestone, :type
 
   def initialize
+    @type = Constants.SubModules[:SERVICE_DEPTH_HOURS]
     @title = "Depth of Hours"
     @description = "The reason why this sub module is important"
 

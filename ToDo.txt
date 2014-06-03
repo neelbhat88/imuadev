@@ -23,3 +23,8 @@ Angular Stuff
 - Page load blip
 
 - Roadmap.html -> how to put templates in separate file?
+  - Along with that, ng-incude with a string built up reloads full page
+    In roadmap.html (from http://lostechies.com/gabrielschenker/2013/12/28/angularjspart-6-templates/)
+
+    <div ng-show="selected.module" class="milestone ptl" ng-include="'/assets/add_'+selected.module.submoduleType.toLowerCase()+'.html'"> but ng-include="'/assets/add_academics_gpa.html'" works just fine
+

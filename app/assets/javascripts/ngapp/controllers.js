@@ -265,7 +265,11 @@ angular.module('myApp.controllers', [])
         new_milestone.is_default = false;
         new_milestone.time_unit_id = timeUnit.id;
 
-        $scope.dd_modules.push( { module: moduleTitle, submodule: this.title, milestone: new_milestone } );
+        $scope.dd_modules.push( { module: moduleTitle,
+                                  submoduleTitle: this.title,
+                                  submoduleType: this.type,
+                                  templatePath: '/assets/add_' + this.type.toLowerCase() + '.html',
+                                  milestone: new_milestone } );
       });
     });
 

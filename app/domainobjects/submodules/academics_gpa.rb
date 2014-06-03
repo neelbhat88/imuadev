@@ -1,8 +1,9 @@
 class AcademicsGpa
 
-  attr_accessor :title, :default_milestone
+  attr_accessor :title, :default_milestone, :type
 
   def initialize
+    @type = Constants.SubModules[:ACADEMICS_GPA]
     @title = "GPA"
     @description = "The reason why this sub module is important"
 
