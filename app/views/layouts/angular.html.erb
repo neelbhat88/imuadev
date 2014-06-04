@@ -36,6 +36,11 @@
 
         <nav class="right">
           <ul>
+            <% if current_user.super_admin? %>
+            <li>
+              <a href="#/sa/organizations">Organizations</a>
+            </li>
+            <% end %>
             <li>
               <a href="#/roadmap">Roadmap</a>
             </li>

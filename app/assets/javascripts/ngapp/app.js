@@ -5,7 +5,7 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
   function($routeProvider, $locationProvider) {
 
     $routeProvider.when('/', {
-      templateUrl: '/assets/roadmap.html',
+      templateUrl: '/assets/roadmap.tmpl.html',
       controller: 'RoadmapController',
       resolve: {
         currentUser: ['SessionService', function(SessionService) {
@@ -27,8 +27,18 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
     })
 
     .when('/profile', {
-      templateUrl: '/assets/profile.html',
+      templateUrl: '/assets/profile.tmpl.html',
       controller: 'ProfileController'
+    })
+
+    .when('/roadmap', {
+      templateUrl: '/assets/roadmap.tmpl.html',
+      controller: 'RoadmapController'
+    })
+
+    .when('/sa/organizations', {
+      templateUrl: '/assets/superadmin/organizations.tmpl.html',
+      controller: 'SuperAdminOrganizationsCtrl'
     })
 
     .otherwise({redirectTo: '/'});

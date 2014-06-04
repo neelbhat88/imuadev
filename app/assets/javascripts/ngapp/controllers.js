@@ -341,6 +341,18 @@ angular.module('myApp.controllers', [])
   }
 ])
 
+.controller('SuperAdminOrganizationsCtrl', ['$scope', 'SessionService', 'OrganizationService',
+  function($scope, SessionService, OrganizationService) {
+    var currentUser = SessionService.currentUser;
+
+    OrganizationService.all().then(
+      function Success(data) {
+        $scope.organizations = data.organizations;
+      }
+    );
+  }
+])
+
 .controller('HeaderController', ['$scope', 'SessionService',
   function($scope, SessionService) {
     $scope.user = SessionService.currentUser; // ToDo: This is null, need to figure out why
