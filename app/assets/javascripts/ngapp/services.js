@@ -180,6 +180,20 @@ angular.module('myApp.services')
         });
 
       return defer.promise;
+    },
+
+    getOrganization: function(orgId) {
+      var defer = $q.defer();
+
+      $http.get('/api/v1/organization/' + orgId)
+        .then(function(resp, status){
+          if (resp.data.success)
+            defer.resolve(resp.data);
+          else
+            defer.reject(resp.data);
+        });
+
+      return defer.promise;
     }
   };
 
@@ -193,6 +207,21 @@ angular.module('myApp.services')
 
     getUserInfo: function(userId) {
 
+    },
+
+    addUser: function(user) {
+      var defer = $q.defer();
+
+      $http.post('/api/v1/users', { user: user })
+        .then(function(resp, status){
+          if (resp.data.success)
+            defer.resolve(resp.data);
+          else
+            defer.reject(resp.data);
+        }
+      );
+
+      return defer.promise;
     },
 
     updateUserInfoWithPicture: function(user, formData) {
@@ -258,6 +287,17 @@ angular.module('myApp.services')
       );
 
       return defer.promise;
+    },
+
+    newOrgAdmin: function(orgId)
+    {
+      return {
+          email: "",
+          first_name: "",
+          last_name: "",
+          role: 10,
+          organization_id: orgId
+      }
     }
 
   }

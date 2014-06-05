@@ -16,30 +16,35 @@ class Api::V1::UsersController < ApplicationController
 
   # POST /users
   def create
-    # Temporary security check
-    if !current_user.super_admin?
+    email = params[:user][:email]
+    first_name = params[:user][:first_name]
+    last_name = params[:user][:last_name]
+    role = params[:user][:role].to_i
+    orgId = params[:user][:organization_id].to_i
+
+    # Temporary security check - need to find a better way to do this
+    if !current_user.super_admin? && role == Constants.UserRole[:SUPER_ADMIN]
       render status: 401,
         json: {
-          success: false
+          success: false,
+          info: "You do not have sufficient permissions to create the user."
         }
     end
-
-    email = params[:email]
-    first_name = params[:first_name]
-    last_name = params[:last_name]
-    role = params[:role].to_i
 
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,
-             :role => role  }
+             :role => role,
+             :organization_id => orgId }
 
     result = UserRepository.new.create_user(user, current_user)
 
+    viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
     render status: 200,
     json: {
       success: result[:success],
-      info: result[:info]
+      info: result[:info],
+      user: viewUser
     }
   end
 
@@ -54,11 +59,12 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.update_user_info(user)
 
+    viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
     render status: 200,
     json: {
       success: result[:success],
       info: result[:info],
-      user: ViewUser.new(result[:user])
+      user: viewUser
     }
   end
 

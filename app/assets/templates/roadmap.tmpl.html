@@ -59,7 +59,7 @@
   $(function() { $('input, textarea').placeholder();});
 </script>
 
-<script type="text/ng-template" id="addMilestoneModal.html">
+<script type="text/ng-template" id="addMilestoneModal.tmpl.html">
     <div class="modal-body">
         <select ng-model="selected.module" ng-options="mod.submoduleTitle group by mod.module for mod in dd_modules">
           <option value="">-- choose sub-module --</option>
@@ -94,7 +94,7 @@
     </div>
 </script>
 
-<script type="text/ng-template" id="editMilestoneModal.html">
+<script type="text/ng-template" id="editMilestoneModal.tmpl.html">
     <div class="modal-body">
         <div class="milestone ptl">
           <div class="pbs">

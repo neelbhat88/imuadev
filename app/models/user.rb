@@ -7,8 +7,10 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-  					:first_name, :last_name, :phone, :role, :avatar
+  					:first_name, :last_name, :phone, :role, :avatar, :organization_id
   # attr_accessible :title, :body
+
+  belongs_to :organization
 
   has_attached_file :avatar, styles: {
     square: '140x140#',
@@ -25,5 +27,9 @@ class User < ActiveRecord::Base
 
   def super_admin?
   	return self.role.to_i == Constants.UserRole[:SUPER_ADMIN]
+  end
+
+  def org_admin?
+    return self.role.to_i == Constants.UserRole[:ORG_ADMIN]
   end
 end

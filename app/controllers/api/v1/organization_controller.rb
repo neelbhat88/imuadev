@@ -6,7 +6,7 @@ class Api::V1::OrganizationController < ApplicationController
   respond_to :json
 
   # GET /organization
-  def index
+  def all_organizations
     result = OrganizationRepository.new.get_all_organizations()
 
     render status: 200,
@@ -14,6 +14,20 @@ class Api::V1::OrganizationController < ApplicationController
         success: result[:success],
         info: result[:info],
         organizations: result[:organizations]
+      }
+  end
+
+  # GET /organization/:id
+  def get_organization
+    orgId = params[:id]
+
+    result = OrganizationRepository.new.get_organization(orgId)
+
+    render status: 200,
+      json: {
+        success: result[:success],
+        info: result[:info],
+        organization: ViewOrganization.new(result[:organization])
       }
   end
 

@@ -1,0 +1,65 @@
+<div class="organizationContainer paxl">
+  <h2>{{organization.name}}</h2>
+
+  <div class="ptxl">
+
+    <div class="user-list">
+      <h4>Organization Admins</h4>
+
+      <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
+        <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+        <div class="avatar-block__name">
+          {{orgAdmin.first_name}} {{orgAdmin.last_name}}
+        </div>
+      </div>
+
+      <div class="user-list__add" ng-click="addOrgAdmin()">
+        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div>Add Organization Admin</div>
+      </div>
+    </div>
+
+    <div>
+      <h4>Mentors</h4>
+    </div>
+
+    <div>
+      <h4>Students</h4>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/ng-template" id="addUserModal.tmpl.html">
+    <div class="modal-body paxl">
+        <h3>New Organization Admin</h3>
+        <form class="form--profile" ng-hide="editingPassword">
+
+          <div class="pbs">
+            <input type="email" class="form-field form-field--profile" ng-model="user.email" placeholder="Email" autofocus="true">
+          </div>
+
+          <div class="pbs">
+            <input class="form-field form-field--profile" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+          </div>
+
+          <div class="pbs">
+            <input class="form-field form-field--profile" ng-model="user.last_name" placeholder="Last Name">
+          </div>
+
+          <ul class="errorText ptm">
+            <li ng-repeat="error in errors">{{error}}</li>
+          </ul>
+
+          <div class="buttonGroup pvl">
+
+            <button type="submit" class="submit" ng-click="add()"><span>Add</span></button>
+
+            <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+
+          </div>
+
+        </form>
+    </div>
+</script>

@@ -1,49 +1,49 @@
 <div class="login-container">
 
-	<div class="login-form">
+  <div class="login-form">
 
-		<div class="logo">
-		
-			<%= image_tag "logo-blue.png", :alt => "Imua" %>			
-		
-		</div>
-		
-		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class=>"form-container") do |f| %>
+    <div class="logo">
 
-			<div class="element">
-			
-				<%= f.email_field :email, :autofocus => true, :class=>"form-field", :placeholder=>"Email" %>
-			
-			</div>
-			
-			<div class="element">
-			
-				<%= f.password_field :password, :class=>"form-field", :placeholder=>"Password" %>
-			
-			</div>
-		
-			<div class="element">
-			
-				<%= f.submit "Log In", :class=>"button" %>
-			
-			</div>
-		
-		<% end %>
-	
-	</div>
+      <%= image_tag "logo-blue.png", :alt => "Imua" %>
 
-	<div class="login-links">
-	
-		<!-- <a href="#">Forgot your password?</a> -->
-	
-	</div>
+    </div>
+
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class=>"form-container") do |f| %>
+
+      <div class="element">
+
+        <%= f.email_field :email, :autofocus => true, :class=>"form-field", :placeholder=>"Email" %>
+
+      </div>
+
+      <div class="element">
+
+        <%= f.password_field :password, :class=>"form-field", :placeholder=>"Password" %>
+
+      </div>
+
+      <div class="element">
+
+        <%= f.submit "Log In", :class=>"button" %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+  <div class="login-links">
+
+    <!-- <a href="#">Forgot your password?</a> -->
+
+  </div>
 
 </div>
 
 <div class="footer-container">
-	
+
 </div>
 
 <script>
-	$(function() { $('input, textarea').placeholder();});
+  $(function() { $('input, textarea').placeholder();});
 </script>

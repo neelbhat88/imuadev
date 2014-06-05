@@ -41,6 +41,11 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
       controller: 'SuperAdminOrganizationsCtrl'
     })
 
+    .when('/organization/:id', {
+      templateUrl: '/assets/organization/organization.tmpl.html',
+      controller: 'OrganizationCtrl'
+    })
+
     .otherwise({redirectTo: '/'});
 
     $locationProvider.html5Mode(true); // Removes the /#/ from the URL

@@ -62,23 +62,30 @@ class UserRepository
   end
 
   def create_user(user_obj, current_user)
+    if user_obj[:organization_id].nil? && user_obj[:role] != Constants.UserRole[:SUPER_ADMIN]
+      return { :success => false, :info => "You must assign this user to an organization", :user => nil }
+    elsif User.where(:email=> user_obj[:email]).length != 0
+      return { :success => false, :info => "A user with the email #{user_obj[:email]} already exists.", :user => nil }
+    end
+
     password = Devise.friendly_token.first(8)
+    user = User.new do |u|
+      u.email = user_obj[:email]
+      u.first_name = user_obj[:first_name]
+      u.last_name = user_obj[:last_name]
+      u.role = user_obj[:role]
+      u.organization_id = user_obj[:organization_id]
+      u.password = password
+    end
 
-    success = User.create(:email => user_obj[:email],
-                :first_name => user_obj[:first_name],
-                :last_name => user_obj[:last_name],
-                :role => user_obj[:role],
-                :password => password)
-
-    if success
-      user = User.find_by_email(user_obj[:email])
+    if user.save
       UserMailer.welcome(user, password).deliver
       UserMailer.new_user(user, current_user).deliver
 
-      return { :success => true, :info => "User created successfully. Email has been sent." }
+      return { :success => true, :info => "User created successfully. Email has been sent.", :user => user }
     end
 
-    return { :success => false, :info => "Failed to create user." }
+    return { :success => false, :info => "Failed to create user.", :user => nil }
   end
 
   def delete_user(userId)

@@ -2,6 +2,6 @@
   <h4 ng-show="organizations.length == 0">No organizations created. Use the REST API to create one</h4>
 
   <li ng-repeat="org in organizations">
-    <a href="#">{{org.name}}</a>
+    <a ng-href="#/organization/{{org.id}}">{{org.name}}</a>
   </li>
 </div>

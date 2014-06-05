@@ -16,7 +16,8 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  '/organization' => 'organization#index'
+      get  '/organization' => 'organization#all_organizations'
+      get  '/organization/:id' => 'organization#get_organization'
       post '/organization' => 'organization#create_organization'
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'

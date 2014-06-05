@@ -190,7 +190,7 @@ angular.module('myApp.controllers', [])
     $scope.addMilestone = function(timeUnit)
     {
       var modalInstance = $modal.open({
-        templateUrl: 'addMilestoneModal.html',
+        templateUrl: 'addMilestoneModal.tmpl.html',
         controller: 'AddMilestoneModalController',
         backdrop: 'static',
         resolve: {
@@ -216,7 +216,7 @@ angular.module('myApp.controllers', [])
     $scope.viewMilestone = function(timeUnit, milestone)
     {
       var modalInstance = $modal.open({
-        templateUrl: 'editMilestoneModal.html',
+        templateUrl: 'editMilestoneModal.tmpl.html',
         controller: 'EditMilestoneModalController',
         backdrop: 'static',
         resolve: {
@@ -350,6 +350,72 @@ angular.module('myApp.controllers', [])
         $scope.organizations = data.organizations;
       }
     );
+  }
+])
+
+.controller('OrganizationCtrl', ['$scope', '$routeParams', '$location',
+                                  '$modal', 'OrganizationService',
+  function($scope, $routeParams, $location, $modal, OrganizationService) {
+    var orgId = $routeParams.id
+
+    // Question: Can this be done in the resolve instead?
+    OrganizationService.getOrganization($routeParams.id).then(
+      function Success(data){
+        $scope.organization = data.organization;
+      },
+      function Error(data){
+        $location.path('/');
+      }
+    );
+
+    $scope.addOrgAdmin = function(){
+      var modalInstance = $modal.open({
+        templateUrl: 'addUserModal.tmpl.html',
+        controller: 'AddUserModalController',
+        backdrop: 'static',
+        resolve: {
+          organization: function() {
+            return $scope.organization;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (user){
+        $scope.organization.orgAdmins.push(user);
+      });
+    }
+  }
+])
+
+.controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'UsersService',
+  function($scope, $modalInstance, organization, UsersService) {
+    $scope.errors = [];
+    $scope.user = UsersService.newOrgAdmin(organization.id);
+
+    $scope.add = function()
+    {
+      $scope.errors = [];
+
+      if ($scope.user.email == "")
+        $scope.errors.push("You must provide an email.");
+
+      if ($scope.errors.length == 0)
+      {
+        UsersService.addUser($scope.user).then(
+          function Success(data){
+            $modalInstance.close(data.user);
+          },
+          function Error(data){
+            $scope.errors = [data.info]
+          }
+        );
+      }
+    };
+
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
+
   }
 ])
 

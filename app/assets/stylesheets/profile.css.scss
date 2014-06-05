@@ -4,31 +4,6 @@
   font-size: 18px;
   text-align: center;
 
-  .avatar-block {
-
-    padding: 10px;
-
-    .avatar-block__img {
-      @extend .img-thumbnail;
-
-      // ToDo - Has to be a better way to include bootstrap style and then overwrite parts of it
-      &.avatar-block__img--thumbnail {
-        height: 140px;
-        width: 140px;
-        border-radius: 65px;
-      }
-    }
-
-    .avatar-block__upload {
-
-      width: 230px;
-      margin: auto;
-      display: inline-block;
-
-    }
-
-  }
-
   .form--profile {
 
     padding-left: 10px;
@@ -46,6 +21,44 @@
 
   .form-field--profile {
     min-width: 250px;
+  }
+
+}
+
+.avatar-block--list {
+  display: inline-block;
+  vertical-align: top;
+
+  width: 160px;
+  word-wrap: break-word;
+
+  .avatar-block__name { text-align: center; }
+}
+
+.avatar-block {
+
+  padding: 10px;
+
+  .avatar-block__img {
+    display: block;
+    margin: auto;
+
+    @extend .img-thumbnail;
+
+    // ToDo - Has to be a better way to include bootstrap style and then overwrite parts of it
+    &.avatar-block__img--thumbnail {
+      height: 140px;
+      width: 140px;
+      border-radius: 65px;
+    }
+  }
+
+  .avatar-block__upload {
+
+    width: 230px;
+    margin: auto;
+    display: inline-block;
+
   }
 
 }

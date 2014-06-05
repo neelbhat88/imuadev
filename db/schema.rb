@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140603151951) do
+ActiveRecord::Schema.define(:version => 20140604201517) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -84,9 +84,11 @@ ActiveRecord::Schema.define(:version => 20140603151951) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "organization_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["organization_id"], :name => "IDX_User_OrganizationId"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
