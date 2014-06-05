@@ -57,7 +57,7 @@
 
       <div class="buttonGroup pvl" ng-show="editingInfo" >
 
-        <button type="submit" class="submit" ng-click="updateUserInfo()"><span>Save</span></button>
+        <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
 
         <button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
 
@@ -87,8 +87,7 @@
       </ul>
 
       <div class="buttonGroup pvl">
-
-        <button type="submit" class="submit" ng-click="updateUserPassword()"><span>Save</span></button>
+        <button ng-click="updateUserPassword($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
 
         <button class="cancel" ng-click="cancelUpdatePassword()"><span>Cancel</span></button>
       </div>

@@ -1,12 +1,14 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', ['$scope', 'SessionService', 'UsersService',
-  function($scope, SessionService, UsersService) {
+.controller('ProfileController', ['$scope', 'SessionService',
+                            'UsersService', 'LoadingService',
+  function($scope, SessionService, UsersService, LoadingService) {
 
     $scope.user = SessionService.currentUser;
     $scope.origUser = angular.copy($scope.user)
     $scope.editingInfo = false;
     $scope.editingPassword = false;
+    $scope.password = {current: "", new: "", confirm: ""};
 
     $scope.editing = function() {
       return $scope.editingInfo || $scope.editingPassword;
@@ -24,13 +26,14 @@ angular.module('myApp.controllers', [])
       $scope.errors = {};
     };
 
-    $scope.updateUserInfo = function() {
+    $scope.updateUserInfo = function($event) {
 
       var fd = new FormData();
       angular.forEach($scope.files, function(file) {
         fd.append('user[avatar]', file);
       });
 
+      LoadingService.buttonStart($event.currentTarget);
       UsersService.updateUserInfoWithPicture($scope.user, fd)
       .then(
         function Success(data) {
@@ -50,7 +53,7 @@ angular.module('myApp.controllers', [])
         }
       )
       .finally(function() {
-
+        LoadingService.buttonStop();
       });
 
     };
@@ -64,7 +67,15 @@ angular.module('myApp.controllers', [])
       clearPasswordFields();
     };
 
-    $scope.updateUserPassword = function() {
+    $scope.updateUserPassword = function($event) {
+      $scope.errors = [];
+      if (!$scope.password.current || !$scope.password.new || !$scope.password.confirm)
+      {
+        $scope.errors.push("You must fill in all fields.");
+        return;
+      }
+
+      LoadingService.buttonStart($event.currentTarget);
       UsersService.updateUserPassword($scope.user, $scope.password)
         .then(
           function Success(data) {
@@ -73,15 +84,19 @@ angular.module('myApp.controllers', [])
             $scope.editingPassword = false;
           },
           function Error(data) {
+            $scope.errors = [];
             $scope.errors = data.info;
           }
-        );
+        )
+        .finally(function(){
+          LoadingService.buttonStop();
+        });
     };
 
     function clearPasswordFields()
     {
       $scope.password = {};
-      $scope.errors = {};
+      $scope.errors = [];
     }
 
   }
@@ -387,12 +402,12 @@ angular.module('myApp.controllers', [])
   }
 ])
 
-.controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'UsersService',
-  function($scope, $modalInstance, organization, UsersService) {
+.controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'UsersService', 'LoadingService',
+  function($scope, $modalInstance, organization, UsersService, LoadingService) {
     $scope.errors = [];
     $scope.user = UsersService.newOrgAdmin(organization.id);
 
-    $scope.add = function()
+    $scope.add = function($event)
     {
       $scope.errors = [];
 
@@ -401,6 +416,7 @@ angular.module('myApp.controllers', [])
 
       if ($scope.errors.length == 0)
       {
+        LoadingService.buttonStart($event.currentTarget);
         UsersService.addUser($scope.user).then(
           function Success(data){
             $modalInstance.close(data.user);
@@ -408,7 +424,10 @@ angular.module('myApp.controllers', [])
           function Error(data){
             $scope.errors = [data.info]
           }
-        );
+        )
+        .finally(function(){
+          LoadingService.buttonStop();
+        });
       }
     };
 

@@ -37,7 +37,9 @@ $darkgrey: rgb(40,40,40);
 
 $grey: #666;
 $grey-hover: #888;
-$blue-hover: #53b5e6;
+
+$button-blue: #53b5e6;
+$button-blue-hover: #69bfe9;
 
 $ink: #374347;
 
@@ -342,23 +344,23 @@ header {
     display: inline-block;
     vertical-align: middle;
     padding-left: 10px;
-
+    font-size: 18px;
   }
 
 }
 
 .submit {
 
-  border: 1px solid $blue;
-  background-color: $blue;
-  @include border-radius(5px);
+  border: 1px solid $button-blue;
+  background-color: $button-blue;
+  @include border-radius(2px);
   color: white;
   min-width: 80px;
 
   padding: 6px 10px;
   cursor: pointer;
 
-  &:hover { background-color: $blue-hover; }
+  &:hover { background-color: $button-blue-hover; }
 
 }
 
@@ -366,7 +368,7 @@ header {
 
   border: 1px solid $grey;
   background-color: $grey;
-  @include border-radius(5px);
+  @include border-radius(2px);
   color: white;
   min-width: 80px;
 

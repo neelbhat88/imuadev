@@ -31,6 +31,10 @@
 
 </div>
 
+<script>
+  $(document).ready(function() { Ladda.bind( '.ladda-button' ); });
+</script>
+
 <script type="text/ng-template" id="addUserModal.tmpl.html">
     <div class="modal-body paxl">
         <h3>New Organization Admin</h3>
@@ -54,7 +58,7 @@
 
           <div class="buttonGroup pvl">
 
-            <button type="submit" class="submit" ng-click="add()"><span>Add</span></button>
+            <button ng-click="add($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Add</span></button>
 
             <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
 

@@ -201,6 +201,23 @@ angular.module('myApp.services')
 
 }])
 
+.factory('LoadingService', [function() {
+  var service = {
+    laddaButton: null,
+
+    buttonStart: function(elem) {
+      service.laddaButton = Ladda.create(elem);
+      service.laddaButton.start();
+    },
+
+    buttonStop: function() {
+      service.laddaButton.stop();
+    }
+  }
+
+  return service;
+}])
+
 .factory('UsersService', ['$http', '$q', function($http, $q){
 
   var service = {
@@ -248,9 +265,6 @@ angular.module('myApp.services')
 
     updateUserPassword: function(user, password) {
       var defer = $q.defer();
-
-      if (!password.current || !password.new || !password.confirm)
-        return;
 
       var user = {
         id: user.id,

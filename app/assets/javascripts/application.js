@@ -17,6 +17,8 @@
 //= require angular-route
 //= require angular-resource
 //= require angular-ui-bootstrap-tpls
+//= require spin
+//= require ladda
 //= require_tree .
 
 $(document).ready(function(){

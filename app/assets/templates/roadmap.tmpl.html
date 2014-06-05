@@ -37,15 +37,15 @@
 
       <!-- TimeUnit Footer -->
       <div class="tu__footer">
-        <div ng-hide="tu.editing"><a href="#" ng-click="addMilestone(tu)">Add Milestone</a></div>
+        <div ng-hide="tu.editing"><a ng-click="addMilestone(tu)">Add Milestone</a></div>
 
-        <div ng-show="tu.editing && tu.id"><a href="#" ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
+        <div ng-show="tu.editing && tu.id"><a ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
       </div>
       <!-- TimeUnit Footer -->
     </div>
 
     <div class="tu" ng-hide="addingTimeUnit">
-      <div class="tu__footer"><a href="#" ng-click="addTimeUnit()">Add Time Unit</a></div>
+      <div class="tu__footer"><a ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
 
@@ -118,7 +118,7 @@
           <div class="buttonGroup pvs">
             <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
             <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-            <a href="#" ng-click="delete()">Delete Milestone</a>
+            <a ng-click="delete()">Delete Milestone</a>
           </div>
         </div>
     </div>

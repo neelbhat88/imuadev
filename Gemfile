@@ -8,9 +8,9 @@ gem 'rails', '3.2.11'
 gem 'pg'
 gem 'thin'
 
-group :development do		
-	gem 'debugger'
-	gem 'rspec-rails'
+group :development do
+  gem 'debugger'
+  gem 'rspec-rails'
 end
 
 # Gems used only for assets and not required
@@ -46,6 +46,7 @@ gem 'aws-sdk'
 # Used for authentication
 gem 'devise'
 
+gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

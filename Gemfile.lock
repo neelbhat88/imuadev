@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/Promptus/ladda-rails.git
+  revision: 6e2e4401a9c38a3c6f10118b262ef8c8c3ae969d
+  specs:
+    ladda-rails (0.9.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -167,6 +173,7 @@ DEPENDENCIES
   jquery-placeholder-rails
   jquery-rails
   jquery-ui-rails
+  ladda-rails!
   mail
   newrelic_rpm
   ngmin-rails
