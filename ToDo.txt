@@ -1,4 +1,5 @@
-- Add description to Milestone level and show that in UI
+- Background process to send emails during user creation
+
 - Cache Roadmap object in Angular so that it doesn't always make the rest call
 
 - Tests -> add , only: [:edit] to resources :users and see if test fails

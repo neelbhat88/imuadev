@@ -26,6 +26,8 @@ Imua::Application.routes.draw do
       get  '/organization/:id/modules' => 'organization#modules'
 
       post '/roadmap' => 'roadmap#create'
+      put  '/roadmap/:id' => 'roadmap#update'
+      delete '/roadmap/:id' => 'roadmap#delete'
 
       post '/time_unit' => 'roadmap#create_time_unit'
       put  '/time_unit/:id' => 'roadmap#update_time_unit'

@@ -104,12 +104,12 @@ angular.module('myApp.controllers', [])
 ])
 
 .controller('RoadmapController', ['$scope', 'RoadmapService', 'SessionService', '$filter',
-                                  '$modal',
-  function($scope, RoadmapService, SessionService, $filter, $modal)
+                                  '$modal', 'LoadingService',
+  function($scope, RoadmapService, SessionService, $filter, $modal, LoadingService)
   {
     $scope.loading = true;
     $scope.user = SessionService.currentUser;
-    var orgId = -1; // TODO: Hardcoding this for now, change when organizations are added
+    var orgId = $scope.user.organization_id == null ? -1 : $scope.user.organization_id;
 
     // This will come from the org the user is part of
     RoadmapService.getRoadmap(orgId).then(
@@ -126,6 +126,30 @@ angular.module('myApp.controllers', [])
         $scope.enabled_modules = data.enabled_modules;
       }
     );
+
+    $scope.createRoadmap = function(name, $event) {
+      $scope.errors = [];
+
+      if (!name)
+      {
+        $scope.errors.push("Your roadmap has to have a name.");
+        return;
+      }
+
+      LoadingService.buttonStart($event.currentTarget);
+      RoadmapService.createRoadmap(orgId, name).then(
+        function Success(data) {
+          $scope.roadmap = data.roadmap;
+        },
+        function Error(data) {
+          $scope.errors = [];
+          $scope.errors.push(data.info);
+        }
+      )
+      .finally(function(){
+        LoadingService.buttonStop();
+      });
+    }
 
     $scope.addTimeUnit = function(timeUnit) {
       $scope.addingTimeUnit = true;

@@ -87,11 +87,12 @@ class Api::V1::OrganizationController < ApplicationController
 
     roadmap = RoadmapRepository.new.get_roadmap_by_organization(orgId)
 
+    viewRoadmap = ViewRoadmap.new(roadmap) unless roadmap.nil?
     render status: 200,
       json: {
         success: true,
         info: "Roadmap",
-        roadmap: roadmap
+        roadmap: viewRoadmap
       }
   end
 

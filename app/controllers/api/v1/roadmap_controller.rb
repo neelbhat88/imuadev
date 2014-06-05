@@ -5,26 +5,39 @@ class Api::V1::RoadmapController < ApplicationController
 
   respond_to :json
 
-  # POST roadmap
+  # POST /roadmap
   def create
     orgId = params[:roadmap][:organization_id].to_i
     name = params[:roadmap][:name]
-    desc = params[:roadmap][:description]
 
     roadmap = {
                 :organization_id => orgId,
-                :name => name,
-                :description => desc
+                :name => name
               }
 
     result = RoadmapRepository.new.create_roadmap(roadmap)
+
+    viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
+    render status: 200,
+      json: {
+        success: result[:success],
+        info: result[:info],
+        roadmap: viewRoadmap
+      }
+
+  end
+
+  # DELETE /roadmap/:id
+  def delete
+    roadmapId = params[:id]
+
+    result = RoadmapRepository.new.delete_roadmap(roadmapId)
 
     render status: 200,
       json: {
         success: result[:success],
         info: result[:info]
       }
-
   end
 
   # POST /time_unit

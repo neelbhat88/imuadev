@@ -1,6 +1,6 @@
-<div class="roadmapContainer pbxl" ng-hide="!roadmap && loading">
+<div class="roadmapContainer pbxl" ng-show="roadmap && !loading">
   <div class="tuContainer ptl">
-    <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+    <h1 class="roadmapContainer__title pbm">{{roadmap.name}}</h1>
     <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
 
     <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
@@ -51,12 +51,44 @@
 
 </div>
 
-<div ng-show="!roadmap && !loading" class="ptl">
-  <h4 style="font-style: italic;">No roadmap created. Please contact your Imua admin.</h4>
+<div ng-show="!roadmap && !loading" class="paxl createRoadmap" style="max-width: 800px; margin: auto;">
+  <h4>Let's create your orgnization's roadmap! The roadmap is where you enter the milestones which get your users to their goal. You can start creating your roadmap in 3 simple steps:</h4>
+
+  <ol class="phxl pbxl" style="list-style: decimal; list-style-position: inside;">
+    <li class="ptm">Create a rodmap below by giving it a name. For example, at Hoku Scholars, we call ours "College Readiness".</li>
+    <li class="ptm">Add time units to your roadmap (you'll be adding milestones to these soon). At Hoku Scholars we have milestones every semester for our students, so we created 8 time units called Semester 1, Semester 2, etc. </li>
+    <li class="ptm">Add milestones! These are the goals your users are trying to achieve.</li>
+  </ol>
+
+  <div style="text-align: center;">
+    <h4> Ready? Enter your roadmap name below and click "Create" </h4>
+
+    <input class="form-field" ng-model="roadmapName" placeholder="Roadmap Name">
+    <button ng-click="createRoadmap(roadmapName, $event)" class="ladda-button submit mlm mtm" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Create</span></button>
+
+    <ul class="errorText ptm">
+      <li ng-repeat="error in errors">{{error}}</li>
+    </ul>
+  </div>
 </div>
 
 <script>
-  $(function() { $('input, textarea').placeholder();});
+  $(function() {
+    $('input, textarea').placeholder();
+
+    setHeight();
+    $(window).resize(function(event) {
+      setHeight();
+    });
+
+    function setHeight() {
+      var headerHeight = $('header').outerHeight();
+      var windowHeight = $(window).outerHeight();
+      var bodyHeight = windowHeight - headerHeight;
+
+      $('.roadmapContainer').css('min-height', bodyHeight + 'px');
+    }
+  });
 </script>
 
 <script type="text/ng-template" id="addMilestoneModal.tmpl.html">

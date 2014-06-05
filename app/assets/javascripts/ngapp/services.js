@@ -42,10 +42,33 @@ angular.module('myApp.services')
   function($http, $q){
 
     var service = {
+      newRoadmap: function(orgId, name) {
+        return {
+          name: name,
+          organization_id: orgId
+        }
+      },
+
       getRoadmap: function(orgId) {
         var defer = $q.defer();
 
         $http.get('/api/v1/organization/' + orgId + '/roadmap')
+          .then(function(resp, status){
+            if (resp.data.success)
+              defer.resolve(resp.data);
+            else
+              defer.reject(resp.data);
+          });
+
+        return defer.promise;
+      },
+
+      createRoadmap: function(orgId, name) {
+        var roadmap = service.newRoadmap(orgId, name);
+
+        var defer = $q.defer();
+
+        $http.post('/api/v1/roadmap', {roadmap: roadmap})
           .then(function(resp, status){
             if (resp.data.success)
               defer.resolve(resp.data);

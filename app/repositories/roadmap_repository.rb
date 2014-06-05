@@ -5,19 +5,18 @@ class RoadmapRepository
   def get_roadmap_by_organization(orgId)
     roadmap = Roadmap.where(:organization_id => orgId)[0]
 
-    return ViewRoadmap.new(roadmap)
+    return roadmap
   end
 
   def create_roadmap(roadmap)
     if Roadmap.where(:organization_id => roadmap[:organization_id]).length != 0
       return { :success => false, :info => "Roadmap for the organization already exists.", :roadmap => nil }
-    elsif roadmap[:name] == "" || roadmap[:organization_id] = ""
+    elsif roadmap[:name] == "" || roadmap[:organization_id] == ""
       return { :success => false, :info => "Incorrect arguments received to create a roadmap.", :roadmap => nil }
     end
 
     newroadmap = Roadmap.new do | r |
       r.name = roadmap[:name]
-      r.description = roadmap[:description],
       r.organization_id = roadmap[:organization_id]
     end
 
@@ -27,6 +26,14 @@ class RoadmapRepository
 
     return { :success => false, :info => "Failed to create roadmap.", :roadmap => nil }
 
+  end
+
+  def delete_roadmap(roadmapId)
+    if Roadmap.find(roadmapId).destroy()
+      return { :success => true, :info => "Successfully deleted Roadmap id:#{roadmapId} and all of its time units and milestones." }
+    else
+      return { :success => false, :info => "Failed to delete Roadmap id:#{roadmapId}." }
+    end
   end
 
   def create_time_unit(time_unit)

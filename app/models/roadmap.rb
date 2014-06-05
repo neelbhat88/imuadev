@@ -1,7 +1,7 @@
 class Roadmap < ActiveRecord::Base
   attr_accessible :description, :name, :organization_id
 
-  has_many :time_units
+  has_many :time_units, dependent: :destroy
 end
 
 class ViewRoadmap
