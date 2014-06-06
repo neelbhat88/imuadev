@@ -7,6 +7,8 @@ gem 'rails', '3.2.11'
 
 gem 'pg'
 gem 'thin'
+gem 'unicorn'
+gem "rack-timeout"
 
 group :development do
   gem 'debugger'

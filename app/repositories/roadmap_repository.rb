@@ -119,7 +119,11 @@ class RoadmapRepository
     if milestones.count > 1
       error = "ERROR: There is more than one default milestone for Module: #{mod}, SubModule: #{submod}"
       Rails.logger.error error
-      UserMailer.log_error(error).deliver
+
+      # Send email out of process
+      Background.process do
+        UserMailer.log_error(error).deliver
+      end
     end
 
     return milestones[0]

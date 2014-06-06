@@ -79,8 +79,12 @@ class UserRepository
     end
 
     if user.save
-      UserMailer.welcome(user, password).deliver
-      UserMailer.new_user(user, current_user).deliver
+      # Send emails out of process
+      # https://www.agileplannerapp.com/blog/building-agile-planner/rails-background-jobs-in-threads
+      Background.process do
+        UserMailer.welcome(user, password).deliver
+        UserMailer.new_user(user, current_user).deliver
+      end
 
       return { :success => true, :info => "User created successfully. Email has been sent.", :user => user }
     end
