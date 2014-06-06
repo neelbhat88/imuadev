@@ -38,6 +38,8 @@ $darkgrey: rgb(40,40,40);
 $grey: #666;
 $grey-hover: #888;
 
+$bg-grey: #282828;
+
 $button-blue: #53b5e6;
 $button-blue-hover: #69bfe9;
 
@@ -379,7 +381,7 @@ header {
 
 }
 
-.errorText { color: red; }
+.errorText { color: $red; }
 
 /* ===============================================
    Misc

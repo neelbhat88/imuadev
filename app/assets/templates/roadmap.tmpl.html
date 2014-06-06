@@ -66,7 +66,7 @@
     <input class="form-field" ng-model="roadmapName" placeholder="Roadmap Name">
     <button ng-click="createRoadmap(roadmapName, $event)" class="ladda-button submit mlm mtm" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Create</span></button>
 
-    <ul class="errorText ptm">
+    <ul class="errorText ptm" ng-show="errors">
       <li ng-repeat="error in errors">{{error}}</li>
     </ul>
   </div>
@@ -114,12 +114,12 @@
             <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
           </div>
 
-          <ul class="errorText ptm">
+          <ul class="errorText ptm" ng-show="errors">
             <li ng-repeat="error in errors">{{error}}</li>
           </ul>
         </div>
 
-        <div class="buttonGroup pvs">
+        <div class="buttonGroup pvxl">
           <button type="submit" class="submit" ng-show="selected.module" ng-click="add()"><span>Add</span></button>
           <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
         </div>
@@ -143,11 +143,11 @@
             <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="3">Extremely Important</label>
           </div>
 
-          <ul class="errorText ptm">
+          <ul class="errorText ptm" ng-show="errors">
             <li ng-repeat="error in errors">{{error}}</li>
           </ul>
 
-          <div class="buttonGroup pvs">
+          <div class="buttonGroup pvxl">
             <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
             <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
             <a ng-click="delete()">Delete Milestone</a>

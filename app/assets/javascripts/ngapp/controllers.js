@@ -412,6 +412,7 @@ angular.module('myApp.controllers', [])
         templateUrl: 'addUserModal.tmpl.html',
         controller: 'AddUserModalController',
         backdrop: 'static',
+        size: 'sm',
         resolve: {
           organization: function() {
             return $scope.organization;

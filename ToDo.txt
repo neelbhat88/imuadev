@@ -31,6 +31,8 @@ Angular Stuff
 
 - Angular best practices for authorization (Admin only can see this page, etc)
 
+- Full angular header with different links for different people
+
 - Caching objects between pages, e.g. Roadmap can be cached after the first time you go to the roadmap page until the user refreshes their screen
 
 - Do I need to resolve user session it before every controller? Is it possible to go to a route before hitting the first route where the resolve is?

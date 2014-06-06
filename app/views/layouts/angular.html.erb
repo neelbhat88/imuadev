@@ -41,6 +41,13 @@
               <a href="#/sa/organizations">Organizations</a>
             </li>
             <% end %>
+
+            <% if current_user.org_admin? %>
+            <li>
+              <a href="#/organization/<%= current_user.organization_id %>">Users</a>
+            </li>
+            <% end %>
+
             <li>
               <a href="#/roadmap">Roadmap</a>
             </li>

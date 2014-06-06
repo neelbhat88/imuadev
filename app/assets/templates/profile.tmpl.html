@@ -11,7 +11,7 @@
     </div>
 
     <!-- UserInfo form -->
-    <form class="form--profile" ng-hide="editingPassword">
+    <form class="form form--profile" ng-hide="editingPassword">
 
       <div class="pbs">
         <span ng-hide="editingInfo" class="form--profile__field-label">Email: </span>
@@ -25,7 +25,7 @@
           <span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
         </div>
 
-        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+        <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
 
       </div>
 
@@ -36,7 +36,7 @@
           <span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
         </div>
 
-        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
+        <input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
 
       </div>
 
@@ -47,11 +47,11 @@
           <span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
         </div>
 
-        <input class="form-field form-field--profile" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
+        <input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
 
       </div>
 
-      <ul class="errorText ptm" ng-show="editingInfo" >
+      <ul class="errorText ptm" ng-show="editingInfo && errors" >
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
 
@@ -67,22 +67,22 @@
     <!-- UserInfo form -->
 
     <!-- Password Form -->
-    <form class="form--profile" ng-show="editingPassword">
+    <form class="form form--profile" ng-show="editingPassword">
       <h4>Change Password</h4>
 
       <div class="pbs">
-        <input type="password" class="form-field form-field--profile" ng-model="password.current" placeholder="Current Password" name="current" required>
+        <input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" name="current" required>
       </div>
 
       <div class="pbs">
-        <input type="password" class="form-field form-field--profile" ng-model="password.new" placeholder="New Password" name="new" required>
+        <input type="password" class="form-field" ng-model="password.new" placeholder="New Password" name="new" required>
       </div>
 
       <div class="pbs">
-        <input type="password" class="form-field form-field--profile" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
+        <input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
       </div>
 
-      <ul class="errorText ptm">
+      <ul class="errorText ptm" ng-show="errors">
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
 

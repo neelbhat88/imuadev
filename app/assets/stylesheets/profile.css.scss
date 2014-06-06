@@ -4,22 +4,23 @@
   font-size: 18px;
   text-align: center;
 
-  .form--profile {
+}
 
-    padding-left: 10px;
-    padding-top: 10px;
+.form {
+  padding: 10px;
+}
 
-    text-align: center;
+.form--profile {
 
-    .form--profile__field-label
-    {
-      color: grey;
-      padding-right: 10px;
-    }
+  text-align: center;
 
+  .form--profile__field-label
+  {
+    color: grey;
+    padding-right: 10px;
   }
 
-  .form-field--profile {
+  .form-field {
     min-width: 250px;
   }
 
