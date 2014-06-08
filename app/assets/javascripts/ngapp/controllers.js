@@ -1,7 +1,7 @@
 angular.module('myApp.controllers', [])
 
-.controller('ProfileController', ['$scope', 'current_user', 'LoadingService',
-  function($scope, current_user, LoadingService) {
+.controller('ProfileController', ['$scope', 'current_user', 'UsersService', 'LoadingService',
+  function($scope, current_user, UsersService, LoadingService) {
 
     $scope.user = current_user;
     $scope.origUser = angular.copy($scope.user)
