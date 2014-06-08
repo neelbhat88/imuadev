@@ -142,6 +142,21 @@ angular.module('myApp')
           });
 
         return defer.promise;
+      },
+
+      validateMilestone: function(timeUnit, milestone)
+      {
+        var errors = [];
+
+        $.each(timeUnit.milestones, function(index, val) {
+          if (this.id != milestone.id && (this.title == milestone.title || this.value == milestone.value))
+          {
+            errors.push("A milestone with the same title or value already exists in " + timeUnit.name);
+            return false;
+          }
+        });
+
+        return errors;
       }
     };
 

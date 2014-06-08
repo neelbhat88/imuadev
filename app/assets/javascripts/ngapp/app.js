@@ -14,16 +14,6 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
       }
     })
 
-    .when('/profile', {
-      templateUrl: '/assets/profile.tmpl.html',
-      controller: 'ProfileController',
-      resolve: {
-        current_user: ['SessionService', function(SessionService) {
-          return SessionService.getCurrentUser();
-        }]
-      }
-    })
-
     .when('/sa/organizations', {
       templateUrl: '/assets/superadmin/organizations.tmpl.html',
       controller: 'SuperAdminOrganizationsCtrl'
