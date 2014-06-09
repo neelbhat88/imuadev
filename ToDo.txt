@@ -22,6 +22,8 @@ DEBT and QUESTIONS
 
 Angular Stuff
 
+- users_service.js methods returning just $http and then using .success() and .error() with the server returning error status --> Is this a good way to do it?
+
 - Page load blip --> ng-cloak
 
 - Roadmap.html -> how to put templates in separate file?

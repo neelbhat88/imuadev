@@ -41,6 +41,8 @@ class Api::V1::OrganizationController < ApplicationController
             success: false,
             info: "Must provide an organization name"
           }
+
+      return
     end
 
     result = OrganizationRepository.new.create_organization({:name => name})

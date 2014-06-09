@@ -33,12 +33,12 @@ class UserRepository
     if (result)
       new_user = get_user(id)
 
-      return { :success => true, :info => "User info updated successfully!", :user => new_user }
+      return { :status => :ok, :info => "User info updated successfully!", :user => new_user }
 
     else
       old_user = get_user(id)
 
-      return { :success => false, :info => user.errors.messages[:avatar], :user => old_user}
+      return { :status => :bad_request, :info => user.errors.messages[:avatar], :user => old_user}
     end
   end
 
@@ -53,19 +53,19 @@ class UserRepository
     if (user.update_with_password(user_obj))
       new_user = get_user(id)
 
-      return { :success => true, :info => "Password updated successfully!", :user=>new_user }
+      return { :status => :ok, :info => "Password updated successfully!", :user=>new_user }
     else
       old_user = get_user(id)
 
-      return { :success => false, :info => user.errors.full_messages, :user=>old_user }
+      return { :status => :bad_request, :info => user.errors.full_messages, :user=>old_user }
     end
   end
 
   def create_user(user_obj, current_user)
     if user_obj[:organization_id].nil? && user_obj[:role] != Constants.UserRole[:SUPER_ADMIN]
-      return { :success => false, :info => "You must assign this user to an organization", :user => nil }
+      return { :status => :bad_request, :info => "You must assign this user to an organization", :user => nil }
     elsif User.where(:email=> user_obj[:email]).length != 0
-      return { :success => false, :info => "A user with the email #{user_obj[:email]} already exists.", :user => nil }
+      return { :status => :conflict, :info => "A user with the email #{user_obj[:email]} already exists.", :user => nil }
     end
 
     password = Devise.friendly_token.first(8)
@@ -86,17 +86,17 @@ class UserRepository
         UserMailer.new_user(user, current_user).deliver
       end
 
-      return { :success => true, :info => "User created successfully. Email has been sent.", :user => user }
+      return { :status => :ok, :info => "User created successfully. Email has been sent.", :user => user }
     end
 
-    return { :success => false, :info => "Failed to create user.", :user => nil }
+    return { :status => :internal_server_error, :info => "Failed to create user.", :user => nil }
   end
 
   def delete_user(userId)
     if User.find(userId).destroy
-      return { :success => true, :info => "User deleted successfully" }
+      return { :status => :ok, :info => "User deleted successfully" }
     else
-      return { :success => false, :info => "Failed to delete user." }
+      return { :status => :internal_server_error, :info => "Failed to delete user." }
     end
   end
 end

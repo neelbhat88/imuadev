@@ -24,11 +24,12 @@ class Api::V1::UsersController < ApplicationController
 
     # Temporary security check - need to find a better way to do this
     if !current_user.super_admin? && role == Constants.UserRole[:SUPER_ADMIN]
-      render status: 401,
+      render status: :unauthorized,
         json: {
-          success: false,
           info: "You do not have sufficient permissions to create the user."
         }
+
+      return
     end
 
     user = { :first_name => first_name,
@@ -40,9 +41,8 @@ class Api::V1::UsersController < ApplicationController
     result = UserRepository.new.create_user(user, current_user)
 
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
-    render status: 200,
+    render status: result[:status],
     json: {
-      success: result[:success],
       info: result[:info],
       user: viewUser
     }
@@ -60,29 +60,29 @@ class Api::V1::UsersController < ApplicationController
     result = UserRepository.new.update_user_info(user)
 
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
-    render status: 200,
+    render status: result[:status],
     json: {
-      success: result[:success],
       info: result[:info],
       user: viewUser
     }
   end
 
   # DELETE /users/:id
-  def delete
+  def destroy
     # Temporary security check
     if !current_user.super_admin?
-      render status: 401,
+      render status: :unauthorized,
         json: {
-          success: false
+          into: "This user is not allowed to perform this action."
         }
+
+      return
     end
 
     result = UserRepository.new.delete_user(params[:id])
 
-    render status: 200,
+    render status: result[:status],
     json: {
-      success: result[:success],
       info: result[:info]
     }
   end
@@ -93,13 +93,12 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.update_password(userObj)
 
-    if (result[:success])
+    if (result[:status] == :ok)
       sign_in result[:user], :bypass => true
     end
 
-    render status: 200,
+    render status: result[:status],
     json: {
-      success: result[:success],
       info: result[:info]
     }
   end

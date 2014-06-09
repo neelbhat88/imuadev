@@ -62,17 +62,16 @@ angular.module('myApp.controllers', [])
       if ($scope.errors.length == 0)
       {
         LoadingService.buttonStart($event.currentTarget);
-        UsersService.addUser($scope.user).then(
-          function Success(data){
+        UsersService.addUser($scope.user)
+          .success(function(data) {
             $modalInstance.close(data.user);
-          },
-          function Error(data){
+          })
+          .error(function(data) {
             $scope.errors = [data.info]
-          }
-        )
-        .finally(function(){
-          LoadingService.buttonStop();
-        });
+          })
+          .finally(function(){
+            LoadingService.buttonStop();
+          });
       }
     };
 

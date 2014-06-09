@@ -33,8 +33,7 @@ angular.module('myApp')
 
       LoadingService.buttonStart($event.currentTarget);
       UsersService.updateUserInfoWithPicture($scope.user, fd)
-      .then(
-        function Success(data) {
+        .success(function(data) {
           // ToDo: Success message here
           $scope.user = data.user;
 
@@ -43,16 +42,15 @@ angular.module('myApp')
           $scope.editingInfo = false;
           $scope.origUser = angular.copy($scope.user);
           $scope.errors = {};
-        },
-        function Error(data) {
+        })
+        .error(function(data) {
           $scope.errors = data.info;
 
           // ToDo: Error message here
-        }
-      )
-      .finally(function() {
-        LoadingService.buttonStop();
-      });
+        })
+        .finally(function() {
+          LoadingService.buttonStop();
+        });
 
     };
 
@@ -75,17 +73,15 @@ angular.module('myApp')
 
       LoadingService.buttonStart($event.currentTarget);
       UsersService.updateUserPassword($scope.user, $scope.password)
-        .then(
-          function Success(data) {
-            // ToDo: Add Success message here
-            clearPasswordFields();
-            $scope.editingPassword = false;
-          },
-          function Error(data) {
-            $scope.errors = [];
-            $scope.errors = data.info;
-          }
-        )
+        .success(function(data) {
+          //ToDo: Add Success message here
+          clearPasswordFields();
+          $scope.editingPassword = false;
+        })
+        .error(function(data) {
+          $scope.errors = [];
+          $scope.errors = data.info;
+        })
         .finally(function(){
           LoadingService.buttonStop();
         });

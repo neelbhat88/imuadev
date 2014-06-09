@@ -8,45 +8,22 @@ angular.module('myApp')
     },
 
     addUser: function(user) {
-      var defer = $q.defer();
-
-      $http.post('/api/v1/users', { user: user })
-        .then(function(resp, status){
-          if (resp.data.success)
-            defer.resolve(resp.data);
-          else
-            defer.reject(resp.data);
-        }
-      );
-
-      return defer.promise;
+      return $http.post('/api/v1/users', { user: user });
     },
 
     updateUserInfoWithPicture: function(user, formData) {
-      var defer = $q.defer();
-
       formData.append("user[first_name]", user.first_name);
       formData.append("user[last_name]", user.last_name);
       formData.append("user[phone]", user.phone);
 
-      $http.put('/api/v1/users/' + user.id, formData,
+      return $http.put('/api/v1/users/' + user.id, formData,
         {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
-        })
-        .then(function(resp, status){
-          if (resp.data.success)
-            defer.resolve(resp.data);
-          else
-            defer.reject(resp.data);
         });
-
-      return defer.promise;
     },
 
     updateUserPassword: function(user, password) {
-      var defer = $q.defer();
-
       var user = {
         id: user.id,
         current_password: password.current,
@@ -54,34 +31,15 @@ angular.module('myApp')
         password_confirmation: password.confirm
       };
 
-      $http.put('/api/v1/users/' + user.id + '/update_password', {user: user})
-        .then(function(resp, status){
-          if (resp.data.success)
-            defer.resolve(resp.data);
-          else
-            defer.reject(resp.data);
-        });
-
-      return defer.promise;
+      return $http.put('/api/v1/users/' + user.id + '/update_password', {user: user});
     },
 
     updateProfilePicture: function(user, formData) {
-      var defer = $q.defer();
-
-      $http.put('/api/v1/users/' + user.id, formData,
+      return $http.put('/api/v1/users/' + user.id, formData,
         {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
-        })
-        .then(function(resp, status){
-          if (resp.data.success)
-            defer.resolve(resp.data);
-          else
-            defer.reject(resp.data);
-        }
-      );
-
-      return defer.promise;
+        });
     },
 
     newOrgAdmin: function(orgId)
