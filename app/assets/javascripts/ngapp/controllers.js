@@ -13,8 +13,8 @@ angular.module('myApp.controllers', [])
 ])
 
 .controller('OrganizationCtrl', ['$scope', '$routeParams', '$location',
-                                  '$modal', 'OrganizationService',
-  function($scope, $routeParams, $location, $modal, OrganizationService) {
+                                  '$modal', 'OrganizationService', 'UsersService',
+  function($scope, $routeParams, $location, $modal, OrganizationService, UsersService) {
     var orgId = $routeParams.id
 
     // Question: Can this be done in the resolve instead?
@@ -27,15 +27,18 @@ angular.module('myApp.controllers', [])
       }
     );
 
-    $scope.addOrgAdmin = function(){
+    $scope.addOrgAdmin = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'addUserModal.tmpl.html',
+        templateUrl: '/assets/organization/add_user_modal.tmpl.html',
         controller: 'AddUserModalController',
         backdrop: 'static',
         size: 'sm',
         resolve: {
           organization: function() {
             return $scope.organization;
+          },
+          new_user: function() {
+            return UsersService.newOrgAdmin($scope.organization.id);
           }
         }
       });
@@ -43,14 +46,35 @@ angular.module('myApp.controllers', [])
       modalInstance.result.then(function (user){
         $scope.organization.orgAdmins.push(user);
       });
+    };
+
+    $scope.addStudent = function() {
+      var modalInstance = $modal.open({
+        templateUrl: '/assets/organization/add_user_modal.tmpl.html',
+        controller: 'AddUserModalController',
+        backdrop: 'static',
+        size: 'sm',
+        resolve: {
+          organization: function() {
+            return $scope.organization;
+          },
+          new_user: function() {
+            return UsersService.newStudent($scope.organization.id);
+          }
+        }
+      });
+
+      modalInstance.result.then(function (user){
+        $scope.organization.students.push(user);
+      });
     }
   }
 ])
 
-.controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'UsersService', 'LoadingService',
-  function($scope, $modalInstance, organization, UsersService, LoadingService) {
+.controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'new_user', 'UsersService', 'LoadingService',
+  function($scope, $modalInstance, organization, new_user, UsersService, LoadingService) {
     $scope.errors = [];
-    $scope.user = UsersService.newOrgAdmin(organization.id);
+    $scope.user = new_user;
 
     $scope.add = function($event)
     {

@@ -1,4 +1,4 @@
-<div class="organizationContainer paxl">
+<div class="organizationContainer paxl" ng-cloak>
   <h2>{{organization.name}}</h2>
 
   <div class="ptxl">
@@ -19,12 +19,20 @@
       </div>
     </div>
 
-    <div>
-      <h4>Mentors</h4>
-    </div>
-
-    <div>
+    <div class="user-list ptxl">
       <h4>Students</h4>
+
+      <div class="avatar-block avatar-block--list" ng-repeat="student in organization.students">
+        <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+        <div class="avatar-block__name">
+          {{student.first_name}} {{student.last_name}}
+        </div>
+      </div>
+
+      <div class="user-list__add" ng-click="addStudent()">
+        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div>Add Student</div>
+      </div>
     </div>
 
   </div>
@@ -36,41 +44,4 @@
     $('input, textarea').placeholder();
     Ladda.bind( '.ladda-button' );
   });
-</script>
-
-<script type="text/ng-template" id="addUserModal.tmpl.html">
-    <div class="modal-body paxl user-modal">
-        <!--<h3 class="pbl">Add User</h3>
-        <h5>Organization Admin</h5> -->
-        <form class="form form--user" ng-hide="editingPassword">
-
-          <div class="pbl">
-            <div class="pbs">Email</div>
-            <input type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
-          </div>
-
-          <div class="pbl">
-            <div class="pbs">First Name</div>
-            <input class="form-field" ng-model="user.first_name" placeholder="First Name">
-          </div>
-
-          <div class="pbs">
-            <div class="pbs">Last Name</div>
-            <input class="form-field" ng-model="user.last_name" placeholder="Last Name">
-          </div>
-
-          <ul class="errorText ptm" ng-show="errors">
-            <li ng-repeat="error in errors">{{error}}</li>
-          </ul>
-
-          <div class="buttonGroup ptl">
-
-            <button ng-click="add($event)" class="ladda-button submit" type="submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Add</span></button>
-
-            <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-
-          </div>
-
-        </form>
-    </div>
 </script>

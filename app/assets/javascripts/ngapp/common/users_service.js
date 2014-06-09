@@ -51,6 +51,17 @@ angular.module('myApp')
           role: 10,
           organization_id: orgId
       }
+    },
+
+    newStudent: function(orgId)
+    {
+      return {
+          email: "",
+          first_name: "",
+          last_name: "",
+          role: 50,
+          organization_id: orgId
+      }
     }
 
   }
