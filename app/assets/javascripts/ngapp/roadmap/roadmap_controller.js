@@ -124,7 +124,7 @@ angular.module('myApp')
     $scope.addMilestone = function(timeUnit)
     {
       var modalInstance = $modal.open({
-        templateUrl: 'addMilestoneModal.tmpl.html',
+        templateUrl: '/assets/roadmap/add_milestone_modal.tmpl.html',
         controller: 'AddMilestoneModalController',
         backdrop: 'static',
         resolve: {
@@ -150,7 +150,7 @@ angular.module('myApp')
     $scope.viewMilestone = function(timeUnit, milestone)
     {
       var modalInstance = $modal.open({
-        templateUrl: 'editMilestoneModal.tmpl.html',
+        templateUrl: '/assets/roadmap/edit_milestone_modal.tmpl.html',
         controller: 'EditMilestoneModalController',
         backdrop: 'static',
         resolve: {

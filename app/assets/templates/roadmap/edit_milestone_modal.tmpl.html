@@ -1,0 +1,27 @@
+<div class="modal-body">
+    <div class="milestone ptl">
+      <div class="pbs">
+        <input class="form-field milestone-title" ng-model="milestone.title" placeholder="Milestone Title">
+      </div>
+
+      <div class="pbs">
+        <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
+      </div>
+
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="1">Less Important</label>
+        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="2">Important</label>
+        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="3">Extremely Important</label>
+      </div>
+
+      <ul class="errorText ptm" ng-show="errors">
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
+
+      <div class="buttonGroup pvxl">
+        <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
+        <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+        <a ng-click="delete()">Delete Milestone</a>
+      </div>
+    </div>
+</div>

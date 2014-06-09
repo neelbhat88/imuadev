@@ -1,4 +1,6 @@
-- Background process to send emails during user creation
+- Remove extra defers on all HTTP calls
+
+
 
 - Cache Roadmap object in Angular so that it doesn't always make the rest call
 
@@ -34,5 +36,3 @@ Angular Stuff
 - Full angular header with different links for different people
 
 - Caching objects between pages, e.g. Roadmap can be cached after the first time you go to the roadmap page until the user refreshes their screen
-
-- Do I need to resolve user session it before every controller? Is it possible to go to a route before hitting the first route where the resolve is?
