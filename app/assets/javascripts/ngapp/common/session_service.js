@@ -4,10 +4,10 @@ angular.module('myApp')
 
     var service = {
 
-      currentUser: null,
+      _currentUser: null,
 
       isAuthenticated: function() {
-        return !!service.currentUser;
+        return !!service._currentUser;
       },
 
       isAuthorized: function(authorizedRoles) {
@@ -15,25 +15,25 @@ angular.module('myApp')
           authorizedRoles = [authorizedRoles];
 
         return ( service.isAuthenticated() &&
-               authorizedRoles.indexOf(service.currentUser.role) !== -1 )
+               authorizedRoles.indexOf(service._currentUser.role) !== -1 )
       },
 
       getCurrentUser: function(){
         if (service.isAuthenticated()) {
-          return $q.when(service.currentUser);
+          return $q.when(service._currentUser);
         }
         else {
           return $http.get('/api/v1/current_user').then(function(resp){
-            service.currentUser = resp.data.user;
+            service._currentUser = resp.data.user;
 
-            return service.currentUser;
+            return service._currentUser;
           });
         }
 
       },
 
       isSuperAdmin: function() {
-        return !!(service.currentUser && service.currentUser.is_super_admin)
+        return !!(service._currentUser && service._currentUser.is_super_admin)
       }
 
     };

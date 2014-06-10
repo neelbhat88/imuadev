@@ -1,7 +1,4 @@
-angular.module('myApp.services', []);
-
-angular.module('myApp.services')
-
+angular.module('myApp')
 .factory('OrganizationService', ['$http', '$q', function($http, $q) {
 
   var service = {

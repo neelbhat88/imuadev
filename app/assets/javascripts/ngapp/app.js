@@ -1,8 +1,8 @@
-angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
+angular.module('myApp', ['ngRoute', 'myApp.controllers',
                           'myApp.directives', 'ui.bootstrap'])
 
-.config(['$routeProvider', 'USER_ROLES',
-  function($routeProvider, USER_ROLES) {
+.config(['$routeProvider', 'CONSTANTS',
+  function($routeProvider, CONSTANTS) {
 
     $routeProvider.when('/', {
       templateUrl: '/assets/roadmap/roadmap.tmpl.html',
@@ -14,50 +14,28 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
       }
     })
 
-    .when('/sa/organizations', {
-      templateUrl: '/assets/superadmin/organizations.tmpl.html',
-      controller: 'SuperAdminOrganizationsCtrl',
-      resolve: {
-        current_user: ['SessionService', function(SessionService) {
-          return SessionService.getCurrentUser();
-        }]
-      },
-      data: {
-        authorizedRoles: [USER_ROLES.super_admin]
-      }
-    })
-
-    .when('/organization/:id', {
-      templateUrl: '/assets/organization/organization.tmpl.html',
-      controller: 'OrganizationCtrl',
-      resolve: {
-        current_user: ['SessionService', function(SessionService) {
-          return SessionService.getCurrentUser();
-        }]
-      },
-      data: {
-        authorizedRoles: [USER_ROLES.super_admin, USER_ROLES.org_admin]
-      }
-    })
-
     .otherwise({redirectTo: '/'});
   }
 ]);
 
 angular.module('myApp')
 .run(['$rootScope', '$location', 'SessionService', function($rootScope, $location, SessionService){
-  $rootScope.$on('$routeChangeStart', function(event, next, current){
-    // If no authorized roles than the route is authorized for everyone
-    if ( next.data && next.data.authorizedRoles )
-    {
-      var authorizedRoles = next.data.authorizedRoles;
 
-      if (!SessionService.isAuthorized(authorizedRoles)) {
-        $location.path('/');
-        return false;
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    // Always calling getCurrentUser on every change/refresh to make sure current_user is set
+    SessionService.getCurrentUser().then(function(){
+      // If no authorized roles than the route is authorized for everyone
+      if ( next.data && next.data.authorizedRoles )
+      {
+        var authorizedRoles = next.data.authorizedRoles;
+
+        if (!SessionService.isAuthorized(authorizedRoles)) {
+          $location.path('/');
+          return false;
+        }
       }
-    }
 
-    return true;
+      return true;
+    });
   });
 }]);
