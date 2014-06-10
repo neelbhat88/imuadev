@@ -10,6 +10,14 @@ angular.module('myApp')
         return !!service.currentUser;
       },
 
+      isAuthorized: function(authorizedRoles) {
+        if (!angular.isArray(authorizedRoles))
+          authorizedRoles = [authorizedRoles];
+
+        return ( service.isAuthenticated() &&
+               authorizedRoles.indexOf(service.currentUser.role) !== -1 )
+      },
+
       getCurrentUser: function(){
         if (service.isAuthenticated()) {
           return $q.when(service.currentUser);

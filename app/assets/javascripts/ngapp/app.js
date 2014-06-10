@@ -1,8 +1,8 @@
 angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
                           'myApp.directives', 'ui.bootstrap'])
 
-.config(['$routeProvider', '$locationProvider',
-  function($routeProvider, $locationProvider) {
+.config(['$routeProvider', 'USER_ROLES',
+  function($routeProvider, USER_ROLES) {
 
     $routeProvider.when('/', {
       templateUrl: '/assets/roadmap/roadmap.tmpl.html',
@@ -16,21 +16,48 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers', 'myApp.services',
 
     .when('/sa/organizations', {
       templateUrl: '/assets/superadmin/organizations.tmpl.html',
-      controller: 'SuperAdminOrganizationsCtrl'
+      controller: 'SuperAdminOrganizationsCtrl',
+      resolve: {
+        current_user: ['SessionService', function(SessionService) {
+          return SessionService.getCurrentUser();
+        }]
+      },
+      data: {
+        authorizedRoles: [USER_ROLES.super_admin]
+      }
     })
 
     .when('/organization/:id', {
       templateUrl: '/assets/organization/organization.tmpl.html',
-      controller: 'OrganizationCtrl'
+      controller: 'OrganizationCtrl',
+      resolve: {
+        current_user: ['SessionService', function(SessionService) {
+          return SessionService.getCurrentUser();
+        }]
+      },
+      data: {
+        authorizedRoles: [USER_ROLES.super_admin, USER_ROLES.org_admin]
+      }
     })
 
     .otherwise({redirectTo: '/'});
   }
 ]);
 
-// HTTP statuses used by Rest calls
-var Status = new function() {
-  this.Success = 200;
+angular.module('myApp')
+.run(['$rootScope', '$location', 'SessionService', function($rootScope, $location, SessionService){
+  $rootScope.$on('$routeChangeStart', function(event, next, current){
+    // If no authorized roles than the route is authorized for everyone
+    if ( next.data && next.data.authorizedRoles )
+    {
+      var authorizedRoles = next.data.authorizedRoles;
 
-  this.Error = 500;
-}
+      if (!SessionService.isAuthorized(authorizedRoles)) {
+        $location.path('/');
+        return false;
+      }
+    }
+
+    return true;
+  });
+}]);

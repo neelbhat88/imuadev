@@ -20,7 +20,3 @@
 //= require spin
 //= require ladda
 //= require_tree .
-
-$(document).ready(function(){
-	
-});

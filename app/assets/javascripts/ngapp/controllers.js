@@ -1,8 +1,8 @@
 angular.module('myApp.controllers', [])
 
-.controller('SuperAdminOrganizationsCtrl', ['$scope', 'SessionService', 'OrganizationService',
-  function($scope, SessionService, OrganizationService) {
-    var currentUser = SessionService.currentUser;
+.controller('SuperAdminOrganizationsCtrl', ['$scope', 'current_user', 'OrganizationService',
+  function($scope, current_user, OrganizationService) {
+    $scope.user = current_user;
 
     OrganizationService.all().then(
       function Success(data) {

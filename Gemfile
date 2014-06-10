@@ -27,7 +27,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-ui-rails'
 gem 'jquery-placeholder-rails'
 
 gem 'bootstrap-sass', '~>3.1.1'
@@ -36,7 +36,6 @@ gem 'newrelic_rpm'
 
 gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails'
-gem 'ngmin-rails'
 
 gem 'mail'
 
