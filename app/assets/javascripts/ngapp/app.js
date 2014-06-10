@@ -19,6 +19,11 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers',
 ]);
 
 angular.module('myApp')
+.controller('AppController', ['$scope', 'CONSTANTS', function($scope, CONSTANTS){
+  $scope.CONSTANTS = CONSTANTS;
+}]);
+
+angular.module('myApp')
 .run(['$rootScope', '$location', 'SessionService', function($rootScope, $location, SessionService){
 
   $rootScope.$on('$routeChangeStart', function(event, next, current) {

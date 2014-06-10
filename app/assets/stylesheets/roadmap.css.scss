@@ -34,6 +34,11 @@
 
   .tu__header-title {
     font-weight: bold;
+  }
+
+  .tu__header-title--editable {
+    @extend .tu__header-title;
+
     cursor: pointer;
 
     &:hover { border-bottom: 1px solid; }
@@ -57,14 +62,18 @@
     border-top: 5px solid;
     border-bottom: 1px solid #9e9e9e;
 
-    cursor: pointer;
-
     .footer {
       text-align: right;
     }
 
     &.js-tu__milestone--academics { border-top-color: $academics-color; }
     &.js-tu__milestone--service { border-top-color: $service-color; }
+  }
+
+  .tu__milestone--editable {
+    @extend .tu__milestone;
+
+    cursor: pointer;
   }
 
   .tu__footer {

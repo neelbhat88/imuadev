@@ -1,4 +1,4 @@
-<div class="roadmapContainer pbxl" ng-show="roadmap && !loading">
+<div class="roadmapContainer pbxl" ng-if="roadmap && !loading">
   <div class="tuContainer ptl">
     <h1 class="roadmapContainer__title pbm">{{roadmap.name}}</h1>
     <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
@@ -8,17 +8,22 @@
       <!-- TimeUnit Header -->
       <div class="tu__header">
 
-        <span class="tu__header-title" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
+        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
+          <span class="tu__header-title">{{tu.name}}</span>
+        </div>
+        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
+          <span class="tu__header-title--editable" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
 
-        <div ng-show="tu.editing">
-          <form>
-            <input class="form-field" ng-model="tu.name" placeholder="Time Unit Name">
+          <div ng-show="tu.editing">
+            <form>
+              <input class="form-field" ng-model="tu.name" placeholder="Time Unit Name">
 
-            <div class="buttonGroup pvs">
-              <button type="submit" class="submit" ng-click="saveAddTimeUnit(tu)"><span>Save</span></button>
-              <button class="cancel" ng-click="cancelAddTimeUnit(tu)"><span>Cancel</span></button>
-            </div>
-          </form>
+              <div class="buttonGroup pvs">
+                <button type="submit" class="submit" ng-click="saveAddTimeUnit(tu)"><span>Save</span></button>
+                <button class="cancel" ng-click="cancelAddTimeUnit(tu)"><span>Cancel</span></button>
+              </div>
+            </form>
+          </div>
         </div>
 
       </div>
@@ -27,16 +32,25 @@
       <!-- TimeUnit Milestones -->
       <div class="tu__milestones-container" ng-hide="tu.editing">
 
-        <div class="tu__milestone" ng-class="getMilestoneClass(milestone)" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <!-- Non-editable view -->
+        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="tu__milestone" ng-class="getMilestoneClass(milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer">{{milestone.points * milestone.importance}}</div>
         </div>
+        <!-- Non-editable view -->
+
+        <!-- Editable view -->
+        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__milestone--editable" ng-class="getMilestoneClass(milestone)" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+          <div class="title">{{milestone.title}}</div>
+          <div class="footer">{{milestone.points * milestone.importance}}</div>
+        </div>
+        <!-- Editable view -->
 
       </div>
       <!-- TimeUnit Header -->
 
       <!-- TimeUnit Footer -->
-      <div class="tu__footer">
+      <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__footer">
         <div ng-hide="tu.editing"><a ng-click="addMilestone(tu)">Add Milestone</a></div>
 
         <div ng-show="tu.editing && tu.id"><a ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
@@ -44,14 +58,14 @@
       <!-- TimeUnit Footer -->
     </div>
 
-    <div class="tu" ng-hide="addingTimeUnit">
+    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu" ng-hide="addingTimeUnit">
       <div class="tu__footer"><a ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
 
 </div>
 
-<div ng-show="!roadmap && !loading" class="paxl createRoadmap" style="max-width: 800px; margin: auto;">
+<div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin && !roadmap && !loading" class="paxl createRoadmap" style="max-width: 800px; margin: auto;">
   <h4>Let's create your orgnization's roadmap! The roadmap is where you enter the milestones which get your users to their goal. You can start creating your roadmap in 3 simple steps:</h4>
 
   <ol class="phxl pbxl" style="list-style: decimal; list-style-position: inside;">
@@ -70,6 +84,11 @@
       <li ng-repeat="error in errors">{{error}}</li>
     </ul>
   </div>
+</div>
+
+<div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor && !roadmap && !loading" class="paxl" style="max-width: 800px; margin: auto;">
+  <h2 style="text-align:center">Roadmap under construction... </h2>
+  <div class="ptxl"><p>Looks like your organization's administrators are still constructing your organization's roadmap. Check back again soon!</p></div>
 </div>
 
 <script>
