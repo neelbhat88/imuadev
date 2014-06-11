@@ -47,19 +47,13 @@
         <!-- Editable view -->
 
       </div>
-      <!-- TimeUnit Header -->
+      <!-- TimeUnit Milestones -->
 
       <!-- TimeUnit Footer -->
       <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__footer">
         <div ng-hide="tu.editing"><a ng-click="addMilestone(tu)">Add Milestone</a></div>
-
-        <div ng-show="tu.editing && tu.id"><a ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
       </div>
       <!-- TimeUnit Footer -->
-    </div>
-
-    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu" ng-hide="addingTimeUnit">
-      <div class="tu__footer"><a ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
 
@@ -70,8 +64,7 @@
 
   <ol class="phxl pbxl" style="list-style: decimal; list-style-position: inside;">
     <li class="ptm">Create a rodmap below by giving it a name. For example, at Hoku Scholars, we call ours "College Readiness".</li>
-    <li class="ptm">Add time units to your roadmap (you'll be adding milestones to these soon). At Hoku Scholars we have milestones every semester for our students, so we created 8 time units called Semester 1, Semester 2, etc. </li>
-    <li class="ptm">Add milestones! These are the goals your users are trying to achieve.</li>
+    <li class="ptm">Your roadmap will be created with 8 semesters. All you have to do is add milestones to the semesters! These are the goals your users are trying to achieve every semester.</li>
   </ol>
 
   <div style="text-align: center;">

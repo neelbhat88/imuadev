@@ -49,8 +49,8 @@ test:
   encoding: unicode
   database: imua_test
   pool: 5
-  username: imua
-  password:
+  username: <%= ENV['PG_DB_USER'] %>
+  password: <%= ENV['PG_DB_PASS'] %>
 
 production:
   adapter: postgresql

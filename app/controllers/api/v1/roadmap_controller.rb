@@ -15,7 +15,7 @@ class Api::V1::RoadmapController < ApplicationController
                 :name => name
               }
 
-    result = RoadmapRepository.new.create_roadmap(roadmap)
+    result = RoadmapRepository.new.create_roadmap_with_semesters(roadmap)
 
     viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
     render status: 200,

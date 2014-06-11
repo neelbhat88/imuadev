@@ -28,6 +28,29 @@ class RoadmapRepository
 
   end
 
+  def create_roadmap_with_semesters(roadmap)
+    result = create_roadmap(roadmap)
+
+    return result if !result[:success]
+
+    roadmap = result[:roadmap]
+
+    # Create 8 semesters
+    (1..8).each do | n |
+      new_time_unit = roadmap.time_units.new do | tu |
+        tu.name = "Semester " + n.to_s
+        tu.organization_id = roadmap[:organization_id]
+      end
+
+      if !new_time_unit.save
+        return { :success => false, :info => "Failed to create 8 semesters.", :roadmap => nil }
+      end
+    end
+
+    return { :success => true, :info => "Roadmap with 8 semesters created successfully.", :roadmap => roadmap }
+
+  end
+
   def delete_roadmap(roadmapId)
     if Roadmap.find(roadmapId).destroy()
       return { :success => true, :info => "Successfully deleted Roadmap id:#{roadmapId} and all of its time units and milestones." }
