@@ -22,29 +22,19 @@ angular.module('myApp')
       }
     );
 
-    $scope.createRoadmap = function(name, $event) {
-      $scope.errors = [];
-
-      if (!name)
-      {
-        $scope.errors.push("Your roadmap has to have a name.");
+    $scope.updateRoadmapName = function(roadmap) {
+      if (!roadmap.newname)
         return;
-      }
 
-      LoadingService.buttonStart($event.currentTarget);
-      RoadmapService.createRoadmap(orgId, name).then(
-        function Success(data) {
-          $scope.roadmap = data.roadmap;
-        },
-        function Error(data) {
-          $scope.errors = [];
-          $scope.errors.push(data.info);
-        }
-      )
-      .finally(function(){
-        LoadingService.buttonStop();
+      RoadmapService.updateRoadmapName(roadmap, roadmap.newname)
+      .success(function(data) {
+        $scope.roadmap.name = data.roadmap.name;
+        roadmap.editing = false;
+      })
+      .error(function(data) {
+        roadmap.editing = false;
       });
-    }
+    };
 
     $scope.addTimeUnit = function(timeUnit) {
       $scope.addingTimeUnit = true;

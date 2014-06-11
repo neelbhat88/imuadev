@@ -27,6 +27,20 @@ class Api::V1::RoadmapController < ApplicationController
 
   end
 
+  # PUT /roadmap/:id
+  def update
+    roadmap = params[:roadmap]
+
+    result = RoadmapRepository.new.update_roadmap(roadmap)
+
+    viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
+    render result[:status],
+      json: {
+        info: result[:info],
+        roadmap: viewRoadmap
+      }
+  end
+
   # DELETE /roadmap/:id
   def delete
     roadmapId = params[:id]

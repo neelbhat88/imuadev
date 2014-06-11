@@ -51,6 +51,16 @@ class RoadmapRepository
 
   end
 
+  def update_roadmap(newroadmap)
+    roadmap = Roadmap.find(newroadmap[:id])
+
+    if roadmap.update_attributes(:name => newroadmap[:name])
+      return { :status => :ok, :info => "Successfully updated Roadmap id:#{newroadmap[:id]}.", :roadmap => roadmap }
+    else
+      return { :status => :internal_server_error, :info => "Failed to update Roadmap id:#{newroadmap[:id]}.", :roadmap => roadmap }
+    end
+  end
+
   def delete_roadmap(roadmapId)
     if Roadmap.find(roadmapId).destroy()
       return { :success => true, :info => "Successfully deleted Roadmap id:#{roadmapId} and all of its time units and milestones." }

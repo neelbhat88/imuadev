@@ -1,7 +1,25 @@
 <div class="roadmapContainer pbxl" ng-if="roadmap && !loading">
   <div class="tuContainer ptl">
-    <h1 class="roadmapContainer__title pbm">{{roadmap.name}}</h1>
-    <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
+
+    <!-- Roadmap Name -->
+    <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
+      <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+    </div>
+
+    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
+      <h1 class="roadmapContainer__title--editable" ng-hide="roadmap.editing" ng-click="roadmap.editing=true; roadmap.newname=roadmap.name">{{roadmap.name}}</h1>
+
+      <div ng-show="roadmap.editing" class="pvxl">
+        <form>
+          <input class="form-field mrm" ng-model="roadmap.newname" placeholder="Roadmap Name">
+
+          <button type="submit" class="submit" ng-click="updateRoadmapName(roadmap)"><span>Save</span></button>
+          <button class="cancel" ng-click="roadmap.editing=false"><span>Cancel</span></button>
+        </form>
+      </div>
+
+    </div>
+    <!-- Roadmap Name -->
 
     <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
 
