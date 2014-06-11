@@ -1,4 +1,6 @@
 # To Do's
+1. Figure out if Pat can push to staging
+
 1. Remove extra defers on all HTTP calls -- first wait on answer to question about it though
 
 1. Cache Roadmap object in Angular so that it doesn't always make the rest call
