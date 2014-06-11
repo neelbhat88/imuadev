@@ -15,7 +15,7 @@ class Api::V1::RoadmapController < ApplicationController
                 :name => name
               }
 
-    result = RoadmapRepository.new.create_roadmap(roadmap)
+    result = RoadmapRepository.new.create_roadmap_with_semesters(roadmap)
 
     viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
     render status: 200,
@@ -25,6 +25,20 @@ class Api::V1::RoadmapController < ApplicationController
         roadmap: viewRoadmap
       }
 
+  end
+
+  # PUT /roadmap/:id
+  def update
+    roadmap = params[:roadmap]
+
+    result = RoadmapRepository.new.update_roadmap(roadmap)
+
+    viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
+    render result[:status],
+      json: {
+        info: result[:info],
+        roadmap: viewRoadmap
+      }
   end
 
   # DELETE /roadmap/:id

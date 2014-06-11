@@ -1,7 +1,25 @@
 <div class="roadmapContainer pbxl" ng-if="roadmap && !loading">
   <div class="tuContainer ptl">
-    <h1 class="roadmapContainer__title pbm">{{roadmap.name}}</h1>
-    <!-- <h4 class="plm">{{roadmap.description}}</h4> -->
+
+    <!-- Roadmap Name -->
+    <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
+      <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+    </div>
+
+    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
+      <h1 class="roadmapContainer__title--editable" ng-hide="roadmap.editing" ng-click="roadmap.editing=true; roadmap.newname=roadmap.name">{{roadmap.name}}</h1>
+
+      <div ng-show="roadmap.editing" class="pvxl">
+        <form>
+          <input class="form-field mrm" ng-model="roadmap.newname" placeholder="Roadmap Name">
+
+          <button type="submit" class="submit" ng-click="updateRoadmapName(roadmap)"><span>Save</span></button>
+          <button class="cancel" ng-click="roadmap.editing=false"><span>Cancel</span></button>
+        </form>
+      </div>
+
+    </div>
+    <!-- Roadmap Name -->
 
     <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
 
@@ -47,19 +65,13 @@
         <!-- Editable view -->
 
       </div>
-      <!-- TimeUnit Header -->
+      <!-- TimeUnit Milestones -->
 
       <!-- TimeUnit Footer -->
       <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__footer">
         <div ng-hide="tu.editing"><a ng-click="addMilestone(tu)">Add Milestone</a></div>
-
-        <div ng-show="tu.editing && tu.id"><a ng-click="deleteTimeUnit(tu)">Delete Time Unit</a></div>
       </div>
       <!-- TimeUnit Footer -->
-    </div>
-
-    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu" ng-hide="addingTimeUnit">
-      <div class="tu__footer"><a ng-click="addTimeUnit()">Add Time Unit</a></div>
     </div>
   </div>
 
@@ -70,8 +82,7 @@
 
   <ol class="phxl pbxl" style="list-style: decimal; list-style-position: inside;">
     <li class="ptm">Create a rodmap below by giving it a name. For example, at Hoku Scholars, we call ours "College Readiness".</li>
-    <li class="ptm">Add time units to your roadmap (you'll be adding milestones to these soon). At Hoku Scholars we have milestones every semester for our students, so we created 8 time units called Semester 1, Semester 2, etc. </li>
-    <li class="ptm">Add milestones! These are the goals your users are trying to achieve.</li>
+    <li class="ptm">Your roadmap will be created with 8 semesters. All you have to do is add milestones to the semesters! These are the goals your users are trying to achieve every semester.</li>
   </ol>
 
   <div style="text-align: center;">

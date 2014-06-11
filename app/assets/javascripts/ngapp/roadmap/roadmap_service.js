@@ -40,6 +40,12 @@ angular.module('myApp')
         return defer.promise;
       },
 
+      updateRoadmapName: function(roadmap, newname) {
+        roadmap.name = newname;
+
+        return $http.put('/api/v1/roadmap/' + roadmap.id, {roadmap: roadmap});
+      },
+
       getEnabledModules: function(orgId) {
         var defer = $q.defer();
 

@@ -23,6 +23,7 @@ Imua::Application.routes.draw do
       delete '/organization/:id' => 'organization#delete_organization'
 
       get  '/organization/:id/roadmap' => 'organization#roadmap'
+      get  '/organization/:id/roadmap/reset' => 'organization#reset_roadmap'
       get  '/organization/:id/modules' => 'organization#modules'
 
       post '/roadmap' => 'roadmap#create'

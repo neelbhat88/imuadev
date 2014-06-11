@@ -1,11 +1,14 @@
 require 'spec_helper'
 
-describe OrganizationController do
+describe Api::V1::OrganizationController do
 
   describe "GET 'roadmap'" do
     it "returns http success" do
-      get 'roadmap'
-      response.should be_success
+      x = "Hello"
+
+      x.should == "Hellos"
+      #get 'roadmap'
+      #response.should be_success
     end
   end
 

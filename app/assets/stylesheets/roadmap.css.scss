@@ -4,7 +4,20 @@
 
   padding: 0 40px;
 
-  .roadmapContainer__title { color: white; }
+  .roadmapContainer__title {
+    color: white;
+    display: inline-block;
+    margin-bottom: 20px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .roadmapContainer__title--editable {
+    @extend .roadmapContainer__title;
+
+    cursor: pointer;
+
+    &:hover { border-bottom: 1px solid; }
+  }
 }
 
 .tuContainer {
