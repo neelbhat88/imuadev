@@ -27,7 +27,17 @@ class OrganizationRepository
     organization.name = name
 
     if organization.save
-      return { :success => true, :info => "Organization created successfully", :organization => organization }
+      roadmap = {
+                :organization_id => organization.id,
+                :name => organization.name + "'s Roadmap"
+              }
+
+      result = RoadmapRepository.new.create_roadmap_with_semesters(roadmap)
+      if !result[:success]
+        return { :success => false, :info => "Organization created successfully BUT failed to create default roadmap.", :organization => organization }
+      end
+
+      return { :success => true, :info => "Organization created successfully. Default roadmap created for organization.", :organization => organization }
     end
 
     return { :success => false, :info => "Failed to create organization", :organization => nil }
