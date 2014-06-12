@@ -1,83 +1,91 @@
 .login-container {
 
-	width: 100%;
-	position: absolute;
-	top: 50%;
-	margin-top: -220px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  margin-top: -220px;
 
-	@include respond-to-with-height(640) { margin-top: -180px; }
-	@include respond-to-with-height(300) { margin-top: -100px; }
-	@include respond-to-with-height(200) { margin-top: -50px; }
+  @include respond-to-with-height(640) { margin-top: -180px; }
+  @include respond-to-with-height(300) { margin-top: -100px; }
+  @include respond-to-with-height(200) { margin-top: -50px; }
 
-	.login-form {
-	
-		width: 50%;
-		max-width: 500px;
-		margin: 0 auto;
-		padding-bottom: 20px;
-	
-		.logo {
-		
-			width: 60%;
-			max-width: 250px;
-			margin: 0 auto;
-			margin-bottom: 40px;
-			
-			img {
-			
-				width: 100%;
-				height: auto;
-			
-			}
-		
-		}
-			
-		.form-field {
-		
-			font-size: 14px;
-			background: #ebebeb;
-			margin-bottom: 15px;
-			width: 90%;
-			max-width: 250px;
-			@include border-radius(10px);			
+  .login-form {
 
-			&:focus {		
-				background: #ffffff;				
-			}
-		
-		}	
-		
-		.button {
-		
-			@include body-font(14px);
-			padding:5px 40px; 
-			background:#ccc; 
-			border:0 none;
-			cursor:pointer;
-			@include border-radius(10px);
-			
-			&:hover { background: #ffffff; }
-		}
-	
-	}
+    width: 50%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-bottom: 20px;
 
-	.login-links {
-		width: 100%;
-		padding-bottom: 20px;
-		color: #909090;
-		@include body-font(12px);
-		
-		a {
-		
-			color: #666666;
-			
-			&:hover {
-			
-				color: white;
-			
-			}
-		
-		}
-	}	
+    .logo {
+
+      width: 60%;
+      max-width: 250px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+
+      img {
+
+        width: 100%;
+        height: auto;
+
+      }
+
+    }
+
+    .form-field {
+
+      font-size: 14px;
+      background: #ebebeb;
+      margin-bottom: 15px;
+      width: 90%;
+      max-width: 250px;
+      @include border-radius(10px);
+
+      &:focus {
+        background: #ffffff;
+      }
+
+    }
+
+    .button {
+
+      @include body-font(14px);
+      padding:5px 40px;
+      background:#ccc;
+      border:0 none;
+      cursor:pointer;
+      @include border-radius(10px);
+
+      &:hover { background: #ffffff; }
+    }
+
+  }
+
+  .login-links {
+    width: 100%;
+    padding-bottom: 20px;
+    color: #909090;
+    @include body-font(12px);
+
+    a {
+
+      color: #666666;
+
+      &:hover {
+
+        color: white;
+
+      }
+
+    }
+  }
+
+  .blog-link {
+    color: white;
+
+    a {
+      color: $blue;
+    }
+  }
 
 }
