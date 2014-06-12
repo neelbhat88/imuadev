@@ -1,6 +1,7 @@
 class Roadmap < ActiveRecord::Base
   attr_accessible :description, :name, :organization_id
 
+  belongs_to :organization
   has_many :time_units, dependent: :destroy
 end
 

@@ -2,6 +2,7 @@ class Organization < ActiveRecord::Base
   attr_accessible :name
 
   has_many :users
+  has_one :roadmap
 end
 
 class ViewOrganization

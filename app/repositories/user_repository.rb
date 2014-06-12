@@ -78,6 +78,10 @@ class UserRepository
       u.password = password
     end
 
+    if user.role == Constants.UserRole[:STUDENT]
+      user.time_unit_id = RoadmapRepository.new.get_time_units(user.organization_id)[0].id
+    end
+
     if user.save
       # Send emails out of process
       # https://www.agileplannerapp.com/blog/building-agile-planner/rails-background-jobs-in-threads
@@ -98,5 +102,36 @@ class UserRepository
     else
       return { :status => :internal_server_error, :info => "Failed to delete user." }
     end
+  end
+end
+
+class OrgUser
+  attr_accessor :email, :first_name, :last_name, :role, :organization_id
+
+  def initialize(user_obj)
+    @email = user_obj.email
+    @first_name = user_obj.first_name
+    @last_name = user_obj.last_name
+    @role = user_obj.role
+    @organization_id = user_obj.organization_id
+  end
+
+  def create(user_obj)
+
+
+  end
+end
+
+class Student < OrgUser
+  attr_accessor :time_unit_id
+
+  def initialize(user_obj)
+    super
+
+    @time_unit_id = user_obj.time_unit_id
+  end
+
+  def create(user_obj)
+
   end
 end

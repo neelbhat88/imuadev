@@ -2,6 +2,9 @@ class RoadmapRepository
   def initialize
   end
 
+  ######################################
+  ############## ROADMAP ###############
+  ######################################
   def get_roadmap_by_organization(orgId)
     roadmap = Roadmap.where(:organization_id => orgId)[0]
 
@@ -69,6 +72,14 @@ class RoadmapRepository
     end
   end
 
+  ######################################
+  ############# TIME UNIT ##############
+  ######################################
+
+  def get_time_units(organization_id)
+    return TimeUnit.where(:organization_id => organization_id)
+  end
+
   def create_time_unit(time_unit)
     roadmap = Roadmap.find(time_unit[:roadmap_id])
 
@@ -101,6 +112,10 @@ class RoadmapRepository
       return { :success => false, :info => "Failed to delete Time Unit id:#{time_unit_id}." }
     end
   end
+
+  ######################################
+  ############# MILESTONE ##############
+  ######################################
 
   def create_milestone(milestone)
     default_points = 10

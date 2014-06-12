@@ -7,10 +7,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-  					:first_name, :last_name, :phone, :role, :avatar, :organization_id
+  					:first_name, :last_name, :phone, :role, :avatar, :organization_id,
+            :time_unit_id
   # attr_accessible :title, :body
 
   belongs_to :organization
+  belongs_to :time_unit
 
   has_attached_file :avatar, styles: {
     square: '140x140#',
