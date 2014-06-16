@@ -86,6 +86,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
   color: white;
 
   .module-data__side-nav {
+    min-height: 250px;
+
     display: inline-block;
     vertical-align: top;
 
