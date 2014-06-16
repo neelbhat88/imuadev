@@ -22,8 +22,8 @@ Imua::Application.routes.draw do
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'
 
+      get  '/organization/:id/time_units' => 'organization#time_units'
       get  '/organization/:id/roadmap' => 'organization#roadmap'
-      get  '/organization/:id/roadmap/reset' => 'organization#reset_roadmap'
       get  '/organization/:id/modules' => 'organization#modules'
 
       post '/roadmap' => 'roadmap#create'
@@ -38,6 +38,9 @@ Imua::Application.routes.draw do
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
+
+      # ToDo: Don't like this being a POST but leaving it for now for sake of getting this done
+      post  '/progress/modules' => 'progress#all_modules_progress'
 
     end # end :v1
   end # end :api

@@ -24,7 +24,7 @@ private
   end
 
   def verified__request?
-    super || form_authenticity_token == request.headers['HTTP_X_XSRF_TOKEN']
+    super || form_authenticity_token == request.headers['X_XSRF_TOKEN']
   end
 
 end

@@ -28,6 +28,10 @@ angular.module('myApp')
         });
 
       return defer.promise;
+    },
+
+    getTimeUnits: function(orgId) {
+      return $http.get('/api/v1/organization/' + orgId + '/time_units');
     }
   };
 

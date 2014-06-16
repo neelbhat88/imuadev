@@ -1,11 +1,9 @@
 .roadmapContainer {
-  background-color: $bg-grey;
   border-top: 1px solid;
 
-  padding: 0 40px;
+  padding: 0 40px 20px 40px;
 
   .roadmapContainer__title {
-    color: white;
     display: inline-block;
     margin-bottom: 20px;
     border-bottom: 1px solid transparent;
@@ -32,6 +30,7 @@
   display: inline-block;
   vertical-align: top;
 
+  padding: 5px;
   margin: 5px;
 
   border: 1px solid #e0e0e0;
@@ -79,8 +78,8 @@
       text-align: right;
     }
 
-    &.js-tu__milestone--academics { border-top-color: $academics-color; }
-    &.js-tu__milestone--service { border-top-color: $service-color; }
+    &.color--academics { border-top-color: $academics-color; }
+    &.color--service { border-top-color: $service-color; }
   }
 
   .tu__milestone--editable {

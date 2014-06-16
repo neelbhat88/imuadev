@@ -155,19 +155,6 @@ angular.module('myApp')
 
       modalInstance.result.then(function (){
       });
-    },
-
-    $scope.getMilestoneClass = function(milestone)
-    {
-      switch(milestone.module){
-      case "Academics":
-        return "js-tu__milestone--academics";
-      case "Service":
-        return "js-tu__milestone--service";
-      }
-
-      return "";
     }
-
   }
 ])

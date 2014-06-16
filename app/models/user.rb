@@ -34,4 +34,12 @@ class User < ActiveRecord::Base
   def org_admin?
     return self.role.to_i == Constants.UserRole[:ORG_ADMIN]
   end
+
+  def mentor?
+    return self.role.to_i == Constants.UserRole[:MENTOR]
+  end
+
+  def student?
+    return self.role.to_i == Constants.UserRole[:STUDENT]
+  end
 end

@@ -117,6 +117,10 @@ class RoadmapRepository
   ############# MILESTONE ##############
   ######################################
 
+  def get_milestones_in_time_unit(time_unit_id)
+    return Milestone.where(:time_unit_id => time_unit_id)
+  end
+
   def create_milestone(milestone)
     default_points = 10
 

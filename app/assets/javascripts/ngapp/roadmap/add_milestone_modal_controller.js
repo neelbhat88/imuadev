@@ -18,8 +18,8 @@ angular.module('myApp')
 
         $scope.dd_modules.push( { module: moduleTitle,
                                   submoduleTitle: this.title,
-                                  submoduleType: this.type,
-                                  templatePath: '/assets/add_' + this.type.toLowerCase() + '.html',
+                                  submoduleType: this.submodtype,
+                                  templatePath: '/assets/add_' + this.submodtype.toLowerCase() + '.html',
                                   milestone: new_milestone } );
       });
     });

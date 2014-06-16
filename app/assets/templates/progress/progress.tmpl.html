@@ -1,0 +1,27 @@
+<div class="progressContainer">
+
+  <div class="module-circles">
+    <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+      <div class="module-circle__bg">
+        <div class="module-circle__points">
+          <div class="value">{{mod.points.user}}/{{mod.points.total}}</div>
+          <div class="text" style="font-size: 10px; text-align: center;">points</div>
+        </div>
+      </div>
+      <div class="module-circle__modtitle">{{mod.module_title}}</div>
+    </div>
+  </div>
+
+
+  <div class="module-data" modulecolor="{{selected_module.module_title}}">
+    <div class="module-data__side-nav">
+      <li class="nav-item" ng-class="{selected: sem.selected}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
+    </div>
+
+    <div class="module-data__content">
+      <h2> Nice work! You'll see your data here soon </h2>
+    </div>
+  </div>
+
+</div>
+

@@ -8,5 +8,10 @@ angular.module('myApp')
     mentor: 40,
     student: 50,
     parent: 60
+  },
+
+  'MODULES' : {
+    academics: "Academics",
+    service: "Service"
   }
 });

@@ -48,6 +48,12 @@
             </li>
             <% end %>
 
+            <% if current_user.student? %>
+            <li>
+              <a href="#/progress">Progress</a>
+            </li>
+            <% end %>
+
             <li>
               <a href="#/roadmap">Roadmap</a>
             </li>

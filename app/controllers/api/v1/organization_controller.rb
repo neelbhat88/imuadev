@@ -98,62 +98,6 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
-  # GET /organization/:id/roadmap/reset
-  def reset_roadmap
-    # Temporary security check - need to find a better way to do this
-    if !current_user.super_admin?
-      render status: :unauthorized,
-        json: {
-          info: "You do not have sufficient permissions to perform this action."
-        }
-
-      return
-    end
-
-    orgId = params[:id]
-
-    result = OrganizationRepository.new.get_organization(orgId)
-    org = result[:organization]
-    if !result[:success]
-      render status: :internal_server_error,
-        json: {
-          info: result[:info]
-        }
-
-      return
-    end
-
-    roadmap_repository = RoadmapRepository.new
-    roadmap = roadmap_repository.get_roadmap_by_organization(orgId)
-
-    # delete old roadmap
-    result = roadmap_repository.delete_roadmap(roadmap.id)
-    if !result[:success]
-      render status: :internal_server_error,
-        json: {
-          info: result[:info]
-        }
-
-      return
-    end
-
-    # create new template roadmap
-    roadmap = {
-                :organization_id => orgId,
-                :name => org.name + "'s Roadmap"
-              }
-
-    result = RoadmapRepository.new.create_roadmap_with_semesters(roadmap)
-
-    viewRoadmap = ViewRoadmap.new(result[:roadmap]) unless result[:roadmap].nil?
-    render status: 200,
-      json: {
-        success: result[:success],
-        info: result[:info],
-        roadmap: viewRoadmap
-      }
-  end
-
   # GET /organization/:id/modules
   def modules
     orgId = params[:orgId]
@@ -168,63 +112,18 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
-end
+  # GET /organization/:id/time_units
+  def time_units
+    orgId = params[:id].to_i
 
-class EnabledModules
-  def initialize
+    org_time_units = RoadmapRepository.new.get_time_units(orgId)
+
+    render status: 200,
+      json: {
+        success: true,
+        info: "Time Units for Organization",
+        org_time_units: org_time_units
+      }
   end
 
-  def get_modules(orgId)
-    # Query DB to get enabled modules/submodules for an organization
-    mod_array = [
-        {
-          :title => Constants.Modules[:ACADEMICS],
-          :submodules => [Constants.SubModules[:ACADEMICS_GPA]]
-        },
-        {
-          :title => Constants.Modules[:SERVICE],
-          :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS]]
-        }
-      ]
-
-    mods = []
-    mod_array.each do | m |
-      mod = AppModule.new
-      mod.title = m[:title]
-
-      m[:submodules].each do | sm |
-        mod.submodules << SubModuleFactory.new.get_submodule(sm)
-      end
-
-      mods << mod
-    end
-
-    return mods
-  end
-
-end
-
-class AppModule
-  attr_accessor :title, :submodules
-
-  def initialize
-    @submodules = []
-  end
-
-end
-
-class SubModuleFactory
-  def initialize
-  end
-
-  def get_submodule(sub_module)
-
-    case sub_module
-    when Constants.SubModules[:ACADEMICS_GPA]
-      return AcademicsGpa.new
-    when Constants.SubModules[:SERVICE_DEPTH_HOURS]
-      return ServiceDepthHours.new
-    end
-
-  end
 end

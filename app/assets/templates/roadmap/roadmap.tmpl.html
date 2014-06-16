@@ -1,4 +1,4 @@
-<div class="roadmapContainer pbxl" ng-if="roadmap && !loading">
+<div class="roadmapContainer" ng-if="roadmap && !loading">
   <div class="tuContainer ptl">
 
     <!-- Roadmap Name -->
@@ -51,14 +51,14 @@
       <div class="tu__milestones-container" ng-hide="tu.editing">
 
         <!-- Non-editable view -->
-        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="tu__milestone" ng-class="getMilestoneClass(milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="tu__milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer">{{milestone.points * milestone.importance}}</div>
         </div>
         <!-- Non-editable view -->
 
         <!-- Editable view -->
-        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__milestone--editable" ng-class="getMilestoneClass(milestone)" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
+        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__milestone--editable" modulecolor="{{milestone.module}}" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
           <div class="title">{{milestone.title}}</div>
           <div class="footer">{{milestone.points * milestone.importance}}</div>
         </div>

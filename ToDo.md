@@ -20,6 +20,9 @@
 # Angular Questions
 1. HOW TO DO RSPEC TESTS?? Any good tutorials? Took forever to figure out how to mock an ActiveRecord call (see roadmap_repository_rspec.rb) and just gave up
 
+1. Understand CSRF security with   before_filter :authenticate_user!
+  skip_before_filter  :verify_authenticity_token
+
 1. users_service.js methods returning just $http and then using .success() and .error() with the server returning error status --> Is this a good way to do it?
 
 1. Roadmap.html
