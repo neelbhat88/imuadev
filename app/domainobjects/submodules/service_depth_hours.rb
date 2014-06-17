@@ -21,7 +21,7 @@ class ServiceDepthHours
       milestone.submodule = @submodtype
       milestone.importance = 2
       milestone.points = 10
-      milestone.title = "Complete 10 hours of service for one organization"
+      milestone.title = "Hours of service to complete for one organization:"
       milestone.value = "10"
     end
     @default_milestone = ViewMilestone.new(milestone)

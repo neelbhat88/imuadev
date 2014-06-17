@@ -62,7 +62,7 @@
             <!-- Non-editable view -->
             <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="semester__milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
               <div class="title">
-                <span>{{milestone.title}}</span>
+                <span>{{milestone.title}} {{milestone.value}}</span>
               </div>
               <!-- <div class="footer">{{milestone.points * milestone.importance}}</div> -->
             </div>
@@ -71,7 +71,7 @@
             <!-- Editable view -->
             <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__milestone--editable" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
               <div class="title">
-                <span>{{milestone.title}}</span>
+                <span>{{milestone.title}} {{milestone.value}}</span>
               </div>
               <div class="icons">
                 <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
