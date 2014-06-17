@@ -39,6 +39,15 @@ angular.module('myApp')
     }
 
     $scope.selectSemester = function(sem) {
+      $http.post('/api/v1/progress/modules', {
+              user_id: current_user.id,
+              organization_id: current_user.organization_id,
+              time_unit_id: sem.id
+            })
+      .success(function(data){
+        $scope.modules_progress = data.modules_progress;
+      });
+
       $.each($scope.semesters, function(index, val) {
         this.selected = false;
 
