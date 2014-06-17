@@ -10,6 +10,14 @@ angular.module('myApp')
     RoadmapService.getRoadmap(orgId).then(
       function Success(data) {
         $scope.roadmap = data.roadmap;
+
+        $scope.roadmap.years = [
+          {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
+          {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },
+          {name: "Year 3", semesters: [$scope.roadmap.time_units[4], $scope.roadmap.time_units[5]] },
+          {name: "Year 4", semesters: [$scope.roadmap.time_units[6], $scope.roadmap.time_units[7]] }
+        ];
+
         $scope.loading = false;
       },
       function Error(data) {
@@ -155,6 +163,24 @@ angular.module('myApp')
 
       modalInstance.result.then(function (){
       });
+    }
+
+    $scope.deleteMilestone = function(tu, milestone) {
+      if (window.confirm("Are you sure you want to delete this milestone?"))
+      {
+        RoadmapService.deleteMilestone(milestone.id).then(
+          function Success(data)
+          {
+            $.each(tu.milestones, function(index, val) {
+              if (this.id == milestone.id)
+              {
+                tu.milestones.splice(index, 1);
+                return false;
+              }
+            });
+          }
+        );
+      }
     }
   }
 ])

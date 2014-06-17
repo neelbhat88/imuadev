@@ -15,7 +15,7 @@ class ViewRoadmap
     @organization_id = roadmap.organization_id
 
     @time_units = []
-    roadmap.time_units.each do | t |
+    roadmap.time_units.order(:id).each do | t |
       @time_units << ViewTimeUnit.new(t)
     end
 

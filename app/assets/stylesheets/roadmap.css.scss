@@ -1,7 +1,11 @@
 .roadmapContainer {
   border-top: 1px solid;
 
-  padding: 0 40px 20px 40px;
+  padding: 0 40px 40px 40px;
+
+  .roadmapContainer__title-container {
+    text-align: center;
+  }
 
   .roadmapContainer__title {
     display: inline-block;
@@ -109,4 +113,121 @@
   input.milestone-title {
     width: 250px;
   }
+}
+
+.year
+{
+  width: 550px;
+  margin: auto;
+}
+
+.year__header
+{
+  padding: 10px 10px 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: $bg-grey;
+  color: white;
+  border-radius: 5px 5px 0 0;
+}
+
+.year__semester {
+
+  .semester__header-title {
+    padding: 10px;
+    background-color: #f0f0f0;
+    color: $ink;
+    text-align: center;
+    font-size: 22px;
+    border: 1px solid $light-grey;
+    border-top: none;
+  }
+
+  .semester__header-title--editable {
+    @extend .semester__header-title;
+
+    .name { cursor: pointer; }
+    .name:hover { border-bottom: 1px solid; }
+  }
+
+  .semester__header-title--editing {
+    padding: 10px;
+    background-color: #e0e0e0;
+    border: 1px solid $light-grey;
+    border-top: none;
+  }
+
+  .semester__milestone {
+    padding: 10px;
+    border: 1px solid $light-grey;
+    border-top: none;
+
+    .title {
+      width: 450px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .semester__milestone--editable
+  {
+    @extend .semester__milestone;
+
+    .icons {
+      display: inline-block;
+      vertical-align: middle;
+      color: $grey;
+    }
+
+    .glyphicon {
+      cursor: pointer;
+      margin-left: 10px;
+
+      &:hover {color: $red;}
+    }
+  }
+
+  .semester__footer {
+    padding: 10px 10px 10px 20px;
+    border: 1px solid $light-grey;
+    border-top: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e0fee0;
+    }
+
+    .glyphicon-plus-sign {
+      color: $green;
+      font-size: 28px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .text {
+      padding-left: 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.roadmap-spacer-circle {
+  width: 50px;
+  height: 50px;
+  background-color: $grey;
+  border-radius: 25px;
+  margin: auto;
+}
+
+.roadmap-spacer-line {
+  height: 60px;
+  width: 10px;
+  background-color: $grey;
+  margin: auto;
+}
+
+.roadmap-spacer-line--aftercircle
+{
+  margin-top: -2px;
 }

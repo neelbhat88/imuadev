@@ -77,7 +77,7 @@ class RoadmapRepository
   ######################################
 
   def get_time_units(organization_id)
-    return TimeUnit.where(:organization_id => organization_id)
+    return TimeUnit.where(:organization_id => organization_id).order(:id)
   end
 
   def create_time_unit(time_unit)
