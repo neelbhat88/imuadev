@@ -129,9 +129,14 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
   }
 }
 
+.user-class-greeting {
+  .line1 { font-size: 18px; }
+  .line2 { font-size: 36px; padding-top: 5px; line-height: 1;}
+}
+
 .module-data {
   margin-top: 20px;
-  padding: 10px;
+  padding: 40px 40px 15px;
   text-align: center;
 
   font-size: 18px;
@@ -148,6 +153,35 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
     font-style: italic;
     color: $grey;
     padding: 10px 0;
+  }
+
+  .module-data__item
+  {
+    font-size: 18px;
+    color: $ink;
+    text-align: left;
+
+    &.last {
+      .module-data__item__class { border-bottom: 0 none; }
+      .module-data__item__grade { border-bottom: 0 none; }
+    }
+
+    .module-data__item__class {
+      display: inline-block;
+      vertical-align: middle;
+      width: 440px;
+      padding: 10px;
+      border-bottom: 1px solid $light-grey;
+      border-right: 1px solid $light-grey;
+    }
+
+    .module-data__item__grade {
+      display: inline-block;
+      vertical-align: middle;
+      width: 50px;
+      padding: 10px;
+      border-bottom: 1px solid $light-grey;
+    }
   }
 
   .module-data__button

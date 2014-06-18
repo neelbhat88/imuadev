@@ -1,22 +1,27 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
-  <div class="pbl" ng-show="user_classes.length == 0">
+  <div class="pbxl" ng-show="user_classes.length == 0">
     <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
     <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
   </div>
 
-  <div class="pbl" ng-show="user_classes.length != 0">
-    <h4>Nice work {{current_user.first_name}}! You've earned a</h4>
-    <h1><span class="bold">3.5 GPA</span> this semester</h1>
+  <div class="user-class-greeting pbxl" ng-show="user_classes.length != 0">
+    <div class="line1">Nice work {{current_user.first_name}}! You've earned a</div>
+    <div class="line2"><span class="bold">3.5 GPA</span> this semester</div>
   </div>
 
   <div class="module-data">
     <div class="noclasses" ng-hide="user_classes.length != 0">No classes added</div>
-    <div class="module-data__item" ng-repeat="user_class in user_classes">
 
+    <div class="module-data-items">
+      <div class="module-data__item" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
+        <div class="module-data__item__class">{{user_class.name}}</div><div class="module-data__item__grade">{{user_class.grade}}</div>
+      </div>
     </div>
 
-    <div class="module-data__button">Update your grades</div>
+    <div class="ptl">
+      <div class="module-data__button">Update your grades</div>
+    </div>
   </div>
 
 </div>
