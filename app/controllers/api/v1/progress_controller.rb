@@ -33,4 +33,18 @@ class Api::V1::ProgressController < ApplicationController
         modules_progress: modules_progress
       }
   end
+
+  # GET /user/:id/data/academics/:time_unit_id
+  def user_academics_data
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+
+    classes = ProgressRepository.new.get_user_classes(userId, time_unit_id)
+
+    render status: 200,
+      json: {
+        info: "User's academics data",
+        academics_data: classes
+      }
+  end
 end

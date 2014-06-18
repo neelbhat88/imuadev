@@ -109,6 +109,7 @@ html {
   min-height: 100%;
 
   body {
+    min-width: 800px;
 
     &.static-pages {
       background-color: $darkgrey;
@@ -345,8 +346,6 @@ header {
 
   .submit, .cancel {
 
-    display: inline-block;
-    vertical-align: middle;
     padding-left: 10px;
     font-size: 18px;
   }
@@ -355,6 +354,8 @@ header {
 
 .submit {
 
+  display: inline-block;
+  vertical-align: middle;
   border: 1px solid $button-blue;
   background-color: $button-blue;
   @include border-radius(2px);
@@ -370,6 +371,8 @@ header {
 
 .cancel {
 
+  display: inline-block;
+  svertical-align: middle;
   border: 1px solid $grey;
   background-color: $grey;
   @include border-radius(2px);
@@ -401,4 +404,39 @@ header {
 
   .alert-notice { @extend .alert-success; }
   .alert-alert, .alert-error { @extend .alert-danger; }
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid black;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+
+  border-top: 20px solid #f00;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+
+  border-left: 60px solid green;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+
+  border-right:10px solid blue;
 }

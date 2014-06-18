@@ -3,6 +3,7 @@ angular.module('myApp')
   function($scope, current_user, OrganizationService, $http) {
     $scope.selected_module = null;
     $scope.semesters = [];
+    $scope.current_user = current_user;
 
     OrganizationService.getTimeUnits(current_user.organization_id)
       .success(function(data) {
@@ -54,6 +55,11 @@ angular.module('myApp')
         if (this.id == sem.id)
           this.selected = true;
       });
+    }
+
+    $scope.getModuleTemplate = function(modTitle) {
+      if (modTitle)
+        return '/assets/progress/' + modTitle.toLowerCase() + '_progress.tmpl.html';
     }
   }
 ]);

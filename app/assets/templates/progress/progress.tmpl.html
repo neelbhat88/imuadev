@@ -9,19 +9,19 @@
         </div>
       </div>
       <div class="module-circle__modtitle">{{mod.module_title}}</div>
+      <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
     </div>
   </div>
 
 
-  <div class="module-data" modulecolor="{{selected_module.module_title}}">
-    <div class="module-data__side-nav">
+  <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
+    <div class="module-data-side-nav">
       <li class="nav-item" ng-class="{selected: sem.selected}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
 
-    <div class="module-data__content">
-      <h2> Nice work! You'll see your data here soon </h2>
+    <div class="module-data-content">
+      <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
     </div>
   </div>
 
 </div>
-

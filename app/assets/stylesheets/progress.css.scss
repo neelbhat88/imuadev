@@ -11,7 +11,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
 }
 
 .module-circles {
-  padding: 60px 60px 60px 60px;
+  padding: 60px 60px 0px 60px;
 
   width: 750px;
   margin: auto;
@@ -57,20 +57,35 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
   }
 
   .module-circle__modtitle {
-    padding-top: 5px;
+    padding: 5px 0;
     text-align: center;
 
     @extend .bold;
   }
+
+  .module-circle__arrow-up {
+    @extend .arrow-up;
+
+    margin: auto;
+
+    @each $category, $color in $colormap {
+
+      &.color--#{$category} {
+        border-bottom-color: $color;
+      }
+
+    }
+  }
 }
 
-.module-data {
+.module-data-container {
+
   @each $category, $color in $colormap {
 
     &.color--#{$category} {
       background-color: $color;
 
-      .module-data__side-nav {
+      .module-data-side-nav {
         color: #c0c0c0;
         background-color: map-get($darkcolormap, $category);
 
@@ -84,10 +99,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
   }
 
   color: white;
+  text-align: center;
 
-  .module-data__side-nav {
-    min-height: 250px;
+  .module-data-side-nav {
+    min-height: 450px;
 
+    float: left;
     display: inline-block;
     vertical-align: top;
 
@@ -101,10 +118,53 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
     }
   }
 
-  .module-data__content {
+  .module-data-content {
+    min-height: 450px;
+
     display: inline-block;
     vertical-align: top;
 
-    padding: 40px;
+    width: 645px;
+    padding: 40px 0px;
+  }
+}
+
+.module-data {
+  margin-top: 20px;
+  padding: 10px;
+  text-align: center;
+
+  font-size: 18px;
+
+  width: 600px;
+  margin: auto;
+  background-color: white;
+  color: $ink;
+
+  @include border-radius(5px);
+
+  .noclasses {
+    text-align: center;
+    font-style: italic;
+    color: $grey;
+    padding: 10px 0;
+  }
+
+  .module-data__button
+  {
+    @extend .submit;
+
+    font-size: 14px;
+
+    margin: auto;
+    background-color: white;
+    color: $light-grey;
+    border-color: $light-grey;
+
+    &:hover {
+      color: $ink;
+      border-color: $ink;
+      background-color: white;
+    }
   }
 }
