@@ -21,7 +21,7 @@ class AcademicsGpa
       milestone.submodule = @submodtype
       milestone.importance = 2
       milestone.points = 10
-      milestone.title = "Keep your overall GPA over:"
+      milestone.title = "Keep your overall GPA above:"
       milestone.value = "3.5"
     end
     @default_milestone = ViewMilestone.new(milestone)
