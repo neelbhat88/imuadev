@@ -153,6 +153,7 @@ class RoadmapRepository
     newmilestone.title = milestone[:title]
     newmilestone.description = milestone[:description]
     newmilestone.value = milestone[:value]
+    newmilestone.icon = milestone[:icon]
 
     if newmilestone.save
       return { :success => true, :info => "Milestone created successfully.", :milestone => newmilestone }

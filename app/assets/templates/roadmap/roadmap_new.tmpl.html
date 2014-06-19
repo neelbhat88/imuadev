@@ -55,41 +55,30 @@
           </div>
           <!-- Semester Header -->
 
-
           <!-- TimeUnit Milestones -->
           <div class="semester__milestones-container">
-
-            <!-- Non-editable view -->
-            <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="semester__milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
+            <div class="semester__milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
               <div class="title">
-                <span>{{milestone.title}} {{milestone.value}}</span>
+                <h4><img ng-src={{milestone.icon}}/>{{milestone.title}}</h4>
+                <h6>{{milestone.description}} {{milestone.value}}
+                  <span class="footer">
+                    Points Value: {{milestone.points * milestone.importance}}
+                  </span>
+                  <span ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="icons">
+                    <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
+                  </span>
+                </h6>
               </div>
-              <!-- <div class="footer">{{milestone.points * milestone.importance}}</div> -->
             </div>
-            <!-- Non-editable view -->
-
-            <!-- Editable view -->
-            <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__milestone--editable" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
-              <div class="title">
-                <span>{{milestone.title}} {{milestone.value}}</span>
-              </div>
-              <div class="icons">
-                <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
-              </div>
-              <!-- <div class="footer">{{milestone.points * milestone.importance}}</div> -->
-            </div>
-            <!-- Editable view -->
-
           </div>
           <!-- TimeUnit Milestones -->
 
-
           <!-- Semester Footer -->
           <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer">
-            <div ng-hide="sem.editing" ng-click="addMilestone(sem)">
-              <div class="glyphicon glyphicon-plus-sign"></div>
-              <div class="text">Add another milestone</div>
+            <div class="semester__footer__title" ng-hide="sem.editing" ng-click="addMilestone(sem)">
+              <span class="glyphicon glyphicon-plus-sign"></span>
+              <span class="text">Add Another Milestone</span>
             </div>
           </div>
           <!-- Semester Footer -->

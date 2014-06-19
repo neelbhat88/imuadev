@@ -21,8 +21,10 @@ class ServiceDepthHours
       milestone.submodule = @submodtype
       milestone.importance = 2
       milestone.points = 10
-      milestone.title = "Hours of service to complete for one organization:"
+      milestone.title = "Give Back"
+      milestone.description = "Community Service Hours:"
       milestone.value = "10"
+      milestone.icon = "/assets/Service.jpg"
     end
     @default_milestone = ViewMilestone.new(milestone)
   end
