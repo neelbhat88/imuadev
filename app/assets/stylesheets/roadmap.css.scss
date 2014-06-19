@@ -229,9 +229,11 @@
     border: 1px solid $light-grey;
     border-top: none;
     cursor: pointer;
+    color: $light-grey;
 
     &:hover {
       background-color: #e0fee0;
+      color: $ink;
     }
 
     .semester__footer__title {
@@ -240,7 +242,7 @@
       text-align: center;
 
       .glyphicon-plus-sign {
-        color: $green;
+
         font-size: 28px;
         padding-right: 10px;
         display: inline-block;
