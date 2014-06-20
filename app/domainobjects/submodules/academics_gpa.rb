@@ -21,8 +21,10 @@ class AcademicsGpa
       milestone.submodule = @submodtype
       milestone.importance = 2
       milestone.points = 10
-      milestone.title = "Keep your overall GPA above:"
+      milestone.title = "Good Grades"
+      milestone.description = "Minimum GPA:"
       milestone.value = "3.5"
+      milestone.icon = "/assets/Academics.jpg"
     end
     @default_milestone = ViewMilestone.new(milestone)
   end

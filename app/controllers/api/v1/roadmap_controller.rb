@@ -131,10 +131,11 @@ class Api::V1::RoadmapController < ApplicationController
     desc = params[:milestone][:description]
     is_default = params[:milestone][:is_default]
     value = params[:milestone][:value]
+    icon = params[:milestone][:icon]
 
     milestone = { :module => mod, :submodule=> submod, :importance => importance,
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
-                  :is_default => is_default }
+                  :is_default => is_default, :icon => icon }
 
     result = RoadmapRepository.new.create_milestone(milestone)
 

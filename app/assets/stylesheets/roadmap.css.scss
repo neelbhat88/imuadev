@@ -157,33 +157,67 @@
     border-top: none;
   }
 
-  .semester__milestone {
-    padding: 10px;
-    border: 1px solid $light-grey;
-    border-top: none;
+  .milestone-title {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 18px;
 
-    .title {
-      width: 450px;
+    img {
+      width: 60px;
       display: inline-block;
       vertical-align: middle;
+      margin-left: 5px;
+      margin-right: 10px;
     }
   }
 
-  .semester__milestone--editable
-  {
-    @extend .semester__milestone;
+  .milestone {
+    padding: 7px 26px;
+    border: 1px solid $light-grey;
+    width: 100%;
+    border-top: none;
+    display: inline-block;
+    text-align: justify;
 
-    .icons {
-      display: inline-block;
-      vertical-align: middle;
-      color: $grey;
+    .milestone__title {
+      @extend .milestone-title;
+      width: 50%;
     }
 
-    .glyphicon {
-      cursor: pointer;
-      margin-left: 10px;
+    .milestone__info {
+      width: 49%;
+      display: inline-block;
+      text-align: right;
+      vertical-align: middle;
+      color: $grey;
+      font-size: 12px;
+      font-weight: 500;
 
-      &:hover {color: $red;}
+      .milestone__info__value {
+        width: 100%;
+        display: inline-block;
+      }
+
+      .milestone__info__weight {
+        width: 100%;
+        display: inline-block;
+        color: $light-grey;
+      }
+
+      .milestone__info__icons {
+        width: 100%;
+        display: inline-block;
+        color: $grey;
+
+        .glyphicon {
+          cursor: pointer;
+          margin-left: 5px;
+
+          &:hover {color: $red;}
+        }
+      }
     }
   }
 
@@ -192,22 +226,31 @@
     border: 1px solid $light-grey;
     border-top: none;
     cursor: pointer;
+    color: $light-grey;
 
     &:hover {
       background-color: #e0fee0;
+      color: $ink;
     }
 
-    .glyphicon-plus-sign {
-      color: $green;
-      font-size: 28px;
+    .semester__footer__title {
+      width: 100%;
       display: inline-block;
-      vertical-align: middle;
-    }
+      text-align: center;
 
-    .text {
-      padding-left: 10px;
-      display: inline-block;
-      vertical-align: middle;
+      .glyphicon-plus-sign {
+
+        font-size: 28px;
+        padding-right: 10px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .text {
+        display: inline-block;
+        vertical-align: middle;
+        padding-right: 38px;
+      }
     }
   }
 }
