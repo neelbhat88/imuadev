@@ -46,6 +46,10 @@ $button-blue-hover: #69bfe9;
 
 $ink: #374347;
 
+.green { color: $green; }
+.red { color: $red; }
+.blue { color: $blue; }
+
 /* ========================= */
 /*      Category Colors      */
 /* ========================= */
@@ -372,7 +376,7 @@ header {
 .cancel {
 
   display: inline-block;
-  svertical-align: middle;
+  vertical-align: middle;
   border: 1px solid $grey;
   background-color: $grey;
   @include border-radius(2px);

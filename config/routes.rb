@@ -14,8 +14,9 @@ Imua::Application.routes.draw do
         collection do
           put '/:id/update_password' => 'users#update_password'
 
-          get '/:id/data/academics/:time_unit_id' => 'progress#user_academics_data'
-          get '/:id/data/service/:time_unit_id' => 'progress#user_service_data'
+          get  '/:id/time_unit/:time_unit_id/classes' => 'progress#user_classes'
+          post '/:id/classes' => 'progress#add_user_class'
+          put  '/:id/classes/:class_id' => 'progress#update_user_class'
         end
       end
 

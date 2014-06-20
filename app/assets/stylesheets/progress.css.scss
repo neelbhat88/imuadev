@@ -152,7 +152,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
     text-align: center;
     font-style: italic;
     color: $grey;
-    padding: 10px 0;
+    padding: 0 0 10px 0;
   }
 
   .module-data__item
@@ -160,19 +160,21 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
     font-size: 18px;
     color: $ink;
     text-align: left;
+    border-bottom: 1px solid $light-grey;
+    position: relative;
 
     &.last {
-      .module-data__item__class { border-bottom: 0 none; }
-      .module-data__item__grade { border-bottom: 0 none; }
+      border-bottom: 0 none;
     }
 
     .module-data__item__class {
       display: inline-block;
       vertical-align: middle;
-      width: 440px;
+      width: 400px;
       padding: 10px;
-      border-bottom: 1px solid $light-grey;
       border-right: 1px solid $light-grey;
+
+      .form-field { width: 100%; }
     }
 
     .module-data__item__grade {
@@ -180,7 +182,16 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
       vertical-align: middle;
       width: 50px;
       padding: 10px;
-      border-bottom: 1px solid $light-grey;
+    }
+
+    .module-data__item__icons {
+      cursor: pointer;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+      position: absolute;
+      right: 10px;
+      top: 15px;
     }
   }
 

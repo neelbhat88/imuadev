@@ -27,7 +27,7 @@ class Api::V1::ProgressController < ApplicationController
       end
     end
 
-    render status: 200,
+    render status: :ok,
       json: {
         info: "Module progress points",
         modules_progress: modules_progress
@@ -35,16 +35,61 @@ class Api::V1::ProgressController < ApplicationController
   end
 
   # GET /user/:id/data/academics/:time_unit_id
-  def user_academics_data
+  def user_classes
     userId = params[:id]
     time_unit_id = params[:time_unit_id]
 
     classes = ProgressRepository.new.get_user_classes(userId, time_unit_id)
 
-    render status: 200,
+    render status: :ok,
       json: {
         info: "User's academics data",
-        academics_data: classes
+        user_classes: classes
+      }
+  end
+
+  # POST /user/:id/classes
+  def add_user_class
+    userId = params[:id]
+    new_class = params[:user_class]
+
+    user_class = ProgressRepository.new.save_user_class(userId, new_class)
+
+    if user_class.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to create a user class."
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Saved user class",
+        user_class: user_class
+      }
+  end
+
+  # PUT /user/:id/classes/:class_id
+  def update_user_class
+    userId = params[:id]
+    classId = params[:class_id]
+    updated_class = params[:user_class]
+
+    user_class = ProgressRepository.new.update_user_class(updated_class)
+
+    if user_class.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to update user class"
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated user class",
+        user_class: user_class
       }
   end
 end
