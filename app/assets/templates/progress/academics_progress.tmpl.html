@@ -42,7 +42,7 @@
         <div class="module-data__item__icons">
           <div ng-hide="user_class.editing">
             <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-            <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click=""></span>
+            <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
           </div>
 
           <div ng-show="user_class.editing">

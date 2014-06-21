@@ -27,6 +27,17 @@ angular.module('myApp')
         });
     }
 
+    $scope.deleteClass = function(index) {
+      if (window.confirm("Are you sure you want to delete this class?"))
+      {
+        UserClassService.delete($scope.user_classes[index])
+          .success(function(data) {
+            $scope.user_classes.splice(index, 1);
+            $scope.gpa = UserClassService.getGPA($scope.user_classes);
+          });
+      }
+    }
+
     $scope.addClass = function() {
       $scope.classes.editing = true;
       $scope.user_classes.push(UserClassService.new($scope.current_user));

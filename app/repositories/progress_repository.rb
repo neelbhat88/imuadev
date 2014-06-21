@@ -30,6 +30,14 @@ class ProgressRepository
     end
   end
 
+  def delete_user_class(classId)
+    if UserClass.find(classId).destroy()
+      return true
+    else
+      return false
+    end
+  end
+
   private
 
   def get_gpa(grade)

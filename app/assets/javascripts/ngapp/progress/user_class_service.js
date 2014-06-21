@@ -23,6 +23,10 @@ angular.module("myApp")
       return $http.post('/api/v1/users/' + user_class.user_id + '/classes', {user_class: user_class});
   }
 
+  self.delete = function(user_class) {
+    return $http.delete('/api/v1/users/'+ user_class.user_id + '/classes/' + user_class.id);
+  }
+
   self.getGPA = function(user_classes)
   {
     var totalGPA = 0;
@@ -37,8 +41,3 @@ angular.module("myApp")
     return (totalGPA / user_classes.length).toFixed(2);
   }
 }]);
-
-
-// Error
-// Delete
-// Lots of classes side bar

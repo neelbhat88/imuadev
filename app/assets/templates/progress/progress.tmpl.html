@@ -1,6 +1,6 @@
 <div class="progressContainer">
 
-  <div class="module-circles">
+  <div class="module-circles js-modules-circles">
     <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
       <div class="module-circle__bg">
         <div class="module-circle__points">
@@ -15,13 +15,47 @@
 
 
   <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
-    <div class="module-data-side-nav">
+    <div class="module-data-side-nav js-module-data-side-nav">
       <li class="nav-item" ng-class="{selected: sem.selected}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
 
-    <div class="module-data-content">
+    <div class="module-data-content js-module-data-content">
       <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
     </div>
   </div>
 
 </div>
+
+<script>
+  $(function() {
+    $('input, textarea').placeholder();
+
+    // Give angular time to render the page before setting the height
+    setTimeout(function(){
+      setHeight();
+    }, 500);
+
+    $(window).resize(function(event) {
+      setHeight();
+    });
+
+    function setHeight() {
+      var windowHeight = $(window).outerHeight();
+      var headerHeight = $('header').outerHeight();
+      var circlesHeight = $('.js-modules-circles').outerHeight();
+      var bodyHeight = windowHeight - headerHeight - circlesHeight;
+
+      var contentHeight = $('.js-module-data-content').outerHeight();
+
+      if (bodyHeight > contentHeight)
+      {
+        $('.js-module-data-content').outerHeight(bodyHeight + 'px');
+        $('.js-module-data-side-nav').outerHeight(bodyHeight + 'px');
+      }
+      else
+      {
+        $('.js-module-data-side-nav').outerHeight(contentHeight + 'px');
+      }
+    }
+  });
+</script>

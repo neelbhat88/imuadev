@@ -92,4 +92,24 @@ class Api::V1::ProgressController < ApplicationController
         user_class: user_class
       }
   end
+
+  # DELETE /user/:id/classes/:class_id
+  def delete_user_class
+    userId = params[:id].to_i
+    classId = params[:class_id].to_i
+
+    if ProgressRepository.new.delete_user_class(classId)
+      render status: :ok,
+        json: {
+          info: "Deleted User Class"
+        }
+      return
+    else
+      render status: :internal_server_error,
+        json: {
+          info: "Failed to delete user class"
+        }
+      return
+    end
+  end
 end

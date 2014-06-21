@@ -17,6 +17,7 @@ Imua::Application.routes.draw do
           get  '/:id/time_unit/:time_unit_id/classes' => 'progress#user_classes'
           post '/:id/classes' => 'progress#add_user_class'
           put  '/:id/classes/:class_id' => 'progress#update_user_class'
+          delete '/:id/classes/:class_id' => 'progress#delete_user_class'
         end
       end
 
