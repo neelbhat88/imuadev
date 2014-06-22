@@ -11,7 +11,7 @@ gem 'unicorn'
 gem "rack-timeout"
 
 group :development do
-  gem 'debugger'
+  #gem 'debugger'
   gem 'rspec-rails'
 end
 
