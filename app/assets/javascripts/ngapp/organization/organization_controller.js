@@ -1,7 +1,7 @@
 angular.module('myApp')
 .controller('OrganizationCtrl', ['$scope', '$routeParams', '$location',
-                                  '$modal', 'OrganizationService', 'UsersService',
-  function($scope, $routeParams, $location, $modal, OrganizationService, UsersService) {
+                                  '$modal', 'current_user', 'OrganizationService', 'UsersService',
+  function($scope, $routeParams, $location, $modal, current_user, OrganizationService, UsersService) {
     var orgId = $routeParams.id
 
     // Question: Can this be done in the resolve instead?
@@ -13,6 +13,13 @@ angular.module('myApp')
         $location.path('/');
       }
     );
+
+    $scope.fullName = function(user) {
+      if (user.id == current_user.id)
+        return "Me";
+      else
+        return user.first_Name + " " + user.last_name; 
+    }
 
     $scope.addOrgAdmin = function() {
       var modalInstance = $modal.open({

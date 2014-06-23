@@ -9,7 +9,7 @@
       <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
         <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
         <div class="avatar-block__name">
-          {{orgAdmin.first_name}} {{orgAdmin.last_name}}
+          {{fullName(orgAdmin)}}
         </div>
       </div>
 

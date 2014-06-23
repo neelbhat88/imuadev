@@ -23,7 +23,10 @@ Imua::Application.routes.draw do
 
       get  '/organization' => 'organization#all_organizations'
       get  '/organization/:id' => 'organization#get_organization'
+      # params[:name]
       post '/organization' => 'organization#create_organization'
+      # params[:id]
+      # params[:name]
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'
 
