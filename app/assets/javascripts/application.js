@@ -19,4 +19,5 @@
 //= require angular-ui-bootstrap-tpls
 //= require spin
 //= require ladda
+//= require d3
 //= require_tree .

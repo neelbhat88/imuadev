@@ -3,6 +3,7 @@ angular.module('myApp')
                                   '$modal', 'current_user', 'OrganizationService', 'UsersService',
   function($scope, $routeParams, $location, $modal, current_user, OrganizationService, UsersService) {
     var orgId = $routeParams.id
+    $scope.current_user = current_user;
 
     // Question: Can this be done in the resolve instead?
     OrganizationService.getOrganization($routeParams.id).then(
@@ -18,7 +19,7 @@ angular.module('myApp')
       if (user.id == current_user.id)
         return "Me";
       else
-        return user.first_Name + " " + user.last_name; 
+        return user.first_Name + " " + user.last_name;
     }
 
     $scope.addOrgAdmin = function() {

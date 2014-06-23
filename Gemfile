@@ -52,6 +52,8 @@ gem 'aws-sdk'
 gem 'devise'
 
 gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
+
+gem "d3-rails"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

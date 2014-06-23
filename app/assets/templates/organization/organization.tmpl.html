@@ -23,7 +23,8 @@
       <h4>Students</h4>
 
       <div class="avatar-block avatar-block--list" ng-repeat="student in organization.students">
-        <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+        <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+        <progress-circle user="{{student}}"></progress-circle>
         <div class="avatar-block__name">
           {{student.first_name}} {{student.last_name}}
         </div>
