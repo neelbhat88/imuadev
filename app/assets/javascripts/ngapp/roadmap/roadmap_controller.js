@@ -135,9 +135,10 @@ angular.module('myApp')
         }
       });
 
+      // TODO: Fix to be like edit milestone
       modalInstance.result.then(function (milestone){
-        RoadmapService.addMilestone(milestone).then(
-          function Success(data)
+        RoadmapService.addMilestone(milestone).success(
+          function (data)
           {
             timeUnit.milestones.push(data.milestone);
           }
@@ -168,8 +169,8 @@ angular.module('myApp')
     $scope.deleteMilestone = function(tu, milestone) {
       if (window.confirm("Are you sure you want to delete this milestone?"))
       {
-        RoadmapService.deleteMilestone(milestone.id).then(
-          function Success(data)
+        RoadmapService.deleteMilestone(milestone.id).success(
+          function (data)
           {
             $.each(tu.milestones, function(index, val) {
               if (this.id == milestone.id)

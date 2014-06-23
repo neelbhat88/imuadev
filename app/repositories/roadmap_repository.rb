@@ -131,7 +131,7 @@ class RoadmapRepository
 
       # Only set is_default if this is not associated with a time_unit
       if milestone[:is_default].nil?
-        return { :success => false, :info => "Must pass either a time_unit_id or is_default = true.", :milestone => nil }
+        return ReturnObject.new(:bad_request, "Must pass either a time_unit_id or is_default = true.", nil)
       end
 
       newmilestone.is_default = milestone[:is_default]
@@ -140,8 +140,8 @@ class RoadmapRepository
       newmilestone = time_unit.milestones.new # This automatically sets the time_unit_id on the Milestone
 
       time_unit.milestones.each do | m |
-        if m.title == milestone[:title] || m.value == milestone[:value]
-          return { :success => false, :info => "A milestone with the same title or description already exists in #{time_unit.name}.", :milestone => nil }
+        if m.module == milestone[:module] && m.submodule == milestone[:submodule] && m.value == milestone[:value]
+          return ReturnObject.new(:conflict, "A milestone of the same type and value already exists in #{time_unit.name}.", nil)
         end
       end
     end
@@ -156,9 +156,9 @@ class RoadmapRepository
     newmilestone.icon = milestone[:icon]
 
     if newmilestone.save
-      return { :success => true, :info => "Milestone created successfully.", :milestone => newmilestone }
+      return ReturnObject.new(:ok, "Successfully created Milestone id: #{newmilestone.id}.", newmilestone)
     else
-      return { :success => false, :info => "Failed to create milestone.", :milestone => nil }
+      return ReturnObject.new(:internal_server_error, "Failed to create milestone.", nil)
     end
 
   end
@@ -187,8 +187,8 @@ class RoadmapRepository
 
     if !milestone.time_unit_id.nil? # Default milestones don't have a time_unit
       milestone.time_unit.milestones.each do | m |
-        if m.id != ms[:id] && (m.title == ms[:title] || m.value == ms[:value])
-          return { :success => false, :info => "A milestone with the same title or value already exists in #{milestone.time_unit.name}.", :milestone => nil }
+        if m.id != ms[:id] && (m.module == ms[:module] && m.submodule == ms[:submodule] && m.value == ms[:value])
+          return ReturnObject.new(:conflict, "A milestone of the same type and value already exists in #{milestone.time_unit.name}.", nil)
         end
       end
     end
@@ -197,17 +197,17 @@ class RoadmapRepository
                                     :description=>ms[:description],
                                     :importance => ms[:importance],
                                     :value => ms[:value])
-      return { :success => true, :info=>"Milestone updated successfully", :milestone=>milestone }
+      return ReturnObject.new(:ok, "Successfully updated Milestone id: #{milestone.id}.", milestone)
     end
 
-    return { :success => false, :info=>"Milestone failed to update", :milestone=>milestone }
+    return ReturnObject.new(:internal_server_error, "Failed to update Milestone id: #{milestone.id}.", milestone)
   end
 
   def delete_milestone(milestoneId)
     if Milestone.find(milestoneId).destroy()
-      return { :success => true, :info => "Successfully deleted Milestone id:#{milestoneId}." }
+      return ReturnObject.new(:ok, "Successfully deleted Milestone id: #{milestoneId}.", nil)
     else
-      return { :success => false, :info => "Failed to delete Milestone id:#{milestoneId}." }
+      return ReturnObject.new(:internal_server_error, "Failed to delete Milestone id: #{milestoneId}.", nil)
     end
   end
 

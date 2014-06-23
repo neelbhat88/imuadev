@@ -12,8 +12,8 @@ angular.module('myApp')
 
       if ($scope.errors.length == 0)
       {
-        RoadmapService.updateMilestone($scope.milestone).then(
-          function Success(data)
+        RoadmapService.updateMilestone($scope.milestone).success(
+          function (data)
           {
             angular.copy(data.milestone, selectedMilestone);
 
@@ -30,8 +30,8 @@ angular.module('myApp')
     $scope.delete = function() {
       if (window.confirm("Are you sure you want to delete this milestone?"))
       {
-        RoadmapService.deleteMilestone($scope.milestone.id).then(
-          function Success(data)
+        RoadmapService.deleteMilestone($scope.milestone.id).success(
+          function (data)
           {
             $.each(timeUnit.milestones, function(index, val) {
               if (this.id == $scope.milestone.id)

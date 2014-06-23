@@ -109,45 +109,15 @@ angular.module('myApp')
       },
 
       addMilestone: function(milestone) {
-        var defer = $q.defer();
-
-        $http.post('/api/v1/milestone', {milestone: milestone})
-          .then(function(resp, status) {
-            if (resp.data.success)
-              defer.resolve(resp.data);
-            else
-              defer.reject(resp.data);
-          });
-
-        return defer.promise;
+        return $http.post('/api/v1/milestone', {milestone: milestone});
       },
 
       updateMilestone: function(milestone) {
-        var defer = $q.defer();
-
-        $http.put('/api/v1/milestone/' + milestone.id, { milestone: milestone })
-          .then(function(resp, status) {
-            if (resp.data.success)
-              defer.resolve(resp.data);
-            else
-              defer.reject(resp.data);
-          });
-
-        return defer.promise;
+        return $http.put('/api/v1/milestone/' + milestone.id, { milestone: milestone });
       },
 
       deleteMilestone: function(milestoneId) {
-        var defer = $q.defer();
-
-        $http.delete('/api/v1/milestone/' + milestoneId)
-          .then(function(resp, status) {
-            if (resp.data.success)
-              defer.resolve(resp.data);
-            else
-              defer.reject(resp.data);
-          });
-
-        return defer.promise;
+        return $http.delete('/api/v1/milestone/' + milestoneId);
       },
 
       validateMilestone: function(timeUnit, milestone)
@@ -155,9 +125,9 @@ angular.module('myApp')
         var errors = [];
 
         $.each(timeUnit.milestones, function(index, val) {
-          if (this.id != milestone.id && (this.title == milestone.title || this.value == milestone.value))
+          if (this.id != milestone.id && (this.module == milestone.module && this.submodule == milestone.submodule && this.value == milestone.value))
           {
-            errors.push("A milestone with the same title or value already exists in " + timeUnit.name);
+            errors.push("A milestone of the same type and value already exists in " + timeUnit.name);
             return false;
           }
         });

@@ -139,11 +139,10 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.create_milestone(milestone)
 
-    viewMilestone = ViewMilestone.new(result[:milestone]) unless result[:milestone].nil?
-    render status: 200,
+    viewMilestone = ViewMilestone.new(result.object) unless result.object.nil?
+    render status: result.status,
       json: {
-        success: result[:success],
-        info: result[:info],
+        info: result.info,
         milestone: viewMilestone
       }
   end
@@ -159,11 +158,10 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.update_milestone(milestone)
 
-    viewMilestone = ViewMilestone.new(result[:milestone]) unless result[:milestone].nil?
-    render status: 200,
+    viewMilestone = ViewMilestone.new(result.object) unless result.object.nil?
+    render status: result.status,
       json: {
-        success: result[:success],
-        info: result[:info],
+        info: result.info,
         milestone: viewMilestone
       }
   end
@@ -174,10 +172,9 @@ class Api::V1::RoadmapController < ApplicationController
 
     result = RoadmapRepository.new.delete_milestone(milestoneId)
 
-    render status: 200,
+    render status: result.status,
       json: {
-        success: result[:success],
-        info: result[:info]
+        info: result.info
       }
   end
 
