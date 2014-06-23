@@ -3,7 +3,7 @@ class OrganizationRepository
   def get_all_organizations
     orgs = Organization.all
 
-    return { :success => true, :info => "All organizations", :organizations => orgs }
+    return ReturnObject.new(:ok, "All organizations", orgs)
   end
 
   def get_organization(orgId)

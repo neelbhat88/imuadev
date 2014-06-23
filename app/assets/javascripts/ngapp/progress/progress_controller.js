@@ -17,7 +17,7 @@ angular.module('myApp')
 
           if (current_user.time_unit_id == this.id)
           {
-            this.name = "Current";
+            this.name = "This Semester";
             return false;
           }
         });

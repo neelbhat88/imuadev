@@ -9,11 +9,10 @@ class Api::V1::OrganizationController < ApplicationController
   def all_organizations
     result = OrganizationRepository.new.get_all_organizations()
 
-    render status: 200,
+    render status: result.status,
       json: {
-        success: result[:success],
-        info: result[:info],
-        organizations: result[:organizations]
+        info: result.info,
+        organizations: result.object
       }
   end
 
