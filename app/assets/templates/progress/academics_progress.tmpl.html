@@ -40,7 +40,7 @@
         </div>
 
         <div class="module-data__item__icons">
-          <div ng-hide="user_class.editing">
+          <div ng-if="selected_semester.id == current_user.time_unit_id" ng-hide="user_class.editing">
             <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
             <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
           </div>
@@ -54,6 +54,6 @@
       </div>
     </div>
 
-    <div class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">Add Class</div>
+    <div ng-if="selected_semester.id == current_user.time_unit_id" class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">Add Class</div>
 
 </div>

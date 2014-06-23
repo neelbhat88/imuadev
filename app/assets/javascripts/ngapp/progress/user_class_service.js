@@ -2,8 +2,8 @@ angular.module("myApp")
 .service("UserClassService", ['$http', function($http){
   var self = this;
 
-  self.all = function(user) {
-    return $http.get('/api/v1/users/' + user.id + '/time_unit/' + user.time_unit_id + '/classes');
+  self.all = function(user, time_unit_id) {
+    return $http.get('/api/v1/users/' + user.id + '/time_unit/' + time_unit_id + '/classes');
   }
 
   self.new = function(user) {

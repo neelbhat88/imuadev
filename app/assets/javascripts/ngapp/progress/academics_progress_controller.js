@@ -4,10 +4,13 @@ angular.module('myApp')
     $scope.user_classes = [];
     $scope.classes = {};
 
-    UserClassService.all($scope.current_user).success(function(data) {
-      $scope.user_classes = data.user_classes;
+    $scope.$watch('selected_semester', function(){
+      UserClassService.all($scope.current_user, $scope.selected_semester.id).success(function(data) {
+        $scope.user_classes = data.user_classes;
+      });
+    });
 
-      // Todo: Make this into a $watch on the user_classes
+    $scope.$watch('user_classes', function() {
       $scope.gpa = UserClassService.getGPA($scope.user_classes);
     });
 
@@ -19,10 +22,7 @@ angular.module('myApp')
 
       UserClassService.save(new_class)
         .success(function(data){
-          //$scope.user_classes.splice(index, 1); // Remove this one since there is no id or other properties
           $scope.user_classes[index] = data.user_class;
-          // Todo: Make this into a $watch on the user_classes
-          $scope.gpa = UserClassService.getGPA($scope.user_classes);
           $scope.classes.editing = false;
         });
     }
@@ -33,7 +33,6 @@ angular.module('myApp')
         UserClassService.delete($scope.user_classes[index])
           .success(function(data) {
             $scope.user_classes.splice(index, 1);
-            $scope.gpa = UserClassService.getGPA($scope.user_classes);
           });
       }
     }

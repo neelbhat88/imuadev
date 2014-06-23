@@ -1,30 +1,31 @@
 angular.module('myApp')
-.controller('ProgressController', ['$scope', 'current_user', 'OrganizationService', '$http',
-  function($scope, current_user, OrganizationService, $http) {
+.controller('ProgressController', ['$scope', 'current_user', 'OrganizationService', 'ProgressService',
+  function($scope, current_user, OrganizationService, ProgressService) {
     $scope.selected_module = null;
     $scope.semesters = [];
     $scope.current_user = current_user;
+    $scope.selected_semester = null;
 
     OrganizationService.getTimeUnits(current_user.organization_id)
       .success(function(data) {
         $scope.semesters = [];
         var org_time_units = data.org_time_units;
 
+        // Set up each semester in descending order
         $.each(org_time_units, function(index, val) {
           $scope.semesters.unshift(this);
 
           if (current_user.time_unit_id == this.id)
+          {
+            this.name = "Current";
             return false;
+          }
         });
 
-        $scope.semesters[0].selected = true;
+        $scope.selected_semester = $scope.semesters[0];
       });
 
-    $http.post('/api/v1/progress/modules', {
-              user_id: current_user.id,
-              organization_id: current_user.organization_id,
-              time_unit_id: current_user.time_unit_id
-            })
+    ProgressService.getModules(current_user, current_user.time_unit_id)
       .success(function(data){
         $scope.modules_progress = data.modules_progress;
         $scope.selected_module = data.modules_progress[0];
@@ -32,29 +33,24 @@ angular.module('myApp')
 
     $scope.selectModule = function(mod) {
       $scope.selected_module = mod;
+      $scope.selected_semester = $scope.semesters[0];
 
-      $.each($scope.semesters, function(index, val) {
-        this.selected = false;
-      });
-      $scope.semesters[0].selected = true;
+      // This is super hacky since this function is injected on the tmpl.html file, but it'll do for now.
+      // Put this in a attr directive e.g. 'Resize' or something
+      setTimeout(function(){ setHeight(); }, 100);
     }
 
     $scope.selectSemester = function(sem) {
-      $http.post('/api/v1/progress/modules', {
-              user_id: current_user.id,
-              organization_id: current_user.organization_id,
-              time_unit_id: sem.id
-            })
+      ProgressService.getModules(current_user, sem.id)
       .success(function(data){
         $scope.modules_progress = data.modules_progress;
+
+        // This is super hacky since this function is injected on the tmpl.html file, but it'll do for now.
+        // Put this in a attr directive e.g. 'Resize' or something
+        setHeight();
       });
 
-      $.each($scope.semesters, function(index, val) {
-        this.selected = false;
-
-        if (this.id == sem.id)
-          this.selected = true;
-      });
+      $scope.selected_semester = sem;
     }
 
     $scope.getModuleTemplate = function(modTitle) {

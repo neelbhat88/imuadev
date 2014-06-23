@@ -16,7 +16,7 @@
 
   <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
     <div class="module-data-side-nav js-module-data-side-nav">
-      <li class="nav-item" ng-class="{selected: sem.selected}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
+      <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
 
     <div class="module-data-content js-module-data-content">
@@ -39,23 +39,24 @@
       setHeight();
     });
 
-    function setHeight() {
-      var windowHeight = $(window).outerHeight();
-      var headerHeight = $('header').outerHeight();
-      var circlesHeight = $('.js-modules-circles').outerHeight();
-      var bodyHeight = windowHeight - headerHeight - circlesHeight;
-
-      var contentHeight = $('.js-module-data-content').outerHeight();
-
-      if (bodyHeight > contentHeight)
-      {
-        $('.js-module-data-content').outerHeight(bodyHeight + 'px');
-        $('.js-module-data-side-nav').outerHeight(bodyHeight + 'px');
-      }
-      else
-      {
-        $('.js-module-data-side-nav').outerHeight(contentHeight + 'px');
-      }
-    }
   });
+
+  function setHeight() {
+    var windowHeight = $(window).outerHeight();
+    var headerHeight = $('header').outerHeight();
+    var circlesHeight = $('.js-modules-circles').outerHeight();
+    var bodyHeight = windowHeight - headerHeight - circlesHeight;
+
+    var contentHeight = $('.js-module-data-content').outerHeight();
+
+    if (bodyHeight > contentHeight)
+    {
+      $('.js-module-data-content').outerHeight(bodyHeight + 'px');
+      $('.js-module-data-side-nav').outerHeight(bodyHeight + 'px');
+    }
+    else
+    {
+      $('.js-module-data-side-nav').outerHeight(contentHeight + 'px');
+    }
+  }
 </script>
