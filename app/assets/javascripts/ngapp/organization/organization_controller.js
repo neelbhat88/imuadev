@@ -20,7 +20,7 @@ angular.module('myApp')
       if (user.id == current_user.id)
         return "Me";
       else
-        return user.first_Name + " " + user.last_name;
+        return user.first_name + " " + user.last_name;
     }
 
     $scope.addOrgAdmin = function() {
