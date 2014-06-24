@@ -12,7 +12,7 @@ angular.module('myApp')
 
     $scope.$watch('user_classes', function() {
       $scope.gpa = UserClassService.getGPA($scope.user_classes);
-    });
+    }, true);
 
     $scope.saveClass = function(index) {
       var new_class = UserClassService.new($scope.current_user);
