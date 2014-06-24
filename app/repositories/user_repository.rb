@@ -73,6 +73,7 @@ class UserRepository
       u.email = user_obj[:email]
       u.first_name = user_obj[:first_name]
       u.last_name = user_obj[:last_name]
+      u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
       u.password = password
@@ -106,12 +107,13 @@ class UserRepository
 end
 
 class OrgUser
-  attr_accessor :email, :first_name, :last_name, :role, :organization_id
+  attr_accessor :email, :first_name, :last_name, :phone, :role, :organization_id
 
   def initialize(user_obj)
     @email = user_obj.email
     @first_name = user_obj.first_name
     @last_name = user_obj.last_name
+    @phone = user_obj.phone
     @role = user_obj.role
     @organization_id = user_obj.organization_id
   end

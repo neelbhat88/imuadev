@@ -48,6 +48,7 @@ angular.module('myApp')
           email: "",
           first_name: "",
           last_name: "",
+          phone: "",
           role: 10,
           organization_id: orgId
       }
@@ -59,6 +60,7 @@ angular.module('myApp')
           email: "",
           first_name: "",
           last_name: "",
+          phone: "",
           role: 50,
           organization_id: orgId
       }

@@ -19,6 +19,7 @@ class Api::V1::UsersController < ApplicationController
     email = params[:user][:email]
     first_name = params[:user][:first_name]
     last_name = params[:user][:last_name]
+    phone = params[:user][:phone]
     role = params[:user][:role].to_i
     orgId = params[:user][:organization_id].to_i
 
@@ -35,6 +36,7 @@ class Api::V1::UsersController < ApplicationController
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,
+             :phone => phone,
              :role => role,
              :organization_id => orgId }
 
