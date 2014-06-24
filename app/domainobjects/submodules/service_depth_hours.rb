@@ -35,7 +35,7 @@ class ServiceDepthHours
 
     totalPoints = 0
     time_units.each do | tu |
-      totalPoints += tu.points * tu.importance
+      totalPoints += tu.points
     end
 
     return totalPoints
