@@ -44,6 +44,9 @@ $bg-grey: #282828;
 $button-blue: #53b5e6;
 $button-blue-hover: #69bfe9;
 
+$button-red: #cf2622;
+$button-red-hover: #cf6967;
+
 $ink: #374347;
 
 .green { color: $green; }
@@ -348,7 +351,7 @@ header {
 
 .buttonGroup {
 
-  .submit, .cancel {
+  .submit, .cancel, .delete {
 
     padding-left: 10px;
     font-size: 18px;
@@ -388,6 +391,21 @@ header {
 
   &:hover { background-color: $grey-hover; }
 
+}
+
+.delete {
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid $button-red;
+  background-color: $button-red;
+  @include border-radius(2px);
+  color: white;
+  min-width: 80px;
+
+  padding: 6px 10px;
+  cursor: pointer;
+
+  &:hover { background-color: $button-red-hover; }
 }
 
 .errorText { color: $red; }

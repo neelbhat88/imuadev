@@ -4,6 +4,17 @@ angular.module('myApp')
   function($scope, $modalInstance, RoadmapService, selectedMilestone, timeUnit) {
     $scope.errors = [];
     $scope.milestone = angular.copy(selectedMilestone);
+    $scope.showAdvanced = false;
+    $scope.advancedPrefix = "Show";
+
+    $scope.toggleAdvanced = function()
+    {
+      $scope.showAdvanced = !$scope.showAdvanced;
+      if($scope.showAdvanced)
+        $scope.advancedPrefix = "Hide";
+      else
+        $scope.advancedPrefix = "Show";
+    };
 
     $scope.save = function() {
       $scope.errors = [];

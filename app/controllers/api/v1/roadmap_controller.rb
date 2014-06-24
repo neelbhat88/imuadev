@@ -127,13 +127,14 @@ class Api::V1::RoadmapController < ApplicationController
     mod = params[:milestone][:module]
     submod = params[:milestone][:submodule]
     importance = params[:milestone][:importance]
+    points = params[:milestone][:points]
     title = params[:milestone][:title]
     desc = params[:milestone][:description]
     is_default = params[:milestone][:is_default]
     value = params[:milestone][:value]
     icon = params[:milestone][:icon]
 
-    milestone = { :module => mod, :submodule=> submod, :importance => importance,
+    milestone = { :module => mod, :submodule=> submod, :importance => importance, :points => points,
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
                   :is_default => is_default, :icon => icon }
 

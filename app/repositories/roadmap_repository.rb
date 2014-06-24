@@ -149,7 +149,7 @@ class RoadmapRepository
     newmilestone.module = milestone[:module]
     newmilestone.submodule = milestone[:submodule]
     newmilestone.importance = milestone[:importance]
-    newmilestone.points = default_points
+    newmilestone.points = milestone[:points]
     newmilestone.title = milestone[:title]
     newmilestone.description = milestone[:description]
     newmilestone.value = milestone[:value]
@@ -195,7 +195,7 @@ class RoadmapRepository
 
     if milestone.update_attributes(:title => ms[:title],
                                     :description=>ms[:description],
-                                    :importance => ms[:importance],
+                                    :points => ms[:points],
                                     :value => ms[:value])
       return ReturnObject.new(:ok, "Successfully updated Milestone id: #{milestone.id}.", milestone)
     end

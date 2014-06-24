@@ -1,21 +1,38 @@
 <div class="modal-body">
-    <div class="milestone ptl">
-      <div class="pbs">
-        <div class="milestone-description">{{milestone.description}}</div>
-      </div>
 
-      <div class="pbs">
-        <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
-      </div>
+  <span class ="edit-milestone__title">
+    <img ng-src={{milestone.icon}}/>{{milestone.title}}
+  </span>
 
-      <ul class="errorText ptm" ng-show="errors">
-        <li ng-repeat="error in errors">{{error}}</li>
-      </ul>
+  <div class="milestone ptl">
+    <div class="pbs">
+      <div class="milestone-description">{{milestone.description}}</div>
+    </div>
 
-      <div class="buttonGroup pvxl">
-        <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
-        <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-        <a ng-click="delete()">Delete Milestone</a>
+    <div class="pbs">
+      <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
+    </div>
+
+    <div class="milestone_advanced">
+      <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+      <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+        <div class="pbs">
+          <span class="milestone-weight">Weight:</span>
+        </div>
+        <div class="pbs">
+          <input class="form-field" ng-model="milestone.points" placeholder="Weight">
+        </div>
       </div>
     </div>
+
+    <ul class="errorText ptm" ng-show="errors">
+      <li ng-repeat="error in errors">{{error}}</li>
+    </ul>
+
+    <div class="buttonGroup pvxl">
+      <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
+      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+      <button class="delete" ng-click="delete()">Delete</button>
+    </div>
+  </div>
 </div>

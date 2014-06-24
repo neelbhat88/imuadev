@@ -56,7 +56,7 @@
           <!-- Semester Header -->
 
           <!-- TimeUnit Milestones -->
-          <div class="milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-importance'">
+          <div class="milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-points'">
             <span class ="milestone__title">
               <img ng-src={{milestone.icon}}/>{{milestone.title}}
             </span>
@@ -72,8 +72,8 @@
           <!-- TimeUnit Milestones -->
 
           <!-- Semester Footer -->
-          <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer">
-            <div class="semester__footer__title" ng-hide="sem.editing" ng-click="addMilestone(sem)">
+          <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer" ng-click="addMilestone(sem)">
+            <div class="semester__footer__title">
               <span class="glyphicon glyphicon-plus-sign"></span>
               <span class="text">Add Another Milestone</span>
             </div>

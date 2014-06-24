@@ -28,20 +28,20 @@
 
       <div class="pbs">
         <input class="form-field" ng-model="selected.module.milestone.value" placeholder="Value">
+
       </div>
 
-      <div class="pbs">
-        <span class="milestone-weight">Weight:</span>
+      <div class="milestone_advanced">
+        <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+        <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+          <div class="pbs">
+            <span class="milestone-weight">Weight:</span>
+          </div>
+          <div class="pbs">
+            <input class="form-field" ng-model="selected.module.milestone.points" placeholder="Weight">
+          </div>
+        </div>
       </div>
-      
-      <div class="pbs">
-        <input class="form-field" ng-model="selected.module.milestone.points" placeholder="Weight">
-      </div>
-      <!-- <div class="btn-group">
-        <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="1">Less Important</label>
-        <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="2">Important</label>
-        <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
-      </div> -->
 
       <ul class="errorText ptm" ng-show="errors">
         <li ng-repeat="error in errors">{{error}}</li>

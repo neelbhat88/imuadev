@@ -301,3 +301,24 @@
     }
   }
 }
+
+.milestone_advanced
+{
+  padding-left: 5px;
+
+  .milestone_advanced__toggle
+  {
+      font-size: 12px;
+  }
+
+  .milestone_advanced__hidden
+  {
+    padding-top: 5px;
+    padding-left: 20px;
+  }
+}
+
+.edit-milestone__title
+{
+  @extend .milestone-title;
+}

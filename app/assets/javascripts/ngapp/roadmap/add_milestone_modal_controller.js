@@ -4,6 +4,8 @@ angular.module('myApp')
   function($scope, $modalInstance, timeUnit, enabledModules, RoadmapService) {
     $scope.selected = {};
     $scope.errors = [];
+    $scope.showAdvanced = false;
+    $scope.advancedPrefix = "Show";
 
     // Build up the dd-modules array for a dropdown
     $scope.dd_modules = [];
@@ -24,9 +26,21 @@ angular.module('myApp')
       });
     });
 
+    // Uncomment to have first module pre-selected
+    //scope.selected.module = $scope.dd_modules[0];
+
     $scope.selectModule = function(module)
     {
       $scope.selected.module = module;
+    };
+
+    $scope.toggleAdvanced = function()
+    {
+      $scope.showAdvanced = !$scope.showAdvanced;
+      if($scope.showAdvanced)
+        $scope.advancedPrefix = "Hide";
+      else
+        $scope.advancedPrefix = "Show";
     };
 
     $scope.add = function()
