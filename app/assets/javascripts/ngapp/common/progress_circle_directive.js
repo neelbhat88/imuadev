@@ -7,11 +7,11 @@ angular.module('myApp')
     },
     link: function(scope, element, attrs) {
       var data = [
-        {name: "GPA", value: 300},
-  			{name: "Extra Curricular", value:  3800},
-  			{name: "Service", value:  2500},
-  			{name: "PDUs", value:  2000},
-  			{name: "Events", value:  1500},
+        {name: "GPA", value: Math.floor(Math.random() * 2000) + 1},
+  			{name: "Extra Curricular", value:  Math.floor(Math.random() * 2000) + 1},
+  			{name: "Service", value:  Math.floor(Math.random() * 2000) + 1},
+  			{name: "PDUs", value:  Math.floor(Math.random() * 2000) + 1},
+  			{name: "Events", value:  Math.floor(Math.random() * 2000) + 1},
         {name: "Future Progress", value: 500}
       ];
 
