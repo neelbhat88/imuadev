@@ -30,14 +30,22 @@ angular.module("myApp")
   self.getGPA = function(user_classes)
   {
     var totalGPA = 0;
+    var totalClasses = 0;
 
     if (user_classes.length == 0)
       return 0;
 
     $.each(user_classes, function(index, val) {
-       totalGPA += this.gpa;
+       if (this.id)
+       {
+         totalGPA += this.gpa;
+         totalClasses++;
+       }
     });
 
-    return (totalGPA / user_classes.length).toFixed(2);
+    if (totalClasses == 0)
+      return 0;
+
+    return (totalGPA / totalClasses).toFixed(2);
   }
 }]);
