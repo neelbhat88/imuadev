@@ -4,6 +4,7 @@ angular.module('myApp')
   function($scope, $routeParams, $location, $modal, current_user, OrganizationService, UsersService) {
     var orgId = $routeParams.id
     $scope.current_user = current_user;
+    $scope.userCtrl = current_user;
 
     // Question: Can this be done in the resolve instead?
     OrganizationService.getOrganization($routeParams.id).then(
