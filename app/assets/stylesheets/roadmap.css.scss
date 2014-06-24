@@ -131,6 +131,22 @@
   border-radius: 5px 5px 0 0;
 }
 
+.milestone-title {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 18px;
+
+  img {
+    width: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+}
+
 .year__semester {
 
   .semester__header-title {
@@ -155,22 +171,6 @@
     background-color: #e0e0e0;
     border: 1px solid $light-grey;
     border-top: none;
-  }
-
-  .milestone-title {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-    font-weight: bold;
-    font-size: 18px;
-
-    img {
-      width: 40px;
-      display: inline-block;
-      vertical-align: middle;
-      margin-left: 5px;
-      margin-right: 10px;
-    }
   }
 
   .milestone {
@@ -273,4 +273,31 @@
 .roadmap-spacer-line--aftercircle
 {
   margin-top: -2px;
+}
+
+.selectable_modules
+{
+  width: 100%;
+  height: 100%;
+
+  .selectable_module__title
+  {
+    @extend .milestone-title;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid $light-grey;
+    background-color: white;
+    img {
+      margin-left: 0px;
+    }
+
+    &:hover {
+      border: 1px solid $ink;
+    }
+
+    &.selected {
+      border: 5px solid $ink;
+      padding: 6px;
+    }
+  }
 }

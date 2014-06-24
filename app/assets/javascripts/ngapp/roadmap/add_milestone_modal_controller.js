@@ -24,6 +24,11 @@ angular.module('myApp')
       });
     });
 
+    $scope.selectModule = function(module)
+    {
+      $scope.selected.module = module;
+    };
+
     $scope.add = function()
     {
       $scope.errors = [];

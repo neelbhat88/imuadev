@@ -1,10 +1,24 @@
 <div class="modal-body">
+
+
+
+    <!--
     <select ng-model="selected.module" ng-options="mod.submoduleTitle group by mod.module for mod in dd_modules">
       <option value="">-- choose sub-module --</option>
     </select>
+    -->
 
     <!-- QUESTION -->
     <!-- <div ng-show="selected.module" class="milestone ptl" ng-include="'/assets/roadmap/add_'+selected.module.submoduleType.toLowerCase()+'.tmpl.html'"> -->
+
+  <div class="selectable_modules">
+
+    <!-- Selectable Modules -->
+    <span class="selectable_module" modulecolor="{{selectable_module.module}}" ng-repeat="selectable_module in dd_modules">
+      <button class ="selectable_module__title" ng-class="{selected: selected.module == selectable_module}" ng-click="selectModule(selectable_module)">
+        <img ng-src={{selectable_module.milestone.icon}}/>{{selectable_module.milestone.title}}
+      </button>
+    </span>
 
     <div ng-show="selected.module" class="milestone ptl">
 
@@ -13,14 +27,21 @@
       </div>
 
       <div class="pbs">
-        <input class="form-field" ng-model="selected.module.milestone.value" placeholder="GPA Value">
+        <input class="form-field" ng-model="selected.module.milestone.value" placeholder="Value">
       </div>
 
-      <div class="btn-group">
+      <div class="pbs">
+        <span class="milestone-weight">Weight:</span>
+      </div>
+      
+      <div class="pbs">
+        <input class="form-field" ng-model="selected.module.milestone.points" placeholder="Weight">
+      </div>
+      <!-- <div class="btn-group">
         <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="1">Less Important</label>
         <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="2">Important</label>
         <label class="btn btn-primary" ng-model="selected.module.milestone.importance" btn-radio="3">Extremely Important</label>
-      </div>
+      </div> -->
 
       <ul class="errorText ptm" ng-show="errors">
         <li ng-repeat="error in errors">{{error}}</li>
@@ -31,4 +52,5 @@
       <button type="submit" class="submit" ng-show="selected.module" ng-click="add()"><span>Add</span></button>
       <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
     </div>
+  </div>
 </div>

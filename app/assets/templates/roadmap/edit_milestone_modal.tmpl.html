@@ -8,12 +8,6 @@
         <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
       </div>
 
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="1">Less Important</label>
-        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="2">Important</label>
-        <label class="btn btn-primary" ng-model="milestone.importance" btn-radio="3">Extremely Important</label>
-      </div>
-
       <ul class="errorText ptm" ng-show="errors">
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
