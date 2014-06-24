@@ -3,8 +3,8 @@ angular.module('myApp')
   function($scope, current_user, OrganizationService) {
     $scope.user = current_user;
 
-    OrganizationService.all().then(
-      function Success(data) {
+    OrganizationService.all()
+    .success(function (data) {
         $scope.organizations = data.organizations;
       }
     );

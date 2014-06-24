@@ -3,17 +3,7 @@ angular.module('myApp')
 
   var service = {
     all: function() {
-      var defer = $q.defer();
-
-      $http.get('/api/v1/organization')
-        .then(function(resp, status){
-          if (resp.data.success)
-            defer.resolve(resp.data);
-          else
-            defer.reject(resp.data);
-        });
-
-      return defer.promise;
+      return $http.get('/api/v1/organization');
     },
 
     getOrganization: function(orgId) {
