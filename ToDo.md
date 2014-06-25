@@ -1,8 +1,8 @@
 # To Do's
 
-1. Remove extra defers on all HTTP calls -- first wait on answer to question about it though
+1. Remove extra defers on all HTTP calls
 
-1. Cache Roadmap object in Angular so that it doesn't always make the rest call
+1. Cache Roadmap object in Angular so that it doesn't always make the rest call - Maybe cache more objects in services
 
 1. **Tests** -> add , only: [:edit] to resources :users and see if test fails
 
@@ -15,6 +15,16 @@
 # DEBT and QUESTIONS
 - UsersController -> How to correctly send a 401 Unauthorized if the authenciate_user! fails in the application controller
 
+# Tech Talk with Greg
+1. RSPEC Tests - Good tutorials? I couldn't figure out easily how to mock an ActiveRecord call. How do they do this?
+1. Loading gif in Angular - Is using $interceptor the best way?
+1. Access and Authorization in Angular - Using authorizedRolse and onChangeStart to do access (prevent students from accessing org admin's pages).
+But on a page that both mentors and OA's can see, how to let one role do something while other role can't in a directive vs doing a bunch of ng-ifs?
+1. Cache busting with Angular templates. Can I see this happening locally? Is this a solution? (https://github.com/pitr/angular-rails-templates)
+
+### General questions
+1. Do they like Intercom? And what is it good for?
+1. Where does he get design/UX inspiration? Any good design/UX resources?
 
 # Angular Questions
 1. HOW TO DO RSPEC TESTS?? Any good tutorials? Took forever to figure out how to mock an ActiveRecord call (see roadmap_repository_rspec.rb) and just gave up
@@ -24,7 +34,16 @@
 
 1. users_service.js methods returning just $http and then using .success() and .error() with the server returning error status --> Is this a good way to do it?
 
-1. Roadmap.html
+1. Angular best practices for authorization (Admin only can see this page, etc)
+   roles and permissions
+
+1. Full angular header with different links for different people
+
+1. Caching objects between pages, e.g. Roadmap can be cached after the first time you go to the roadmap page until the user refreshes their screen. Are there best practices around this?
+
+1. ~~Page load blip~~ --> ng-cloak
+
+1. ~~Roadmap.html~~
 
     ng-incude with a string built up reloads full page
     In roadmap.html See (http://lostechies.com/gabrielschenker/2013/12/28/angularjspart-6-templates/)
@@ -34,14 +53,6 @@
     ```
     but ```ng-include="'/assets/add_academics_gpa.html'"``` works just fine
 
-1. Angular best practices for authorization (Admin only can see this page, etc)
-   roles and permissions
-
-1. Full angular header with different links for different people
-
-1. Caching objects between pages, e.g. Roadmap can be cached after the first time you go to the roadmap page until the user refreshes their screen. Are there best practices around this?
-
-1. ~~Page load blip~~ --> ng-cloak
 
 # Don't forget
 1. **Tests!**

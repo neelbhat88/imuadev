@@ -1,12 +1,11 @@
 <div class="roadmapContainer" ng-if="roadmap && !loading">
   <div class="tuContainer ptl">
-
     <!-- Roadmap Name -->
-    <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
+    <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="roadmapContainer__title-container">
       <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
     </div>
 
-    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
+    <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="roadmapContainer__title-container">
       <h1 class="roadmapContainer__title--editable" ng-hide="roadmap.editing" ng-click="roadmap.editing=true; roadmap.newname=roadmap.name">{{roadmap.name}}</h1>
 
       <div ng-show="roadmap.editing" class="pvxl">
@@ -21,85 +20,76 @@
     </div>
     <!-- Roadmap Name -->
 
-    <div class="tu" ng-repeat="tu in roadmap.time_units | orderBy: 'id' ">
+    <div class="roadmap-spacer-circle"></div>
+    <div class="roadmap-spacer-line roadmap-spacer-line--aftercircle"></div>
 
-      <!-- TimeUnit Header -->
-      <div class="tu__header">
+    <!-- Year -->
+    <div ng-repeat="year in roadmap.years">
+      <div class="year">
 
-        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
-          <span class="tu__header-title">{{tu.name}}</span>
+        <div class="year__header">
+          <span class="name">{{year.name}}</span>
         </div>
-        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
-          <span class="tu__header-title--editable" ng-hide="tu.editing" ng-click="addTimeUnit(tu)">{{tu.name}}</span>
 
-          <div ng-show="tu.editing">
-            <form>
-              <input class="form-field" ng-model="tu.name" placeholder="Time Unit Name">
+        <!-- Semester -->
+        <div class="year__semester" ng-repeat="sem in year.semesters">
 
-              <div class="buttonGroup pvs">
-                <button type="submit" class="submit" ng-click="saveAddTimeUnit(tu)"><span>Save</span></button>
-                <button class="cancel" ng-click="cancelAddTimeUnit(tu)"><span>Cancel</span></button>
-              </div>
-            </form>
+          <!-- Semester Header -->
+          <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
+            <div class="semester__header-title">{{sem.name}}</div>
           </div>
+          <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
+            <div class="semester__header-title--editable" ng-hide="sem.editing">
+              <span class="name" ng-click="addTimeUnit(sem)">{{sem.name}}</span>
+            </div>
+
+            <div ng-show="sem.editing" class="semester__header-title--editing">
+              <form>
+                <input class="form-field" ng-model="sem.name" placeholder="Time Unit Name">
+
+                <button type="submit" class="submit" ng-click="saveAddTimeUnit(sem)"><span>Save</span></button>
+                <button class="cancel" ng-click="cancelAddTimeUnit(sem)"><span>Cancel</span></button>
+              </form>
+            </div>
+          </div>
+          <!-- Semester Header -->
+
+          <!-- TimeUnit Milestones -->
+          <div class="milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-points'">
+            <span class ="milestone__title">
+              <img ng-src={{milestone.icon}}/>{{milestone.title}}
+            </span>
+            <span class = "milestone__info">
+              <span class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
+              <!--<span class="milestone__info__weight">Points Value: {{milestone.points * milestone.importance}}</span>-->
+              <span ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="milestone__info__icons">
+                <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
+                <span class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
+              </span>
+            </span>
+          </div>
+          <!-- TimeUnit Milestones -->
+
+          <!-- Semester Footer -->
+          <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer" ng-click="addMilestone(sem)">
+            <div class="semester__footer__title">
+              <span class="glyphicon glyphicon-plus-sign"></span>
+              <span class="text">Add Another Milestone</span>
+            </div>
+          </div>
+          <!-- Semester Footer -->
+
         </div>
+        <!-- Semester -->
 
       </div>
-      <!-- TimeUnit Header -->
 
-      <!-- TimeUnit Milestones -->
-      <div class="tu__milestones-container" ng-hide="tu.editing">
-
-        <!-- Non-editable view -->
-        <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="tu__milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
-          <div class="title">{{milestone.title}}</div>
-          <div class="footer">{{milestone.points * milestone.importance}}</div>
-        </div>
-        <!-- Non-editable view -->
-
-        <!-- Editable view -->
-        <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__milestone--editable" modulecolor="{{milestone.module}}" ng-click="viewMilestone(tu, milestone)" ng-repeat="milestone in tu.milestones | orderBy: '-importance'">
-          <div class="title">{{milestone.title}}</div>
-          <div class="footer">{{milestone.points * milestone.importance}}</div>
-        </div>
-        <!-- Editable view -->
-
-      </div>
-      <!-- TimeUnit Milestones -->
-
-      <!-- TimeUnit Footer -->
-      <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="tu__footer">
-        <div ng-hide="tu.editing"><a ng-click="addMilestone(tu)">Add Milestone</a></div>
-      </div>
-      <!-- TimeUnit Footer -->
+      <div ng-if="year.name != 'Year 4'" class="roadmap-spacer-line"></div>
     </div>
+    <!-- Year -->
+
   </div>
 
-</div>
-
-<div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin && !roadmap && !loading" class="paxl createRoadmap" style="max-width: 800px; margin: auto;">
-  <h4>Let's create your orgnization's roadmap! The roadmap is where you enter the milestones which get your users to their goal. You can start creating your roadmap in 3 simple steps:</h4>
-
-  <ol class="phxl pbxl" style="list-style: decimal; list-style-position: inside;">
-    <li class="ptm">Create a rodmap below by giving it a name. For example, at Hoku Scholars, we call ours "College Readiness".</li>
-    <li class="ptm">Your roadmap will be created with 8 semesters. All you have to do is add milestones to the semesters! These are the goals your users are trying to achieve every semester.</li>
-  </ol>
-
-  <div style="text-align: center;">
-    <h4> Ready? Enter your roadmap name below and click "Create" </h4>
-
-    <input class="form-field" ng-model="roadmapName" placeholder="Roadmap Name">
-    <button ng-click="createRoadmap(roadmapName, $event)" class="ladda-button submit mlm mtm" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Create</span></button>
-
-    <ul class="errorText ptm" ng-show="errors">
-      <li ng-repeat="error in errors">{{error}}</li>
-    </ul>
-  </div>
-</div>
-
-<div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor && !roadmap && !loading" class="paxl" style="max-width: 800px; margin: auto;">
-  <h2 style="text-align:center">Roadmap under construction... </h2>
-  <div class="ptxl"><p>Looks like your organization's administrators are still constructing your organization's roadmap. Check back again soon!</p></div>
 </div>
 
 <script>

@@ -5,7 +5,7 @@ angular.module('myApp', ['ngRoute', 'myApp.controllers',
   function($routeProvider, CONSTANTS) {
 
     $routeProvider.when('/', {
-      templateUrl: '/assets/roadmap/roadmap_new.tmpl.html',
+      templateUrl: '/assets/roadmap/roadmap.tmpl.html',
       controller: 'RoadmapController',
       resolve: {
         current_user: ['SessionService', function(SessionService) {
