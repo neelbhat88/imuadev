@@ -138,7 +138,7 @@ class Api::V1::RoadmapController < ApplicationController
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
                   :is_default => is_default, :icon => icon }
 
-    result = RoadmapRepository.new.create_milestone(milestone)
+    result = MilestoneService.new.create_milestone(milestone)
 
     viewMilestone = ViewMilestone.new(result.object) unless result.object.nil?
     render status: result.status,
