@@ -3,7 +3,7 @@ angular.module('myApp')
   function($routeProvider) {
 
     $routeProvider.when('/roadmap', {
-      templateUrl: '/assets/roadmap/roadmap.tmpl.html',
+      templateUrl: 'roadmap/roadmap.html',
       controller: 'RoadmapController',
       resolve: {
         current_user: ['SessionService', function(SessionService) {
@@ -11,7 +11,7 @@ angular.module('myApp')
         }]
       }
     }).when('/roadmap-old', {
-      templateUrl: '/assets/roadmap/roadmap_old.tmpl.html',
+      templateUrl: 'roadmap/roadmap_old.html',
       controller: 'RoadmapController',
       resolve: {
         current_user: ['SessionService', function(SessionService) {

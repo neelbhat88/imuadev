@@ -3,7 +3,7 @@ angular.module('myApp')
   function($routeProvider, CONSTANTS) {
 
     $routeProvider.when('/sa/organizations', {
-      templateUrl: '/assets/superadmin/organizations.tmpl.html',
+      templateUrl: 'superadmin/organizations.html',
       controller: 'SuperAdminOrganizationsCtrl',
       resolve: {
         current_user: ['SessionService', function(SessionService) {

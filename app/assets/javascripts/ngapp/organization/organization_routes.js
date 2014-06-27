@@ -3,7 +3,7 @@ angular.module('myApp')
   function($routeProvider, CONSTANTS) {
 
     $routeProvider.when('/organization/:id', {
-      templateUrl: '/assets/organization/organization.tmpl.html',
+      templateUrl: 'organization/organization.html',
       controller: 'OrganizationCtrl',
       resolve: {
         current_user: ['SessionService', function(SessionService) {

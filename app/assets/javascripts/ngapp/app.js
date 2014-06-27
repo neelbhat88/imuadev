@@ -1,11 +1,11 @@
 angular.module('myApp', ['ngRoute', 'myApp.controllers',
-                          'myApp.directives', 'ui.bootstrap'])
+                          'myApp.directives', 'ui.bootstrap', 'templates'])
 
 .config(['$routeProvider', 'CONSTANTS',
   function($routeProvider, CONSTANTS) {
 
     $routeProvider.when('/', {
-      templateUrl: '/assets/roadmap/roadmap.tmpl.html',
+      templateUrl: 'roadmap/roadmap.html',
       controller: 'RoadmapController',
       resolve: {
         current_user: ['SessionService', function(SessionService) {

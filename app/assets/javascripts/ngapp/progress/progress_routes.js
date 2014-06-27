@@ -3,7 +3,7 @@ angular.module('myApp')
   function($routeProvider) {
 
     $routeProvider.when('/progress', {
-      templateUrl: '/assets/progress/progress.tmpl.html',
+      templateUrl: 'progress/progress.html',
       controller: 'ProgressController',
       resolve: {
         current_user: ['SessionService', function(SessionService) {

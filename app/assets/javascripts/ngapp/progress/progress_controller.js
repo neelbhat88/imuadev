@@ -55,7 +55,7 @@ angular.module('myApp')
 
     $scope.getModuleTemplate = function(modTitle) {
       if (modTitle)
-        return '/assets/progress/' + modTitle.toLowerCase() + '_progress.tmpl.html';
+        return 'progress/' + modTitle.toLowerCase() + '_progress.html';
     }
   }
 ]);

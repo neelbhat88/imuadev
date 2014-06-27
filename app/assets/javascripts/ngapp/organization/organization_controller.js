@@ -25,7 +25,7 @@ angular.module('myApp')
 
     $scope.addOrgAdmin = function() {
       var modalInstance = $modal.open({
-        templateUrl: '/assets/organization/add_user_modal.tmpl.html',
+        templateUrl: 'organization/add_user_modal.html',
         controller: 'AddUserModalController',
         backdrop: 'static',
         size: 'sm',
@@ -46,7 +46,7 @@ angular.module('myApp')
 
     $scope.addStudent = function() {
       var modalInstance = $modal.open({
-        templateUrl: '/assets/organization/add_user_modal.tmpl.html',
+        templateUrl: 'organization/add_user_modal.html',
         controller: 'AddUserModalController',
         backdrop: 'static',
         size: 'sm',
