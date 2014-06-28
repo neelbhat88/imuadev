@@ -52,6 +52,13 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
+    coffee-rails (3.2.2)
+      coffee-script (>= 2.2.0)
+      railties (~> 3.2.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.0)
     d3-rails (3.4.4)
       railties (>= 3.1)
     daemons (1.1.9)
@@ -170,6 +177,7 @@ DEPENDENCIES
   angularjs-rails
   aws-sdk
   bootstrap-sass (~> 3.1.1)
+  coffee-rails
   d3-rails
   devise
   jquery-placeholder-rails

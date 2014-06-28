@@ -6,6 +6,8 @@ angular.module('myApp')
     $scope.current_user = current_user;
     $scope.userCtrl = current_user;
 
+    $('input, textarea').placeholder();
+
     // Question: Can this be done in the resolve instead?
     OrganizationService.getOrganization($routeParams.id).then(
       function Success(data){

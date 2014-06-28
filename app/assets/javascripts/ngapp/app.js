@@ -1,22 +1,5 @@
 angular.module('myApp', ['ngRoute', 'myApp.controllers',
-                          'myApp.directives', 'ui.bootstrap', 'templates'])
-
-.config(['$routeProvider', 'CONSTANTS',
-  function($routeProvider, CONSTANTS) {
-
-    $routeProvider.when('/', {
-      templateUrl: 'roadmap/roadmap.html',
-      controller: 'RoadmapController',
-      resolve: {
-        current_user: ['SessionService', function(SessionService) {
-          return SessionService.getCurrentUser();
-        }]
-      }
-    })
-
-    .otherwise({redirectTo: '/'});
-  }
-]);
+                          'myApp.directives', 'ui.bootstrap', 'templates']);
 
 angular.module('myApp')
 .controller('AppController', ['$scope', 'CONSTANTS', function($scope, CONSTANTS){

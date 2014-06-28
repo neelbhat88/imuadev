@@ -7,6 +7,8 @@ angular.module('myApp')
     $scope.user = current_user;
     var orgId = $scope.user.organization_id == null ? -1 : $scope.user.organization_id;
 
+    $('input, textarea').placeholder();
+
     RoadmapService.getRoadmap(orgId).then(
       function Success(data) {
         $scope.roadmap = data.roadmap;

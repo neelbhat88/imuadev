@@ -1,4 +1,4 @@
-<div class="organizationContainer paxl" ng-cloak>
+<div class="organizationContainer paxl" wait-to-load="{{organization}}">
   <h2>{{organization.name}}</h2>
 
   <div class="ptxl">
@@ -39,10 +39,3 @@
   </div>
 
 </div>
-
-<script>
-  $(document).ready(function() {
-    $('input, textarea').placeholder();
-    Ladda.bind( '.ladda-button' );
-  });
-</script>

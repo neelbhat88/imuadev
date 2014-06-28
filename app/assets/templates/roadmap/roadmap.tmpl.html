@@ -1,4 +1,4 @@
-<div class="roadmapContainer" ng-if="roadmap && !loading">
+<div class="roadmapContainer" wait-to-load="{{roadmap}}">
   <div class="tuContainer ptl">
     <!-- Roadmap Name -->
     <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="roadmapContainer__title-container">
@@ -91,22 +91,3 @@
   </div>
 
 </div>
-
-<script>
-  $(function() {
-    $('input, textarea').placeholder();
-
-    setHeight();
-    $(window).resize(function(event) {
-      setHeight();
-    });
-
-    function setHeight() {
-      var headerHeight = $('header').outerHeight();
-      var windowHeight = $(window).outerHeight();
-      var bodyHeight = windowHeight - headerHeight;
-
-      $('.roadmapContainer').css('min-height', bodyHeight + 'px');
-    }
-  });
-</script>

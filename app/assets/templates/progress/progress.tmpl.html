@@ -1,4 +1,4 @@
-<div class="progressContainer">
+<div class="progressContainer" wait-to-load="{{selected_module}}">
 
   <div class="module-circles js-modules-circles">
     <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
@@ -25,38 +25,3 @@
   </div>
 
 </div>
-
-<script>
-  $(function() {
-    $('input, textarea').placeholder();
-
-    // Give angular time to render the page before setting the height
-    setTimeout(function(){
-      setHeight();
-    }, 500);
-
-    $(window).resize(function(event) {
-      setHeight();
-    });
-
-  });
-
-  function setHeight() {
-    var windowHeight = $(window).outerHeight();
-    var headerHeight = $('header').outerHeight();
-    var circlesHeight = $('.js-modules-circles').outerHeight();
-    var bodyHeight = windowHeight - headerHeight - circlesHeight;
-
-    var contentHeight = $('.js-module-data-content').outerHeight();
-
-    if (bodyHeight > contentHeight)
-    {
-      $('.js-module-data-content').outerHeight(bodyHeight + 'px');
-      $('.js-module-data-side-nav').outerHeight(bodyHeight + 'px');
-    }
-    else
-    {
-      $('.js-module-data-side-nav').outerHeight(contentHeight + 'px');
-    }
-  }
-</script>
