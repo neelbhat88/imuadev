@@ -10,10 +10,10 @@ class OrganizationRepository
     org = Organization.where(:id => orgId)[0] #Not using find here because of the exception it throws when not found
 
     if org.nil?
-      return { :success => false, :info => "Organization id:#{orgId} does not exist", :organization => nil }
+      return ReturnObject.new(:not_found, "Organization id:#{orgId} does not exist", nil)
     end
 
-    return { :success => true, :info => "Organization id:#{orgId}", :organization => org }
+    return ReturnObject.new(:ok, "Organization id:#{orgId}", org)
   end
 
   def create_organization(opts)

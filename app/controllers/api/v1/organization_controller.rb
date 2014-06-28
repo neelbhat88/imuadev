@@ -22,11 +22,11 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = OrganizationRepository.new.get_organization(orgId)
 
-    render status: 200,
+    viewOrg = ViewOrganization.new(result.object) unless result.object.nil?
+    render status: result.status,
       json: {
-        success: result[:success],
-        info: result[:info],
-        organization: ViewOrganization.new(result[:organization])
+        info: result.info,
+        organization: viewOrg
       }
   end
 
