@@ -78,8 +78,18 @@ angular.module('myApp')
       .enter().append("g")
         .attr("class", "arc");
 
-      g.append("path").style("fill", function(d) { return color(d.data.name); })
-        .attr("d", arc);
+      g.append("path").attr("fill", function(d, i) { return color(i); })
+          .transition()
+              .ease("bounce")
+              .duration(2400)
+              .attrTween("d", tweenPie);
+
+      function tweenPie(b) {
+          var i = d3.interpolate({startAngle: myScale(45), endAngle: myScale(45)}, b);
+          return function(t) {
+              return arc(i(t));
+          };
+      }
     }
   }
 }]);
