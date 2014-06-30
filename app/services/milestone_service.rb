@@ -29,25 +29,8 @@ class MilestoneService
     end
   end
 
-  # REwork this, don't need default milestones in the DB
   def get_default_milestone(submodule)
-    milestones = Milestone.where(:is_default => true, :submodule => submodule)
-
-    if milestones.empty? # If not stored in DB return code default
-      milestone = MilestoneFactory.get_milestone(submodule)
-
-      return milestone.default_milestone
-    elsif milestones.count > 1
-      error = "ERROR: There is more than one default milestone for SubModule: #{submod}"
-      Rails.logger.error error
-
-      # Send email out of process
-      Background.process do
-        UserMailer.log_error(error).deliver
-      end
-    end
-
-    return milestones[0]
+    return MilestoneFactory.get_milestone(submodule)
   end
 
 end

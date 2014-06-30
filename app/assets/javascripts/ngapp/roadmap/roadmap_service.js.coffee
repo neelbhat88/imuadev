@@ -2,7 +2,7 @@ angular.module('myApp')
 .service 'RoadmapService', ['$http', '$q', ($http, $q) ->
   @newRoadmap = (orgId, name) ->
     name: name,
-    organization_id: orgId  
+    organization_id: orgId
 
   @getRoadmap = (orgId) ->
     defer = $q.defer()
@@ -36,16 +36,7 @@ angular.module('myApp')
     $http.put '/api/v1/roadmap/' + roadmap.id, {roadmap: roadmap}
 
   @getEnabledModules = (orgId) ->
-    defer = $q.defer()
-
     $http.get('api/v1/organization/' + orgId + '/modules')
-      .then (resp, status) ->
-        if resp.data.success
-          defer.resolve(resp.data)
-        else
-          defer.reject(resp.data)
-
-    defer.promise;
 
   @addTimeUnit = (orgId, rId, tu_obj) ->
     defer = $q.defer()

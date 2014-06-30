@@ -105,22 +105,6 @@ class Api::V1::RoadmapController < ApplicationController
       }
   end
 
-  # GET /milestone/default/:module/:submodule
-  def default_milestone
-    mod = params[:module]
-    submod = params[:submodule]
-
-    milestone = RoadmapRepository.new.get_default_milestone({ :module => mod, :submodule=> submod })
-
-    viewMilestone = ViewMilestone.new(milestone) unless milestone.nil?
-    render status: 200,
-      json: {
-        success: true,
-        info: "Default milestone",
-        milestone: viewMilestone
-      }
-  end
-
   # POST /milestone
   def create_milestone
     tuId = params[:milestone][:time_unit_id]

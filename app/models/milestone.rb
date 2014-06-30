@@ -1,6 +1,6 @@
 class Milestone < ActiveRecord::Base
   attr_accessible :title, :description, :value, :module, :submodule,
-                  :importance, :points, :time_unit_id, :is_default, :icon
+                  :importance, :points, :time_unit_id, :icon
 
 
   belongs_to :time_unit
@@ -17,7 +17,7 @@ class Milestone < ActiveRecord::Base
 end
 
 class ViewMilestone
-  attr_accessor :id, :description, :importance, :module, :points, :submodule, :title, :is_default, :icon
+  attr_accessor :id, :description, :importance, :module, :points, :submodule, :title, :icon
 
   def initialize(milestone)
     @id = milestone.id
@@ -27,7 +27,6 @@ class ViewMilestone
     @module = milestone.module
     @submodule = milestone.submodule
     @points = milestone.points
-    @is_default = milestone.is_default
     @value = milestone.value
     @icon = milestone.icon
   end
