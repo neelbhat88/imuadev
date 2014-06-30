@@ -64,7 +64,7 @@
               <!--<span class="milestone__info__weight">Points Value: {{milestone.points * milestone.importance}}</span>-->
               <span ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="milestone__info__icons">
                 <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
+                <span class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, $index)"></span>
               </span>
             </span>
           </div>
