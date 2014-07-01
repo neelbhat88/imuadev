@@ -5,6 +5,10 @@ class MilestoneFactory
       return GpaMilestone.new(milestone)
     when Constants.SubModules[:SERVICE_DEPTH_HOURS]
       return DepthHoursMilestone.new(milestone)
+    when Constants.SubModules[:ACADEMICS_YES_NO]
+      return YesNoMilestoneAcademics.new(milestone)
+    when Constants.SubModules[:SERVICE_YES_NO]
+      return YesNoMilestoneService.new(milestone)
     end
   end
 

@@ -7,11 +7,13 @@ class EnabledModules
     mod_array = [
         {
           :title => Constants.Modules[:ACADEMICS],
-          :submodules => [Constants.SubModules[:ACADEMICS_GPA]]
+          :submodules => [Constants.SubModules[:ACADEMICS_GPA],
+                          Constants.SubModules[:ACADEMICS_YES_NO]]
         },
         {
           :title => Constants.Modules[:SERVICE],
-          :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS]]
+          :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS],
+                          Constants.SubModules[:SERVICE_YES_NO]]
         }
       ]
 
