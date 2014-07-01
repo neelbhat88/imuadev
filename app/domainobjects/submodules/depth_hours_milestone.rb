@@ -15,18 +15,6 @@ class DepthHoursMilestone < ImuaMilestone
 
       @target_hours = @value.to_f
     else
-      @id = milestone.id
-      @module = milestone.module
-      @submodule = milestone.submodule
-      @title = milestone.title
-      @description = milestone.description
-      @value = milestone.value
-      @icon = milestone.icon
-      @time_unit_id = milestone.time_unit_id
-      @importance = milestone.importance
-      @points = milestone.points
-      @icon = milestone.icon
-
       @target_hours = milestone.value.to_f
     end
   end
@@ -35,10 +23,6 @@ class DepthHoursMilestone < ImuaMilestone
     return (
       super && @value.to_f > 0
     )
-  end
-
-  def total_user_points(user_id, time_unit_id)
-    return 0
   end
 
 end

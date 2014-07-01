@@ -4,7 +4,7 @@ class ImuaMilestone
 
   def self.Defaults
     return {
-	  ID:			"",
+      ID:           "",
       MODULE:       "",
       SUBMODULE:    "",
       TITLE:        "n/a",
@@ -17,22 +17,35 @@ class ImuaMilestone
     }
   end
 
-  def initialize
-	@id			  = ImuaMilestone.Defaults[:ID]
-    @module       = ImuaMilestone.Defaults[:MODULE]
-    @submodule    = ImuaMilestone.Defaults[:SUBMODULE]
-    @title        = ImuaMilestone.Defaults[:TITLE]
-    @description  = ImuaMilestone.Defaults[:DESCRIPTION]
-    @value        = ImuaMilestone.Defaults[:VALUE]
-    @time_unit_id = ImuaMilestone.Defaults[:TIME_UNIT_ID]
-    @importance   = ImuaMilestone.Defaults[:IMPORTANCE]
-    @points       = ImuaMilestone.Defaults[:POINTS]
-    @icon         = ImuaMilestone.Defaults[:ICON]
+  def initialize(milestone = nil)
+    if milestone.nil?
+      @id           = ImuaMilestone.Defaults[:ID]
+      @module       = ImuaMilestone.Defaults[:MODULE]
+      @submodule    = ImuaMilestone.Defaults[:SUBMODULE]
+      @title        = ImuaMilestone.Defaults[:TITLE]
+      @description  = ImuaMilestone.Defaults[:DESCRIPTION]
+      @value        = ImuaMilestone.Defaults[:VALUE]
+      @time_unit_id = ImuaMilestone.Defaults[:TIME_UNIT_ID]
+      @importance   = ImuaMilestone.Defaults[:IMPORTANCE]
+      @points       = ImuaMilestone.Defaults[:POINTS]
+      @icon         = ImuaMilestone.Defaults[:ICON]
+    else
+      @id           = milestone.id
+      @module       = milestone.module
+      @submodule    = milestone.submodule
+      @title        = milestone.title
+      @description  = milestone.description
+      @value        = milestone.value
+      @time_unit_id = milestone.time_unit_id
+      @importance   = milestone.importance
+      @points       = milestone.points
+      @icon         = milestone.icon
+    end
   end
 
   def valid?
     return (
-	  @id			!= ImuaMilestone.Defaults[:ID] &&
+      @id           != ImuaMilestone.Defaults[:ID] &&
       @module       != ImuaMilestone.Defaults[:MODULE] &&
       @submodule    != ImuaMilestone.Defaults[:SUBMODULE] &&
       @title        != ImuaMilestone.Defaults[:TITLE] &&
@@ -48,7 +61,7 @@ class ImuaMilestone
 
     time_units = RoadmapRepository.new.get_milestones_in_time_unit(time_unit_id)
     time_units = time_units.select {|tu| tu.submodule == @submodtype}
-	
+
     totalPoints = 0
     time_units.each do | tu |
       totalPoints += tu.points
@@ -57,9 +70,4 @@ class ImuaMilestone
     return totalPoints
   end
 
-  def total_user_points(user_id, time_unit_id)
-    #TODO: Log error
-    return -1
-  end
-  
 end
