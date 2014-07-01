@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140619200722) do
+ActiveRecord::Schema.define(:version => 20140701052514) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -75,6 +75,16 @@ ActiveRecord::Schema.define(:version => 20140619200722) do
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
+
+  create_table "user_milestones", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.integer  "milestone_id"
+    t.string   "module"
+    t.string   "submodule"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

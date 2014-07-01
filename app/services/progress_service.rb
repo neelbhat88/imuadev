@@ -2,7 +2,7 @@ class ProgressService
 
   def get_all_progress(userId, time_unit_id)
     user = UserRepository.new.get_user(userId)
-    enabled_modules = EnabledModules.new.get_modules(user.organization_id)
+    enabled_modules = EnabledModules.new.get_modules(user.organization_id).object
 
     modules_progress = []
     enabled_modules.each do | m |
@@ -12,11 +12,11 @@ class ProgressService
         total_points += om.points
       end
       
-      #users_milestones = EarnedMilestone.where(:user_id => userId, :module => m.title, :time_unit_id => time_unit_id)
+      users_milestones = UserMilestone.where(:user_id => userId, :module => m.title, :time_unit_id => time_unit_id)
       user_points = 0
-      # users_milestones.each do | um |
-      #   user_points += um.milestone.points
-      # end
+      users_milestones.each do | um |
+        user_points += um.milestone.points
+      end
 
       mod = ModuleProgress.new(m.title)
       mod.set_points({:user => user_points, :total => total_points})
