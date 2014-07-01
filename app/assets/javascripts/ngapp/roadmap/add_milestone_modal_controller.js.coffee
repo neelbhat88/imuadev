@@ -14,7 +14,8 @@ angular.module('myApp')
       moduleTitle = module.title
 
       for submodule in module.submodules
-        new_milestone = angular.copy submodule.default_milestone
+        #TODO: This should copy to a View object instead of the entire Milestone
+        new_milestone = angular.copy submodule
         new_milestone.id = null
         new_milestone.is_default = false
         new_milestone.time_unit_id = timeUnit.id
@@ -22,8 +23,8 @@ angular.module('myApp')
         $scope.dd_modules.push
           module: moduleTitle,
           submoduleTitle: submodule.title,
-          submoduleType: submodule.submodtype,
-          templatePath: '/assets/add_' + submodule.submodtype.toLowerCase() + '.html',
+          submoduleType: submodule.submodule,
+          templatePath: '/assets/add_' + submodule.submodule.toLowerCase() + '.html',
           milestone: new_milestone
 
     # Uncomment to have first module pre-selected

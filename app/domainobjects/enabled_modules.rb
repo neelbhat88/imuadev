@@ -3,7 +3,7 @@ class EnabledModules
   end
 
   def get_modules(orgId)
-    # Query DB to get enabled modules/submodules for an organization
+    # TODO: Query DB to get enabled modules/submodules for an organization
     mod_array = [
         {
           :title => Constants.Modules[:ACADEMICS],
@@ -21,13 +21,13 @@ class EnabledModules
       mod.title = m[:title]
 
       m[:submodules].each do | sm |
-        mod.submodules << SubModuleFactory.new.get_submodule(sm)
+        mod.submodules << MilestoneFactory.get_milestone(sm)
       end
 
       mods << mod
     end
 
-    return mods
+    return ReturnObject.new(:ok, "Submodules for orgId: #{orgId}", mods)
   end
 
 end
@@ -41,18 +41,20 @@ class AppModule
 
 end
 
-class SubModuleFactory
-  def initialize
-  end
-
-  def get_submodule(sub_module)
-
-    case sub_module
-    when Constants.SubModules[:ACADEMICS_GPA]
-      return AcademicsGpa.new
-    when Constants.SubModules[:SERVICE_DEPTH_HOURS]
-      return ServiceDepthHours.new
-    end
-
-  end
-end
+# class SubModuleFactory
+#   def initialize
+#   end
+#
+#   def get_submodule(sub_module)
+#
+#     case sub_module
+#     when Constants.SubModules[:ACADEMICS_GPA]
+# #      return AcademicsGpa.new
+#       return GpaMilestone.new
+#     when Constants.SubModules[:SERVICE_DEPTH_HOURS]
+# #      return ServiceDepthHours.new
+#       return DepthHoursMilestone.new
+#     end
+#
+#   end
+# end
