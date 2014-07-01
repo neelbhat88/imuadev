@@ -1,8 +1,9 @@
 class ImuaMilestone
-  attr_accessor :title, :description, :value, :module, :submodule,
+  attr_accessor :id, :title, :description, :value, :module, :submodule,
                   :importance, :points, :time_unit_id, :icon
 
-  def initialize
+  def initialize(milestone=nil)
+    @id = ""
     @module = ""
     @submodule = ""
     @title = "n/a"
