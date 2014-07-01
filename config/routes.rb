@@ -18,6 +18,9 @@ Imua::Application.routes.draw do
           post '/:id/classes' => 'progress#add_user_class'
           put  '/:id/classes/:class_id' => 'progress#update_user_class'
           delete '/:id/classes/:class_id' => 'progress#delete_user_class'
+
+          get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
+          get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
         end
       end
 
@@ -42,13 +45,9 @@ Imua::Application.routes.draw do
       put  '/time_unit/:id' => 'roadmap#update_time_unit'
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
-      get '/milestone/default/:module/:submodule' => 'roadmap#default_milestone'
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
-
-      # ToDo: Don't like this being a POST but leaving it for now for sake of getting this done
-      post  '/progress/modules' => 'progress#all_modules_progress'
 
     end # end :v1
   end # end :api
