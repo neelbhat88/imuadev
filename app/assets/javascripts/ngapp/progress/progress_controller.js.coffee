@@ -31,7 +31,6 @@ angular.module('myApp')
 
   $scope.selectModule = (mod) ->
     $scope.selected_module = mod
-    $scope.selected_semester = $scope.semesters[0]
 
   $scope.selectSemester = (sem) ->
     ProgressService.getModules(current_user, sem.id)

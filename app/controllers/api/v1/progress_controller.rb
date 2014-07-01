@@ -5,33 +5,29 @@ class Api::V1::ProgressController < ApplicationController
 
   respond_to :json
 
-  # GET /progress/modules
-  # Returns All modules for a students current semester and the
+  # GET /user/:id/time_unit/:time_unit_id/progress
+  # Returns All modules for a given semester and the
   # total points avaiable in each module and the user's points earned
   def all_modules_progress
-    userId = params[:user_id]
-    orgId = params[:organization_id]
+    userId = params[:id]
     time_unit_id = params[:time_unit_id]
 
-    enabled_modules = EnabledModules.new.get_modules(orgId)
+    result = ProgressService.new.get_all_progress(userId, time_unit_id)
 
-    modules_progress = []
-    enabled_modules.each do | m |
-
-      m.submodules.each do | sm |
-        total_points = sm.total_milestone_points(time_unit_id)
-        user_points = sm.total_user_points(userId, time_unit_id)
-
-        modObj = {:module_title => m.title, :points=>{:total=>total_points, :user=>user_points} }
-        modules_progress << modObj
-      end
-    end
-
-    render status: :ok,
+    render status: result.status,
       json: {
-        info: "Module progress points",
-        modules_progress: modules_progress
+        info: result.info,
+        modules_progress: result.object
       }
+  end
+
+  # get /user/:id/time_unit/:time_unit_id/progress/:module
+  def module_progress
+    userId = params[:user_id]
+    time_unit_id = params[:time_unit_id]
+    mod = params[:module]
+
+
   end
 
   # GET /user/:id/data/academics/:time_unit_id
@@ -39,7 +35,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     time_unit_id = params[:time_unit_id]
 
-    classes = ProgressRepository.new.get_user_classes(userId, time_unit_id)
+    classes = ProgressService.new.get_user_classes(userId, time_unit_id)
 
     render status: :ok,
       json: {
@@ -53,7 +49,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     new_class = params[:user_class]
 
-    user_class = ProgressRepository.new.save_user_class(userId, new_class)
+    user_class = ProgressService.new.save_user_class(userId, new_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -76,7 +72,7 @@ class Api::V1::ProgressController < ApplicationController
     classId = params[:class_id]
     updated_class = params[:user_class]
 
-    user_class = ProgressRepository.new.update_user_class(updated_class)
+    user_class = ProgressService.new.update_user_class(updated_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -98,7 +94,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id].to_i
     classId = params[:class_id].to_i
 
-    if ProgressRepository.new.delete_user_class(classId)
+    if ProgressService.new.delete_user_class(classId)
       render status: :ok,
         json: {
           info: "Deleted User Class"
