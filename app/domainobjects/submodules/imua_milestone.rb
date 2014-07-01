@@ -48,11 +48,9 @@ class ImuaMilestone
 
     time_units = RoadmapRepository.new.get_milestones_in_time_unit(time_unit_id)
     time_units = time_units.select {|tu| tu.submodule == @submodtype}
-    Rails.logger.debug "*** time_units.length: #{time_units.length} ***"
-    Rails.logger.debug "*** time_unit_id: #{time_unit_id} ***"
+	
     totalPoints = 0
     time_units.each do | tu |
-      Rails.logger.debug "*** tu.points: #{tu.points} ***"
       totalPoints += tu.points
     end
 
@@ -63,4 +61,5 @@ class ImuaMilestone
     #TODO: Log error
     return -1
   end
+  
 end
