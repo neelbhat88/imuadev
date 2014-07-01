@@ -20,8 +20,9 @@ angular.module('myApp')
     $scope.loading = false
   , (data) -> # Error
 
-  RoadmapService.getEnabledModules(orgId).then (data) -> # Success
-    $scope.enabled_modules = data.enabled_modules
+  RoadmapService.getEnabledModules(orgId)
+    .success (data) -> # Success
+      $scope.enabled_modules = data.enabled_modules
 
   $scope.updateRoadmapName = (roadmap) ->
     if !roadmap.newname

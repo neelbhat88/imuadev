@@ -99,15 +99,14 @@ class Api::V1::OrganizationController < ApplicationController
 
   # GET /organization/:id/modules
   def modules
-    orgId = params[:orgId]
+    orgId = params[:id]
 
-    enabled_modules = EnabledModules.new.get_modules(orgId)
+    result = EnabledModules.new.get_modules(orgId)
 
-    render status: 200,
+    render status: result.status,
       json: {
-        success: true,
-        info: "Modules for Organization",
-        enabled_modules: enabled_modules
+        info: result.info,
+        enabled_modules: result.object
       }
   end
 
