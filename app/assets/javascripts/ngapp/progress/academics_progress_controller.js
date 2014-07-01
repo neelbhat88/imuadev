@@ -5,9 +5,11 @@ angular.module('myApp')
     $scope.classes = {};
 
     $scope.$watch('selected_semester', function(){
-      UserClassService.all($scope.current_user, $scope.selected_semester.id).success(function(data) {
-        $scope.user_classes = data.user_classes;
-      });
+      if($scope.selected_semester){
+        UserClassService.all($scope.current_user, $scope.selected_semester.id).success(function(data) {
+          $scope.user_classes = data.user_classes;
+        });
+      }
     });
 
     $scope.$watch('user_classes', function() {

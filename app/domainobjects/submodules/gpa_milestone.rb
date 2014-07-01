@@ -14,8 +14,13 @@ class GpaMilestone < ImuaMilestone
   end
 
   def valid?
-    super
-
-    return true
+    return (
+      super && @value.to_f > 0 && @value.to_f < 5.0
+    )
   end
+
+  def total_user_points(user_id, time_unit_id)
+    return 0
+  end
+
 end

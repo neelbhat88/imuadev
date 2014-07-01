@@ -13,7 +13,9 @@ class Api::V1::ProgressController < ApplicationController
     orgId = params[:organization_id]
     time_unit_id = params[:time_unit_id]
 
-    enabled_modules = EnabledModules.new.get_modules(orgId)
+    #enabled_modules = EnabledModules.new.get_modules(orgId)
+    result = EnabledModules.new.get_modules(orgId)
+    enabled_modules = result.object
 
     modules_progress = []
     enabled_modules.each do | m |

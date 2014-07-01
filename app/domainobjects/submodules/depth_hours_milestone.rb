@@ -14,8 +14,13 @@ class DepthHoursMilestone < ImuaMilestone
   end
 
   def valid?
-    super
-
-    return true
+    return (
+      super && @value.to_f > 0
+    )
   end
+
+  def total_user_points(user_id, time_unit_id)
+    return 0
+  end
+
 end

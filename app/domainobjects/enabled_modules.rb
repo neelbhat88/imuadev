@@ -40,21 +40,3 @@ class AppModule
   end
 
 end
-
-# class SubModuleFactory
-#   def initialize
-#   end
-#
-#   def get_submodule(sub_module)
-#
-#     case sub_module
-#     when Constants.SubModules[:ACADEMICS_GPA]
-# #      return AcademicsGpa.new
-#       return GpaMilestone.new
-#     when Constants.SubModules[:SERVICE_DEPTH_HOURS]
-# #      return ServiceDepthHours.new
-#       return DepthHoursMilestone.new
-#     end
-#
-#   end
-# end
