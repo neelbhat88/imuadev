@@ -1,9 +1,10 @@
 class ImuaMilestone
-  attr_accessor :title, :description, :value, :module, :submodule,
+  attr_accessor :id, :title, :description, :value, :module, :submodule,
                   :importance, :points, :time_unit_id, :icon
 
   def self.Defaults
     return {
+	  ID:			"",
       MODULE:       "",
       SUBMODULE:    "",
       TITLE:        "n/a",
@@ -17,6 +18,7 @@ class ImuaMilestone
   end
 
   def initialize
+	@id			  = ImuaMilestone.Defaults[:ID]
     @module       = ImuaMilestone.Defaults[:MODULE]
     @submodule    = ImuaMilestone.Defaults[:SUBMODULE]
     @title        = ImuaMilestone.Defaults[:TITLE]
@@ -30,6 +32,7 @@ class ImuaMilestone
 
   def valid?
     return (
+	  @id			!= ImuaMilestone.Defaults[:ID] &&
       @module       != ImuaMilestone.Defaults[:MODULE] &&
       @submodule    != ImuaMilestone.Defaults[:SUBMODULE] &&
       @title        != ImuaMilestone.Defaults[:TITLE] &&

@@ -22,12 +22,19 @@ class Api::V1::ProgressController < ApplicationController
   end
 
   # get /user/:id/time_unit/:time_unit_id/progress/:module
+  # Runs through milestones of a given module to see if any have been earned
   def module_progress
-    userId = params[:user_id]
+    userId = params[:id]
     time_unit_id = params[:time_unit_id]
     mod = params[:module]
 
+    result = ProgressService.new.check_progress(userId, time_unit_id, mod)
 
+    render status: result.status,
+      json: {
+        info: result.info,
+        module_progress: result.object
+      }
   end
 
   # GET /user/:id/data/academics/:time_unit_id
@@ -35,7 +42,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     time_unit_id = params[:time_unit_id]
 
-    classes = ProgressService.new.get_user_classes(userId, time_unit_id)
+    classes = UserClassService.new.get_user_classes(userId, time_unit_id)
 
     render status: :ok,
       json: {
@@ -49,7 +56,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     new_class = params[:user_class]
 
-    user_class = ProgressService.new.save_user_class(userId, new_class)
+    user_class = UserClassService.new.save_user_class(userId, new_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -72,7 +79,7 @@ class Api::V1::ProgressController < ApplicationController
     classId = params[:class_id]
     updated_class = params[:user_class]
 
-    user_class = ProgressService.new.update_user_class(updated_class)
+    user_class = UserClassService.new.update_user_class(updated_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -94,7 +101,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id].to_i
     classId = params[:class_id].to_i
 
-    if ProgressService.new.delete_user_class(classId)
+    if UserClassService.new.delete_user_class(classId)
       render status: :ok,
         json: {
           info: "Deleted User Class"
