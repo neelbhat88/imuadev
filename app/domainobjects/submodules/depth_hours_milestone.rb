@@ -21,7 +21,7 @@ class DepthHoursMilestone < ImuaMilestone
 
   def valid?
     return (
-      super && @value.to_f > 0
+      super && @target_hours > 0
     )
   end
 

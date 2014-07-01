@@ -53,21 +53,8 @@ class ImuaMilestone
       @value        != ImuaMilestone.Defaults[:VALUE] &&
       @time_unit_id != ImuaMilestone.Defaults[:TIME_UNIT_ID] &&
       @icon         != ImuaMilestone.Defaults[:ICON] &&
-      @points.to_f   > 0
+      @points        > 0
     )
-  end
-
-  def total_milestone_points(time_unit_id)
-
-    time_units = RoadmapRepository.new.get_milestones_in_time_unit(time_unit_id)
-    time_units = time_units.select {|tu| tu.submodule == @submodtype}
-
-    totalPoints = 0
-    time_units.each do | tu |
-      totalPoints += tu.points
-    end
-
-    return totalPoints
   end
 
 end

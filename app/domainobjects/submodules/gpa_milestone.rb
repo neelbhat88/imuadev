@@ -28,7 +28,7 @@ class GpaMilestone < ImuaMilestone
 
   def valid?
     return (
-      super && @value.to_f > 0 && @value.to_f < 5.0
+      super && @target_gpa > 0 && @target_gpa < 5.0
     )
   end
 
