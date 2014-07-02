@@ -7,5 +7,7 @@ angular.module('myApp')
   @progressForModule = (user, time_unit_id, module_title) ->
     $http.get "/api/v1/users/#{user.id}/time_unit/#{time_unit_id}/progress/#{module_title}"
 
+  @yesNoMilestones = (user, time_unit_id, module_title) ->
+    $http.get "/api/v1/users/#{user.id}/time_unit/#{time_unit_id}/milestones/#{module_title}/yesno"
   @
 ]

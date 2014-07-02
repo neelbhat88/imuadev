@@ -213,3 +213,23 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
     }
   }
 }
+
+.module-yes-nos
+{
+  @extend .pbxl;
+
+  border-bottom: 1px solid;
+  font-size: 16px;
+  text-align: left;
+}
+
+.yes-no-item
+{
+  input { float:left; }
+  .text { display: block; margin-left: 20px; padding-left: 5px;}
+
+  @extend .pas;
+  width: 320px;
+  display: inline-block;
+  vertical-align: top;
+}

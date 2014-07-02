@@ -10,6 +10,10 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_classes = data.user_classes
 
+        ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+          .success (data) ->
+            $scope.yes_no_milestones = data.yes_no_milestones
+
     $scope.$watch 'user_classes', () ->
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
     , true
