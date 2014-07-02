@@ -279,26 +279,34 @@
 {
   width: 100%;
   height: 100%;
+  display: inline-block;
 
-  .selectable_module__title
+  .selectable_module_group
   {
-    @extend .milestone-title;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid $light-grey;
-    background-color: white;
-    img {
-      margin-left: 0px;
-    }
+    width: 40%;
+    text-align: left;
+    display: inline-block;
+    .selectable_module__title
+    {
+      @extend .milestone-title;
+      width: 90%;
+      margin-right: 10px;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid $light-grey;
+      background-color: white;
+      img {
+        margin-left: 0px;
+      }
 
-    &:hover {
-      border: 1px solid $ink;
-    }
+      &:hover {
+        border: 1px solid $ink;
+      }
 
-    &.selected {
-      border: 5px solid $ink;
-      padding: 6px;
+      &.selected {
+        border: 5px solid $ink;
+        padding: 6px;
+      }
     }
   }
 }

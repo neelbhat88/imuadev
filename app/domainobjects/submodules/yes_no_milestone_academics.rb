@@ -7,7 +7,7 @@ class YesNoMilestoneAcademics < ImuaMilestone
       @module = Constants.Modules[:ACADEMICS]
       @submodule = Constants.SubModules[:ACADEMICS_YES_NO]
 
-      @title = "DO IIIIIT"
+      @title = "Do It"
       @description = "Description:"
       @value = "Do iiiiit"
       @icon = "/assets/Academics.jpg"
