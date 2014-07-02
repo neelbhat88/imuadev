@@ -35,7 +35,7 @@ angular.module('myApp')
       modalInstance.result.then (user) ->
         $scope.organization.orgAdmins.push(user)
 
-    $scope.addStudent = () -> 
+    $scope.addStudent = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',
         controller: 'AddUserModalController',
@@ -47,5 +47,18 @@ angular.module('myApp')
 
       modalInstance.result.then (user) ->
         $scope.organization.students.push(user)
+
+    $scope.addMentor = () ->
+      modalInstance = $modal.open
+        templateUrl: 'organization/add_user_modal.html',
+        controller: 'AddUserModalController',
+        backdrop: 'static',
+        size: 'sm',
+        resolve:
+          organization: () -> $scope.organization
+          new_user: () -> UsersService.newMentor($scope.organization.id);
+
+      modalInstance.result.then (user) ->
+        $scope.organization.mentors.push(user)
 
 ]

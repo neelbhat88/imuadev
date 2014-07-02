@@ -1,5 +1,5 @@
-<div class="organizationContainer paxl" wait-to-load="{{organization}}">
-  <h2>{{organization.name}}</h2>
+<div class="organizationContainer" wait-to-load="{{organization.id}}">
+  <h2 class="plxl">{{organization.name}}</h2>
 
   <div class="ptxl">
 
@@ -20,6 +20,22 @@
     </div>
 
     <div class="user-list ptxl">
+      <h4>Mentors</h4>
+
+      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors">
+        <progress-circle myuser="mentor"></progress-circle>
+        <div class="avatar-block__name">
+          {{mentor.first_name}} {{mentor.last_name}}
+        </div>
+      </div>
+
+      <div class="user-list__add" ng-click="addMentor()">
+        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div>Add Mentor</div>
+      </div>
+    </div>
+
+    <div class="user-list ptxl pbxl">
       <h4>Students</h4>
 
       <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in organization.students">
