@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'AcademicsProgressController', ['$scope', 'UserClassService',
-  ($scope, UserClassService) ->
+.controller 'AcademicsProgressController', ['$scope', 'UserClassService', 'ProgressService',
+  ($scope, UserClassService, ProgressService) ->
     $scope.user_classes = []
     $scope.classes = {}
 
@@ -24,6 +24,13 @@ angular.module('myApp')
         .success (data) ->
           $scope.user_classes[index] = data.user_class
           $scope.classes.editing = false
+
+          # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
+          ProgressService.progressForModule($scope.current_user, $scope.selected_semester.id, $scope.CONSTANTS.MODULES.academics)
+            .success (data) ->
+              for mod in $scope.modules_progress # Loop through modules on progress controller
+                if mod.module_title == data.module_progress.module_title
+                  mod.points = data.module_progress.points
 
     $scope.deleteClass = (index) ->
       if window.confirm "Are you sure you want to delete this class?"
