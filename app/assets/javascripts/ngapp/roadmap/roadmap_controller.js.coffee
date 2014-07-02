@@ -106,16 +106,11 @@ angular.module('myApp')
 
   $scope.deleteMilestone = (tu, milestone) ->
     if window.confirm "Are you sure you want to delete this milestone?"
-      index = 0
-      for m in tu.milestones
+      for m,index in tu.milestones
         if m.id == milestone.id
           break
-        ++index
-      if index >= tu.milestones.length
-        index = -1
 
       RoadmapService.deleteMilestone(milestone.id)
       .success (data) ->
-        if index != -1
-          tu.milestones.splice(index, 1)
+        tu.milestones.splice(index, 1)
 ]
