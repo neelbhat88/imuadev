@@ -37,6 +37,50 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # GET  /user/:id/time_unit/:time_unit_id/milestones/:module/yesno
+  def yes_no_milestones
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    mod = params[:module]
+
+    result = MilestoneService.new.yes_no_milestones_including_user(userId, mod, time_unit_id)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        yes_no_milestones: result.object
+      }
+  end
+
+  # POST /user/:id/time_unit/:time_unit_id/milestones/:milestone_id
+  def add_user_milestone
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    milestone_id = params[:milestone_id]
+
+    result = MilestoneService.new.add_user_milestone(userId, time_unit_id, milestone_id)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        milestone: result.object
+      }
+  end
+
+  # DELETE /user/:id/time_unit/:time_unit_id/milestones/:milestone_id
+  def delete_user_milestone
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    milestone_id = params[:milestone_id]
+
+    result = MilestoneService.new.delete_user_milestone(userId, time_unit_id, milestone_id)
+
+    render status: result.status,
+      json: {
+        info: result.info
+      }
+  end
+
   # GET /user/:id/data/academics/:time_unit_id
   def user_classes
     userId = params[:id]

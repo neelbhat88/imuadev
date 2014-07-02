@@ -8,12 +8,12 @@ class EnabledModules
         {
           :title => Constants.Modules[:ACADEMICS],
           :submodules => [Constants.SubModules[:ACADEMICS_GPA],
-                          Constants.SubModules[:ACADEMICS_YES_NO]]
+                          Constants.SubModules[:YES_NO]]
         },
         {
           :title => Constants.Modules[:SERVICE],
           :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS],
-                          Constants.SubModules[:SERVICE_YES_NO]]
+                          Constants.SubModules[:YES_NO]]
         }
       ]
 
@@ -23,7 +23,7 @@ class EnabledModules
       mod.title = m[:title]
 
       m[:submodules].each do | sm |
-        mod.submodules << MilestoneFactory.get_milestone(sm)
+        mod.submodules << MilestoneFactory.get_milestone(mod.title, sm)
       end
 
       mods << mod
