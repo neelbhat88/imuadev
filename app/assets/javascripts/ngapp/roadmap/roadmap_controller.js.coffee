@@ -104,10 +104,12 @@ angular.module('myApp')
 
     modalInstance.result.then () ->
 
-  $scope.deleteMilestone = (tu, index) ->
+  $scope.deleteMilestone = (tu, milestone) ->
     if window.confirm "Are you sure you want to delete this milestone?"
-      RoadmapService.deleteMilestone(tu.milestones[index].id)
-      .success (data) ->
-        tu.milestones.splice(index, 1)
-
-]
+      for m,index in tu.milestones
+        if m.id == milestone.id
+          RoadmapService.deleteMilestone(tu.milestones[index].id)
+          .success (data) ->
+            tu.milestones.splice(index, 1)
+          break
+  ]
