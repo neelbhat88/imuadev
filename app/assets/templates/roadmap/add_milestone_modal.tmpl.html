@@ -11,14 +11,15 @@
     <!-- QUESTION -->
     <!-- <div ng-show="selected.module" class="milestone ptl" ng-include="'/assets/roadmap/add_'+selected.module.submoduleType.toLowerCase()+'.tmpl.html'"> -->
 
-  <div class="selectable_modules">
+    <div class="selectable_modules">
+      <span class="selectable_module_group" ng-repeat="selectable_module_group in selectable_module_groups">
+        <span class="selectable_module" modulecolor="{{selectable_module.module}}" ng-repeat="selectable_module in selectable_module_group.group">
+          <button class ="selectable_module__title" ng-class="{selected: selected.module == selectable_module}" ng-click="selectModule(selectable_module)">
+            <img ng-src={{selectable_module.milestone.icon}}/>{{selectable_module.milestone.title}}
+          </button>
+        </span>
+      </span>
 
-    <!-- Selectable Modules -->
-    <span class="selectable_module" modulecolor="{{selectable_module.module}}" ng-repeat="selectable_module in dd_modules">
-      <button class ="selectable_module__title" ng-class="{selected: selected.module == selectable_module}" ng-click="selectModule(selectable_module)">
-        <img ng-src={{selectable_module.milestone.icon}}/>{{selectable_module.milestone.title}}
-      </button>
-    </span>
 
     <div ng-show="selected.module" class="milestone_edit">
 

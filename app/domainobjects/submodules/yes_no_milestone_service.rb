@@ -7,7 +7,7 @@ class YesNoMilestoneService < ImuaMilestone
       @module = Constants.Modules[:SERVICE]
       @submodule = Constants.SubModules[:SERVICE_YES_NO]
 
-      @title = "DO IIIIIT"
+      @title = "Do It"
       @description = "Description:"
       @value = "Do iiiiit"
       @icon = "/assets/Service.jpg"

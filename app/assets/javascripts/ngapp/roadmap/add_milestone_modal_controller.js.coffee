@@ -8,9 +8,10 @@ angular.module('myApp')
     $scope.advancedPrefix = "Show"
 
     # Build up the dd-modules array for a dropdown
-    $scope.dd_modules = []
+    $scope.selectable_module_groups = []
 
     for module in enabledModules
+      selectable_modules = []
       moduleTitle = module.title
 
       for submodule in module.submodules
@@ -20,12 +21,15 @@ angular.module('myApp')
         new_milestone.is_default = false
         new_milestone.time_unit_id = timeUnit.id
 
-        $scope.dd_modules.push
+        selectable_modules.push
           module: moduleTitle,
           submoduleTitle: submodule.title,
           submoduleType: submodule.submodule,
           templatePath: '/assets/add_' + submodule.submodule.toLowerCase() + '.html',
           milestone: new_milestone
+
+      $scope.selectable_module_groups.push
+        group: selectable_modules
 
     # Uncomment to have first module pre-selected
     # $scope.selected.module = $scope.dd_modules[0];
