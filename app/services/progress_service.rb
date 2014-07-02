@@ -26,10 +26,8 @@ class ProgressService
     users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
 
     milestones = MilestoneFactory.get_milestone_objects(org_milestones)
-    Rails.logger.debug "*****Milestone: #{milestones[0]}"
-    milestones.each do | m |
-      Rails.logger.debug "*****Milestone target_gpa: #{m.target_gpa}"
 
+    milestones.each do | m |
       earned = m.has_earned?(user, time_unit_id)
       user_has_milestone = users_milestones.select{|um| um.milestone_id == m.id}.length > 0
 
