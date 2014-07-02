@@ -110,7 +110,8 @@ angular.module('myApp')
         if m.id == milestone.id
           break
 
-      RoadmapService.deleteMilestone(milestone.id)
-      .success (data) ->
-        tu.milestones.splice(index, 1)
+      if index < tu.milestones.length
+        RoadmapService.deleteMilestone(tu.milestones[index].id)
+        .success (data) ->
+          tu.milestones.splice(index, 1)
 ]
