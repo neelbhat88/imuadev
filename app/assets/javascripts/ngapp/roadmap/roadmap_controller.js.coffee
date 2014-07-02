@@ -108,10 +108,8 @@ angular.module('myApp')
     if window.confirm "Are you sure you want to delete this milestone?"
       for m,index in tu.milestones
         if m.id == milestone.id
+          RoadmapService.deleteMilestone(tu.milestones[index].id)
+          .success (data) ->
+            tu.milestones.splice(index, 1)
           break
-
-      if index < tu.milestones.length
-        RoadmapService.deleteMilestone(tu.milestones[index].id)
-        .success (data) ->
-          tu.milestones.splice(index, 1)
-]
+  ]
