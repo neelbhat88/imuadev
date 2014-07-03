@@ -1,12 +1,25 @@
 class Api::V1::OrganizationController < ApplicationController
+  respond_to :json
 
   before_filter :authenticate_user!
+  before_filter :load_services
 
-  respond_to :json
+  def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil )
+    @organizationRepository = organizationRepo ? organizationRepo : OrganizationRepository.new
+    @roadmapRepository = roadmapRepo ? roadmapRepo : RoadmapRepository.new
+    @enabledModules = enabledModules ? enabledModules : EnabledModules.new
+  end
 
   # GET /organization
   def all_organizations
-    result = OrganizationRepository.new.get_all_organizations()
+    if !current_user.super_admin?
+      render status: :unauthorized,
+        json: {}
+
+      return
+    end
+
+    result = @organizationRepository.get_all_organizations()
 
     render status: result.status,
       json: {
@@ -19,7 +32,7 @@ class Api::V1::OrganizationController < ApplicationController
   def get_organization
     orgId = params[:id]
 
-    result = OrganizationRepository.new.get_organization(orgId)
+    result = @organizationRepository.get_organization(orgId)
 
     viewOrg = ViewOrganization.new(result.object) unless result.object.nil?
     render status: result.status,
@@ -43,7 +56,7 @@ class Api::V1::OrganizationController < ApplicationController
       return
     end
 
-    result = OrganizationRepository.new.create_organization({:name => name})
+    result = @organizationRepository.create_organization({:name => name})
 
     render stauts: 200,
       json: {
@@ -58,7 +71,7 @@ class Api::V1::OrganizationController < ApplicationController
     orgId = params[:id]
     name = params[:name]
 
-    result = OrganizationRepository.new.update_organization({:id => orgId, :name => name})
+    result = @organizationRepository.update_organization({:id => orgId, :name => name})
 
     render status: 200,
       json: {
@@ -72,7 +85,7 @@ class Api::V1::OrganizationController < ApplicationController
   def delete_organization
     orgId = params[:id]
 
-    result = OrganizationRepository.new.delete_organization(orgId)
+    result = @organizationRepository.delete_organization(orgId)
 
     render stauts: 200,
       json: {
@@ -85,7 +98,7 @@ class Api::V1::OrganizationController < ApplicationController
   def roadmap
     orgId = params[:id].to_i
 
-    roadmap = RoadmapRepository.new.get_roadmap_by_organization(orgId)
+    roadmap = @roadmapRepository.get_roadmap_by_organization(orgId)
 
     viewRoadmap = ViewRoadmap.new(roadmap) unless roadmap.nil?
     render status: 200,
@@ -100,7 +113,7 @@ class Api::V1::OrganizationController < ApplicationController
   def modules
     orgId = params[:id]
 
-    result = EnabledModules.new.get_modules(orgId)
+    result = @enabledModules.get_modules(orgId)
 
     render status: result.status,
       json: {
@@ -113,7 +126,7 @@ class Api::V1::OrganizationController < ApplicationController
   def time_units
     orgId = params[:id].to_i
 
-    org_time_units = RoadmapRepository.new.get_time_units(orgId)
+    org_time_units = @roadmapRepository.get_time_units(orgId)
 
     render status: 200,
       json: {

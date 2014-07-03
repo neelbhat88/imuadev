@@ -39,4 +39,9 @@ RSpec.configure do |config|
 
   # Devise Utility methods
   config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
+  config.include RequestHelpers::JsonHelpers, :type => :controller
+
+  # FactoryGirl methods
+  config.include FactoryGirl::Syntax::Methods
 end
