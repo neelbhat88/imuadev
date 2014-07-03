@@ -12,11 +12,11 @@ gem "rack-timeout"
 
 group :development do
   #gem 'debugger'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 # Gems used only for assets and not required
