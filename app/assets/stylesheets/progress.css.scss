@@ -27,7 +27,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark);
   font-size: 16px;
   margin: 10px 20px 0 20px;
 
-  width: 150px;
+  width: 170px;
 
   @each $category, $color in $colormap {
 

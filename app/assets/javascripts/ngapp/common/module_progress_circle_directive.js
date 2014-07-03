@@ -1,23 +1,36 @@
 angular.module('myApp')
-.directive('module-progress-circle', [function(){
+.directive('moduleProgressCircle', [function(){
   return {
     restrict: 'EA',
     scope: {
       module: '='
     },
-// going to need to pass in the color based upon the module
     link: function(scope, element, attrs) {
+      // Throw in a switch statement for now, try to integrate  module
+      // color directive
+      switch (scope.module.module_title) {
+          case 'Academics':
+              var moduleColor = '#3FAB48';
+              var modulePoints = 7;
+              break;
+          case 'Service':
+              var moduleColor = '#E8BE28';
+              var modulePoints = 3;
+              break;
+      }
+      var totalPoints = 10;
       var data = [
-        {name: "Points Earned", value: 5},
-        {name: "Total Points", value: scope.module.points.total - scope.module.points.user}
+        {name: "Points Earned", value: modulePoints},
+        {name: "Total Points", value: /*scope.module.points.total*/totalPoints - modulePoints /*scope.module.points.user*/}
       ];
+      console.log(scope.module);
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
       	width = 170 - margin.left - margin.right;
       	height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
-      				.attr("id", scope.module.title)
+      				.attr("id", scope.module.module_title)
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
@@ -28,40 +41,15 @@ angular.module('myApp')
 
       var radius = Math.min(width, height) / 2;
 
+
       var color = d3.scale.ordinal()
-          .range(['#3FAB48', 'white']);
+          .range([moduleColor, 'white']);
 
       var arc = d3.svg.arc()
           .outerRadius(radius)
           .innerRadius(radius - 15);
 
-      var svg = $('#' + scope.module.title + ' svg')[0];
-      var photoCircle = d3.select(svg)
-                          .append("circle")
-                          .attr("cx", width-85)
-                          .attr("cy", height-85)
-                          .attr("r", radius-20)
-
-
-                //          .style("fill", "url(#photo"+scope.module.id+")");
-
-     /* var image = d3.select(svg)
-                      .append("pattern")
-                      .attr("id", "photo" + scope.module.id)
-                      .attr("x", 0)
-                      .attr("y", 0)
-                      .attr("width", 1)
-                      .attr("height", 1)
-
-      .append("image")
-                       .attr("x", 0)
-                      .attr("y", 0)
-                      .attr("width", 130)
-                      .attr("height", 130)
-                      .attr("xlink:href", scope.module.square_avatar_url);
-
-      var arc2 = d3.svg.arc().outerRadius(radius - 40);
-      */
+      var svg = $('#' + scope.module.module_title + ' svg')[0];
 
       var myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
 
@@ -76,8 +64,31 @@ angular.module('myApp')
       .enter().append("g")
         .attr("class", "arc");
 
-      g.append("path").style("fill", function(d) { return color(d.data.name); })
-        .attr("d", arc);
-    }
+      g.append("path").style("fill", function(d,i) { return color(i); })
+          .transition()
+          .ease("bounce")
+          .duration(2000)
+          .attrTween("d", tweenPie);
+
+      function tweenPie(b) {
+          var i = d3.interpolate({startAngle: myScale(0), endAngle: myScale(0)}, b);
+          return function(t) {
+              return arc(i(t)); };
+      }
+
+      g.append("text")
+      .attr("dy", "0em")
+      .attr("class", "module-circle__points value")
+      .style("text-anchor", "middle")
+      .text(function(d) {
+          return modulePoints + "/" + totalPoints;});
+
+      g.append("text")
+      .attr("dy", "1em")
+      .attr("class", "module-circle__points value")
+      .style("text-anchor", "middle")
+      .text(function(d) {
+          return "points";});
+      }
   }
 }]);
