@@ -30,11 +30,12 @@ angular.module('myApp')
       	height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
-      				.attr("id", scope.module.module_title)
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
       			   .append("g")
+      				.attr("id", scope.module.module_title)
+      				.attr("class", "module-circle__points")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
 
@@ -48,8 +49,6 @@ angular.module('myApp')
       var arc = d3.svg.arc()
           .outerRadius(radius)
           .innerRadius(radius - 15);
-
-      var svg = $('#' + scope.module.module_title + ' svg')[0];
 
       var myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
 
@@ -76,16 +75,16 @@ angular.module('myApp')
               return arc(i(t)); };
       }
 
-      g.append("text")
+      d3.select("#" + scope.module.module_title).append("text")
       .attr("dy", "0em")
-      .attr("class", "module-circle__points value")
+      .attr("class", "value")
       .style("text-anchor", "middle")
       .text(function(d) {
           return modulePoints + "/" + totalPoints;});
 
-      g.append("text")
+      d3.select("#" + scope.module.module_title).append("text")
       .attr("dy", "1em")
-      .attr("class", "module-circle__points value")
+      .attr("class", "text")
       .style("text-anchor", "middle")
       .text(function(d) {
           return "points";});
