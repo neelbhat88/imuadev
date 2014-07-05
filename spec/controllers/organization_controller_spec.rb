@@ -1,14 +1,25 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Api::V1::OrganizationController do
+describe Api::V1::OrganizationController, :type => :controller do
 
-  describe "GET 'roadmap'" do
-    it "returns http success" do
-      x = "Hello"
+  describe "GET 'organization'" do
 
-      x.should == "Hellos"
-      #get 'roadmap'
-      #response.should be_success
+    describe "if user is Super Admin" do
+      it "returns http success" do
+        get :all_organizations
+        print response
+        x = "Hello"
+
+        expect(x).to eq("Hello")
+        #get 'roadmap'
+        #response.should be_success
+      end
+    end
+
+    describe "if user is not Super Admin" do
+      it "returns 401 Unauthorized" do
+
+      end
     end
   end
 
