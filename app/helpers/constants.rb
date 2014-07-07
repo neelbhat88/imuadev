@@ -14,7 +14,10 @@ class Constants
   def self.Modules
     return {
       ACADEMICS: "Academics",
-      SERVICE: "Service"
+      SERVICE: "Service",
+      EXTRACURRICULAR: "Extracurricular",
+      PDU: "PDU",
+      TESTING: "Testing"
     }
   end
 

@@ -13,3 +13,6 @@ angular.module('myApp')
   'MODULES':
     academics: "Academics"
     service: "Service"
+    testing: "Testing"
+    extracurriculars: "Extracurricular"
+    pdu: "PDU"

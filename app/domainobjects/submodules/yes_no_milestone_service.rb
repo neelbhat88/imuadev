@@ -9,7 +9,7 @@ class YesNoMilestoneService < ImuaMilestone
 
       @title = "Do It"
       @description = "Description:"
-      @value = "Do iiiiit"
+      @value = "Give Back"
       @icon = "/assets/Service.jpg"
     end
 
