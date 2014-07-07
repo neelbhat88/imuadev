@@ -21,6 +21,11 @@ Imua::Application.routes.draw do
 
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
+
+          get   '/:id/time_unit/:time_unit_id/milestones/:module/yesno' => 'progress#yes_no_milestones'
+
+          post  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#add_user_milestone'
+          delete  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#delete_user_milestone'
         end
       end
 

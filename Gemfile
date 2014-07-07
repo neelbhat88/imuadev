@@ -12,11 +12,11 @@ gem "rack-timeout"
 
 group :development do
   #gem 'debugger'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 # Gems used only for assets and not required
@@ -42,6 +42,7 @@ gem 'newrelic_rpm'
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails'
+gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
 gem 'mail'
 

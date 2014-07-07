@@ -23,7 +23,7 @@ class GpaMilestone < ImuaMilestone
     user_gpa = UserClassService.new.user_gpa(user.id, time_unit_id)
     Rails.logger.debug("****** User's GPA: #{user_gpa}. Target GPA: #{@target_gpa}")
 
-    return user_gpa >= @target_gpa
+    @earned = user_gpa >= @target_gpa
   end
 
   def valid?

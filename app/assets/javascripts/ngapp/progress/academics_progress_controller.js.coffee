@@ -10,9 +10,23 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_classes = data.user_classes
 
+        ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+          .success (data) ->
+            $scope.yes_no_milestones = data.yes_no_milestones
+
     $scope.$watch 'user_classes', () ->
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
     , true
+
+    $scope.toggleYesNoMilestone = (milestone) ->
+      if milestone.earned
+        ProgressService.addUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
+          .success (data) ->
+            refreshPoints()
+      else
+        ProgressService.deleteUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
+          .success (data) ->
+            refreshPoints()
 
     $scope.saveClass = (index) ->
       new_class = UserClassService.new($scope.current_user)
@@ -25,12 +39,15 @@ angular.module('myApp')
           $scope.user_classes[index] = data.user_class
           $scope.classes.editing = false
 
-          # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
-          ProgressService.progressForModule($scope.current_user, $scope.selected_semester.id, $scope.CONSTANTS.MODULES.academics)
-            .success (data) ->
-              for mod in $scope.modules_progress # Loop through modules on progress controller
-                if mod.module_title == data.module_progress.module_title
-                  mod.points = data.module_progress.points
+          refreshPoints()
+
+    refreshPoints = () ->
+      # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
+      ProgressService.progressForModule($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+        .success (data) ->
+          for mod in $scope.modules_progress # Loop through modules on progress controller
+            if mod.module_title == data.module_progress.module_title
+              mod.points = data.module_progress.points
 
     $scope.deleteClass = (index) ->
       if window.confirm "Are you sure you want to delete this class?"

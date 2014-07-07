@@ -1,6 +1,6 @@
 class ImuaMilestone
   attr_accessor :id, :title, :description, :value, :module, :submodule,
-                  :importance, :points, :time_unit_id, :icon
+                  :importance, :points, :time_unit_id, :icon, :earned
 
   def self.Defaults
     return {
@@ -14,6 +14,7 @@ class ImuaMilestone
       IMPORTANCE:   1,
       POINTS:       10,
       ICON:         "n/a",
+      EARNED:       false
     }
   end
 
@@ -29,6 +30,7 @@ class ImuaMilestone
       @importance   = ImuaMilestone.Defaults[:IMPORTANCE]
       @points       = ImuaMilestone.Defaults[:POINTS]
       @icon         = ImuaMilestone.Defaults[:ICON]
+      @earned       = ImuaMilestone.Defaults[:EARNED]
     else
       @id           = milestone.id
       @module       = milestone.module
@@ -40,6 +42,7 @@ class ImuaMilestone
       @importance   = milestone.importance
       @points       = milestone.points
       @icon         = milestone.icon
+      @earned       = false
     end
   end
 

@@ -5,7 +5,7 @@ class YesNoMilestoneService < ImuaMilestone
 
     if milestone.nil?
       @module = Constants.Modules[:SERVICE]
-      @submodule = Constants.SubModules[:SERVICE_YES_NO]
+      @submodule = Constants.SubModules[:YES_NO]
 
       @title = "Do It"
       @description = "Description:"
@@ -16,8 +16,7 @@ class YesNoMilestoneService < ImuaMilestone
   end
 
   def has_earned?(user, time_unit_id)
-    # TODO
-    return false
+    @earned = MilestoneService.new.has_user_earned_milestone?(user.id, time_unit_id, @id)
   end
 
   def valid?

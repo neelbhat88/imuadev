@@ -25,6 +25,10 @@ class ProgressService
     org_milestones = Milestone.where(:module => module_title, :time_unit_id => time_unit_id)
     users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
 
+    # ToDo: We can probably filter out all the Yes/No milestones here and skip calling has_earned? on all Yes/No milestones
+    # to save a DB call. Yes/No milestone are simple and we know they earned or lost based on checking/unchecking a checkbox so don't need to check again
+    # here when saving other Academics data
+    # For now this is fine, but if DB starts taking a hit we can save some calls here
     milestones = MilestoneFactory.get_milestone_objects(org_milestones)
 
     milestones.each do | m |
@@ -33,11 +37,10 @@ class ProgressService
 
       Rails.logger.debug "*****Milestone id: #{m.id}, value: #{m.value} earned? #{earned}"
       if earned and !user_has_milestone
-        UserMilestone.create(:milestone_id => m.id, :time_unit_id => time_unit_id, :user_id => userId,
-                              :module => m.module, :submodule => m.submodule)
+        MilestoneService.new.add_user_milestone(userId, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone added to UserMilestone table"
       elsif !earned and user_has_milestone
-        UserMilestone.where(:milestone_id => m.id).destroy_all()
+        MilestoneService.new.delete_user_milestone(userId, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone deleted from UserMilestone table"
       end
     end

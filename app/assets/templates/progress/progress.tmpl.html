@@ -2,12 +2,7 @@
 
   <div class="module-circles js-modules-circles">
     <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
-      <div class="module-circle__bg">
-        <div class="module-circle__points">
-          <div class="value">{{mod.points.user}}/{{mod.points.total}}</div>
-          <div class="text" style="font-size: 10px; text-align: center;">points</div>
-        </div>
-      </div>
+      <module-progress-circle module="mod"></module-progress-circle>
       <div class="module-circle__modtitle">{{mod.module_title}}</div>
       <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
     </div>

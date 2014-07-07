@@ -1,7 +1,6 @@
 class Api::V1::ProgressController < ApplicationController
 
   before_filter :authenticate_user!
-  skip_before_filter  :verify_authenticity_token
 
   respond_to :json
 
@@ -34,6 +33,50 @@ class Api::V1::ProgressController < ApplicationController
       json: {
         info: result.info,
         module_progress: result.object
+      }
+  end
+
+  # GET  /user/:id/time_unit/:time_unit_id/milestones/:module/yesno
+  def yes_no_milestones
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    mod = params[:module]
+
+    result = MilestoneService.new.yes_no_milestones_including_user(userId, mod, time_unit_id)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        yes_no_milestones: result.object
+      }
+  end
+
+  # POST /user/:id/time_unit/:time_unit_id/milestones/:milestone_id
+  def add_user_milestone
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    milestone_id = params[:milestone_id]
+
+    result = MilestoneService.new.add_user_milestone(userId, time_unit_id, milestone_id)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        milestone: result.object
+      }
+  end
+
+  # DELETE /user/:id/time_unit/:time_unit_id/milestones/:milestone_id
+  def delete_user_milestone
+    userId = params[:id]
+    time_unit_id = params[:time_unit_id]
+    milestone_id = params[:milestone_id]
+
+    result = MilestoneService.new.delete_user_milestone(userId, time_unit_id, milestone_id)
+
+    render status: result.status,
+      json: {
+        info: result.info
       }
   end
 

@@ -1,11 +1,18 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
+  <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+    <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
+      <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)" ng-disabled="!(selected_semester.id == current_user.time_unit_id)">
+      <span class="text">{{yesno.value}}</span>
+    </div>
+  </div>
+
   <div class="pbxl" ng-show="user_classes.length == 0">
     <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
     <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
   </div>
 
-  <div class="user-class-greeting pbxl" ng-show="user_classes.length != 0">
+  <div class="user-class-greeting pvxl" ng-show="user_classes.length != 0">
     <div class="line1">Nice work {{current_user.first_name}}! You've earned a</div>
     <div class="line2"><span class="bold">{{gpa}} GPA</span> this semester</div>
   </div>

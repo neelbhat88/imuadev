@@ -22,10 +22,10 @@ class Constants
     return {
       ACADEMICS_GPA:       "Academics_GPA",
       ACADEMICS_COURSES:   "Academics_Courses",
-      ACADEMICS_YES_NO:    "Academics_YesNo",
 
       SERVICE_DEPTH_HOURS: "Service_DepthHours",
-      SERVICE_YES_NO:      "Service_YesNo", 
+
+      YES_NO:              "YesNo",
     }
   end
 end
