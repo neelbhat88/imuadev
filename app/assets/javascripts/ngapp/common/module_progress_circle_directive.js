@@ -25,11 +25,12 @@ angular.module('myApp')
               var moduleColor = '#9665aa';
               break;
       }
-      var modulePoints = Math.floor(Math.random() * 10);
-      var totalPoints = 10;
+
+      var modulePoints = scope.module.points.user;
+      var totalPoints = scope.module.points.total;
       var data = [
         {name: "Points Earned", value: modulePoints},
-        {name: "Total Points", value: /*scope.module.points.total*/totalPoints - modulePoints /*scope.module.points.user*/}
+        {name: "Total Points", value: totalPoints - modulePoints}
       ];
       console.log(scope.module);
 
