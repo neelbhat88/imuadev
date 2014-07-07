@@ -14,6 +14,18 @@ class EnabledModules
           :title => Constants.Modules[:SERVICE],
           :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS],
                           Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => Constants.Modules[:EXTRACURRICULAR],
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => Constants.Modules[:PDU],
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => Constants.Modules[:TEST],
+          :submodules => [Constants.SubModules[:YES_NO]]
         }
       ]
 
