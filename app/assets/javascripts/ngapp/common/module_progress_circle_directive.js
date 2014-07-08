@@ -29,7 +29,7 @@ angular.module('myApp')
       var modulePoints = scope.module.points.user;
       var totalPoints = scope.module.points.total;
       var data = [
-        {name: "Points Earned", value: modulePoints},
+        {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
         {name: "Total Points", value: totalPoints - modulePoints}
       ];
       console.log(scope.module);
