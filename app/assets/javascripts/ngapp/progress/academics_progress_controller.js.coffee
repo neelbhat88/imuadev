@@ -18,16 +18,6 @@ angular.module('myApp')
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
     , true
 
-    $scope.toggleYesNoMilestone = (milestone) ->
-      if milestone.earned
-        ProgressService.addUserMilestone($scope.student, $scope.selected_semester.id, milestone.id)
-          .success (data) ->
-            refreshPoints()
-      else
-        ProgressService.deleteUserMilestone($scope.student, $scope.selected_semester.id, milestone.id)
-          .success (data) ->
-            refreshPoints()
-
     $scope.saveClass = (index) ->
       new_class = UserClassService.new($scope.student)
       new_class.id = $scope.user_classes[index].id
@@ -40,14 +30,6 @@ angular.module('myApp')
           $scope.classes.editing = false
 
           refreshPoints()
-
-    refreshPoints = () ->
-      # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
-      ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
-        .success (data) ->
-          for mod in $scope.modules_progress # Loop through modules on progress controller
-            if mod.module_title == data.module_progress.module_title
-              mod.points = data.module_progress.points
 
     $scope.deleteClass = (index) ->
       if window.confirm "Are you sure you want to delete this class?"

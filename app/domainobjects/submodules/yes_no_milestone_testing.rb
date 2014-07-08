@@ -1,16 +1,16 @@
-class YesNoMilestoneService < ImuaMilestone
+class YesNoMilestoneTesting < ImuaMilestone
 
   def initialize(milestone=nil)
     super
 
     if milestone.nil?
-      @module = Constants.Modules[:SERVICE]
+      @module = Constants.Modules[:TESTING]
       @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Service Goal"
+      @title = "Testing Goal"
       @description = "Description:"
-      @value = "Give Back"
-      @icon = "/assets/Service.jpg"
+      @value = "Take Some Tests"
+      @icon = "/assets/Testing.jpg"
     end
 
   end

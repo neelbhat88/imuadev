@@ -64,7 +64,9 @@ class ProgressService
     users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
     user_points = 0
     users_milestones.each do | um |
-      user_points += um.milestone.points
+      if um.milestone != nil
+        user_points += um.milestone.points
+      end
     end
 
     return {:total => total_points, :user => user_points}

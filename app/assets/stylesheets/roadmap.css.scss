@@ -283,16 +283,18 @@
 
   .selectable_module_group
   {
-    width: 40%;
+    width: 50%;
     text-align: left;
     display: inline-block;
+    margin-bottom: 15px;
     .selectable_module__title
     {
       @extend .milestone-title;
+      width: 95%;
       margin-right: 10px;
       margin-bottom: 15px;
       padding: 10px;
-      padding-right: 16px;
+      padding-right: 14px;
       border: 1px solid $light-grey;
       background-color: white;
       img {
@@ -306,7 +308,7 @@
       &.selected {
         border: 5px solid $ink;
         padding: 6px;
-        padding-right: 16px;
+        padding-right: 14px;
       }
     }
   }

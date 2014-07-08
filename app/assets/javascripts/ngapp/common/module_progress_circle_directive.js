@@ -10,18 +10,27 @@ angular.module('myApp')
       // color directive
       switch (scope.module.module_title) {
           case 'Academics':
-              var moduleColor = '#3FAB48';
-              var modulePoints = 7;
+              var moduleColor = '#41ad49';
               break;
           case 'Service':
-              var moduleColor = '#E8BE28';
-              var modulePoints = 3;
+              var moduleColor = '#e8be28';
+              break;
+          case 'Extracurricular':
+              var moduleColor = '#ef413d';
+              break;
+          case 'PDU':
+              var moduleColor = '#27aae1';
+              break;
+          case 'Testing':
+              var moduleColor = '#9665aa';
               break;
       }
-      var totalPoints = 10;
+
+      var modulePoints = scope.module.points.user;
+      var totalPoints = scope.module.points.total;
       var data = [
-        {name: "Points Earned", value: modulePoints},
-        {name: "Total Points", value: /*scope.module.points.total*/totalPoints - modulePoints /*scope.module.points.user*/}
+        {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
+        {name: "Total Points", value: totalPoints - modulePoints}
       ];
       console.log(scope.module);
 
