@@ -290,11 +290,11 @@
     .selectable_module__title
     {
       @extend .milestone-title;
-      width: 90%;
+      width: 95%;
       margin-right: 10px;
       margin-bottom: 15px;
       padding: 10px;
-      padding-right: 16px;
+      padding-right: 14px;
       border: 1px solid $light-grey;
       background-color: white;
       img {
@@ -308,7 +308,7 @@
       &.selected {
         border: 5px solid $ink;
         padding: 6px;
-        padding-right: 16px;
+        padding-right: 14px;
       }
     }
   }
