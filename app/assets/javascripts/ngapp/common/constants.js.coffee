@@ -15,4 +15,4 @@ angular.module('myApp')
     service: "Service"
     testing: "Testing"
     extracurriculars: "Extracurricular"
-    pdu: "PDU"
+    college_prep: "College_Prep"
