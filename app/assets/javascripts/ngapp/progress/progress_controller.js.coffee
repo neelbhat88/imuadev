@@ -31,23 +31,24 @@ angular.module('myApp')
       setHeight()
 
   $scope.$watch 'selected_semester', () ->
-    ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
-      .success (data) ->
-        $scope.yes_no_milestones = data.yes_no_milestones
+    if $scope.selected_semester && $scope.selected_module
+      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+        .success (data) ->
+          $scope.yes_no_milestones = data.yes_no_milestones
 
   $scope.toggleYesNoMilestone = (milestone) ->
     if milestone.earned
-      ProgressService.addUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
+      ProgressService.addUserMilestone($scope.student, $scope.selected_semester.id, milestone.id)
         .success (data) ->
-          refreshPoints()
+          $scope.refreshPoints()
     else
-      ProgressService.deleteUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
+      ProgressService.deleteUserMilestone($scope.student, $scope.selected_semester.id, milestone.id)
         .success (data) ->
-          refreshPoints()
+          $scope.refreshPoints()
 
-  refreshPoints = () ->
+  $scope.refreshPoints = () ->
     # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
-    ProgressService.progressForModule($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+    ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->
         for mod in $scope.modules_progress # Loop through modules on progress controller
           if mod.module_title == data.module_progress.module_title

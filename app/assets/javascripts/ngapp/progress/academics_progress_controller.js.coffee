@@ -6,7 +6,7 @@ angular.module('myApp')
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
-        UserClassService.all($scope.student.id, $scope.student.organization_id, $scope.selected_semester.id)
+        UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
 
@@ -29,13 +29,14 @@ angular.module('myApp')
           $scope.user_classes[index] = data.user_class
           $scope.classes.editing = false
 
-          refreshPoints()
+          $scope.refreshPoints()
 
     $scope.deleteClass = (index) ->
       if window.confirm "Are you sure you want to delete this class?"
         UserClassService.delete($scope.user_classes[index])
           .success (data) ->
             $scope.user_classes.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.addClass = () ->
       $scope.classes.editing = true
