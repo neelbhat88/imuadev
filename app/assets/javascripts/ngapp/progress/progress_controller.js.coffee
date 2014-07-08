@@ -30,11 +30,10 @@ angular.module('myApp')
       $scope.selected_module = data.modules_progress[0]
       setHeight()
 
-  $scope.$watch 'selected_semester', () ->
-    if $scope.selected_semester && $scope.selected_module
-      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
-        .success (data) ->
-          $scope.yes_no_milestones = data.yes_no_milestones
+  # $scope.$watch 'selected_semester', () ->
+  #   ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+  #     .success (data) ->
+  #       $scope.yes_no_milestones = data.yes_no_milestones
 
   $scope.toggleYesNoMilestone = (milestone) ->
     if milestone.earned

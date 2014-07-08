@@ -18,7 +18,7 @@ angular.module('myApp')
           case 'Extracurricular':
               var moduleColor = '#ef413d';
               break;
-          case 'PDU':
+          case 'College_Prep':
               var moduleColor = '#27aae1';
               break;
           case 'Testing':

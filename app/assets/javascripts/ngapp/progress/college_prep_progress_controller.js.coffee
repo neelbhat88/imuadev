@@ -1,5 +1,5 @@
 angular.module('myApp')
-.controller 'PDUProgressController', ['$scope', 'ProgressService',
+.controller 'CollegePrepProgressController', ['$scope', 'ProgressService',
   ($scope, ProgressService) ->
 
     $scope.$watch 'selected_semester', () ->
