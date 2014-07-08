@@ -14,6 +14,7 @@ FactoryGirl.define do
     email "student-test@gmail.com"
     password "password"
     organization_id -10
+    time_unit_id -5
     role 50
   end
 

@@ -1,15 +1,16 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$scope', 'current_user', 'OrganizationService', 'ProgressService',
-($scope, current_user, OrganizationService, ProgressService) ->
+.controller 'ProgressController', ['$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
+($scope, current_user, student, OrganizationService, ProgressService) ->
   $scope.selected_module = null
   $scope.semesters = []
   $scope.current_user = current_user
+  $scope.student = student
   $scope.selected_semester = null
 
   $(window).resize (event) ->
       setHeight()
 
-  OrganizationService.getTimeUnits(current_user.organization_id)
+  OrganizationService.getTimeUnits(student.organization_id)
     .success (data) ->
       $scope.semesters = []
       org_time_units = data.org_time_units
@@ -17,13 +18,13 @@ angular.module('myApp')
       # Set up each semester in descending order
       for tu in org_time_units
         $scope.semesters.unshift(tu)
-        if tu.id == current_user.time_unit_id
+        if tu.id == student.time_unit_id
           tu.name = "This Semester"
           break
 
       $scope.selected_semester = $scope.semesters[0]
 
-  ProgressService.getModules(current_user, current_user.time_unit_id)
+  ProgressService.getModules(student, student.time_unit_id)
     .success (data) ->
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
@@ -33,7 +34,7 @@ angular.module('myApp')
     $scope.selected_module = mod
 
   $scope.selectSemester = (sem) ->
-    ProgressService.getModules(current_user, sem.id)
+    ProgressService.getModules(student, sem.id)
       .success (data) ->
         $scope.modules_progress = data.modules_progress
         setHeight();

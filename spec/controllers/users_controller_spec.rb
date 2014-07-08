@@ -9,6 +9,7 @@ describe Api::V1::UsersController do
     end
 
     it "should set role to org admin" do
+      expect(subject.current_user.org_admin?).to eq(true)
       expect(subject.current_user.role).to eq(Constants.UserRole[:ORG_ADMIN])
     end
   end
@@ -21,6 +22,7 @@ describe Api::V1::UsersController do
     end
 
     it "should set role to student" do
+      expect(subject.current_user.student?).to eq(true)
       expect(subject.current_user.role).to eq(Constants.UserRole[:STUDENT])
     end
   end
@@ -33,6 +35,7 @@ describe Api::V1::UsersController do
     end
 
     it "should set role to mentor" do
+      expect(subject.current_user.mentor?).to eq(true)
       expect(subject.current_user.role).to eq(Constants.UserRole[:MENTOR])
     end
   end
@@ -45,6 +48,7 @@ describe Api::V1::UsersController do
     end
 
     it "should set role to super admin" do
+      expect(subject.current_user.super_admin?).to eq(true)
       expect(subject.current_user.role).to eq(Constants.UserRole[:SUPER_ADMIN])
     end
   end

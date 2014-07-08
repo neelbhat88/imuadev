@@ -34,4 +34,8 @@ Imua::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Tell Unicorn to log just like WEBbrick and Thin web servers do
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get('DEBUG')
 end

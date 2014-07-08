@@ -51,12 +51,12 @@
 
             <% if current_user.student? %>
             <li>
-              <a href="#/progress">Progress</a>
+              <a href="#/progress/<%= current_user.id %>">Progress</a>
             </li>
             <% end %>
 
             <li>
-              <a href="#/roadmap">Roadmap</a>
+              <a href="#/roadmap/">Roadmap</a>
             </li>
             <li>
               <a href="#/profile">Profile</a>

@@ -1,8 +1,15 @@
 class Api::V1::ProgressController < ApplicationController
+  respond_to :json
 
   before_filter :authenticate_user!
+  before_filter :load_services
 
-  respond_to :json
+  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil )
+    @userClassService = userClassService ? userClassService : UserClassService.new
+    @progressService = progressService ? progressService : ProgressService.new
+    @milestoneService = milestoneService ? milestoneService : MilestoneService.new
+    @userRepository = userRepo ? userRepo : UserRepository.new
+  end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
   # Returns All modules for a given semester and the
@@ -11,7 +18,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     time_unit_id = params[:time_unit_id]
 
-    result = ProgressService.new.get_all_progress(userId, time_unit_id)
+    result = @progressService.get_all_progress(userId, time_unit_id)
 
     render status: result.status,
       json: {
@@ -27,7 +34,7 @@ class Api::V1::ProgressController < ApplicationController
     time_unit_id = params[:time_unit_id]
     mod = params[:module]
 
-    result = ProgressService.new.check_progress(userId, time_unit_id, mod)
+    result = @progressService.check_progress(userId, time_unit_id, mod)
 
     render status: result.status,
       json: {
@@ -42,7 +49,7 @@ class Api::V1::ProgressController < ApplicationController
     time_unit_id = params[:time_unit_id]
     mod = params[:module]
 
-    result = MilestoneService.new.yes_no_milestones_including_user(userId, mod, time_unit_id)
+    result = @milestoneService.yes_no_milestones_including_user(userId, mod, time_unit_id)
 
     render status: result.status,
       json: {
@@ -57,7 +64,7 @@ class Api::V1::ProgressController < ApplicationController
     time_unit_id = params[:time_unit_id]
     milestone_id = params[:milestone_id]
 
-    result = MilestoneService.new.add_user_milestone(userId, time_unit_id, milestone_id)
+    result = @milestoneService.add_user_milestone(userId, time_unit_id, milestone_id)
 
     render status: result.status,
       json: {
@@ -72,7 +79,7 @@ class Api::V1::ProgressController < ApplicationController
     time_unit_id = params[:time_unit_id]
     milestone_id = params[:milestone_id]
 
-    result = MilestoneService.new.delete_user_milestone(userId, time_unit_id, milestone_id)
+    result = @milestoneService.delete_user_milestone(userId, time_unit_id, milestone_id)
 
     render status: result.status,
       json: {
@@ -80,12 +87,31 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
-  # GET /user/:id/data/academics/:time_unit_id
+  # GET /user/:id/time_unit/:time_unit_id/classes
   def user_classes
-    userId = params[:id]
-    time_unit_id = params[:time_unit_id]
+    userId = params[:id].to_i
+    time_unit_id = params[:time_unit_id].to_i
 
-    classes = UserClassService.new.get_user_classes(userId, time_unit_id)
+    # ToDo: Create a more general way to do this so this can be done
+    # in all congroller actions
+    if current_user.student?
+      if current_user.id != userId
+        render status: :forbidden,
+          json: {}
+
+        return
+      end
+    end
+
+    user = @userRepository.get_user(userId)
+    if user.nil? || current_user.organization_id != user.organization_id
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
+
+    classes = @userClassService.get_user_classes(userId, time_unit_id)
 
     render status: :ok,
       json: {
@@ -99,7 +125,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id]
     new_class = params[:user_class]
 
-    user_class = UserClassService.new.save_user_class(userId, new_class)
+    user_class = @userClassService.save_user_class(userId, new_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -122,7 +148,7 @@ class Api::V1::ProgressController < ApplicationController
     classId = params[:class_id]
     updated_class = params[:user_class]
 
-    user_class = UserClassService.new.update_user_class(updated_class)
+    user_class = @userClassService.update_user_class(updated_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -144,7 +170,7 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id].to_i
     classId = params[:class_id].to_i
 
-    if UserClassService.new.delete_user_class(classId)
+    if @userClassService.delete_user_class(classId)
       render status: :ok,
         json: {
           info: "Deleted User Class"
