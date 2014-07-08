@@ -1,7 +1,7 @@
 class Api::V1::ProgressController < ApplicationController
 
   before_filter :authenticate_user!
-
+  skip_before_filter :verify_authenticity_token
   respond_to :json
 
   # GET /user/:id/time_unit/:time_unit_id/progress
