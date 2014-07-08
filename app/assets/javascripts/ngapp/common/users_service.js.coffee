@@ -3,6 +3,9 @@ angular.module('myApp')
 
   @getUserInfo = (userId) ->
 
+  @getUser = (userId) ->
+    $http.get "/api/v1/users/#{userId}"
+
   @addUser = (user) ->
     $http.post '/api/v1/users', { user: user }
 

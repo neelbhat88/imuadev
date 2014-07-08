@@ -38,13 +38,13 @@
     <div class="user-list ptxl pbxl">
       <h4>Students</h4>
 
-      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in organization.students">
+      <a ng-href="#/progress/{{student.id}}" class="avatar-block progress-circles avatar-block--list" ng-repeat="student in organization.students">
         <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
         <progress-circle myuser="student"></progress-circle>
         <div class="avatar-block__name">
           {{student.first_name}} {{student.last_name}}
         </div>
-      </div>
+      </a>
 
       <div class="user-list__add" ng-click="addStudent()">
         <div class="glyphicon glyphicon-plus-sign ptxl"></div>

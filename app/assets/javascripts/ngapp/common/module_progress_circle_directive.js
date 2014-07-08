@@ -32,7 +32,6 @@ angular.module('myApp')
         {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
         {name: "Total Points", value: totalPoints - modulePoints}
       ];
-      console.log(scope.module);
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
       	width = 170 - margin.left - margin.right;
