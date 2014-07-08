@@ -20,7 +20,7 @@ class EnabledModules
           :submodules => [Constants.SubModules[:YES_NO]]
         },
         {
-          :title => Constants.Modules[:COLLEGE_PREP],
+          :title => Constants.Modules[:PDU],
           :submodules => [Constants.SubModules[:YES_NO]]
         },
         {
