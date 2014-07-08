@@ -73,8 +73,7 @@ angular.module('myApp')
 
       g.append("path").style("fill", function(d,i) { return color(i); })
           .transition()
-          .ease("bounce")
-          .duration(2000)
+          .duration(1700)
           .attrTween("d", tweenPie);
 
       function tweenPie(b) {
