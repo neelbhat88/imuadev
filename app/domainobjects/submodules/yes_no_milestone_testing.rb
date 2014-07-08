@@ -7,7 +7,7 @@ class YesNoMilestoneTesting < ImuaMilestone
       @module = Constants.Modules[:TESTING]
       @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Do It"
+      @title = "Testing Goal"
       @description = "Description:"
       @value = "Take Some Tests"
       @icon = "/assets/Testing.jpg"

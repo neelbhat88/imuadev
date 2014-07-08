@@ -7,7 +7,7 @@ class YesNoMilestonePDU < ImuaMilestone
       @module = Constants.Modules[:PDU]
       @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Do It"
+      @title = "College Prep Goal"
       @description = "Description:"
       @value = "Learn New Skills"
       @icon = "/assets/PDU.jpg"
