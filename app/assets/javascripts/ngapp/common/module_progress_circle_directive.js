@@ -29,34 +29,23 @@ angular.module('myApp')
           // Throw in a switch statement for now, try to integrate  module
           // color directive
           switch (module.module_title) {
-              case 'Academics':
-                  var moduleColor = '#41ad49';
-                  break;
-              case 'Service':
-                  var moduleColor = '#e8be28';
-                  break;
-              case 'Extracurricular':
-                  var moduleColor = '#ef413d';
-                  break;
-              case 'College_Prep':
-                  var moduleColor = '#27aae1';
-                  break;
-              case 'Testing':
-                  var moduleColor = '#9665aa';
-                  break;
+              case 'Academics':       var moduleColor = '#41ad49'; break;
+              case 'Service':         var moduleColor = '#e8be28'; break;
+              case 'Extracurricular': var moduleColor = '#ef413d'; break;
+              case 'College_Prep':    var moduleColor = '#27aae1'; break;
+              case 'Testing':         var moduleColor = '#9665aa'; break;
           }
 
           var modulePoints = module.points.user;
           var totalPoints = module.points.total;
           var data = [
-            {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
-            {name: "Total Points", value: totalPoints - modulePoints}
+            {name: "Points Earned", value: modulePoints},
+            {name: "Total Points", value: (totalPoints == 0) ? 1 : totalPoints - modulePoints}
           ];
 
 
-
           var color = d3.scale.ordinal()
-              .range([moduleColor, 'white']);
+              .range([moduleColor, '#e5e5e5']);
 
           var arc = d3.svg.arc()
               .outerRadius(radius)
