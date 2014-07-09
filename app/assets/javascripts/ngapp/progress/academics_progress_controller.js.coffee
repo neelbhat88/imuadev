@@ -6,11 +6,11 @@ angular.module('myApp')
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
-        UserClassService.all($scope.current_user, $scope.selected_semester.id)
+        UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
 
-        ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+        ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
           .success (data) ->
             $scope.yes_no_milestones = data.yes_no_milestones
 
@@ -18,18 +18,8 @@ angular.module('myApp')
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
     , true
 
-    $scope.toggleYesNoMilestone = (milestone) ->
-      if milestone.earned
-        ProgressService.addUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
-          .success (data) ->
-            refreshPoints()
-      else
-        ProgressService.deleteUserMilestone($scope.current_user, $scope.selected_semester.id, milestone.id)
-          .success (data) ->
-            refreshPoints()
-
     $scope.saveClass = (index) ->
-      new_class = UserClassService.new($scope.current_user)
+      new_class = UserClassService.new($scope.student)
       new_class.id = $scope.user_classes[index].id
       new_class.name = $scope.user_classes[index].new_name
       new_class.grade = $scope.user_classes[index].new_grade
@@ -39,25 +29,18 @@ angular.module('myApp')
           $scope.user_classes[index] = data.user_class
           $scope.classes.editing = false
 
-          refreshPoints()
-
-    refreshPoints = () ->
-      # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
-      ProgressService.progressForModule($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
-        .success (data) ->
-          for mod in $scope.modules_progress # Loop through modules on progress controller
-            if mod.module_title == data.module_progress.module_title
-              mod.points = data.module_progress.points
+          $scope.refreshPoints()
 
     $scope.deleteClass = (index) ->
       if window.confirm "Are you sure you want to delete this class?"
         UserClassService.delete($scope.user_classes[index])
           .success (data) ->
             $scope.user_classes.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.addClass = () ->
       $scope.classes.editing = true
-      $scope.user_classes.push(UserClassService.new($scope.current_user))
+      $scope.user_classes.push(UserClassService.new($scope.student))
 
     $scope.cancelEdit = (index) ->
       if $scope.user_classes[index].id

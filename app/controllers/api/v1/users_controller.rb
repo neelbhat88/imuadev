@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_filter :authenticate_user!
-
+  skip_before_filter :verify_authenticity_token
   respond_to :json
 
   # GET /users
@@ -51,6 +51,27 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/:id
   def show
+    userId = params[:id].to_i
+
+    # ToDo: Create a more general way to do this so this can be done
+    # in all congroller actions
+    if current_user.student?
+      if current_user.id != userId
+        render status: :forbidden,
+          json: {}
+
+        return
+      end
+    end
+
+    user = UserRepository.new.get_user(userId)
+
+    viewUser = ViewUser.new(user) unless user.nil?
+    render status: :ok,
+      json: {
+        info: "User",
+        user: viewUser
+      }
   end
 
   # PUT /users/:id

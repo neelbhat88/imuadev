@@ -7,7 +7,7 @@ class YesNoMilestoneExtracurricular < ImuaMilestone
       @module = Constants.Modules[:EXTRACURRICULAR]
       @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Do It"
+      @title = "Extracurricular Goal"
       @description = "Description:"
       @value = "Get Involved"
       @icon = "/assets/Extracurricular.jpg"

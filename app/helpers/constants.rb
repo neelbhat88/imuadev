@@ -16,7 +16,7 @@ class Constants
       ACADEMICS: "Academics",
       SERVICE: "Service",
       EXTRACURRICULAR: "Extracurricular",
-      PDU: "PDU",
+      COLLEGE_PREP: "College_Prep",
       TESTING: "Testing"
     }
   end

@@ -14,8 +14,8 @@ class MilestoneFactory
         return YesNoMilestoneService.new(milestone)
       elsif mod == Constants.Modules[:EXTRACURRICULAR]
         return YesNoMilestoneExtracurricular.new(milestone)
-      elsif mod == Constants.Modules[:PDU]
-        return YesNoMilestonePDU.new(milestone)
+      elsif mod == Constants.Modules[:COLLEGE_PREP]
+        return YesNoMilestoneCollegePrep.new(milestone)
       elsif mod == Constants.Modules[:TESTING]
         return YesNoMilestoneTesting.new(milestone)
       end

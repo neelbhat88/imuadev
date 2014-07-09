@@ -1,13 +1,13 @@
-class YesNoMilestonePDU < ImuaMilestone
+class YesNoMilestoneCollegePrep < ImuaMilestone
 
   def initialize(milestone=nil)
     super
 
     if milestone.nil?
-      @module = Constants.Modules[:PDU]
+      @module = Constants.Modules[:COLLEGE_PREP]
       @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Do It"
+      @title = "College Prep Goal"
       @description = "Description:"
       @value = "Learn New Skills"
       @icon = "/assets/PDU.jpg"

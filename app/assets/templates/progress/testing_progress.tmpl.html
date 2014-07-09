@@ -1,4 +1,14 @@
-<h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
-<h4>Let's get that taken care of. Add your testing data below.</h4>
+<div ng-controller="TestingProgressController" class="testingProgressContainer">
 
-<h1 class="ptxl" style="text-align: center;">Testing Data coming soon!</h1>
+  <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+    <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
+      <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)" ng-disabled="!(selected_semester.id == current_user.time_unit_id)">
+      <span class="text">{{yesno.value}}</span>
+    </div>
+  </div>
+
+  <div class="pbxl" ng-show="yes_no_milestones.length == 0">
+    <h4>Looks like there aren't any testing milestones for this semester.</h4>
+  </div>
+
+</div>

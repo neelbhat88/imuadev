@@ -18,7 +18,7 @@ angular.module('myApp')
           case 'Extracurricular':
               var moduleColor = '#ef413d';
               break;
-          case 'PDU':
+          case 'College_Prep':
               var moduleColor = '#27aae1';
               break;
           case 'Testing':
@@ -29,10 +29,9 @@ angular.module('myApp')
       var modulePoints = scope.module.points.user;
       var totalPoints = scope.module.points.total;
       var data = [
-        {name: "Points Earned", value: modulePoints},
+        {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
         {name: "Total Points", value: totalPoints - modulePoints}
       ];
-      console.log(scope.module);
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
       	width = 170 - margin.left - margin.right;
@@ -74,8 +73,7 @@ angular.module('myApp')
 
       g.append("path").style("fill", function(d,i) { return color(i); })
           .transition()
-          .ease("bounce")
-          .duration(2000)
+          .duration(1700)
           .attrTween("d", tweenPie);
 
       function tweenPie(b) {
