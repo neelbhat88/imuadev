@@ -1,9 +1,9 @@
 <div class="progressContainer" wait-to-load="{{selected_module}}">
 
-  <div class="module-circles js-modules-circles">
+  <div class="module-circles js-module-circles">
     <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
       <module-progress-circle module="mod"></module-progress-circle>
-      <div class="module-circle__modtitle">{{mod.module_title}}</div>
+      <div class="module-circle__modtitle">{{mod.module_title | underscoresToSpaces}}</div>
       <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
     </div>
   </div>
@@ -14,8 +14,10 @@
       <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
 
-    <div class="module-data-content js-module-data-content">
-      <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
+    <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
+      <div class="module-data-content">
+        <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
+      </div>
     </div>
   </div>
 

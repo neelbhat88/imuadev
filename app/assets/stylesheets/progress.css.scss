@@ -5,16 +5,16 @@ $academics-color-dark: #2c7532;
 $service-color-dark: #8b700f;
 $testing-color-dark: #6d457d;
 $extracurricular-color-dark: #ce1511;
-$pdu-color-dark: #177ba5;
+$college_prep-color-dark: #177ba5;
 
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, pdu: $pdu-color);
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, pdu: $pdu-color-dark);
+$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
+$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
 .progressContainer {
 }
 
 .module-circles {
-  padding: 60px 60px 0px 60px;
+  padding: 60px 0px 0px 150px;
 
   width: 1200px;
   margin: auto;
@@ -84,7 +84,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   @each $category, $color in $colormap {
 
     &.color--#{$category} {
-      background-color: $color;
+      background-color: map-get($darkcolormap, $category);
 
       .module-data-side-nav {
         color: #c0c0c0;
@@ -100,14 +100,11 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   }
 
   color: white;
-  text-align: center;
 
   .module-data-side-nav {
     min-height: 450px;
 
     float: left;
-    display: inline-block;
-    vertical-align: top;
 
     width: 150px;
     padding: 40px 0;
@@ -119,14 +116,27 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 
-  .module-data-content {
-    min-height: 450px;
-
+  .module-data-content-container {
     display: inline-block;
     vertical-align: top;
 
+    @each $category, $color in $colormap {
+
+      &.color--#{$category} {
+        background-color: $color;
+      }
+
+    }
+  }
+
+  .module-data-content {
+    min-height: 450px;
+
     width: 645px;
+    margin: auto;
     padding: 40px 0px;
+
+    text-align: center;
   }
 }
 

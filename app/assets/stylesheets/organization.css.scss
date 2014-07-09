@@ -19,7 +19,14 @@
 
 }
 
-.avatar-block { cursor: pointer; }
+a.avatar-block {
+  text-decoration: none;
+  color: $ink;
+
+  &:hover {
+    color: $ink;
+  }
+}
 
 
 .user-modal {
