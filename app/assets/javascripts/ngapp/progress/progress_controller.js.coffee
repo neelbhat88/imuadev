@@ -7,8 +7,16 @@ angular.module('myApp')
   $scope.student = student
   $scope.selected_semester = null
 
-  $(window).resize (event) ->
-      setHeight()
+  setWidth = () ->
+    windowWidth = $(window).outerWidth()
+    contentWidth = $('.js-module-circles').outerWidth()
+    sideNavWidth = $('.js-module-data-side-nav').outerWidth()
+    if contentWidth >= windowWidth
+      $('.js-module-data-content-container').width(contentWidth - sideNavWidth)
+    else
+      $('.js-module-data-content-container').width(windowWidth - sideNavWidth)
+
+  $(window).resize (event) -> setWidth()
 
   OrganizationService.getTimeUnits(student.organization_id)
     .success (data) ->
@@ -26,9 +34,9 @@ angular.module('myApp')
 
   ProgressService.getModules(student, student.time_unit_id)
     .success (data) ->
+      setWidth()
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
-      setHeight()
 
   # $scope.$watch 'selected_semester', () ->
   #   ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
@@ -60,24 +68,10 @@ angular.module('myApp')
     ProgressService.getModules(student, sem.id)
       .success (data) ->
         $scope.modules_progress = data.modules_progress
-        setHeight();
 
     $scope.selected_semester = sem
 
   $scope.getModuleTemplate = (modTitle) ->
     'progress/' + modTitle.toLowerCase() + '_progress.html' if modTitle
 
-  setHeight = () ->
-    windowHeight = $(window).outerHeight()
-    headerHeight = $('header').outerHeight()
-    circlesHeight = $('.js-modules-circles').outerHeight()
-    bodyHeight = windowHeight - headerHeight - circlesHeight
-
-    contentHeight = $('.js-module-data-content').outerHeight()
-
-    if bodyHeight > contentHeight
-      $('.js-module-data-content').outerHeight(bodyHeight + 'px')
-      $('.js-module-data-side-nav').outerHeight(bodyHeight + 'px')
-    else
-      $('.js-module-data-side-nav').outerHeight(contentHeight + 'px')
 ]
