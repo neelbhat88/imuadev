@@ -84,7 +84,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   @each $category, $color in $colormap {
 
     &.color--#{$category} {
-      background-color: $color;
+      background-color: map-get($darkcolormap, $category);
 
       .module-data-side-nav {
         color: #c0c0c0;
@@ -100,14 +100,11 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   }
 
   color: white;
-  text-align: center;
 
   .module-data-side-nav {
     min-height: 450px;
 
     float: left;
-    display: inline-block;
-    vertical-align: top;
 
     width: 150px;
     padding: 40px 0;
@@ -119,14 +116,27 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 
-  .module-data-content {
-    min-height: 450px;
-
+  .module-data-content-container {
     display: inline-block;
     vertical-align: top;
 
+    @each $category, $color in $colormap {
+
+      &.color--#{$category} {
+        background-color: $color;
+      }
+
+    }
+  }
+
+  .module-data-content {
+    min-height: 450px;
+
     width: 645px;
+    margin: auto;
     padding: 40px 0px;
+
+    text-align: center;
   }
 }
 
