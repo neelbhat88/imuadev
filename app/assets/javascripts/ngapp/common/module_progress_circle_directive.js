@@ -64,7 +64,7 @@ angular.module('myApp')
           .enter().append("g")
           .append("path").style("fill", function(d,i) { return color(i); })
               .transition()
-              .duration(1700)
+              .duration(1300)
               .attrTween("d", tweenPie)
               .each(function(d) {this._current = d;}); // stores current angles
 

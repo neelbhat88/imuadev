@@ -94,7 +94,7 @@ angular.module('myApp')
 
       g.append("path").attr("fill", function(d, i) { return color(i); })
           .transition()
-              .duration(2400)
+              .duration(1300)
               .attrTween("d", tweenPie);
 
       function tweenPie(b) {
