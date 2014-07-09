@@ -105,7 +105,7 @@ class Api::V1::ProgressController < ApplicationController
     end
 
     user = @userRepository.get_user(userId)
-    if user.nil? || current_user.organization_id != user.organization_id
+    if user.nil? || (!current_user.super_admin? && current_user.organization_id != user.organization_id)
       render status: :forbidden,
         json: {}
 

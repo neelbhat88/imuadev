@@ -31,7 +31,13 @@ class Api::V1::OrganizationController < ApplicationController
 
   # GET /organization/:id
   def get_organization
-    orgId = params[:id]
+    orgId = params[:id].to_i
+
+    if !current_user.super_admin? && current_user.organization_id != orgId
+      render status: :forbidden, json: {}
+
+      return
+    end
 
     result = @organizationRepository.get_organization(orgId)
 
