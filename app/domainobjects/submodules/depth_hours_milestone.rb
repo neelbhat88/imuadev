@@ -19,6 +19,10 @@ class DepthHoursMilestone < ImuaMilestone
     end
   end
 
+  def has_earned?(user, time_unit_id)
+    @earned = MilestoneService.new.has_user_earned_milestone?(user.id, time_unit_id, @id)
+  end
+
   def valid?
     return (
       super && @target_hours > 0

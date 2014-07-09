@@ -6,6 +6,7 @@ angular.module('myApp')
       myuser: '='
     },
     link: function(scope, element, attrs) {
+        console.log(scope.myuser);
       var data = [
         {name: "GPA", value: Math.floor(Math.random() * 2000) + 1},
   			{name: "Extra Curricular", value:  Math.floor(Math.random() * 2000) + 1},
