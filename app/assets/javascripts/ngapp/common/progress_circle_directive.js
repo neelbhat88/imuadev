@@ -9,10 +9,10 @@ angular.module('myApp')
         console.log(scope.myuser);
       var data = [
         {name: "GPA", value: Math.floor(Math.random() * 2000) + 1},
-  			{name: "Extra Curricular", value:  Math.floor(Math.random() * 2000) + 1},
-  			{name: "Service", value:  Math.floor(Math.random() * 2000) + 1},
-  			{name: "PDUs", value:  Math.floor(Math.random() * 2000) + 1},
-  			{name: "Events", value:  Math.floor(Math.random() * 2000) + 1},
+        {name: "Service", value:  Math.floor(Math.random() * 2000) + 1},
+        {name: "Extracurricular", value:  Math.floor(Math.random() * 2000) + 1},
+        {name: "College Prep", value:  Math.floor(Math.random() * 2000) + 1},
+        {name: "Testing", value:  Math.floor(Math.random() * 2000) + 1},
         {name: "Future Progress", value: 500}
       ];
 
@@ -33,7 +33,7 @@ angular.module('myApp')
       var radius = Math.min(width, height) / 2;
 
       var color = d3.scale.ordinal()
-          .range(['#3FAB48', '#EF423C', '#FED65C', '#25AAE2', '#B160EB', 'white']);
+          .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', 'white']);
 
       var arc = d3.svg.arc()
           .outerRadius(radius)
@@ -81,7 +81,6 @@ angular.module('myApp')
 
       g.append("path").attr("fill", function(d, i) { return color(i); })
           .transition()
-              .ease("bounce")
               .duration(2400)
               .attrTween("d", tweenPie);
 
