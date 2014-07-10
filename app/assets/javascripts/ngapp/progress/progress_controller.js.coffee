@@ -37,6 +37,7 @@ angular.module('myApp')
       setWidth()
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
+      $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress}
 
   $scope.$watch 'selected_semester', () ->
     if $scope.selected_semester
