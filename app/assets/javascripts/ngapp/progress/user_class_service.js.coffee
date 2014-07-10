@@ -4,10 +4,10 @@ angular.module("myApp")
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/time_unit/#{time_unit_id}/classes"
 
-  @new = (user) ->
+  @new = (user, time_unit_id) ->
     name: "",
     grade: "",
-    time_unit_id: user.time_unit_id,
+    time_unit_id: time_unit_id,
     user_id: user.id,
     editing: true
 
