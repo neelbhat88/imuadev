@@ -1,50 +1,45 @@
 require 'rails_helper'
 
 describe Api::V1::OrganizationController do
-  before(:each) do
-    @organizationRepository = instance_double("OrganizationRepository")
-    @roadmapRepository = instance_double("RoadmapRepository")
-    @enabledModules = instance_double("EnabledModules")
-    controller.load_services(@organizationRepository, @roadmapRepository, @enabledModules)
-  end
 
   describe "GET /organizations as super admin" do
     login_super_admin
 
-    it "returns object" do
-      allow(@organizaitonRepository).to receive(:get_all_organizaitons).and_return(ReturnObject.new(:ok, "info", nil))
+    it "returns organization" do
+      org1 = create(:organization)
+      org2 = create(:organization)
 
       get :all_organizations
 
       expect(response.status).to eq(200)
-      expect(json).to have_key("organizations")
+      expect(json["organizations"].length).to eq(2)
     end
   end
 
   describe "GET /organizations as org admin" do
     login_org_admin
-    it "returns unauthorized" do
+    it "returns 403" do
       get :all_organizations
 
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(403)
     end
   end
 
   describe "GET /organizations as student" do
     login_student
-    it "returns unauthorized" do
+    it "returns 403" do
       get :all_organizations
 
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(403)
     end
   end
 
   describe "GET /organizations as mentor" do
     login_mentor
-    it "returns unauthorized" do
+    it "returns 403" do
       get :all_organizations
 
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(403)
     end
   end
 
@@ -64,13 +59,14 @@ describe Api::V1::OrganizationController do
     context "as a Super Admin" do
       login_super_admin
 
-      # ToDo: Why does the mock object still run the code in orgrepo??
-      xit "returns 200 for any :id" do
-        allow(@organizaitonRepository).to receive(:get_organization).and_return(ReturnObject.new(:ok, "Organization", nil))
+      it "returns 200 for any :id" do
+        org1 = create(:organization)
+        org2 = create(:organization)
 
-        get :get_organization, {:id => 5555}
+        get :get_organization, {:id => org1.id}
 
         expect(response.status).to eq(200)
+        expect(json["organization"]["id"]).to eq(org1.id)
       end
     end
   end
