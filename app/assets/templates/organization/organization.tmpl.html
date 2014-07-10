@@ -38,7 +38,7 @@
     <div class="user-list ptxl pbxl">
       <h4>Students</h4>
 
-      <a ng-href="#/progress/{{student.user.id}}" class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: '-user.id'">
+      <a ng-href="#/progress/{{student.user.id}}" class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: 'user.id'">
         <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
         <progress-circle student="student"></progress-circle>
         <div class="avatar-block__name">
