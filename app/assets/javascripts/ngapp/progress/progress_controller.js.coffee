@@ -38,10 +38,14 @@ angular.module('myApp')
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
 
-  # $scope.$watch 'selected_semester', () ->
-  #   ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
-  #     .success (data) ->
-  #       $scope.yes_no_milestones = data.yes_no_milestones
+  $scope.$watch 'selected_semester', () ->
+    if $scope.selected_semester
+      $scope.$watch 'selected_module', () ->
+        if $scope.selected_module
+          ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+            .success (data) ->
+              $scope.yes_no_milestones = data.yes_no_milestones
+              $scope.loaded_yes_no_milestones = true
 
   $scope.toggleYesNoMilestone = (milestone) ->
     if milestone.earned

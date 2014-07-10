@@ -1,12 +1,5 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
-  <div class="module-yes-nos" wait-to-load="{{loaded_yes_no_milestones}}" ng-if="yes_no_milestones.length > 0">
-    <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-      <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)" ng-disabled="!(selected_semester.id == current_user.time_unit_id)">
-      <span class="text">{{yesno.value}}</span>
-    </div>
-  </div>
-
   <div class="module-user-classes" wait-to-load="{{loaded_user_classes}}">
 
     <div class="pbxl" ng-show="user_classes.length == 0">
