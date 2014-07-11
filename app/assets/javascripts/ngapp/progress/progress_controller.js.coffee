@@ -43,7 +43,7 @@ angular.module('myApp')
     if $scope.selected_semester
       $scope.$watch 'selected_module', () ->
         if $scope.selected_module
-          ProgressService.yesNoMilestones($scope.current_user, $scope.selected_semester.id, $scope.selected_module.module_title)
+          ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
             .success (data) ->
               $scope.yes_no_milestones = data.yes_no_milestones
               $scope.loaded_yes_no_milestones = true
@@ -78,5 +78,8 @@ angular.module('myApp')
 
   $scope.getModuleTemplate = (modTitle) ->
     'progress/' + modTitle.toLowerCase() + '_progress.html' if modTitle
+
+  $scope.editable = (user, semester) ->
+    user.role != $scope.CONSTANTS.USER_ROLES.student || user.time_unit_id == semester.id
 
 ]

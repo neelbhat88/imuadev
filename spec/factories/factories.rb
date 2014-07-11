@@ -1,38 +1,38 @@
 FactoryGirl.define do
-  factory :org_admin, class: User do
-    first_name "OrgAdmin"
+  factory :user do
+    first_name "Test"
     last_name "Test"
-    email "oa-test@gmail.com"
+    sequence(:email) { |n| "test#{n}@test.com"}
     password "password"
     organization_id -10
-    role 10
+
+    factory :org_admin do
+      role 10
+    end
+
+    factory :student do
+      time_unit_id -5
+      role 50
+    end
+
+    factory :mentor do
+      role 40
+    end
+
+    factory :super_admin do
+      role 0
+    end
   end
 
-  factory :student, class: User do
-    first_name "Student"
-    last_name "Test"
-    email "student-test@gmail.com"
-    password "password"
-    organization_id -10
-    time_unit_id -5
-    role 50
+  factory :organization do
+    name "Test Org"
   end
 
-  factory :mentor, class: User do
-    first_name "Mentor"
-    last_name "Test"
-    email "mentor-test@gmail.com"
-    password "password"
-    organization_id -10
-    role 40
-  end
-
-  factory :super_admin, class: User do
-    first_name "SuperAdmin"
-    last_name "Test"
-    email "sa-test@gmail.com"
-    password "password"
-    organization_id -10
-    role 0
+  factory :user_class do
+    gpa 4.0
+    grade "A"
+    name "Test Class"
+    time_unit_id 1
+    user_id -1
   end
 end

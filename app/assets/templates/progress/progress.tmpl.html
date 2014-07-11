@@ -30,7 +30,8 @@
 
           <div class="module-yes-nos" wait-to-load="{{loaded_yes_no_milestones}}" ng-if="yes_no_milestones.length > 0">
             <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-              <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)" ng-disabled="!(selected_semester.id == current_user.time_unit_id)">
+              <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                ng-disabled="!editable(current_user, selected_semester)">
               <span class="text">{{yesno.value}}</span>
             </div>
           </div>

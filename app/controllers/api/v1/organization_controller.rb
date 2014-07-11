@@ -14,7 +14,7 @@ class Api::V1::OrganizationController < ApplicationController
   # GET /organization
   def all_organizations
     if !current_user.super_admin?
-      render status: :unauthorized,
+      render status: :forbidden,
         json: {}
 
       return
