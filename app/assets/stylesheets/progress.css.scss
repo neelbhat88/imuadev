@@ -13,38 +13,16 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 .progressContainer {
 }
 
-// .module-circles {
-//   padding: 60px 20px 0px 0px;
-//
-//   width: 1220px;
-//   margin: auto;
-//   text-align: center;
-//
-//   .module-circle {
-//     display: inline-block;
-//   }
-// }
+.module-circles {
+  padding: 60px 20px 0px 150px;
 
-.circles {
-  padding: 60px 20px 0px 0px;
-  //width: 1220px;
-  width: 1400px;
+  width: 1220px;
+  margin: auto;
+  text-align: center;
 
-  .module-circles {
-    margin: auto;
-    width: 100%;
-    text-align: center;
-    .module-circle {
-      display: inline-block;
-    }
-  }
-  .progress-circle {
+  .module-circle {
     display: inline-block;
   }
-}
-
-.progress-circle {
-  @extend .module-circle;
 }
 
 .module-circle {
