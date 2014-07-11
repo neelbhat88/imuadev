@@ -19,8 +19,6 @@ angular.module('myApp')
       				.attr("class", "module-circle__points")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
-
-
       var radius = Math.min(width, height) / 2;
 
       scope.render = function(module) {

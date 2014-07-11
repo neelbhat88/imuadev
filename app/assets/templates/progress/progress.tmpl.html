@@ -1,42 +1,49 @@
 <div class="progressContainer" wait-to-load="{{selected_module}}">
 
-  <div class="module-circles js-module-circles">
-    <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
-      <module-progress-circle module="mod"></module-progress-circle>
-      <div class="module-circle__modtitle">{{mod.module_title | underscoresToSpaces}}</div>
-      <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
+  <div class="circles js-circles">
+    <div class="progress-circle" ng-if="student_with_modules_progress">
+      <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
+      <div class="progress-circle__name">
+        {{student_with_modules_progress.user.first_name}} {{student_with_modules_progress.user.last_name}}
+      </div>
+    </div>
+
+    <div class="module-circles js-module-circles">
+      <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+        <module-progress-circle module="mod"></module-progress-circle>
+        <div class="module-circle__modtitle">{{mod.module_title | underscoresToSpaces}}</div>
+        <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
+      </div>
     </div>
   </div>
 
-
   <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
+
     <div class="module-data-side-nav js-module-data-side-nav">
       <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
 
     <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
 
-      <div class="module-data-content">
-
-        <div class="pbxl" ng-show="selected_module.points.total == 0">
-          <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
-        </div>
-
-        <div class="real-module-data-content" ng-if="selected_module.points.total > 0">
-
-          <div class="module-yes-nos" wait-to-load="{{loaded_yes_no_milestones}}" ng-if="yes_no_milestones.length > 0">
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-              <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
-                ng-disabled="!editable(current_user, selected_semester)">
-              <span class="text">{{yesno.value}}</span>
-            </div>
-          </div>
-
-          <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
-
-        </div>
+      <div class="pbxl" ng-show="selected_module.points.total == 0">
+        <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
       </div>
+
+      <div class="module-data-content" ng-if="selected_module.points.total > 0">
+
+        <div class="module-yes-nos" wait-to-load="{{loaded_yes_no_milestones}}" ng-if="yes_no_milestones.length > 0">
+          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
+            <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+              ng-disabled="!editable(current_user, selected_semester)">
+            <span class="text">{{yesno.value}}</span>
+          </div>
+        </div>
+
+        <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
+      </div>
+
     </div>
+
   </div>
 
 </div>
