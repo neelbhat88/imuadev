@@ -8,7 +8,7 @@ class ProgressService
     enabled_modules.each do | m |
       points = get_module_and_user_points(userId, time_unit_id, m.title)
 
-      mod = ModuleProgress.new(m.title, points[:user], points[:total])
+      mod = ModuleProgress.new(m.title, time_unit_id, points[:user], points[:total])
 
       modules_progress << mod
     end
@@ -47,7 +47,7 @@ class ProgressService
 
     # Get total and user points
     points = get_module_and_user_points(userId, time_unit_id, module_title)
-    mod = ModuleProgress.new(module_title, points[:user], points[:total])
+    mod = ModuleProgress.new(module_title, time_unit_id, points[:user], points[:total])
 
     return ReturnObject.new(:ok, "#{module_title} progress", mod)
   end
@@ -74,10 +74,11 @@ class ProgressService
 end
 
 class ModuleProgress
-  attr_accessor :module_title, :points
+  attr_accessor :module_title, :time_unit_id, :points
 
-  def initialize(title, user_points, total_points)
+  def initialize(title, time_unit_id, user_points, total_points)
     @module_title = title
+    @time_unit_id = time_unit_id
     @points = {:user => user_points, :total => total_points}
   end
 

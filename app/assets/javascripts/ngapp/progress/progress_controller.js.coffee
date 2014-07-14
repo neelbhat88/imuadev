@@ -1,11 +1,15 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
-($scope, current_user, student, OrganizationService, ProgressService) ->
+.controller 'ProgressController', ['$q', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
+($q, $scope, current_user, student, OrganizationService, ProgressService) ->
+  $scope.modules_progress = []
   $scope.selected_module = null
   $scope.semesters = []
+  $scope.selected_semester = null
   $scope.current_user = current_user
   $scope.student = student
-  $scope.selected_semester = null
+  $scope.overall_points = {user: 0, total: 0}
+  $scope.loaded_yes_no_milestones = false
+
 
   setWidth = () ->
     windowWidth = $(window).outerWidth()
@@ -32,21 +36,33 @@ angular.module('myApp')
 
       $scope.selected_semester = $scope.semesters[0]
 
-  ProgressService.getModules(student, student.time_unit_id)
-    .success (data) ->
-      setWidth()
-      $scope.modules_progress = data.modules_progress
-      $scope.selected_module = data.modules_progress[0]
-      $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress}
-
+  $scope.loaded_overall_points = false
   $scope.$watch 'selected_semester', () ->
-    if $scope.selected_semester
-      $scope.$watch 'selected_module', () ->
-        if $scope.selected_module
-          ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
-            .success (data) ->
-              $scope.yes_no_milestones = data.yes_no_milestones
-              $scope.loaded_yes_no_milestones = true
+    if !$scope.loaded_overall_points && $scope.selected_semester
+      for sem in $scope.semesters
+        ProgressService.getModules($scope.student, sem.id)
+          .success (data) ->
+            time_unit_id = data.modules_progress[0].time_unit_id
+            $scope.modules_progress[time_unit_id] = data.modules_progress;
+            for m in data.modules_progress
+              $scope.overall_points.user += m.points.user
+              $scope.overall_points.total += m.points.total
+              $scope.overall_points.percent = Math.round(($scope.overall_points.user / $scope.overall_points.total) * 100)
+      $scope.loaded_overall_points = true
+
+  $scope.$watch 'modules_progress[selected_semester.id]', () ->
+    if $scope.modules_progress && $scope.selected_semester && $scope.modules_progress[$scope.selected_semester.id]
+      setWidth()
+      if !$scope.selected_module
+        $scope.selected_module = $scope.modules_progress[$scope.selected_semester.id][0]
+      $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[$scope.selected_semester.id]}
+
+  $scope.$watch 'selected_module', () ->
+    if $scope.selected_module && !$scope.loaded_yes_no_milestones
+      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+        .success (data) ->
+          $scope.yes_no_milestones = data.yes_no_milestones
+          $scope.loaded_yes_no_milestones = true
 
   $scope.toggleYesNoMilestone = (milestone) ->
     if milestone.earned
@@ -62,8 +78,11 @@ angular.module('myApp')
     # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
     ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->
-        for mod in $scope.modules_progress # Loop through modules on progress controller
+        for mod in $scope.modules_progress[$scope.selected_semester.id] # Loop through modules on progress controller
           if mod.module_title == data.module_progress.module_title
+            $scope.overall_points.user += (data.module_progress.points.user - mod.points.user)
+            $scope.overall_points.total += (data.module_progress.points.total - mod.points.total)
+            $scope.overall_points.percent = Math.round(($scope.overall_points.user / $scope.overall_points.total) * 100)
             mod.points = data.module_progress.points
 
   $scope.selectModule = (mod) ->
@@ -74,9 +93,16 @@ angular.module('myApp')
   $scope.selectSemester = (sem) ->
     ProgressService.getModules(student, sem.id)
       .success (data) ->
-        $scope.modules_progress = data.modules_progress
-        $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress}
-
+        $scope.modules_progress[sem.id] = data.modules_progress
+        $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[sem.id]}
+        $scope.found_prev_module_title = false
+        for m in $scope.modules_progress[sem.id]
+          if m.module_title == $scope.selected_module.module_title
+            $scope.found_prev_module_title = true
+            $scope.selectModule(m)
+            break
+        if !$scope.found_prev_module_title
+          $scope.selectModule($scope.modules_progress[sem.id][0])
     $scope.selected_semester = sem
 
   $scope.getModuleTemplate = (modTitle) ->
