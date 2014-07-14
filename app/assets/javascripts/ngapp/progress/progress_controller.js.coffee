@@ -32,9 +32,7 @@ angular.module('myApp')
         $scope.semesters.unshift(tu)
         if tu.id == student.time_unit_id
           tu.name = "This Semester"
-          break
-
-      $scope.selected_semester = $scope.semesters[0]
+          $scope.selected_semester = $scope.semesters[0]
 
   $scope.loaded_overall_points = false
   $scope.$watch 'selected_semester', () ->
