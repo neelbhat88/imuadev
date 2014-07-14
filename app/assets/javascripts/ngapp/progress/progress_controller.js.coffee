@@ -8,8 +8,20 @@ angular.module('myApp')
   $scope.current_user = current_user
   $scope.student = student
   $scope.overall_points = {user: 0, total: 0}
-  $scope.loaded_yes_no_milestones = false
 
+  $scope.loaded_yes_no_milestones = false
+  $scope.loaded_module_milestones = false
+  $scope.loaded_milestones = false
+
+  $scope.$on 'loaded_module_milestones', () ->
+    $scope.loaded_module_milestones = true
+
+  $scope.$watch 'loaded_module_milestones', () ->
+    if $scope.loaded_module_milestones && $scope.loaded_yes_no_milestones
+      $scope.loaded_milestones = true
+  $scope.$watch 'loaded_yes_no_milestones', () ->
+    if $scope.loaded_yes_no_milestones && $scope.loaded_module_milestones
+      $scope.loaded_milestones = true
 
   setWidth = () ->
     windowWidth = $(window).outerWidth()
@@ -85,23 +97,30 @@ angular.module('myApp')
 
   $scope.selectModule = (mod) ->
     if $scope.selected_module != mod
+      $scope.loaded_milestones = false
+      $scope.loaded_module_milestones = false
       $scope.loaded_yes_no_milestones = false
       $scope.selected_module = mod
 
   $scope.selectSemester = (sem) ->
-    ProgressService.getModules(student, sem.id)
-      .success (data) ->
-        $scope.modules_progress[sem.id] = data.modules_progress
-        $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[sem.id]}
-        $scope.found_prev_module_title = false
-        for m in $scope.modules_progress[sem.id]
-          if m.module_title == $scope.selected_module.module_title
-            $scope.found_prev_module_title = true
-            $scope.selectModule(m)
-            break
-        if !$scope.found_prev_module_title
-          $scope.selectModule($scope.modules_progress[sem.id][0])
-    $scope.selected_semester = sem
+    if $scope.selected_semester != sem
+      $scope.loaded_milestones = false
+      $scope.loaded_module_milestones = false
+      $scope.loaded_yes_no_milestones = false
+      $scope.selected_semester = sem
+      ProgressService.getModules(student, sem.id)
+        .success (data) ->
+          $scope.found_prev_module_title = false
+          for m in $scope.modules_progress[sem.id]
+            if m.module_title == $scope.selected_module.module_title
+              $scope.found_prev_module_title = true
+              $scope.selected_module = m
+              break
+          if !$scope.found_prev_module_title
+            $scope.selected_module = $scope.modules_progress[sem.id][0]
+          $scope.modules_progress[sem.id] = data.modules_progress
+          $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[sem.id]}
+
 
   $scope.getModuleTemplate = (modTitle) ->
     'progress/' + modTitle.toLowerCase() + '_progress.html' if modTitle

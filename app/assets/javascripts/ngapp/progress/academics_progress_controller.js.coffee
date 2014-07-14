@@ -9,7 +9,7 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
-            $scope.loaded_user_classes = true
+            $scope.$emit('loaded_module_milestones');
 
     $scope.$watch 'user_classes', () ->
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
