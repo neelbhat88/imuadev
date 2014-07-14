@@ -43,7 +43,8 @@
 
         <div ng-hide="editingInfo">
           <span class="form--profile__field-label">Phone Number: </span>
-          <span ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+          <span ng-if="editable()" ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+          <span ng-if="!editable()" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Not entered"}}</span>
         </div>
 
         <input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
@@ -96,7 +97,7 @@
 
   </div>
 
-  <div class="buttonGroup pvl" ng-hide="editing()" >
+  <div class="buttonGroup pvl" ng-if="editable()" ng-hide="editing()" >
 
     <input value="Update Info" type="button" class="submit" ng-click="editUserInfo()">
 

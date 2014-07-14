@@ -33,7 +33,7 @@ class Api::V1::OrganizationController < ApplicationController
   def get_organization
     orgId = params[:id].to_i
 
-    if !current_user.super_admin? && current_user.organization_id != orgId
+    if !same_organization?(orgId)
       render status: :forbidden, json: {}
 
       return

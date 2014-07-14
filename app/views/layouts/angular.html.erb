@@ -59,7 +59,7 @@
               <a href="#/roadmap/">Roadmap</a>
             </li>
             <li>
-              <a href="#/profile">Profile</a>
+              <a href="#/profile/<%= current_user.id %>">Profile</a>
             </li>
             <li>
               <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
