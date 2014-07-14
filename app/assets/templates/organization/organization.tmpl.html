@@ -8,9 +8,12 @@
 
       <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
         <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-        <div class="avatar-block__name">
-          {{fullName(orgAdmin)}}
-        </div>
+
+        <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
+          <div class="avatar-block__name">
+            {{fullName(orgAdmin)}}
+          </div>
+        </a>
       </div>
 
       <div class="user-list__add" ng-click="addOrgAdmin()">
@@ -38,13 +41,17 @@
     <div class="user-list ptxl pbxl">
       <h4>Students</h4>
 
-      <a ng-href="#/progress/{{student.user.id}}" class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: 'user.id'">
+      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: 'user.id'">
         <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-        <progress-circle student="student"></progress-circle>
-        <div class="avatar-block__name">
-          {{student.user.first_name}} {{student.user.last_name}}
-        </div>
-      </a>
+        <a ng-href="#/progress/{{student.user.id}}" title="View progress">
+          <progress-circle student="student"></progress-circle>
+        </a>
+        <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+          <div class="avatar-block__name">
+            {{student.user.first_name}} {{student.user.last_name}}
+          </div>
+        </a>
+      </div>
 
       <div class="user-list__add" ng-click="addStudent()">
         <div class="glyphicon glyphicon-plus-sign ptxl"></div>

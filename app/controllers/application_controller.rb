@@ -15,6 +15,22 @@ class ApplicationController < ActionController::Base
     authenticate_user!
   end
 
+  def student_can_access?(userId)
+    if current_user.student? && current_user.id != userId
+      return false
+    end
+
+    return true
+  end
+
+  def same_organization?(orgId)
+    if !current_user.super_admin? && current_user.organization_id != orgId
+      return false
+    end
+
+    return true
+  end
+
 private
 
 end
