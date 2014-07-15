@@ -11,6 +11,10 @@ angular.module('myApp')
     $scope.editingInfo || $scope.editingPassword
 
   $scope.editable = () ->
+    current_user.role != $scope.CONSTANTS.USER_ROLES.student ||
+    current_user.id == user.id
+
+  $scope.editablePassword = () ->
     current_user.id == $scope.user.id
 
   $scope.editUserInfo = () ->
