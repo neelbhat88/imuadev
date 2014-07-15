@@ -107,7 +107,6 @@ angular.module('myApp')
       $scope.loaded_milestones = false
       $scope.loaded_module_milestones = false
       $scope.loaded_yes_no_milestones = false
-      $scope.selected_semester = sem
       ProgressService.getModules(student, sem.id)
         .success (data) ->
           $scope.found_prev_module_title = false
@@ -120,6 +119,7 @@ angular.module('myApp')
             $scope.selected_module = $scope.modules_progress[sem.id][0]
           $scope.modules_progress[sem.id] = data.modules_progress
           $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[sem.id]}
+      $scope.selected_semester = sem
 
 
   $scope.getModuleTemplate = (modTitle) ->
