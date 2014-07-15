@@ -14,12 +14,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 }
 
 .circles {
-  padding: 60px 20px 0px 210px;
+  padding: 60px 20px 0px 244px;
   width: 100%;
 
   .progress-circle {
     font-size: 16px;
-    margin: 10px 0 0 -210px;
+    margin: 10px 0 0 -247px;
     padding-left: 20px;
     width: 205px;
     display: inline-block;
@@ -33,6 +33,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 
+  .overall-circle {
+    margin: 0 0 0 -34px;
+    width: 68px;
+    display: inline-block;
+  }
+
   .module-circles {
     width: 100%;
     margin: auto;
@@ -44,6 +50,19 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 
+}
+
+.overall-circle {
+  font-size: 16px;
+  width: 68px;
+
+  .overall-circle__points {
+    background-color: white;
+    color: $ink;
+
+    .value {text-align: center;}
+    .text {font-size: 10px; text-align: center;}
+  }
 }
 
 .module-circle {
@@ -127,7 +146,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
     float: left;
 
-    width: 210px;
+    width: 244px;
     padding: 40px 0;
 
     .nav-item {
