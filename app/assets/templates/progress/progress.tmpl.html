@@ -1,8 +1,8 @@
 <div class="progressContainer" wait-to-load="{{selected_module}}">
 
-  <div class="overall-progress">
+  <!-- <div class="overall-progress">
     Overall Completedness: {{overall_points.percent}}% ({{overall_points.user}}/{{overall_points.total}})
-  </div>
+  </div> -->
 
   <div class="circles js-circles">
     <div class="progress-circle" ng-if="student_with_modules_progress">
@@ -10,6 +10,10 @@
       <div class="progress-circle__name">
         {{student_with_modules_progress.user.first_name}} {{student_with_modules_progress.user.last_name}}
       </div>
+    </div>
+
+    <div class="overall-circle" ng-if="loaded_overall_points">
+      <overall-progress-circle points="overall_points" ng-if="loaded_overall_points"></overall-progress-circle>
     </div>
 
     <div class="module-circles js-module-circles">

@@ -7,7 +7,7 @@ angular.module('myApp')
   $scope.selected_semester = null
   $scope.current_user = current_user
   $scope.student = student
-  $scope.overall_points = {user: 0, total: 0}
+  $scope.overall_points = {user: 0, total: 0, percent: 0}
 
   $scope.loaded_yes_no_milestones = false
   $scope.loaded_module_milestones = false
