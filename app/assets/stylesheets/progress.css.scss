@@ -34,7 +34,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   }
 
   .overall-circle {
-    margin: 0 0 0 -34px;
+    vertical-align: top;
+    margin: 127px -4px 0 -30px;
     width: 68px;
     display: inline-block;
   }
@@ -283,4 +284,13 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   width: 320px;
   display: inline-block;
   vertical-align: top;
+}
+
+.semester-changer {
+  text-align: right;
+  padding: 10px 40px;
+
+  .semester-changer__next, .semester-changer__prev {
+    cursor: pointer;    
+  }
 }

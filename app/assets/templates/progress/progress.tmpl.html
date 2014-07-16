@@ -1,4 +1,11 @@
 <div class="progressContainer" wait-to-load="{{selected_module}}">
+  <div class="semester-changer">
+    <span class="glyphicon glyphicon-backward semester-changer__prev" title="Previous Semester"
+        ng-hide="student.time_unit_id == semesters[semesters.length - 1].id" ng-click="prevSemester()"></span>
+    <span>Update student's current semester</span>
+    <span class="glyphicon glyphicon-forward semester-changer__next" title="Next Semester"
+        ng-hide="student.time_unit_id == semesters[0].id" ng-click="nextSemester()"></span>
+  </div>
 
   <!-- <div class="overall-progress">
     Overall Completedness: {{overall_points.percent}}% ({{overall_points.user}}/{{overall_points.total}})

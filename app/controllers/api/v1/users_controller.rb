@@ -128,6 +128,32 @@ class Api::V1::UsersController < ApplicationController
     }
   end
 
+  # PUT /users/:id/time_unit/next
+  def move_to_next_semester
+    userId = params[:id]
+
+    result = UserRepository.new.move_to_next_semester(userId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user: result.object
+      }
+  end
+
+  # PUT /users/:id/time_unit/previous
+  def move_to_prev_semester
+    userId = params[:id]
+
+    result = UserRepository.new.move_to_prev_semester(userId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user: result.object
+      }
+  end
+
 end
 
 

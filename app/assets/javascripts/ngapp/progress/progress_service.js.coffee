@@ -16,5 +16,11 @@ angular.module('myApp')
   @deleteUserMilestone = (user, time_unit_id, milestone_id) ->
     $http.delete "/api/v1/users/#{user.id}/time_unit/#{time_unit_id}/milestones/#{milestone_id}"
 
+  @nextSemester = (user) ->
+    $http.put "/api/v1/users/#{user.id}/time_unit/next"
+
+  @prevSemester = (user) ->
+    $http.put "/api/v1/users/#{user.id}/time_unit/previous"
+
   @
 ]

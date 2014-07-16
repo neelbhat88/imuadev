@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$q', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
-($q, $scope, current_user, student, OrganizationService, ProgressService) ->
+.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
+($route, $scope, current_user, student, OrganizationService, ProgressService) ->
   $scope.modules_progress = []
   $scope.selected_module = null
   $scope.semesters = []
@@ -127,5 +127,15 @@ angular.module('myApp')
 
   $scope.editable = (user, semester) ->
     user.role != $scope.CONSTANTS.USER_ROLES.student || user.time_unit_id == semester.id
+
+  $scope.nextSemester = () ->
+    ProgressService.nextSemester($scope.student)
+      .success (data) ->
+        $route.reload()
+
+  $scope.prevSemester = () ->
+    ProgressService.prevSemester($scope.student)
+      .success (data) ->
+        $route.reload()
 
 ]
