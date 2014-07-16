@@ -104,6 +104,44 @@ class UserRepository
       return { :status => :internal_server_error, :info => "Failed to delete user." }
     end
   end
+
+  def move_to_next_semester(userId)
+    user = get_user(userId)
+    time_units = RoadmapRepository.new.get_time_units(user.organization_id)
+
+    next_time_unit = time_units.select{|tu| tu.id == (user.time_unit_id + 1)}.first
+
+    if next_time_unit.nil?
+      return ReturnObject.new(:bad_request, "Next semester does not exist. Current sem id: #{user.time_unit_id}", nil)
+    end
+
+    user.time_unit_id = next_time_unit.id
+
+    if user.save
+      return ReturnObject.new(:ok, "User moved to next semester successfully", user)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to move User to next semester", nil)
+    end
+  end
+
+  def move_to_prev_semester(userId)
+    user = get_user(userId)
+    time_units = RoadmapRepository.new.get_time_units(user.organization_id)
+
+    prev_time_unit = time_units.select{|tu| tu.id == (user.time_unit_id - 1)}.first
+
+    if prev_time_unit.nil?
+      return ReturnObject.new(:bad_request, "Previous semester does not exist. Current sem id: #{user.time_unit_id}", nil)
+    end
+
+    user.time_unit_id = prev_time_unit.id
+
+    if user.save
+      return ReturnObject.new(:ok, "User moved to previous semester successfully", user)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to move User to previous semester", nil)
+    end
+  end
 end
 
 class OrgUser

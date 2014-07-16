@@ -285,3 +285,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   display: inline-block;
   vertical-align: top;
 }
+
+.semester-changer {
+  text-align: right;
+  padding: 10px 40px;
+
+  .semester-changer__next, .semester-changer__prev {
+    cursor: pointer;    
+  }
+}

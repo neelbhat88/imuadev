@@ -19,6 +19,9 @@ Imua::Application.routes.draw do
           put  '/:id/classes/:class_id' => 'progress#update_user_class'
           delete '/:id/classes/:class_id' => 'progress#delete_user_class'
 
+          put '/:id/time_unit/next' => "users#move_to_next_semester"
+          put '/:id/time_unit/previous' => "users#move_to_prev_semester"
+
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
