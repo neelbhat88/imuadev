@@ -29,6 +29,8 @@ Imua::Application.routes.draw do
 
           post  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#add_user_milestone'
           delete  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#delete_user_milestone'
+
+          get    '/:id/expectations' => 'expectation#user_expectations'
         end
       end
 
@@ -56,6 +58,15 @@ Imua::Application.routes.draw do
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
+
+      get    '/organization/:id/expectations' => 'expectation#expectations'
+      post   '/expectation'     => 'expectation#create_expectation'
+      put    '/expectation/:id' => 'expectation#update_expectation'
+      delete '/expectation/:id' => 'expectation#delete_expectation'
+
+      post   '/user_expectation'     => 'expectation#create_user_expectation'
+      put    '/user_expectation/:id' => 'expectation#update_user_expectation'
+      delete '/user_expectation/:id' => 'expectation#delete_user_expectation'
 
     end # end :v1
   end # end :api
