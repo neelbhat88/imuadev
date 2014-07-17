@@ -144,7 +144,8 @@ class UserRepository
   end
 
   def assign(mentor_id, student_id)
-    if get_user(mentor_id).nil? || get_user(student_id).nil?
+    student = get_user(student_id)
+    if get_user(mentor_id).nil? || student.nil?
       return ReturnObject.new(:bad_request, "One of your user's in the relationship does not exist", nil)
     end
 
@@ -158,7 +159,7 @@ class UserRepository
     end
 
     if relationship.save
-      return ReturnObject.new(:ok, "User #{student_id} successfully assigned to #{mentor_id}", nil)
+      return ReturnObject.new(:ok, "User #{student_id} successfully assigned to #{mentor_id}", student)
     else
       return ReturnObject.new(:internal_server_error, relationship.errors, nil)
     end

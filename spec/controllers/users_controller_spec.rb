@@ -112,6 +112,7 @@ describe Api::V1::UsersController do
 
         expect(relation).to_not be_nil
         expect(response.status).to eq(200)
+        expect(json["student"]["id"]).to eq(student.id)
       end
 
       it "returns 409 if student is already assigned to mentor" do

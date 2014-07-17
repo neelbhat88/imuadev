@@ -161,9 +161,11 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.assign(userId, assignee_id)
 
+    viewUser = ViewUser.new(result.object) unless result.object.nil?
     render status: result.status,
         json: {
-          info: result.info
+          info: result.info,
+          student: viewUser
         }
   end
 
