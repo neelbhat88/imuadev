@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :expectation do
-    organization_id 1
+    organization_id -10
     title           "default_title"
     description     "default_description"
     rank            0

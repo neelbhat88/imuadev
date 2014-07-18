@@ -5,7 +5,7 @@ class ExpectationService
   #####################################
 
   def get_expectations(orgId)
-    return Expectation.where(:orgId => orgId)
+    return Expectation.where(:organization_id => orgId)
   end
 
   def create_expectation(expectation)

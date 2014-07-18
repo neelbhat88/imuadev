@@ -20,10 +20,10 @@ class Api::V1::ExpectationController < ApplicationController
 
     result = @expectationService.get_expectations(orgId)
 
-    render status: result.status,
+    render status: :ok,
       json: {
-        info: result.info,
-        modules_progress: result.object
+        info: "expectations",
+        expectations: result
       }
   end
 
@@ -93,11 +93,11 @@ class Api::V1::ExpectationController < ApplicationController
     userId = params[:id]
 
     result = @expectationService.get_user_expectations(userId)
-
-    render status: result.status,
+    logger.debug(result)
+    render status: :ok,
       json: {
-        info: result.info,
-        user_expectation: result.object
+        info: "user_expectations",
+        user_expectations: result
       }
   end
 
