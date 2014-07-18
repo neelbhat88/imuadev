@@ -3,10 +3,12 @@ class Expectation < ActiveRecord::Base
 
   belongs_to :organization
 
-   validates :organization_id, presence: true
-   validates :title, :uniqueness => {:scope => [ :organization_id] },presence: true
-   validates :description, presence: true
-   validates :rank, presence: true
+  has_many :user_expectations, dependent: :destroy
+
+  validates :organization_id, presence: true
+  validates :title, :uniqueness => {:scope => [ :organization_id] },presence: true
+  validates :description, presence: true
+  validates :rank, presence: true
 end
 
 class ViewExpectation

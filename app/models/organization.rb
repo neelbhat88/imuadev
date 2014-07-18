@@ -1,9 +1,9 @@
 class Organization < ActiveRecord::Base
   attr_accessible :name
 
-  has_many :users
-  has_many :expectations
-  has_one :roadmap
+  has_many :users, dependent: :destroy
+  has_many :expectations, dependent: :destroy
+  has_one :roadmap, dependent: :destroy
 end
 
 class ViewOrganization
@@ -22,6 +22,6 @@ class ViewOrganization
     org.expectations.each do | e |
       @expectations << ViewExpectation.new(e)
     end
-    
+
   end
 end

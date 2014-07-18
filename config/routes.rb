@@ -30,7 +30,7 @@ Imua::Application.routes.draw do
           post  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#add_user_milestone'
           delete  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#delete_user_milestone'
 
-          get    '/:id/expectations' => 'expectation#user_expectations'
+          get '/:id/expectations' => 'expectation#user_expectations'
         end
       end
 
