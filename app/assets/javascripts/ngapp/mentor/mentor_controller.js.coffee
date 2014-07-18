@@ -23,4 +23,13 @@ angular.module('myApp')
           if a_student.user.id == student.id
             $scope.assigned_students.splice(index, 1)
             break;
+
+  $scope.isAssigned = (student) ->
+    assigned = false
+    for s in $scope.assigned_students
+      if student.id == s.user.id
+        assigned = true
+        break
+
+    return assigned
 ]

@@ -3,28 +3,13 @@
   color: white;
 }
 
-.btn-done-assigning {
-  width: 200px;
-  margin: auto;
-
-  border: 1px solid $bg-grey;
-  border-bottom: none;
-
-  padding: 10px;
-  color: $bg-grey;
-  font-size: 18px;
-  text-align: center;
-
-  cursor: pointer;
-
-  &:hover {
-    background-color: $bg-grey;
-    color: white;
-  }
-}
-
 .all-students {
-  .avatar-block:hover {cursor: pointer;}
+  .avatar-block {
+
+    &.assigned { display: none; }
+
+    &:hover { cursor: pointer; }
+  }
 }
 
 .unassign {
