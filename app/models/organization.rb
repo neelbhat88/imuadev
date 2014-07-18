@@ -7,7 +7,7 @@ class Organization < ActiveRecord::Base
 end
 
 class ViewOrganization
-  attr_accessor :id, :name, :orgAdmins, :students, :mentors, :expectations
+  attr_accessor :id, :name, :orgAdmins, :students, :mentors
 
   def initialize(org)
     @id = org.id
@@ -17,11 +17,5 @@ class ViewOrganization
     @orgAdmins = users.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}
     @mentors = users.select {|u| u.role == Constants.UserRole[:MENTOR]}
     @students = users.select {|u| u.role == Constants.UserRole[:STUDENT]}
-
-    @expectations = []
-    org.expectations.each do | e |
-      @expectations << ViewExpectation.new(e)
-    end
-
   end
 end

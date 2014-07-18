@@ -30,18 +30,17 @@ class Api::V1::ExpectationController < ApplicationController
   # POST /organization/:id/expectations
   # Creates an Expectation for the given Organization
   def create_expectation
-    orgId       = params[:id]
+    orgId       = params[:id].to_i
     expectation = params[:expectation]
 
-    expectation[:organization_id] = orgId
+    expectation["organization_id"] = orgId
 
     result = @expectationService.create_expectation(expectation)
 
-    viewExpectation = ViewExpectation.new(result.object) unless result.object.nil?
     render status: result.status,
       json: {
         info: result.info,
-        expectation: viewExpectation
+        expectation: result.object
       }
   end
 
@@ -52,18 +51,17 @@ class Api::V1::ExpectationController < ApplicationController
     expectationId = params[:expectation_id]
     expectation   = params[:expectation]
 
-    expectation[:organization_id] = orgId
-    expectation[:id]              = expectationId
+    expectation["organization_id"] = orgId
+    expectation["id"]              = expectationId
 
     # TODO Check that the given orgId matches to the Expectation
 
     result = @expectationService.update_expectation(expectation)
 
-    viewExpectation = ViewExpectation.new(result.object) unless result.object.nil?
     render status: result.status,
       json: {
         info: result.info,
-        expectation: viewExpectation
+        expectation: result.object
       }
   end
 
@@ -93,7 +91,7 @@ class Api::V1::ExpectationController < ApplicationController
     userId = params[:id]
 
     result = @expectationService.get_user_expectations(userId)
-    logger.debug(result)
+
     render status: :ok,
       json: {
         info: "user_expectations",
@@ -107,7 +105,7 @@ class Api::V1::ExpectationController < ApplicationController
     userId          = params[:id]
     userExpectation = params[:userExpectation]
 
-    userExpectation[:user_id] = userId
+    userExpectation["user_id"] = userId
 
     result = @expectationService.create_user_expectation(userExpectation)
 
@@ -125,8 +123,8 @@ class Api::V1::ExpectationController < ApplicationController
     userExpectationId = params[:expectation_id]
     userExpectation   = params[:userExpectation]
 
-    userExpectation[:user_id] = userId
-    userExpectation[:id]      = userExpectationId
+    userExpectation["user_id"] = userId
+    userExpectation["id"]      = userExpectationId
 
     # TODO Check that the given userId matches to the userExpectation
 
@@ -140,7 +138,7 @@ class Api::V1::ExpectationController < ApplicationController
   end
 
   # DELETE /user/:id/expectations/:expectation_id
-  # Deletes a UserExpectation for the given Uswe
+  # Deletes a UserExpectation for the given User
   def delete_user_expectation
     userId            = params[:id]
     userExpectationId = params[:expectation_id]

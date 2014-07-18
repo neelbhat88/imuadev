@@ -10,7 +10,7 @@ class ExpectationService
 
   def create_expectation(expectation)
     newExpectation = Expectation.new do | e |
-      e.orgId = expectation[:organization_id]
+      e.organization_id = expectation[:organization_id]
       e.title = expectation[:title]
       e.description = expectation[:description]
       e.rank = expectation[:rank]
@@ -22,7 +22,7 @@ class ExpectationService
     if newExpectation.save
       return ReturnObject.new(:ok, "Successfully created Expectation, id: #{newExpectation.id}.", newExpectation)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create expectation.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create expectation. Errors: #{newExpectation.errors}", nil)
     end
   end
 
@@ -36,7 +36,7 @@ class ExpectationService
                                        :rank => expectation[:rank])
       return ReturnObject.new(:ok, "Successfully updated Expectation, id: #{dbExpectation.id}.", dbExpectation)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update Expectation, id: #{dbExpectation.id}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update Expectation, id: #{dbExpectation.id}.", nil)
     end
   end
 
