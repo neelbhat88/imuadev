@@ -154,6 +154,62 @@ class Api::V1::UsersController < ApplicationController
       }
   end
 
+  # POST /users/:id/relationship/:assignee_id
+  def assign
+    userId = params[:id].to_i
+    assignee_id = params[:assignee_id].to_i
+
+    result = UserRepository.new.assign(userId, assignee_id)
+
+    viewUser = ViewUser.new(result.object) unless result.object.nil?
+    render status: result.status,
+        json: {
+          info: result.info,
+          student: viewUser
+        }
+  end
+
+  # DELETE /users/:id/relationship/:assignee_id
+  def unassign
+    userId = params[:id].to_i
+    assignee_id = params[:assignee_id].to_i
+
+    result = UserRepository.new.unassign(userId, assignee_id)
+
+    render stauts: result.status,
+      json: {
+        info: result.info
+      }
+  end
+
+  # GET /users/:id/relationship/students
+  def get_assigned_students
+    userId = params[:id].to_i
+
+    students = UserRepository.new.get_assigned_students(userId)
+
+    viewStudents = students.map {|s| ViewUser.new(s)}
+    render status: :ok,
+      json: {
+        info: "Assigned students",
+        students: viewStudents
+      }
+  end
+
+  # GET /users/:id/relationship/mentors
+  def get_assigned_mentors
+    userId = params[:id].to_i
+
+    mentors = UserRepository.new.get_assigned_mentors(userId)
+
+    viewMentors = mentors.map {|s| ViewUser.new(s)}
+    render status: :ok,
+      json: {
+        info: "Assigned mentors",
+        mentors: viewMentors
+      }
+  end
+
 end
 
 
