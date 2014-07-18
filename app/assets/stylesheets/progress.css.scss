@@ -160,6 +160,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   .module-data-content-container {
     display: inline-block;
     vertical-align: top;
+    min-width: 1070px;
 
     @each $category, $color in $colormap {
 
@@ -291,6 +292,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   padding: 10px 40px;
 
   .semester-changer__next, .semester-changer__prev {
-    cursor: pointer;    
+    cursor: pointer;
   }
 }
