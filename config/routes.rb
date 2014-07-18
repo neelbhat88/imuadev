@@ -35,7 +35,10 @@ Imua::Application.routes.draw do
           get '/:id/relationship/students' => 'users#get_assigned_students'
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
 
-          get '/:id/expectations' => 'expectation#user_expectations'
+          get    '/:id/expectations'                 => 'expectation#get_user_expectations'
+          post   '/:id/expectations'                 => 'expectation#create_user_expectation'
+          put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'
+          delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
 
@@ -64,14 +67,10 @@ Imua::Application.routes.draw do
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
 
-      get    '/organization/:id/expectations' => 'expectation#expectations'
-      post   '/expectation'     => 'expectation#create_expectation'
-      put    '/expectation/:id' => 'expectation#update_expectation'
-      delete '/expectation/:id' => 'expectation#delete_expectation'
-
-      post   '/user_expectation'     => 'expectation#create_user_expectation'
-      put    '/user_expectation/:id' => 'expectation#update_user_expectation'
-      delete '/user_expectation/:id' => 'expectation#delete_user_expectation'
+      get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
+      post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
+      put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
+      delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
     end # end :v1
   end # end :api
