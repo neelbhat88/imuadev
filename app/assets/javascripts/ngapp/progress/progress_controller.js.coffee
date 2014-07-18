@@ -39,12 +39,12 @@ angular.module('myApp')
       $scope.semesters = []
       org_time_units = data.org_time_units
 
-      # Set up each semester in descending order
+      # Set up each semester in ascending order
       for tu in org_time_units
-        $scope.semesters.unshift(tu)
+        $scope.semesters.push(tu)
         if tu.id == student.time_unit_id
           tu.name = "This Semester"
-          $scope.selected_semester = $scope.semesters[0]
+          $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
 
   $scope.loaded_overall_points = false
   $scope.$watch 'selected_semester', () ->

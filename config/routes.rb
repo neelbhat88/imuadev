@@ -30,6 +30,11 @@ Imua::Application.routes.draw do
           post  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#add_user_milestone'
           delete  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#delete_user_milestone'
 
+          post '/:id/relationship/:assignee_id' => "users#assign"
+          delete '/:id/relationship/:assignee_id' => "users#unassign"
+          get '/:id/relationship/students' => 'users#get_assigned_students'
+          get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
+
           get '/:id/expectations' => 'expectation#user_expectations'
         end
       end

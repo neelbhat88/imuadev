@@ -1,21 +1,14 @@
 angular.module('myApp')
-.controller 'OrganizationCtrl', ['$q', '$scope', '$modal', 'current_user', 'organization', 'UsersService', 'ProgressService',
-  ($q, $scope, $modal, current_user, organization, UsersService, ProgressService) ->
+.controller 'OrganizationCtrl', ['$scope', '$modal', 'current_user', 'organization', 'UsersService', 'ProgressService',
+  ($scope, $modal, current_user, organization, UsersService, ProgressService) ->
     $scope.current_user = current_user
     $scope.organization = organization
     $scope.students = []
 
     $('input, textarea').placeholder()
 
-    getModulesProgress = (student) ->
-      defer = $q.defer()
-      ProgressService.getModules(student, student.time_unit_id)
-        .success (data) ->
-          defer.resolve({user: student, modules_progress: data.modules_progress})
-      defer.promise
-
     for student in $scope.organization.students
-      getModulesProgress(student).then (student_with_modules_progress) ->
+      ProgressService.getModulesProgress(student).then (student_with_modules_progress) ->
         $scope.students.unshift(student_with_modules_progress)
     $scope.loaded_users = true
 
