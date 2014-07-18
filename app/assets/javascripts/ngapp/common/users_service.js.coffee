@@ -29,15 +29,6 @@ angular.module('myApp')
 
     $http.put '/api/v1/users/' + user.id + '/update_password', user: user
 
-  @getAssignedStudents = (userId) ->
-    $http.get "/api/v1/users/#{userId}/relationship/students"
-
-  @assign = (mentorId, studentId) ->
-    $http.post "/api/v1/users/#{mentorId}/relationship/#{studentId}"
-
-  @unassign = (mentorId, studentId) ->
-    $http.delete "/api/v1/users/#{mentorId}/relationship/#{studentId}"
-
   @newOrgAdmin = (orgId) ->
     email: ""
     first_name: ""

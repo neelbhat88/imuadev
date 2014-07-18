@@ -142,65 +142,12 @@ class UserRepository
       return ReturnObject.new(:internal_server_error, "Failed to move User to previous semester", nil)
     end
   end
-
-  def assign(mentor_id, student_id)
-    student = get_user(student_id)
-    if get_user(mentor_id).nil? || student.nil?
-      return ReturnObject.new(:bad_request, "One of your user's in the relationship does not exist", nil)
-    end
-
-    if Relationship.where(:user_id => student_id, :assigned_to_id => mentor_id).length > 0
-      return ReturnObject.new(:conflict, "This relationship already exists", nil)
-    end
-
-    relationship = Relationship.new do | r |
-      r.user_id = student_id
-      r.assigned_to_id = mentor_id
-    end
-
-    if relationship.save
-      return ReturnObject.new(:ok, "User #{student_id} successfully assigned to #{mentor_id}", student)
-    else
-      return ReturnObject.new(:internal_server_error, relationship.errors, nil)
-    end
-  end
-
-  def unassign(mentor_id, student_id)
-    if Relationship.where(:user_id => student_id, :assigned_to_id => mentor_id).destroy_all()
-      return ReturnObject.new(:ok, "User #{student_id} successfully unassigned from #{mentor_id}", nil)
-    else
-      return ReturnObject.new(:internal_server_error, "User #{student_id} could not be unassigned from #{mentor_id}", nil)
-    end
-  end
-
-  def get_assigned_students(userId)
-    relations = Relationship.where(:assigned_to_id => userId)
-
-    students = []
-    relations.each do | r |
-      students << r.user
-    end
-
-    return students
-  end
-
-  def get_assigned_mentors(userId)
-    relations = Relationship.where(:user_id => userId)
-
-    mentors = []
-    relations.each do | r |
-      mentors << get_user(r.assigned_to_id)
-    end
-
-    return mentors
-  end
 end
 
 class OrgUser
-  attr_accessor :id, :email, :first_name, :last_name, :phone, :role, :organization_id
+  attr_accessor :email, :first_name, :last_name, :phone, :role, :organization_id
 
   def initialize(user_obj)
-    @id = user_obj.id
     @email = user_obj.email
     @first_name = user_obj.first_name
     @last_name = user_obj.last_name

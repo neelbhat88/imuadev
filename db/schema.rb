@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140717154111) do
+ActiveRecord::Schema.define(:version => 20140701052514) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -44,13 +44,6 @@ ActiveRecord::Schema.define(:version => 20140717154111) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "relationships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "assigned_to_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
   end
 
   create_table "roadmaps", :force => true do |t|
