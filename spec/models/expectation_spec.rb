@@ -19,15 +19,11 @@ describe Expectation do
     end
 
     it "if organization_id, title already exists" do
-      Expectation.create(organization_id: 1,
-                         title:           "tmp_t",
-                         description:     "tmp_d",
-                         rank:            0)
-
-      expect(Expectation.new(organization_id: 1,
-                             title:           "tmp_t",
-                             description:     "tmp_d",
-                             rank:            0)).to have(1).errors_on(:title)
+      factory = create(:expectation)
+      expect(Expectation.new(organization_id: factory.organization_id,
+                             title:           factory.title,
+                             description:     factory.description,
+                             rank:            factory.rank)).to have(1).errors_on(:title)
     end
   end
 end

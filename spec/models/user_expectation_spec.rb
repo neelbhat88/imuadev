@@ -15,13 +15,10 @@ describe UserExpectation do
     end
 
     it "if user_id, expectation_id already exists" do
-      UserExpectation.create(expectation_id: 1,
-                             user_id:        1,
-                             status:         1)
-
-      expect(UserExpectation.new(expectation_id: 1,
-                                 user_id:        1,
-                                 status:         1)).to have(1).errors_on(:expectation_id)
+      factory = create(:user_expectation)
+      expect(UserExpectation.new(expectation_id: factory.expectation_id,
+                                 user_id:        factory.user_id,
+                                 status:         factory.status)).to have(1).errors_on(:expectation_id)
     end
   end
 end
