@@ -1,0 +1,36 @@
+.dashboard-header {
+  height: 230px;
+  background-color: $green;
+  color: white;
+  border-bottom: 1px solid;
+}
+
+.dashboard-attention {
+  height: 100px;
+}
+
+.dashboard-content {
+  height: 300px;
+  background-color: $bg-grey;
+  color: white;
+}
+
+.mentor-header {
+  .greeting {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .circle-attention {
+    display: inline-block;
+    vertical-align: middle;
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    background-color: white;
+
+    .circle-attention__text {
+      padding: 30px;
+    }
+  }
+}

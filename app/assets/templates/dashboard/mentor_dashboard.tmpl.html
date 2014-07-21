@@ -1,0 +1,31 @@
+<div ng-controller="MentorDashboardController">
+  <div class="pal dashboard-header dashboard-header--mentor">
+    <div class="mentor-header">
+      <div class="greeting">Welcome back {{current_user.first_name}}!</div>
+      <div class="circle-attention">
+        <div class="circle-attention__text">
+          0 students need your attention
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pal dashboard-attention dashboard-attention--mentor">
+    <div>This is where things that need attention go</div>
+  </div>
+
+  <div class="pal dashboard-content dashboard-content--mentor">
+    <h4>My Assigned Students</h4>
+    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
+      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+      <a ng-href="#/progress/{{student.user.id}}" title="View progress">
+        <progress-circle student="student"></progress-circle>
+      </a>
+      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+        <div class="avatar-block__name">
+          {{student.user.first_name}} {{student.user.last_name}}
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
