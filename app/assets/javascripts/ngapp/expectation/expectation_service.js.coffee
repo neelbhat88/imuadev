@@ -10,9 +10,9 @@ angular.module('myApp')
 
   @saveExpectation = (expectation) ->
     if expectation.id
-      $http.post "/api/v1/expectation/#{expectation.id}", {expectation: expectation}
+      $http.put "/api/v1/organization/#{expectation.organization_id}/expectations/#{expectation.id}", {expectation: expectation}
     else
-      $http.post "/api/v1/expectation", {expectation: expectation}
+      $http.post "/api/v1/organization/#{expectation.organization_id}/expectations/#{expectation.id}", {expectation: expectation}
 
   @deleteExpectaion = (expectation) ->
     $http.delete "/api/v1/expectation/#{expectation.id}"
@@ -26,12 +26,12 @@ angular.module('myApp')
 
   @saveUserExpectation = (user_expectation) ->
     if user_expectation.id
-      $http.post "/api/v1/user_expectation/#{user_expectation.id}", {userExpectation: user_expectation}
+      $http.put "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}", {userExpectation: user_expectation}
     else
-      $http.post "/api/v1/user_expectation", {userExpectation: user_expectation}
+      $http.post "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}", {userExpectation: user_expectation}
 
   @deleteUserExpectation = (user_expectation) ->
-    $http.delete "/api/v1/user_expectation/#{user_expectation.id}"
+    $http.delete "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}"
 
   @
 ]
