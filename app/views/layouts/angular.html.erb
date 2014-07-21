@@ -49,6 +49,12 @@
             </li>
             <% end %>
 
+            <% if current_user.mentor? %>
+            <li>
+              <a href="#/dashboard">Dashboard</a>
+            </li>
+            <% end %>
+
             <% if current_user.student? %>
             <li>
               <a href="#/progress/<%= current_user.id %>">Progress</a>

@@ -18,22 +18,30 @@
       </div>
     </div>
 
-    <div class="user-list__add" ng-click="assigning=true" ng-hide="assigning">
+    <div class="user-list__add" ng-click="assigning=true" ng-hide="assigning || assigned_students.length == all_students.length">
       <div class="glyphicon glyphicon-plus-sign ptxl"></div>
       <div>Assign Student</div>
     </div>
+
+    <div class="user-list__add" ng-click="assigning=false" ng-show="assigning">
+      <div class="glyphicon glyphicon-ok-sign ptxl"></div>
+      <div>Done Assigning</div>
+    </div>
   </div>
 
-  <div ng-show="assigning">
-    <div class="btn-done-assigning" ng-click="assigning=false">Done Assigning</div>
-    <div class="user-list ptxl pbxl all-students">
-      <div class="avatar-block avatar-block--list" ng-click="assign(student)" ng-repeat="student in all_students">
-        <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+  <div class="user-list ptxl pbxl all-students" ng-show="assigning">
+    <h4 ng-hide="all_students.length == assigned_students.length">Click the students below to assign them to {{mentor.first_name}}</h4>
+    <div class="avatar-block avatar-block--list" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)"
+          ng-repeat="student in all_students">
+      <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
 
-        <div class="avatar-block__name">
-          {{student.first_name}} {{student.last_name}}
-        </div>
+      <div class="avatar-block__name">
+        {{student.first_name}} {{student.last_name}}
       </div>
+    </div>
+
+    <div class="pal" ng-show="all_students.length == assigned_students.length">
+      <h4>No students left to assign!</h4>
     </div>
   </div>
 

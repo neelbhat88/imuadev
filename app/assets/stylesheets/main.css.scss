@@ -420,6 +420,10 @@ button:focus {
    Misc
    =============================================== */
 
+.displayNone {
+  display: none;
+}
+
 .flash-container {
   padding: 20px;
   @extend .font-size-normal;
