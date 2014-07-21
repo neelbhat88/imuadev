@@ -47,14 +47,12 @@ class Api::V1::ExpectationController < ApplicationController
   # PUT /organization/:id/expectations/:expectation_id
   # Updates an Expectation for the given Organization
   def update_expectation
-    orgId         = params[:id]
-    expectationId = params[:expectation_id]
+    orgId         = params[:id].to_i
+    expectationId = params[:expectation_id].to_i
     expectation   = params[:expectation]
 
     expectation["organization_id"] = orgId
     expectation["id"]              = expectationId
-
-    # TODO Check that the given orgId matches to the Expectation
 
     result = @expectationService.update_expectation(expectation)
 
@@ -68,12 +66,14 @@ class Api::V1::ExpectationController < ApplicationController
   # DELETE /organization/:id/expectations/:expectation_id
   # Deletes an Expectation for the given Organization
   def delete_expectation
-    orgId         = params[:id]
-    expectationId = params[:expectation_id]
+    orgId         = params[:id].to_i
+    expectationId = params[:expectation_id].to_i
 
-    # TODO Check that the given orgId matches to the Expectation
+    expectation = Expectation.new()
+    expectation["organization_id"] = orgId
+    expectation["id"]              = expectationId
 
-    result = @expectationService.delete_expectation(expectationId)
+    result = @expectationService.delete_expectation(expectation)
 
     render status: result.status,
       json: {
@@ -99,13 +99,15 @@ class Api::V1::ExpectationController < ApplicationController
       }
   end
 
-  # POST /user/:id/expectations
-  # Creates a UserExpectation for the given User
+  # POST /user/:id/expectations/:expectation_id
+  # Creates a UserExpectation for the given User and Expectation
   def create_user_expectation
-    userId          = params[:id]
+    userId          = params[:id].to_i
+    expectationId   = params[:expectation_id].to_i
     userExpectation = params[:userExpectation]
 
-    userExpectation["user_id"] = userId
+    userExpectation["user_id"]        = userId
+    userExpectation["expectation_id"] = expectationId
 
     result = @expectationService.create_user_expectation(userExpectation)
 
@@ -117,16 +119,14 @@ class Api::V1::ExpectationController < ApplicationController
   end
 
   # PUT /user/:id/expectations/:expectation_id
-  # Updates a UserExpectation for the given User
+  # Updates a UserExpectation for the given User and Expectation
   def update_user_expectation
-    userId            = params[:id]
-    userExpectationId = params[:expectation_id]
-    userExpectation   = params[:userExpectation]
+    userId          = params[:id].to_i
+    expectationId   = params[:expectation_id].to_i
+    userExpectation = params[:userExpectation]
 
-    userExpectation["user_id"] = userId
-    userExpectation["id"]      = userExpectationId
-
-    # TODO Check that the given userId matches to the userExpectation
+    userExpectation["user_id"]        = userId
+    userExpectation["expectation_id"] = expectationId
 
     result = @expectationService.update_user_expectation(userExpectation)
 
@@ -138,14 +138,16 @@ class Api::V1::ExpectationController < ApplicationController
   end
 
   # DELETE /user/:id/expectations/:expectation_id
-  # Deletes a UserExpectation for the given User
+  # Deletes a UserExpectation for the given User and Expectation
   def delete_user_expectation
-    userId            = params[:id]
-    userExpectationId = params[:expectation_id]
+    userId        = params[:id].to_i
+    expectationId = params[:expectation_id].to_i
 
-    # TODO Check that the given userId matches to the userExpectation
+    userExpectation = UserExpectation.new()
+    userExpectation["user_id"]        = userId
+    userExpectation["expectation_id"] = expectationId
 
-    result = @expectationService.delete_user_expectation(userExpectationId)
+    result = @expectationService.delete_user_expectation(userExpectation)
 
     render status: result.status,
       json: {

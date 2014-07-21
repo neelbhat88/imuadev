@@ -4,6 +4,11 @@ class ExpectationService
   ########### ORGANIZATION ############
   #####################################
 
+  def get_expectation(orgId, expectationId)
+    return Expectation.where(:organization_id => orgId,
+                             :id => expectationId).first
+  end
+
   def get_expectations(orgId)
     return Expectation.where(:organization_id => orgId)
   end
@@ -27,7 +32,14 @@ class ExpectationService
   end
 
   def update_expectation(expectation)
-    dbExpectation = Expectation.find(expectation[:id])
+    orgId = expectation[:organization_id]
+    expId = expectation[:id]
+
+    dbExpectation = get_expectation(orgId, expId)
+
+    if dbExpectation.nil?
+      return ReturnObject.new(:internal_server_error, "Failed to find Expectation with orgId: #{orgId} and expId: #{expId}.", nil)
+    end
 
     # TODO Check title uniqueness within Organization's set of Expectations
 
@@ -40,17 +52,31 @@ class ExpectationService
     end
   end
 
-  def delete_expectation(expectationId)
-    if Expectation.find(expectationId).destroy()
-      return ReturnObject.new(:ok, "Successfully deleted Expectation, id: #{expectationId}.", nil)
+  def delete_expectation(expectation)
+    orgId = expectation[:organization_id]
+    expId = expectation[:id]
+
+    dbExpectation = get_expectation(orgId, expId)
+
+    if dbExpectation.nil?
+      return ReturnObject.new(:internal_server_error, "Failed to find Expectation with orgId: #{orgId} and expId: #{expId}.", nil)
+    end
+
+    if Expectation.find(dbExpectation.id).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted Expectation, id: #{dbExpectation.id}.", nil)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to delete Expectation, id: #{expectationId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete Expectation, id: #{dbExpectation.id}.", nil)
     end
   end
 
   #################################
   ############# USER ##############
   #################################
+
+  def get_user_expectation(userId, expectationId)
+    return UserExpectation.where(:user_id => userId,
+                                 :expectation_id => expectationId).first
+  end
 
   def get_user_expectations(userId)
     return UserExpectation.where(:user_id => userId)
@@ -64,7 +90,10 @@ class ExpectationService
     end
 
     if !newUserExpectation.valid?
+      # TODO
     end
+
+    # TODO Check that expectation_id and user_id belong to the same Organization
 
     if newUserExpectation.save
       return ReturnObject.new(:ok, "Successfully created UserExpectation, id: #{newUserExpectation.id}.", newUserExpectation)
@@ -74,7 +103,14 @@ class ExpectationService
   end
 
   def update_user_expectation(userExpectation)
-    dbUserExpectation = UserExpectation.find(userExpectation[:id])
+    userId = userExpectation[:user_id]
+    expectationId = userExpectation[:expectation_id]
+
+    dbUserExpectation = get_user_expectation(userId, expectationId)
+
+    if dbUserExpectation.nil?
+      return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with userId: #{userId} and expectationId: #{expectationId}.", nil)
+    end
 
     if dbUserExpectation.update_attributes(:status => userExpectation[:status])
       return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", dbUserExpectation)
@@ -83,11 +119,20 @@ class ExpectationService
     end
   end
 
-  def delete_user_expectation(userExpectationId)
-    if UserExpectation.find(userExpectationId).destroy()
-      return ReturnObject.new(:ok, "Successfully deleted UserExpectation, id: #{userExpectationId}.", nil)
+  def delete_user_expectation(userExpectation)
+    userId = userExpectation[:user_id]
+    expectationId = userExpectation[:expectation_id]
+
+    dbUserExpectation = get_user_expectation(userId, expectationId)
+
+    if dbUserExpectation.nil?
+      return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with userId: #{userId} and expectationId: #{expectationId}.", nil)
+    end
+
+    if UserExpectation.find(dbUserExpectation.id).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted UserExpectation, id: #{dbUserExpectation.id}.", nil)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to delete UserExpectation, id: #{userExpectationId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete UserExpectation, id: #{dbUserExpectation.id}.", nil)
     end
   end
 
