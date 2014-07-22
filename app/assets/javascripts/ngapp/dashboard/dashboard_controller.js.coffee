@@ -11,7 +11,7 @@ angular.module('myApp')
         # 'dashboard/schooladmin_dashboard.html'
       when $scope.CONSTANTS.USER_ROLES.mentor
         'dashboard/mentor_dashboard.html'
-      # when $scope.CONSTANTS.USER_ROLES.student
-        # 'dashboard/student_dashboard.html'
+      when $scope.CONSTANTS.USER_ROLES.student
+        'dashboard/student_dashboard.html'
 
 ]

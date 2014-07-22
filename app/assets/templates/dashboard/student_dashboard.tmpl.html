@@ -1,4 +1,37 @@
 <div ng-controller="StudentDashboardController" class="studentDashboardContainer">
+  <div class="pal dashboard-header dashboard-header--student">
+    <div class="mentor-header">
+      <div class="greeting">
+        <div class="greeting__small">Hello {{current_user.first_name}},</div>
+        <div class="greeting__large">Welcome back!</div>
+      </div>
+      <!-- <div class="circle-attention">
+        <div class="inner">
+          <div class="circle-attention__text">
+            <div style="font-size: 75px; line-height: 1;">0</div>
+            <div class="pts" style="font-size: 16px; line-height: 1;">students need your attention</div>
+          </div>
+        </div>
+      </div> -->
+      <div class="progress-circle" ng-if="student_with_modules_progress">
+        <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
+        <div class="progress-circle__name">
+          {{student_with_modules_progress.user.first_name}} {{student_with_modules_progress.user.last_name}}
+        </div>
+      </div>
 
+      <div class="overall-circle" ng-if="loaded_overall_points">
+        <overall-progress-circle points="overall_points"></overall-progress-circle>
+      </div>
+    </div>
+  </div>
+
+  <div class="pal dashboard-attention dashboard-attention--student displayNone">
+    <div>This is where things that need attention go</div>
+  </div>
+
+  <div class="pal dashboard-content dashboard-content--student">
+    <h4>Content</h4>
+  </div>
 
 </div>
