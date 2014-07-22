@@ -62,7 +62,7 @@ class ExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find Expectation with orgId: #{orgId} and expId: #{expId}.", nil)
     end
 
-    if Expectation.find(dbExpectation.id).destroy()
+    if dbExpectation.destroy()
       return ReturnObject.new(:ok, "Successfully deleted Expectation, id: #{dbExpectation.id}.", nil)
     else
       return ReturnObject.new(:internal_server_error, "Failed to delete Expectation, id: #{dbExpectation.id}.", nil)
@@ -129,7 +129,7 @@ class ExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with userId: #{userId} and expectationId: #{expectationId}.", nil)
     end
 
-    if UserExpectation.find(dbUserExpectation.id).destroy()
+    if dbUserExpectation.destroy()
       return ReturnObject.new(:ok, "Successfully deleted UserExpectation, id: #{dbUserExpectation.id}.", nil)
     else
       return ReturnObject.new(:internal_server_error, "Failed to delete UserExpectation, id: #{dbUserExpectation.id}.", nil)
