@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140722021123) do
+ActiveRecord::Schema.define(:version => 20140722120534) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -88,11 +88,11 @@ ActiveRecord::Schema.define(:version => 20140722021123) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "position"
   end
 
   create_table "user_extracurricular_activity_details", :force => true do |t|
     t.integer  "extracurricular_activity_id"
-    t.string   "position"
     t.string   "description"
     t.integer  "user_id"
     t.datetime "created_at",                  :null => false

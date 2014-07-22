@@ -1,3 +1,3 @@
 class UserExtracurricularActivity < ActiveRecord::Base
-  attr_accessible :name, :user_id
+  attr_accessible :name, :user_id, :position
 end
