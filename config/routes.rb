@@ -34,6 +34,11 @@ Imua::Application.routes.draw do
           delete '/:id/relationship/:assignee_id' => "users#unassign"
           get '/:id/relationship/students' => 'users#get_assigned_students'
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
+
+          get    '/:id/expectations'                 => 'expectation#get_user_expectations'
+          post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'
+          put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'
+          delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
 
@@ -61,6 +66,11 @@ Imua::Application.routes.draw do
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
+
+      get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
+      post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
+      put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
+      delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
     end # end :v1
   end # end :api

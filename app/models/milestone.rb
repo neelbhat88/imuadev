@@ -5,6 +5,8 @@ class Milestone < ActiveRecord::Base
 
   belongs_to :time_unit
 
+  has_many :user_milestones, dependent: :destroy
+
   validates :title, presence: true
   validates :description, presence: true
   validates :value, presence: true
