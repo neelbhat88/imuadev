@@ -1,4 +1,16 @@
 <div ng-controller="OrganizationExpectationController" class="organizationExpectationContainer">
 
+  <h4>Expectations</h4>
+  <div class="no-expectations" ng-hide="expectations.length != 0">No expectations added</div>
+
+  <div class="expectations-list" ng-repeat="expectation in expectations">
+    <div class="expectations-list-item">
+      <input class="form-field" ng-model="expectation.title" placeholder="Expectation Title" name="expectation_title">
+      <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveExpectation($index)"></span>
+      <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteExpectation($index)"></span>
+    </div>
+  </div>
+
+  <div class="add-expectation__button" ng-click="addExpectation()">Add Expectation</div>
 
 </div>

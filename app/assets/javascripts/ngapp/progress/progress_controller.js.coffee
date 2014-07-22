@@ -28,9 +28,9 @@ angular.module('myApp')
     contentWidth = $('.js-circles').outerWidth()
     sideNavWidth = $('.js-module-data-side-nav').outerWidth()
     if contentWidth >= windowWidth
-      $('.js-module-data-content-container').width(contentWidth - sideNavWidth - 20)
+      $('.js-module-data-content-container').width(contentWidth - sideNavWidth - 220)
     else
-      $('.js-module-data-content-container').width(windowWidth - sideNavWidth - 20)
+      $('.js-module-data-content-container').width(windowWidth - sideNavWidth - 220)
 
   $(window).resize (event) -> setWidth()
 

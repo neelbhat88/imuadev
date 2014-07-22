@@ -1,0 +1,37 @@
+.organizationExpectationContainer {
+
+  .expectations-list-item {
+    padding: 0px 0px 5px 0px;
+
+  }
+
+  .add-expectation__button {
+    @extend .submit;
+
+    font-size: 14px;
+
+    margin: auto;
+    margin-top: 5px;
+
+    background-color: white;
+    color: $light-grey;
+    border-color: $light-grey;
+
+    &:hover {
+      color: $ink;
+      border-color: $ink;
+      background-color: white;
+    }
+  }
+}
+
+.studentExpectationContainer {
+
+  width: 200px;
+  padding: 20px 20px;
+
+  .expectations-list-item {
+    padding: 10px 0px 0px 0px;
+  }
+
+}
