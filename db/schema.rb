@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140717154111) do
+ActiveRecord::Schema.define(:version => 20140722021123) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -83,6 +83,22 @@ ActiveRecord::Schema.define(:version => 20140717154111) do
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
 
+  create_table "user_extracurricular_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "user_extracurricular_activity_details", :force => true do |t|
+    t.integer  "extracurricular_activity_id"
+    t.string   "position"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
   create_table "user_milestones", :force => true do |t|
     t.integer  "user_id"
     t.integer  "time_unit_id"
@@ -91,6 +107,22 @@ ActiveRecord::Schema.define(:version => 20140717154111) do
     t.string   "submodule"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "user_service_hours", :force => true do |t|
+    t.integer  "service_org_id"
+    t.decimal  "hours"
+    t.date     "date"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "user_service_orgs", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
