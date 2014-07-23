@@ -143,7 +143,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   .module-data-content-container {
     display: inline-block;
     vertical-align: top;
-    min-width: 850px;
+    min-width: 1070px;
 
     @each $category, $color in $colormap {
 
@@ -164,9 +164,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     text-align: center;
   }
 
-  .user-expectations {
-    display: inline-block;
-  }
 }
 
 .user-class-greeting {

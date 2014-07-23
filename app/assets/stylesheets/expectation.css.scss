@@ -66,18 +66,14 @@
         cursor: pointer;
       }
     }
-
-    .add-expectation__button-placeholder {
-      //padding: 3px;
-    }
   }
 }
 
 .studentExpectationContainer {
 
-  width: 200px;
+  width: 100%;
   padding: 20px 20px;
-  background-color: black;
+  background-color: inherit;
   cursor: default;
 
   .expectations-list-item {
