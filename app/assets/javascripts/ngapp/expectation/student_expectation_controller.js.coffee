@@ -16,12 +16,13 @@ angular.module('myApp')
               for ue in data.user_expectations
                 if e.id == ue.expectation_id
                   e.user_expectation = ue
+                  # TODO splice ue out of data.user_expectations
                   break
               if not e.user_expectation?
                 e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
             $scope.loaded_expectations = true
 
-    $scope.setExpectationStatus = (expectation, status) ->
+    $scope.setUserExpectationStatus = (expectation, status) ->
       if expectation.user_expectation.status != status
         for e in $scope.expectations
           if e.id == expectation.id
