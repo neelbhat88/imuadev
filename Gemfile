@@ -14,12 +14,14 @@ group :development do
   #gem 'debugger'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails', "~> 4.0"
+  gem 'jasmine'
 end
 
 group :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-collection_matchers'
   gem 'factory_girl_rails' ,"~> 4.0"
+  gem 'jasmine'
 end
 
 # Gems used only for assets and not required
