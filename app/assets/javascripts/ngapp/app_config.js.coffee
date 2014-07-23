@@ -11,3 +11,12 @@ angular.module('myApp').config ['$routeProvider', '$httpProvider', 'CONSTANTS',
   .otherwise
     redirectTo: '/'
 ]
+
+
+angular.module('myApp')
+.controller "ExampleController", ["$scope", ($scope) ->
+  $scope.greeting = "Hello World"
+
+  $scope.sayGreeting = () ->
+    $scope.greeting + "! This works!"
+]
