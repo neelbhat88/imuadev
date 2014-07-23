@@ -1,15 +1,13 @@
 <div ng-controller="StudentExpectationController" class="studentExpectationContainer">
 
   <h4>Expectations</h4>
-  <div class="no-expectations" ng-hide="expectations.length != 0">None</div>
-
-  <div class="expectations-list" ng-repeat="expectation in expectations">
-    <div class="expectations-list-item">
-      <h6>{{expectation.title}}</h6>
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'">0</label>
-        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'">1</label>
-        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'">2</label>
+  <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
+    <div class="expectations-list-item" ng-repeat="expectation in expectations">
+      <div class="expectation-title">{{expectation.title}}</div>
+      <div class="expectation-btn-group">
+        <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+        <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+        <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
       </div>
     </div>
   </div>
