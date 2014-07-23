@@ -2,7 +2,7 @@ angular.module('myApp')
 .controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService",
 ($scope, ProgressService, OrganizationService) ->
   $scope.student_with_modules_progress = null
-  $scope.student = $scope.current_user
+  $scope.student = $scope.user
   $scope.overall_points = {user: 0, total: 0, percent: 0}
 
   ProgressService.getModulesProgress($scope.student).then (student_with_modules_progress) ->
