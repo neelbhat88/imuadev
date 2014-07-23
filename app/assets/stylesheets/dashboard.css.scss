@@ -8,6 +8,28 @@
   height: 300px;
 }
 
+.dashboard-header--student {
+  background-color: white;
+  color: $ink;
+  
+  padding: 40px;
+  height: 250px;
+
+  .progress-circle {
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-left: 50px;
+  }
+
+  .overall-circle {
+    display: inline-block;
+    vertical-align: bottom;
+    position: relative;
+    left: -15px;
+  }
+}
+
 .dashboard-attention {
   height: 100px;
 }

@@ -17,29 +17,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   padding: 60px 20px 0px 180px;
   width: 100%;
 
-  .progress-circle {
-    font-size: 16px;
-    margin: 10px 0 0 -247px;
-    padding-left: 20px;
-    width: 205px;
-    display: inline-block;
-    vertical-align: top;
-    text-align: center;
-
-    .progress-circle__name {
-      padding: 5px 0;
-      text-align: center;
-      @extend .bold;
-    }
-  }
-
-  .overall-circle {
-    vertical-align: top;
-    margin: 127px -4px 0 -30px;
-    width: 68px;
-    display: inline-block;
-  }
-
   .module-circles {
     width: 100%;
     margin: auto;
@@ -51,6 +28,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 
+}
+
+.progress-circle {
+  .progress-circle__name {
+    text-align: center;
+  }
 }
 
 .overall-circle {
