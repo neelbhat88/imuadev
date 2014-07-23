@@ -1,7 +1,10 @@
 angular.module('myApp')
-.controller "DashboardController", ["$scope", "current_user",
-($scope, current_user) ->
+.controller "DashboardController", ["$scope", "$location", "current_user",
+($scope, $location, current_user) ->
   $scope.current_user = current_user
+
+  if $scope.current_user.role < $scope.CONSTANTS.USER_ROLES.mentor
+    $location.path('/roadmap')
 
   $scope.loadDashboard = (role) ->
     switch role
