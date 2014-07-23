@@ -13,15 +13,39 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 .progressContainer {
 }
 
-.module-circles {
-  padding: 60px 0px 0px 150px;
+.circles {
+  padding: 60px 20px 0px 180px;
+  width: 100%;
 
-  width: 1200px;
-  margin: auto;
-  text-align: center;
-
-  .module-circle {
+  .module-circles {
+    width: 100%;
+    margin: auto;
     display: inline-block;
+    text-align: center;
+
+    .module-circle {
+      display: inline-block;
+    }
+  }
+
+}
+
+.progress-circle {
+  .progress-circle__name {
+    text-align: center;
+  }
+}
+
+.overall-circle {
+  font-size: 16px;
+  width: 68px;
+
+  .overall-circle__points {
+    background-color: white;
+    color: $ink;
+
+    .value {text-align: center;}
+    .text {font-size: 10px; text-align: center;}
   }
 }
 
@@ -106,7 +130,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
     float: left;
 
-    width: 150px;
+    width: 170px;
     padding: 40px 0;
 
     .nav-item {
@@ -119,6 +143,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   .module-data-content-container {
     display: inline-block;
     vertical-align: top;
+    min-width: 1070px;
 
     @each $category, $color in $colormap {
 
@@ -243,4 +268,13 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   width: 320px;
   display: inline-block;
   vertical-align: top;
+}
+
+.semester-changer {
+  text-align: right;
+  padding: 10px 40px;
+
+  .semester-changer__next, .semester-changer__prev {
+    cursor: pointer;
+  }
 }

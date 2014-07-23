@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   belongs_to :time_unit
 
   has_many :user_classes, dependent: :destroy
+  has_many :user_expectations, dependent: :destroy
+  has_many :relationships, dependent: :destroy
 
   has_attached_file :avatar, styles: {
     square: '140x140#',

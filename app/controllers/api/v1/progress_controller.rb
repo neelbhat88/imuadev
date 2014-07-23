@@ -93,19 +93,15 @@ class Api::V1::ProgressController < ApplicationController
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
-    # ToDo: Create a more general way to do this so this can be done
-    # in all congroller actions
-    if current_user.student?
-      if current_user.id != userId
-        render status: :forbidden,
-          json: {}
+    if !student_can_access?(userId)
+      render status: :forbidden,
+        json: {}
 
-        return
-      end
+      return
     end
 
     user = @userRepository.get_user(userId)
-    if user.nil? || current_user.organization_id != user.organization_id
+    if !same_organization?(user.organization_id)
       render status: :forbidden,
         json: {}
 

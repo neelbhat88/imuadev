@@ -14,7 +14,7 @@ class Api::V1::OrganizationController < ApplicationController
   # GET /organization
   def all_organizations
     if !current_user.super_admin?
-      render status: :unauthorized,
+      render status: :forbidden,
         json: {}
 
       return
@@ -31,7 +31,13 @@ class Api::V1::OrganizationController < ApplicationController
 
   # GET /organization/:id
   def get_organization
-    orgId = params[:id]
+    orgId = params[:id].to_i
+
+    if !same_organization?(orgId)
+      render status: :forbidden, json: {}
+
+      return
+    end
 
     result = @organizationRepository.get_organization(orgId)
 

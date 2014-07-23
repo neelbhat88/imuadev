@@ -19,8 +19,6 @@ angular.module('myApp')
       				.attr("class", "module-circle__points")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
-
-
       var radius = Math.min(width, height) / 2;
 
       scope.render = function(module) {
@@ -29,34 +27,23 @@ angular.module('myApp')
           // Throw in a switch statement for now, try to integrate  module
           // color directive
           switch (module.module_title) {
-              case 'Academics':
-                  var moduleColor = '#41ad49';
-                  break;
-              case 'Service':
-                  var moduleColor = '#e8be28';
-                  break;
-              case 'Extracurricular':
-                  var moduleColor = '#ef413d';
-                  break;
-              case 'College_Prep':
-                  var moduleColor = '#27aae1';
-                  break;
-              case 'Testing':
-                  var moduleColor = '#9665aa';
-                  break;
+              case 'Academics':       var moduleColor = '#41ad49'; break;
+              case 'Service':         var moduleColor = '#e8be28'; break;
+              case 'Extracurricular': var moduleColor = '#ef413d'; break;
+              case 'College_Prep':    var moduleColor = '#27aae1'; break;
+              case 'Testing':         var moduleColor = '#9665aa'; break;
           }
 
           var modulePoints = module.points.user;
           var totalPoints = module.points.total;
           var data = [
-            {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
-            {name: "Total Points", value: totalPoints - modulePoints}
+            {name: "Points Earned", value: modulePoints},
+            {name: "Total Points", value: (totalPoints == 0) ? 1 : totalPoints - modulePoints}
           ];
 
 
-
           var color = d3.scale.ordinal()
-              .range([moduleColor, 'white']);
+              .range([moduleColor, '#e5e5e5']);
 
           var arc = d3.svg.arc()
               .outerRadius(radius)
@@ -75,7 +62,7 @@ angular.module('myApp')
           .enter().append("g")
           .append("path").style("fill", function(d,i) { return color(i); })
               .transition()
-              .duration(1700)
+              .duration(1300)
               .attrTween("d", tweenPie)
               .each(function(d) {this._current = d;}); // stores current angles
 

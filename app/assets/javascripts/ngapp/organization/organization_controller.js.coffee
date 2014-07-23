@@ -1,10 +1,16 @@
 angular.module('myApp')
-.controller 'OrganizationCtrl', ['$scope', '$modal', 'current_user', 'organization', 'UsersService',
-  ($scope, $modal, current_user, organization, UsersService) ->
+.controller 'OrganizationCtrl', ['$scope', '$modal', 'current_user', 'organization', 'UsersService', 'ProgressService',
+  ($scope, $modal, current_user, organization, UsersService, ProgressService) ->
     $scope.current_user = current_user
     $scope.organization = organization
+    $scope.students = []
 
     $('input, textarea').placeholder()
+
+    for student in $scope.organization.students
+      ProgressService.getModulesProgress(student).then (student_with_modules_progress) ->
+        $scope.students.unshift(student_with_modules_progress)
+    $scope.loaded_users = true
 
     $scope.fullName = (user) ->
       if user.id == current_user.id

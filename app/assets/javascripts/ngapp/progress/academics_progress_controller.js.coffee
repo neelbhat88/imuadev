@@ -9,17 +9,14 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
-
-        ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
-          .success (data) ->
-            $scope.yes_no_milestones = data.yes_no_milestones
+            $scope.$emit('loaded_module_milestones');
 
     $scope.$watch 'user_classes', () ->
       $scope.gpa = UserClassService.getGPA($scope.user_classes)
     , true
 
     $scope.saveClass = (index) ->
-      new_class = UserClassService.new($scope.student)
+      new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = $scope.user_classes[index].id
       new_class.name = $scope.user_classes[index].new_name
       new_class.grade = $scope.user_classes[index].new_grade
@@ -40,7 +37,7 @@ angular.module('myApp')
 
     $scope.addClass = () ->
       $scope.classes.editing = true
-      $scope.user_classes.push(UserClassService.new($scope.student))
+      $scope.user_classes.push(UserClassService.new($scope.student, $scope.selected_semester.id))
 
     $scope.cancelEdit = (index) ->
       if $scope.user_classes[index].id

@@ -53,18 +53,21 @@ class Api::V1::UsersController < ApplicationController
   def show
     userId = params[:id].to_i
 
-    # ToDo: Create a more general way to do this so this can be done
-    # in all congroller actions
-    if current_user.student?
-      if current_user.id != userId
-        render status: :forbidden,
-          json: {}
+    if !student_can_access?(userId)
+      render status: :forbidden,
+        json: {}
 
-        return
-      end
+      return
     end
 
     user = UserRepository.new.get_user(userId)
+
+    if !same_organization?(user.organization_id)
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
 
     viewUser = ViewUser.new(user) unless user.nil?
     render status: :ok,
@@ -123,6 +126,88 @@ class Api::V1::UsersController < ApplicationController
     json: {
       info: result[:info]
     }
+  end
+
+  # PUT /users/:id/time_unit/next
+  def move_to_next_semester
+    userId = params[:id]
+
+    result = UserRepository.new.move_to_next_semester(userId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user: result.object
+      }
+  end
+
+  # PUT /users/:id/time_unit/previous
+  def move_to_prev_semester
+    userId = params[:id]
+
+    result = UserRepository.new.move_to_prev_semester(userId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user: result.object
+      }
+  end
+
+  # POST /users/:id/relationship/:assignee_id
+  def assign
+    userId = params[:id].to_i
+    assignee_id = params[:assignee_id].to_i
+
+    result = UserRepository.new.assign(userId, assignee_id)
+
+    viewUser = ViewUser.new(result.object) unless result.object.nil?
+    render status: result.status,
+        json: {
+          info: result.info,
+          student: viewUser
+        }
+  end
+
+  # DELETE /users/:id/relationship/:assignee_id
+  def unassign
+    userId = params[:id].to_i
+    assignee_id = params[:assignee_id].to_i
+
+    result = UserRepository.new.unassign(userId, assignee_id)
+
+    render stauts: result.status,
+      json: {
+        info: result.info
+      }
+  end
+
+  # GET /users/:id/relationship/students
+  def get_assigned_students
+    userId = params[:id].to_i
+
+    students = UserRepository.new.get_assigned_students(userId)
+
+    viewStudents = students.map {|s| ViewUser.new(s)}
+    render status: :ok,
+      json: {
+        info: "Assigned students",
+        students: viewStudents
+      }
+  end
+
+  # GET /users/:id/relationship/mentors
+  def get_assigned_mentors
+    userId = params[:id].to_i
+
+    mentors = UserRepository.new.get_assigned_mentors(userId)
+
+    viewMentors = mentors.map {|s| ViewUser.new(s)}
+    render status: :ok,
+      json: {
+        info: "Assigned mentors",
+        mentors: viewMentors
+      }
   end
 
 end

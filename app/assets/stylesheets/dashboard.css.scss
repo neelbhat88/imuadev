@@ -1,0 +1,86 @@
+.dashboard-header {
+  background-color: $green;
+  color: white;
+}
+
+.dashboard-header--mentor {
+  padding: 50px 130px;
+  height: 300px;
+}
+
+.dashboard-header--student {
+  background-color: white;
+  color: $ink;
+  
+  padding: 40px;
+  height: 250px;
+
+  .progress-circle {
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-left: 50px;
+  }
+
+  .overall-circle {
+    display: inline-block;
+    vertical-align: bottom;
+    position: relative;
+    left: -15px;
+  }
+}
+
+.dashboard-attention {
+  height: 100px;
+}
+
+.dashboard-content {
+  height: 300px;
+  background-color: $bg-grey;
+  color: white;
+}
+
+.mentor-header {
+  width: 770px;
+  margin: auto;
+
+  .greeting {
+    display: inline-block;
+    vertical-align: middle;
+
+    .greeting__small {
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .greeting__large {
+      padding-top: 20px;
+      font-size: 60px;
+      line-height: 1;
+      font-weight: bold;
+    }
+  }
+
+  .circle-attention {
+    margin-left: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+    background-color: white;
+    text-align: center;
+
+    .inner {
+      height: 180px;
+      width: 180px;
+      border-radius: 90px;
+      background-color: $green;
+      margin: 10px;
+    }
+
+    .circle-attention__text {
+      padding: 30px;
+    }
+  }
+}

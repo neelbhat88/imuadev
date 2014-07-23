@@ -118,7 +118,7 @@ html {
   min-height: 100%;
 
   body {
-    min-width: 1200px;
+    min-width: 1260px;
 
     &.static-pages {
       background-color: $darkgrey;
@@ -269,11 +269,44 @@ header {
 
         float: left;
 
-        cursor: pointer;
+        a { cursor: pointer; }
 
         margin-left: 100px;
         @include respond-to(840) { margin-left: 50px; }
         @include respond-to(660) { margin-left: 20px; }
+
+        &.cog {
+          margin-left: 50px;
+        }
+      }
+
+      .cog .glyphicon {
+        font-size: 22px;
+      }
+
+      .dropdown {
+        cursor: pointer;
+
+        .submenu {
+          position: absolute;
+          right: 0px;
+          top: 35px;
+
+          padding: 5px 20px;
+          background-color: $bg-grey;
+          border: 1px solid white;
+          @include border-radius(5px);
+          box-shadow: 0px 3px 5px #666;
+
+          .submenu__link {
+            padding: 10px;
+            border-bottom: 1px solid;
+
+            &:last-of-type {
+              border-bottom: none;
+            }
+          }
+        }
 
       }
 
@@ -283,6 +316,12 @@ header {
 
 }
 
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999; // Just below the header
+}
 /* ===============================================
    Helper Classes
    =============================================== */
@@ -419,6 +458,10 @@ button:focus {
 /* ===============================================
    Misc
    =============================================== */
+
+.displayNone {
+  display: none;
+}
 
 .flash-container {
   padding: 20px;

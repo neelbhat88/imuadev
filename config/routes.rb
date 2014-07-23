@@ -19,6 +19,9 @@ Imua::Application.routes.draw do
           put  '/:id/classes/:class_id' => 'progress#update_user_class'
           delete '/:id/classes/:class_id' => 'progress#delete_user_class'
 
+          put '/:id/time_unit/next' => "users#move_to_next_semester"
+          put '/:id/time_unit/previous' => "users#move_to_prev_semester"
+
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
@@ -26,6 +29,16 @@ Imua::Application.routes.draw do
 
           post  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#add_user_milestone'
           delete  '/:id/time_unit/:time_unit_id/milestones/:milestone_id' => 'progress#delete_user_milestone'
+
+          post '/:id/relationship/:assignee_id' => "users#assign"
+          delete '/:id/relationship/:assignee_id' => "users#unassign"
+          get '/:id/relationship/students' => 'users#get_assigned_students'
+          get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
+
+          get    '/:id/expectations'                 => 'expectation#get_user_expectations'
+          post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'
+          put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'
+          delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
 
@@ -53,6 +66,11 @@ Imua::Application.routes.draw do
       post '/milestone' => 'roadmap#create_milestone'
       put  '/milestone/:id' => 'roadmap#update_milestone'
       delete '/milestone/:id' => 'roadmap#delete_milestone'
+
+      get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
+      post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
+      put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
+      delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
     end # end :v1
   end # end :api

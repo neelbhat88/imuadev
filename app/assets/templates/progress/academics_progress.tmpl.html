@@ -1,66 +1,65 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
-  <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
-    <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-      <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)" ng-disabled="!(selected_semester.id == current_user.time_unit_id)">
-      <span class="text">{{yesno.value}}</span>
+  <div class="module-user-classes">
+
+    <div class="pbxl" ng-show="user_classes.length == 0">
+      <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
+      <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
     </div>
-  </div>
 
-  <div class="pbxl" ng-show="user_classes.length == 0">
-    <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
-    <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
-  </div>
+    <div class="user-class-greeting pvxl" ng-show="user_classes.length != 0">
+      <div class="line1">Nice work {{current_user.first_name}}! You've earned a</div>
+      <div class="line2"><span class="bold">{{gpa}} GPA</span> this semester</div>
+    </div>
 
-  <div class="user-class-greeting pvxl" ng-show="user_classes.length != 0">
-    <div class="line1">Nice work {{current_user.first_name}}! You've earned a</div>
-    <div class="line2"><span class="bold">{{gpa}} GPA</span> this semester</div>
-  </div>
+    <div class="module-data">
+      <div class="noclasses" ng-hide="user_classes.length != 0">No classes added</div>
 
-  <div class="module-data">
-    <div class="noclasses" ng-hide="user_classes.length != 0">No classes added</div>
+      <div class="module-data-items">
+        <div class="module-data__item" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
 
-    <div class="module-data-items">
-      <div class="module-data__item" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
-
-        <div class="module-data__item__class">
-          <span ng-hide="user_class.editing">{{user_class.name}}</span>
-          <input ng-show="user_class.editing" class="form-field" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
-        </div>
-
-        <div class="module-data__item__grade">
-          <span ng-hide="user_class.editing">{{user_class.grade}}</span>
-          <select ng-show="user_class.editing" ng-model="user_class.new_grade">
-            <option value="A">A</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B">B</option>
-            <option value="B">B-</option>
-            <option value="C+">C+</option>
-            <option value="C">C</option>
-            <option value="C-">C-</option>
-            <option value="D+">D+</option>
-            <option value="D">D</option>
-            <option value="D-">D-</option>
-            <option value="F">F</option>
-          </select>
-        </div>
-
-        <div class="module-data__item__icons">
-          <div ng-if="selected_semester.id == current_user.time_unit_id" ng-hide="user_class.editing">
-            <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-            <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
+          <div class="module-data__item__class">
+            <span ng-hide="user_class.editing">{{user_class.name}}</span>
+            <input ng-show="user_class.editing" class="form-field" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
           </div>
 
-          <div ng-show="user_class.editing">
-            <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveClass($index)"></span>
-            <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEdit($index)"></span>
+          <div class="module-data__item__grade">
+            <span ng-hide="user_class.editing">{{user_class.grade}}</span>
+            <select ng-show="user_class.editing" ng-model="user_class.new_grade">
+              <option value="A">A</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B">B</option>
+              <option value="B">B-</option>
+              <option value="C+">C+</option>
+              <option value="C">C</option>
+              <option value="C-">C-</option>
+              <option value="D+">D+</option>
+              <option value="D">D</option>
+              <option value="D-">D-</option>
+              <option value="F">F</option>
+            </select>
           </div>
-        </div>
 
+          <div class="module-data__item__icons">
+            <div ng-if="editable(current_user, selected_semester)"
+                  ng-hide="user_class.editing">
+              <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
+              <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
+            </div>
+
+            <div ng-show="user_class.editing">
+              <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveClass($index)"></span>
+              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEdit($index)"></span>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
 
-    <div ng-if="selected_semester.id == current_user.time_unit_id" class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">Add Class</div>
+      <div ng-if="editable(current_user, selected_semester)"
+          class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">Add Class</div>
+    </div>
+  </div>
 
 </div>

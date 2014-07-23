@@ -1,4 +1,4 @@
-<div class="organizationContainer" wait-to-load="{{organization.id}}">
+<div class="organizationContainer" wait-to-load="{{loaded_users}}">
   <h2 class="plxl">{{organization.name}}</h2>
 
   <div class="ptxl">
@@ -8,9 +8,12 @@
 
       <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
         <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-        <div class="avatar-block__name">
-          {{fullName(orgAdmin)}}
-        </div>
+
+        <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
+          <div class="avatar-block__name">
+            {{fullName(orgAdmin)}}
+          </div>
+        </a>
       </div>
 
       <div class="user-list__add" ng-click="addOrgAdmin()">
@@ -19,32 +22,41 @@
       </div>
     </div>
 
-    <!-- <div class="user-list ptxl">
+    <div class="user-list ptxl">
       <h4>Mentors</h4>
 
-      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors">
-        <progress-circle myuser="mentor"></progress-circle>
-        <div class="avatar-block__name">
-          {{mentor.first_name}} {{mentor.last_name}}
-        </div>
+      <div class="avatar-block avatar-block--list" ng-repeat="mentor in organization.mentors">
+        <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
+          <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+          <!-- <progress-circle student="mentor"></progress-circle> -->
+        </a>
+        <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+          <div class="avatar-block__name">
+            {{fullName(mentor)}}
+          </div>
+        </a>
       </div>
 
       <div class="user-list__add" ng-click="addMentor()">
         <div class="glyphicon glyphicon-plus-sign ptxl"></div>
         <div>Add Mentor</div>
       </div>
-    </div> -->
+    </div>
 
     <div class="user-list ptxl pbxl">
       <h4>Students</h4>
 
-      <a ng-href="#/progress/{{student.id}}" class="avatar-block progress-circles avatar-block--list" ng-repeat="student in organization.students">
+      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: 'user.id'">
         <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-        <progress-circle myuser="student"></progress-circle>
-        <div class="avatar-block__name">
-          {{student.first_name}} {{student.last_name}}
-        </div>
-      </a>
+        <a ng-href="#/progress/{{student.user.id}}" title="View progress">
+          <progress-circle student="student"></progress-circle>
+        </a>
+        <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+          <div class="avatar-block__name">
+            {{student.user.first_name}} {{student.user.last_name}}
+          </div>
+        </a>
+      </div>
 
       <div class="user-list__add" ng-click="addStudent()">
         <div class="glyphicon glyphicon-plus-sign ptxl"></div>

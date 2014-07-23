@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'ProgressService', ['$http', ($http) ->
+.service 'ProgressService', ['$http', '$q', ($http, $q) ->
 
   @getModules = (user, time_unit_id) ->
     $http.get "/api/v1/users/#{user.id}/time_unit/#{time_unit_id}/progress"
@@ -15,6 +15,19 @@ angular.module('myApp')
 
   @deleteUserMilestone = (user, time_unit_id, milestone_id) ->
     $http.delete "/api/v1/users/#{user.id}/time_unit/#{time_unit_id}/milestones/#{milestone_id}"
+
+  @nextSemester = (user) ->
+    $http.put "/api/v1/users/#{user.id}/time_unit/next"
+
+  @prevSemester = (user) ->
+    $http.put "/api/v1/users/#{user.id}/time_unit/previous"
+
+  @getModulesProgress = (student) ->
+    defer = $q.defer()
+    @getModules(student, student.time_unit_id)
+      .success (data) ->
+        defer.resolve({user: student, modules_progress: data.modules_progress})
+    defer.promise
 
   @
 ]

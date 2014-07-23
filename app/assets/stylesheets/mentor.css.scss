@@ -1,0 +1,22 @@
+.all-students {
+  background-color: $bg-grey;
+  color: white;
+}
+
+.all-students {
+  .avatar-block {
+
+    &.assigned { display: none; }
+
+    &:hover { cursor: pointer; }
+  }
+}
+
+.unassign {
+  text-align: center;
+
+  .glyphicon {
+    color: red;
+    cursor: pointer;
+  }
+}
