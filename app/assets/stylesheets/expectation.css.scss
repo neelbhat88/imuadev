@@ -1,26 +1,74 @@
 .organizationExpectationContainer {
 
-  .expectations-list-item {
-    padding: 0px 0px 5px 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-  }
+  font-size: 18px;
 
-  .add-expectation__button {
-    @extend .submit;
+  width: 400px;
+  background-color: white;
+  color: $ink;
 
-    font-size: 14px;
+  @include border-radius(5px);
 
-    margin: auto;
-    margin-top: 5px;
+  .expectations-list {
 
-    background-color: white;
-    color: $light-grey;
-    border-color: $light-grey;
+    .expectations-list__item {
+      margin-left: 10px;
+      margin-right: 10px;
+      font-size: 14px;
+      vertical-align: middle;
 
-    &:hover {
-      color: $ink;
-      border-color: $ink;
+      .expectations-list__item__title {
+        display: inline-block;
+        vertical-align: middle;
+        width: 200px;
+        border-right: 1px solid $light-grey;
+
+        .form-field {
+          width: 100%;
+          margin-top: 10px;
+          margin-left: -10px;
+          padding: 0px 0px 0px 10px;
+          line-height: 2;
+          }
+      }
+
+      .expectations-list__item__icons {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 12px;
+
+        .editing_icon {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .add-expectation__button {
+      @include border-radius(5px);
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: 10px;
+      padding: 0px 10px 0px 10px;
+      font-size: 14px;
+      line-height: 2;
+
       background-color: white;
+      color: $light-grey;
+      border: 1px solid $light-grey;
+
+      &:hover {
+        color: $ink;
+        border-color: $ink;
+        background-color: white;
+        cursor: pointer;
+      }
+    }
+
+    .add-expectation__button-placeholder {
+      //padding: 3px;
     }
   }
 }
