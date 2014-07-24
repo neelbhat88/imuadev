@@ -1,4 +1,4 @@
-describe "DashboardController", () ->
+xdescribe "DashboardController", () ->
   scope = null
   $controller = null
   $rootScope = null
