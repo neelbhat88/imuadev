@@ -32,6 +32,9 @@ angular.module('myApp')
   @getAssignedStudents = (userId) ->
     $http.get "/api/v1/users/#{userId}/relationship/students"
 
+  @getAssignedMentors = (userId) ->
+    $http.get "/api/v1/users/#{userId}/relationship/mentors"
+
   @assign = (mentorId, studentId) ->
     $http.post "/api/v1/users/#{mentorId}/relationship/#{studentId}"
 
