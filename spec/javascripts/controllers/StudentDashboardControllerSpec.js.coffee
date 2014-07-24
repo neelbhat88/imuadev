@@ -1,4 +1,4 @@
-describe "StudentDashboardController", () ->
+xdescribe "StudentDashboardController", () ->
   # ************************
   # **** Instance Vars *****
   # ************************
