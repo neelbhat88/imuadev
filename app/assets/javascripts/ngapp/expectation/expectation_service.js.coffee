@@ -5,6 +5,12 @@ angular.module('myApp')
   ########### ORGANIZATION ############
   #####################################
 
+  @newExpectation = (orgId) ->
+    organization_id: orgId,
+    title:           "",
+    description:     "temp description",
+    rank:            0
+
   @getExpectations = (orgId) ->
     $http.get "/api/v1/organization/#{orgId}/expectations"
 
@@ -12,14 +18,19 @@ angular.module('myApp')
     if expectation.id
       $http.put "/api/v1/organization/#{expectation.organization_id}/expectations/#{expectation.id}", {expectation: expectation}
     else
-      $http.post "/api/v1/organization/#{expectation.organization_id}/expectations/#{expectation.id}", {expectation: expectation}
+      $http.post "/api/v1/organization/#{expectation.organization_id}/expectations", {expectation: expectation}
 
-  @deleteExpectaion = (expectation) ->
-    $http.delete "/api/v1/expectation/#{expectation.id}"
+  @deleteExpectation = (expectation) ->
+    $http.delete "/api/v1/organization/#{expectation.organization_id}/expectations/#{expectation.id}"
 
   #################################
   ############# USER ##############
   #################################
+
+  @newUserExpectation = (userId, expectationId, status) ->
+    user_id:        userId,
+    expectation_id: expectationId,
+    status:         status
 
   @getUserExpectations = (user) ->
     $http.get "/api/v1/users/#{user.id}/expectations"
