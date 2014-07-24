@@ -51,7 +51,7 @@
 
             <% if current_user.mentor? || current_user.student? %>
             <li>
-              <a class="js-nav-link" href="#/dashboard">Dashboard</a>
+              <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
             </li>
             <% end %>
 

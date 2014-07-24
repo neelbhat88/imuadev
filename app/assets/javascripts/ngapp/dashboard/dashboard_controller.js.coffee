@@ -1,9 +1,12 @@
 angular.module('myApp')
-.controller "DashboardController", ["$scope", "$location", "current_user",
-($scope, $location, current_user) ->
-  $scope.current_user = current_user
+.controller "DashboardController", ["$scope", "$location", "current_user", "user",
+($scope, $location, current_user, user) ->
+  if (user)
+    $scope.user = user
+  else
+    $scope.user = current_user
 
-  if $scope.current_user.role < $scope.CONSTANTS.USER_ROLES.mentor
+  if $scope.user.role < $scope.CONSTANTS.USER_ROLES.mentor
     $location.path('/roadmap')
 
   $scope.loadDashboard = (role) ->
