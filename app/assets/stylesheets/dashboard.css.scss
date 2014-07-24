@@ -11,7 +11,7 @@
 .dashboard-header--student {
   background-color: white;
   color: $ink;
-  
+
   padding: 40px;
   height: 250px;
 
@@ -35,9 +35,36 @@
 }
 
 .dashboard-content {
-  height: 300px;
+  height: 100%;
   background-color: $bg-grey;
   color: white;
+}
+
+.dashboard-content--student {
+  width: 100%;
+  display: inline-block;
+
+  .mentor-list {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 220px;
+  }
+
+  .middle-content-container {
+    display: inline-block;
+    min-width: 782px;
+    vertical-align: top;
+    border-left: 1px solid $light-grey;
+    border-right: 1px solid $light-grey;
+  }
+
+  .user-expectations {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    width: 220px;
+  }
 }
 
 .mentor-header {
@@ -47,6 +74,7 @@
   .greeting {
     display: inline-block;
     vertical-align: middle;
+    margin-left: 15px;
 
     .greeting__small {
       font-size: 36px;
@@ -62,7 +90,7 @@
   }
 
   .circle-attention {
-    margin-left: 100px;
+    margin-left: 85px;
     display: inline-block;
     vertical-align: middle;
     height: 200px;

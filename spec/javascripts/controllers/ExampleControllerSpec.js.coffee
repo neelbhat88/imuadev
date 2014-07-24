@@ -1,12 +1,20 @@
 describe "ExampleController", () ->
-  appCtrl = null
+  $controller = null
+  $rootScope = null
   scope = null
 
-  # Need these next two beforeEach's in all test files
+  # Load the module
   beforeEach module "myApp"
-  beforeEach inject ($controller, $rootScope) ->
-    scope = $rootScope.$new()
-    appCtrl = $controller "ExampleController", {$scope: scope}
+  beforeEach inject (_$controller_, _$rootScope_) ->
+    $controller = _$controller_
+    $rootScope = _$rootScope_
+
+    parentScope = $rootScope.$new()
+    $controller "AppController", {$scope: parentScope}
+    scope = parentScope.$new() # Creates a new scope that's a child of parentScope
+
+  beforeEach () ->
+    $controller "ExampleController", {$scope: scope}
 
   it "should set greeting", () ->
     expect(scope.greeting).toBe("Hello World")

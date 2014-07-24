@@ -8,6 +8,8 @@ angular.module('myApp').config ['$routeProvider', '$httpProvider', 'CONSTANTS',
         SessionService.getCurrentUser();
       ]
 
+      user: () -> null
+
   .otherwise
     redirectTo: '/'
 ]
