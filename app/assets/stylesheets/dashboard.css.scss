@@ -11,7 +11,7 @@
 .dashboard-header--student {
   background-color: white;
   color: $ink;
-  
+
   padding: 40px;
   height: 250px;
 
@@ -35,9 +35,23 @@
 }
 
 .dashboard-content {
-  height: 300px;
+  height: 100%;
   background-color: $bg-grey;
   color: white;
+}
+
+.dashboard-content--student {
+  width: 100%;
+  display: inline-block;
+  text-align: right;
+
+  .user-expectations {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    width: 220px;
+    border-left: 1px solid $light-grey;
+  }
 }
 
 .mentor-header {

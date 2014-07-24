@@ -1,6 +1,7 @@
 angular.module('myApp')
 .controller "DashboardController", ["$scope", "$location", "current_user", "user",
 ($scope, $location, current_user, user) ->
+  $scope.current_user = current_user
   if (user)
     $scope.user = user
   else
