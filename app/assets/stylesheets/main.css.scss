@@ -44,10 +44,10 @@ $purple: rgb(178,97,235); // #9665aa
 $darkpurple: rgb(138,67,187); //#8a43bb
 
 $light-grey: #c0c0c0;
-$grey: #666;
-$darkgrey: rgb(40,40,40); // #282828
+$grey: rgb(25,26,27); // #191a1b
+$darkgrey: rgb(18,19,20); // #121314
 $grey-hover: #888;
-$bg-grey: #282828;
+$ink: rgb(43,45,47); // #2b2d2f
 
 $button-blue: #53b5e6;
 $button-blue-hover: #69bfe9;
@@ -55,7 +55,6 @@ $button-blue-hover: #69bfe9;
 $button-red: #cf2622;
 $button-red-hover: #cf6967;
 
-$ink: #374347;
 
 .green { color: $green; }
 .red { color: $red; }
@@ -238,7 +237,7 @@ h6 {
 header {
 
   width: 100%;
-  background: $bg-grey;
+  background: $darkgrey;
   color: white();
   border-bottom: 1px white(0.25) solid;
   position: relative;
@@ -307,7 +306,7 @@ header {
           top: 35px;
 
           padding: 5px 20px;
-          background-color: $bg-grey;
+          background-color: $darkgrey;
           border: 1px solid white;
           @include border-radius(5px);
           box-shadow: 0px 3px 5px #666;
