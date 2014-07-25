@@ -280,12 +280,9 @@ header {
   width: 100%;
   background: $darkgrey;
   color: white();
-  border-bottom: 1px white(0.25) solid;
+  border-bottom: 1px rgb(65, 66, 67) solid;
   position: relative;
   z-index: 1000;
-
-  min-width: 415px;
-  @include respond-to(415) { min-width: 345px; }
 
   a {
 
@@ -329,15 +326,24 @@ header {
         @include respond-to(840) { margin-left: 50px; }
         @include respond-to(660) { margin-left: 20px; }
 
-        &.cog {
-          margin-left: 50px;
+      }
+
+      .cog {
+      
+	      .current-name {
+	      	display: inline-block;
+	      	padding-right: 6px;
+	      }
+	      
+	      .glyphicon {
+          display: inline-block;
+          font-size: 22px;
+	      	vertical-align: middle;
+	      	margin-top: -6px;
         }
+      
       }
-
-      .cog .glyphicon {
-        font-size: 22px;
-      }
-
+      
       .dropdown {
         cursor: pointer;
 
