@@ -67,21 +67,19 @@
             </li>
             <% end %>
 
-            <li class="dropdown">
-	            <div class="cog js-cog">
-  	            <div class="current-name">
-  	            	<%= current_user.first_name %>
-  	            </div>
-	              <span class="glyphicon glyphicon-cog"></span>
-	              <div class="submenu js-submenu">
-	                <div class="submenu__link">
-	                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
-	                </div>
-	                <div class="submenu__link">
-	                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-	                </div>
-	              </div>
+            <li class="dropdown cog js-cog">
+	            <div class="current-name">
+	            	<%= current_user.first_last_initial %>
 	            </div>
+              <span class="glyphicon glyphicon-cog"></span>
+              <div class="submenu js-submenu">
+                <div class="submenu__link">
+                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
+                </div>
+                <div class="submenu__link">
+                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                </div>
+              </div>
             </li>
           </ul>
         </nav>
