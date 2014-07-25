@@ -31,6 +31,14 @@ class User < ActiveRecord::Base
     :content_type => { :content_type => /\Aimage\/.*\Z/, :message => "You must choose an image file" },
     :size => { :in => 0..2.megabytes, :message => "The file must be less than 2 megabytes in size" }
 
+  def full_name
+    return self.first_name + " " + self.last_name
+  end
+
+  def first_last_initial
+    return self.first_name + " " + self.last_name[0].capitalize + "."
+  end
+
   def super_admin?
   	return self.role.to_i == Constants.UserRole[:SUPER_ADMIN]
   end
