@@ -17,6 +17,9 @@
     @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
+/* Global Wrappers */
+
+$wrapper: 0 80px;
 
 /* Colors */
 
@@ -55,7 +58,7 @@ $button-blue-hover: #69bfe9;
 $button-red: #cf2622;
 $button-red-hover: #cf6967;
 
-
+//These should be removed soon
 .green { color: $green; }
 .red { color: $red; }
 .blue { color: $blue; }
@@ -92,7 +95,7 @@ $bold: 700;
 
 }
 
-@mixin font-size($size:1.6, $line: $size * 1.4){
+@mixin font-size($size:1.6, $line: $size * 1.2){
     font-size:   ($size * 10) + px;
     line-height: ($line * 10) + px;
     font-size:   $size + rem;
@@ -180,7 +183,7 @@ h1 {
 
 h2 {
 
-  @include font-size(8);
+  @include font-size(9);
   font-weight: $bold;
 
 }
@@ -202,7 +205,7 @@ h4 {
 
 h5 {
 
-  @include font-size(2.4);
+  @include font-size(3,1);
   font-weight: $light;
 
 }
@@ -259,7 +262,7 @@ header {
 
   .wrapper {
 
-    margin: 0 45px;
+    margin: $wrapper;
     @include respond-to(415) { margin: 0 10px; }
 
     .imua-logo {
