@@ -44,17 +44,31 @@
 .dashboard-content--student {
   width: 100%;
   display: inline-block;
-  text-align: right;
+
+  .mentor-list {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 220px;
+  }
+
+  .middle-content-container {
+    display: inline-block;
+    min-width: 782px;
+    vertical-align: top;
+    border-left: 1px solid $light-grey;
+    border-right: 1px solid $light-grey;
+  }
 
   .user-expectations {
     display: inline-block;
     text-align: left;
     vertical-align: top;
     width: 220px;
-    border-left: 1px solid $light-grey;
   }
 }
 
+<<<<<<< HEAD
 
 /***** Mentor Page *****/
 
@@ -81,12 +95,41 @@
 	  	height: 288px;
 	  	margin: 0 auto;
 	  	
+=======
+
+/***** Mentor Page *****/
+
+.mentor-header {
+
+  width: 1100px;
+  height: 300px;
+  margin: 0 auto;
+
+  .greeting {
+
+    margin-top: 80px;
+    float: left;
+
+  }
+
+  .circle-attention {
+
+		float: right;
+
+	  .circle {
+
+	  	width: 288px;
+	  	height: 288px;
+	  	margin: 0 auto;
+
+>>>>>>> master
 	    &:after {
 			content: "";
 			display: block;
 			width: 100%;
 			height:0;
 			padding-bottom: 88%;
+<<<<<<< HEAD
 			-moz-border-radius: 50%; 
 			-webkit-border-radius: 50%; 
 			border-radius: 50%;
@@ -95,11 +138,22 @@
 	    
 	    .text {
 	    
+=======
+			-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+			border-radius: 50%;
+		  	border: 22px solid white;
+	    }
+
+	    .text {
+
+>>>>>>> master
 			float:left;
 			width:100%;
 			padding-top: 15%;
 			text-align:center;
 			color:white;
+<<<<<<< HEAD
 			
 			.subhead {
 			
@@ -107,6 +161,15 @@
 			
 			}
 	    
+=======
+
+			.subhead {
+
+				@include font-size(2);
+
+			}
+
+>>>>>>> master
 	    }
 	 }
   }

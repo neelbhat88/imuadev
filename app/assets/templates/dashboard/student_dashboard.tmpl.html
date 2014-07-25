@@ -25,7 +25,23 @@
     </div>
 
     <div class="pal dashboard-content dashboard-content--student">
+
+      <div class="mentor-list">
+        <div class="student-mentors-header">Your Mentors:</div>
+        <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+          <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+            <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+            <div class="avatar-block__name">
+              {{mentor.first_name}} {{mentor.last_name}}
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="middle-content-container"></div>
+
       <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
+
     </div>
 
   </div>

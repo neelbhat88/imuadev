@@ -7,8 +7,9 @@ angular.module('myApp')
   else
     $scope.user = current_user
 
-  if $scope.user.role < $scope.CONSTANTS.USER_ROLES.mentor
-    $location.path('/roadmap')
+  switch $scope.user.role
+    when $scope.CONSTANTS.USER_ROLES.org_admin then $location.path('/organization/' + $scope.user.organization_id)
+    when $scope.CONSTANTS.USER_ROLES.super_admin then $location.path('/sa/organizations')
 
   $scope.loadDashboard = (role) ->
     switch role

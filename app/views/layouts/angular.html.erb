@@ -61,9 +61,11 @@
             </li>
             <% end %>
 
+            <% if !current_user.super_admin? %>
             <li>
               <a class="js-nav-link" href="#/roadmap/">Roadmap</a>
             </li>
+            <% end %>
 
             <li class="dropdown cog js-cog">
               <span class="glyphicon glyphicon-cog"></span>
