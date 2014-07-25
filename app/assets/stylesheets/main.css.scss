@@ -17,10 +17,6 @@
     @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
-/* Global Wrappers */
-
-$wrapper: 0 80px;
-
 /* Colors */
 
 @function black($opacity:1){
@@ -233,6 +229,48 @@ h6 {
 
 .font-size-normal { font-size: 16px; }
 
+
+/* ===============================================
+   Global Classes
+   =============================================== */
+
+$wrapper: 0 80px;
+
+.user-list-header {
+
+	width: 100%;
+	padding-bottom: 20px;
+	border-bottom: 1px white(0.25) solid;
+	
+}
+
+.user-list-container {
+
+	margin-top: 60px;
+
+}
+
+.user-list {
+
+  .user-list__add {
+    cursor: pointer;
+
+    padding: 20px 10px;
+    width: 160px;
+    word-wrap: break-word;
+
+    display: inline-block;
+    vertical-align: top;
+
+    text-align: center;
+
+    .glyphicon { font-size: 62px; color: $green; }
+    .text { text-align: center; }
+  }
+
+}
+
+
 /* ===============================================
    Header
    =============================================== */
@@ -338,6 +376,8 @@ header {
   left: 0;
   z-index: 999; // Just below the header
 }
+
+
 /* ===============================================
    Helper Classes
    =============================================== */

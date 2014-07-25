@@ -1,25 +1,19 @@
-.expectations {
-  padding: 0px 20px;
+.organizationContainer {
+
+	padding: $wrapper;
+	padding-top: 60px;
+	padding-bottom: 60px;
+
 }
 
-.user-list {
-  @extend .plxl;
+.organizationName {
 
-  .user-list__add {
-    cursor: pointer;
+	width: 100%;
+	text-align: center;
+	padding-bottom: 20px;
+	border-bottom: 1px black(0.25) solid;
+	margin-bottom: 60px;
 
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
-
-    display: inline-block;
-    vertical-align: top;
-
-    text-align: center;
-
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
 
 }
 
