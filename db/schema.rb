@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140722120534) do
+ActiveRecord::Schema.define(:version => 20140722021123) do
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -85,16 +85,18 @@ ActiveRecord::Schema.define(:version => 20140722120534) do
 
   create_table "user_extracurricular_activities", :force => true do |t|
     t.string   "name"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.string   "position"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_extracurricular_activity_details", :force => true do |t|
     t.integer  "extracurricular_activity_id"
     t.string   "description"
     t.integer  "user_id"
+    t.integer  "time_unit_id"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
@@ -114,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20140722120534) do
     t.decimal  "hours"
     t.date     "date"
     t.integer  "user_id"
+    t.integer  "time_unit_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
@@ -121,8 +124,9 @@ ActiveRecord::Schema.define(:version => 20140722120534) do
   create_table "user_service_orgs", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "time_unit_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -5,6 +5,7 @@ class CreateUserServiceHours < ActiveRecord::Migration
       t.decimal :hours
       t.date :date
       t.integer :user_id
+      t.integer :time_unit_id
 
       t.timestamps
     end
