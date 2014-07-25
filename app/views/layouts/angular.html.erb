@@ -31,7 +31,7 @@
       <div class="wrapper clear">
         <div class="imua-logo left">
           <a href="/">
-            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %> Collective Progress <!-- Replace "Collective Progress" with Custom Organization Name -->
+            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %> <%= current_user.organization.name %> 
           </a>
         </div>
 
@@ -67,16 +67,21 @@
             </li>
             <% end %>
 
-            <li class="dropdown cog js-cog">
-              <span class="glyphicon glyphicon-cog"></span>
-              <div class="submenu js-submenu">
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
-                </div>
-                <div class="submenu__link">
-                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-                </div>
-              </div>
+            <li class="dropdown">
+	            <div class="cog js-cog">
+  	            <div class="current-name">
+  	            	<%= current_user.first_name %>
+  	            </div>
+	              <span class="glyphicon glyphicon-cog"></span>
+	              <div class="submenu js-submenu">
+	                <div class="submenu__link">
+	                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
+	                </div>
+	                <div class="submenu__link">
+	                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+	                </div>
+	              </div>
+	            </div>
             </li>
           </ul>
         </nav>

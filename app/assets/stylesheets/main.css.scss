@@ -280,12 +280,9 @@ header {
   width: 100%;
   background: $darkgrey;
   color: white();
-  border-bottom: 1px white(0.25) solid;
+  border-bottom: 1px rgb(65, 66, 67) solid;
   position: relative;
   z-index: 1000;
-
-  min-width: 415px;
-  @include respond-to(415) { min-width: 345px; }
 
   a {
 
