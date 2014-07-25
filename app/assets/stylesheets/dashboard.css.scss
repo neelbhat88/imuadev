@@ -1,7 +1,7 @@
 .dashboard-header {
 	background-color: $green;
 	width: 100%;
-	padding: 80px 0;
+	padding: 60px 0;
 	margin: 0;
 	color: white;
 }
@@ -38,6 +38,7 @@
   color: white;
   padding: $wrapper;
   padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .dashboard-content--student {
@@ -53,6 +54,9 @@
     border-left: 1px solid $light-grey;
   }
 }
+
+
+/***** Mentor Page *****/
 
 .mentor-header {
 	
@@ -106,4 +110,18 @@
 	    }
 	 }
   }
+}
+
+.student-list-header {
+
+	width: 100%;
+	padding-bottom: 20px;
+	border-bottom: 1px white(0.25) solid;
+
+}
+
+.student-list-container {
+
+	margin-top: 60px;
+
 }
