@@ -19,31 +19,30 @@
     <div class="progressStudent">
     
       <div class="progressCircle">
-      
       	[Student Progress Circle Here]<!-- Insert student progress circle here please -->
-      
       </div>
       
       <h4 class="bold">Student N.<!-- Insert student first name, last initial here please --></h4>
       
       <div class="progressCircle-overall">
-      
       	[% College Ready Circle Here]<!-- Insert overall (aka '% College Ready') circle here please -->
-      
       </div>
 
     
     </div>
     
       <!--NAVIGATION-->
-    <div class="progressSemesters">
+    <div class="progressSemesters section">
+      <div class="sectionHeader bold">My Progress</div>
       <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
-    
-    <div class="progressMentors">
-    
-    	My Mentors
-    
+   
+    <div class="progressExpectations section">
+      <div class="sectionHeader bold">My Expectations</div>
+    </div> 
+   
+    <div class="progressMentors section">
+    	<div class="sectionHeader bold">My Mentors</div>
     </div>
     <!--/NAVIGATION-->
   
@@ -67,6 +66,8 @@
     
       <!--MAIN PANEL-->    
       <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
+      
+        <h3>Dresha's {{selected_module.module_title | underscoresToSpaces}}</h3>
   
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
