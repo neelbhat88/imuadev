@@ -1,11 +1,6 @@
 /* ========================= */
 /*           Colors          */
 /* ========================= */
-$academics-color-dark: #2c7532;
-$service-color-dark: #8b700f;
-$testing-color-dark: #6d457d;
-$extracurricular-color-dark: #ce1511;
-$college_prep-color-dark: #177ba5;
 
 $colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
 $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
@@ -14,7 +9,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 }
 
 .circles {
-  padding: 60px 20px 0px 180px;
   width: 100%;
 
   .module-circles {

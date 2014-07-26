@@ -31,7 +31,12 @@
       <div class="wrapper clear">
         <div class="imua-logo left">
           <a href="/">
-            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %> <%= current_user.organization.name %> 
+            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %> 
+            <% if current_user.super_admin? %>
+              Collective Progress
+            <% else %>
+              <%= current_user.organization.name %>             
+            <% end %>
           </a>
         </div>
 
@@ -69,7 +74,11 @@
 
             <li class="dropdown cog js-cog">
 	            <div class="current-name">
-	            	<%= current_user.first_last_initial %>
+  	            <% if current_user.super_admin? %>
+                  Administrator
+                <% else %>
+                  <%= current_user.first_last_initial %>
+                <% end %>
 	            </div>
               <span class="glyphicon glyphicon-cog"></span>
               <div class="submenu js-submenu">
