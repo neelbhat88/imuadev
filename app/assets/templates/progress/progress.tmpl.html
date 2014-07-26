@@ -11,6 +11,7 @@
     Overall Completedness: {{overall_points.percent}}% ({{overall_points.user}}/{{overall_points.total}})
   </div> -->
 
+  <!--CIRCLES-->
   <div class="circles js-circles">
     <div class="module-circles js-module-circles">
       <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
@@ -20,13 +21,17 @@
       </div>
     </div>
   </div>
+  <!--/CIRCLES-->
 
   <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
 
+    <!--NAVIGATION-->
     <div class="module-data-side-nav js-module-data-side-nav">
       <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
+    <!--/NAVIGATION-->
 
+    <!--MAIN PANEL-->    
     <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
 
       <div class="module-data-content" ng-show="selected_module.points.total == 0">
@@ -47,6 +52,7 @@
       </div>
 
     </div>
+    <!--/MAIN PANEL-->
 
     <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
 

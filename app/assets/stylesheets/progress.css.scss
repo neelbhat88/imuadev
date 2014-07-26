@@ -11,16 +11,10 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 .circles {
   width: 100%;
 
-  .module-circles {
-    width: 100%;
-    margin: auto;
-    display: inline-block;
-    text-align: center;
-
     .module-circle {
       display: inline-block;
+      text-align: center;
     }
-  }
 
 }
 
