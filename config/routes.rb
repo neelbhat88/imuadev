@@ -67,8 +67,7 @@ Imua::Application.routes.draw do
       post '/milestone' => 'milestone#create_milestone'
       put  '/milestone/:id' => 'milestone#update_milestone'
       delete '/milestone/:id' => 'milestone#delete_milestone'
-      get '/milestone/update_org_id' => 'milestone#update_org_id'
-
+      
       get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
       post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
       put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
