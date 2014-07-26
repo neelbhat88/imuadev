@@ -4,6 +4,8 @@ class Organization < ActiveRecord::Base
   has_many :users, dependent: :destroy
   has_many :expectations, dependent: :destroy
   has_one :roadmap, dependent: :destroy
+  has_many :time_units, dependent: :destroy
+  has_many :milestones, dependent: :destroy
 end
 
 class ViewOrganization

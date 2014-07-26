@@ -16,6 +16,14 @@ class ProgressService
     return ReturnObject.new(:ok, "All modules progress", modules_progress)
   end
 
+  def overall_progress(userId)
+    user = UserRepository.new.get_user(userId)
+
+    totalPoints = Milestone.where(:organization_id => user.organization_id).sum(:points)
+
+    # total user points = all user milestones added up
+  end
+
   def check_progress(userId, time_unit_id, module_title)
     user = UserRepository.new.get_user(userId)
 

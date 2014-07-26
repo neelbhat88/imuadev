@@ -37,7 +37,7 @@
 	    <div class="user-list-container">
 		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
 		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-		      <a ng-href="#/dashboard/{{student.user.id}}" title="View Student">
+		      <a ng-href="#/progress/{{student.user.id}}" title="View Student">
 		        <progress-circle student="student"></progress-circle>
 		      </a>
 		      <a ng-href="#/profile/{{student.user.id}}" title="View student info">

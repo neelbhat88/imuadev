@@ -22,12 +22,15 @@ angular.module('myApp')
   @prevSemester = (user) ->
     $http.put "/api/v1/users/#{user.id}/time_unit/previous"
 
-  @getModulesProgress = (student) ->
+  @getAllModulesProgress = (student, semester_id) ->
     defer = $q.defer()
-    @getModules(student, student.time_unit_id)
+    @getModules(student, semester_id)
       .success (data) ->
         defer.resolve({user: student, modules_progress: data.modules_progress})
     defer.promise
+
+  @getOverallProgress = (student) ->
+    $http.get "/api/v1/users/#{user.id}/progress"
 
   @
 ]
