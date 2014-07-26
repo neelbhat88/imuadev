@@ -29,5 +29,8 @@ angular.module('myApp')
         defer.resolve({user: student, modules_progress: data.modules_progress})
     defer.promise
 
+  @getOverallProgress = (student) ->
+    $http.get "/api/v1/users/#{user.id}/progress"
+
   @
 ]
