@@ -19,9 +19,19 @@ class ProgressService
   def overall_progress(userId)
     user = UserRepository.new.get_user(userId)
 
-    totalPoints = Milestone.where(:organization_id => user.organization_id).sum(:points)
+    totalPoints = MilestoneService.new.get_total_points(user.organization_id)
 
-    # total user points = all user milestones added up
+    totalUserPoints = 0
+    userMilestones = MilestoneService.new.get_all_user_milestones(user.id)
+    userMilestones.each do | um |
+      totalUserPoints += um.milestone.points
+    end
+
+    percentComplete = ((totalUserPoints.to_f / totalPoints.to_f) * 100.0).round(0)
+
+    obj = { :totalUserPoints => totalUserPoints, :totalPoints => totalPoints, :percentComplete => percentComplete }
+
+    return ReturnObject.new(:ok, "Overall progress", obj)
   end
 
   def check_progress(userId, time_unit_id, module_title)

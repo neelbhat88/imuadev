@@ -110,4 +110,12 @@ class MilestoneService
     end
   end
 
+  def get_total_points(orgId)
+    Milestone.where(:organization_id => orgId).sum(:points)
+  end
+
+  def get_all_user_milestones(userId)
+    UserMilestone.where(:user_id => userId)
+  end
+
 end

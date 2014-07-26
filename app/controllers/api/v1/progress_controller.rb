@@ -34,7 +34,7 @@ class Api::V1::ProgressController < ApplicationController
   def overall_progress
     userId = params[:id]
 
-    result = @progressService.get_overall_progress(userId)
+    result = @progressService.overall_progress(userId)
 
     render status: result.status,
       json: {

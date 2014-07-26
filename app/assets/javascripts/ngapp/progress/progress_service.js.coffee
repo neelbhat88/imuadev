@@ -30,7 +30,7 @@ angular.module('myApp')
     defer.promise
 
   @getOverallProgress = (student) ->
-    $http.get "/api/v1/users/#{user.id}/progress"
+    $http.get "/api/v1/users/#{student.id}/progress"
 
   @
 ]

@@ -51,9 +51,14 @@ angular.module('myApp')
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
 
-  # Gets the overall progress circle
+  # Loads data for all modules progress circle
   ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
     $scope.student_with_modules_progress = student_with_modules_progress
+
+  # Loads data for overall progress circle
+  ProgressService.getOverallProgress($scope.student)
+    .success (data) ->
+      $scope.overall_points = data.overall_progress
 
   $scope.$watch 'selected_semester', () ->
     if $scope.selected_semester && $scope.selected_module && !$scope.loaded_yes_no_milestones
@@ -94,6 +99,10 @@ angular.module('myApp')
       # Only change the selected one so all of the cicrles don't refresh
       for mod in student_with_modules_progress.modules_progress
         selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
+
+    ProgressService.getOverallProgress($scope.student)
+      .success (data) ->
+        $scope.overall_points = data.overall_progress
 
   $scope.selectModule = (mod) ->
     if $scope.selected_module != mod
