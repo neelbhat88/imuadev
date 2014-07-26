@@ -41,6 +41,24 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   		margin-bottom: 10px;
     
     }
+    
+    ul {
+    
+    	list-style: none;
+    	
+    	li {
+    	
+    		padding: 10px 6px;
+    		
+    		&:hover {
+    		
+    			background: $darkgrey;
+    		
+    		}
+    	
+    	}
+    
+    }
 
   
   }

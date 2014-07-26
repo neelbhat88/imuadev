@@ -31,10 +31,12 @@
     
     </div>
     
-      <!--NAVIGATION-->
+    <!--NAVIGATION-->
     <div class="progressSemesters section">
       <div class="sectionHeader bold">My Progress</div>
-      <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
+      <ul class="semestersList">
+        <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
+      </ul>
     </div>
    
     <div class="progressExpectations section">
@@ -67,7 +69,7 @@
       <!--MAIN PANEL-->    
       <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
       
-        <h3>Dresha's {{selected_module.module_title | underscoresToSpaces}}</h3>
+        <h3>{{selected_module.module_title | underscoresToSpaces}}</h3>
   
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
