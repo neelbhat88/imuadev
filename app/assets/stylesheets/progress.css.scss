@@ -16,33 +16,36 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   bottom: 0; 
 }
 
-.left.col { 
+.progressLeft {
+
   position: absolute; 
   left: 0; 
   right: 0; 
-  width: 250px; 
-  overflow: hidden; 
-}
-
-.right.col {
-  left: 250px; 
-  right: 0; 
+  width: 320px; 
   overflow-y: auto; 
-}
-
-
-.progressLeft {
-
   background: $grey;
   color: white;
+  padding: $wrapper;
+  
+  .progressStudent {
+  
+  	margin: 60px 0;
+  
+  }
 
 }
 
 .progressRight{
 
+  left: 320px; 
+  right: 0; 
+  overflow-y: auto; 
   background: $darkgrey;
 
   .circles {
+  
+    margin: 60px 0;
+    padding: $wrapper;
   
       .module-circle {
         display: inline-block;

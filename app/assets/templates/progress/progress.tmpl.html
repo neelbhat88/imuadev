@@ -14,11 +14,24 @@
   </div> -->
   
 
-  <div class="left col progressLeft">
+  <div class="progressLeft col">
 
-    <div class="studentProgress">
+    <div class="progressStudent">
     
-      Main student progress circle goes here please
+      <div class="progressCircle">
+      
+      	[Student Progress Circle Here]<!-- Insert student progress circle here please -->
+      
+      </div>
+      
+      <h4 class="bold">Student N.<!-- Insert student first name, last initial here please --></h4>
+      
+      <div class="progressCircle-overall">
+      
+      	[% College Ready Circle Here]<!-- Insert overall (aka '% College Ready') circle here please -->
+      
+      </div>
+
     
     </div>
     
@@ -26,11 +39,17 @@
     <div class="progressSemesters">
       <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
     </div>
+    
+    <div class="progressMentors">
+    
+    	My Mentors
+    
+    </div>
     <!--/NAVIGATION-->
   
   </div>
 
-  <div class="right col progressRight">
+  <div class="progressRight col">
   
 	  <!--CIRCLES-->
     <div class="circles js-circles">
