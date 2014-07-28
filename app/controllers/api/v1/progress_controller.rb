@@ -5,11 +5,12 @@ class Api::V1::ProgressController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil )
+  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil, userServiceOrgHourService=nil )
     @userClassService = userClassService ? userClassService : UserClassService.new
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
+    @userServiceOrgHourService = userServiceOrgHourService ? userServiceOrgHourService : UserServiceOrgHourService.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -180,5 +181,37 @@ class Api::V1::ProgressController < ApplicationController
         }
       return
     end
+  end
+
+  # GET /user/:id/time_unit/:time_unit_id/service_orgs_hours
+  def service_orgs_hours
+    userId = params[:id].to_i
+    time_unit_id = params[:time_unit_id].to_i
+
+    if !student_can_access?(userId)
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
+
+    user = @userRepository.get_user(userId)
+    if !same_organization?(user.organization_id)
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
+
+    service_orgs = @userServiceOrgHourService.get_user_service_orgs(userId, time_unit_id)
+
+    service_hours = @userServiceOrgHourService.get_user_service_hours(userId, time_unit_id)
+
+    render status: :ok,
+      json: {
+        info: "User's Service Orgs and Hours",
+        user_service_orgs: service_orgs,
+        user_service_hours: service_hours
+      }
   end
 end
