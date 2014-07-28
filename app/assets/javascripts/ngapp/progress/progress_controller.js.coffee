@@ -51,6 +51,15 @@ angular.module('myApp')
       $scope.modules_progress = data.modules_progress
       $scope.selected_module = data.modules_progress[0]
 
+  # Loads data for all modules progress circle
+  ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+    $scope.student_with_modules_progress = student_with_modules_progress
+
+  # Loads data for overall progress circle
+  ProgressService.getOverallProgress($scope.student)
+    .success (data) ->
+      $scope.overall_points = data.overall_progress
+
   $scope.$watch 'selected_semester', () ->
     if $scope.selected_semester && $scope.selected_module && !$scope.loaded_yes_no_milestones
       ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
@@ -77,12 +86,23 @@ angular.module('myApp')
           $scope.refreshPoints()
 
   $scope.refreshPoints = () ->
-    # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
-    ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+    # ToDo: If the overall progress circle on this page no longer needs the students picture,
+    # then we don't need student_with_modules_progress and the directive can be changed to just
+    # accept the modules_progress array
+    ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
+      $scope.student_with_modules_progress = student_with_modules_progress
+
+      selected_mod_progress = null
+      for mod in $scope.modules_progress
+        selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
+
+      # Only change the selected one so all of the cicrles don't refresh
+      for mod in student_with_modules_progress.modules_progress
+        selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
+
+    ProgressService.getOverallProgress($scope.student)
       .success (data) ->
-        for mod in $scope.modules_progress # Loop through modules on progress controller
-          if mod.module_title == data.module_progress.module_title
-            mod.points = data.module_progress.points
+        $scope.overall_points = data.overall_progress
 
   $scope.selectModule = (mod) ->
     if $scope.selected_module != mod
@@ -95,12 +115,17 @@ angular.module('myApp')
     $scope.loaded_milestones = false
     $scope.loaded_module_milestones = false
     $scope.loaded_yes_no_milestones = false
-    ProgressService.getModules(student, sem.id)
-      .success (data) ->
-        $scope.modules_progress = data.modules_progress
-        for mod in $scope.modules_progress
-          if mod.module_title == $scope.selected_module.module_title
-            $scope.selected_module.points = mod.points
+
+    # ToDo: If the overall progress circle on this page no longer needs the students picture,
+    # then we don't need student_with_modules_progress and the directive can be changed to just
+    # accept the modules_progress array
+    ProgressService.getAllModulesProgress($scope.student, sem.id).then (student_with_modules_progress) ->
+      $scope.modules_progress = student_with_modules_progress.modules_progress
+      $scope.student_with_modules_progress = student_with_modules_progress
+
+      for mod in $scope.modules_progress
+        if mod.module_title == $scope.selected_module.module_title
+          $scope.selected_module.points = mod.points
 
     $scope.selected_semester = sem
 

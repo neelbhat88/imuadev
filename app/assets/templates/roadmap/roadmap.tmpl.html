@@ -2,7 +2,7 @@
   <div class="tuContainer ptl">
     <!-- Roadmap Name -->
     <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="roadmapContainer__title-container">
-      <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+      <h3 class="roadmapContainer__title">{{roadmap.name}}</h3>
     </div>
 
     <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="roadmapContainer__title-container">

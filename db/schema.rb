@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140718063952) do
+ActiveRecord::Schema.define(:version => 20140726152911) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -40,11 +40,12 @@ ActiveRecord::Schema.define(:version => 20140718063952) do
     t.integer  "points"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "is_default",   :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "is_default",      :default => false
     t.string   "value"
     t.string   "icon"
+    t.integer  "organization_id"
   end
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"

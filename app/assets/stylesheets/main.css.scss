@@ -17,7 +17,6 @@
     @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
-
 /* Colors */
 
 @function black($opacity:1){
@@ -28,18 +27,26 @@
     @return rgba(255,255,255,$opacity)
 }
 
-$green: rgb(65,173,73); // #41ad49
+$green: rgb(64,174,73); // #41ad49
+$darkgreen: rgb(43,151,51); //#2b8333
+
 $red: rgb(239,65,61); // #ef413d
-$blue: rgb(39,170,225); // #27aae1
-$yellow: rgb(232,190,40); // #e8be28
-$purple: rgb(150,101,170); // #9665aa
-$darkgrey: rgb(40,40,40); // #282828
+$darkred: rgb(181,45,42); // #b52d2a
+
+$blue: rgb(37,170,225); // #27aae1
+$darkblue: rgb(21,126,170); // #157eaa
+
+$yellow: rgb(242,190,40); // #e8be28
+$darkyellow: rgb(187,146,26); // #bb921a
+
+$purple: rgb(178,97,235); // #9665aa
+$darkpurple: rgb(138,67,187); //#8a43bb
 
 $light-grey: #c0c0c0;
-$grey: #666;
+$grey: rgb(25,26,27); // #191a1b
+$darkgrey: rgb(18,19,20); // #121314
 $grey-hover: #888;
-
-$bg-grey: #282828;
+$ink: rgb(43,45,47); // #2b2d2f
 
 $button-blue: #53b5e6;
 $button-blue-hover: #69bfe9;
@@ -47,8 +54,7 @@ $button-blue-hover: #69bfe9;
 $button-red: #cf2622;
 $button-red-hover: #cf6967;
 
-$ink: #374347;
-
+//These should be removed soon
 .green { color: $green; }
 .red { color: $red; }
 .blue { color: $blue; }
@@ -57,10 +63,20 @@ $ink: #374347;
 /*      Category Colors      */
 /* ========================= */
 $academics-color: $green;
+$academics-color-dark: $darkgreen;
+
 $service-color: $yellow;
+$service-color-dark: $darkyellow;
+
 $testing-color: $purple;
+$testing-color-dark: $darkpurple;
+
 $extracurricular-color: $red;
+$extracurricular-color-dark: $darkred;
+
 $college_prep-color: $blue;
+$college_prep-color-dark: $darkblue;
+
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
@@ -85,7 +101,7 @@ $bold: 700;
 
 }
 
-@mixin font-size($size:1.6, $line: $size * 1.4){
+@mixin font-size($size:1.6, $line: $size * 1.2){
     font-size:   ($size * 10) + px;
     line-height: ($line * 10) + px;
     font-size:   $size + rem;
@@ -173,7 +189,7 @@ h1 {
 
 h2 {
 
-  @include font-size(8);
+  @include font-size(9);
   font-weight: $bold;
 
 }
@@ -195,14 +211,14 @@ h4 {
 
 h5 {
 
-  @include font-size(2.4);
+  @include font-size(3,1);
   font-weight: $light;
 
 }
 
 h6 {
 
-  @include font-size(1.2);
+  @include font-size(1.8);
   font-weight: $light;
 
 }
@@ -223,6 +239,48 @@ h6 {
 
 .font-size-normal { font-size: 16px; }
 
+
+/* ===============================================
+   Global Classes
+   =============================================== */
+
+$wrapper: 0 40px;
+
+.user-list-header {
+
+	width: 100%;
+	padding-bottom: 20px;
+	border-bottom: 1px white(0.25) solid;
+	
+}
+
+.user-list-container {
+
+	margin-top: 60px;
+
+}
+
+.user-list {
+
+  .user-list__add {
+    cursor: pointer;
+
+    padding: 20px 10px;
+    width: 160px;
+    word-wrap: break-word;
+
+    display: inline-block;
+    vertical-align: top;
+
+    text-align: center;
+
+    .glyphicon { font-size: 62px; color: $green; }
+    .text { text-align: center; }
+  }
+
+}
+
+
 /* ===============================================
    Header
    =============================================== */
@@ -230,14 +288,11 @@ h6 {
 header {
 
   width: 100%;
-  background: $bg-grey;
+  background: $darkgrey;
   color: white();
-  border-bottom: 1px white(0.25) solid;
+  border-bottom: 1px rgb(65, 66, 67) solid;
   position: relative;
   z-index: 1000;
-
-  min-width: 415px;
-  @include respond-to(415) { min-width: 345px; }
 
   a {
 
@@ -252,18 +307,24 @@ header {
 
   .wrapper {
 
-    margin: 0 45px;
+    margin: $wrapper;
     @include respond-to(415) { margin: 0 10px; }
 
     .imua-logo {
 
-      margin: 11px 0;
+      margin: 22px 0;
+      
+      img {
+      
+      	margin-right: 5px;
+      
+      }
 
     }
 
     nav {
 
-      margin: 37px 0;
+      margin: 32px 0;
 
       li {
 
@@ -275,15 +336,24 @@ header {
         @include respond-to(840) { margin-left: 50px; }
         @include respond-to(660) { margin-left: 20px; }
 
-        &.cog {
-          margin-left: 50px;
+      }
+
+      .cog {
+      
+	      .current-name {
+	      	display: inline-block;
+	      	padding-right: 6px;
+	      }
+	      
+	      .glyphicon {
+          display: inline-block;
+          font-size: 22px;
+	      	vertical-align: middle;
+	      	margin-top: -6px;
         }
+      
       }
-
-      .cog .glyphicon {
-        font-size: 22px;
-      }
-
+      
       .dropdown {
         cursor: pointer;
 
@@ -293,7 +363,7 @@ header {
           top: 35px;
 
           padding: 5px 20px;
-          background-color: $bg-grey;
+          background-color: $darkgrey;
           border: 1px solid white;
           @include border-radius(5px);
           box-shadow: 0px 3px 5px #666;
@@ -322,6 +392,8 @@ header {
   left: 0;
   z-index: 999; // Just below the header
 }
+
+
 /* ===============================================
    Helper Classes
    =============================================== */

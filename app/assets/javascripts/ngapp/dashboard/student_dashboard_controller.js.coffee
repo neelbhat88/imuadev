@@ -20,7 +20,7 @@ angular.module('myApp')
 
   $(window).resize (event) -> setMiddleDimensions()
 
-  ProgressService.getModulesProgress($scope.student).then (student_with_modules_progress) ->
+  ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
     $scope.student_with_modules_progress = student_with_modules_progress
     setMiddleDimensions()
 
