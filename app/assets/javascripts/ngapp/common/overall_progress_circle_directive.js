@@ -82,6 +82,7 @@ angular.module('myApp')
       }
 
       scope.$watch('points', function(){
+        if (scope.points)
           scope.render(scope.points);
       }, true);
     }
