@@ -37,8 +37,8 @@ angular.module('myApp')
           var modulePoints = module.points.user;
           var totalPoints = module.points.total;
           var data = [
-            {name: "Points Earned", value: modulePoints},
-            {name: "Total Points", value: (totalPoints == 0) ? 1 : totalPoints - modulePoints}
+            {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
+            {name: "Total Points", value: (totalPoints == 0) ? 0 : totalPoints - modulePoints}
           ];
 
 

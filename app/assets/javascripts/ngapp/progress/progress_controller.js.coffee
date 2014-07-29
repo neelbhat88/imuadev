@@ -45,14 +45,11 @@ angular.module('myApp')
           tu.name = "This Semester"
           $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
 
-  ProgressService.getModules(student, student.time_unit_id)
-    .success (data) ->
-      setWidth()
-      $scope.modules_progress = data.modules_progress
-      $scope.selected_module = data.modules_progress[0]
-
   # Loads data for all modules progress circle
   ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+    setWidth()
+    $scope.modules_progress = student_with_modules_progress.modules_progress
+    $scope.selected_module = $scope.modules_progress[0]
     $scope.student_with_modules_progress = student_with_modules_progress
 
   # Loads data for overall progress circle
