@@ -194,6 +194,10 @@ class UserRepository
 
     return mentors
   end
+
+  def are_related?(studentId, mentorId)
+    return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
+  end
 end
 
 class OrgUser

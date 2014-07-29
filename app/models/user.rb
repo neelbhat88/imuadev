@@ -54,4 +54,16 @@ class User < ActiveRecord::Base
   def student?
     return self.role.to_i == Constants.UserRole[:STUDENT]
   end
+
+  def abilities
+    @abilities ||= begin
+                     abilities = Six.new
+                     abilities << Ability
+                     abilities
+                   end
+  end
+
+  def can? action, subject
+    abilities.allowed?(self, action, subject)
+  end
 end
