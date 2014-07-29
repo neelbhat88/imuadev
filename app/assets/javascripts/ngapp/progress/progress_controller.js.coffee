@@ -44,6 +44,7 @@ angular.module('myApp')
         if tu.id == student.time_unit_id
           tu.name = "This Semester"
           $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
+          $scope.new_selected_semester = $scope.selected_semester
 
   # Loads data for all modules progress circle
   ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
@@ -63,6 +64,7 @@ angular.module('myApp')
         .success (data) ->
           $scope.yes_no_milestones = data.yes_no_milestones
           $scope.loaded_yes_no_milestones = true
+          $scope.new_selected_semester = $scope.selected_semester
 
   $scope.$watch 'selected_module', () ->
     if $scope.selected_module && !$scope.loaded_yes_no_milestones

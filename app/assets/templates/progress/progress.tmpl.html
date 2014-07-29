@@ -38,9 +38,12 @@
     <!--NAVIGATION-->
     <div class="progressSemesters section">
       <div class="sectionHeader bold">My Progress</div>
-      <ul class="semestersList">
-        <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
-      </ul>
+      <div class="semestersList">
+        <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
+          <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
+        </select>
+        <!-- <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li> -->
+      </div>
     </div>
 
     <div class="progressExpectations section">
