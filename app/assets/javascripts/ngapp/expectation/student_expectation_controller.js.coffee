@@ -1,7 +1,9 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', 'ExpectationService',
-  ($route, $scope, ExpectationService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService',
+  ($route, $scope, student, current_user, ExpectationService) ->
 
+    $scope.current_user = current_user
+    $scope.student = student
     $scope.orgId = $scope.student.organization_id
     $scope.studentId = $scope.student.id
 

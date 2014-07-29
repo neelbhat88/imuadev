@@ -44,7 +44,9 @@
     </div>
 
     <div class="progressExpectations section">
-      <div class="sectionHeader bold">My Expectations</div>
+      <div class="sectionHeader bold">
+        <a ng-href="#/expectations/{{student.id}}" title="View Expectations">My Expectations</a>
+      </div>
     </div>
 
     <div class="progressMentors section">
@@ -94,8 +96,6 @@
 
       </div>
       <!--/MAIN PANEL-->
-
-      <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
 
     </div>
 
