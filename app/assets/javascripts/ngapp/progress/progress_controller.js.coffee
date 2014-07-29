@@ -89,17 +89,25 @@ angular.module('myApp')
     # ToDo: If the overall progress circle on this page no longer needs the students picture,
     # then we don't need student_with_modules_progress and the directive can be changed to just
     # accept the modules_progress array
-    ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
-      $scope.student_with_modules_progress = student_with_modules_progress
+    # ToDo: I don't like how this works, we should revisit. Difference between checking progress
+    # after saving data and then getting progress for all categories, for the full circle, and the
+    # overall progress circle
+    ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+      .success (data) ->
+        ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
+          $scope.student_with_modules_progress = student_with_modules_progress
 
-      selected_mod_progress = null
-      for mod in $scope.modules_progress
-        selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
+          selected_mod_progress = null
+          for mod in $scope.modules_progress
+            selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
 
-      # Only change the selected one so all of the cicrles don't refresh
-      for mod in student_with_modules_progress.modules_progress
-        selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
+          # Only change the selected one so all of the cicrles don't refresh
+          for mod in student_with_modules_progress.modules_progress
+            selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
 
+        refreshOverallProgress()
+
+  refreshOverallProgress = () ->
     ProgressService.getOverallProgress($scope.student)
       .success (data) ->
         $scope.overall_points = data.overall_progress
