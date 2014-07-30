@@ -114,86 +114,14 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       
   }
 
-  .progress-circle {
-    .progress-circle__name {
-      text-align: center;
-    }
-  }
-
-  .overall-circle {
-    font-size: 16px;
-    width: 68px;
-
-    .overall-circle__points {
-      background-color: white;
-      color: $ink;
-
-      .value {text-align: center;}
-      .text {font-size: 10px; text-align: center;}
-    }
-  }
-
   .module-circle {
-  /*
-  ===================================================================
-  Most of .module-circle is redundent. Working to minimize conflicts.
-  ===================================================================
-
-    cursor: pointer;
-    font-size: 16px;
-    margin: 10px 20px 0 20px;
-
-    width: 170px;
-  */
-
-    @each $category, $color in $colormap {
+  
+      @each $category, $color in $colormap {
 
       &.color--#{$category} { color: $color; }
 
     }
 
-  /*
-    .module-circle__bg {
-      background-color: $grey;
-      margin: auto;
-      padding: 5px;
-      border-radius: 60px;
-      width: 120px;
-      height: 120px;
-    }
-
-    .module-circle__points {
-      padding: 35px;
-      background-color: white;
-      border-radius: 55px;
-      color: $ink;
-
-      .value {text-align: center;}
-      .text {font-size: 10px; text-align: center;}
-    }
-
-    .module-circle__modtitle {
-      padding: 5px 0;
-      text-align: center;
-
-      @extend .bold;
-    }
-  */
-
-    .module-circle__arrow-up {
-  /*
-      @extend .arrow-up;
-
-      margin: auto;
-  */
-
-      @each $category, $color in $colormap {
-
-        &.color--#{$category} {
-          border-bottom-color: $color;
-        }
-      }
-    }
   }
 
   .module-data-container {
@@ -221,8 +149,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 }
-
-
 
 .semester-changer {
 
