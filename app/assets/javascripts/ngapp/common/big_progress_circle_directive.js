@@ -1,5 +1,5 @@
 angular.module('myApp')
-.directive('progressCircle', [function(){
+.directive('bigProgressCircle', [function(){
   return {
     restrict: 'EA',
     scope: {
@@ -7,7 +7,7 @@ angular.module('myApp')
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      var width = 170 - margin.left - margin.right;
+      var width = 240 - margin.left - margin.right;
       var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
@@ -50,10 +50,11 @@ angular.module('myApp')
             .innerRadius(radius - 14);
 
         var svg = $('#' + student.user.id + ' svg')[0];
+
         var photoCircle = d3.select(svg)
                             .append("circle")
-                            .attr("cx", width/2)
-                            .attr("cy", height/2)
+                            .attr("cx", width - 120)
+                            .attr("cy", height - 120)
                             .attr("r", radius-20)
 
 
@@ -67,8 +68,9 @@ angular.module('myApp')
                         .attr("width", 1)
                         .attr("height", 1)
 
-        .append("image")
-                         .attr("x", 0)
+
+          .append("image")
+                        .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", width-40)
                         .attr("height", height-40)
