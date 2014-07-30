@@ -7,8 +7,8 @@ angular.module('myApp')
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      	width = 170 - margin.left - margin.right;
-      	height = width - margin.top - margin.bottom;
+      var width = 170 - margin.left - margin.right;
+      var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
       				.attr("id", scope.student.user.id)
