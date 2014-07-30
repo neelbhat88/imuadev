@@ -1,4 +1,5 @@
 <div class="progressContainer" wait-to-load="{{selected_module}}">
+<!-- SEMESTER CHANGER THING
   <div class="semester-changer" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
     <span class="glyphicon glyphicon-backward semester-changer__prev" title="Previous Semester"
         ng-hide="student.time_unit_id == semesters[0].id" ng-click="prevSemester()"></span>
@@ -6,49 +7,99 @@
     <span class="glyphicon glyphicon-forward semester-changer__next" title="Next Semester"
         ng-hide="student.time_unit_id == semesters[semesters.length - 1].id" ng-click="nextSemester()"></span>
   </div>
+-->
 
   <!-- <div class="overall-progress">
     Overall Completedness: {{overall_points.percent}}% ({{overall_points.user}}/{{overall_points.total}})
   </div> -->
 
-  <div class="circles js-circles">
-    <div class="module-circles js-module-circles">
-      <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
-        <module-progress-circle module="mod"></module-progress-circle>
-        <div class="module-circle__modtitle">{{mod.module_title | underscoresToSpaces}}</div>
-        <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
+
+  <div class="progressLeft col">
+
+    <div class="progressStudent">
+
+      <div class="progressCircle">
+      	<div class="progress-circle" ng-if="student_with_modules_progress">
+          <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
+       </div>
+      </div>
+
+      <h4 class="bold">{{student.first_last_initial}}</h4>
+
+      <div class="progressCircle-overall">
+      	<div class="overall-circle">
+         <overall-progress-circle points="overall_points"></overall-progress-circle>
+       </div>
+      </div>
+
+
+    </div>
+
+    <!--NAVIGATION-->
+    <div class="progressSemesters section">
+      <div class="sectionHeader bold">My Progress</div>
+      <div class="semestersList">
+        <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
+          <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
+        </select>
+        <!-- <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li> -->
       </div>
     </div>
+
+    <div class="progressExpectations section">
+      <div class="bold">
+        <a ng-href="#/expectations/{{student.id}}" title="View Expectations">My Expectations</a>
+      </div>
+    </div>
+
+    <div class="progressMentors section">
+    	<div class="bold">My Mentors</div>
+    </div>
+    <!--/NAVIGATION-->
+
   </div>
 
-  <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
+  <div class="progressRight col">
 
-    <div class="module-data-side-nav js-module-data-side-nav">
-      <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
-    </div>
-
-    <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
-
-      <div class="module-data-content" ng-show="selected_module.points.total == 0">
-        <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
+	  <!--CIRCLES-->
+    <div class="circles js-circles">
+      <div class="module-circles js-module-circles">
+        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+          <module-progress-circle module="mod"></module-progress-circle>
+          <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</h6></div>
+        </div>
       </div>
+    </div>
+    <!--/CIRCLES-->
 
-      <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
+    <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
 
-        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
-          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-            <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
-              ng-disabled="!editable(current_user, selected_semester)">
-            <span class="text">{{yesno.value}}</span>
-          </div>
+      <!--MAIN PANEL-->
+      <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
+
+        <h3>{{selected_module.module_title | underscoresToSpaces}}</h3>
+
+        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+          <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
         </div>
 
-        <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
+        <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
+
+          <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
+              <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                ng-disabled="!editable(current_user, selected_semester)">
+              <span class="text">{{yesno.value}}</span>
+            </div>
+          </div>
+
+          <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
+        </div>
+
       </div>
+      <!--/MAIN PANEL-->
 
     </div>
-
-    <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
 
   </div>
 

@@ -5,6 +5,7 @@ class MilestoneService
     milestone.value = ms[:value]
     milestone.points = ms[:points]
     milestone.time_unit_id = ms[:time_unit_id]
+    milestone.organization_id = ms[:organization_id]
 
     if !milestone.valid?
     end
@@ -15,17 +16,46 @@ class MilestoneService
       m.title = milestone.title
       m.description = milestone.description
       m.value = milestone.value
-      m.icon = milestone.icon
       m.time_unit_id = milestone.time_unit_id
       m.importance = milestone.importance
       m.points = milestone.points
       m.icon = milestone.icon
+      m.organization_id = milestone.organization_id
     end
 
     if newmilestone.save
       return ReturnObject.new(:ok, "Successfully created Milestone id: #{newmilestone.id}.", newmilestone)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create milestone.", nil)
+      return ReturnObject.new(:internal_server_error, newmilestone.errors, nil)
+    end
+  end
+
+  def update_milestone(ms)
+    milestone = Milestone.find(ms[:id])
+
+    if !milestone.time_unit_id.nil? # Default milestones don't have a time_unit
+      milestone.time_unit.milestones.each do | m |
+        if m.id != ms[:id] && (m.module == ms[:module] && m.submodule == ms[:submodule] && m.value == ms[:value])
+          return ReturnObject.new(:conflict, "A milestone of the same type and value already exists in #{milestone.time_unit.name}.", nil)
+        end
+      end
+    end
+
+    if milestone.update_attributes(:title => ms[:title],
+                                    :description=>ms[:description],
+                                    :points => ms[:points],
+                                    :value => ms[:value])
+      return ReturnObject.new(:ok, "Successfully updated Milestone id: #{milestone.id}.", milestone)
+    end
+
+    return ReturnObject.new(:internal_server_error, "Failed to update Milestone id: #{milestone.id}.", milestone)
+  end
+
+  def delete_milestone(milestoneId)
+    if Milestone.find(milestoneId).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted Milestone id: #{milestoneId}.", nil)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to delete Milestone id: #{milestoneId}.", nil)
     end
   end
 
@@ -78,6 +108,14 @@ class MilestoneService
     else
       return ReturnObject.new(:internal_server_error, "Failed to remove User Milestone", nil)
     end
+  end
+
+  def get_total_points(orgId)
+    Milestone.where(:organization_id => orgId).sum(:points)
+  end
+
+  def get_all_user_milestones(userId)
+    UserMilestone.where(:user_id => userId)
   end
 
 end

@@ -4,6 +4,7 @@ FactoryGirl.define do
     last_name "Test"
     sequence(:email) { |n| "test#{n}@test.com"}
     password "password"
+    role -10
     organization_id -10
 
     factory :org_admin do
@@ -21,6 +22,7 @@ FactoryGirl.define do
 
     factory :super_admin do
       role 0
+      organization_id 0
     end
   end
 

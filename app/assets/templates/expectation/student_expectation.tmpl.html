@@ -1,6 +1,6 @@
-<div ng-controller="StudentExpectationController" class="studentExpectationContainer">
+<div class="studentExpectationContainer">
 
-  <h4>Expectations</h4>
+  <h4>{{student.first_last_initial}}'s Expectations</h4>
   <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
     <div class="expectations-list-item" ng-repeat="expectation in expectations">
       <div class="expectation-title">{{expectation.title}}</div>

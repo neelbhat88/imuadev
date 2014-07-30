@@ -13,7 +13,7 @@ angular.module('myApp')
   $scope.assign = (student) ->
     UsersService.assign($scope.mentor.id, student.id)
       .success (data) ->
-        ProgressService.getModulesProgress(data.student).then (student_with_modules_progress) ->
+        ProgressService.getAllModulesProgress(data.student, data.student.time_unit_id).then (student_with_modules_progress) ->
           $scope.assigned_students.unshift(student_with_modules_progress)
 
   $scope.unassign = (student) ->

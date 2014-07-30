@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  helper_method :abilities, :can?
+
+  before_filter :add_abilities
+
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
     #return dashboard_path
@@ -31,6 +35,20 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-private
+  protected
+
+  def add_abilities
+    abilities << Ability
+  end
+
+  def abilities
+    @abilities ||= Six.new
+  end
+
+  # simple delegate method for controller & view
+  def can?(object, action, subject)
+    abilities.allowed?(object, action, subject)
+  end
+
 
 end

@@ -7,9 +7,9 @@ describe Api::V1::UsersController do
       login_student
 
       it "returns 403 if a student tries to see another student's profile" do
-        studentId = subject.current_user.id + 1
+        student = create(:student)
 
-        get :show, {:id => studentId}
+        get :show, {:id => student.id}
 
         expect(response.status).to eq(403)
       end

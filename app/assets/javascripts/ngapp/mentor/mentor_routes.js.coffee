@@ -29,7 +29,7 @@ angular.module('myApp')
         UsersService.getAssignedStudents($route.current.params.id)
         .success (data) ->
           for student in data.students
-            ProgressService.getModulesProgress(student).then (student_with_modules_progress) ->
+            ProgressService.getAllModulesProgress(student, student.time_unit_id).then (student_with_modules_progress) ->
               assigned_students.unshift(student_with_modules_progress)
 
           defer.resolve(assigned_students)

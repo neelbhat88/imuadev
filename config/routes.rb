@@ -22,6 +22,7 @@ Imua::Application.routes.draw do
           put '/:id/time_unit/next' => "users#move_to_next_semester"
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
 
+          get  '/:id/progress' => 'progress#overall_progress'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
@@ -63,9 +64,9 @@ Imua::Application.routes.draw do
       put  '/time_unit/:id' => 'roadmap#update_time_unit'
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
-      post '/milestone' => 'roadmap#create_milestone'
-      put  '/milestone/:id' => 'roadmap#update_milestone'
-      delete '/milestone/:id' => 'roadmap#delete_milestone'
+      post '/milestone' => 'milestone#create_milestone'
+      put  '/milestone/:id' => 'milestone#update_milestone'
+      delete '/milestone/:id' => 'milestone#delete_milestone'
 
       get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
       post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
@@ -75,7 +76,9 @@ Imua::Application.routes.draw do
     end # end :v1
   end # end :api
 
-  get '/dashboard' => 'static#dashboard', as: 'dashboard'
+  get '/forgot_password' => 'static#forgot_password'
+  post '/reset_password' => 'static#reset_password'
+  
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:
