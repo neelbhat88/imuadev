@@ -43,11 +43,11 @@ angular.module('myApp')
 
 
           var color = d3.scale.ordinal()
-              .range([moduleColor, '#e5e5e5']);
+              .range([moduleColor, '#191a1b']);
 
           var arc = d3.svg.arc()
               .outerRadius(radius)
-              .innerRadius(radius - 15);
+              .innerRadius(radius - 12);
 
           var myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
 
@@ -92,16 +92,16 @@ angular.module('myApp')
           }
 */
           d3.select("#" + module.module_title).append("text")
-          .attr("dy", "0em")
+          .attr("dy", "0.2em")
           .attr("class", "value")
           .attr("fill", "white")
-          .attr("font-size", "34")
+          .attr("font-size", "30")
           .style("text-anchor", "middle")
           .text(function(d) {
               return modulePoints + "/" + totalPoints;});
 
           d3.select("#" + module.module_title).append("text")
-          .attr("dy", "1.3em")
+          .attr("dy", "1.7em")
           .attr("class", "text")
           .attr("fill", "white")
           .style("text-anchor", "middle")

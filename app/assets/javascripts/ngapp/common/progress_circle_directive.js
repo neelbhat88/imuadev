@@ -47,7 +47,7 @@ angular.module('myApp')
 
         var arc = d3.svg.arc()
             .outerRadius(radius)
-            .innerRadius(radius - 15);
+            .innerRadius(radius - 14);
 
         var svg = $('#' + student.user.id + ' svg')[0];
         var photoCircle = d3.select(svg)
