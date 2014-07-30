@@ -68,6 +68,16 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   	margin: 60px 0;
 
   }
+  
+  select {
+  
+  	height: 32px;
+  	width: 100%;
+  	padding: 5px;
+  	background: $grey;
+		border: 1px white(0.1) solid;
+  
+  }
 
 }
 
@@ -211,6 +221,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
   }
 }
+
+
 
 .semester-changer {
 
