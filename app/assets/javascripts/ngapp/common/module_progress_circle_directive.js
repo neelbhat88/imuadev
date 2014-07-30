@@ -94,13 +94,16 @@ angular.module('myApp')
           d3.select("#" + module.module_title).append("text")
           .attr("dy", "0em")
           .attr("class", "value")
+          .attr("fill", "white")
+          .attr("font-size", "34")
           .style("text-anchor", "middle")
           .text(function(d) {
               return modulePoints + "/" + totalPoints;});
 
           d3.select("#" + module.module_title).append("text")
-          .attr("dy", "1em")
+          .attr("dy", "1.3em")
           .attr("class", "text")
+          .attr("fill", "white")
           .style("text-anchor", "middle")
           .text(function(d) {
               return "points";});
