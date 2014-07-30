@@ -38,17 +38,22 @@
     <!--NAVIGATION-->
     <div class="progressSemesters section">
       <div class="sectionHeader bold">My Progress</div>
-      <ul class="semestersList">
-        <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li>
-      </ul>
+      <div class="semestersList">
+        <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
+          <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
+        </select>
+        <!-- <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li> -->
+      </div>
     </div>
 
     <div class="progressExpectations section">
-      <div class="sectionHeader bold">My Expectations</div>
+      <div class="bold">
+        <a ng-href="#/expectations/{{student.id}}" title="View Expectations">My Expectations</a>
+      </div>
     </div>
 
     <div class="progressMentors section">
-    	<div class="sectionHeader bold">My Mentors</div>
+    	<div class="bold">My Mentors</div>
     </div>
     <!--/NAVIGATION-->
 
@@ -59,10 +64,9 @@
 	  <!--CIRCLES-->
     <div class="circles js-circles">
       <div class="module-circles js-module-circles">
-        <div class="module-circle" ng-repeat="mod in modules_progress" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
           <module-progress-circle module="mod"></module-progress-circle>
-          <div class="module-circle__modtitle">{{mod.module_title | underscoresToSpaces}}</div>
-          <div class="module-circle__arrow-up" modulecolor="{{mod.module_title}}" ng-show="mod.module_title == selected_module.module_title"></div>
+          <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</h6></div>
         </div>
       </div>
     </div>
@@ -94,8 +98,6 @@
 
       </div>
       <!--/MAIN PANEL-->
-
-      <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
 
     </div>
 

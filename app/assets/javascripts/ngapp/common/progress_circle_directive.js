@@ -23,7 +23,7 @@ angular.module('myApp')
       scope.render = function(student) {
         chart.selectAll("g").remove();
         var color = d3.scale.ordinal()
-            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#e5e5e5']);
+            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
 
         var total_points = 0;
         var user_points = 0;
@@ -47,7 +47,7 @@ angular.module('myApp')
 
         var arc = d3.svg.arc()
             .outerRadius(radius)
-            .innerRadius(radius - 15);
+            .innerRadius(radius - 14);
 
         var svg = $('#' + student.user.id + ' svg')[0];
         var photoCircle = d3.select(svg)
@@ -91,7 +91,7 @@ angular.module('myApp')
 
         g.append("path").attr("fill", function(d, i) { return color(i); })
             .transition()
-                .duration(1300)
+                .duration(800)
                 .attrTween("d", tweenPie);
 
         function tweenPie(b) {

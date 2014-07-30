@@ -44,15 +44,13 @@ angular.module('myApp')
         if tu.id == student.time_unit_id
           tu.name = "This Semester"
           $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
-
-  ProgressService.getModules(student, student.time_unit_id)
-    .success (data) ->
-      setWidth()
-      $scope.modules_progress = data.modules_progress
-      $scope.selected_module = data.modules_progress[0]
+          $scope.new_selected_semester = $scope.selected_semester
 
   # Loads data for all modules progress circle
   ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+    setWidth()
+    $scope.modules_progress = student_with_modules_progress.modules_progress
+    $scope.selected_module = $scope.modules_progress[0]
     $scope.student_with_modules_progress = student_with_modules_progress
 
   # Loads data for overall progress circle
@@ -66,6 +64,7 @@ angular.module('myApp')
         .success (data) ->
           $scope.yes_no_milestones = data.yes_no_milestones
           $scope.loaded_yes_no_milestones = true
+          $scope.new_selected_semester = $scope.selected_semester
 
   $scope.$watch 'selected_module', () ->
     if $scope.selected_module && !$scope.loaded_yes_no_milestones
@@ -133,7 +132,7 @@ angular.module('myApp')
 
       for mod in $scope.modules_progress
         if mod.module_title == $scope.selected_module.module_title
-          $scope.selected_module.points = mod.points
+          $scope.selected_module = mod
 
     $scope.selected_semester = sem
 
