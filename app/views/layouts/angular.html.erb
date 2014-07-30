@@ -31,11 +31,11 @@
       <div class="wrapper clear">
         <div class="imua-logo left">
           <a href="/">
-            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %> 
+            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %>
             <% if current_user.super_admin? %>
               Collective Progress
             <% else %>
-              <%= current_user.organization.name %>             
+              <%= current_user.organization.name %>
             <% end %>
           </a>
         </div>
@@ -63,6 +63,12 @@
             <% if current_user.student? %>
             <li>
               <a class="js-nav-link" href="#/progress/<%= current_user.id %>">Progress</a>
+            </li>
+            <% end %>
+
+            <% if current_user.student? %>
+            <li>
+              <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">Expectations</a>
             </li>
             <% end %>
 

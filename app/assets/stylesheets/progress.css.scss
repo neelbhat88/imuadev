@@ -9,136 +9,146 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
 }
 
-.col { 
+.col {
   overflow: hidden;
   position: absolute;
   top: 90px;
-  bottom: 0; 
+  bottom: 0;
 }
 
 .progressLeft {
 
-  position: absolute; 
-  left: 0; 
-  right: 0; 
-  width: 320px; 
-  overflow-y: auto; 
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 320px;
+  overflow-y: auto;
   background: $grey;
   color: white;
   padding: $wrapper;
-  
+
   .section {
-  
+
   	margin-bottom: 40px;
 
     .sectionHeader {
-    
+
       @include font-size(1.6);
     	text-align: center;
     	color: $light-grey;
     	padding: 8px 0;
   		border-bottom: 1px white(0.1) solid;
   		margin-bottom: 10px;
-    
-    }
-    
-    ul {
-    
-    	list-style: none;
-    	
-    	li {
-    	
-    		padding: 10px 6px;
-    		
-    		&:hover {
-    		
-    			background: $darkgrey;
-    		
-    		}
-    	
-    	}
-    
+
     }
 
-  
+    ul {
+
+    	list-style: none;
+
+    	li {
+
+    		padding: 10px 6px;
+
+    		&:hover {
+
+    			background: $darkgrey;
+
+    		}
+
+    	}
+
+    }
+
+
   }
-    
+
   .progressStudent {
+<<<<<<< HEAD
   
   	margin-top: 60px;
   	text-align: center;
   
+=======
+
+  	margin: 60px 0;
+
+>>>>>>> FETCH_HEAD
   }
 
 }
 
 .progressRight{
 
-  left: 320px; 
-  right: 0; 
-  overflow-y: auto; 
+  left: 320px;
+  right: 0;
+  overflow-y: auto;
   background: $darkgrey;
 
   .circles {
-  
+
     margin-top: 60px;
     padding: $wrapper;
     color: white();
-  
+
       .module-circle {
         display: inline-block;
         margin-right: 40px;
         margin-bottom: 60px;
         text-align: center;
-        
-        &:last-of-type {
-        
-        	margin-right: 0;
-        
+
+        &.inactive {
+          //display: none;
         }
-        
+
+        &:last-of-type {
+
+        	margin-right: 0;
+
+        }
+
       }
-  
+
   }
-  
+
   .progress-circle {
     .progress-circle__name {
       text-align: center;
     }
   }
-  
+
   .overall-circle {
     font-size: 16px;
     width: 68px;
-  
+
     .overall-circle__points {
       background-color: white;
       color: $ink;
-  
+
       .value {text-align: center;}
       .text {font-size: 10px; text-align: center;}
     }
   }
-  
+
   .module-circle {
   /*
   ===================================================================
   Most of .module-circle is redundent. Working to minimize conflicts.
   ===================================================================
-  
+
     cursor: pointer;
     font-size: 16px;
     margin: 10px 20px 0 20px;
-  
+
     width: 170px;
   */
-  
+
     @each $category, $color in $colormap {
-  
+
       &.color--#{$category} { color: $color; }
-  
+
     }
-  
+
   /*
     .module-circle__bg {
       background-color: $grey;
@@ -148,62 +158,62 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       width: 120px;
       height: 120px;
     }
-  
+
     .module-circle__points {
       padding: 35px;
       background-color: white;
       border-radius: 55px;
       color: $ink;
-  
+
       .value {text-align: center;}
       .text {font-size: 10px; text-align: center;}
     }
-  
+
     .module-circle__modtitle {
       padding: 5px 0;
       text-align: center;
-  
+
       @extend .bold;
     }
   */
-  
+
     .module-circle__arrow-up {
   /*
       @extend .arrow-up;
-  
+
       margin: auto;
   */
-  
+
       @each $category, $color in $colormap {
-  
+
         &.color--#{$category} {
           border-bottom-color: $color;
         }
       }
     }
   }
-  
+
   .module-data-container {
-  
+
     padding: $wrapper;
     padding-top: 30px;
-    
+
     @each $category, $color in $colormap {
-  
+
       &.color--#{$category} {
         background-color: map-get($colormap, $category);
       }
-  
+
     }
-  
+
     color: white;
-  
+
     .module-data-content-container {
       @each $category, $color in $colormap {
         &.color--#{$category} {
           background-color: $color;
         }
-        
+
       }
     }
   }
