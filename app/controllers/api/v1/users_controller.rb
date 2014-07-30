@@ -32,6 +32,12 @@ class Api::V1::UsersController < ApplicationController
       return
     end
 
+    organization = OrganizationRepository.new.get_organization(orgId)
+    if organization.nil? || !can?(current_user, :create_user, organization)
+      render status: :forbidden, json: {}
+      return
+    end
+
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,

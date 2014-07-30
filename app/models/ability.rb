@@ -7,18 +7,28 @@ class Ability
 
       case subject.class.name
       when "User" then user_abilities(user, subject)
+      when "Organization" then organizaiton_abilities(user, subject)
       else []
       end
 
     end
 
-    def user_abilities(user, subject)
+    def user_abilities(user, subjectUser)
       rules = []
 
-      return [] if user.organization_id != subject.organization_id
+      if user.super_admin?
+        return [
+          :delete_user,
+          :edit_user_info,
+          :view_profile,
+          :change_semester,
+        ]
+      else
+        return [] if user.organization_id != subjectUser.organization_id
+      end
 
       # Actions on himself
-      if user.id == subject.id
+      if user.id == subjectUser.id
         rules += [
           :update_password,
           :view_profile,
@@ -27,7 +37,6 @@ class Ability
 
       elsif user.org_admin?
         rules += [
-          :create_user,
           :delete_user,
           :edit_user_info,
           :view_profile,
@@ -35,8 +44,8 @@ class Ability
         ]
 
       elsif user.mentor?
-        if subject.student?
-          related = UserRepository.new.are_related?(subject.id, user.id)
+        if subjectUser.student?
+          related = UserRepository.new.are_related?(subjectUser.id, user.id)
           if related
             rules += [
               :view_profile,
@@ -51,21 +60,29 @@ class Ability
         end
 
       elsif user.student?
-        related = UserRepository.new.are_related?(user.id, subject.id)
+        related = UserRepository.new.are_related?(user.id, subjectUser.id)
         if related
           rules += [
             :view_profile,
           ]
         end
 
-      elsif user.super_admin?
-        rules += [
-          :create_user,
-          :delete_user,
-          :edit_user_info,
-          :view_profile,
-          :change_semester,
-        ]
+      end
+
+      rules.uniq
+    end
+
+    def organization_abilities(user, subjectOrg)
+      rules = []
+
+      if user.super_admin?
+        return [:create_user]
+      else
+        return [] if user.organization_id != subjectOrg.id
+      end
+
+      if user.org_admin?
+        rules += [:create_user]
       end
 
       rules.uniq
