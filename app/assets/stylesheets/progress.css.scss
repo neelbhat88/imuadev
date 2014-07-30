@@ -94,24 +94,30 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     padding: $wrapper;
     color: white();
 
-      .module-circle {
-        display: inline-block;
-        margin-right: 40px;
-        margin-bottom: 60px;
-        text-align: center;
+    .module-circle {
+      display: inline-block;
+      margin-right: 40px;
+      margin-bottom: 60px;
+      text-align: center;
 
-        &.inactive {
-          //display: none;
-        }
+      &.inactive {
+        //display: none;
+      }
 
-        &:last-of-type {
+      &:last-of-type {
 
         	margin-right: 0;
 
         }
 
-      }
-      
+    }
+    
+    .notSelected {
+    
+    	opacity: 0.3;
+    
+    }
+          
   }
 
   .module-circle {
