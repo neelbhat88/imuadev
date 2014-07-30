@@ -26,6 +26,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   background: $grey;
   color: white;
   padding: $wrapper;
+  text-align: center;
 
   .section {
 
@@ -91,7 +92,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   .circles {
 
     margin-top: 60px;
-    padding: $wrapper;
+    padding: $panelwrapper;
     color: white();
 
     .module-circle {
@@ -99,6 +100,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       margin-right: 40px;
       margin-bottom: 60px;
       text-align: center;
+      opacity: 0.3;
 
       &.inactive {
         //display: none;
@@ -112,9 +114,9 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
     }
     
-    .notSelected {
+    .selectedCircle {
     
-    	opacity: 0.3;
+    	opacity: 1;
     
     }
           
@@ -132,7 +134,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   .module-data-container {
 
-    padding: $wrapper;
+    padding: $panelwrapper;
     padding-top: 30px;
 
     @each $category, $color in $colormap {
