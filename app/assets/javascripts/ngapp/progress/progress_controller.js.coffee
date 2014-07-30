@@ -132,7 +132,7 @@ angular.module('myApp')
 
       for mod in $scope.modules_progress
         if mod.module_title == $scope.selected_module.module_title
-          $scope.selected_module.points = mod.points
+          $scope.selected_module = mod
 
     $scope.selected_semester = sem
 
