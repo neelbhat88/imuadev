@@ -52,8 +52,8 @@ angular.module('myApp')
         var svg = $('#' + student.user.id + ' svg')[0];
         var photoCircle = d3.select(svg)
                             .append("circle")
-                            .attr("cx", width-85)
-                            .attr("cy", height-85)
+                            .attr("cx", width/2)
+                            .attr("cy", height/2)
                             .attr("r", radius-20)
 
 
@@ -70,8 +70,8 @@ angular.module('myApp')
         .append("image")
                          .attr("x", 0)
                         .attr("y", 0)
-                        .attr("width", 130)
-                        .attr("height", 130)
+                        .attr("width", width-40)
+                        .attr("height", height-40)
                         .attr("xlink:href", student.user.square_avatar_url);
 
         var arc2 = d3.svg.arc().outerRadius(radius - 40);
