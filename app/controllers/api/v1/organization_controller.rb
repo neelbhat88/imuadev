@@ -39,12 +39,12 @@ class Api::V1::OrganizationController < ApplicationController
       return
     end
 
-    result = @organizationRepository.get_organization(orgId)
+    org = @organizationRepository.get_organization(orgId)
 
-    viewOrg = ViewOrganization.new(result.object) unless result.object.nil?
-    render status: result.status,
+    viewOrg = ViewOrganization.new(org) unless org.nil?
+    render status: :ok,
       json: {
-        info: result.info,
+        info: "Organization",
         organization: viewOrg
       }
   end
