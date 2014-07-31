@@ -1,6 +1,10 @@
 class UserClassService
 
   def get_user_classes(userId, time_unit_id)
+    if time_unit_id == 0
+      return UserClass.where(:user_id => userId).order(:id)
+    end
+
     return UserClass.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
