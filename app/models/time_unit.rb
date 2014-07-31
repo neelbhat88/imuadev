@@ -3,6 +3,7 @@ class TimeUnit < ActiveRecord::Base
 
   has_many :milestones, dependent: :destroy
   has_many :users
+  has_many :user_tests, dependent: :destroy
 
   belongs_to :roadmap
 end
