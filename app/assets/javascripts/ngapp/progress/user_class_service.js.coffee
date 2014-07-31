@@ -2,7 +2,7 @@ angular.module("myApp")
 .service "UserClassService", ['$http', ($http) ->
 
   @all = (userId, time_unit_id) ->
-    $http.get "/api/v1/users/#{userId}/time_unit/#{time_unit_id}/classes"
+    $http.get "/api/v1/users/#{userId}/user_class?time_unit=#{time_unit_id}"
 
   @new = (user, time_unit_id) ->
     name: "",

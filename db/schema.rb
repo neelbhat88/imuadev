@@ -108,6 +108,11 @@ ActiveRecord::Schema.define(:version => 20140808203914) do
     t.integer  "time_unit_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "period"
+    t.string   "room"
+    t.float    "credit_hours"
+    t.string   "level"
+    t.string   "subject"
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
