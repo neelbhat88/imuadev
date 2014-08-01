@@ -78,7 +78,8 @@ Imua::Application.routes.draw do
 
   get '/forgot_password' => 'static#forgot_password'
   post '/reset_password' => 'static#reset_password'
-  
+  get '/login' => 'static#login'
+
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:
