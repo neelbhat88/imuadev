@@ -79,6 +79,7 @@ Imua::Application.routes.draw do
   get '/forgot_password' => 'static#forgot_password'
   post '/reset_password' => 'static#reset_password'
   get '/login' => 'static#login'
+  get '/marketing' => 'static#index'
 
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#login'
