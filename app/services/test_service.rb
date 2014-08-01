@@ -4,9 +4,8 @@ class TestService
   ########### ORGANIZATION ############
   #####################################
 
-  def get_org_test(orgId, orgTestId)
-    return OrgTest.where(:organization_id => orgId,
-                         :id => orgTestId).first
+  def get_org_test(orgTestId)
+    return OrgTest.where(:id => orgTestId).first
   end
 
   def get_org_tests(orgId)
@@ -31,20 +30,17 @@ class TestService
     end
   end
 
-  def update_org_test(orgTest)
-    orgId     = orgTest[:organization_id]
-    orgTestId = orgTest[:id]
-
-    dbOrgTest = get_org_test(orgId, orgTestId)
+  def update_org_test(orgTestId, orgTest)
+    dbOrgTest = get_org_test(orgTestId)
 
     if dbOrgTest.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find OrgTest with orgId: #{orgId} and orgTestId: #{orgTestId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to find OrgTest with id: #{orgTestId}.", nil)
     end
 
     # TODO Check title uniqueness within Organization's set of OrgTests
 
-    if dbOrgTest.update_attributes(:title => orgTest[:title],
-                                   :score_type => orgTest[:score_type],
+    if dbOrgTest.update_attributes(:title       => orgTest[:title],
+                                   :score_type  => orgTest[:score_type],
                                    :description => orgTest[:description])
       return ReturnObject.new(:ok, "Successfully updated OrgTest, id: #{dbOrgTest.id}.", dbOrgTest)
     else
@@ -52,14 +48,11 @@ class TestService
     end
   end
 
-  def delete_org_test(orgTest)
-    orgId     = orgTest[:organization_id]
-    orgTestId = orgTest[:id]
-
-    dbOrgTest = get_org_test(orgId, orgTestId)
+  def delete_org_test(orgTestId)
+    dbOrgTest = get_org_test(orgTestId)
 
     if dbOrgTest.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find OrgTest with orgId: #{orgId} and orgTestId: #{orgTestId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to find OrgTest with id: #{orgTestId}.", nil)
     end
 
     if dbOrgTest.destroy()
@@ -73,13 +66,17 @@ class TestService
   ############# USER ##############
   #################################
 
-  def get_user_test(userId, orgTestId)
-    return UserTest.where(:user_id => userId,
-                          :org_test_id => orgTestId).first
+  def get_user_test(userTestId)
+    return UserTest.where(:id => userTestId).first
   end
 
   def get_user_tests(userId)
     return UserTest.where(:user_id => userId)
+  end
+
+  def get_user_tests_time_unit(userId, timeUnitId)
+    return UserTest.where(:user_id => userId,
+                          :time_unit_id => timeUnitId)
   end
 
   def create_user_test(userTest)
@@ -96,7 +93,7 @@ class TestService
       # TODO
     end
 
-    # TODO Check that org_test_id and user_id belong to the same Organization
+    # TODO Check that org_test_id, user_id, and time_unit_id all belong to the same Organization
 
     if newUserTest.save
       return ReturnObject.new(:ok, "Successfully created UserTest, id: #{newUserTest.id}.", newUserTest)
@@ -105,35 +102,27 @@ class TestService
     end
   end
 
-  def update_user_test(userTest)
-    userId      = userTest[:user_id]
-    orgTestId   = userTest[:org_test_id]
-    timeUnitId  = userTest[:time_unit_id]
-    date        = userTest[:date]
-    score       = userTest[:score]
-    description = userTest[:description]
-
-    dbUserTest = get_user_test(userId, orgTestId)
+  def update_user_test(userTestId, userTest)
+    dbUserTest = get_user_test(userTestId)
 
     if dbUserTest.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find UserTest with userId: #{userId} and orgTestId: #{orgTestId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to find UserTest with userTestId: #{userTestId}.", nil)
     end
 
-    if dbUserTest.update_attributes(:status => userTest[:status])
+    if dbUserTest.update_attributes(:date        => userTest[:date],
+                                    :score       => userTest[:score],
+                                    :description => userTest[:description])
       return ReturnObject.new(:ok, "Successfully updated UserTest, id: #{dbUserTest.id}.", dbUserTest)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserTest, id: #{dbUserTest.id}", nil)
     end
   end
 
-  def delete_user_test(userTest)
-    userId    = userTest[:user_id]
-    orgTestId = userTest[:org_test_id]
-
-    dbUserTest = get_user_test(userId, orgTestId)
+  def delete_user_test(userTestId)
+    dbUserTest = get_user_test(userTestId)
 
     if dbUserTest.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find UserTest with userId: #{userId} and orgTestId: #{orgTestId}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to find UserTest with id: #{userTestId}.", nil)
     end
 
     if dbUserTest.destroy()

@@ -7,7 +7,7 @@ class Ability
 
       case subject.class.name
       when "User" then user_abilities(user, subject)
-      when "Organization" then organizaiton_abilities(user, subject)
+      when "Organization" then organization_abilities(user, subject)
       else []
       end
 
@@ -76,13 +76,23 @@ class Ability
       rules = []
 
       if user.super_admin?
-        return [:create_user]
+        return [:create_user,
+                :read_org_tests]
       else
         return [] if user.organization_id != subjectOrg.id
       end
 
       if user.org_admin?
-        rules += [:create_user]
+        rules += [:create_user,
+                  :read_org_tests]
+      end
+
+      if user.mentor?
+        rules += [:read_org_tests]
+      end
+
+      if user.student?
+        rules += [:read_org_tests]
       end
 
       rules.uniq

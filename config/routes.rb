@@ -52,9 +52,11 @@ Imua::Application.routes.draw do
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'
 
-      get  '/organization/:id/time_units' => 'organization#time_units'
-      get  '/organization/:id/roadmap' => 'organization#roadmap'
-      get  '/organization/:id/modules' => 'organization#modules'
+      get '/organization/:id/time_units' => 'organization#time_units'
+      get '/organization/:id/roadmap' => 'organization#roadmap'
+      get '/organization/:id/modules' => 'organization#modules'
+
+      get '/organization/:id/tests' => 'test#get_org_tests'
 
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
@@ -78,7 +80,7 @@ Imua::Application.routes.draw do
 
   get '/forgot_password' => 'static#forgot_password'
   post '/reset_password' => 'static#reset_password'
-  
+
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:
