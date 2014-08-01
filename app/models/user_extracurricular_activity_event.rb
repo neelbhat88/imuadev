@@ -1,6 +1,6 @@
-class UserExtracurricularActivityDetail < ActiveRecord::Base
+class UserExtracurricularActivityEvent < ActiveRecord::Base
   attr_accessible :description, :extracurricular_activity_id, :user_id,
-    :time_unit_id
+    :time_unit_id, :leadership, :name
 
   belongs_to :user
   belongs_to :user_extra_curricular_activity

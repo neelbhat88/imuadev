@@ -1,4 +1,4 @@
-class UserExtracurricularActivity < ActiveRecord::Base
+class UserServiceActivity < ActiveRecord::Base
   attr_accessible :name, :user_id, :description
 
   belongs_to :user

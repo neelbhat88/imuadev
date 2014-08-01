@@ -5,12 +5,13 @@ class Api::V1::ProgressController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil, userServiceOrgHourService=nil )
+  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil, userServiceActivityService=nil, userExtracurricularActivityService=nil )
     @userClassService = userClassService ? userClassService : UserClassService.new
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
-    @userServiceOrgHourService = userServiceOrgHourService ? userServiceOrgHourService : UserServiceOrgHourService.new
+    @userServiceActivityService = userServiceActivityService ? userServiceActivityService : UserServiceActivityService.new
+    @userExtracurricularActivityService = userExtracurricularActivityService ? userExtracurricularActivityService : UserExtracurricularActivityService.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -183,8 +184,8 @@ class Api::V1::ProgressController < ApplicationController
     end
   end
 
-  # GET /user/:id/time_unit/:time_unit_id/service_orgs_hours
-  def service_orgs_hours
+  # GET /user/:id/time_unit/:time_unit_id/service_activity_events
+  def service_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -203,15 +204,48 @@ class Api::V1::ProgressController < ApplicationController
       return
     end
 
-    service_orgs = @userServiceOrgHourService.get_user_service_orgs(userId, time_unit_id)
+    service_activities = @userServiceActivityService.get_user_service_activities(userId)
 
-    service_hours = @userServiceOrgHourService.get_user_service_hours(userId, time_unit_id)
+    service_events = @userServiceActivityService.get_user_service_activity_events(userId, time_unit_id)
 
     render status: :ok,
       json: {
-        info: "User's Service Orgs and Hours",
-        user_service_orgs: service_orgs,
-        user_service_hours: service_hours
+        info: "User's Service Activities and Events",
+        user_service_activities: service_activities,
+        user_service_activity_events: service_events
       }
   end
+
+  # GET /user/:id/time_unit/:time_unit_id/extracurricular_activity_events
+  def extracurricular_activity_events
+    userId = params[:id].to_i
+    time_unit_id = params[:time_unit_id].to_i
+
+    if !student_can_access?(userId)
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
+
+    user = @userRepository.get_user(userId)
+    if !same_organization?(user.organization_id)
+      render status: :forbidden,
+        json: {}
+
+      return
+    end
+
+    extracurricular_activities = @userExtracurricularActivityService.get_user_extracurricular_activities(userId)
+
+    extracurricular_events = @userExtracurricularActivityService.get_user_extracurricular_activity_events(userId, time_unit_id)
+
+    render status: :ok,
+      json: {
+        info: "User's Extracurricular Activities and Events",
+        user_extracurricular_activities: extracurricular_activities,
+        user_extracurricular_activity_events: extracurricular_events
+      }
+  end
+
 end

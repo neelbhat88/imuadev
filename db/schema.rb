@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140722021123) do
+ActiveRecord::Schema.define(:version => 20140801271125) do
+
+  create_table "expectations", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "title"
+    t.string   "description"
+    t.integer  "rank"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -31,11 +40,12 @@ ActiveRecord::Schema.define(:version => 20140722021123) do
     t.integer  "points"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "is_default",   :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "is_default",      :default => false
     t.string   "value"
     t.string   "icon"
+    t.integer  "organization_id"
   end
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
@@ -83,22 +93,31 @@ ActiveRecord::Schema.define(:version => 20140722021123) do
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
 
-  create_table "user_extracurricular_activities", :force => true do |t|
-    t.string   "name"
-    t.string   "position"
+  create_table "user_expectations", :force => true do |t|
+    t.integer  "expectation_id"
     t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "status"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
-  create_table "user_extracurricular_activity_details", :force => true do |t|
+  create_table "user_extracurricular_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "user_extracurricular_activity_events", :force => true do |t|
     t.integer  "extracurricular_activity_id"
     t.string   "description"
     t.integer  "user_id"
     t.integer  "time_unit_id"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.string   "name"
+    t.string   "leadership"
   end
 
   create_table "user_milestones", :force => true do |t|
@@ -111,22 +130,24 @@ ActiveRecord::Schema.define(:version => 20140722021123) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "user_service_hours", :force => true do |t|
-    t.integer  "service_org_id"
+  create_table "user_service_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "user_service_activity_events", :force => true do |t|
+    t.integer  "user_service_org_id"
     t.decimal  "hours"
     t.date     "date"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  create_table "user_service_orgs", :force => true do |t|
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "name"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "description"
   end
 
   create_table "users", :force => true do |t|
