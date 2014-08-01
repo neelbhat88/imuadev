@@ -81,7 +81,7 @@ Imua::Application.routes.draw do
   get '/login' => 'static#login'
 
   get '/*path' => redirect("/?goto=%{path}")
-  root :to => 'static#index'
+  root :to => 'static#login'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
