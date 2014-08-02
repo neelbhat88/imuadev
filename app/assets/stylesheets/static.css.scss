@@ -116,5 +116,45 @@
   	margin-top: 20px;
   
   }
+  
+  .topper {
+  
+  	
+		max-width: 1200px;
+		min-width: 600px;
+		margin: 0 auto;
+  	padding: 100px 0;
+  	
+  	.imua-logo {
+  	
+  	  width: 25%;
+  	  float: left;
+      margin-left: 5%; //Illusion to feel more centered
+  	
+  		img {
+  		
+  			width: 100%;
+  			height: auto;
+  		
+  		}
+  	
+  	}
+  	
+  	.text {
+  	
+  	  width: 70%;
+  	  float: left;
+  	  text-align: left;
+  	  padding: 50px 0px 0px 50px;
+  	  
+      .subhead {
+      
+      	color: $light-grey;
+      
+      }
+  	
+  	}
+  
+  }
 
 }
