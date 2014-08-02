@@ -7,7 +7,7 @@ class Ability
 
       case subject.class.name
       when "User" then user_abilities(user, subject)
-      when "Organization" then organizaiton_abilities(user, subject)
+      when "Organization" then organization_abilities(user, subject)
       else []
       end
 
