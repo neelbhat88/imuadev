@@ -115,10 +115,7 @@
 
 .tool {
 
-  font-family: "proxima-nova-alt";
 	color: white;
-	padding: 0 0 0 0;
-	@include respond-to(640) { padding: 100px 0 0 0; }
 
 	.section-title {
 
@@ -130,57 +127,13 @@
 	.topper {
 
 		margin-bottom: 100px;
-		@include respond-to(640) { margin-bottom: 100px; }
-
-		.left-img, .right-img {
-
-			width: 25%;
-
-			img {
-
-				width: 100%;
-				height: auto;
-				max-width: 500px;
-
-			}
-
-		}
-
-		.left-img {
-
-			float: left;
-
-		}
-
-		.imua-logo {
-
-			width: 50%;
-			text-align: center;
-			float: left;
-
-			img {
-
-				width: 60%;
-				height: auto;
-				max-width: 551px;
-				margin-bottom: 20px;
-
-			}
-
-		}
 
     .imua-tagline {
 
-      float: left;
-      padding: 60px 60px 0;
+      padding: 60px 60px;
 
     }
 
-		.right-img {
-
-			float: right;
-
-		}
 
 	} //topper
 
