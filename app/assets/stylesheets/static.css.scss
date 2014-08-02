@@ -93,3 +93,28 @@
 
 /***** MARKETING PAGE *****/
 
+.marketing-header {
+
+	color: white;
+
+  a {
+  
+  	color: white;
+  
+  }
+  
+  .wrapper {
+  
+  	margin: $wrapper;
+  
+  }
+  
+  .login-link {
+  
+  	float: right;
+  	@include font-size(1.6);
+  	margin-top: 20px;
+  
+  }
+
+}
