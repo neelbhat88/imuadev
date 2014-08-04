@@ -38,9 +38,10 @@ class Api::V1::TestController < ApplicationController
   # Creates an OrgTest
   def create_org_test
     orgTest = params[:orgTest]
+    orgId   = params[:orgTest][:organization_id].to_i
 
     organization = OrganizationRepository.new.get_organization(orgId)
-    if !can?(current_user, :create_org_test, organization)
+    if !can?(current_user, :manage_org_tests, organization)
       render status: :forbidden,
         json: {}
       return
@@ -51,7 +52,7 @@ class Api::V1::TestController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        expectation: result.object
+        orgTest: result.object
       }
   end
 
@@ -59,10 +60,11 @@ class Api::V1::TestController < ApplicationController
   # Updates an OrgTest
   def update_org_test
     orgTestId      = params[:id].to_i
-    updatedOrgTest = params[:org_test]
+    updatedOrgTest = params[:orgTest]
 
-    orgTest = @test_service.get_org_test(orgTestId)
-    if !can?(current_user, :update_org_test, orgTest)
+    orgTest = @testService.get_org_test(orgTestId)
+    organization = OrganizationRepository.new.get_organization(orgTest.organization_id)
+    if !can?(current_user, :manage_org_tests, organization)
       render status: :forbidden,
         json: {}
       return
@@ -73,7 +75,7 @@ class Api::V1::TestController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        expectation: result.object
+        orgTest: result.object
       }
   end
 
@@ -82,8 +84,9 @@ class Api::V1::TestController < ApplicationController
   def delete_org_test
     orgTestId = params[:id].to_i
 
-    orgTest = @test_service.get_org_test(orgTestId)
-    if !can?(current_user, :delete_org_test, orgTest)
+    orgTest = @testService.get_org_test(orgTestId)
+    organization = OrganizationRepository.new.get_organization(orgTest.organization_id)
+    if !can?(current_user, :manage_org_tests, organization)
       render status: :forbidden,
         json: {}
       return
@@ -106,7 +109,7 @@ class Api::V1::TestController < ApplicationController
   # If time_unit_id is -1, then returns all UserTests for the User.
   def get_user_tests
     userId     = params[:id].to_i
-    timeUnitId = params[:time_unit_id].to_i
+    timeUnitId = (params[:time_unit_id].nil?) ? nil : params[:time_unit_id].to_i
 
     user = UserRepository.new.get_user(userId)
     if !can?(current_user, :read_user_tests, user)
@@ -115,25 +118,26 @@ class Api::V1::TestController < ApplicationController
       return
     end
 
-    info = (timeUnitId == -1) ? "all user_tests" : "user_tests for time_unit"
-    result = (timeUnitId == -1) ?
+    info = (timeUnitId.nil?) ? "all user_tests" : "user_tests for time_unit"
+    result = (timeUnitId.nil?) ?
              @testService.get_user_tests(userId) :
              @testService.get_user_tests_time_unit(userId, timeUnitId)
 
     render status: :ok,
       json: {
         info: info,
-        user_tests: result
+        userTests: result
       }
   end
 
   # POST /user_test
   # Creates a UserTest
   def create_user_test
-    userTest   = params[:userTest]
+    userTest = params[:userTest]
+    userId   = params[:userTest][:user_id].to_i
 
     user = UserRepository.new.get_user(userId)
-    if !can?(current_user, :create_user_test, user)
+    if !can?(current_user, :manage_user_tests, user)
       render status: :forbidden,
         json: {}
       return
@@ -144,7 +148,7 @@ class Api::V1::TestController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        user_test: result.object
+        userTest: result.object
       }
   end
 
@@ -155,7 +159,7 @@ class Api::V1::TestController < ApplicationController
     userTest   = params[:userTest]
 
     user = UserRepository.new.get_user(userId)
-    if !can?(current_user, :update_user_test, user)
+    if !can?(current_user, :manage_user_tests, user)
       render status: :forbidden,
         json: {}
       return
@@ -166,7 +170,7 @@ class Api::V1::TestController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        user_test: result.object
+        userTest: result.object
       }
   end
 
@@ -176,7 +180,7 @@ class Api::V1::TestController < ApplicationController
     userTestId = params[:id].to_i
 
     user = UserRepository.new.get_user(userId)
-    if !can?(current_user, :delete_user_test, user)
+    if !can?(current_user, :manage_user_tests, user)
       render status: :forbidden,
         json: {}
       return

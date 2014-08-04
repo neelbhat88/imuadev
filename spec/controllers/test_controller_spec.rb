@@ -105,167 +105,240 @@ describe Api::V1::TestController do
 
   end
 
+  describe "POST /org_test" do
 
+    describe "as a student" do
+      login_student
 
-  # describe "POST /organization/:id/expectations" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:orgId) { subject.current_user.organization_id }
-  #
-  #     xit "returns 403 if a student tries to create an Expectation" do
-  #       expectation = attributes_for(:expectation,
-  #                                    organization_id: orgId)
-  #       post :create_expectation, {:id => orgId,
-  #                                  :expectation => expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     xit "returns 403 if an admin tries to create an Expectation for another Organization" do
-  #       expectation = attributes_for(:expectation,
-  #                                    organization_id: orgId)
-  #       post :create_expectation, {:id => otherOrgId,
-  #                                  :expectation => expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to create an Expectation (json has different orgId)" do
-  #       mod_expectation = attributes_for(:expectation,
-  #                                        organization_id: otherOrgId)
-  #       post :create_expectation, {:id => orgId,
-  #                                  :expectation => mod_expectation}
-  #       expect(response.status).to eq(200)
-  #       expect(json["expectation"]["organization_id"]).to eq(orgId)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # describe "PUT /organization/:id/expectations/:expectation_id" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:orgId) { subject.current_user.organization_id }
-  #
-  #     let!(:expectation) { create(:expectation,
-  #                                 organization_id: orgId) }
-  #
-  #     xit "returns 403 if a student tries to update an Expectation" do
-  #       put :update_expectation, {:id => orgId,
-  #                                 :expectation_id => expectation.id,
-  #                                 :expectation => expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     let!(:expectation)       { create(:expectation,
-  #                                       organization_id: orgId) }
-  #     let!(:other_expectation) { create(:expectation,
-  #                                       organization_id: otherOrgId) }
-  #
-  #     xit "returns 403 if an admin tries to update an Expectation for another Organization" do
-  #       mod_expectation = attributes_for(:expectation,
-  #                                        organization_id: expectation.organization_id,
-  #                                        expectation_id: expectation.id)
-  #       put :update_expectation, {:id => otherOrgId,
-  #                                 :expectation_id => expectation.id,
-  #                                 :expectation => mod_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     xit "returns 403 if an admin tries to update an Expectation under another Organization" do
-  #       mod_expectation = attributes_for(:expectation,
-  #                                        organization_id: other_expectation.organization_id,
-  #                                        expectation_id: other_expectation.id)
-  #       put :update_expectation, {:id => orgId,
-  #                                 :expectation_id => other_expectation.id,
-  #                                 :expectation => mod_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to update an Expectation (json has different orgId and expectation_id)" do
-  #       mod_expectation = attributes_for(:expectation,
-  #                                        organization_id: other_expectation.organization_id,
-  #                                        expectation_id: other_expectation.id)
-  #       put :update_expectation, {:id => orgId,
-  #                                 :expectation_id => expectation.id,
-  #                                 :expectation => mod_expectation}
-  #       expect(response.status).to eq(200)
-  #       expect(json["expectation"]["id"]).to eq(expectation.id)
-  #       expect(json["expectation"]["organization_id"]).to eq(orgId)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # describe "DELETE /organization/:id/expectations/:expectation_id" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:orgId) { subject.current_user.organization_id }
-  #
-  #     let!(:expectation) { create(:expectation,
-  #                                 organization_id: orgId) }
-  #
-  #     xit "returns 403 if a student tries to delete an Expectation" do
-  #       delete :delete_expectation, {:id => orgId,
-  #                                    :expectation_id => expectation.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     let!(:expectation)       { create(:expectation,
-  #                                       organization_id: orgId) }
-  #     let!(:other_expectation) { create(:expectation,
-  #                                       organization_id: otherOrgId) }
-  #
-  #     xit "returns 403 if an admin tries to delete an Expectation for another Organization" do
-  #       delete :delete_expectation, {:id => otherOrgId,
-  #                                    :expectation_id => expectation.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     xit "returns 403 if an admin tries to delete an Expectation under another Organization" do
-  #       delete :delete_expectation, {:id => orgId,
-  #                                    :expectation_id => other_expectation.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to delete an Expectation" do
-  #       delete :delete_expectation, {:id => orgId,
-  #                                    :expectation_id => expectation.id}
-  #       expect(response.status).to eq(200)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # #############################
-  # ########### USER ############
-  # #############################
-  #
+      let(:orgId) { subject.current_user.organization_id }
+      let!(:org)  { create(:organization, id: orgId) }
+
+      it "returns 403 if tries to create an organization test" do
+        orgTest = attributes_for(:org_test, organization_id: org.id)
+        post :create_org_test, {:orgTest => orgTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:orgId) { subject.current_user.organization_id }
+      let!(:org)  { create(:organization, id: orgId) }
+
+      it "returns 403 if tries to create an organization test" do
+        orgTest = attributes_for(:org_test, organization_id: org.id)
+        post :create_org_test, {:orgTest => orgTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)      { create(:organization, id: orgId) }
+      let!(:otherOrg) { create(:organization, id: orgId + 1) }
+
+      it "returns 403 if tries to create an organization test for a different organization" do
+        otherOrgTest = attributes_for(:org_test, organization_id: otherOrg.id)
+        post :create_org_test, {:orgTest => otherOrgTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if same organization" do
+        orgTest = attributes_for(:org_test, organization_id: org.id)
+        post :create_org_test, {:orgTest => orgTest}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["organization_id"]).to eq(org.id)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let!(:org1) { create(:organization, id: 1) }
+      let!(:org2) { create(:organization, id: 2) }
+
+      it "returns 200 if tries to create an organization test for org1" do
+        org1Test = attributes_for(:org_test, organization_id: org1.id)
+        post :create_org_test, {:orgTest => org1Test}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["organization_id"]).to eq(org1.id)
+      end
+
+      it "returns 200 if tries to create an organization test for org2" do
+        org2Test = attributes_for(:org_test, organization_id: org2.id)
+        post :create_org_test, {:orgTest => org2Test}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["organization_id"]).to eq(org2.id)
+      end
+    end
+
+  end
+
+  describe "PUT /org_test/:id" do
+
+    describe "as a student" do
+      login_student
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)     { create(:organization, id: orgId) }
+      let!(:orgTest) { create(:org_test, organization_id: org.id)}
+
+      it "returns 403 if tries to update an organization test" do
+        updatedOrgTest = attributes_for(:org_test, organization_id: org.id)
+        put :update_org_test, {:id => orgTest.id, :orgTest => updatedOrgTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)     { create(:organization, id: orgId) }
+      let!(:orgTest) { create(:org_test, organization_id: org.id)}
+
+      it "returns 403 if tries to update an organization test" do
+        updatedOrgTest = attributes_for(:org_test, organization_id: org.id)
+        put :update_org_test, {:id => orgTest.id, :orgTest => updatedOrgTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)      { create(:organization, id: orgId) }
+      let!(:otherOrg) { create(:organization, id: orgId + 1) }
+
+      let!(:orgTest)      { create(:org_test, organization_id: org.id)}
+      let!(:otherOrgTest) { create(:org_test, organization_id: otherOrg.id)}
+
+      it "returns 403 if tries to update an organization test for a different organization" do
+        updatedOtherOrgTest = attributes_for(:org_test, organization_id: otherOrg.id)
+        put :update_org_test, {:id => otherOrgTest.id, :orgTest => updatedOtherOrgTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if same organization" do
+        updatedOrgTest = attributes_for(:org_test, organization_id: org.id)
+        put :update_org_test, {:id => orgTest.id, :orgTest => updatedOrgTest}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["id"]).to eq(orgTest.id)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let!(:org1) { create(:organization, id: 1) }
+      let!(:org2) { create(:organization, id: 2) }
+
+      let!(:org1Test) { create(:org_test, organization_id: org1.id)}
+      let!(:org2Test) { create(:org_test, organization_id: org2.id)}
+
+      it "returns 200 if tries to update an organization test for org1" do
+        updatedOrg1Test = attributes_for(:org_test, organization_id: org1.id)
+        put :update_org_test, {:id => org1Test.id, :orgTest => updatedOrg1Test}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["id"]).to eq(org1Test.id)
+      end
+
+      it "returns 200 if tries to update an organization test for org2" do
+        updatedOrg2Test = attributes_for(:org_test, organization_id: org2.id)
+        put :update_org_test, {:id => org2Test.id, :orgTest => updatedOrg2Test}
+        expect(response.status).to eq(200)
+        expect(json["orgTest"]["id"]).to eq(org2Test.id)
+      end
+    end
+
+  end
+
+  describe "DELETE /org_test/:id" do
+
+    describe "as a student" do
+      login_student
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)     { create(:organization, id: orgId) }
+      let!(:orgTest) { create(:org_test, organization_id: org.id)}
+
+      it "returns 403 if tries to delete an organization test" do
+        delete :delete_org_test, {:id => orgTest.id}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)     { create(:organization, id: orgId) }
+      let!(:orgTest) { create(:org_test, organization_id: org.id)}
+
+      it "returns 403 if tries to delete an organization test" do
+        delete :delete_org_test, {:id => orgTest.id}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:orgId) { subject.current_user.organization_id }
+
+      let!(:org)      { create(:organization, id: orgId) }
+      let!(:otherOrg) { create(:organization, id: orgId + 1) }
+
+      let!(:orgTest)      { create(:org_test, organization_id: org.id)}
+      let!(:otherOrgTest) { create(:org_test, organization_id: otherOrg.id)}
+
+      it "returns 403 if tries to delete an organization test for a different organization" do
+        delete :delete_org_test, {:id => otherOrgTest.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if same organization" do
+        delete :delete_org_test, {:id => orgTest.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let!(:org1) { create(:organization, id: 1) }
+      let!(:org2) { create(:organization, id: 2) }
+
+      let!(:org1Test) { create(:org_test, organization_id: org1.id)}
+      let!(:org2Test) { create(:org_test, organization_id: org2.id)}
+
+      it "returns 200 if tries to update an organization test for org1" do
+        delete :delete_org_test, {:id => org1Test.id}
+        expect(response.status).to eq(200)
+      end
+
+      it "returns 200 if tries to update an organization test for org2" do
+        delete :delete_org_test, {:id => org2Test.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+  end
+
+  #############################
+  ########### USER ############
+  #############################
+
   # describe "GET /users/:id/expectations" do
   #
   #   describe "as a student" do

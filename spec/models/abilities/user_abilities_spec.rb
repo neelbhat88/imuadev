@@ -18,7 +18,9 @@ describe Ability do
 
     expect(abilities).to contain_exactly( :view_profile,
                                           :update_password,
-                                          :edit_user_info)
+                                          :edit_user_info,
+                                          :read_user_tests,
+                                          :manage_user_tests)
   end
 
   it "actions allowed to a super admin" do
@@ -29,7 +31,9 @@ describe Ability do
     expect(abilities).to contain_exactly( :view_profile,
                                           :delete_user,
                                           :edit_user_info,
-                                          :change_semester)
+                                          :change_semester,
+                                          :read_user_tests,
+                                          :manage_user_tests)
   end
 
   it "super admins can do all actions regardless of user's organizaiton" do
@@ -41,7 +45,9 @@ describe Ability do
     expect(abilities).to contain_exactly( :view_profile,
                                           :delete_user,
                                           :edit_user_info,
-                                          :change_semester)
+                                          :change_semester,
+                                          :read_user_tests,
+                                          :manage_user_tests)
   end
 
   it "actions allowed to a org admin" do
@@ -53,7 +59,9 @@ describe Ability do
     expect(abilities).to contain_exactly( :view_profile,
                                           :delete_user,
                                           :edit_user_info,
-                                          :change_semester)
+                                          :change_semester,
+                                          :read_user_tests,
+                                          :manage_user_tests)
   end
 
   it "org admins can't perform any actions on users not in organization" do
@@ -84,7 +92,9 @@ describe Ability do
 
       expect(abilities).to contain_exactly( :view_profile,
                                             :edit_user_info,
-                                            :change_semester)
+                                            :change_semester,
+                                            :read_user_tests,
+                                            :manage_user_tests)
     end
 
     it "if subject is not an assigned student" do

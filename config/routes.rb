@@ -57,6 +57,14 @@ Imua::Application.routes.draw do
       get '/organization/:id/modules' => 'organization#modules'
 
       get '/organization/:id/tests' => 'test#get_org_tests'
+      post '/org_test' => 'test#create_org_test'
+      put '/org_test/:id' => 'test#update_org_test'
+      delete '/org_test/:id' => 'test#delete_org_test'
+
+      get '/user/:id/tests' => 'test#get_user_tests'
+      post '/user_test' => 'test#create_user_test'
+      put '/user_test/:id' => 'test#update_user_test'
+      delete '/user_test/:id' => 'test#delete_user_test'
 
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
