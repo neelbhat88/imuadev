@@ -1,21 +1,19 @@
-.user-list {
-  @extend .plxl;
+.organizationContainer {
 
-  .user-list__add {
-    cursor: pointer;
+	padding: $wrapper;
+	padding-top: 60px;
+	padding-bottom: 60px;
 
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
+}
 
-    display: inline-block;
-    vertical-align: top;
+.organizationName {
 
-    text-align: center;
+	width: 100%;
+	text-align: center;
+	padding-bottom: 20px;
+	border-bottom: 1px black(0.25) solid;
+	margin-bottom: 60px;
 
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
 
 }
 
@@ -30,7 +28,7 @@ a.avatar-block {
 
 
 .user-modal {
-    background-color: $bg-grey;
+    background-color: $darkgrey;
     color: white;
 }
 

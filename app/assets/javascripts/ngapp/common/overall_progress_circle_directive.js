@@ -6,11 +6,9 @@ angular.module('myApp')
       points: '='
     },
     link: function(scope, element, attrs) {
-      console.log(scope.points);
-
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-        width = 68 - margin.left - margin.right;
-        height = width - margin.top - margin.bottom;
+      var width = 68 - margin.left - margin.right;
+      var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
               .append('svg')
@@ -28,9 +26,9 @@ angular.module('myApp')
           chart.selectAll("text").remove();
 
           var circleColor = '#b7b7b7';
-          var userPoints = points.user;
-          var totalPoints = points.total;
-          var percentPoints = points.percent;
+          var userPoints = points.totalUserPoints;
+          var totalPoints = points.totalPoints;
+          var percentPoints = points.percentComplete;
           var data = [
             {name: "Points Earned", value: userPoints},
             {name: "Total Points", value: (totalPoints == 0) ? 1 : totalPoints - userPoints}
@@ -83,6 +81,7 @@ angular.module('myApp')
       }
 
       scope.$watch('points', function(){
+        if (scope.points)
           scope.render(scope.points);
       }, true);
     }

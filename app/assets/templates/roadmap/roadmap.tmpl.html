@@ -2,7 +2,7 @@
   <div class="tuContainer ptl">
     <!-- Roadmap Name -->
     <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor" class="roadmapContainer__title-container">
-      <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+      <h3 class="roadmapContainer__title">{{roadmap.name}}</h3>
     </div>
 
     <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="roadmapContainer__title-container">
@@ -60,7 +60,8 @@
               <img ng-src={{milestone.icon}}/>{{milestone.title}}
             </span>
             <span class = "milestone__info">
-              <span class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
+              <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
+              <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
               <!--<span class="milestone__info__weight">Points Value: {{milestone.points * milestone.importance}}</span>-->
               <span ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin" class="milestone__info__icons">
                 <span class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>

@@ -32,6 +32,12 @@ class Api::V1::UsersController < ApplicationController
       return
     end
 
+    organization = OrganizationRepository.new.get_organization(orgId)
+    if organization.nil? || !can?(current_user, :create_user, organization)
+      render status: :forbidden, json: {}
+      return
+    end
+
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,
@@ -52,20 +58,11 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/:id
   def show
     userId = params[:id].to_i
-
-    if !student_can_access?(userId)
-      render status: :forbidden,
-        json: {}
-
-      return
-    end
-
     user = UserRepository.new.get_user(userId)
 
-    if !same_organization?(user.organization_id)
+    if !can?(current_user, :view_profile, user)
       render status: :forbidden,
         json: {}
-
       return
     end
 

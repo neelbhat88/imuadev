@@ -31,7 +31,12 @@
       <div class="wrapper clear">
         <div class="imua-logo left">
           <a href="/">
-            <%= image_tag "logo-blue.png", :alt => "IMUA", :height=>'77px', :width=>'77px' %>
+            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %>
+            <% if current_user.super_admin? %>
+              Collective Progress
+            <% else %>
+              <%= current_user.organization.name %>
+            <% end %>
           </a>
         </div>
 
@@ -39,41 +44,94 @@
           <ul>
             <% if current_user.super_admin? %>
             <li>
-              <a href="#/sa/organizations">Organizations</a>
+              <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
             </li>
             <% end %>
 
             <% if current_user.org_admin? %>
             <li>
-              <a href="#/organization/<%= current_user.organization_id %>">Users</a>
+              <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Users</a>
             </li>
             <% end %>
 
-            <% if current_user.mentor? %>
+            <% if current_user.mentor? || current_user.student? %>
             <li>
-              <a href="#/dashboard">Dashboard</a>
+              <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
             </li>
             <% end %>
 
             <% if current_user.student? %>
             <li>
-              <a href="#/progress/<%= current_user.id %>">Progress</a>
+              <a class="js-nav-link" href="#/progress/<%= current_user.id %>">Progress</a>
             </li>
             <% end %>
 
+            <% if current_user.student? %>
             <li>
-              <a href="#/roadmap/">Roadmap</a>
+              <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">Expectations</a>
             </li>
+            <% end %>
+
+            <% if !current_user.super_admin? %>
             <li>
-              <a href="#/profile/<%= current_user.id %>">Profile</a>
+              <a class="js-nav-link" href="#/roadmap/">Roadmap</a>
             </li>
-            <li>
-              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+            <% end %>
+
+            <li class="dropdown cog js-cog">
+	            <div class="current-name">
+  	            <% if current_user.super_admin? %>
+                  Administrator
+                <% else %>
+                  <%= current_user.first_last_initial %>
+                <% end %>
+	            </div>
+              <span class="glyphicon glyphicon-cog"></span>
+              <div class="submenu js-submenu">
+                <div class="submenu__link">
+                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
+                </div>
+                <div class="submenu__link">
+                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                </div>
+              </div>
             </li>
           </ul>
         </nav>
       </div>
     </header>
+    <div class="mask"></div>
     <div data-ng-view></div>
   </body>
+
+  <script>
+    $(document).ready(function(){
+      hideMenu();
+
+      $('.js-cog').click(function(){
+        $('.js-submenu').toggle();
+
+        $('.mask').toggle();
+        $('.mask').height($(window).height());
+        $('.mask').width($(window).width());
+      });
+
+      $('.js-nav-link').click(function(e) {
+        hideMenu();
+
+        e.stopPropagation();
+      });
+
+      $('.mask').click(function(e) {
+        hideMenu();
+        e.stopPropagation();
+      })
+
+      function hideMenu() {
+        $('.js-submenu').hide();
+        $('.mask').hide();
+      }
+
+    });
+  </script>
 </html>

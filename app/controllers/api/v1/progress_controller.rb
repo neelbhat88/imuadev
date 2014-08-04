@@ -30,6 +30,21 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # GET /user/:id/progress
+  # Returns object with total user points, overall points, and percent complete
+  # overall across all semesters
+  def overall_progress
+    userId = params[:id]
+
+    result = @progressService.overall_progress(userId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        overall_progress: result.object
+      }
+  end
+
   # get /user/:id/time_unit/:time_unit_id/progress/:module
   # Runs through milestones of a given module to see if any have been earned
   def module_progress

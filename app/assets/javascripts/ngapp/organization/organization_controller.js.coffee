@@ -8,7 +8,7 @@ angular.module('myApp')
     $('input, textarea').placeholder()
 
     for student in $scope.organization.students
-      ProgressService.getModulesProgress(student).then (student_with_modules_progress) ->
+      ProgressService.getAllModulesProgress(student, student.time_unit_id).then (student_with_modules_progress) ->
         $scope.students.unshift(student_with_modules_progress)
     $scope.loaded_users = true
 

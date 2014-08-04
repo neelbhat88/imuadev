@@ -1,40 +1,52 @@
 <div ng-controller="MentorDashboardController">
-  <div class="pal dashboard-header dashboard-header--mentor">
-    <div class="mentor-header">
-      <div class="greeting">
-        <div class="greeting__small">Hello {{current_user.first_name}},</div>
-        <div class="greeting__large">Welcome back!</div>
-      </div>
-      <div class="circle-attention">
-        <div class="inner">
-          <div class="circle-attention__text">
-            <div style="font-size: 75px; line-height: 1;">0</div>
-            <div class="pts" style="font-size: 16px; line-height: 1;">students need your attention</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="dashboard-header dashboard-header--mentor">
+	    <div class="mentor-header clear">
+	      <div class="greeting">
+	        <h5>Hey there {{current_user.first_name}},</h5>
+	        <h2>Welcome back!</h2>
+	      </div>
+	      <div class="circle-attention">
+
+			  	<div class="circle">
+			  	
+				  	<div class="text">
+				  	
+					<h2>0</h2>
+		            <span class="subhead">students need<br>your attention</span>				  	
+				  	</div>
+
+			  	</div>
+			  	
+
+		            
+		  </div>
+	    </div>	
   </div>
 
-  <div class="pal dashboard-attention dashboard-attention--mentor displayNone">
+  <div class="dashboard-attention dashboard-attention--mentor displayNone">
     <div>This is where things that need attention go</div>
   </div>
 
-  <div class="pal dashboard-content dashboard-content--mentor">
-    <h4>My Assigned Students</h4>
-    <div ng-hide="assigned_students.length > 0">
-      <h5 class="pam" style="font-style: italic">{{current_user.first_name}}, looks like no students have been assigned to you yet.</h5>
-    </div>
-    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
-      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-      <a ng-href="#/progress/{{student.user.id}}" title="View progress">
-        <progress-circle student="student"></progress-circle>
-      </a>
-      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
-        <div class="avatar-block__name">
-          {{student.user.first_name}} {{student.user.last_name}}
-        </div>
-      </a>
-    </div>
+  <div class="dashboard-content dashboard-content--mentor">
+	    <div class="user-list-header">
+	    	<h4><span class="bold">{{current_user.first_name}}'s</span> Students</h4>
+	    </div>
+	    <div ng-hide="assigned_students.length > 0">
+	      <h5 style="font-style: italic">{{current_user.first_name}}, looks like no students have been assigned to you yet.</h5>
+	    </div>
+	    <div class="user-list-container">
+		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
+		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+		      <a ng-href="#/progress/{{student.user.id}}" title="View Student">
+		        <progress-circle student="student"></progress-circle>
+		      </a>
+		      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+		        <div class="avatar-block__name">
+		          <h6>{{student.user.first_name}} {{student.user.last_name}}</h6>
+		        </div>
+		      </a>
+		    </div>
+	    
+	    </div>
   </div>
 </div>

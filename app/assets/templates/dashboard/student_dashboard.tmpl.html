@@ -1,0 +1,42 @@
+<div ng-controller="StudentDashboardController" class="studentDashboardContainer">
+  <div wait-to-load="{{student_with_modules_progress}}">
+
+    <div class="dashboard-header dashboard-header--student">
+      <div class="mentor-header">
+        <div class="greeting">
+          <div class="greeting__small">Hello {{student.first_name}},</div>
+          <div class="greeting__large">Welcome back!</div>
+        </div>
+
+        <div class="progress-circle" ng-if="student_with_modules_progress">
+          <a ng-href="#/progress/{{student.id}}" title="View Progress">
+            <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pal dashboard-attention dashboard-attention--student displayNone">
+      <div>This is where things that need attention go</div>
+    </div>
+
+    <div class="pal dashboard-content dashboard-content--student">
+
+      <div class="mentor-list">
+        <div class="student-mentors-header">Your Mentors:</div>
+        <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+          <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+            <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+            <div class="avatar-block__name">
+              {{mentor.first_name}} {{mentor.last_name}}
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="middle-content-container"></div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,4 +1,8 @@
 @import "reset";
+
+@import "bootstrap";
+@import "bootstrap/glyphicons";
+
 @import "main";
 @import "static";
 @import "profile";
@@ -7,9 +11,8 @@
 @import "organization";
 @import "mentor";
 @import "dashboard";
+@import "expectation";
 
 @import "ladda";
 @import "loading_animation";
 @import "overrides";
-@import "bootstrap";
-@import "bootstrap/glyphicons";

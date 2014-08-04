@@ -7,8 +7,8 @@ angular.module('myApp')
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      	width = 170 - margin.left - margin.right;
-      	height = width - margin.top - margin.bottom;
+      var width = 170 - margin.left - margin.right;
+      var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
               .append('svg')
@@ -27,27 +27,27 @@ angular.module('myApp')
           // Throw in a switch statement for now, try to integrate  module
           // color directive
           switch (module.module_title) {
-              case 'Academics':       var moduleColor = '#41ad49'; break;
-              case 'Service':         var moduleColor = '#e8be28'; break;
-              case 'Extracurricular': var moduleColor = '#ef413d'; break;
-              case 'College_Prep':    var moduleColor = '#27aae1'; break;
-              case 'Testing':         var moduleColor = '#9665aa'; break;
+              case 'Academics':       var moduleColor = '#41ad49'; var moduleColorBg = '#16241a'; break;
+              case 'Service':         var moduleColor = '#e8be28'; var moduleColorBg = '#2a271b'; break;
+              case 'Extracurricular': var moduleColor = '#ef413d'; var moduleColorBg = '#291818'; break;
+              case 'College_Prep':    var moduleColor = '#27aae1'; var moduleColorBg = '#142229'; break;
+              case 'Testing':         var moduleColor = '#9665aa'; var moduleColorBg = '#221b2a'; break;
           }
 
           var modulePoints = module.points.user;
           var totalPoints = module.points.total;
           var data = [
-            {name: "Points Earned", value: modulePoints},
-            {name: "Total Points", value: (totalPoints == 0) ? 1 : totalPoints - modulePoints}
+            {name: "Points Earned", value: (totalPoints == 0) ? 1 : modulePoints},
+            {name: "Total Points", value: (totalPoints == 0) ? 0 : totalPoints - modulePoints}
           ];
 
 
           var color = d3.scale.ordinal()
-              .range([moduleColor, '#e5e5e5']);
+              .range([moduleColor, moduleColorBg]);
 
           var arc = d3.svg.arc()
               .outerRadius(radius)
-              .innerRadius(radius - 15);
+              .innerRadius(radius - 12);
 
           var myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
 
@@ -92,15 +92,18 @@ angular.module('myApp')
           }
 */
           d3.select("#" + module.module_title).append("text")
-          .attr("dy", "0em")
+          .attr("dy", "0.2em")
           .attr("class", "value")
+          .attr("fill", "white")
+          .attr("font-size", "30")
           .style("text-anchor", "middle")
           .text(function(d) {
               return modulePoints + "/" + totalPoints;});
 
           d3.select("#" + module.module_title).append("text")
-          .attr("dy", "1em")
+          .attr("dy", "1.7em")
           .attr("class", "text")
+          .attr("fill", "white")
           .style("text-anchor", "middle")
           .text(function(d) {
               return "points";});

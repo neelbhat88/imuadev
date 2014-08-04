@@ -1,7 +1,15 @@
 angular.module('myApp')
-.controller "DashboardController", ["$scope", "current_user",
-($scope, current_user) ->
+.controller "DashboardController", ["$scope", "$location", "current_user", "user",
+($scope, $location, current_user, user) ->
   $scope.current_user = current_user
+  if (user)
+    $scope.user = user
+  else
+    $scope.user = current_user
+
+  switch $scope.user.role
+    when $scope.CONSTANTS.USER_ROLES.org_admin then $location.path('/organization/' + $scope.user.organization_id)
+    when $scope.CONSTANTS.USER_ROLES.super_admin then $location.path('/sa/organizations')
 
   $scope.loadDashboard = (role) ->
     switch role
@@ -11,7 +19,7 @@ angular.module('myApp')
         # 'dashboard/schooladmin_dashboard.html'
       when $scope.CONSTANTS.USER_ROLES.mentor
         'dashboard/mentor_dashboard.html'
-      # when $scope.CONSTANTS.USER_ROLES.student
-        # 'dashboard/student_dashboard.html'
+      when $scope.CONSTANTS.USER_ROLES.student
+        'dashboard/student_dashboard.html'
 
 ]

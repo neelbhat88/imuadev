@@ -14,12 +14,14 @@ group :development do
   #gem 'debugger'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails', "~> 4.0"
+  gem 'jasmine'
 end
 
 group :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'rspec-collection_matchers'
   gem 'factory_girl_rails' ,"~> 4.0"
+  gem 'jasmine'
 end
 
 # Gems used only for assets and not required
@@ -60,6 +62,8 @@ gem 'devise'
 gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
 
 gem "d3-rails"
+
+gem "six"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

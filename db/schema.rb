@@ -144,10 +144,10 @@ ActiveRecord::Schema.define(:version => 20140801271125) do
     t.date     "date"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|

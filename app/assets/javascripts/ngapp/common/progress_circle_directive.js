@@ -6,11 +6,9 @@ angular.module('myApp')
       student: '='
     },
     link: function(scope, element, attrs) {
-        console.log(scope.student);
-
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      	width = 170 - margin.left - margin.right;
-      	height = width - margin.top - margin.bottom;
+      var width = 170 - margin.left - margin.right;
+      var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
       				.attr("id", scope.student.user.id)
@@ -25,7 +23,7 @@ angular.module('myApp')
       scope.render = function(student) {
         chart.selectAll("g").remove();
         var color = d3.scale.ordinal()
-            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#e5e5e5']);
+            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
 
         var total_points = 0;
         var user_points = 0;
@@ -49,13 +47,13 @@ angular.module('myApp')
 
         var arc = d3.svg.arc()
             .outerRadius(radius)
-            .innerRadius(radius - 15);
+            .innerRadius(radius - 14);
 
         var svg = $('#' + student.user.id + ' svg')[0];
         var photoCircle = d3.select(svg)
                             .append("circle")
-                            .attr("cx", width-85)
-                            .attr("cy", height-85)
+                            .attr("cx", width/2)
+                            .attr("cy", height/2)
                             .attr("r", radius-20)
 
 
@@ -72,8 +70,8 @@ angular.module('myApp')
         .append("image")
                          .attr("x", 0)
                         .attr("y", 0)
-                        .attr("width", 130)
-                        .attr("height", 130)
+                        .attr("width", width-40)
+                        .attr("height", height-40)
                         .attr("xlink:href", student.user.square_avatar_url);
 
         var arc2 = d3.svg.arc().outerRadius(radius - 40);
@@ -93,7 +91,7 @@ angular.module('myApp')
 
         g.append("path").attr("fill", function(d, i) { return color(i); })
             .transition()
-                .duration(1300)
+                .duration(800)
                 .attrTween("d", tweenPie);
 
         function tweenPie(b) {

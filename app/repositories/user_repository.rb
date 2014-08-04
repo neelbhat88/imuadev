@@ -68,7 +68,7 @@ class UserRepository
       return { :status => :conflict, :info => "A user with the email #{user_obj[:email]} already exists.", :user => nil }
     end
 
-    password = Devise.friendly_token.first(8)
+    password = generate_password()
     user = User.new do |u|
       u.email = user_obj[:email]
       u.first_name = user_obj[:first_name]
@@ -95,6 +95,20 @@ class UserRepository
     end
 
     return { :status => :internal_server_error, :info => "Failed to create user.", :user => nil }
+  end
+
+  def generate_password
+    return Devise.friendly_token.first(8)
+  end
+
+  def reset_password(user)
+    new_password = generate_password()
+
+    user.update_attributes(:password => new_password)
+
+    Background.process do
+      UserMailer.reset_password(user, new_password).deliver
+    end
   end
 
   def delete_user(userId)
@@ -193,6 +207,10 @@ class UserRepository
     end
 
     return mentors
+  end
+
+  def are_related?(studentId, mentorId)
+    return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
   end
 end
 

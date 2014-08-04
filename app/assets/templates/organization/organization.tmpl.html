@@ -1,11 +1,17 @@
 <div class="organizationContainer" wait-to-load="{{loaded_users}}">
-  <h2 class="plxl">{{organization.name}}</h2>
 
-  <div class="ptxl">
+	<div class="organizationName">
+	
+	  <h3>{{organization.name}}</h3>
+	
+	</div>
 
+  <div>
+  
     <div class="user-list">
-      <h4>Organization Admins</h4>
-
+      
+      	<h4>Organization Admins</h4>
+      
       <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
         <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
 
@@ -17,12 +23,12 @@
       </div>
 
       <div class="user-list__add" ng-click="addOrgAdmin()">
-        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div class="glyphicon glyphicon-plus-sign"></div>
         <div>Add Organization Admin</div>
       </div>
     </div>
 
-    <div class="user-list ptxl">
+    <div class="user-list">
       <h4>Mentors</h4>
 
       <div class="avatar-block avatar-block--list" ng-repeat="mentor in organization.mentors">
@@ -38,12 +44,12 @@
       </div>
 
       <div class="user-list__add" ng-click="addMentor()">
-        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div class="glyphicon glyphicon-plus-sign"></div>
         <div>Add Mentor</div>
       </div>
     </div>
 
-    <div class="user-list ptxl pbxl">
+    <div class="user-list">
       <h4>Students</h4>
 
       <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in students | orderBy: 'user.id'">
@@ -59,10 +65,12 @@
       </div>
 
       <div class="user-list__add" ng-click="addStudent()">
-        <div class="glyphicon glyphicon-plus-sign ptxl"></div>
+        <div class="glyphicon glyphicon-plus-sign"></div>
         <div>Add Student</div>
       </div>
     </div>
+
+    <div class="expectations" ng-include="'expectation/organization_expectation.html'"></div>
 
   </div>
 

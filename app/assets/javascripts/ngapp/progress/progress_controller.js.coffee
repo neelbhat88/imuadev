@@ -7,7 +7,6 @@ angular.module('myApp')
   $scope.selected_semester = null
   $scope.current_user = current_user
   $scope.student = student
-  $scope.overall_points = {user: 0, total: 0, percent: 0}
 
   $scope.loaded_yes_no_milestones = false
   $scope.loaded_module_milestones = false
@@ -28,9 +27,9 @@ angular.module('myApp')
     contentWidth = $('.js-circles').outerWidth()
     sideNavWidth = $('.js-module-data-side-nav').outerWidth()
     if contentWidth >= windowWidth
-      $('.js-module-data-content-container').width(contentWidth - sideNavWidth - 20)
+      $('.js-module-data-content-container').width(contentWidth - sideNavWidth - 220)
     else
-      $('.js-module-data-content-container').width(windowWidth - sideNavWidth - 20)
+      $('.js-module-data-content-container').width(windowWidth - sideNavWidth - 220)
 
   $(window).resize (event) -> setWidth()
 
@@ -45,27 +44,27 @@ angular.module('myApp')
         if tu.id == student.time_unit_id
           tu.name = "This Semester"
           $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
+          $scope.new_selected_semester = $scope.selected_semester
 
-  $scope.loaded_overall_points = false
+  # Loads data for all modules progress circle
+  ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+    setWidth()
+    $scope.modules_progress = student_with_modules_progress.modules_progress
+    $scope.selected_module = $scope.modules_progress[0]
+    $scope.student_with_modules_progress = student_with_modules_progress
+
+  # Loads data for overall progress circle
+  ProgressService.getOverallProgress($scope.student)
+    .success (data) ->
+      $scope.overall_points = data.overall_progress
+
   $scope.$watch 'selected_semester', () ->
-    if !$scope.loaded_overall_points && $scope.selected_semester
-      for sem in $scope.semesters
-        ProgressService.getModules($scope.student, sem.id)
-          .success (data) ->
-            time_unit_id = data.modules_progress[0].time_unit_id
-            $scope.modules_progress[time_unit_id] = data.modules_progress;
-            for m in data.modules_progress
-              $scope.overall_points.user += m.points.user
-              $scope.overall_points.total += m.points.total
-              $scope.overall_points.percent = Math.round(($scope.overall_points.user / $scope.overall_points.total) * 100)
-      $scope.loaded_overall_points = true
-
-  $scope.$watch 'modules_progress[selected_semester.id]', () ->
-    if $scope.modules_progress && $scope.selected_semester && $scope.modules_progress[$scope.selected_semester.id]
-      setWidth()
-      if !$scope.selected_module
-        $scope.selected_module = $scope.modules_progress[$scope.selected_semester.id][0]
-      $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[$scope.selected_semester.id]}
+    if $scope.selected_semester && $scope.selected_module && !$scope.loaded_yes_no_milestones
+      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+        .success (data) ->
+          $scope.yes_no_milestones = data.yes_no_milestones
+          $scope.loaded_yes_no_milestones = true
+          $scope.new_selected_semester = $scope.selected_semester
 
   $scope.$watch 'selected_module', () ->
     if $scope.selected_module && !$scope.loaded_yes_no_milestones
@@ -73,6 +72,7 @@ angular.module('myApp')
         .success (data) ->
           $scope.yes_no_milestones = data.yes_no_milestones
           $scope.loaded_yes_no_milestones = true
+  , true
 
   $scope.toggleYesNoMilestone = (milestone) ->
     if milestone.earned
@@ -85,15 +85,31 @@ angular.module('myApp')
           $scope.refreshPoints()
 
   $scope.refreshPoints = () ->
-    # ToDo: Might be better to broadcast something here that progresscontroller lisents for and then updates progress accordingly
+    # ToDo: If the overall progress circle on this page no longer needs the students picture,
+    # then we don't need student_with_modules_progress and the directive can be changed to just
+    # accept the modules_progress array
+    # ToDo: I don't like how this works, we should revisit. Difference between checking progress
+    # after saving data and then getting progress for all categories, for the full circle, and the
+    # overall progress circle
     ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->
-        for mod in $scope.modules_progress[$scope.selected_semester.id] # Loop through modules on progress controller
-          if mod.module_title == data.module_progress.module_title
-            $scope.overall_points.user += (data.module_progress.points.user - mod.points.user)
-            $scope.overall_points.total += (data.module_progress.points.total - mod.points.total)
-            $scope.overall_points.percent = Math.round(($scope.overall_points.user / $scope.overall_points.total) * 100)
-            mod.points = data.module_progress.points
+        ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
+          $scope.student_with_modules_progress = student_with_modules_progress
+
+          selected_mod_progress = null
+          for mod in $scope.modules_progress
+            selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
+
+          # Only change the selected one so all of the cicrles don't refresh
+          for mod in student_with_modules_progress.modules_progress
+            selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
+
+        refreshOverallProgress()
+
+  refreshOverallProgress = () ->
+    ProgressService.getOverallProgress($scope.student)
+      .success (data) ->
+        $scope.overall_points = data.overall_progress
 
   $scope.selectModule = (mod) ->
     if $scope.selected_module != mod
@@ -103,23 +119,22 @@ angular.module('myApp')
       $scope.selected_module = mod
 
   $scope.selectSemester = (sem) ->
-    if $scope.selected_semester != sem
-      $scope.loaded_milestones = false
-      $scope.loaded_module_milestones = false
-      $scope.loaded_yes_no_milestones = false
-      ProgressService.getModules(student, sem.id)
-        .success (data) ->
-          $scope.found_prev_module_title = false
-          for m in $scope.modules_progress[sem.id]
-            if m.module_title == $scope.selected_module.module_title
-              $scope.found_prev_module_title = true
-              $scope.selected_module = m
-              break
-          if !$scope.found_prev_module_title
-            $scope.selected_module = $scope.modules_progress[sem.id][0]
-          $scope.modules_progress[sem.id] = data.modules_progress
-          $scope.student_with_modules_progress = {user: $scope.student, modules_progress: $scope.modules_progress[sem.id]}
-      $scope.selected_semester = sem
+    $scope.loaded_milestones = false
+    $scope.loaded_module_milestones = false
+    $scope.loaded_yes_no_milestones = false
+
+    # ToDo: If the overall progress circle on this page no longer needs the students picture,
+    # then we don't need student_with_modules_progress and the directive can be changed to just
+    # accept the modules_progress array
+    ProgressService.getAllModulesProgress($scope.student, sem.id).then (student_with_modules_progress) ->
+      $scope.modules_progress = student_with_modules_progress.modules_progress
+      $scope.student_with_modules_progress = student_with_modules_progress
+
+      for mod in $scope.modules_progress
+        if mod.module_title == $scope.selected_module.module_title
+          $scope.selected_module = mod
+
+    $scope.selected_semester = sem
 
 
   $scope.getModuleTemplate = (modTitle) ->
