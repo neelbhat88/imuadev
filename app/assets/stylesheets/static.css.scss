@@ -177,7 +177,7 @@ html {
 
   .section {
   
-  	padding: 100px 140px;
+  	padding: 120px 140px;
   	
   	.inner-section {
   	
@@ -253,9 +253,15 @@ html {
 		color: white;
 		width: 100%;
 		
-		.image {
+		.image--categories {
 		
 			max-width: 450px;
+		
+		}
+		
+		.image--studentlist {
+		
+			max-width: 600px;
 		
 		}
 			
