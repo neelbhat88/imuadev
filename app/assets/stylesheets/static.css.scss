@@ -279,7 +279,46 @@ html {
 	
 		color: white;
 		width: 100%;
+				
+		.org-logos {
+	
+  		width: 100%;
+  		
+  		.org-logo--img {
+  		
+  			width: 200px;
+  			display: inline-block;
+  			margin: 50px;
+  			  			
+  			img {
+  			
+  				width: 100%;
+  				height: auto;
+  				  			
+  			}
+  			
+  		
+  		}
+  		
+  		.org-logo--smaller {
+  		
+  			width: 150px;
+  			display: inline-block;
+  			margin: 0 50px;
+  			  			
+  			img {
+  			
+  				width: 100%;
+  				height: auto;
+  				  			
+  			}
+  			
+  		
+  		}
+  	
+  	}
+
 	
 	}
-
+	
 }
