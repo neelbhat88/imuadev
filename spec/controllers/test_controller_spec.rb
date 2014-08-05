@@ -339,293 +339,658 @@ describe Api::V1::TestController do
   ########### USER ############
   #############################
 
-  # describe "GET /users/:id/expectations" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:studentId) { subject.current_user.id }
-  #     let(:orgId)     { subject.current_user.organization_id }
-  #
-  #     let!(:expectation)      { create(:expectation,
-  #                                      organization_id: orgId) }
-  #     let!(:user_expectation) { create(:user_expectation,
-  #                                      expectation_id: expectation.id,
-  #                                      user_id:        studentId) }
-  #
-  #     xit "returns 403 if a student tries to see another student's UserExpectations" do
-  #       otherStudentId = studentId + 1
-  #       get :get_user_expectations, {:id => otherStudentId}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if same student" do
-  #       get :get_user_expectations, {:id => studentId}
-  #       expect(response.status).to eq(200)
-  #       expect(json["user_expectations"][0]["user_id"]).to eq(studentId)
-  #       expect(json["user_expectations"][0]["expectation_id"]).to eq(expectation.id)
-  #     end
-  #
-  #   end
-  #
-  #   describe "as a org admin" do
-  #     login_org_admin
-  #
-  #     let(:adminId) { subject.current_user.id }
-  #     let(:orgId)   { subject.current_user.organization_id }
-  #
-  #     let!(:expectation)      { create(:expectation,
-  #                                      organization_id: orgId) }
-  #     let!(:student)          { create(:student,
-  #                                      organization_id: orgId) }
-  #     let!(:user_expectation) { create(:user_expectation,
-  #                                      expectation_id: expectation.id,
-  #                                      user_id:        student.id) }
-  #
-  #     xit "returns 403 if not in same organization" do
-  #       otherOrgId = orgId + 1
-  #       subject.current_user.organization_id = otherOrgId
-  #
-  #       get :get_user_expectations, {:id => student.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if same organization" do
-  #       get :get_user_expectations, {:id => student.id}
-  #       expect(response.status).to eq(200)
-  #       expect(json["user_expectations"][0]["user_id"]).to eq(student.id)
-  #       expect(json["user_expectations"][0]["expectation_id"]).to eq(expectation.id)
-  #     end
-  #   end
-  # end
-  #
-  # describe "POST /users/:id/expectations/:expectation_id" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:studentId) { subject.current_user.id }
-  #     let(:orgId)     { subject.current_user.organization_id }
-  #
-  #     let!(:expectation)      { create(:expectation,
-  #                                      organization_id: orgId) }
-  #
-  #     xit "returns 403 if a student tries to create a UserExpectation" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id:        studentId)
-  #       post :create_user_expectation, {:id => studentId,
-  #                                       :expectation_id => expectation.id,
-  #                                       :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     let!(:student)       { create(:student,
-  #                                   organization_id: orgId) }
-  #     let!(:other_student) { create(:student,
-  #                                   organization_id: otherOrgId) }
-  #
-  #     let!(:expectation)       { create(:expectation,
-  #                                       organization_id: orgId) }
-  #     let!(:other_expectation) { create(:expectation,
-  #                                       organization_id: otherOrgId) }
-  #
-  #     xit "returns 403 if an admin tries to create a UserExpectation for an Expectation not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id:        student.id)
-  #       post :create_user_expectation, {:id => student.id,
-  #                                       :expectation_id => other_expectation.id,
-  #                                       :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     xit "returns 403 if an admin tries to create a UserExpectation for a User not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id: student.id)
-  #       post :create_user_expectation, {:id => other_student.id,
-  #                                       :expectation_id => expectation.id,
-  #                                       :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to create a UserExpectation (with incorrect json)" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: other_expectation.id,
-  #                                         user_id:        other_student.id)
-  #       post :create_user_expectation, {:id => student.id,
-  #                                       :expectation_id => expectation.id,
-  #                                       :userExpectation => user_expectation}
-  #       expect(response.status).to eq(200)
-  #       expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
-  #       expect(json["user_expectation"]["user_id"]).to eq(student.id)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # describe "PUT /users/:id/expectations/:expectation_id" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:studentId) { subject.current_user.id }
-  #     let(:orgId)     { subject.current_user.organization_id }
-  #
-  #     let!(:expectation)      { create(:expectation,
-  #                                      organization_id: orgId) }
-  #     let!(:user_expectation) { create(:user_expectation,
-  #                                      expectation_id: expectation.id,
-  #                                      user_id: studentId) }
-  #
-  #     xit "returns 403 if a student tries to update a UserExpectation" do
-  #       put :update_user_expectation, {:id => studentId,
-  #                                      :expectation_id => expectation.id,
-  #                                      :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     let!(:student)       { create(:student,
-  #                                   organization_id: orgId) }
-  #     let!(:other_student) { create(:student,
-  #                                   organization_id: otherOrgId) }
-  #
-  #     let!(:expectation)       { create(:expectation,
-  #                                       organization_id: orgId) }
-  #     let!(:other_expectation) { create(:expectation,
-  #                                       organization_id: otherOrgId) }
-  #
-  #     let!(:user_expectation)       { create(:user_expectation,
-  #                                            expectation_id: expectation.id,
-  #                                            user_id: student.id) }
-  #     let!(:other_user_expectation) { create(:user_expectation,
-  #                                            expectation_id: other_expectation.id,
-  #                                            user_id: other_student.id) }
-  #
-  #     xit "returns 403 if an admin tries to update a UserExpectation for an Expectation not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id:        student.id)
-  #       put :update_user_expectation, {:id => student.id,
-  #                                      :expectation_id => other_expectation.id,
-  #                                      :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     xit "returns 403 if an admin tries to update a UserExpectation for a User not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id: student.id)
-  #       put :update_user_expectation, {:id => other_student.id,
-  #                                      :expectation_id => expectation.id,
-  #                                      :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to update a UserExpectation (with incorrect json)" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: other_expectation.id,
-  #                                         user_id:        other_student.id)
-  #       put :update_user_expectation, {:id => student.id,
-  #                                      :expectation_id => expectation.id,
-  #                                      :userExpectation => user_expectation}
-  #       expect(response.status).to eq(200)
-  #       expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
-  #       expect(json["user_expectation"]["user_id"]).to eq(student.id)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # describe "DELETE /users/:id/expectations/:expectation_id" do
-  #
-  #   describe "as a student" do
-  #     login_student
-  #
-  #     let(:studentId) { subject.current_user.id }
-  #     let(:orgId)     { subject.current_user.organization_id }
-  #
-  #     let!(:expectation)      { create(:expectation,
-  #                                      organization_id: orgId) }
-  #     let!(:user_expectation) { create(:user_expectation,
-  #                                      expectation_id: expectation.id,
-  #                                      user_id: studentId) }
-  #
-  #     xit "returns 403 if a student tries to delete a UserExpectation" do
-  #       delete :delete_user_expectation, {:id => studentId,
-  #                                         :expectation_id => expectation.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #   end
-  #
-  #   describe "as an org admin" do
-  #     login_org_admin
-  #
-  #     let(:orgId)      { subject.current_user.organization_id }
-  #     let(:otherOrgId) { orgId + 1 }
-  #
-  #     let!(:student)       { create(:student,
-  #                                   organization_id: orgId) }
-  #     let!(:other_student) { create(:student,
-  #                                   organization_id: otherOrgId) }
-  #
-  #     let!(:expectation)       { create(:expectation,
-  #                                       organization_id: orgId) }
-  #     let!(:other_expectation) { create(:expectation,
-  #                                       organization_id: otherOrgId) }
-  #
-  #     let!(:user_expectation)       { create(:user_expectation,
-  #                                            expectation_id: expectation.id,
-  #                                            user_id: student.id) }
-  #     let!(:other_user_expectation) { create(:user_expectation,
-  #                                            expectation_id: other_expectation.id,
-  #                                            user_id: other_student.id) }
-  #
-  #     xit "returns 403 if an admin tries to delete a UserExpectation for an Expectation not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id:        student.id)
-  #       delete :delete_user_expectation, {:id => student.id,
-  #                                         :expectation_id => other_expectation.id}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     xit "returns 403 if an admin tries to delete a UserExpectation for a User not in their Organization" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: expectation.id,
-  #                                         user_id: student.id)
-  #       delete :delete_user_expectation, {:id => other_student.id,
-  #                                         :expectation_id => expectation.id,
-  #                                         :userExpectation => user_expectation}
-  #       expect(response.status).to eq(403)
-  #     end
-  #
-  #     it "returns 200 if an admin tries to delete a UserExpectation (with incorrect json)" do
-  #       user_expectation = attributes_for(:user_expectation,
-  #                                         expectation_id: other_expectation.id,
-  #                                         user_id:        other_student.id)
-  #       delete :delete_user_expectation, {:id => student.id,
-  #                                         :expectation_id => expectation.id,
-  #                                         :userExpectation => user_expectation}
-  #       expect(response.status).to eq(200)
-  #     end
-  #   end
-  #
-  # end
+  describe "GET /users/:id/tests?time_unit_id=#" do
+
+    describe "as a student" do
+      login_student
+
+      let(:userId)     { subject.current_user.id }
+      let(:orgId)      { subject.current_user.organization_id }
+      let(:timeUnitId) { subject.current_user.time_unit_id }
+
+      let!(:org)          { create(:organization, id: orgId) }
+      let!(:otherStudent) { create(:student, organization_id: org.id) }
+      let(:otherUserId)   { otherStudent.id }
+
+      let!(:orgTest)      { create(:org_test, organization_id: org.id) }
+
+      let!(:userTest1)    { create(:user_test, org_test_id: orgTest.id,
+                                               user_id: userId,
+                                               time_unit_id: timeUnitId) }
+      let!(:userTest2)    { create(:user_test, org_test_id: orgTest.id,
+                                               user_id: userId,
+                                               time_unit_id: timeUnitId + 1) }
+
+      let!(:otherUserTest1) { create(:user_test, org_test_id: orgTest.id,
+                                                 user_id: otherUserId,
+                                                 time_unit_id: timeUnitId) }
+      let!(:otherUserTest2) { create(:user_test, org_test_id: orgTest.id,
+                                                 user_id: otherUserId,
+                                                 time_unit_id: timeUnitId + 1) }
+
+      it "returns 403 if try to view another student's tests (all)" do
+        get :get_user_tests, {:id => otherUserId}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 403 if try to view another student's tests (for a particular time unit)" do
+        get :get_user_tests, {:id => otherUserId, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if own tests (all)" do
+        get :get_user_tests, {:id => userId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(userTest1.id)
+        expect(json["userTests"][1]["id"]).to eq(userTest2.id)
+      end
+
+      it "returns 200 if own tests (for a particular time unit)" do
+        get :get_user_tests, {:id => userId, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(userTest1.id)
+        expect(json["userTests"][1]).to eq(nil)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:userId)     { subject.current_user.id }
+      let(:orgId)      { subject.current_user.organization_id }
+      let!(:org)       { create(:organization, id: orgId) }
+      let(:timeUnitId) { 1 }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org.id) }
+
+      let!(:relationship) { create(:relationship, user_id: student1.id,
+                                                  assigned_to_id: userId) }
+
+      let!(:orgTest) { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId) }
+      let!(:student1Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId + 1) }
+
+      let!(:student2Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                 user_id: student2.id,
+                                                 time_unit_id: timeUnitId) }
+      let!(:student2Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                 user_id: student2.id,
+                                                 time_unit_id: timeUnitId + 1) }
+
+      it "returns 403 if try to view a student's tests (all) who is not assigned to them." do
+        get :get_user_tests, {:id => student2.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 403 if try to view a student's tests (for a particular time unit) who is not assigned to them." do
+        get :get_user_tests, {:id => student2.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if try to view a student's tests (all) who is assigned to them." do
+        get :get_user_tests, {:id => student1.id}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+      end
+
+      it "returns 200 if try to view a student's tests (for a particular time unit) who is assigned to them." do
+        get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]).to eq(nil)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:timeUnitId) { 1 }
+
+      let(:orgId) { subject.current_user.organization_id }
+      let!(:org)  { create(:organization, id: orgId) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:orgTest)  { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId) }
+      let!(:student1Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId + 1) }
+
+      let(:otherOrgId) { orgId + 1 }
+      let!(:otherOrg)  { create(:organization, id: otherOrgId) }
+
+      let!(:student2)      { create(:student, organization_id: otherOrg.id) }
+      let!(:otherOrgTest)  { create(:org_test, organization_id: otherOrg.id) }
+
+      let!(:student2Test1) { create(:user_test, org_test_id: otherOrgTest.id,
+                                                user_id: student2.id,
+                                                time_unit_id: timeUnitId) }
+      let!(:student2Test2) { create(:user_test, org_test_id: otherOrgTest.id,
+                                                user_id: student2.id,
+                                                time_unit_id: timeUnitId + 1) }
+
+      it "returns 403 if try to view a student's tests (all) for different organization." do
+        get :get_user_tests, {:id => student2.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 403 if try to view a student's tests (for a particular time unit) for different organization." do
+        get :get_user_tests, {:id => student2.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if try to view a student's tests (all) within same organization." do
+        get :get_user_tests, {:id => student1.id}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+      end
+
+      it "returns 200 if try to view a student's tests (for a particular time unit) within same organization." do
+        get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]).to eq(nil)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let(:timeUnitId) { 1 }
+
+      let(:orgId) { 1 }
+      let!(:org)  { create(:organization, id: orgId) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:orgTest)  { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId) }
+      let!(:student1Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id,
+                                                time_unit_id: timeUnitId + 1) }
+
+      let(:otherOrgId) { orgId + 1 }
+      let!(:otherOrg)  { create(:organization, id: otherOrgId) }
+
+      let!(:student2)      { create(:student, organization_id: otherOrg.id) }
+      let!(:otherOrgTest)  { create(:org_test, organization_id: otherOrg.id) }
+
+      let!(:student2Test1) { create(:user_test, org_test_id: otherOrgTest.id,
+                                                user_id: student2.id,
+                                                time_unit_id: timeUnitId) }
+      let!(:student2Test2) { create(:user_test, org_test_id: otherOrgTest.id,
+                                                user_id: student2.id,
+                                                time_unit_id: timeUnitId + 1) }
+
+      it "returns 200 if try to view a student1's tests (all)." do
+        get :get_user_tests, {:id => student1.id}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+      end
+
+      it "returns 200 if try to view a student1's tests (for a particular time unit)." do
+        get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
+        expect(json["userTests"][1]).to eq(nil)
+      end
+
+      it "returns 200 if try to view a student2's tests (all)." do
+        get :get_user_tests, {:id => student2.id}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student2Test1.id)
+        expect(json["userTests"][1]["id"]).to eq(student2Test2.id)
+      end
+
+      it "returns 200 if try to view a student2's tests (for a particular time unit)." do
+        get :get_user_tests, {:id => student2.id, :time_unit_id => timeUnitId}
+        expect(response.status).to eq(200)
+        expect(json["userTests"][0]["id"]).to eq(student2Test1.id)
+        expect(json["userTests"][1]).to eq(nil)
+      end
+    end
+
+  end
+
+  describe "POST /user_test" do
+
+    describe "as a student" do
+      login_student
+
+      let(:userId)     { subject.current_user.id }
+      let(:orgId)      { subject.current_user.organization_id }
+      let(:timeUnitId) { subject.current_user.time_unit_id }
+
+      let!(:org)        { create(:organization, id: orgId) }
+      let!(:otherUser)  { create(:student, organization_id: org.id) }
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      it "returns 403 if creating a test for another student" do
+        otherUserTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                                   user_id: otherUser.id)
+        post :create_user_test, {:userTest => otherUserTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if creating a test for themself" do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: userId)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["user_id"]).to eq(userId)
+      end
+
+      # TODO More tests like this across the entire suite
+      xit "returns 403 if creating a test for themself for a time_unit other than the one that they're currently in." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: userId,
+                                              time_unit_id: timeUnitId + 1)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org.id) }
+
+      let!(:relationship) { create(:relationship, user_id: student1.id,
+                                                  assigned_to_id: userId) }
+
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      it "returns 403 if creating a test for a student not assigned to them" do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student2.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if creating a test for a student assigned to them" do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["user_id"]).to eq(student1.id)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+      let!(:org2)  { create(:organization, id: orgId + 1) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org2.id) }
+
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      it "returns 403 if creating a test for a student in a different organization." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student2.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if creating a test for a student in the same organization." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["user_id"]).to eq(student1.id)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let(:orgId)     { 1 }
+      let!(:org)      { create(:organization, id: orgId) }
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:orgTest)  { create(:org_test, organization_id: org.id) }
+
+      let!(:otherOrg)     { create(:organization, id: orgId + 1) }
+      let!(:student2)     { create(:student, organization_id: otherOrg.id) }
+      let!(:otherOrgTest) { create(:org_test, organization_id: otherOrg.id) }
+
+      it "returns 200 if creating a test for student1." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["user_id"]).to eq(student1.id)
+      end
+
+      it "returns 200 if creating a test for student2 with orgTest in same organization." do
+        userTest = attributes_for(:user_test, org_test_id: otherOrgTest.id,
+                                              user_id: student2.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["user_id"]).to eq(student2.id)
+      end
+
+      # TODO More tests like this across the entire suite
+      xit "returns 500 if creating a test for student with orgTest from different organization." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student2.id)
+        post :create_user_test, {:userTest => userTest}
+        expect(response.status).to eq(500)
+      end
+    end
+  end
+
+  describe "PUT /user_test/:id" do
+
+    describe "as a student" do
+      login_student
+
+      let(:userId)     { subject.current_user.id }
+      let(:orgId)      { subject.current_user.organization_id }
+      let(:timeUnitId) { subject.current_user.time_unit_id }
+
+      let!(:org)        { create(:organization, id: orgId) }
+      let!(:otherUser)  { create(:student, organization_id: org.id) }
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: userId,
+                                                time_unit_id: timeUnitId) }
+      let!(:student1Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: userId,
+                                                time_unit_id: timeUnitId + 1) }
+
+      let!(:student2Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: otherUser.id,
+                                                time_unit_id: timeUnitId) }
+
+      it "returns 403 if updating another student's test." do
+        updatedOtherUserTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                                          user_id: userId,
+                                                          time_unit_id: student1Test1.time_unit_id)
+        put :update_user_test, {:id => student2Test.id, :userTest => updatedOtherUserTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if updating their own test in the time_unit that they're currently in." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: userId,
+                                              time_unit_id: student1Test1.time_unit_id)
+        put :update_user_test, {:id => student1Test1.id, :userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["id"]).to eq(student1Test1.id)
+      end
+
+      # TODO More tests like this across the entire suite
+      xit "returns 403 if updating their own test that's in a time_unit other than the one that they're currently in." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: userId,
+                                              time_unit_id: student1Test1.time_unit_id)
+        put :update_user_test, {:id => student1Test2.id, :userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org.id) }
+
+      let!(:relationship) { create(:relationship, user_id: student1.id,
+                                                  assigned_to_id: userId) }
+
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id) }
+      let!(:student2Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student2.id) }
+
+      it "returns 403 if updating a test for a student not assigned to them" do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        put :update_user_test, {:id => student2Test.id, :userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if updating a test for a student assigned to them" do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        put :update_user_test, {:id => student1Test.id, :userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["id"]).to eq(student1Test.id)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+      let!(:org2)  { create(:organization, id: orgId + 1) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org2.id) }
+
+      let!(:orgTest)  { create(:org_test, organization_id: org.id) }
+      let!(:org2Test) { create(:org_test, organization_id: org2.id) }
+
+      let!(:student1Test) { create(:user_test, org_test_id: orgTest.id,
+                                               user_id: student1.id) }
+      let!(:student2Test) { create(:user_test, org_test_id: org2Test.id,
+                                               user_id: student2.id) }
+
+      it "returns 403 if updating a test for a student in a different organization." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        put :update_user_test, {:id => student2Test.id, :userTest => userTest}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if updating a test for a student in the same organization." do
+        userTest = attributes_for(:user_test, org_test_id: orgTest.id,
+                                              user_id: student1.id)
+        put :update_user_test, {:id => student1Test.id, :userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["id"]).to eq(student1Test.id)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let(:orgId) { 1 }
+      let!(:org1) { create(:organization, id: orgId) }
+      let!(:org2) { create(:organization, id: orgId + 1) }
+
+      let!(:student1) { create(:student, organization_id: org1.id) }
+      let!(:student2) { create(:student, organization_id: org2.id) }
+
+      let!(:org1Test) { create(:org_test, organization_id: org1.id) }
+      let!(:org2Test) { create(:org_test, organization_id: org2.id) }
+
+      let!(:student1Test) { create(:user_test, org_test_id: org1Test.id,
+                                               user_id: student1.id) }
+      let!(:student2Test) { create(:user_test, org_test_id: org2Test.id,
+                                               user_id: student2.id) }
+
+      it "returns 200 if updating a test for student1." do
+        userTest = attributes_for(:user_test, org_test_id: org1Test.id,
+                                              user_id: student1.id)
+        put :update_user_test, {:id => student1Test.id, :userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["id"]).to eq(student1Test.id)
+      end
+
+      it "returns 200 if updating a test for student2." do
+        userTest = attributes_for(:user_test, org_test_id: org1Test.id,
+                                              user_id: student2.id)
+        put :update_user_test, {:id => student2Test.id, :userTest => userTest}
+        expect(response.status).to eq(200)
+        expect(json["userTest"]["id"]).to eq(student2Test.id)
+        expect(json["userTest"]["org_test_id"]).to eq(org2Test.id)
+      end
+    end
+  end
+
+  describe "DELETE /user_test/:id" do
+
+    describe "as a student" do
+      login_student
+
+      let(:userId)     { subject.current_user.id }
+      let(:orgId)      { subject.current_user.organization_id }
+      let(:timeUnitId) { subject.current_user.time_unit_id }
+
+      let!(:org)        { create(:organization, id: orgId) }
+      let!(:otherUser)  { create(:student, organization_id: org.id) }
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test1) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: userId,
+                                                time_unit_id: timeUnitId) }
+      let!(:student1Test2) { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: userId,
+                                                time_unit_id: timeUnitId + 1) }
+
+      let!(:student2Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: otherUser.id,
+                                                time_unit_id: timeUnitId) }
+
+      it "returns 403 if deleting another student's test." do
+        delete :delete_user_test, {:id => student2Test.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if deleting their own test in the time_unit that they're currently in." do
+        delete :delete_user_test, {:id => student1Test1.id}
+        expect(response.status).to eq(200)
+      end
+
+      # TODO More tests like this across the entire suite
+      xit "returns 403 if deleting their own test that's in a time_unit other than the one that they're currently in." do
+        delete :delete_user_test, {:id => student1Test2.id}
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org.id) }
+
+      let!(:relationship) { create(:relationship, user_id: student1.id,
+                                                  assigned_to_id: userId) }
+
+      let!(:orgTest)    { create(:org_test, organization_id: org.id) }
+
+      let!(:student1Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student1.id) }
+      let!(:student2Test)  { create(:user_test, org_test_id: orgTest.id,
+                                                user_id: student2.id) }
+
+      it "returns 403 if deleting a test for a student not assigned to them" do
+        delete :delete_user_test, {:id => student2Test.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if deleting a test for a student assigned to them" do
+        delete :delete_user_test, {:id => student1Test.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "as an org admin" do
+      login_org_admin
+
+      let(:userId) { subject.current_user.id }
+      let(:orgId)  { subject.current_user.organization_id }
+      let!(:org)   { create(:organization, id: orgId) }
+      let!(:org2)  { create(:organization, id: orgId + 1) }
+
+      let!(:student1) { create(:student, organization_id: org.id) }
+      let!(:student2) { create(:student, organization_id: org2.id) }
+
+      let!(:orgTest)  { create(:org_test, organization_id: org.id) }
+      let!(:org2Test) { create(:org_test, organization_id: org2.id) }
+
+      let!(:student1Test) { create(:user_test, org_test_id: orgTest.id,
+                                               user_id: student1.id) }
+      let!(:student2Test) { create(:user_test, org_test_id: org2Test.id,
+                                               user_id: student2.id) }
+
+      it "returns 403 if deleting a test for a student in a different organization." do
+        delete :delete_user_test, {:id => student2Test.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "returns 200 if updating a test for a student in the same organization." do
+        delete :delete_user_test, {:id => student1Test.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "as a super admin" do
+      login_super_admin
+
+      let(:orgId) { 1 }
+      let!(:org1) { create(:organization, id: orgId) }
+      let!(:org2) { create(:organization, id: orgId + 1) }
+
+      let!(:student1) { create(:student, organization_id: org1.id) }
+      let!(:student2) { create(:student, organization_id: org2.id) }
+
+      let!(:org1Test) { create(:org_test, organization_id: org1.id) }
+      let!(:org2Test) { create(:org_test, organization_id: org2.id) }
+
+      let!(:student1Test) { create(:user_test, org_test_id: org1Test.id,
+                                               user_id: student1.id) }
+      let!(:student2Test) { create(:user_test, org_test_id: org2Test.id,
+                                               user_id: student2.id) }
+
+      it "returns 200 if deleting a test for student1." do
+        delete :delete_user_test, {:id => student1Test.id}
+        expect(response.status).to eq(200)
+      end
+
+      it "returns 200 if deleting a test for student2." do
+        delete :delete_user_test, {:id => student2Test.id}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
 
 end

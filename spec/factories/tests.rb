@@ -12,6 +12,6 @@ FactoryGirl.define do
     org_test_id  1
     user_id      1
     time_unit_id 1
-    date         Date.today # TODO Potential errors if tests run at midnight
+    date         Date.today # TODO Potential for conflicts if tests run at midnight
   end
 end

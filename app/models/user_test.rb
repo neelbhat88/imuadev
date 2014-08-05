@@ -3,7 +3,7 @@ class UserTest < ActiveRecord::Base
 
   belongs_to :org_test
   belongs_to :user
-  belongs_to :time_unit_id
+  belongs_to :time_unit
 
   validates :org_test_id, presence: true
   validates :user_id, presence: true

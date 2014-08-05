@@ -155,10 +155,11 @@ class Api::V1::TestController < ApplicationController
   # PUT /user_test/:id
   # Updates a UserTest
   def update_user_test
-    userTestId = params[:id].to_i
-    userTest   = params[:userTest]
+    userTestId      = params[:id].to_i
+    updatedUserTest = params[:userTest]
 
-    user = UserRepository.new.get_user(userId)
+    userTest = @testService.get_user_test(userTestId)
+    user = UserRepository.new.get_user(userTest.user_id)
     if !can?(current_user, :manage_user_tests, user)
       render status: :forbidden,
         json: {}
@@ -179,7 +180,8 @@ class Api::V1::TestController < ApplicationController
   def delete_user_test
     userTestId = params[:id].to_i
 
-    user = UserRepository.new.get_user(userId)
+    userTest = @testService.get_user_test(userTestId)
+    user = UserRepository.new.get_user(userTest.user_id)
     if !can?(current_user, :manage_user_tests, user)
       render status: :forbidden,
         json: {}
