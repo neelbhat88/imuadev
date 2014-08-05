@@ -132,6 +132,32 @@ html {
   	float: right;
   	@include font-size(1.6);
   	margin-top: 20px;
+  	
+  	a {
+  	
+  		&:hover {
+  		
+  			text-decoration: none;
+  		
+  		}
+  	
+  	}
+  	
+  	.login-link--border {
+  	
+  		padding: 10px 30px;
+  		color: $light-grey;
+  		border: 1px solid $light-grey;
+  		@include border-radius(30px);
+  		
+  		&:hover {
+  		
+  			color: white;
+  			border: 1px solid white;
+  		
+  		}
+  	
+  	}
   
   }
   
@@ -144,7 +170,7 @@ html {
   	
   	.imua-logo {
   	
-  	  width: 250px;
+  	  width: 300px;
   	  margin: 0 auto;
   	
   		img {
@@ -159,7 +185,7 @@ html {
   	.text {
   	
   	  width: 70%;
-      margin: 0 auto;
+      margin: 25px auto 0 auto;
   	  
       .subhead {
       
