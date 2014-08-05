@@ -134,18 +134,8 @@ html {
   min-height: 100%;
 
   body {
+    
     min-width: 1260px;
-
-    &.static-pages {
-      background-color: $darkgrey;
-      background: image-url("bg.jpg") no-repeat center center fixed;
-      @include bgcover();
-      color: $ink;
-      text-align: center;
-      @include body-font(22px);
-      min-height: 100%;
-    }
-
     @include body-font(14px);
 
   }
