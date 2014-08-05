@@ -166,7 +166,7 @@ html {
   	
 		max-width: 1200px;
 		margin: 0 auto;
-  	padding: 150px 0;
+  	padding: 150px 0 100px 0;
   	
   	.imua-logo {
   	
@@ -194,6 +194,41 @@ html {
       }
   	
   	}
+  	
+  	.find-out {
+  	
+  		margin-top: 80px;
+  		@include font-size(1.6);
+  		
+  		a {
+  		
+  			&:hover {
+  			
+  				text-decoration: none;
+  			
+  			}
+  		
+  		}
+  		
+  		.find-out--button {
+  		
+	  		width: 200px;
+	  		margin: 0 auto;
+	  		padding: 10px 30px;
+    		color: $light-grey;
+    		border: 1px solid $light-grey;
+    		@include border-radius(30px);
+    		
+    		&:hover {
+    		
+    			color: white;
+    			border: 1px solid white;
+    		
+    		}
+
+  		} //.find-out--button
+  	
+  	} //.find-out
   
   }
 
@@ -338,12 +373,10 @@ html {
   				height: auto;
   				  			
   			}
-  			
   		
   		}
   	
   	}
-
 	
 	}
 	
