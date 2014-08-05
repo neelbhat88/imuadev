@@ -105,6 +105,11 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  ###############################################################
+  ###############  User Activities and Events ###################
+  ###########  Move into separate controller soon ###############
+  ###############################################################
+
   # GET /user/:id/time_unit/:time_unit_id/classes
   def user_classes
     userId = params[:id].to_i
@@ -158,8 +163,6 @@ class Api::V1::ProgressController < ApplicationController
 
   # PUT /user/:id/classes/:class_id
   def update_user_class
-    userId = params[:id]
-    classId = params[:class_id]
     updated_class = params[:user_class]
 
     user_class = @userClassService.update_user_class(updated_class)
@@ -181,7 +184,6 @@ class Api::V1::ProgressController < ApplicationController
 
   # DELETE /user/:id/classes/:class_id
   def delete_user_class
-    userId = params[:id].to_i
     classId = params[:class_id].to_i
 
     if @userClassService.delete_user_class(classId)
@@ -200,7 +202,7 @@ class Api::V1::ProgressController < ApplicationController
   end
 
   # GET /user/:id/time_unit/:time_unit_id/service_activity_events
-  def service_activity_events
+  def user_service_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -231,8 +233,136 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # POST /user/:id/service_activity
+  def add_user_service_activity
+    userId = params[:id]
+    new_service_activity = params[:service_activity]
+
+
+    user_service_activity = @userServiceActivityService.save_user_service_activity(userId, new_service_activity)
+
+    if user_service_activity.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to create a user service activity."
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Saved user service activity",
+        user_class: user_service_activity
+      }
+  end
+
+  # POST /user/:id/service_activity_event
+  def add_user_service_activity_event
+    userId = params[:id]
+    new_service_activity_event = params[:service_activity_event]
+
+
+    user_service_activity_event = @userServiceActivityService.save_user_service_activity_event(userId, new_service_activity_event)
+
+    if user_service_activity_event.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to create a user service activity event."
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Saved user service activity event",
+        user_class: user_service_activity_event
+      }
+  end
+
+  # PUT /user/:id/service_activity/:service_activity_id
+  def update_user_service_activity
+    updated_service_activity = params[:user_service_activity]
+
+    user_service_activity = @userClassService.update_user_service_activity(updated_service_activity)
+
+    if user_service_activity.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to update user service activity"
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated user service activity",
+        user_class: user_service_activity
+      }
+  end
+
+  # PUT /user/:id/service_activity_event/:service_activity_event_id
+  def update_user_service_activity_event
+    updated_service_activity_event = params[:user_service_activity_event]
+
+    user_service_activity_event = @userClassService.update_user_service_activity_event(updated_service_activity_event)
+
+    if user_service_activity_event.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to update user service activity"
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated user service activity",
+        user_class: user_service_activity_event
+      }
+  end
+
+  # DELETE /user/:id/service_activity/:service_activity_id
+  def delete_user_service_activity
+    userId = params[:id].to_i
+    serviceActivityId = params[:service_activity_id].to_i
+
+    if @userClassService.delete_user_service_activity(serviceActivityId)
+      render status: :ok,
+        json: {
+          info: "Deleted User Service Activity"
+        }
+      return
+    else
+      render status: :internal_server_error,
+        json: {
+          info: "Failed to delete user service activity"
+        }
+      return
+    end
+  end
+
+  # DELETE /user/:id/service_activity_event/:service_activity_event_id
+  def delete_user_service_activity_event
+    userId = params[:id].to_i
+    serviceActivityEventId = params[:service_activity_event_id].to_i
+
+    if @userClassService.delete_user_service_activity(serviceActivityEventId)
+      render status: :ok,
+        json: {
+          info: "Deleted User Service Activity Event"
+        }
+      return
+    else
+      render status: :internal_server_error,
+        json: {
+          info: "Failed to delete user service activity event"
+        }
+      return
+    end
+  end
+
   # GET /user/:id/time_unit/:time_unit_id/extracurricular_activity_events
-  def extracurricular_activity_events
+  def user_extracurricular_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -261,6 +391,134 @@ class Api::V1::ProgressController < ApplicationController
         user_extracurricular_activities: extracurricular_activities,
         user_extracurricular_activity_events: extracurricular_events
       }
+  end
+
+  # POST /user/:id/service_activity
+  def add_user_service_activity
+    userId = params[:id]
+    new_service_activity = params[:service_activity]
+
+
+    user_service_activity = @userServiceActivityService.save_user_service_activity(userId, new_service_activity)
+
+    if user_service_activity.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to create a user service activity."
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Saved user service activity",
+        user_class: user_service_activity
+      }
+  end
+
+  # POST /user/:id/service_activity_event
+  def add_user_service_activity_event
+    userId = params[:id]
+    new_service_activity_event = params[:service_activity_event]
+
+
+    user_service_activity_event = @userServiceActivityService.save_user_service_activity_event(userId, new_service_activity_event)
+
+    if user_service_activity_event.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to create a user service activity event."
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Saved user service activity event",
+        user_class: user_service_activity_event
+      }
+  end
+
+  # PUT /user/:id/service_activity/:service_activity_id
+  def update_user_service_activity
+    updated_service_activity = params[:user_service_activity]
+
+    user_service_activity = @userClassService.update_user_service_activity(updated_service_activity)
+
+    if user_service_activity.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to update user service activity"
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated user service activity",
+        user_class: user_service_activity
+      }
+  end
+
+  # PUT /user/:id/service_activity_event/:service_activity_event_id
+  def update_user_service_activity_event
+    updated_service_activity_event = params[:user_service_activity_event]
+
+    user_service_activity_event = @userClassService.update_user_service_activity_event(updated_service_activity_event)
+
+    if user_service_activity_event.nil?
+      render status: :bad_request,
+      json: {
+        info: "Failed to update user service activity"
+      }
+      return
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated user service activity",
+        user_class: user_service_activity_event
+      }
+  end
+
+  # DELETE /user/:id/service_activity/:service_activity_id
+  def delete_user_service_activity
+    userId = params[:id].to_i
+    serviceActivityId = params[:service_activity_id].to_i
+
+    if @userClassService.delete_user_service_activity(serviceActivityId)
+      render status: :ok,
+        json: {
+          info: "Deleted User Service Activity"
+        }
+      return
+    else
+      render status: :internal_server_error,
+        json: {
+          info: "Failed to delete user service activity"
+        }
+      return
+    end
+  end
+
+  # DELETE /user/:id/service_activity_event/:service_activity_event_id
+  def delete_user_service_activity_event
+    userId = params[:id].to_i
+    serviceActivityEventId = params[:service_activity_event_id].to_i
+
+    if @userClassService.delete_user_service_activity(serviceActivityEventId)
+      render status: :ok,
+        json: {
+          info: "Deleted User Service Activity Event"
+        }
+      return
+    else
+      render status: :internal_server_error,
+        json: {
+          info: "Failed to delete user service activity event"
+        }
+      return
+    end
   end
 
 end

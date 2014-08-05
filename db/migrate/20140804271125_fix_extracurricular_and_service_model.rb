@@ -13,5 +13,7 @@ class FixExtracurricularAndServiceModel < ActiveRecord::Migration
     add_column :user_service_activities, :description, :string
     add_column :user_service_activity_events, :name, :string
     add_column :user_service_activity_events, :description, :string
+    rename_column :user_service_activity_events, :user_service_org_id, :user_service_activity_id
+    rename_column :user_extracurricular_activity_events, :extracurricular_activity_id, :user_extracurricular_activity_id
   end
 end

@@ -27,7 +27,7 @@ class UserExtracurricularActivityService
     end
   end
 
-  def save_user_activity_event(userId, user_extracurricular_activity_event)
+  def save_user_extracurricular_activity_event(userId, user_extracurricular_activity_event)
     new_activity_event = UserExtracurricularActivityEvent.new do | u |
       u.user_id = userId
       u.description = user_extracurricular_activity_event[:description]
@@ -54,7 +54,7 @@ class UserExtracurricularActivityService
     end
   end
 
-  def update_user_activity_event(user_extracurricular_activity_event)
+  def update_user_extracurricular_activity_event(user_extracurricular_activity_event)
     db_class = UserExtracurricularActivityEvent.find(user_extracurricular_activity_event[:id])
     if db_class.update_attributes(:description => user_extracurricular_activity_event[:description], :leadership => user_extracurricular_activity_event[:leadership], :name => user_extracurricular_activity_event[:name])
       return db_class
@@ -71,7 +71,7 @@ class UserExtracurricularActivityService
     end
   end
 
-  def delete_user_activity_event(extracurricularActivityEventId)
+  def delete_user_extracurricular_activity_event(extracurricularActivityEventId)
     if UserExtracurricularActivityEvent.find(extracurricularActivityEventId).destroy()
       return true
     else

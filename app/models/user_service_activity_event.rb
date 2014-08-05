@@ -6,6 +6,7 @@ class UserServiceActivityEvent < ActiveRecord::Base
   belongs_to :user_service_activity
 
   validates :user_id, presence: true
+  validates :user_service_activity_id, presence: true
   validates :time_unit_id, presence: true
   validates :date, presence: true
   validates :hours, presence: true

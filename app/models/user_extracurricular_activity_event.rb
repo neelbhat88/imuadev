@@ -5,8 +5,7 @@ class UserExtracurricularActivityEvent < ActiveRecord::Base
   belongs_to :user
   belongs_to :user_extra_curricular_activity
 
-  validates :description, presence: true
-  validates :extracurricular_activity_id, presence: true
+  validates :user_extracurricular_activity_id, presence: true
   validates :user_id, presence: true
   validates :time_unit_id, presence: true
 end
