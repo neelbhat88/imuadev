@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140726152911) do
+ActiveRecord::Schema.define(:version => 20140731203036) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(:version => 20140726152911) do
   end
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
+
+  create_table "org_tests", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "title"
+    t.integer  "score_type"
+    t.string   "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -101,24 +110,6 @@ ActiveRecord::Schema.define(:version => 20140726152911) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "user_extracurricular_activities", :force => true do |t|
-    t.string   "name"
-    t.string   "position"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "user_extracurricular_activity_details", :force => true do |t|
-    t.integer  "extracurricular_activity_id"
-    t.string   "description"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-  end
-
   create_table "user_milestones", :force => true do |t|
     t.integer  "user_id"
     t.integer  "time_unit_id"
@@ -129,20 +120,13 @@ ActiveRecord::Schema.define(:version => 20140726152911) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "user_service_hours", :force => true do |t|
-    t.integer  "service_org_id"
-    t.decimal  "hours"
+  create_table "user_tests", :force => true do |t|
+    t.integer  "org_test_id"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
     t.date     "date"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  create_table "user_service_orgs", :force => true do |t|
-    t.string   "name"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
+    t.string   "score"
+    t.string   "description"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
