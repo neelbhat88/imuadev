@@ -308,7 +308,7 @@ html {
 				  
 		  .image {
 		  
-		  	max-width: 682px;
+		  	max-width: 600px;
 		  			  
 		  }
 	
@@ -339,6 +339,18 @@ html {
 		background: white;
 		color: $ink;
 		width: 100%;
+		
+		.image--attention {
+		
+			max-width: 500px;
+		
+		}
+		
+		.image--communication {
+		
+			max-width: 650px;
+		
+		}
 	
 	}
 	
