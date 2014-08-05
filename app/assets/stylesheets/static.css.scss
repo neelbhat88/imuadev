@@ -166,7 +166,13 @@ html {
   	
 		max-width: 1200px;
 		margin: 0 auto;
-  	padding: 150px 0 100px 0;
+  	padding: 70px 0;
+  	
+  	@include respond-to-min(1400) {
+  	
+	  	padding: 150px 0;
+  	
+  	}
   	
   	.imua-logo {
   	
@@ -197,7 +203,7 @@ html {
   	
   	.find-out {
   	
-  		margin-top: 80px;
+  		margin-top: 40px;
   		@include font-size(1.6);
   		
   		a {
