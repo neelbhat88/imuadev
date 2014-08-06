@@ -127,17 +127,31 @@ html {
   
   }
   
-  .login-link {
+  .navigation {
   
   	float: right;
   	@include font-size(1.6);
   	margin-top: 20px;
   	
+  	ul {
+  	
+  		li {
+  		
+  			display: inline-block;
+  			margin-left: 40px;
+  		
+  		}
+  	
+  	}
+  	
   	a {
+  	
+			color: $light-grey;
   	
   		&:hover {
   		
   			text-decoration: none;
+  			color: white;
   		
   		}
   	
