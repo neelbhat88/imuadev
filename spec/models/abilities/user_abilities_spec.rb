@@ -20,7 +20,10 @@ describe Ability do
                                           :update_password,
                                           :edit_user_info,
                                           :read_user_tests,
-                                          :manage_user_tests)
+                                          :manage_user_tests,
+                                          :manage_user_activities,
+                                          :manage_user_events
+                                        )
   end
 
   it "actions allowed to a super admin" do
@@ -33,7 +36,10 @@ describe Ability do
                                           :edit_user_info,
                                           :change_semester,
                                           :read_user_tests,
-                                          :manage_user_tests)
+                                          :manage_user_tests,
+                                          :manage_user_activities,
+                                          :manage_user_events
+                                        )
   end
 
   it "super admins can do all actions regardless of user's organizaiton" do
@@ -47,7 +53,10 @@ describe Ability do
                                           :edit_user_info,
                                           :change_semester,
                                           :read_user_tests,
-                                          :manage_user_tests)
+                                          :manage_user_tests,
+                                          :manage_user_activities,
+                                          :manage_user_events
+                                        )
   end
 
   it "actions allowed to a org admin" do
@@ -61,7 +70,10 @@ describe Ability do
                                           :edit_user_info,
                                           :change_semester,
                                           :read_user_tests,
-                                          :manage_user_tests)
+                                          :manage_user_tests,
+                                          :manage_user_activities,
+                                          :manage_user_events
+                                        )
   end
 
   it "org admins can't perform any actions on users not in organization" do
@@ -94,7 +106,10 @@ describe Ability do
                                             :edit_user_info,
                                             :change_semester,
                                             :read_user_tests,
-                                            :manage_user_tests)
+                                            :manage_user_tests,
+                                            :manage_user_activities,
+                                            :manage_user_events
+                                          )
     end
 
     it "if subject is not an assigned student" do
