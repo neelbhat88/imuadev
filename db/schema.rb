@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140805173729) do
+ActiveRecord::Schema.define(:version => 20140805235740) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20140805173729) do
     t.integer  "org_test_id"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.date     "date"
+    t.datetime "date"
     t.string   "score"
     t.string   "description"
     t.datetime "created_at",   :null => false

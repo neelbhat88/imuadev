@@ -61,7 +61,7 @@ Imua::Application.routes.draw do
       put '/org_test/:id' => 'test#update_org_test'
       delete '/org_test/:id' => 'test#delete_org_test'
 
-      get '/user/:id/tests' => 'test#get_user_tests'
+      get '/users/:id/tests' => 'test#get_user_tests'
       post '/user_test' => 'test#create_user_test'
       put '/user_test/:id' => 'test#update_user_test'
       delete '/user_test/:id' => 'test#delete_user_test'

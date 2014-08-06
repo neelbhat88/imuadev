@@ -27,16 +27,16 @@ angular.module('myApp')
   ############# USER ##############
   #################################
 
-  @newUserTest = (userId, orgTestId, timeUnitId, date) ->
+  @newUserTest = (userId, timeUnitId) ->
     user_id:      userId,
-    org_test_id:  orgTestId,
+    org_test_id:  "",
     time_unit_id: timeUnitId,
-    date:         date,
+    date:         "",
     score:        "",
     description:  ""
 
-  @getUserTests = (user, timeUnitId = null) ->
-    $http.get "/api/v1/users/#{user.id}/tests?time_unit_id=#{timeUnitId}"
+  @getUserTests = (userId, timeUnitId = null) ->
+    $http.get "/api/v1/users/#{userId}/tests?time_unit_id=#{timeUnitId}"
 
   @saveUserTest = (userTest) ->
     if userTest.id

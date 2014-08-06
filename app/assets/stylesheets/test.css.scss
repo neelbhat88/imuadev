@@ -32,3 +32,32 @@
     }
   }
 }
+
+
+.module-data__item {
+
+  .module-data__item__userTest__title {
+    display: inline-block;
+    width: 150px;
+    margin-right: 15px;
+  }
+
+  .module-data__item__userTest__date {
+    display: inline-block;
+    margin-right: 15px;
+  }
+
+  .module-data__item__userTest__score {
+    display: inline-block;
+    margin-right: 15px;
+    width: 75px;
+
+    .form-field {
+      width: 100%;
+    }
+  }
+
+  .module-data__item__icons {
+    display: inline-block;
+  }
+}
