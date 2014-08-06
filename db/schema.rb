@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20140804271125) do
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
 
+  create_table "org_tests", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "title"
+    t.integer  "score_type"
+    t.string   "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -148,6 +157,17 @@ ActiveRecord::Schema.define(:version => 20140804271125) do
     t.datetime "updated_at",               :null => false
     t.string   "name"
     t.string   "description"
+  end
+
+  create_table "user_tests", :force => true do |t|
+    t.integer  "org_test_id"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.date     "date"
+    t.string   "score"
+    t.string   "description"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|
