@@ -12,10 +12,11 @@ class UserServiceActivityService
     return UserServiceActivityEvent.where(:service_activity_id => user_service_activity[:id], :user_id => userId)
   end
 
-  def save_user_service_activity(userId, user_service_activity)
+  def save_user_service_activity(user_service_activity)
     new_service_activity = UserServiceActivity.new do | u |
-      u.user_id = userId
+      u.user_id = user_service_activity[:user_id]
       u.name = user_service_activity[:name]
+      u.description = user_service_activity[:description]
     end
 
     if new_service_activity.save
@@ -25,12 +26,12 @@ class UserServiceActivityService
     end
   end
 
-  def save_user_service_activity_event(userId, user_service_activity_event)
+  def save_user_service_activity_event(user_service_activity_event)
     new_service_activity_event = UserServiceActivityEvent.new do | u |
-      u.user_id = userId
+      u.user_id = user_service_activity_event[:user_id]
       u.date = user_service_activity_event[:date]
       u.hours = user_service_activity_event[:hours]
-      u.service_activity_id = user_service_activity_event[:service_activity_id]
+      u.user_service_activity_id = user_service_activity_event[:user_service_activity_id]
       u.time_unit_id = user_service_activity_event[:time_unit_id]
     end
 
@@ -41,17 +42,17 @@ class UserServiceActivityService
     end
   end
 
-  def update_user_service_activity(user_service_activity)
-    db_class = UserServiceActivity.find(user_service_activity[:id])
-    if db_class.update_attributes(:name => user_service_activity[:name])
+  def update_user_service_activity(serviceActivityId, user_service_activity)
+    db_class = UserServiceActivity.find(serviceActivityId)
+    if db_class.update_attributes(:name => user_service_activity[:name], :description => user_service_activity[:description])
       return db_class
     else
       return nil
     end
   end
 
-  def update_user_service_activity_event(user_service_activity_event)
-    db_class = UserServiceActivityEvent.find(user_service_activity_event[:id])
+  def update_user_service_activity_event(serviceActivityEventId, user_service_activity_event)
+    db_class = UserServiceActivityEvent.find(serviceActivityEventId)
     if db_class.update_attributes(:date => user_service_activity_event[:date], :hours => user_service_activity_event[:hours])
       return db_class
     else

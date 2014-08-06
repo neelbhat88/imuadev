@@ -19,23 +19,6 @@ Imua::Application.routes.draw do
           put  '/:id/classes/:class_id' => 'progress#update_user_class'
           delete '/:id/classes/:class_id' => 'progress#delete_user_class'
 
-          get  '/:id/time_unit/:time_unit_id/service_activity_events' => 'progress#user_service_activity_events'
-
-          post '/:id/service_activity' => 'progress#add_user_service_activity'
-          post '/:id/service_activity_event' => 'progress#add_user_service_activity_event'
-          put  '/:id/service_activity/:service_activity' => 'progress#update_user_service_activity'
-          put  '/:id/service_activity_event/:service_activity_event' => 'progress#update_user_service_activity_event'
-          delete '/:id/service_activity/:service_activity' => 'progress#delete_user_service_activity'
-          delete '/:id/service_activity_event/:service_activity_event' => 'progress#delete_user_service_activity_event'
-
-          get  '/:id/time_unit/:time_unit_id/extracurricular_activity_events' => 'progress#user_extracurricular_activity_events'
-          post '/:id/extracurricular_activity' => 'progress#add_user_extracurricular_activity'
-          post '/:id/extracurricular_activity_event' => 'progress#add_user_extracurricular_activity_event'
-          put  '/:id/extracurricular_activity/:extracurricular_activity_id' => 'progress#update_user_extracurricular_activity'
-          put  '/:id/extracurricular_activity_event/:extracurricular_activity_event_id' => 'progress#update_user_extracurricular_activity_event'
-          delete '/:id/extracuricular_activity/:extracurricular_activity_id' => 'progress#delete_user_extracurricular_activity'
-          delete '/:id/extracuricular_activity_event/:extracurricular_activity_event_id' => 'progress#delete_user_extracurricular_activity_event'
-
           put '/:id/time_unit/next' => "users#move_to_next_semester"
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
 
@@ -59,6 +42,24 @@ Imua::Application.routes.draw do
           delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
+
+      get  '/user/:id/service_activity_events' => 'service_activity#user_service_activity_events'
+
+      post '/service_activity' => 'service_activity#add_user_service_activity'
+      post '/service_activity_event' => 'service_activity#add_user_service_activity_event'
+      put  '/service_activity/:id' => 'service_activity#update_user_service_activity'
+      put  '/service_activity_event/:id' => 'service_activity#update_user_service_activity_event'
+      delete '/service_activity/:id' => 'service_activity#delete_user_service_activity'
+      delete '/service_activity_event/:id' => 'service_activity#delete_user_service_activity_event'
+
+      get  '/user/:id/extracurricular_activity_events' => 'extracurricular_activity#user_extracurricular_activity_events'
+      post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
+      post '/extracurricular_activity_event' => 'extracurricular_activity#add_user_extracurricular_activity_event'
+      put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
+      put  '/extracurricular_activity_event/:id' => 'extracurricular_activity#update_user_extracurricular_activity_event'
+      delete '/extracuricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
+      delete '/extracuricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
+
 
       get  '/organization' => 'organization#all_organizations'
       get  '/organization/:id' => 'organization#get_organization'

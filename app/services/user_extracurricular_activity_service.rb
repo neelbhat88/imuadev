@@ -13,9 +13,9 @@ class UserExtracurricularActivityService
     return UserExtracurricularActivityEvent.where(:extracurricular_activity_id => user_extracurricular_activity[:id], :user_id => userId)
   end
 
-  def save_user_extracurricular_activity(userId, user_extracurricular_activity)
+  def save_user_extracurricular_activity(user_extracurricular_activity)
     new_extracurricular = UserExtracurricularActivity.new do | u |
-      u.user_id = userId
+      u.user_id = user_extracurricular_activity[:user_id]
       u.name = user_extracurricular_activity[:name]
       u.description = user_extracurricular_activity[:description]
     end
@@ -27,13 +27,13 @@ class UserExtracurricularActivityService
     end
   end
 
-  def save_user_extracurricular_activity_event(userId, user_extracurricular_activity_event)
+  def save_user_extracurricular_activity_event(user_extracurricular_activity_event)
     new_activity_event = UserExtracurricularActivityEvent.new do | u |
-      u.user_id = userId
+      u.user_id = user_extracurricular_activity_event[:user_id]
       u.description = user_extracurricular_activity_event[:description]
       u.leadership = user_extracurricular_activity_event[:leadership]
       u.name = user_extracurricular_activity_event[:name]
-      u.extracurricular_activity_id =
+      u.user_extracurricular_activity_id =
         user_extracurricular_activity_event[:extracurricular_activity_id]
       u.time_unit_id = user_extracurricular_activity_event[:time_unit_id]
     end
@@ -45,8 +45,8 @@ class UserExtracurricularActivityService
     end
   end
 
-  def update_user_extracurricular_activity(user_extracurricular_activity)
-    db_class = UserExtracurricularActivity.find(user_extracurricular_activity[:id])
+  def update_user_extracurricular_activity(extracurricularActivityId, user_extracurricular_activity)
+    db_class = UserExtracurricularActivity.find(extracurricularActivityId)
     if db_class.update_attributes(:name => user_extracurricular_activity[:name], :description => user_extracurricular_activity[:description])
       return db_class
     else
@@ -54,8 +54,8 @@ class UserExtracurricularActivityService
     end
   end
 
-  def update_user_extracurricular_activity_event(user_extracurricular_activity_event)
-    db_class = UserExtracurricularActivityEvent.find(user_extracurricular_activity_event[:id])
+  def update_user_extracurricular_activity_event(extracurricularActivityEventId, user_extracurricular_activity_event)
+    db_class = UserExtracurricularActivityEvent.find(extracurricularActivityEventId)
     if db_class.update_attributes(:description => user_extracurricular_activity_event[:description], :leadership => user_extracurricular_activity_event[:leadership], :name => user_extracurricular_activity_event[:name])
       return db_class
     else
