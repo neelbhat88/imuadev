@@ -109,7 +109,8 @@ class TestService
       return ReturnObject.new(:internal_server_error, "Failed to find UserTest with userTestId: #{userTestId}.", nil)
     end
 
-    if dbUserTest.update_attributes(:date        => userTest[:date],
+    if dbUserTest.update_attributes(:org_test_id => userTest[:org_test_id],
+                                    :date        => userTest[:date],
                                     :score       => userTest[:score],
                                     :description => userTest[:description])
       return ReturnObject.new(:ok, "Successfully updated UserTest, id: #{dbUserTest.id}.", dbUserTest)
