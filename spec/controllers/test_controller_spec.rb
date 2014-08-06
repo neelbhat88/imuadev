@@ -851,12 +851,19 @@ describe Api::V1::TestController do
       end
 
       it "returns 200 if updating a test for student2." do
-        userTest = attributes_for(:user_test, org_test_id: org1Test.id,
+        userTest = attributes_for(:user_test, org_test_id: org2Test.id,
                                               user_id: student2.id)
         put :update_user_test, {:id => student2Test.id, :userTest => userTest}
         expect(response.status).to eq(200)
         expect(json["userTest"]["id"]).to eq(student2Test.id)
         expect(json["userTest"]["org_test_id"]).to eq(org2Test.id)
+      end
+
+      xit "returns 500 if updating a test for student2 with an orgTest from org1." do
+        userTest = attributes_for(:user_test, org_test_id: org1Test.id,
+                                              user_id: student2.id)
+        put :update_user_test, {:id => student2Test.id, :userTest => userTest}
+        expect(response.status).to eq(500)
       end
     end
   end
