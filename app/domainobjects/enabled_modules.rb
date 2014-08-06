@@ -17,8 +17,7 @@ class EnabledModules
         },
         {
           :title => Constants.Modules[:EXTRACURRICULAR],
-          :submodules => [Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES],
-                          Constants.SubModules[:YES_NO]]
+          :submodules => [Constants.SubModules[:YES_NO]]
         },
         {
           :title => Constants.Modules[:COLLEGE_PREP],

@@ -21,17 +21,21 @@ angular.module("myApp")
 
   @saveServiceActivity = (user_service_activity) ->
     if user_service_activity.id
-      return $http.put "/api/v1/users/#{user_service_activity.user_id}/service_activity/#{user_service_activity.id}", {user_service_activity: user_service_activity}
+      return $http.put "/api/v1/service_activity/#{user_service_activity.id}", {user_service_activity: user_service_activity}
     else
-      return $http.post "/api/v1/users/#{user_service_activity.user_id}/service_activity", {user_service_activity: user_service_activity}
+      return $http.post "/api/v1//service_activity", {user_service_activity: user_service_activity}
 
   @saveServiceActivityEvent = (user_service_activity_event) ->
     if user_service_activity_event.id
-      return $http.put "/api/v1/users/#{user_service_activity_event.user_id}/service_activity_event/#{user_service_activity_event.id}", {user_service_activity_event: user_service_activity_event}
+      return $http.put "/api/v1/service_activity_event/#{user_service_activity_event.id}", {user_service_activity_event: user_service_activity_event}
     else
-      return $http.post "/api/v1/users/#{user_service_activity_event.user_id}/service_activity_event", {user_service_activity_event: user_service_activity_event}
+      return $http.post "/api/v1/service_activity_event", {user_service_activity_event: user_service_activity_event}
 
-  @delete = (user_class) ->
-    return $http.delete "/api/v1/users/#{user_class.user_id}/classes/#{user_class.id}"
+  @deleteServiceActivity = (user_service_activity) ->
+    return $http.delete "/api/v1/service_activity/#{user_service_activity.id}"
+
+  @deleteServiceActivityEvent = (user_service_activity_event) ->
+    return $http.delete "/api/v1/service_activity_event/#{user_service_activity_event.id}"
+
   @
 ]

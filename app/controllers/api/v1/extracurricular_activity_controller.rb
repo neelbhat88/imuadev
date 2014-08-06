@@ -14,74 +14,68 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
-    if !student_can_access?(userId)
-      render status: :forbidden,
-        json: {}
-
-      return
-    end
-
     user = @userRepository.get_user(userId)
-    if !same_organization?(user.organization_id)
+    if !can?(current_user, :manage_user_events, user)
       render status: :forbidden,
         json: {}
-
+      return
+    elsif !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    extracurricular_activities = @userExtracurricularActivityService.get_user_extracurricular_activities(userId)
+    activities_result = @userExtracurricularActivityService.get_user_extracurricular_activities(userId)
 
-    extracurricular_events = @userExtracurricularActivityService.get_user_extracurricular_activity_events(userId, time_unit_id)
+    events_result = @userExtracurricularActivityService.get_user_extracurricular_activity_events(userId, time_unit_id)
 
     render status: :ok,
       json: {
         info: "User's Extracurricular Activities and Events",
-        user_extracurricular_activities: extracurricular_activities,
-        user_extracurricular_activity_events: extracurricular_events
+        user_extracurricular_activities: activities_result,
+        user_extracurricular_activity_events: events_result
       }
   end
 
   # POST /extracurricular_activity
   def add_user_extracurricular_activity
     new_extracurricular_activity = params[:extracurricular_activity]
+    userId = params[:extracurricular_activity][:user_id].to_i
 
-
-    user_extracurricular_activity = @userExtracurricularActivityService.save_user_extracurricular_activity(new_extracurricular_activity)
-
-    if user_extracurricular_activity.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to create a user extracurricular activity."
-      }
+    user = @userRepository.get_user(userId)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userExtracurricularActivityService.save_user_extracurricular_activity(new_extracurricular_activity)
+
+    render status: result.status,
       json: {
-        info: "Saved user extracurricular activity",
-        user_extracurricular_activity: user_extracurricular_activity
+        info: result.info,
+        user_extracurricular_activity: result.object
       }
   end
 
   # POST /extracurricular_activity_event
   def add_user_extracurricular_activity_event
     new_extracurricular_activity_event = params[:extracurricular_activity_event]
+    userId = params[:extracurricular_activity_event][:user_id].to_i
 
-
-    user_extracurricular_activity_event = @userExtracurricularActivityService.save_user_extracurricular_activity_event(new_extracurricular_activity_event)
-
-    if user_extracurricular_activity_event.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to create a user extracurricular activity event."
-      }
+    user = @userRepository.get_user(userId)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userExtracurricularActivityService.save_user_extracurricular_activity_event(new_extracurricular_activity_event)
+
+    render status: result.status,
       json: {
-        info: "Saved user extracurricular activity event",
-        user_extracurricular_activity_event: user_extracurricular_activity_event
+        info: result.info,
+        user_extracurricular_activity_event: result.object
       }
   end
 
@@ -90,20 +84,21 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     extracurricularActivityId = params[:id].to_i
     updated_extracurricular_activity = params[:extracurricular_activity]
 
-    user_extracurricular_activity = @userExtracurricularActivityService.update_user_extracurricular_activity(extracurricularActivityId, updated_extracurricular_activity)
+    user_extracurricular_activity = @userExtracurricularActivityService.get_user_extracurricular_activity(extracurricularActivityId)
 
-    if user_extracurricular_activity.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to update user extracurricular activity"
-      }
+    user = @userRepository.get_user(user_extracurricular_activity.user_id)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userExtracurricularActivityService.update_user_extracurricular_activity(extracurricularActivityId, updated_extracurricular_activity)
+
+    render status: result.status,
       json: {
-        info: "Updated user extracurricular activity",
-        user_extracurricular_activity: user_extracurricular_activity
+        info: result.info,
+        user_extracurricular_activity: result.object
       }
   end
 
@@ -112,20 +107,21 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     extracurricularActivityEventId = params[:id].to_i
     updated_extracurricular_activity_event = params[:extracurricular_activity_event]
 
-    user_extracurricular_activity_event = @userExtracurricularActivityService.update_user_extracurricular_activity_event(extracurricularActivityEventId, updated_extracurricular_activity_event)
+    user_extracurricular_activity_event = @userExtracurricularActivityService.get_user_extracurricular_activity_event(extracurricularActivityEventId)
 
-    if user_extracurricular_activity_event.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to update user extracurricular activity"
-      }
+    user = @userRepository.get_user(user_extracurricular_activity_event.user_id)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userExtracurricularActivityService.update_user_extracurricular_activity_event(extracurricularActivityEventId, updated_extracurricular_activity_event)
+
+    render status: result.status,
       json: {
-        info: "Updated user extracurricular activity",
-        user_extracurricular_activity_event: user_extracurricular_activity_event
+        info: result.info,
+        user_extracurricular_activity_event: result.object
       }
   end
 
@@ -133,38 +129,42 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   def delete_user_extracurricular_activity
     extracurricularActivityId = params[:id].to_i
 
-    if @userExtracurricularActivityService.delete_user_extracurricular_activity(extracurricularActivityId)
-      render status: :ok,
-        json: {
-          info: "Deleted User Extracurricular Activity"
-        }
-      return
-    else
-      render status: :internal_server_error,
-        json: {
-          info: "Failed to delete user extracurricular activity"
-        }
+    user_extracurricular_activity = @userExtracurricularActivityService.get_user_extracurricular_activity(extracurricularActivityId)
+
+    user = @userRepository.get_user(user_extracurricular_activity.user_id)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
+
+    result = @userExtracurricularActivityService.delete_user_extracurricular_activity(extracurricularActivityId)
+
+    render status: result.status,
+      json: {
+        info: result.info
+      }
   end
 
   # DELETE /extracurricular_activity_event/:id
   def delete_user_extracurricular_activity_event
     extracurricularActivityEventId = params[:id].to_i
 
-    if @userExtracurricularActivityService.delete_user_extracurricular_activity_event(extracurricularActivityEventId)
-      render status: :ok,
-        json: {
-          info: "Deleted User Extracurricular Activity Event"
-        }
-      return
-    else
-      render status: :internal_server_error,
-        json: {
-          info: "Failed to delete user extracurricular activity event"
-        }
+    user_extracurricular_activity_event = @userExtracurricularActivityService.get_user_extracurricular_activity_event(extracurricularActivityEventId)
+
+    user = @userRepository.get_user(user_extracurricular_activity_event.user_id)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
+
+    result = @userExtracurricularActivityService.delete_user_extracurricular_activity_event(extracurricularActivityEventId)
+
+    render status: result.status,
+      json: {
+        info: result.info
+      }
   end
 
 end

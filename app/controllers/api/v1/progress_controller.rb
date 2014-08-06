@@ -161,6 +161,8 @@ class Api::V1::ProgressController < ApplicationController
 
   # PUT /user/:id/classes/:class_id
   def update_user_class
+    userId = params[:id]
+    classId = params[:class_id]
     updated_class = params[:user_class]
 
     user_class = @userClassService.update_user_class(updated_class)
@@ -182,6 +184,7 @@ class Api::V1::ProgressController < ApplicationController
 
   # DELETE /user/:id/classes/:class_id
   def delete_user_class
+    userId = params[:id].to_i
     classId = params[:class_id].to_i
 
     if @userClassService.delete_user_class(classId)

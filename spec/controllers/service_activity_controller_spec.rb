@@ -42,8 +42,9 @@ describe Api::V1::ServiceActivityController do
 
       it "returns 403 if :id is not current student" do
         subject.current_user.id = 1
+        user = create(:student, id: 2)
 
-        get :user_service_activity_events, {:id => '2'}
+        get :user_service_activity_events, {:id => user.id, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -56,7 +57,7 @@ describe Api::V1::ServiceActivityController do
         user = create(:student, organization_id: 12345)
         subject.current_user.organization_id = 1
 
-        get :user_service_activity_events, {:id => user.id}
+        get :user_service_activity_events, {:id => user.id, :time_unit_id => user.time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -102,8 +103,8 @@ describe Api::V1::ServiceActivityController do
 
       let(:userId) { subject.current_user.id }
 
-      it "returns 200 with user_service_activity" do
-        event1 = attributes_for(:user_service_activity_event, user_id: subject.current_user.id, )
+      it "returns 200 with user_service_activity_event" do
+        event1 = attributes_for(:user_service_activity_event, user_id: subject.current_user.id)
         post :add_user_service_activity_event, {:service_activity_event => event1}
 
         expect(response.status).to eq(200)
@@ -159,7 +160,7 @@ describe Api::V1::ServiceActivityController do
         delete :delete_user_service_activity, {:id => theActivity[:id]}
 
         expect(response.status).to eq(200)
-        expect(json["info"]).to eq('Deleted User Service Activity')
+        expect(json["info"]).to eq("Successfully deleted Service Activity, id: #{theActivity[:id]}")
       end
     end
   end
@@ -176,7 +177,7 @@ describe Api::V1::ServiceActivityController do
         delete :delete_user_service_activity_event, {:id => theActivityEvent[:id]}
 
         expect(response.status).to eq(200)
-        expect(json["info"]).to eq('Deleted User Service Activity Event')
+        expect(json["info"]).to eq("Successfully deleted Service Activity Event, id: #{theActivityEvent[:id]}")
       end
     end
   end

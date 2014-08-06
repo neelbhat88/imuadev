@@ -14,74 +14,68 @@ class Api::V1::ServiceActivityController < ApplicationController
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
-    if !student_can_access?(userId)
-      render status: :forbidden,
-        json: {}
-
-      return
-    end
-
     user = @userRepository.get_user(userId)
-    if !same_organization?(user.organization_id)
+    if !can?(current_user, :manage_user_events, user)
       render status: :forbidden,
         json: {}
-
+      return
+    elsif !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    service_activities = @userServiceActivityService.get_user_service_activities(userId)
+    activities_result = @userServiceActivityService.get_user_service_activities(userId)
 
-    service_events = @userServiceActivityService.get_user_service_activity_events(userId, time_unit_id)
+    events_result = @userServiceActivityService.get_user_service_activity_events(userId, time_unit_id)
 
     render status: :ok,
       json: {
         info: "User's Service Activities and Events",
-        user_service_activities: service_activities,
-        user_service_activity_events: service_events
+        user_service_activities: activities_result,
+        user_service_activity_events: events_result
       }
   end
 
   # POST /service_activity
   def add_user_service_activity
     new_service_activity = params[:service_activity]
+    userId = params[:service_activity][:user_id].to_i
 
-
-    user_service_activity = @userServiceActivityService.save_user_service_activity(new_service_activity)
-
-    if user_service_activity.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to create a user service activity."
-      }
+    user = @userRepository.get_user(userId)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userServiceActivityService.save_user_service_activity(new_service_activity)
+
+    render status: result.status,
       json: {
-        info: "Saved user service activity",
-        user_service_activity: user_service_activity
+        info: result.info,
+        user_service_activity: result.object
       }
   end
 
   # POST /service_activity_event
   def add_user_service_activity_event
     new_service_activity_event = params[:service_activity_event]
+    userId = params[:service_activity_event][:user_id].to_i
 
-
-    user_service_activity_event = @userServiceActivityService.save_user_service_activity_event(new_service_activity_event)
-
-    if user_service_activity_event.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to create a user service activity event."
-      }
+    user = @userRepository.get_user(userId)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userServiceActivityService.save_user_service_activity_event(new_service_activity_event)
+
+    render status: result.status,
       json: {
-        info: "Saved user service activity event",
-        user_service_activity_event: user_service_activity_event
+        info: result.info,
+        user_service_activity_event: result.object
       }
   end
 
@@ -90,20 +84,21 @@ class Api::V1::ServiceActivityController < ApplicationController
     serviceActivityId = params[:id].to_i
     updated_service_activity = params[:service_activity]
 
-    user_service_activity = @userServiceActivityService.update_user_service_activity(serviceActivityId, updated_service_activity)
+    userServiceActivity = @userServiceActivityService.get_user_service_activity(serviceActivityId)
 
-    if user_service_activity.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to update user service activity"
-      }
+    user = @userRepository.get_user(userServiceActivity.user_id)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userServiceActivityService.update_user_service_activity(serviceActivityId, updated_service_activity)
+
+    render status: result.status,
       json: {
-        info: "Updated user service activity",
-        user_service_activity: user_service_activity
+        info: result.info,
+        user_service_activity: result.object
       }
   end
 
@@ -112,20 +107,21 @@ class Api::V1::ServiceActivityController < ApplicationController
     serviceActivityEventId = params[:id].to_i
     updated_service_activity_event = params[:service_activity_event]
 
-    user_service_activity_event = @userServiceActivityService.update_user_service_activity_event(serviceActivityEventId, updated_service_activity_event)
+    userServiceActivityEvent = @userServiceActivityService.get_user_service_activity_event(serviceActivityEventId)
 
-    if user_service_activity_event.nil?
-      render status: :bad_request,
-      json: {
-        info: "Failed to update user service activity"
-      }
+    user = @userRepository.get_user(userServiceActivityEvent.user_id)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    render status: :ok,
+    result = @userServiceActivityService.update_user_service_activity_event(serviceActivityEventId, updated_service_activity_event)
+
+    render status: result.status,
       json: {
-        info: "Updated user service activity",
-        user_service_activity_event: user_service_activity_event
+        info: result.info,
+        user_service_activity_event: result.object
       }
   end
 
@@ -133,38 +129,42 @@ class Api::V1::ServiceActivityController < ApplicationController
   def delete_user_service_activity
     serviceActivityId = params[:id].to_i
 
-    if @userServiceActivityService.delete_user_service_activity(serviceActivityId)
-      render status: :ok,
-        json: {
-          info: "Deleted User Service Activity"
-        }
-      return
-    else
-      render status: :internal_server_error,
-        json: {
-          info: "Failed to delete user service activity"
-        }
+    userServiceActivity = @userServiceActivityService.get_user_service_activity(serviceActivityId)
+
+    user = @userRepository.get_user(userServiceActivity.user_id)
+    if !can?(current_user, :manage_user_activities, user)
+      render status: :forbidden,
+        json: {}
       return
     end
+
+    result = @userServiceActivityService.delete_user_service_activity(serviceActivityId)
+
+    render status: result.status,
+      json: {
+        info: result.info
+      }
   end
 
   # DELETE /service_activity_event/:id
   def delete_user_service_activity_event
     serviceActivityEventId = params[:id].to_i
 
-    if @userServiceActivityService.delete_user_service_activity_event(serviceActivityEventId)
-      render status: :ok,
-        json: {
-          info: "Deleted User Service Activity Event"
-        }
-      return
-    else
-      render status: :internal_server_error,
-        json: {
-          info: "Failed to delete user service activity event"
-        }
+    userServiceActivityEvent = @userServiceActivityService.get_user_service_activity_event(serviceActivityEventId)
+
+    user = @userRepository.get_user(userServiceActivityEvent.user_id)
+    if !can?(current_user, :manage_user_events, user)
+      render status: :forbidden,
+        json: {}
       return
     end
+
+    result = @userServiceActivityService.delete_user_service_activity_event(serviceActivityEventId)
+
+    render status: result.status,
+      json: {
+        info: result.info
+      }
   end
 
 end

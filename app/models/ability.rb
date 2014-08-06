@@ -23,7 +23,9 @@ class Ability
           :view_profile,
           :change_semester,
           :read_user_tests,
-          :manage_user_tests
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -36,7 +38,9 @@ class Ability
           :view_profile,
           :edit_user_info,
           :read_user_tests,
-          :manage_user_tests
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
 
       elsif user.org_admin?
@@ -46,7 +50,9 @@ class Ability
           :view_profile,
           :change_semester,
           :read_user_tests,
-          :manage_user_tests
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
 
       elsif user.mentor?
@@ -58,7 +64,9 @@ class Ability
               :change_semester,
               :edit_user_info,
               :read_user_tests,
-              :manage_user_tests
+              :manage_user_tests,
+              :manage_user_activities,
+              :manage_user_events
             ]
           end
         else # other users in their organization (other mentors, admins)
