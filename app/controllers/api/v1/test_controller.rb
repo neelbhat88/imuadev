@@ -166,7 +166,7 @@ class Api::V1::TestController < ApplicationController
       return
     end
 
-    result = @testService.update_user_test(userTestId, userTest)
+    result = @testService.update_user_test(userTestId, updatedUserTest)
 
     render status: result.status,
       json: {

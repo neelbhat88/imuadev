@@ -28,8 +28,14 @@ angular.module('myApp')
         var total_points = 0;
         var user_points = 0;
         var data = [6];
+        data[0] = {name: "Academics",       value: 0};
+        data[1] = {name: "Service",         value: 0};
+        data[2] = {name: "Extracurricular", value: 0};
+        data[3] = {name: "College_Prep",    value: 0};
+        data[4] = {name: "Testing",         value: 0};
+        data[5] = {name: "Future Progress", value: 0};
 
-        _ref = student.modules_progress;
+        var _ref = student.modules_progress;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           var index = -1;
           switch (_ref[_i].module_title) {
@@ -102,7 +108,7 @@ angular.module('myApp')
         }
       }
 
-      scope.$watch('student', function(){
+      scope.$watch('student', function() {
           scope.render(scope.student);
       }, true);
     }

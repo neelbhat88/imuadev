@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :org_test do
     organization_id -10
     title           "default_title"
-    score_type      0
+    score_type      Constants.TestScoreTypes[:PERCENT]
     description     "default_description"
   end
 

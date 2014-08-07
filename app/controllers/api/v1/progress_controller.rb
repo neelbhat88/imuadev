@@ -4,12 +4,12 @@ class Api::V1::ProgressController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
-
-  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil )
+  def load_services( progressService=nil, milestoneService=nil, userClassService=nil, userRepo=nil, userServiceActivityService=nil, userExtracurricularActivityService=nil )
     @userClassService = userClassService ? userClassService : UserClassService.new
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
+    @userServiceActivityService = userServiceActivityService ? userServiceActivityService : UserServiceActivityService.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -102,6 +102,11 @@ class Api::V1::ProgressController < ApplicationController
         info: result.info
       }
   end
+
+  ###############################################################
+  ###############  User Activities and Events ###################
+  ###########  Move into separate controller soon ###############
+  ###############################################################
 
   # GET /user/:id/time_unit/:time_unit_id/classes
   def user_classes
@@ -196,4 +201,5 @@ class Api::V1::ProgressController < ApplicationController
       return
     end
   end
+
 end

@@ -1,0 +1,34 @@
+<div ng-controller="OrgTestController" class="orgTestContainer">
+
+  <h4>Tests</h4>
+  <div class="orgTests-list" wait-to-load="{{loaded_orgTests}}">
+
+    <div class="orgTests-list__item" ng-repeat="orgTest in orgTests">
+      <div class="orgTests-list__item__title">
+        <span ng-hide="orgTest.editing">{{orgTest.title}}</span>
+        <input ng-show="orgTest.editing" class="form-field" ng-model="orgTest.new_title" placeholder="Test Title" name="orgTest_title">
+      </div>
+      <div class="orgTests-list__item__score_type">
+        <span ng-hide="orgTest.editing">{{orgTest.score_type}}</span>
+        <select ng-show="orgTest.editing" ng-options="scoreType as scoreType for scoreType in TestScoreTypes" ng-model="orgTest.new_score_type">
+          <option value="">--- Score Type ---</option>
+        </select>
+      </div>
+      <div class="orgTests-list__item__icons" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
+        <div ng-hide="orgTest.editing">
+          <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editOrgTest($index)"></span>
+          <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteOrgTest($index)"></span>
+        </div>
+        <div ng-show="orgTest.editing">
+          <span class="editing_icon glyphicon glyphicon-ok prs green" title="Save" ng-click="saveOrgTest($index)"></span>
+          <span class="editing_icon glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditOrgTest($index)"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-orgTest__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.student && !orgTests.editing"></div>
+    <div class="add-orgTest__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.student && !orgTests.editing" ng-click="addOrgTest()">Add Test</div>
+
+  </div>
+
+</div>
