@@ -31,14 +31,14 @@
     <div class="user-list">
       <h4>Mentors</h4>
 
-      <div class="avatar-block avatar-block--list" ng-repeat="mentor in organization.mentors">
-        <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
-          <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-          <!-- <progress-circle student="mentor"></progress-circle> -->
+      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in mentors | orderBy: 'user.id'">
+        <a ng-href="#/mentor/{{mentor.user.id}}" title="View progress">
+          <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+          <progress-circle student="mentor"></progress-circle>
         </a>
-        <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+        <a ng-href="#/profile/{{mentor.user.id}}" title="View mentor info">
           <div class="avatar-block__name">
-            {{fullName(mentor)}}
+            {{fullName(mentor.user)}}
           </div>
         </a>
       </div>
