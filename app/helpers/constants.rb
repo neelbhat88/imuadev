@@ -26,8 +26,12 @@ class Constants
       ACADEMICS_GPA:       "Academics_GPA",
       ACADEMICS_COURSES:   "Academics_Courses",
 
+      SERVICE_HOURS:       "Service_Hours",
       SERVICE_DEPTH_HOURS: "Service_DepthHours",
+
       EXTRACURRICULAR_ACTIVITIES: "Extracurricular_Activities",
+      EXTRACURRICULAR_DEPTH_ACTIVITIES: "Extracurricular_DepthActivities",
+      EXTRACURRICULAR_LEADERSHIP_ACTIVITIES: "Extracurricular_LeadershipActivities",
 
       YES_NO:              "YesNo",
     }
