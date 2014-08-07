@@ -112,20 +112,21 @@ ActiveRecord::Schema.define(:version => 20140805235740) do
 
   create_table "user_extracurricular_activities", :force => true do |t|
     t.string   "name"
-    t.string   "position"
     t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
   end
 
-  create_table "user_extracurricular_activity_details", :force => true do |t|
-    t.integer  "extracurricular_activity_id"
+  create_table "user_extracurricular_activity_events", :force => true do |t|
+    t.integer  "user_extracurricular_activity_id"
     t.string   "description"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "name"
+    t.string   "leadership"
   end
 
   create_table "user_milestones", :force => true do |t|
@@ -138,22 +139,24 @@ ActiveRecord::Schema.define(:version => 20140805235740) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "user_service_hours", :force => true do |t|
-    t.integer  "service_org_id"
+  create_table "user_service_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "user_service_activity_events", :force => true do |t|
+    t.integer  "user_service_activity_id"
     t.decimal  "hours"
     t.date     "date"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  create_table "user_service_orgs", :force => true do |t|
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.string   "name"
-    t.integer  "user_id"
-    t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "description"
   end
 
   create_table "user_tests", :force => true do |t|
