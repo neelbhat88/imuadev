@@ -43,7 +43,7 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  '/user/:id/service_activity_events' => 'service_activity#user_service_activity_events'
+      get  '/users/:id/service_activity_events' => 'service_activity#user_service_activity_events'
 
       post '/service_activity' => 'service_activity#add_user_service_activity'
       post '/service_activity_event' => 'service_activity#add_user_service_activity_event'
@@ -52,7 +52,7 @@ Imua::Application.routes.draw do
       delete '/service_activity/:id' => 'service_activity#delete_user_service_activity'
       delete '/service_activity_event/:id' => 'service_activity#delete_user_service_activity_event'
 
-      get  '/user/:id/extracurricular_activity_events' => 'extracurricular_activity#user_extracurricular_activity_events'
+      get  '/users/:id/extracurricular_activity_events' => 'extracurricular_activity#user_extracurricular_activity_events'
       post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
       post '/extracurricular_activity_event' => 'extracurricular_activity#add_user_extracurricular_activity_event'
       put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'

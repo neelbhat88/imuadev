@@ -9,7 +9,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /user/:id/extracurricular_activity_events?time_unit_id=#
+  # GET /users/:id/extracurricular_activity_events?time_unit_id=#
   def user_extracurricular_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i

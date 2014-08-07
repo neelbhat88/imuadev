@@ -9,7 +9,7 @@ class Api::V1::ServiceActivityController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /user/:id/service_activity_events?time_unit_id=#
+  # GET /users/:id/service_activity_events?time_unit_id=#
   def user_service_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
