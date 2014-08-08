@@ -31,7 +31,7 @@ class UserExtracurricularActivityService
     if new_extracurricular.save
       return ReturnObject.new(:ok, "Successfully created Extracurricular Activity, id: #{new_extracurricular.id}", new_extracurricular)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create Extracurricular Activity. Errors: #{new_extracurricular.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create Extracurricular Activity. Errors: #{new_extracurricular.errors.inspect}", nil)
     end
   end
 
@@ -49,7 +49,7 @@ class UserExtracurricularActivityService
     if new_activity_event.save
       return ReturnObject.new(:ok, "Successfully created Extracurricular Activity Event, id: #{new_activity_event.id}", new_activity_event)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create Extracurricular Activity Event. Errors: #{new_activity_event.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create Extracurricular Activity Event. Errors: #{new_activity_event.errors.inspect}", nil)
     end
   end
 
@@ -59,7 +59,7 @@ class UserExtracurricularActivityService
     if db_class.update_attributes(:name => user_extracurricular_activity[:name], :description => user_extracurricular_activity[:description])
       return ReturnObject.new(:ok, "Successfully updated Extracurricular Activity, id: #{db_class.id}", db_class)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update Extracurricular Activity. Errors: #{db_class.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update Extracurricular Activity. Errors: #{db_class.errors.inspect}", nil)
     end
   end
 
@@ -68,7 +68,7 @@ class UserExtracurricularActivityService
     if db_class.update_attributes(:description => user_extracurricular_activity_event[:description], :leadership => user_extracurricular_activity_event[:leadership], :name => user_extracurricular_activity_event[:name])
       return ReturnObject.new(:ok, "Successfully updated Extracurricular Activity Event, id: #{db_class.id}", db_class)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update Extracurricular Activity Event. Errors: #{db_class.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update Extracurricular Activity Event. Errors: #{db_class.errors.inspect}", nil)
     end
   end
 

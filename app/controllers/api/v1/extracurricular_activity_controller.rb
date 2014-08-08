@@ -39,8 +39,8 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
 
   # POST /extracurricular_activity
   def add_user_extracurricular_activity
-    new_extracurricular_activity = params[:extracurricular_activity]
-    userId = params[:extracurricular_activity][:user_id].to_i
+    new_extracurricular_activity = params[:user_extracurricular_activity]
+    userId = params[:user_extracurricular_activity][:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_user_activities, user)
@@ -60,8 +60,8 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
 
   # POST /extracurricular_activity_event
   def add_user_extracurricular_activity_event
-    new_extracurricular_activity_event = params[:extracurricular_activity_event]
-    userId = params[:extracurricular_activity_event][:user_id].to_i
+    new_extracurricular_activity_event = params[:user_extracurricular_activity_event]
+    userId = params[:user_extracurricular_activity_event][:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_user_events, user)
@@ -82,7 +82,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   # PUT /extracurricular_activity/:id
   def update_user_extracurricular_activity
     extracurricularActivityId = params[:id].to_i
-    updated_extracurricular_activity = params[:extracurricular_activity]
+    updated_extracurricular_activity = params[:user_extracurricular_activity]
 
     user_extracurricular_activity = @userExtracurricularActivityService.get_user_extracurricular_activity(extracurricularActivityId)
 
@@ -105,7 +105,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   # PUT /extracurricular_activity_event/:id
   def update_user_extracurricular_activity_event
     extracurricularActivityEventId = params[:id].to_i
-    updated_extracurricular_activity_event = params[:extracurricular_activity_event]
+    updated_extracurricular_activity_event = params[:user_extracurricular_activity_event]
 
     user_extracurricular_activity_event = @userExtracurricularActivityService.get_user_extracurricular_activity_event(extracurricularActivityEventId)
 
