@@ -89,7 +89,7 @@ describe Api::V1::ServiceActivityController do
 
       it "returns 200 with user_service_activity" do
         activity1 = attributes_for(:user_service_activity, user_id: subject.current_user.id)
-        post :add_user_service_activity, {:service_activity => activity1}
+        post :add_user_service_activity, {:user_service_activity => activity1}
 
         expect(response.status).to eq(200)
         expect(json["user_service_activity"]["user_id"]).to eq(userId)
@@ -105,7 +105,7 @@ describe Api::V1::ServiceActivityController do
 
       it "returns 200 with user_service_activity_event" do
         event1 = attributes_for(:user_service_activity_event, user_id: subject.current_user.id)
-        post :add_user_service_activity_event, {:service_activity_event => event1}
+        post :add_user_service_activity_event, {:user_service_activity_event => event1}
 
         expect(response.status).to eq(200)
         expect(json["user_service_activity_event"]["user_id"]).to eq(userId)
@@ -123,7 +123,7 @@ describe Api::V1::ServiceActivityController do
       it "returns 200 with user_service_activity" do
         activity1 = attributes_for(:user_service_activity, user_id: subject.current_user.id,
                                    name: 'poopHard')
-        put :update_user_service_activity, {:id => theActivity[:id], :service_activity => activity1}
+        put :update_user_service_activity, {:id => theActivity[:id], :user_service_activity => activity1}
 
         expect(response.status).to eq(200)
         expect(json["user_service_activity"]["user_id"]).to eq(userId)
@@ -141,7 +141,7 @@ describe Api::V1::ServiceActivityController do
 
       it "returns 200 with user_service_activity_event" do
         event1 = attributes_for(:user_service_activity_event, user_id: subject.current_user.id, name: 'GettingIt')
-        put :update_user_service_activity_event, {:id => theActivityEvent[:id], :service_activity_event => event1}
+        put :update_user_service_activity_event, {:id => theActivityEvent[:id], :user_service_activity_event => event1}
 
         expect(response.status).to eq(200)
         expect(json["user_service_activity_event"]["user_id"]).to eq(userId)
