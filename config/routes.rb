@@ -57,8 +57,8 @@ Imua::Application.routes.draw do
       post '/extracurricular_activity_event' => 'extracurricular_activity#add_user_extracurricular_activity_event'
       put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
       put  '/extracurricular_activity_event/:id' => 'extracurricular_activity#update_user_extracurricular_activity_event'
-      delete '/extracuricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
-      delete '/extracuricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
+      delete '/extracurricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
+      delete '/extracurricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
 
 
       get  '/organization' => 'organization#all_organizations'

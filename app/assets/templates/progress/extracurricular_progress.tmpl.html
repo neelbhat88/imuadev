@@ -1,3 +1,68 @@
 <div ng-controller="ExtracurricularProgressController" class="extracurricularProgressContainer">
+  <div class="module-userExtracurricularActivities">
+
+    <div class="pbxl" ng-show="user_extracurricular_activities.length == 0">
+      <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
+      <h4>Let's get that taken care of. Add your Extracurricular Activities for this semester below.</h4>
+    </div>
+
+    <div class="module-data">
+      <div class="noExtracurricularActivities" ng-hide="user_extracurricular_activites.length != 0">No Extracurricular Activities Added</div>
+
+      <div class="module-data-items">
+        <div class="module-data__item" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities" ng-class="{'last':$last}">
+
+          <div class="module-data__item__activity">
+            <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</span>
+            <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
+          </div>
+
+          <div class="module-data__item__icons">
+            <div ng-if="editable(current_user, selected_semester)"
+                  ng-hide="user_extracurricular_activity.editing">
+              <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
+              <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+            </div>
+
+            <div ng-show="user_extracurricular_activity.editing">
+              <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
+              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
+            </div>
+          </div>
+
+          <div class="module-data__item" ng-repeat="(eventIndex, user_extracurricular_event) in user_extracurricular_activity.events" ng-class="{'last':$last}">
+            <div class="module-data__item__event">
+              <span ng-hide="user_extracurricular_event.editing">{{user_extracurricular_event.leadership}}</span>
+              <input ng-show="user_extracurricular_event.editing" class="form-field" ng-model="user_extracurricular_event.new_leadership" placeholder="Leadership" name="extracurricularEventLeadership">
+            </div>
+            <div class="module-data__item__event">
+              <span ng-hide="user_extracurricular_event.editing">{{user_extracurricular_event.description}}</span>
+              <input ng-show="user_extracurricular_event.editing" class="form-field" ng-model="user_extracurricular_event.new_description" placeholder="Event Description" name="extracurricularEventDescription">
+            </div>
+
+            <div class="module-data__item__icons">
+              <div ng-if="editable(current_user, selected_semester)"
+                    ng-hide="user_extracurricular_event.editing">
+                <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
+                <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+              </div>
+
+              <div ng-show="user_extracurricular_event.editing">
+                <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_extracurricular_activity.id)"></span>
+                <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
+              </div>
+            </div>
+          </div>
+          <div ng-if="editable(current_user, selected_semester)"
+              class="module-data__button" ng-click="addEvent(activityIndex, user_extracurricular_activity.id)" ng-hide="user_extracurricular_activities[activityIndex].events.editing">Add Event
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="editable(current_user, selected_semester)"
+          class="module-data__button" ng-click="addActivity()" ng-hide="user_extracurricular_activities.editing">Add Extracurricular Activity
+      </div>
+    </div>
+  </div>
 
 </div>

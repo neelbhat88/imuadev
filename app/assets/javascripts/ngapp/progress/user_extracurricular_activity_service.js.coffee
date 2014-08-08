@@ -9,9 +9,9 @@ angular.module("myApp")
     user_id: user.id,
     editing: true
 
-  @newExtracurricularActivityEvent = (user, time_unit_id) ->
+  @newExtracurricularEvent = (user, time_unit_id, extracurricularActivityId) ->
     name: "",
-    user_extracurricular_activity_id: "",
+    user_extracurricular_activity_id: extracurricularActivityId,
     hours: "",
     date: "",
     time_unit_id: time_unit_id,
@@ -25,7 +25,7 @@ angular.module("myApp")
     else
       return $http.post "/api/v1//extracurricular_activity", {user_extracurricular_activity: user_extracurricular_activity}
 
-  @saveExtracurricularActivityEvent = (user_extracurricular_activity_event) ->
+  @saveExtracurricularEvent = (user_extracurricular_activity_event) ->
     if user_extracurricular_activity_event.id
       return $http.put "/api/v1/extracurricular_activity_event/#{user_extracurricular_activity_event.id}", {user_extracurricular_activity_event: user_extracurricular_activity_event}
     else
@@ -34,7 +34,7 @@ angular.module("myApp")
   @deleteExtracurricularActivity = (user_extracurricular_activity) ->
     return $http.delete "/api/v1/extracurricular_activity/#{user_extracurricular_activity.id}"
 
-  @deleteExtracurricularActivityEvent = (user_extracurricular_activity_event) ->
+  @deleteExtracurricularEvent = (user_extracurricular_activity_event) ->
     return $http.delete "/api/v1/extracurricular_activity_event/#{user_extracurricular_activity_event.id}"
 
   @
