@@ -3,14 +3,11 @@ angular.module('myApp')
   ($scope, UserServiceActivityService, ProgressService) ->
     $scope.user_service_activities = []
     $scope.user_service_activity_events = []
-    $scope.activities = {}
-    $scope.events= {}
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
         UserServiceActivityService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
-            console.log(data.user_service_activities)
             $scope.user_service_activities = data.user_service_activities
             $scope.user_service_activity_events = data.user_service_activity_events
 
@@ -21,12 +18,12 @@ angular.module('myApp')
                   user_service_activity.events.push(user_service_activity_event)
 
             console.log($scope.user_service_activities)
-            $scope.$emit('loaded_module_milestones');
+            $scope.$emit('loaded_module_milestones')
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
-        $scope.$emit('loaded_module_milestones');
+        $scope.$emit('loaded_module_milestones')
 
-    $scope.saveServiceActivity = (index) ->
+    $scope.saveActivity = (index) ->
       new_service_activity = UserServiceActivityService.newServiceActivity($scope.student, $scope.selected_semester.id)
       new_service_activity.id = $scope.user_service_activities[index].id
       new_service_activity.name = $scope.user_service_activities[index].new_name
@@ -39,7 +36,7 @@ angular.module('myApp')
 
           $scope.refreshPoints()
 
-    $scope.saveServiceEvent = (index) ->
+    $scope.saveEvent = (index) ->
       new_service_event = UserServiceActivityService.newServiceEvent($scope.student, $scope.selected_semester.id)
       new_service_event.id = $scope.user_service_activity_events[index].id
       new_service_event.name = $scope.user_service_activity_events[index].new_name
@@ -52,14 +49,14 @@ angular.module('myApp')
 
           $scope.refreshPoints()
 
-    $scope.deleteServiceActivity = (index) ->
+    $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this class?"
         UserServiceActivityService.deleteServiceActivity($scope.user_service_activities[index])
           .success (data) ->
             $scope.user_service_activities.splice(index, 1)
             $scope.refreshPoints()
 
-    $scope.deleteServiceEvent = (index) ->
+    $scope.deleteEvent = (index) ->
       if window.confirm "Are you sure you want to delete this class?"
         UserServiceActivityService.deleteServiceEvent($scope.user_service_activity_events[index])
           .success (data) ->
@@ -72,22 +69,31 @@ angular.module('myApp')
       else
         $scope.user_service_activities.splice(index, 1)
 
-      $scope.activities.editing = false;
+      $scope.user_service_activities.editing = false
 
-    $scope.cancelEventEdit= (index) ->
-      if $scope.user_service_activties[index].events.id
-        $scope.user_service_activities[index].events.editing = false
+    $scope.cancelEventEdit= (parentIndex, index) ->
+      if $scope.user_service_activities[parentIndex].events[index].id
+        $scope.user_service_activities[parentIndex].events[index].editing = false
       else
-        $scope.user_service_activities.events.splice(index, 1)
+        $scope.user_service_activities[parentIndex].events.splice(index, 1)
 
-      $scope.events.editing = false;
+      $scope.user_service_activities[parentIndex].events.editing = false
 
     $scope.addActivity = () ->
-      $scope.activities.editing = true
+      $scope.user_service_activities.editing = true
       $scope.user_service_activities.push(UserServiceActivityService.newServiceActivity($scope.student, $scope.selected_semester.id))
 
     $scope.addEvent= (index, user_service_activity_id) ->
-      $scope.events.editing = true
+      $scope.user_service_activities[index].events.editing = true
       $scope.user_service_activities[index].events.push(UserServiceActivityService.newServiceEvent($scope.student, $scope.selected_semester.id, user_service_activity_id))
+
+    $scope.editActivity= (index) ->
+      $scope.user_service_activities[index].editing = true
+      $scope.user_service_activities[index].new_name= $scope.user_service_activities[index].name
+
+    $scope.editEvent = (parentIndex, index) ->
+      $scope.user_service_activities[parentIndex].events[index].editing = true
+      $scope.user_service_activities[parentIndex].events[index].new_description = $scope.user_service_activities[parentIndex].events[index].description
+      $scope.user_service_activities[parentIndex].events[index].new_hours = $scope.user_service_activities[parentIndex].events[index].hours
 
 ]

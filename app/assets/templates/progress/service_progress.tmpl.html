@@ -20,7 +20,7 @@
           <div class="module-data__item__icons">
             <div ng-if="editable(current_user, selected_semester)"
                   ng-hide="user_service_activity.editing">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="activities.editing=true;user_service_activity.editing=true;user_service_activity.new_name=user_service_activity.name;"></span>
+              <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="editActivity($index)"></span>
               <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity($index)"></span>
             </div>
 
@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div class="module-data__item" ng-repeat-start="user_service_event in user_service_activity.events" ng-class="{'last':$last}">
+          <div class="module-data__item" ng-repeat="user_service_event in user_service_activity.events" ng-class="{'last':$last}">
             <div class="module-data__item__event">
               <span ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
               <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_activity_events.new_description" placeholder="Service Event Description" name="serviceEventDescription">
@@ -39,28 +39,28 @@
               <span ng-hide="user_service_event.editing">{{user_service_event.hours}}</span>
               <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_activity_events.new_hours" placeholder="Service Event Hours" name="serviceEventHours">
             </div>
-          </div>
 
-          <div class="module-data__item__icons" ng-repeat-end>
-            <div ng-if="editable(current_user, selected_semester)"
-                  ng-hide="user_service_event.editing">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Service Event" ng-click="events.editing=true;user_service_event.editing=true;user_service_event.new_description=user_service_event.description;user_service_event.new_hours=user_service_event.hours"></span>
-              <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent($index)"></span>
-            </div>
+            <div class="module-data__item__icons">
+              <div ng-if="editable(current_user, selected_semester)"
+                    ng-hide="user_service_event.editing">
+                <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent($parent.$index, $index)"></span>
+                <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent($parent.$index, $index)"></span>
+              </div>
 
-            <div ng-show="user_service_event.editing">
-              <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent($index)"></span>
-              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit($index)"></span>
+              <div ng-show="user_service_event.editing">
+                <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent($parent.$index, $index)"></span>
+                <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit($parent.$index, $index)"></span>
+              </div>
             </div>
           </div>
           <div ng-if="editable(current_user, selected_semester)"
-              class="module-data__button" ng-click="addEvent($index, user_service_activity.id)" ng-hide="events.editing">Add Event
+              class="module-data__button" ng-click="addEvent($index, user_service_activity.id)" ng-hide="user_service_activities[$index].events.editing">Add Event
           </div>
         </div>
       </div>
 
       <div ng-if="editable(current_user, selected_semester)"
-          class="module-data__button" ng-click="addActivity()" ng-hide="activities.editing">Add Service Activity
+          class="module-data__button" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add Service Activity
       </div>
     </div>
   </div>
