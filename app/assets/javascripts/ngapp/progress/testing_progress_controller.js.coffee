@@ -49,12 +49,14 @@ angular.module('myApp')
               break
           $scope.userTests[index].editing = false
           $scope.userTests.editing = false
+          $scope.refreshPoints()
 
     $scope.deleteUserTest = (index) ->
       if window.confirm "Are you sure you want to delete this test?"
         TestService.deleteUserTest($scope.userTests[index])
           .success (data) ->
             $scope.userTests.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true

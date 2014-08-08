@@ -8,8 +8,8 @@ class LeadershipActivitiesMilestone < ImuaMilestone
       @module = Constants.Modules[:EXTRACURRICULAR]
       @submodule = Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
 
-      @title = "Extracurricular"
-      @description = "Leadership Activities:"
+      @title = "Be a Leader"
+      @description = "Number of activities with a leadership role:"
       @value = "1"
       @icon = "/assets/Extracurricular.jpg"
 
@@ -26,7 +26,7 @@ class LeadershipActivitiesMilestone < ImuaMilestone
 
     events.each do | e |
       if !events.leadership.nil?
-        user_leadership_activities++
+        user_leadership_activities += 1
       end
     end
 

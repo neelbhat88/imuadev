@@ -8,8 +8,8 @@ class HoursMilestone < ImuaMilestone
       @module = Constants.Modules[:SERVICE]
       @submodule = Constants.SubModules[:SERVICE_HOURS]
 
-      @title = "Service Hours"
-      @description = "Community Service Hours:"
+      @title = "Give Back"
+      @description = "Community service hours:"
       @value = "10"
       @icon = "/assets/Service.jpg"
 

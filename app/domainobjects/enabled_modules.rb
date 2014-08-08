@@ -29,7 +29,8 @@ class EnabledModules
         },
         {
           :title => Constants.Modules[:TESTING],
-          :submodules => [Constants.SubModules[:YES_NO]]
+          :submodules => [Constants.SubModules[:TESTING_TAKE],
+                          Constants.SubModules[:YES_NO]]
         }
       ]
 

@@ -8,8 +8,8 @@ class DepthHoursMilestone < ImuaMilestone
       @module = Constants.Modules[:SERVICE]
       @submodule = Constants.SubModules[:SERVICE_DEPTH_HOURS]
 
-      @title = "Service Hours"
-      @description = "Community Service Depth Hours:"
+      @title = "Be Committed"
+      @description = "Minimum service hours for a single organization:"
       @value = "10"
       @icon = "/assets/Service.jpg"
 

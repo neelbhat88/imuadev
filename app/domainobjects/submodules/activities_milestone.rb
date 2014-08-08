@@ -8,8 +8,8 @@ class ActivitiesMilestone < ImuaMilestone
       @module = Constants.Modules[:EXTRACURRICULAR]
       @submodule = Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES]
 
-      @title = "Extracurricular"
-      @description = "Minimum activity #:"
+      @title = "Get Involved"
+      @description = "Minimum activities:"
       @value = "1"
       @icon = "/assets/Extracurricular.jpg"
 

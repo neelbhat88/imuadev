@@ -16,6 +16,9 @@ class MilestoneFactory
     when Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
       return LeadershipActivitiesMilestone.new(milestone)
 
+    when Constants.SubModules[:TESTING_TAKE]
+      return TakeTestMilestone.new(milestone)
+
     when Constants.SubModules[:YES_NO]
       if mod == Constants.Modules[:ACADEMICS]
         return YesNoMilestoneAcademics.new(milestone)

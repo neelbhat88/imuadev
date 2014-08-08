@@ -33,6 +33,8 @@ class Constants
       EXTRACURRICULAR_DEPTH_ACTIVITIES: "Extracurricular_DepthActivities",
       EXTRACURRICULAR_LEADERSHIP_ACTIVITIES: "Extracurricular_LeadershipActivities",
 
+      TESTING_TAKE: "Testing_Take",
+
       YES_NO:              "YesNo",
     }
   end
@@ -40,8 +42,8 @@ class Constants
   def self.TestScoreTypes
     return {
       PERCENT:      "Percent",
-      RAW_NUMBER:   "Raw Number",
-      LETTER_GRADE: "Letter Grade"
+      RAW_NUMBER:   "Raw_Number",
+      LETTER_GRADE: "Letter_Grade"
     }
   end
 
