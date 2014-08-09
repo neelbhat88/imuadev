@@ -9,7 +9,7 @@ class Api::V1::ServiceActivityController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /user/:id/service_activity_events?time_unit_id=#
+  # GET /users/:id/service_activity_events?time_unit_id=#
   def user_service_activity_events
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
@@ -39,8 +39,8 @@ class Api::V1::ServiceActivityController < ApplicationController
 
   # POST /service_activity
   def add_user_service_activity
-    new_service_activity = params[:service_activity]
-    userId = params[:service_activity][:user_id].to_i
+    new_service_activity = params[:user_service_activity]
+    userId = params[:user_service_activity][:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_user_activities, user)
@@ -60,8 +60,8 @@ class Api::V1::ServiceActivityController < ApplicationController
 
   # POST /service_activity_event
   def add_user_service_activity_event
-    new_service_activity_event = params[:service_activity_event]
-    userId = params[:service_activity_event][:user_id].to_i
+    new_service_activity_event = params[:user_service_activity_event]
+    userId = params[:user_service_activity_event][:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_user_events, user)
@@ -82,7 +82,7 @@ class Api::V1::ServiceActivityController < ApplicationController
   # PUT /service_activity/:id
   def update_user_service_activity
     serviceActivityId = params[:id].to_i
-    updated_service_activity = params[:service_activity]
+    updated_service_activity = params[:user_service_activity]
 
     userServiceActivity = @userServiceActivityService.get_user_service_activity(serviceActivityId)
 
@@ -105,7 +105,7 @@ class Api::V1::ServiceActivityController < ApplicationController
   # PUT /service_activity_event/:id
   def update_user_service_activity_event
     serviceActivityEventId = params[:id].to_i
-    updated_service_activity_event = params[:service_activity_event]
+    updated_service_activity_event = params[:user_service_activity_event]
 
     userServiceActivityEvent = @userServiceActivityService.get_user_service_activity_event(serviceActivityEventId)
 

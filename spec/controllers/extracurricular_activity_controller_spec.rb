@@ -81,7 +81,7 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 200 with user_extracurricular_activity" do
         activity1 = attributes_for(:user_extracurricular_activity, user_id: subject.current_user.id)
-        post :add_user_extracurricular_activity, {:extracurricular_activity => activity1}
+        post :add_user_extracurricular_activity, {:user_extracurricular_activity => activity1}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activity"]["user_id"]).to eq(userId)
@@ -98,7 +98,7 @@ describe Api::V1::ExtracurricularActivityController do
       it "returns 200 with user_extracurricular_activity_event" do
         activity1 = create(:user_extracurricular_activity, user_id: userId)
         event1 = attributes_for(:user_extracurricular_activity_event, user_id: subject.current_user.id , time_unit_id: subject.current_user.time_unit_id, user_extracurricular_activity_id: activity1.id)
-        post :add_user_extracurricular_activity_event, {:extracurricular_activity_event => event1}
+        post :add_user_extracurricular_activity_event, {:user_extracurricular_activity_event => event1}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activity_event"]["user_id"]).to eq(userId)
@@ -116,7 +116,7 @@ describe Api::V1::ExtracurricularActivityController do
       it "returns 200 with user_extracurricular_activity" do
         activity1 = attributes_for(:user_extracurricular_activity, user_id: subject.current_user.id,
                                    name: 'poopHard')
-        put :update_user_extracurricular_activity, {:id => theActivity[:id], :extracurricular_activity => activity1}
+        put :update_user_extracurricular_activity, {:id => theActivity[:id], :user_extracurricular_activity => activity1}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activity"]["user_id"]).to eq(userId)
@@ -134,7 +134,7 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 200 with user_extracurricular_activity_event" do
         event1 = attributes_for(:user_extracurricular_activity_event, user_id: subject.current_user.id, name: 'GettingIt')
-        put :update_user_extracurricular_activity_event, {:id => theActivityEvent[:id], :extracurricular_activity_event => event1}
+        put :update_user_extracurricular_activity_event, {:id => theActivityEvent[:id], :user_extracurricular_activity_event => event1}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activity_event"]["user_id"]).to eq(userId)

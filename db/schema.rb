@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(:version => 20140808203914) do
   create_table "user_service_activity_events", :force => true do |t|
     t.integer  "user_service_activity_id"
     t.decimal  "hours"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "user_id"
     t.integer  "time_unit_id"
     t.datetime "created_at",               :null => false
