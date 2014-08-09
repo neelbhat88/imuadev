@@ -8,8 +8,8 @@ describe Api::V1::ParentGuardianContactController do
       login_super_admin
 
       let!(:student) { create(:student) }
-      let!(:parent_guardian_contact_1) { create(:parent_guardian_contact, user_id: student.id) }
-      let!(:parent_guardian_contact_2) { create(:parent_guardian_contact, user_id: student.id) }
+      let!(:parentGuardianContact1) { create(:parent_guardian_contact, user_id: student.id) }
+      let!(:parentGuardianContact2) { create(:parent_guardian_contact, user_id: student.id) }
 
       it "returns 200 when requesting all parent guardian contacts." do
         get :get_parent_guardian_contacts, {:id => student.id}
@@ -17,23 +17,6 @@ describe Api::V1::ParentGuardianContactController do
         expect(json["parentGuardianContacts"].length).to eq(2)
       end
     end
-  end
-
-  describe "GET /parent_guardian_contact/:id" do
-
-    describe "as a super admin" do
-      login_super_admin
-
-      let!(:student) { create(:student) }
-      let!(:parent_guardian_contact) { create(:parent_guardian_contact, user_id: student.id) }
-
-      it "returns 200 when requesting a parent guardian contact." do
-        get :get_parent_guardian_contact, {:id => parent_guardian_contact.id}
-        expect(response.status).to eq(200)
-        expect(json["parentGuardianContact"]["id"]).to eq(parent_guardian_contact.id)
-      end
-    end
-
   end
 
   describe "POST /parent_guardian_contact" do
@@ -50,15 +33,49 @@ describe Api::V1::ParentGuardianContactController do
         expect(json["parentGuardianContact"]["user_id"]).to eq(student.id)
       end
     end
-
   end
 
   describe "PUT /parent_guardian_contact/:id" do
 
+    describe "as a super admin" do
+      login_super_admin
+
+      let!(:student) { create(:student) }
+      let!(:parentGuardianContact) { create(:parent_guardian_contact, user_id: student.id) }
+
+      it "returns 200 when updating a parent guardian contact." do
+        updatedParentGuardianContact = attributes_for(:parent_guardian_contact, id: parentGuardianContact.id + 1,
+                                                                                user_id: student.id + 1,
+                                                                                name: "Updated Name",
+                                                                                relationship: "Updated Relationship",
+                                                                                email: "Updated@email.com",
+                                                                                phone: "444-444-4444")
+        put :update_parent_guardian_contact, {:id => parentGuardianContact.id,
+                                              :parent_guardian_contact => updatedParentGuardianContact}
+        expect(response.status).to eq(200)
+        expect(json["parentGuardianContact"]["id"]).to eq(parentGuardianContact.id)
+        expect(json["parentGuardianContact"]["user_id"]).to eq(student.id)
+        expect(json["parentGuardianContact"]["name"]).to eq("Updated Name")
+        expect(json["parentGuardianContact"]["relationship"]).to eq("Updated Relationship")
+        expect(json["parentGuardianContact"]["email"]).to eq("Updated@email.com")
+        expect(json["parentGuardianContact"]["phone"]).to eq("444-444-4444")
+      end
+    end
   end
 
   describe "DELETE /parent_guardian_contact/:id" do
 
+    describe "as a super admin" do
+      login_super_admin
+
+      let!(:student) { create(:student) }
+      let!(:parentGuardianContact) { create(:parent_guardian_contact, user_id: student.id) }
+
+      it "returns 200 when deleting a parent guardian contact." do
+        delete :delete_parent_guardian_contact, {:id => parentGuardianContact.id}
+        expect(response.status).to eq(200)
+      end
+    end
   end
 
 end

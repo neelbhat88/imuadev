@@ -45,7 +45,7 @@ class ParentGuardianContactService
   end
 
   def delete_parent_guardian_contact(parentGuardianContactId)
-    dbParentGuardianContact = get_org_test(parentGuardianContactId)
+    dbParentGuardianContact = get_parent_guardian_contact(parentGuardianContactId)
 
     if dbParentGuardianContact.nil?
       return ReturnObject.new(:internal_server_error, "Failed to find ParentGuardianContact with id: #{parentGuardianContactId}.", nil)

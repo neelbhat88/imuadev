@@ -32,8 +32,8 @@ class Api::V1::ParentGuardianContactController < ApplicationController
 
   # POST /parent_guardian_contact
   def create_parent_guardian_contact
-    parentGuardianContact = params[:parentGuardianContact]
-    userId                = params[:parentGuardianContact][:user_id].to_i
+    parentGuardianContact = params[:parent_guardian_contact]
+    userId                = params[:parent_guardian_contact][:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_parent_guardian_contacts, user)
@@ -54,7 +54,7 @@ class Api::V1::ParentGuardianContactController < ApplicationController
   # PUT /parent_guardian_contact/:id
   def update_parent_guardian_contact
     parentGuardianContactId      = params[:id].to_i
-    updatedParentGuardianContact = params[:parentGuardianContact]
+    updatedParentGuardianContact = params[:parent_guardian_contact]
 
     parentGuardianContact = @parentGuardianContactService.get_parent_guardian_contact(parentGuardianContactId)
     user = @userRepository.get_user(parentGuardianContact.user_id)
@@ -69,7 +69,7 @@ class Api::V1::ParentGuardianContactController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        userTest: result.object
+        parentGuardianContact: result.object
       }
   end
 

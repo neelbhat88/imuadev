@@ -84,6 +84,11 @@ Imua::Application.routes.draw do
       put '/user_test/:id' => 'test#update_user_test'
       delete '/user_test/:id' => 'test#delete_user_test'
 
+      get '/users/:id/parent_guardian_contacts' => 'parent_guardian_contact#get_parent_guardian_contacts'
+      post '/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
+      put '/parent_guardian_contact/:id' => 'parent_guardian_contact#update_parent_guardian_contact'
+      delete '/parent_guardian_contact/:id' => 'parent_guardian_contact#delete_parent_guardian_contact'
+
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
       delete '/roadmap/:id' => 'roadmap#delete'
