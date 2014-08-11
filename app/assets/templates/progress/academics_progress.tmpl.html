@@ -7,6 +7,8 @@
       <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
     </div>
 
+    <div class="your-grades">
+            
     <div class="user-class-greeting pvxl" ng-show="user_classes.length != 0">
       <div class="line1">Hey {{current_user.first_name}}, you are currently earning a</div>
       <div class="line2"><span class="bold">{{gpa}} GPA</span> this semester</div>
@@ -39,11 +41,11 @@
               <option value="D-">D-</option>
               <option value="F">F</option>
             </select>
-          </div>
+          </div><!-- /module-data__item__grade -->
 
           <div class="module-data__item__icons">
-            <div ng-if="editable(current_user, selected_semester)"
-                  ng-hide="user_class.editing">
+            
+            <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
               <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
               <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
             </div>
@@ -52,14 +54,20 @@
               <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveClass($index)"></span>
               <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEdit($index)"></span>
             </div>
-          </div>
+            
+          </div><!-- /module-data__item__icons -->
 
         </div>
+        
       </div>
 
-      <div ng-if="editable(current_user, selected_semester)"
-          class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">Add Class</div>
-    </div>
+      <div ng-if="editable(current_user, selected_semester)" class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">
+        Add Class
+      </div>
+      
+    </div><!-- /module-data -->
+    
+    </div><!-- /your-grades -->
   </div>
 
 </div>
