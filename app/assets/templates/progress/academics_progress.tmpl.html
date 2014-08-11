@@ -1,6 +1,6 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
   
-  <div class="module-user-classes">
+  <div class="module-user-classes section-wrapper">
 
     <div class="section academic-milestones">
     
@@ -30,6 +30,8 @@
     </div>
     
     <div class="section your-grades">
+    
+      <div class="section--header">Grades</div>
     
       <div ng-show="user_classes.length == 0">
         <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>

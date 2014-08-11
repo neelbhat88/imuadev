@@ -5,9 +5,7 @@
 $colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
 $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
-.progressContainer {
-
-}
+$progressLeft-width: 320px;
 
 .col {
   overflow: hidden;
@@ -21,7 +19,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   position: absolute;
   left: 0;
   right: 0;
-  width: 320px;
+  width: $progressLeft-width;
   overflow-y: auto;
   background: $grey;
   color: white;
@@ -156,20 +154,31 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       
       	padding: $panelwrapper;
       	padding-top: 30px;
-      
+      	padding-bottom: 30px;
+      	      
       }
       
-      .section {
+      .section-wrapper {
       
-    	  background: $academics-color-dark;
+        width: 90%;
+            
+	      .section {
+
+      	  background: $academics-color-dark;
+      	  padding-bottom: 30px;
+      	  margin-bottom: 30px;
+        
+        	.section--header {
+        	
+  	    	  padding-top: 30px;
+        	  padding-bottom: 30px;
+        	      	
+        	}
+        
+        }
       
-      	.section--header {
-      	
-      	      	
-      	}
-      
-      }
-      
+      } // .section-wrapper
+            
     } //.module-data-content-container
     
   } // .module-data-container

@@ -78,11 +78,15 @@
       <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
 
         <div class="module-title">
-        
+        	
         	<h4 class="bold">{{selected_module.module_title | underscoresToSpaces}}</h4>
-        
+        	
+        	<div class="module-subhead">
+            {{current_user.first_name}}, you've earned <span class="bold">##</span> out of {{selected_module.points.total}} available points in {{selected_module.module_title | underscoresToSpaces}}
+          </div>
+          
         </div>
-
+        
         <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
 
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
