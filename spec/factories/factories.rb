@@ -68,5 +68,5 @@ FactoryGirl.define do
     time_unit_id 1
     user_id -1
   end
-  
+
 end
