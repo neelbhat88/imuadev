@@ -26,7 +26,7 @@ class TestService
     if newOrgTest.save
       return ReturnObject.new(:ok, "Successfully created OrgTest, id: #{newOrgTest.id}.", newOrgTest)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create OrgTest. Errors: #{newOrgTest.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create OrgTest. Errors: #{newOrgTest.errors.inspect}", nil)
     end
   end
 
@@ -44,7 +44,7 @@ class TestService
                                    :description => orgTest[:description])
       return ReturnObject.new(:ok, "Successfully updated OrgTest, id: #{dbOrgTest.id}.", dbOrgTest)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update OrgTest, id: #{dbOrgTest.id}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update OrgTest, id: #{dbOrgTest.id}.", dbOrgTest.errors.inspect)
     end
   end
 
@@ -98,7 +98,7 @@ class TestService
     if newUserTest.save
       return ReturnObject.new(:ok, "Successfully created UserTest, id: #{newUserTest.id}.", newUserTest)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create UserTest.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create UserTest.", newUserTest.errors.insepct)
     end
   end
 
@@ -115,7 +115,7 @@ class TestService
                                     :description => userTest[:description])
       return ReturnObject.new(:ok, "Successfully updated UserTest, id: #{dbUserTest.id}.", dbUserTest)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update UserTest, id: #{dbUserTest.id}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update UserTest, id: #{dbUserTest.id}", dbUserTest.errors.inspect)
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140805235740) do
+ActiveRecord::Schema.define(:version => 20140808194112) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20140805235740) do
   create_table "user_service_activity_events", :force => true do |t|
     t.integer  "user_service_activity_id"
     t.decimal  "hours"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "user_id"
     t.integer  "time_unit_id"
     t.datetime "created_at",               :null => false
