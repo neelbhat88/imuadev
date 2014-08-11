@@ -29,9 +29,6 @@ FactoryGirl.define do
   factory :organization do
     name "Test Org"
   end
-<<<<<<< HEAD
-  
-=======
 
   factory :user_class do
     gpa 4.0
@@ -71,6 +68,5 @@ FactoryGirl.define do
     time_unit_id 1
     user_id -1
   end
-
->>>>>>> master
+  
 end

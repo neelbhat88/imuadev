@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20140731141649) do
-=======
 ActiveRecord::Schema.define(:version => 20140808194112) do
->>>>>>> master
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -119,8 +115,6 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.datetime "updated_at",     :null => false
   end
 
-<<<<<<< HEAD
-=======
   create_table "user_extracurricular_activities", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -140,7 +134,6 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.string   "leadership"
   end
 
->>>>>>> master
   create_table "user_milestones", :force => true do |t|
     t.integer  "user_id"
     t.integer  "time_unit_id"
@@ -151,8 +144,6 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.datetime "updated_at",   :null => false
   end
 
-<<<<<<< HEAD
-=======
   create_table "user_service_activities", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -184,7 +175,6 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.datetime "updated_at",   :null => false
   end
 
->>>>>>> master
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
