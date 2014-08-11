@@ -134,9 +134,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   .module-data-container {
 
-    padding: $panelwrapper;
-    padding-top: 30px;
-
     @each $category, $color in $colormap {
 
       &.color--#{$category} {
