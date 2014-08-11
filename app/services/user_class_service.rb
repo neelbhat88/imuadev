@@ -29,9 +29,9 @@ class UserClassService
     end
 
     if new_class.save
-      return new_class
+      return ReturnObject.new(:ok, "User class created successfully", new_class)
     else
-      return nil
+      return ReturnObject.new(:bad_request, "Failed to create a user class", nil)
     end
   end
 
