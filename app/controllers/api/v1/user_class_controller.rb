@@ -45,20 +45,12 @@ class Api::V1::UserClassController < ApplicationController
     userId = params[:user_id]
     new_class = params[:user_class]
 
-    user_class = @userClassService.save_user_class(userId, new_class)
+    result = @userClassService.save_user_class(userId, new_class)
 
-    if user_class.nil?
-      render status: :bad_request,
+    render status: result.status,
       json: {
-        info: "Failed to create a user class."
-      }
-      return
-    end
-
-    render status: :ok,
-      json: {
-        info: "Saved user class",
-        user_class: user_class
+        info: result.info,
+        user_class: result.object
       }
   end
 

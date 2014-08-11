@@ -15,7 +15,7 @@ angular.module("myApp")
     if user_class.id
       return $http.put "/api/v1/users/#{user_class.user_id}/classes/#{user_class.id}", {user_class: user_class}
     else
-      return $http.post "/api/v1/users/#{user_class.user_id}/classes", {user_class: user_class}
+      return $http.post "/api/v1/users/#{user_class.user_id}/user_class", {user_class: user_class}
 
   @delete = (user_class) ->
     return $http.delete "/api/v1/users/#{user_class.user_id}/classes/#{user_class.id}"

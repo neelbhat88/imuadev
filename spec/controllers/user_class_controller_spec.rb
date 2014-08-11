@@ -36,4 +36,89 @@ describe Api::V1::UserClassController do
 
   end
 
+  describe "POST #create" do
+
+    describe "as a student" do
+      login_student
+
+      before(:each) do
+        @user = subject.current_user
+      end
+
+      it "returns 200 and adds user_class to database" do
+        expect {
+          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class)}
+        }.to change(UserClass, :count).by(1)
+
+        expect(response.status).to eq(200)
+        expect(json["user_class"]).to_not be_nil
+      end
+
+      it "returns 400 if there is an error creating a user_class" do
+        expect {
+          post :create, {:user_id => @user.id,
+                         user_class: attributes_for(:user_class, name: nil)}
+        }.to change(UserClass, :count).by(0)
+
+        expect(response.status).to eq(400)
+        expect(json["user_class"]).to be_nil
+      end
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      before(:each) do
+        @user = create(:student)
+      end
+
+      it "returns 200 and adds user_class to database" do
+        expect {
+          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class)}
+        }.to change(UserClass, :count).by(1)
+
+        expect(response.status).to eq(200)
+        expect(json["user_class"]).to_not be_nil
+      end
+
+      it "returns 400 if there is an error creating a user_class" do
+        expect {
+          post :create, {:user_id => @user.id,
+                         user_class: attributes_for(:user_class, name: nil)}
+        }.to change(UserClass, :count).by(0)
+
+        expect(response.status).to eq(400)
+        expect(json["user_class"]).to be_nil
+      end
+    end
+
+    describe "as an admin" do
+      login_org_admin
+
+      before(:each) do
+        @user = create(:student)
+      end
+
+      it "returns 200 and adds user_class to database" do
+        expect {
+          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class)}
+        }.to change(UserClass, :count).by(1)
+
+        expect(response.status).to eq(200)
+        expect(json["user_class"]).to_not be_nil
+      end
+
+      it "returns 400 if there is an error creating a user_class" do
+        expect {
+          post :create, {:user_id => @user.id,
+                         user_class: attributes_for(:user_class, name: nil)}
+        }.to change(UserClass, :count).by(0)
+
+        expect(response.status).to eq(400)
+        expect(json["user_class"]).to be_nil
+      end
+    end
+
+  end
+
 end
