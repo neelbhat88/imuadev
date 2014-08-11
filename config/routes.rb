@@ -51,6 +51,24 @@ Imua::Application.routes.draw do
         end
       end
 
+      get  '/users/:id/service_activity_events' => 'service_activity#user_service_activity_events'
+
+      post '/service_activity' => 'service_activity#add_user_service_activity'
+      post '/service_activity_event' => 'service_activity#add_user_service_activity_event'
+      put  '/service_activity/:id' => 'service_activity#update_user_service_activity'
+      put  '/service_activity_event/:id' => 'service_activity#update_user_service_activity_event'
+      delete '/service_activity/:id' => 'service_activity#delete_user_service_activity'
+      delete '/service_activity_event/:id' => 'service_activity#delete_user_service_activity_event'
+
+      get  '/users/:id/extracurricular_activity_events' => 'extracurricular_activity#user_extracurricular_activity_events'
+      post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
+      post '/extracurricular_activity_event' => 'extracurricular_activity#add_user_extracurricular_activity_event'
+      put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
+      put  '/extracurricular_activity_event/:id' => 'extracurricular_activity#update_user_extracurricular_activity_event'
+      delete '/extracurricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
+      delete '/extracurricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
+
+
       get  '/organization' => 'organization#all_organizations'
       get  '/organization/:id' => 'organization#get_organization'
       # params[:name]
@@ -60,9 +78,19 @@ Imua::Application.routes.draw do
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'
 
-      get  '/organization/:id/time_units' => 'organization#time_units'
-      get  '/organization/:id/roadmap' => 'organization#roadmap'
-      get  '/organization/:id/modules' => 'organization#modules'
+      get '/organization/:id/time_units' => 'organization#time_units'
+      get '/organization/:id/roadmap' => 'organization#roadmap'
+      get '/organization/:id/modules' => 'organization#modules'
+
+      get '/organization/:id/tests' => 'test#get_org_tests'
+      post '/org_test' => 'test#create_org_test'
+      put '/org_test/:id' => 'test#update_org_test'
+      delete '/org_test/:id' => 'test#delete_org_test'
+
+      get '/users/:id/tests' => 'test#get_user_tests'
+      post '/user_test' => 'test#create_user_test'
+      put '/user_test/:id' => 'test#update_user_test'
+      delete '/user_test/:id' => 'test#delete_user_test'
 
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
@@ -87,6 +115,12 @@ Imua::Application.routes.draw do
   get '/forgot_password' => 'static#forgot_password'
   post '/reset_password' => 'static#reset_password'
 
+<<<<<<< HEAD
+=======
+  get '/login' => 'static#login'
+  get '/marketing' => 'static#index'
+
+>>>>>>> master
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:

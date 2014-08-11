@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140731141649) do
+=======
+ActiveRecord::Schema.define(:version => 20140808194112) do
+>>>>>>> master
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -49,6 +53,15 @@ ActiveRecord::Schema.define(:version => 20140731141649) do
   end
 
   add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
+
+  create_table "org_tests", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "title"
+    t.string   "score_type"
+    t.string   "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -106,6 +119,28 @@ ActiveRecord::Schema.define(:version => 20140731141649) do
     t.datetime "updated_at",     :null => false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "user_extracurricular_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "user_extracurricular_activity_events", :force => true do |t|
+    t.integer  "user_extracurricular_activity_id"
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "name"
+    t.string   "leadership"
+  end
+
+>>>>>>> master
   create_table "user_milestones", :force => true do |t|
     t.integer  "user_id"
     t.integer  "time_unit_id"
@@ -116,6 +151,40 @@ ActiveRecord::Schema.define(:version => 20140731141649) do
     t.datetime "updated_at",   :null => false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "user_service_activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "user_service_activity_events", :force => true do |t|
+    t.integer  "user_service_activity_id"
+    t.decimal  "hours"
+    t.datetime "date"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.string   "name"
+    t.string   "description"
+  end
+
+  create_table "user_tests", :force => true do |t|
+    t.integer  "org_test_id"
+    t.integer  "user_id"
+    t.integer  "time_unit_id"
+    t.datetime "date"
+    t.string   "score"
+    t.string   "description"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+>>>>>>> master
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false

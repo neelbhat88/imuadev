@@ -134,18 +134,8 @@ html {
   min-height: 100%;
 
   body {
+    
     min-width: 1260px;
-
-    &.static-pages {
-      background-color: $darkgrey;
-      background: image-url("bg.jpg") no-repeat center center fixed;
-      @include bgcover();
-      color: $ink;
-      text-align: center;
-      @include body-font(22px);
-      min-height: 100%;
-    }
-
     @include body-font(14px);
 
   }
@@ -252,7 +242,7 @@ $panelwrapper: 0 80px;
 	width: 100%;
 	padding-bottom: 20px;
 	border-bottom: 1px white(0.25) solid;
-	
+
 }
 
 .user-list-container {
@@ -314,11 +304,11 @@ header {
     .imua-logo {
 
       margin: 22px 0;
-      
+
       img {
-      
+
       	margin-right: 5px;
-      
+
       }
 
     }
@@ -340,21 +330,21 @@ header {
       }
 
       .cog {
-      
+
 	      .current-name {
 	      	display: inline-block;
 	      	padding-right: 6px;
 	      }
-	      
+
 	      .glyphicon {
           display: inline-block;
           font-size: 22px;
 	      	vertical-align: middle;
 	      	margin-top: -6px;
         }
-      
+
       }
-      
+
       .dropdown {
         cursor: pointer;
 

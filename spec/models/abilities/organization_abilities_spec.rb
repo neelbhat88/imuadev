@@ -7,7 +7,9 @@ describe Ability do
 
     abilities = Ability.organization_abilities(user, org)
 
-    expect(abilities).to contain_exactly(:create_user)
+    expect(abilities).to contain_exactly(:create_user,
+                                         :read_org_tests,
+                                         :manage_org_tests)
   end
 
   it "doesn't allow any action if not in same organization" do
@@ -25,7 +27,9 @@ describe Ability do
 
     abilities = Ability.organization_abilities(user, org)
 
-    expect(abilities).to contain_exactly(:create_user)
+    expect(abilities).to contain_exactly(:create_user,
+                                         :read_org_tests,
+                                         :manage_org_tests)
   end
 
   it "allows mentor actions" do
@@ -34,7 +38,7 @@ describe Ability do
 
     abilities = Ability.organization_abilities(user, org)
 
-    expect(abilities).to contain_exactly()
+    expect(abilities).to contain_exactly(:read_org_tests)
   end
 
   it "allows student actions" do
@@ -43,6 +47,6 @@ describe Ability do
 
     abilities = Ability.organization_abilities(user, org)
 
-    expect(abilities).to contain_exactly()
+    expect(abilities).to contain_exactly(:read_org_tests)
   end
 end

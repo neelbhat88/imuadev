@@ -7,7 +7,7 @@ class Ability
 
       case subject.class.name
       when "User" then user_abilities(user, subject)
-      when "Organization" then organizaiton_abilities(user, subject)
+      when "Organization" then organization_abilities(user, subject)
       else []
       end
 
@@ -22,6 +22,10 @@ class Ability
           :edit_user_info,
           :view_profile,
           :change_semester,
+          :read_user_tests,
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -32,7 +36,11 @@ class Ability
         rules += [
           :update_password,
           :view_profile,
-          :edit_user_info
+          :edit_user_info,
+          :read_user_tests,
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
 
       elsif user.org_admin?
@@ -40,7 +48,11 @@ class Ability
           :delete_user,
           :edit_user_info,
           :view_profile,
-          :change_semester
+          :change_semester,
+          :read_user_tests,
+          :manage_user_tests,
+          :manage_user_activities,
+          :manage_user_events
         ]
 
       elsif user.mentor?
@@ -50,7 +62,11 @@ class Ability
             rules += [
               :view_profile,
               :change_semester,
-              :edit_user_info
+              :edit_user_info,
+              :read_user_tests,
+              :manage_user_tests,
+              :manage_user_activities,
+              :manage_user_events
             ]
           end
         else # other users in their organization (other mentors, admins)
@@ -63,7 +79,7 @@ class Ability
         related = UserRepository.new.are_related?(user.id, subjectUser.id)
         if related
           rules += [
-            :view_profile,
+            :view_profile
           ]
         end
 
@@ -76,13 +92,25 @@ class Ability
       rules = []
 
       if user.super_admin?
-        return [:create_user]
+        return [:create_user,
+                :read_org_tests,
+                :manage_org_tests]
       else
         return [] if user.organization_id != subjectOrg.id
       end
 
       if user.org_admin?
-        rules += [:create_user]
+        rules += [:create_user,
+                  :read_org_tests,
+                  :manage_org_tests]
+      end
+
+      if user.mentor?
+        rules += [:read_org_tests]
+      end
+
+      if user.student?
+        rules += [:read_org_tests]
       end
 
       rules.uniq

@@ -1,10 +1,15 @@
 class StaticController < ApplicationController
-  before_filter :authenticate_user, except: [:index, :forgot_password, :reset_password]
+  before_filter :authenticate_user, except: [:index, :forgot_password,
+                                             :reset_password, :login]
 
   # Set the layout based on if the user is signed in or not
   layout :choose_layout
 
   def index
+    render "index"
+  end
+
+  def login
     render "login"
   end
 
