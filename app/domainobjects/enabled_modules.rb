@@ -12,12 +12,16 @@ class EnabledModules
         },
         {
           :title => Constants.Modules[:SERVICE],
-          :submodules => [Constants.SubModules[:SERVICE_DEPTH_HOURS],
+          :submodules => [Constants.SubModules[:SERVICE_HOURS],
+                          Constants.SubModules[:SERVICE_DEPTH_HOURS],
                           Constants.SubModules[:YES_NO]]
         },
         {
           :title => Constants.Modules[:EXTRACURRICULAR],
-          :submodules => [Constants.SubModules[:YES_NO]]
+          :submodules => [Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES],
+                          Constants.SubModules[:EXTRACURRICULAR_DEPTH_ACTIVITIES],
+                          Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES],
+                          Constants.SubModules[:YES_NO]]
         },
         {
           :title => Constants.Modules[:COLLEGE_PREP],
@@ -25,7 +29,8 @@ class EnabledModules
         },
         {
           :title => Constants.Modules[:TESTING],
-          :submodules => [Constants.SubModules[:YES_NO]]
+          :submodules => [Constants.SubModules[:TESTING_TAKE],
+                          Constants.SubModules[:YES_NO]]
         }
       ]
 

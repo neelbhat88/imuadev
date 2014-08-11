@@ -32,6 +32,7 @@ angular.module('myApp')
           $scope.user_extracurricular_activities[index] = data.user_extracurricular_activity
           $scope.user_extracurricular_activities[index].events = extracurricular_events
           $scope.user_extracurricular_activities.editing = false
+          $scope.refreshPoints()
 
     $scope.saveEvent = (parentIndex, index, extracurricularActivityId) ->
       new_extracurricular_event = UserExtracurricularActivityService.newExtracurricularEvent($scope.student, $scope.selected_semester.id, extracurricularActivityId)
@@ -42,20 +43,22 @@ angular.module('myApp')
       UserExtracurricularActivityService.saveExtracurricularEvent(new_extracurricular_event)
         .success (data) ->
           $scope.user_extracurricular_activities[parentIndex].events[index] = data.user_extracurricular_activity_event
-
           $scope.user_extracurricular_activities[parentIndex].events[index].editing = false
+          $scope.refreshPoints()
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
         UserExtracurricularActivityService.deleteExtracurricularActivity($scope.user_extracurricular_activities[index])
           .success (data) ->
             $scope.user_extracurricular_activities.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.deleteEvent = (parentIndex, index) ->
       if window.confirm "Are you sure you want to delete this event?"
         UserExtracurricularActivityService.deleteExtracurricularEvent($scope.user_extracurricular_activities[parentIndex].events[index])
           .success (data) ->
             $scope.user_extracurricular_activities[parentIndex].events.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
       if $scope.user_extracurricular_activities[index].id
@@ -70,7 +73,6 @@ angular.module('myApp')
         $scope.user_extracurricular_activities[parentIndex].events[index].editing = false
       else
         $scope.user_extracurricular_activities[parentIndex].events.splice(index, 1)
-
       $scope.user_extracurricular_activities[parentIndex].events.editing = false
 
     $scope.addActivity = () ->
