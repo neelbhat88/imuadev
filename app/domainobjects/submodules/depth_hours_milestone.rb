@@ -23,18 +23,19 @@ class DepthHoursMilestone < ImuaMilestone
     max_user_depth_hours = 0
 
     activities = UserServiceActivityService.new.get_user_service_activities(user.id)
+    _activities_array = []
     activities.each do | a |
-      a.depth_hours = 0
+      _activities_array << {:activity => a, :depth_hours => 0}
     end
 
     time_units = RoadmapRepository.new.get_time_units(user.organization_id)
     time_units.each do | tu |
-      if tu.id <= time_unit_id
+      if tu.id <= time_unit_id.to_i
         events = UserServiceActivityService.new.get_user_service_activity_events(user.id, tu.id)
         events.each do | e |
-          activities.each do | a |
-            if e.user_service_activity_id == a.id
-              a.depth_hours += e.hours
+          _activities_array.each do | a |
+            if e.user_service_activity_id == a[:activity].id
+              a[:depth_hours] += e.hours
               break
             end
           end
@@ -42,13 +43,13 @@ class DepthHoursMilestone < ImuaMilestone
       end
     end
 
-    activities.each do | a |
-      if a.depth_hours > max_user_depth_hours
-        max_user_depth_hours = a.depth_hours
+    _activities_array.each do | a |
+      if a[:depth_hours] > max_user_depth_hours
+        max_user_depth_hours = a[:depth_hours]
       end
     end
 
-    @earned = max_user_depth_hours >= @target_hours
+    @earned = max_user_depth_hours >= @target_depth_hours
   end
 
   def valid?

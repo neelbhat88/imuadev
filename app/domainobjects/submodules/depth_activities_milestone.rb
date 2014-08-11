@@ -23,27 +23,28 @@ class DepthActivitiesMilestone < ImuaMilestone
     max_user_depth_activities = 0
     userExtracurricularActivityService = UserExtracurricularActivityService.new
 
-    activities = userExtracurricularActivityService.new.get_user_extracurricular_activities(user.id)
+    activities = userExtracurricularActivityService.get_user_extracurricular_activities(user.id)
+    _activities_array = []
     activities.each do | a |
-      a.depth_activities = 0
+      _activities_array << {:activity => a, :depth_activities => 0}
     end
 
     time_units = RoadmapRepository.new.get_time_units(user.organization_id)
     time_units.each do | tu |
-      if tu.id <= time_unit_id
-        events = userExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, tu.id)
-        activities.each do | a |
+      if tu.id <= time_unit_id.to_i
+        events = userExtracurricularActivityService.get_user_extracurricular_activity_events(user.id, tu.id)
+        _activities_array.each do | a |
           # Check that we have at least one event for this activity in the time_unit
-          if events.select{|e| e.user_extracurricular_activity_id == a.id}.length > 0
-            a.depth_activities += 1
+          if events.select{|e| e.user_extracurricular_activity_id == a[:activity].id}.length > 0
+            a[:depth_activities] += 1
           end
         end
       end
     end
 
-    activities.each do | a |
-      if a.depth_activities > max_user_depth_activities
-        max_user_depth_activities = a.depth_activities
+    _activities_array.each do | a |
+      if a[:depth_activities] > max_user_depth_activities
+        max_user_depth_activities = a[:depth_activities]
       end
     end
 

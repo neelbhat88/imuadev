@@ -25,7 +25,7 @@ class LeadershipActivitiesMilestone < ImuaMilestone
     events = UserExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, time_unit_id)
 
     events.each do | e |
-      if !events.leadership.nil?
+      if !e.leadership.nil? && !e.leadership.empty?
         user_leadership_activities += 1
       end
     end

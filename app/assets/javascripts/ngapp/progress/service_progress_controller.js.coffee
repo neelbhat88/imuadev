@@ -32,6 +32,7 @@ angular.module('myApp')
           $scope.user_service_activities[index] = data.user_service_activity
           $scope.user_service_activities[index].events = service_events
           $scope.user_service_activities.editing = false
+          $scope.refreshPoints()
 
     $scope.saveEvent = (parentIndex, index, serviceActivityId) ->
       new_service_event = UserServiceActivityService.newServiceEvent($scope.student, $scope.selected_semester.id, serviceActivityId)
@@ -43,20 +44,22 @@ angular.module('myApp')
       UserServiceActivityService.saveServiceEvent(new_service_event)
         .success (data) ->
           $scope.user_service_activities[parentIndex].events[index] = data.user_service_activity_event
-
           $scope.user_service_activities[parentIndex].events[index].editing = false
+          $scope.refreshPoints()
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
         UserServiceActivityService.deleteServiceActivity($scope.user_service_activities[index])
           .success (data) ->
             $scope.user_service_activities.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.deleteEvent = (parentIndex, index) ->
       if window.confirm "Are you sure you want to delete this event?"
         UserServiceActivityService.deleteServiceEvent($scope.user_service_activities[parentIndex].events[index])
           .success (data) ->
             $scope.user_service_activities[parentIndex].events.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
       if $scope.user_service_activities[index].id
