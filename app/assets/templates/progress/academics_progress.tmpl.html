@@ -7,6 +7,18 @@
       <h4>Let's get that taken care of. Add your classes for this semester below.</h4>
     </div>
 
+    <div class="academic-milestones">
+    
+      <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+        <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
+          <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+            ng-disabled="!editable(current_user, selected_semester)">
+          <span class="text">{{yesno.value}}</span>
+        </div>
+      </div>
+    
+    </div>
+    
     <div class="your-grades">
             
     <div class="user-class-greeting pvxl" ng-show="user_classes.length != 0">
