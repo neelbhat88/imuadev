@@ -77,6 +77,8 @@
       <!--MAIN PANEL-->
       <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
 
+        <h3 class="module-title">{{selected_module.module_title | underscoresToSpaces}}</h3>
+
         <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
 
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>

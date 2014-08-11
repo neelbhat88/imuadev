@@ -134,6 +134,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   .module-data-container {
 
+    color: white;
+
     @each $category, $color in $colormap {
 
       &.color--#{$category} {
@@ -142,17 +144,35 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
     }
 
-    color: white;
-
     .module-data-content-container {
       @each $category, $color in $colormap {
         &.color--#{$category} {
           background-color: $color;
         }
 
+      } //@each $catagory, $color in $colormap
+      
+      .module-title {
+      
+      	padding: $panelwrapper;
+      	padding-top: 30px;
+      
       }
-    }
-  }
+      
+      .section {
+      
+      	.section--header {
+      	
+      	  background: $academics-color-dark;
+      	      	
+      	}
+      
+      }
+      
+    } //.module-data-content-container
+    
+  } // .module-data-container
+  
 }
 
 .semester-changer {

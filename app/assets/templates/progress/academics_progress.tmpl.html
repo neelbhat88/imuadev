@@ -1,17 +1,15 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
-
-  <h3>{{selected_module.module_title | underscoresToSpaces}}</h3>
-
-  <div class="module-data-content" ng-show="selected_module.points.total == 0">
-    <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
-  </div>
   
   <div class="module-user-classes">
 
-    <div class="academic-milestones">
+    <div class="section academic-milestones">
     
-      <p>Your Academic Milestones<p>
+    	<div class="section--header">Academic Milestones</div>
     
+      <div class="module-data-content" ng-show="selected_module.points.total == 0">
+        <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
+      </div>
+                      
       <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
         <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
           <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
