@@ -2,25 +2,25 @@
   <div class="dashboard-header dashboard-header--mentor">
 	    <div class="mentor-header clear">
 	      <div class="greeting">
-	        <h5>Hey there {{current_user.first_name}},</h5>
+	        <h5>Hey there {{user.first_name}},</h5>
 	        <h2>Welcome back!</h2>
 	      </div>
 	      <div class="circle-attention">
 
 			  	<div class="circle">
-			  	
+
 				  	<div class="text">
-				  	
+
 					<h2>0</h2>
-		            <span class="subhead">students need<br>your attention</span>				  	
+		            <span class="subhead">students need<br>your attention</span>
 				  	</div>
 
 			  	</div>
-			  	
 
-		            
+
+
 		  </div>
-	    </div>	
+	    </div>
   </div>
 
   <div class="dashboard-attention dashboard-attention--mentor displayNone">
@@ -29,10 +29,10 @@
 
   <div class="dashboard-content dashboard-content--mentor">
 	    <div class="user-list-header">
-	    	<h4><span class="bold">{{current_user.first_name}}'s</span> Students</h4>
+	    	<h4><span class="bold">{{user.first_name}}'s</span> Students</h4>
 	    </div>
 	    <div ng-hide="assigned_students.length > 0">
-	      <h5 style="font-style: italic">{{current_user.first_name}}, looks like no students have been assigned to you yet.</h5>
+	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
 	    </div>
 	    <div class="user-list-container">
 		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
@@ -46,7 +46,7 @@
 		        </div>
 		      </a>
 		    </div>
-	    
+
 	    </div>
   </div>
 </div>
