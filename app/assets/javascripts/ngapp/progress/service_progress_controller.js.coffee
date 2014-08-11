@@ -39,12 +39,12 @@ angular.module('myApp')
       new_service_event.description = $scope.user_service_activities[parentIndex].events[index].new_description
       new_service_event.hours = $scope.user_service_activities[parentIndex].events[index].new_hours
       new_service_event.date = $scope.user_service_activities[parentIndex].events[index].new_date
+      $scope.user_service_activities[parentIndex].events.editing = false
 
       UserServiceActivityService.saveServiceEvent(new_service_event)
         .success (data) ->
           $scope.user_service_activities[parentIndex].events[index] = data.user_service_activity_event
 
-          $scope.user_service_activities[parentIndex].events[index].editing = false
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
