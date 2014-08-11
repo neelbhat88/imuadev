@@ -54,10 +54,9 @@ class Api::V1::UserClassController < ApplicationController
       }
   end
 
-  # PUT /user/:id/classes/:class_id
-  def update_user_class
-    userId = params[:id]
-    classId = params[:class_id]
+  # PUT /user_class/:id
+  def update
+    classId = params[:id]
     updated_class = params[:user_class]
 
     user_class = @userClassService.update_user_class(updated_class)
@@ -77,10 +76,9 @@ class Api::V1::UserClassController < ApplicationController
       }
   end
 
-  # DELETE /user/:id/classes/:class_id
-  def delete_user_class
-    userId = params[:id].to_i
-    classId = params[:class_id].to_i
+  # DELETE /user_class/:id
+  def destroy
+    classId = params[:id].to_i
 
     if @userClassService.delete_user_class(classId)
       render status: :ok,
