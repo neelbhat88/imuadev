@@ -5,24 +5,8 @@
 $colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
 $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
-.progressContainer {
+.progressUpper {
 
-}
-
-.col {
-  overflow: hidden;
-  position: absolute;
-  top: 90px;
-  bottom: 0;
-}
-
-.progressLeft {
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 320px;
-  overflow-y: auto;
   background: $grey;
   color: white;
   padding: $wrapper;
@@ -64,12 +48,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   }
 
-  .progressStudent {
-
-  	margin: 60px 0;
-
-  }
-  
   select {
   
   	height: 32px;
@@ -82,11 +60,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
 }
 
-.progressRight{
+.progresslower{
 
-  left: 320px;
-  right: 0;
-  overflow-y: auto;
   background: $darkgrey;
 
   .circles {
