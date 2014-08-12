@@ -22,6 +22,9 @@ angular.module('myApp')
 
       scope.render = function(student) {
         chart.selectAll("g").remove();
+        d3.selectAll("circle").remove();
+        d3.selectAll("pattern").remove();
+
         var color = d3.scale.ordinal()
             .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
 
@@ -56,8 +59,6 @@ angular.module('myApp')
                             .attr("cx", width - 120)
                             .attr("cy", height - 120)
                             .attr("r", radius-20)
-
-
                             .style("fill", "url(#photo"+student.user.id+")");
 
         var image = d3.select(svg)
@@ -67,9 +68,7 @@ angular.module('myApp')
                         .attr("y", 0)
                         .attr("width", 1)
                         .attr("height", 1)
-
-
-          .append("image")
+                        .append("image")
                         .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", width-40)
