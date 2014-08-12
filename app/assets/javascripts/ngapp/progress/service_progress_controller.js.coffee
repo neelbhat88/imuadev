@@ -5,10 +5,13 @@ angular.module('myApp')
     $scope.semester_service_hours = 0
 
     $scope.$watch 'user_service_activities', () ->
+      $scope.loaded_semester_service_hours = false
+      $scope.semester_service_hours = 0
       for activity in $scope.user_service_activities
         if activity.events
           for event in activity.events
-            $scope.semester_service_hours += parseFloat event.hours
+            if event.hours
+              $scope.semester_service_hours += parseFloat event.hours
       $scope.loaded_semester_service_hours = true
     , true
 
@@ -17,19 +20,12 @@ angular.module('myApp')
         UserServiceActivityService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_service_activities = data.user_service_activities
-
             for user_service_activity in $scope.user_service_activities
               user_service_activity.events = []
               for user_service_activity_event in data.user_service_activity_events
                 if user_service_activity.id == user_service_activity_event.user_service_activity_id
                   user_service_activity.events.push(user_service_activity_event)
-
-            console.log($scope.user_service_activities)
             $scope.$emit('loaded_module_milestones')
-
-    $scope.$watch 'selected_semester', () ->
-      if $scope.selected_semester
-        $scope.$emit('loaded_module_milestones')
 
     $scope.saveActivity = (index) ->
       new_service_activity = UserServiceActivityService.newServiceActivity($scope.student, $scope.selected_semester.id)
