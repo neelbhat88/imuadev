@@ -56,7 +56,7 @@
                                 
                   <div class="module-data__item__event--date">
                     
-                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MMM dd, yyyy'}}</span>
+                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yyyy'}}</span>
                     <datepicker ng-show="user_service_event.editing" ng-model="user_service_event.new_date" show-weeks="false"></datepicker>
                     
                   </div>
