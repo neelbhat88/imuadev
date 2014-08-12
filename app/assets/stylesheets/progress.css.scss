@@ -248,8 +248,15 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	}
       	
     	} //section--milestones
+      
+    	.numbers-large {
+    	
+    		@include font-size(10.0);
+    		font-weight: $light;
+    	
+    	}
 
-    }
+    } //.section-wrapper
     
     /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
             
@@ -262,14 +269,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         .section--header { background: $academics-color; }
     	
     	}
-    	
-    	.gpa-large {
-    	
-    		@include font-size(10.0);
-    		font-weight: $light;
-    	
-    	}
-    	
+    	    	
     	.section--grades {
     	
     		.section--inner {

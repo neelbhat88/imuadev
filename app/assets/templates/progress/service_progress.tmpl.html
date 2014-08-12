@@ -56,7 +56,7 @@
                                 
                   <div class="module-data__item__event--date">
                     
-                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yyyy'}}</span>
+                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</span>
                     <datepicker ng-show="user_service_event.editing" ng-model="user_service_event.new_date" show-weeks="false"></datepicker>
                     
                   </div>
@@ -114,6 +114,21 @@
     	</div>
     
     </div> <!-- /section--service -->
+    
+    <div class="section section--hours">
+    
+      <div class="section--header">Total Service Hours</div>
+
+      <div class="section--inner">
+      
+      	<div class="user-class-greeting" ng-show="user_classes.length != 0">
+          Hey {{current_user.first_name}}, you have completed
+          <h4><span class="numbers-large">###</span><br>total hours</h4> this semester.
+        </div>
+      
+      </div>
+    
+    </div><!-- /section--gpa -->
     
     <div class="section section--milestones">
     
