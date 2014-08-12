@@ -61,7 +61,7 @@
 	  <!--CIRCLES-->
     <div class="circles js-circles">
       <div class="module-circles js-module-circles">
-        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
           <module-progress-circle module="mod"></module-progress-circle>
           <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</h6></div>
         </div>
@@ -75,10 +75,14 @@
 
     <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
 
-      <!--MAIN PANEL-->
-      <div class="module-data-content-container js-module-data-content-container" modulecolor="{{selected_module.module_title}}">
-
-        <h3>{{selected_module.module_title | underscoresToSpaces}}</h3>
+      <!--MAIN PANEL-->      
+        <div class="module-header">
+        
+  	        <h4 class="bold">
+    	        {{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}
+            </h4>
+        
+        </div>
 
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
@@ -96,8 +100,6 @@
 
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
         </div>
-
-      </div>
       <!--/MAIN PANEL-->
 
     </div>

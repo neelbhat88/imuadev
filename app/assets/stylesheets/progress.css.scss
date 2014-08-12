@@ -79,7 +79,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       width: 20%;
       text-align: center;
       opacity: 0.3;
-
+      
       &.inactive {
         //display: none;
       }
@@ -95,6 +95,16 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     .selectedCircle {
     
     	opacity: 1;
+    
+    }
+    
+    .notSelectedCircle {
+    
+    	&:hover {
+    	
+    		opacity: 0.75;
+    	
+    	}
     
     }
           
@@ -118,26 +128,31 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   .module-data-container {
 
-    padding: $panelwrapper;
-    padding-top: 30px;
+    width: 100%;
+    padding-top: 40px;
+    text-align: center;
 
     @each $category, $color in $colormap {
 
       &.color--#{$category} {
-        background-color: map-get($colormap, $category);
+        background-color: map-get($darkcolormap, $category);
       }
 
     }
 
     color: white;
 
+/* Will be removed soon.
     .module-data-content-container {
+    
+    width: 100%;
       @each $category, $color in $colormap {
         &.color--#{$category} {
           background-color: $color;
         }
 
       }
+*/
     }
   }
 }
