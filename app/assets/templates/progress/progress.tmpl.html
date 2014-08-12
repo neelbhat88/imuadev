@@ -14,53 +14,50 @@
   </div> -->
 
 
-  <div class="progressLeft col">
+  <div class="progressUpper">
 
-    <div class="progressStudent">
-
-      <div class="progressCircle-big">
-      	<div class="big-progress-circle" ng-if="student_with_modules_progress">
-          <big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
-       </div>
-      </div>
-
-      <h4 class="bold">{{student.first_last_initial}}</h4>
-
-      <div class="progressCircle-overall">
-      	<div class="overall-circle">
-         <overall-progress-circle points="overall_points"></overall-progress-circle>
-       </div>
-      </div>
-
-
-    </div>
-
-    <!--NAVIGATION-->
-    <div class="progressSemesters section">
-      <div class="sectionHeader bold">My Progress</div>
-      <div class="semestersList">
-        <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
-          <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
-        </select>
-        <!-- <li class="nav-item" ng-class="{selected: sem.id == selected_semester.id}" ng-repeat="sem in semesters" ng-click="selectSemester(sem)">{{sem.name}}</li> -->
-      </div>
-    </div>
-
-    <div class="progressExpectations section">
-      <div class="bold">
-        <a ng-href="#/expectations/{{student.id}}" title="View Expectations">My Expectations</a>
-      </div>
-    </div>
-
-    <div class="progressMentors section">
-    	<div class="bold">My Mentors</div>
-    </div>
-    <!--/NAVIGATION-->
+    <ul class="clear">
+    
+      <li class="progressStudent">
+  
+        <div class="progressStudent-wrapper clear">
+                  
+          <div class="progressSelector">
+        
+  	        <h5><span class="bold">{{student.first_last_initial}}'s</span> Progress
+          
+            <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
+                <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
+            </select>
+            
+            </h5>
+          
+          </div>
+        
+        </div>
+  
+      </li>
+      
+      <li class="studentExpectations narrow">Your Expectations</li>
+      
+      <li class="studentMentors narrow">Your Mentors</li>
+    
+    </ul>
 
   </div>
+  
+  <div class="progressMiddle clear">
 
-  <div class="progressRight col">
-
+    <div class="progressCircle-big--container">
+  
+      <div class="progressCircle-big">
+      	<div class="big-progress-circle" ng-if="student_with_modules_progress">
+      		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
+      	</div>
+      </div>
+      
+    </div>
+  
 	  <!--CIRCLES-->
     <div class="circles js-circles">
       <div class="module-circles js-module-circles">
@@ -71,6 +68,10 @@
       </div>
     </div>
     <!--/CIRCLES-->
+
+  </div><!-- /progressMiddle -->
+
+  <div class="progressLower">
 
     <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
 
