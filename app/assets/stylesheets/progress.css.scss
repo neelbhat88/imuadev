@@ -194,7 +194,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       			.yes-no--point-circle {
       			
       				@include circle(90px);
-      				color: $academics-color;
       				background: white(1.0);
       				margin: 0 auto;
       				padding-bottom: 10px;
@@ -304,8 +303,200 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         	
       	} //section--milestones
 
-    	    	    
-    }
+    } //academicsProgressContainer
+    
+    .serviceProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $service-color-dark;
+        
+        .section--header { background: $service-color; }
+    	
+    	}
+
+    
+			.module-data__item {
+    			
+			  padding-bottom: 20px;
+			  border-bottom: 1px solid white(0.1);
+			  margin-bottom: 20px;
+			  
+				.module-data__item__activityContainer {
+				
+          padding-bottom: 20px;
+  			  border-bottom: 1px solid white(0.1);
+  			  margin-bottom: 20px;
+    			  
+  				.module-data__item__activity {
+  				
+  					width: 80%;
+  					float: left;
+    			  text-align: left;
+  				
+  				}
+  				  				
+  				.module-data__item__icons {
+  				
+  					width: 20%;
+  					float: left;
+  					text-align: right;
+  				
+  				}
+				
+				}//__activityContainer
+				
+				.module-data__item__event {
+				
+					width: 100%;
+					padding: 0 20px;
+					
+					.module-data__item__event--date {
+					
+						width: 20%;
+						float: left;
+						text-align: left;
+					
+					}
+					
+					.module-data__item__event--description {
+					
+						width: 50%;
+						float: left;
+						text-align: left;
+					
+					}
+					
+					.module-data__item__event--hours {
+					
+						width: 20%;
+						float: left;
+						text-align: center;
+					
+					}
+					
+					.module-data__item__icons {
+					
+						width: 10%;
+						float: left;
+						text-align: right;
+					
+					}
+				
+				}
+				
+
+      } //module-data__item
+      
+    	.section--milestones {
+    	
+      	.section--inner {
+      	      	
+      		.yes-no-item {
+      		      			
+      			.yes-no--point-circle {
+      			
+      				color: $service-color;
+      			
+      			} //yes-no--point-circle
+                  		
+      		} //yes-no-item
+      	
+      	}
+      	
+    	} //section--milestones
+    
+    } //serviceProgressContainer
+    
+    .collegePrepProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $college_prep-color-dark;
+        
+        .section--header { background: $college_prep-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $college_prep-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //collegePrepProgressContainer
+    
+    .extracurricularProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $extracurricular-color-dark;
+        
+        .section--header { background: $extracurricular-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $extracurricular-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //extracurricularProgressContainer
+    
+    .testingProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $testing-color-dark;
+        
+        .section--header { background: $testing-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $testing-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //testingProgressContainer
   
   } //.module-data-container
   
