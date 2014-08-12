@@ -7,7 +7,8 @@ html {
       background: image-url("bg.jpg") no-repeat top center fixed;
       @include bgcover();
       text-align: center;
-      @include body-font(22px);
+      @include font-size(2.0);
+      font-weight: $light;
       min-height: 100%;
     }
 
@@ -67,7 +68,7 @@ html {
 
     .button {
 
-      @include body-font(14px);
+      @include font-size(1.4);
       padding:5px 40px;
       background:#ccc;
       border:0 none;
@@ -83,7 +84,7 @@ html {
     width: 100%;
     padding-bottom: 20px;
     color: #909090;
-    @include body-font(12px);
+    @include font-size(1.2);
 
     a {
 

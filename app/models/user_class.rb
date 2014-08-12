@@ -1,5 +1,6 @@
 class UserClass < ActiveRecord::Base
-  attr_accessible :gpa, :grade, :name, :time_unit_id, :user_id
+  attr_accessible :gpa, :grade, :name, :time_unit_id, :user_id,
+                  :period, :room, :credit_hours, :level, :subject
 
   belongs_to :user
 

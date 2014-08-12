@@ -2,6 +2,15 @@ angular.module('myApp')
 .controller 'ServiceProgressController', ['$scope', 'UserServiceActivityService', 'ProgressService',
   ($scope, UserServiceActivityService, ProgressService) ->
     $scope.user_service_activities = []
+    $scope.semester_service_hours = 0
+
+    $scope.$watch 'user_service_activities', () ->
+      for activity in $scope.user_service_activities
+        if activity.events
+          for event in activity.events
+            $scope.semester_service_hours += parseFloat event.hours
+      $scope.loaded_semester_service_hours = true
+    , true
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -17,6 +26,7 @@ angular.module('myApp')
 
             console.log($scope.user_service_activities)
             $scope.$emit('loaded_module_milestones')
+
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
         $scope.$emit('loaded_module_milestones')
@@ -32,6 +42,7 @@ angular.module('myApp')
           $scope.user_service_activities[index] = data.user_service_activity
           $scope.user_service_activities[index].events = service_events
           $scope.user_service_activities.editing = false
+          $scope.refreshPoints()
 
     $scope.saveEvent = (parentIndex, index, serviceActivityId) ->
       new_service_event = UserServiceActivityService.newServiceEvent($scope.student, $scope.selected_semester.id, serviceActivityId)
@@ -44,19 +55,22 @@ angular.module('myApp')
       UserServiceActivityService.saveServiceEvent(new_service_event)
         .success (data) ->
           $scope.user_service_activities[parentIndex].events[index] = data.user_service_activity_event
-
+          $scope.user_service_activities[parentIndex].events[index].editing = false
+          $scope.refreshPoints()
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
         UserServiceActivityService.deleteServiceActivity($scope.user_service_activities[index])
           .success (data) ->
             $scope.user_service_activities.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.deleteEvent = (parentIndex, index) ->
       if window.confirm "Are you sure you want to delete this event?"
         UserServiceActivityService.deleteServiceEvent($scope.user_service_activities[parentIndex].events[index])
           .success (data) ->
             $scope.user_service_activities[parentIndex].events.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
       if $scope.user_service_activities[index].id

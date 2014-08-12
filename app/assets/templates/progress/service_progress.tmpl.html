@@ -1,72 +1,198 @@
 <div ng-controller="ServiceProgressController" class="serviceProgressContainer">
-  <div class="module-userServiceActivities">
 
-    <div class="pbxl" ng-show="user_service_activities.length == 0">
-      <h4>{{current_user.first_name}}, looks like you haven't entered any data.</h4>
-      <h4>Let's get that taken care of. Add your Service Activities for this semester below.</h4>
-    </div>
+  <div class="module-userServiceActivities section-wrapper clear">
 
-    <div class="module-data">
-      <div class="noServiceActivities" ng-hide="user_service_activites.length != 0">No Service Activities Added</div>
+    <div class="section section--service">
 
-      <div class="module-data-items">
-        <div class="module-data__item" ng-repeat="(activityIndex, user_service_activity) in user_service_activities" ng-class="{'last':$last}">
+    	<div class="section--header">Service Records</div>
 
-          <div class="module-data__item__activity">
-            <span ng-hide="user_service_activity.editing">{{user_service_activity.name}}</span>
-            <input ng-show="user_service_activity.editing" class="form-field" ng-model="user_service_activity.new_name" placeholder="Organization Name" name="serviceActivityName"></input>
-          </div>
+    	<div class="section--inner">
 
-          <div class="module-data__item__icons">
-            <div ng-if="editable(current_user, selected_semester)"
-                  ng-hide="user_service_activity.editing">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
-              <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
-            </div>
+  	    <div ng-show="user_service_activities.length == 0">
+          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
+          <h6>Let's get that taken care of. Add your Service Activities for this semester below.</h6>
+        </div>
 
-            <div ng-show="user_service_activity.editing">
-              <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
-              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
-            </div>
-          </div>
+        <div class="module-data">
+          <div class="noServiceActivities" ng-hide="user_service_activites.length != 0">No Service Activities Added</div>
 
-          <div class="module-data__item" ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
-            <div class="module-data__item__event">
-              <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MMM dd, yyyy'}}</span>
-              <datepicker ng-show="user_service_event.editing" ng-model="user_service_event.new_date" show-weeks="false"></datepicker>
-            </div>
-            <div class="module-data__item__event">
-              <span ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
-              <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_description" placeholder="Description (optional)" name="serviceEventDescription"></input>
-            </div>
-            <div class="module-data__item__event">
-              <span ng-hide="user_service_event.editing">{{user_service_event.hours}}</span>
-              <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours"></input>
-            </div>
+          <div class="module-data-items">
 
-            <div class="module-data__item__icons">
+            <div class="module-data__item" ng-repeat="(activityIndex, user_service_activity) in user_service_activities" ng-class="{'last':$last}">
+
+            <div class="module-data__item__activityContainer clear">
+
+              <div class="module-data__item__activity">
+
+                <span ng-hide="user_service_activity.editing">{{user_service_activity.name}}</span>
+                <input ng-show="user_service_activity.editing" class="form-field" ng-model="user_service_activity.new_name" placeholder="Service Organization Name" name="serviceActivityName">
+
+              </div><!-- module-data__item__activity -->
+
+              <div class="module-data__item__icons">
+
+                <div ng-if="editable(current_user, selected_semester)" ng-hide="user_service_activity.editing">
+
+                  <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
+
+                  <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+
+                </div>
+
+                <div ng-show="user_service_activity.editing">
+
+                  <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
+
+                  <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
+                </div>
+
+              </div><!-- module-data__item__icons -->
+
+            </div><!-- module-data__item__activityContainer -->
+
+              <div class="module-data__item" ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
+
+                <div class="module-data__item__event clear">
+
+                  <div class="module-data__item__event--date">
+
+                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</span>
+                    <datepicker ng-show="user_service_event.editing" ng-model="user_service_event.new_date" show-weeks="false"></datepicker>
+
+                  </div>
+
+                  <div class="module-data__item__event--description">
+
+                    <span ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
+                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription">
+
+                  </div>
+
+                  <div class="module-data__item__event--hours">
+
+                    <span ng-hide="user_service_event.editing">{{user_service_event.hours}}<br><span class="hours">Hours</span></span>
+                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
+
+                  </div>
+
+                  <div class="module-data__item__icons">
+
+                  <div ng-if="editable(current_user, selected_semester)"
+                        ng-hide="user_service_event.editing">
+
+                    <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
+
+                    <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+
+                  </div>
+
+                  <div ng-show="user_service_event.editing">
+
+                    <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)"></span>
+
+                    <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
+
+                  </div>
+
+                </div>
+
+                </div><!-- module-data__item__event -->
+
+              </div><!-- module-data__item (event) -->
+
               <div ng-if="editable(current_user, selected_semester)"
-                    ng-hide="user_service_event.editing">
-                <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+                  class="module-data__button" ng-click="addEvent(activityIndex, user_service_activity.id)" ng-hide="user_service_activities[activityIndex].events.editing">Add Hours
               </div>
 
-              <div ng-show="user_service_event.editing">
-                <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)"></span>
-                <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
-              </div>
-            </div>
+            </div><!-- module-data__item -->
+
           </div>
+
           <div ng-if="editable(current_user, selected_semester)"
-              class="module-data__button" ng-click="addEvent(activityIndex, user_service_activity.id)" ng-hide="user_service_activities[activityIndex].events.editing||user_service_activities.editing">Add Hours
+              class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add Service Organization
           </div>
         </div>
+
+    	</div>
+
+    </div> <!-- /section--service -->
+
+    <div class="section section--hours">
+
+      <div class="section--header">Total Service Hours</div>
+
+      <div class="section--inner">
+
+      	<div class="user-class-greeting" ng-show="user_classes.length != 0" wait-to-load="{{loaded_semester_service_hours}}">
+          Hey {{current_user.first_name}}, you have completed
+          <h4><span class="numbers-large">{{semester_service_hours}}</span><br>Service Hours</h4> this semester.
+        </div>
+
       </div>
 
-      <div ng-if="editable(current_user, selected_semester)"
-          class="module-data__button" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add Service Organization
-      </div>
-    </div>
+    </div><!-- /section--gpa -->
+
+    <div class="section section--milestones">
+
+    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+
+      <div class="section--inner">
+
+        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+          <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
+        </div>
+
+        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+
+          <div class="yes-nos-unsatisfied section--subsection clear">
+
+          	<div class="section--subhead">Next Milestones</div>
+
+	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+              <div class="yes-no-item-unstatisfied">
+
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+	                	<h5 class="bold">{{yesno.points}}</h5>
+                  	<p>Points</p>
+                  </div>
+                </div>
+
+                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                  ng-disabled="!editable(current_user, selected_semester)">
+                <h6>{{yesno.value}}</h6>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="yes-nos-unsatisfied section--subsection clear">
+
+          	<div class="section--subhead">Completed Milestones</div>
+
+            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+              <div class="yes-no-item-statisfied">
+
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+	                	<h4 class="bold">✓</h4>
+                  </div>
+                </div>
+
+                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                  ng-disabled="!editable(current_user, selected_semester)">
+                <h6>{{yesno.value}}</h6>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div><!-- /section-inner -->
+
+    </div><!-- /academic-milestones -->
+
   </div>
 
 </div>

@@ -50,6 +50,7 @@ angular.module('myApp')
         UserExtracurricularActivityService.deleteExtracurricularActivity($scope.user_extracurricular_activities[index])
           .success (data) ->
             $scope.user_extracurricular_activities.splice(index, 1)
+            $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
       if $scope.user_extracurricular_activities[index].id

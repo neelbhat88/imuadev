@@ -1,9 +1,71 @@
 <div ng-controller="TestingProgressController" class="testingProgressContainer">
 
-  <div class="module-userTests">
+  <div class="module-userTests section-wrapper clear">
+
+      <div class="section section--milestones">
+
+    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+
+      <div class="section--inner">
+
+        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+          <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
+        </div>
+
+        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+
+          <div class="yes-nos-unsatisfied section--subsection clear">
+
+          	<div class="section--subhead">Next Milestones</div>
+
+	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+              <div class="yes-no-item-unstatisfied">
+
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+	                	<h5 class="bold">{{yesno.points}}</h5>
+                  	<p>Points</p>
+                  </div>
+                </div>
+
+                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                  ng-disabled="!editable(current_user, selected_semester)">
+                <h6>{{yesno.value}}</h6>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="yes-nos-unsatisfied section--subsection clear">
+
+          	<div class="section--subhead">Completed Milestones</div>
+
+            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+              <div class="yes-no-item-statisfied">
+
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+	                	<h4 class="bold">✓</h4>
+                  </div>
+                </div>
+
+                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                  ng-disabled="!editable(current_user, selected_semester)">
+                <h6>{{yesno.value}}</h6>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div><!-- /section-inner -->
+
+    </div><!-- /academic-milestones -->
 
     <div class="pbxl" ng-show="userTests.length == 0">
-      <h4>Add tests you've taken this semester.</h4>
+      <h4>{{student.first_name}}, looks like you haven't entered any data.</h4>
+      <h4>Let's get that taken care of. Add tests you've taken this semester.</h4>
     </div>
 
     <div class="module-data-container">
@@ -20,7 +82,7 @@
           </div>
 
           <div class="module-data__item__userTest__date">
-            <span ng-hide="userTest.editing">{{userTest.date | date: 'MMM dd, yyyy'}}</span>
+            <span ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</span>
             <datepicker ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" show-weeks="false"></datepicker>
             <!-- <input datepicker-popup="dd-MM-yyyy" ng-model="userTest.new_date" class="form-control" datepicker-options="dateOptions" show-weeks='false' is-open="opened" min="minDate" max="'2015-06-22'" date-disabled="disabled(date, mode)" close-text="Close" /> -->
           </div>

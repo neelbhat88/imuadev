@@ -8,7 +8,7 @@ class GpaMilestone < ImuaMilestone
       @module = Constants.Modules[:ACADEMICS]
       @submodule = Constants.SubModules[:ACADEMICS_GPA]
 
-      @title = "Academic GPA"
+      @title = "Good Grades"
       @description = "Minimum GPA:"
       @value = "3.5"
       @icon = "/assets/Academics.jpg"
