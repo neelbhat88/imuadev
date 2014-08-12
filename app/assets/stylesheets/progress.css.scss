@@ -245,14 +245,13 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	.section--inner {
       	      	
       		.yes-no-item {
-      		
-      			width: 48%;
-      			margin: 1%;
-      			min-height: 300px;
-      			background:red;
-      			float: left;
-      			margin: 10px 0;
-      		
+      		      			
+        			width: 48%;
+        			min-height: 200px;
+        			background:red;
+        			float: left;
+        			margin: 10px 1%;
+                  		
       		}
       	
       	}
