@@ -131,6 +131,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     width: 100%;
     padding-top: 40px;
     text-align: center;
+    color: white;
 
     @each $category, $color in $colormap {
 
@@ -138,24 +139,11 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         background-color: map-get($darkcolormap, $category);
       }
 
-    }
-
-    color: white;
-
-/* Will be removed soon.
-    .module-data-content-container {
-    
-    width: 100%;
-      @each $category, $color in $colormap {
-        &.color--#{$category} {
-          background-color: $color;
-        }
-
-      }
-*/
-    }
-  }
-}
+    } //@each $category, color...
+  
+  } //.module-data-container
+  
+} //.progressLower
 
 .semester-changer {
 
