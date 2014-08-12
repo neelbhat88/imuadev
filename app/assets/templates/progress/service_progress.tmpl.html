@@ -123,14 +123,14 @@
 
       <div class="section--inner">
 
-      	<div class="user-class-greeting" wait-to-load="{{loaded_module_milestones}}">
+      	<div class="user-class-greeting" ng-show="user_classes.length != 0" wait-to-load="{{loaded_semester_service_hours}}">
           Hey {{current_user.first_name}}, you have completed
           <h4><span class="numbers-large">{{semester_service_hours}}</span><br>Service Hours</h4> this semester.
         </div>
 
       </div>
 
-    </div><!-- /section--hours -->
+    </div><!-- /section--gpa -->
 
     <div class="section section--milestones">
 
