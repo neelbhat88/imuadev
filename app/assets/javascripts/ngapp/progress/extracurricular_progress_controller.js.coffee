@@ -15,7 +15,6 @@ angular.module('myApp')
                 if user_extracurricular_activity.id == user_extracurricular_activity_event.user_extracurricular_activity_id
                   user_extracurricular_activity.events.push(user_extracurricular_activity_event)
 
-            console.log($scope.user_extracurricular_activities)
             $scope.$emit('loaded_module_milestones')
 
     $scope.$watch 'selected_semester', () ->
@@ -26,7 +25,6 @@ angular.module('myApp')
       if !!$scope.user_extracurricular_activities[index].events[0].id
         event_id = $scope.user_extracurricular_activities[index].events[0].id
       new_extracurricular_activity = UserExtracurricularActivityService.newExtracurricularActivity($scope.student, $scope.selected_semester.id)
-      console.log(new_extracurricular_activity)
       new_extracurricular_activity.id = $scope.user_extracurricular_activities[index].id
       new_extracurricular_activity.name = $scope.user_extracurricular_activities[index].new_name
       new_extracurricular_activity.events[0].leadership = $scope.user_extracurricular_activities[index].events[0].new_leadership
@@ -66,7 +64,6 @@ angular.module('myApp')
 
 
     $scope.editActivity = (index) ->
-      console.log($scope.user_extracurricular_activities[index])
       $scope.user_extracurricular_activities[index].editing = true
       $scope.user_extracurricular_activities[index].new_name= $scope.user_extracurricular_activities[index].name
       $scope.user_extracurricular_activities[index].events[0].new_leadership = $scope.user_extracurricular_activities[index].events[0].leadership

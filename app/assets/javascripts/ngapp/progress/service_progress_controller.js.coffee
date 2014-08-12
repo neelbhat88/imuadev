@@ -24,7 +24,6 @@ angular.module('myApp')
                 if user_service_activity.id == user_service_activity_event.user_service_activity_id
                   user_service_activity.events.push(user_service_activity_event)
 
-            console.log($scope.user_service_activities)
             $scope.$emit('loaded_module_milestones')
 
     $scope.$watch 'selected_semester', () ->
