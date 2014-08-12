@@ -9,71 +9,74 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   background: $grey;
   color: white;
-  padding: $wrapper;
-  text-align: center;
-
-  .section {
-
-  	margin-bottom: 40px;
-
-    .sectionHeader {
-
-      @include font-size(1.6);
-    	text-align: center;
-    	color: $light-grey;
-    	padding: 8px 0;
-  		border-bottom: 1px white(0.1) solid;
-  		margin-bottom: 10px;
-
-    }
-
-    ul {
-
-    	list-style: none;
-
-    	li {
-
-    		padding: 10px 6px;
-
-    		&:hover {
-
-    			background: $darkgrey;
-
-    		}
-
-    	}
-
-    }
-
-
-  }
-
-  select {
+	border-bottom: 1px $darkborder solid;
   
-  	height: 32px;
-  	width: 100%;
-  	padding: 5px;
-  	background: $grey;
-		border: 1px white(0.1) solid;
+  ul {
+  
+    margin-bottom: 0;
+    
+  	li {
+  	
+  		float: left;
+  		  	
+  	}
+  	
+    .progressStudent {
+    
+      width: 70%;
+      padding: 25px 100px 0 100px;
+            
+      select {
+
+      	height: 60px;
+      	padding: 5px;
+      	background: $grey;
+      	border: none;
+    		border-bottom: 1px rgb(65, 66, 67) solid;
+      
+      }
+    
+    }
+    
+    .narrow {
+    
+      width: 15%;
+      padding: 60px 0;
+      text-align: center;
+      border-left: 1px solid $darkborder;
+    
+    }
   
   }
 
 }
 
-.progresslower{
-
-  background: $darkgrey;
+.progressMiddle {
+    
+  background: $grey;
+  
+  .progressCircle-big--container {
+  
+  	float: left;
+  	width: 20%;
+  	text-align: center;
+	  padding-top: 60px;
+    padding-bottom: 60px;
+    border-right: 1px solid $darkborder;
+  	
+  }
 
   .circles {
 
-    margin-top: 60px;
-    padding: $panelwrapper;
+    width: 80%;
+    float: left;
+    padding-top: 80px;
+    text-align: center;
     color: white();
 
     .module-circle {
       display: inline-block;
-      margin-right: 40px;
-      margin-bottom: 60px;
+      width: 20%;
       text-align: center;
       opacity: 0.3;
 
@@ -96,6 +99,12 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     }
           
   }
+
+}
+
+.progressLower {
+
+  background: $grey;
 
   .module-circle {
   
