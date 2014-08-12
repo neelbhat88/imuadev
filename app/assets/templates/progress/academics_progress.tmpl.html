@@ -2,7 +2,7 @@
   
   <div class="module-user-classes section-wrapper clear">
     
-    <div class="section gpa">
+    <div class="section section--gpa">
     
       <div class="section--header">GPA</div>
 
@@ -17,7 +17,7 @@
     
     </div>
     
-    <div class="section your-grades">
+    <div class="section section--grades">
     
       <div class="section--header">Grades</div>
       
@@ -89,7 +89,7 @@
     
     </div><!-- /your-grades -->
         
-        <div class="section academic-milestones">
+        <div class="section section--milestones">
     
     	<div class="section--header">Academic Milestones</div>
     
@@ -101,13 +101,12 @@
   
         <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
         
-          <div class="yes-nos-unsatisfied">
+          <div class="yes-nos-unsatisfied section--subsection clear">
           
-          	UNSATISFIED YES-NOS
+          	<div class="section--subhead">Next Milestones</div>
           	
-	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-              <div class="yes-no-item-unstatisfied" ng-if="!yesno.earned">
-                Unsatisfied
+	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+              <div class="yes-no-item-unstatisfied">
                 <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <span class="text">{{yesno.value}}</span>
@@ -116,18 +115,16 @@
           
           </div>
           
-          <div class="yes-nos-unsatisfied">
+          <div class="yes-nos-unsatisfied section--subsection clear">
           
-          	!!!SATISFIED YES-NOS!!!
+          	<div class="section--subhead">Completed Milestones</div>
             
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-              <div class="yes-no-item-statisfied" ng-if="yesno.earned">
-                Satisfied
+            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+              <div class="yes-no-item-statisfied">
                 <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <span class="text">{{yesno.value}}</span>
               </div>
-              
             </div>
           
           </div>
