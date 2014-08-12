@@ -22,9 +22,7 @@ describe Ability do
                                           :read_user_tests,
                                           :manage_user_tests,
                                           :manage_user_activities,
-                                          :manage_user_events,
-                                          :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_user_events
                                         )
   end
 
@@ -40,9 +38,7 @@ describe Ability do
                                           :read_user_tests,
                                           :manage_user_tests,
                                           :manage_user_activities,
-                                          :manage_user_events,
-                                          :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_user_events
                                         )
   end
 
@@ -59,9 +55,7 @@ describe Ability do
                                           :read_user_tests,
                                           :manage_user_tests,
                                           :manage_user_activities,
-                                          :manage_user_events,
-                                          :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_user_events
                                         )
   end
 
@@ -78,9 +72,7 @@ describe Ability do
                                           :read_user_tests,
                                           :manage_user_tests,
                                           :manage_user_activities,
-                                          :manage_user_events,
-                                          :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_user_events
                                         )
   end
 
@@ -116,9 +108,7 @@ describe Ability do
                                             :read_user_tests,
                                             :manage_user_tests,
                                             :manage_user_activities,
-                                            :manage_user_events,
-                                            :read_parent_guardian_contacts,
-                                            :manage_parent_guardian_contacts
+                                            :manage_user_events
                                           )
     end
 

@@ -33,7 +33,7 @@ describe Api::V1::MilestoneController do
       jsonMilestone = json["milestone"]
       expect(jsonMilestone["id"]).to_not be_nil
       expect(jsonMilestone["value"]).to eq(milestone.value)
-      expect(jsonMilestone["title"]).to eq("Good Grades")
+      expect(jsonMilestone["title"]).to eq("Academic GPA")
       expect(jsonMilestone["description"]).to eq("Minimum GPA:")
       expect(jsonMilestone["icon"]).to eq("/assets/Academics.jpg")
     end

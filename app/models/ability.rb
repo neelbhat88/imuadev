@@ -25,9 +25,7 @@ class Ability
           :read_user_tests,
           :manage_user_tests,
           :manage_user_activities,
-          :manage_user_events,
-          :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_user_events
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -42,9 +40,7 @@ class Ability
           :read_user_tests,
           :manage_user_tests,
           :manage_user_activities,
-          :manage_user_events,
-          :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_user_events
         ]
 
       elsif user.org_admin?
@@ -56,9 +52,7 @@ class Ability
           :read_user_tests,
           :manage_user_tests,
           :manage_user_activities,
-          :manage_user_events,
-          :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_user_events
         ]
 
       elsif user.mentor?
@@ -72,9 +66,7 @@ class Ability
               :read_user_tests,
               :manage_user_tests,
               :manage_user_activities,
-              :manage_user_events,
-              :read_parent_guardian_contacts,
-              :manage_parent_guardian_contacts
+              :manage_user_events
             ]
           end
         else # other users in their organization (other mentors, admins)

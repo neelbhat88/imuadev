@@ -26,14 +26,8 @@ class Constants
       ACADEMICS_GPA:       "Academics_GPA",
       ACADEMICS_COURSES:   "Academics_Courses",
 
-      SERVICE_HOURS:       "Service_Hours",
       SERVICE_DEPTH_HOURS: "Service_DepthHours",
-
       EXTRACURRICULAR_ACTIVITIES: "Extracurricular_Activities",
-      EXTRACURRICULAR_DEPTH_ACTIVITIES: "Extracurricular_DepthActivities",
-      EXTRACURRICULAR_LEADERSHIP_ACTIVITIES: "Extracurricular_LeadershipActivities",
-
-      TESTING_TAKE: "Testing_Take",
 
       YES_NO:              "YesNo",
     }
@@ -42,8 +36,8 @@ class Constants
   def self.TestScoreTypes
     return {
       PERCENT:      "Percent",
-      RAW_NUMBER:   "Raw_Number",
-      LETTER_GRADE: "Letter_Grade"
+      RAW_NUMBER:   "Raw Number",
+      LETTER_GRADE: "Letter Grade"
     }
   end
 
