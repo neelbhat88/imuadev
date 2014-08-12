@@ -3,105 +3,84 @@
 /* ========================= */
 
 $colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
+
 $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
-.progressContainer {
+.progressUpper {
 
-}
-
-.col {
-  overflow: hidden;
-  position: absolute;
-  top: 90px;
-  bottom: 0;
-}
-
-.progressLeft {
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 320px;
-  overflow-y: auto;
   background: $grey;
   color: white;
-  padding: $wrapper;
-  text-align: center;
-
-  .section {
-
-  	margin-bottom: 40px;
-
-    .sectionHeader {
-
-      @include font-size(1.6);
-    	text-align: center;
-    	color: $light-grey;
-    	padding: 8px 0;
-  		border-bottom: 1px white(0.1) solid;
-  		margin-bottom: 10px;
-
-    }
-
-    ul {
-
-    	list-style: none;
-
-    	li {
-
-    		padding: 10px 6px;
-
-    		&:hover {
-
-    			background: $darkgrey;
-
-    		}
-
-    	}
-
-    }
-
-
-  }
-
-  .progressStudent {
-
-  	margin: 60px 0;
-
-  }
+	border-bottom: 1px $darkborder solid;
   
-  select {
+  ul {
   
-  	height: 32px;
-  	width: 100%;
-  	padding: 5px;
-  	background: $grey;
-		border: 1px white(0.1) solid;
+    margin-bottom: 0;
+    
+  	li {
+  	
+  		float: left;
+  		  	
+  	}
+  	
+    .progressStudent {
+    
+      width: 70%;
+      padding: 25px 100px 0 100px;
+            
+      select {
+
+      	height: 60px;
+      	padding: 5px;
+      	background: $grey;
+      	border: none;
+    		border-bottom: 1px rgb(65, 66, 67) solid;
+      
+      }
+    
+    }
+    
+    .narrow {
+    
+      width: 15%;
+      padding: 60px 0;
+      text-align: center;
+      border-left: 1px solid $darkborder;
+    
+    }
   
   }
 
 }
 
-.progressRight{
-
-  left: 320px;
-  right: 0;
-  overflow-y: auto;
-  background: $darkgrey;
+.progressMiddle {
+    
+  background: $grey;
+  
+  .progressCircle-big--container {
+  
+  	float: left;
+  	width: 20%;
+  	text-align: center;
+	  padding-top: 60px;
+    padding-bottom: 60px;
+    border-right: 1px solid $darkborder;
+  	
+  }
 
   .circles {
 
-    margin-top: 60px;
-    padding: $panelwrapper;
+    width: 80%;
+    float: left;
+    padding-top: 80px;
+    text-align: center;
     color: white();
 
     .module-circle {
       display: inline-block;
-      margin-right: 40px;
-      margin-bottom: 60px;
+      width: 20%;
       text-align: center;
       opacity: 0.3;
-
+      
       &.inactive {
         //display: none;
       }
@@ -119,8 +98,25 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     	opacity: 1;
     
     }
+    
+    .notSelectedCircle {
+    
+    	&:hover {
+    	
+    		opacity: 0.75;
+    	
+    	}
+    
+    }
           
   }
+
+}
+
+.progressLower {
+
+  background: $darkgrey;
+  min-height: 500px;
 
   .module-circle {
   
@@ -134,33 +130,374 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
   .module-data-container {
 
-    padding: $panelwrapper;
-    padding-top: 30px;
-
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    color: white;
+    
     @each $category, $color in $colormap {
 
-      &.color--#{$category} {
-        background-color: map-get($colormap, $category);
-      }
+      &.color--#{$category} { border-top: 6px solid $color; }
 
     }
+      
+    .section-wrapper {
 
-    color: white;
-
-    .module-data-content-container {
-      @each $category, $color in $colormap {
-        &.color--#{$category} {
-          background-color: $color;
-        }
-
+      padding: $wrapper;
+      margin-top: 20px;
+    
+        .section {
+      
+      	width: 31%;
+        margin: 1%;
+      	float: left;
+      	
+      	.section--header {
+      	      	
+      		padding: 20px;
+      		border-bottom: 1px solid white(0.1);
+      	
+      	}
+      	
+      	.section--inner {
+      	
+	      	padding: 40px;
+      	
+      	  .section--subsection {
+      	  
+      	    margin-bottom: 20px;
+      	  
+      	  	.section--subhead {
+      	  	
+      			  padding-bottom: 20px;
+      			  border-bottom: 1px solid white(0.1);
+      			  margin-bottom: 20px;
+      	  	
+      	  	}
+      	  
+      	  }
+      	
+      	}
+      	      
       }
+      
+    	.section--milestones {
+    	
+      	.section--inner {
+      	      	
+      		.yes-no-item {
+      		      			
+      			width: 44%;
+      			float: left;
+      			margin: 10px 3%;
+      			
+      			.yes-no--point-circle {
+      			
+      				@include circle(90px);
+      				background: white(1.0);
+      				margin: 0 auto;
+      				padding-bottom: 10px;
+      				
+      				.point-circle--inside {
+      				
+      					padding-top: 20px;
+      				
+      				}
+      			
+      			} //yes-no--point-circle
+      			
+      			.yes-no-item-statisfied {
+      			
+      				opacity: 0.6;
+      				
+      				.point-circle--inside {
+      				
+      					padding-top: 10px;
+      				
+      				}
+      			
+      			}
+                  		
+      		} //yes-no-item
+      	
+      	}
+      	
+    	} //section--milestones
+
     }
-  }
-}
+    
+    /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
+            
+    .academicsProgressContainer {
+    
+    	.section { 
+    	
+    	  background: $academics-color-dark;
+        
+        .section--header { background: $academics-color; }
+    	
+    	}
+    	
+    	.gpa-large {
+    	
+    		@include font-size(10.0);
+    		font-weight: $light;
+    	
+    	}
+    	
+    	.section--grades {
+    	
+    		.section--inner {
+    		
+    			.module-data__item {
+    			
+    			  padding-bottom: 20px;
+    			  border-bottom: 1px solid white(0.1);
+    			  margin-bottom: 20px;
+    			
+    				.module-data__item__class {
+    				
+    					width: 60%;
+    					float: left;
+	    			  text-align: left;
+    				
+    				}
+    				
+    				.module-data__item__grade {
+    				
+    					width: 30%;
+    					float: left;
+    					text-align: center;
+    				
+    				}
+    				
+    				.module-data__item__icons {
+    				
+    					width: 10%;
+    					float: left;
+    					text-align: right;
+    				
+    				}
+    			
+    			}
+    		
+    		}
+    	
+    	} // .section--grades
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $academics-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
 
-.semester-changer {
+    } //academicsProgressContainer
+    
+    .serviceProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $service-color-dark;
+        
+        .section--header { background: $service-color; }
+    	
+    	}
 
-  .semester-changer__next, .semester-changer__prev {
-    cursor: pointer;
-  }
-}
+    
+			.module-data__item {
+    			
+			  padding-bottom: 20px;
+			  border-bottom: 1px solid white(0.1);
+			  margin-bottom: 20px;
+			  
+				.module-data__item__activityContainer {
+				
+          padding-bottom: 20px;
+  			  border-bottom: 1px solid white(0.1);
+  			  margin-bottom: 20px;
+    			  
+  				.module-data__item__activity {
+  				
+  					width: 80%;
+  					float: left;
+    			  text-align: left;
+  				
+  				}
+  				  				
+  				.module-data__item__icons {
+  				
+  					width: 20%;
+  					float: left;
+  					text-align: right;
+  				
+  				}
+				
+				}//__activityContainer
+				
+				.module-data__item__event {
+				
+					width: 100%;
+					padding: 0 20px;
+					
+					.module-data__item__event--date {
+					
+						width: 20%;
+						float: left;
+						text-align: left;
+					
+					}
+					
+					.module-data__item__event--description {
+					
+						width: 50%;
+						float: left;
+						text-align: left;
+					
+					}
+					
+					.module-data__item__event--hours {
+					
+						width: 20%;
+						float: left;
+						text-align: center;
+					
+					}
+					
+					.module-data__item__icons {
+					
+						width: 10%;
+						float: left;
+						text-align: right;
+					
+					}
+				
+				}
+				
+
+      } //module-data__item
+      
+    	.section--milestones {
+    	
+      	.section--inner {
+      	      	
+      		.yes-no-item {
+      		      			
+      			.yes-no--point-circle {
+      			
+      				color: $service-color;
+      			
+      			} //yes-no--point-circle
+                  		
+      		} //yes-no-item
+      	
+      	}
+      	
+    	} //section--milestones
+    
+    } //serviceProgressContainer
+    
+    .collegePrepProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $college_prep-color-dark;
+        
+        .section--header { background: $college_prep-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $college_prep-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //collegePrepProgressContainer
+    
+    .extracurricularProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $extracurricular-color-dark;
+        
+        .section--header { background: $extracurricular-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $extracurricular-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //extracurricularProgressContainer
+    
+    .testingProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $testing-color-dark;
+        
+        .section--header { background: $testing-color; }
+    	
+    	}
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $testing-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //testingProgressContainer
+  
+  } //.module-data-container
+  
+} //.progressLower

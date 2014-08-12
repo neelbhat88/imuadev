@@ -9,7 +9,7 @@ class LeadershipActivitiesMilestone < ImuaMilestone
       @submodule = Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
 
       @title = "Be a Leader"
-      @description = "Number of activities with a leadership role:"
+      @description = "Minimum number of past leadership roles:"
       @value = "1"
       @icon = "/assets/Extracurricular.jpg"
 
@@ -21,12 +21,17 @@ class LeadershipActivitiesMilestone < ImuaMilestone
 
   def has_earned?(user, time_unit_id)
     user_leadership_activities = 0
+    userExtracurricularActivityService = UserExtracurricularActivityService.new
 
-    events = UserExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, time_unit_id)
-
-    events.each do | e |
-      if !e.leadership.nil? && !e.leadership.empty?
-        user_leadership_activities += 1
+    time_units = RoadmapRepository.new.get_time_units(user.organization_id)
+    time_units.each do | tu |
+      if tu.id <= time_unit_id.to_i
+        events = userExtracurricularActivityService.get_user_extracurricular_activity_events(user.id, tu.id)
+        events.each do | e |
+          if !e.leadership.nil? && !e.leadership.empty?
+            user_leadership_activities += 1
+          end
+        end
       end
     end
 
