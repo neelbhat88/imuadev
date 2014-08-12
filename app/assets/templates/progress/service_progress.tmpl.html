@@ -70,7 +70,7 @@
                   
                   <div class="module-data__item__event--hours">
                     
-                    <span ng-hide="user_service_event.editing">{{user_service_event.hours}}</span>
+                    <span ng-hide="user_service_event.editing">{{user_service_event.hours}}<br><span class="hours">Hours</span></span>
                     <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Service Event Hours" name="serviceEventHours">
                   
                   </div>
@@ -107,7 +107,7 @@
           </div>
     
           <div ng-if="editable(current_user, selected_semester)"
-              class="module-data__button" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add Service Activity
+              class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add New Service Activity
           </div>
         </div>
     	
