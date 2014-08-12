@@ -2,7 +2,97 @@
 
   <div class="module-userTests section-wrapper clear">
 
-      <div class="section section--milestones">
+    <div class="section section--tests">
+    
+      <div class="section--header">Tests Taken</div>
+      
+      <div class="section--inner">
+    
+        <div ng-show="userTests.length == 0">
+          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
+          <h6>Let's get that taken care of. Add tests you've taken this semester.</h6>
+        </div>
+    
+        <div class="module-data">
+        
+          <div class="noUserTests" ng-hide="userTests.length != 0">No tests added</div>
+    
+          <div class="module-data-items">
+            
+            <div class="module-data__item clear" ng-repeat="userTest in userTests" ng-class="{'last':$last}">
+    
+              <div class="module-data__item__test-date">
+                <span ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</span>
+                <datepicker ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" show-weeks="false"></datepicker>
+                <!-- <input datepicker-popup="dd-MM-yyyy" ng-model="userTest.new_date" class="form-control" datepicker-options="dateOptions" show-weeks='false' is-open="opened" min="minDate" max="'2015-06-22'" date-disabled="disabled(date, mode)" close-text="Close" /> -->
+              </div>
+              
+              <div class="module-data__item__test-name">
+                <span ng-hide="userTest.editing">{{userTest.orgTest.title}}</span>
+                <select ng-show="userTest.editing" ng-options="orgTest as orgTest.title for orgTest in orgTests" ng-model="userTest.new_orgTest">
+                  <option value="">--- Select Test ---</option>
+                </select>
+              </div>
+    
+              <div class="module-data__item__test-score">
+                <span ng-hide="userTest.editing">{{userTest.score}}</span>
+                <input ng-show="userTest.editing && userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="form-field" ng-model="userTest.new_score" placeholder="Score"></input>
+                <select ng-show="userTest.editing && userTest.new_orgTest.score_type == 'Letter Grade' && userTest.new_orgTest != null" ng-model="userTest.new_score">
+                  <option value="A">A</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B">B</option>
+                  <option value="B-">B-</option>
+                  <option value="C+">C+</option>
+                  <option value="C">C</option>
+                  <option value="C-">C-</option>
+                  <option value="D+">D+</option>
+                  <option value="D">D</option>
+                  <option value="D-">D-</option>
+                  <option value="F">F</option>
+                </select>
+              </div><!-- /module-data__item__test-score -->
+    
+              <div class="module-data__item__icons">
+                <div ng-if="editable(current_user, selected_semester)" ng-hide="userTest.editing">
+                  <span class="glyphicon glyphicon-pencil prs" title="Edit Test" ng-click="editUserTest($index)"></span>
+                  <span class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteUserTest($index)"></span>
+                </div>
+    
+                <div ng-show="userTest.editing">
+                  <span class="glyphicon glyphicon-ok prs green" ng-hide="!userTest.new_orgTest || !userTest.new_date" ng-title="Save" ng-click="saveUserTest($index)"></span>
+                  <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditUserTest($index)"></span>
+                </div>
+              </div><!-- /module-data__item__icons -->
+    
+            </div><!-- /module-data__item -->
+            
+          </div><!-- /module-data-items -->
+    
+          <div ng-if="editable(current_user, selected_semester)"
+              class="module-data__button" ng-click="addUserTest()" ng-hide="userTests.editing">Add Test</div>
+        </div><!-- /module-data -->
+        
+      </div>
+    
+    </div><!-- /section--tests -->
+    
+    <div class="section section--tests-taken">
+
+      <div class="section--header">Total Service Hours</div>
+
+      <div class="section--inner">
+
+      	<div class="user-class-greeting" wait-to-load="{{loaded_module_milestones}}">
+          Hey {{current_user.first_name}}, you have finished
+          <h4><span class="numbers-large">###</span><br>Tests</h4> this semester.
+        </div>
+
+      </div>
+
+    </div><!-- /section--tests-taken -->
+  
+    <div class="section section--milestones">
 
     	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
 
@@ -61,69 +151,8 @@
 
       </div><!-- /section-inner -->
 
-    </div><!-- /academic-milestones -->
-
-    <div class="pbxl" ng-show="userTests.length == 0">
-      <h4>{{student.first_name}}, looks like you haven't entered any data.</h4>
-      <h4>Let's get that taken care of. Add tests you've taken this semester.</h4>
-    </div>
-
-    <div class="module-data-container">
-      <div class="noUserTests" ng-hide="userTests.length != 0">No tests added</div>
-
-      <div class="module-data-content-container">
-        <div class="module-data__item" ng-repeat="userTest in userTests" ng-class="{'last':$last}">
-
-          <div class="module-data__item__userTest__title">
-            <span ng-hide="userTest.editing">{{userTest.orgTest.title}}</span>
-            <select ng-show="userTest.editing" ng-options="orgTest as orgTest.title for orgTest in orgTests" ng-model="userTest.new_orgTest">
-              <option value="">--- Select Test ---</option>
-            </select>
-          </div>
-
-          <div class="module-data__item__userTest__date">
-            <span ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</span>
-            <datepicker ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" show-weeks="false"></datepicker>
-            <!-- <input datepicker-popup="dd-MM-yyyy" ng-model="userTest.new_date" class="form-control" datepicker-options="dateOptions" show-weeks='false' is-open="opened" min="minDate" max="'2015-06-22'" date-disabled="disabled(date, mode)" close-text="Close" /> -->
-          </div>
-
-          <div class="module-data__item__userTest__score">
-            <span ng-hide="userTest.editing">{{userTest.score}}</span>
-            <input ng-show="userTest.editing && userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="form-field" ng-model="userTest.new_score" placeholder="Score"></input>
-            <select ng-show="userTest.editing && userTest.new_orgTest.score_type == 'Letter Grade' && userTest.new_orgTest != null" ng-model="userTest.new_score">
-              <option value="A">A</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B">B</option>
-              <option value="B-">B-</option>
-              <option value="C+">C+</option>
-              <option value="C">C</option>
-              <option value="C-">C-</option>
-              <option value="D+">D+</option>
-              <option value="D">D</option>
-              <option value="D-">D-</option>
-              <option value="F">F</option>
-            </select>
-          </div>
-
-          <div class="module-data__item__icons">
-            <div ng-if="editable(current_user, selected_semester)" ng-hide="userTest.editing">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Test" ng-click="editUserTest($index)"></span>
-              <span class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteUserTest($index)"></span>
-            </div>
-
-            <div ng-show="userTest.editing">
-              <span class="glyphicon glyphicon-ok prs green" ng-hide="!userTest.new_orgTest || !userTest.new_date" ng-title="Save" ng-click="saveUserTest($index)"></span>
-              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditUserTest($index)"></span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div ng-if="editable(current_user, selected_semester)"
-          class="module-data__button" ng-click="addUserTest()" ng-hide="userTests.editing">Add Test</div>
-    </div>
+    </div><!-- /section--milestones -->
+  
   </div>
 
 </div>
