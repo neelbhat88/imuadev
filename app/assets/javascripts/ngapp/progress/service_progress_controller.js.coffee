@@ -25,6 +25,10 @@ angular.module('myApp')
               for user_service_activity_event in data.user_service_activity_events
                 if user_service_activity.id == user_service_activity_event.user_service_activity_id
                   user_service_activity.events.push(user_service_activity_event)
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
             $scope.$emit('loaded_module_milestones')
 
     $scope.saveActivity = (index) ->
