@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :user_extracurricular_activity_events, dependent: :destroy
   has_many :user_service_activities, dependent: :destroy
   has_many :user_service_activity_events, dependent: :destroy
+  has_many :parent_guardian_contacts, dependent: :destroy
 
   has_attached_file :avatar, styles: {
     square: '140x140#',
