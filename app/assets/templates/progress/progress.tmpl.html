@@ -89,15 +89,6 @@
         </div>
 
         <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
-
-          <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones">
-              <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
-                ng-disabled="!editable(current_user, selected_semester)">
-              <span class="text">{{yesno.value}}</span>
-            </div>
-          </div>
-
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
         </div>
       <!--/MAIN PANEL-->
