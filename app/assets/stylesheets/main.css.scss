@@ -54,6 +54,8 @@ $button-blue-hover: #69bfe9;
 $button-red: #cf2622;
 $button-red-hover: #cf6967;
 
+$darkborder: rgb(65, 66, 67);
+
 //These should be removed soon
 .green { color: $green; }
 .red { color: $red; }
@@ -79,27 +81,10 @@ $college_prep-color-dark: $darkblue;
 
 
 /* Fonts */
-$font-stack: "jaf-facitweb", "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
-$light: 300;
-$regular: 400;
+$font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
+$light: 200;
+$regular: 300;
 $bold: 700;
-
-@mixin headline-font($size) {
-      font-family: $font-stack;
-      font-size: $size;
-      line-height: 1.2;
-      font-weight: 100;
-}
-
-@mixin body-font($size) {
-
-    font-family: $font-stack;
-    font-weight: $light;
-    font-style: normal;
-    font-size: $size;
-    line-height: 1.5;
-
-}
 
 @mixin font-size($size:1.6, $line: $size * 1.2){
     font-size:   ($size * 10) + px;
@@ -128,6 +113,14 @@ $bold: 700;
 
 }
 
+@mixin circle($size) {
+
+	width: $size;
+	height: $size;
+	@include border-radius(100%);
+
+}
+
 
 html {
   height: 100%;
@@ -136,8 +129,10 @@ html {
   body {
     
     min-width: 1260px;
-    @include body-font(14px);
-
+    font-family: $font-stack;
+    font-weight: $regular;
+    @include font-size(1.4);
+    
   }
 
 }
@@ -281,7 +276,7 @@ header {
   width: 100%;
   background: $darkgrey;
   color: white();
-  border-bottom: 1px rgb(65, 66, 67) solid;
+  border-bottom: 1px $darkborder solid;
   position: relative;
   z-index: 1000;
 
