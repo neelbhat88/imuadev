@@ -178,10 +178,56 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	  }
       	
       	}
-      
+      	      
       }
-    
+      
+    	.section--milestones {
+    	
+      	.section--inner {
+      	      	
+      		.yes-no-item {
+      		      			
+      			width: 44%;
+      			float: left;
+      			margin: 10px 3%;
+      			
+      			.yes-no--point-circle {
+      			
+      				@include circle(90px);
+      				color: $academics-color;
+      				background: white(1.0);
+      				margin: 0 auto;
+      				padding-bottom: 10px;
+      				
+      				.point-circle--inside {
+      				
+      					padding-top: 20px;
+      				
+      				}
+      			
+      			} //yes-no--point-circle
+      			
+      			.yes-no-item-statisfied {
+      			
+      				opacity: 0.6;
+      				
+      				.point-circle--inside {
+      				
+      					padding-top: 10px;
+      				
+      				}
+      			
+      			}
+                  		
+      		} //yes-no-item
+      	
+      	}
+      	
+    	} //section--milestones
+
     }
+    
+    /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
             
     .academicsProgressContainer {
     
@@ -238,26 +284,27 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     		
     		}
     	
-    	} // .your-grades
+    	} // .section--grades
     	
     	.section--milestones {
       	
-      	.section--inner {
-      	      	
-      		.yes-no-item {
-      		      			
-        			width: 48%;
-        			min-height: 200px;
-        			background:red;
-        			float: left;
-        			margin: 10px 1%;
-                  		
-      		}
-      	
-      	}
-      	
-    	}
-    	    
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $academics-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    	    	    
     }
   
   } //.module-data-container
