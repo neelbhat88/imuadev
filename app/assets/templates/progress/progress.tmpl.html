@@ -17,49 +17,49 @@
   <div class="progressUpper">
 
     <ul class="clear">
-    
+
       <li class="progressStudent">
-  
+
         <div class="progressStudent-wrapper clear">
-                  
+
           <div class="progressSelector">
-        
+
   	        <h5><span class="bold">{{student.first_last_initial}}'s</span> Progress
-          
+
             <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
                 <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
             </select>
-            
+
             </h5>
-          
+
           </div>
-        
+
         </div>
-  
+
       </li>
-      
+
       <li class="studentExpectations narrow">Your Expectations</li>
-      
+
       <li class="studentMentors narrow">Your Mentors</li>
-    
+
     </ul>
 
   </div>
-  
+
   <div class="progressMiddle clear">
 
     <div class="progressCircle-big--container">
-  
+
       <div class="progressCircle-big">
       	<div class="big-progress-circle" ng-if="student_with_modules_progress">
       		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
       	</div>
       </div>
-      
+
     </div>
-  
+
 	  <!--CIRCLES-->
-    <div class="circles js-circles">
+    <div class="circlessssss js-circlessssss">
       <div class="module-circles js-module-circles">
         <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
           <module-progress-circle module="mod"></module-progress-circle>
@@ -71,17 +71,17 @@
 
   </div><!-- /progressMiddle -->
 
-  <div class="progressLower">
+  <div class="progressLowersssss">
 
     <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
 
-      <!--MAIN PANEL-->      
+      <!--MAIN PANEL-->
         <div class="module-header">
-        
+
   	        <h4 class="bold">
     	        {{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}
             </h4>
-        
+
         </div>
 
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
