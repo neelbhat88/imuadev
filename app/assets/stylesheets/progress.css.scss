@@ -131,7 +131,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   .module-data-container {
 
     width: 100%;
-    padding-top: 40px;
+    padding: 40px 0;
     text-align: center;
     color: white;
     
@@ -171,15 +171,11 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
             
     .academicsProgressContainer {
     
-    	.section {
+    	.section { 
     	
-    		background: $academics-color-dark;
-    		
-    		.section--header {
-    		
-    			background: $academics-color;
-    		
-    		}
+    	  background: $academics-color-dark;
+        
+        .section--header { background: $academics-color; }
     	
     	}
     	
