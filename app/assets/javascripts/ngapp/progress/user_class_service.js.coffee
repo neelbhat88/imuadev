@@ -2,7 +2,7 @@ angular.module("myApp")
 .service "UserClassService", ['$http', ($http) ->
 
   @all = (userId, time_unit_id) ->
-    $http.get "/api/v1/users/#{userId}/time_unit/#{time_unit_id}/classes"
+    $http.get "/api/v1/users/#{userId}/user_class?time_unit=#{time_unit_id}"
 
   @new = (user, time_unit_id) ->
     name: "",
@@ -13,12 +13,12 @@ angular.module("myApp")
 
   @save = (user_class) ->
     if user_class.id
-      return $http.put "/api/v1/users/#{user_class.user_id}/classes/#{user_class.id}", {user_class: user_class}
+      return $http.put "/api/v1/user_class/#{user_class.id}", {user_class: user_class}
     else
-      return $http.post "/api/v1/users/#{user_class.user_id}/classes", {user_class: user_class}
+      return $http.post "/api/v1/users/#{user_class.user_id}/user_class", {user_class: user_class}
 
   @delete = (user_class) ->
-    return $http.delete "/api/v1/users/#{user_class.user_id}/classes/#{user_class.id}"
+    return $http.delete "/api/v1/user_class/#{user_class.id}"
 
   @getGPA = (user_classes) ->
     totalGPA = 0

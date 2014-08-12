@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140808194112) do
+ActiveRecord::Schema.define(:version => 20140808203914) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "parent_guardian_contacts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "relationship"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "relationships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to_id"
@@ -98,6 +108,11 @@ ActiveRecord::Schema.define(:version => 20140808194112) do
     t.integer  "time_unit_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "period"
+    t.string   "room"
+    t.float    "credit_hours"
+    t.string   "level"
+    t.string   "subject"
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"

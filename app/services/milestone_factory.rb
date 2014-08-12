@@ -4,8 +4,20 @@ class MilestoneFactory
     when Constants.SubModules[:ACADEMICS_GPA]
       return GpaMilestone.new(milestone)
 
+    when Constants.SubModules[:SERVICE_HOURS]
+      return HoursMilestone.new(milestone)
     when Constants.SubModules[:SERVICE_DEPTH_HOURS]
       return DepthHoursMilestone.new(milestone)
+
+    when Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES]
+      return ActivitiesMilestone.new(milestone)
+    when Constants.SubModules[:EXTRACURRICULAR_DEPTH_ACTIVITIES]
+      return DepthActivitiesMilestone.new(milestone)
+    when Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
+      return LeadershipActivitiesMilestone.new(milestone)
+
+    when Constants.SubModules[:TESTING_TAKE]
+      return TakeTestMilestone.new(milestone)
 
     when Constants.SubModules[:YES_NO]
       if mod == Constants.Modules[:ACADEMICS]

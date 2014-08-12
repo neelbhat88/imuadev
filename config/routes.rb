@@ -10,14 +10,17 @@ Imua::Application.routes.draw do
         get 'current_user' => 'sessions#show_current_user'
       end
 
+      # **************************************
+      # Start adding new routes here like this
+      # run foreman run rake routes to see what the routes look like
+      # **************************************
+      resources :users, shallow: true do
+        resources :user_class, except: [:new, :edit]
+      end
+
       resources :users do
         collection do
           put '/:id/update_password' => 'users#update_password'
-
-          get  '/:id/time_unit/:time_unit_id/classes' => 'progress#user_classes'
-          post '/:id/classes' => 'progress#add_user_class'
-          put  '/:id/classes/:class_id' => 'progress#update_user_class'
-          delete '/:id/classes/:class_id' => 'progress#delete_user_class'
 
           put '/:id/time_unit/next' => "users#move_to_next_semester"
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
@@ -83,6 +86,11 @@ Imua::Application.routes.draw do
       post '/user_test' => 'test#create_user_test'
       put '/user_test/:id' => 'test#update_user_test'
       delete '/user_test/:id' => 'test#delete_user_test'
+
+      get '/users/:id/parent_guardian_contacts' => 'parent_guardian_contact#get_parent_guardian_contacts'
+      post '/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
+      put '/parent_guardian_contact/:id' => 'parent_guardian_contact#update_parent_guardian_contact'
+      delete '/parent_guardian_contact/:id' => 'parent_guardian_contact#delete_parent_guardian_contact'
 
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
