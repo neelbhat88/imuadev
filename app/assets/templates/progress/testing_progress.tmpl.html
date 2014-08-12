@@ -21,14 +21,16 @@
 	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
               <div class="yes-no-item-unstatisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h5 class="bold">{{yesno.points}}</h5>
-                  	<p>Points</p>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{yesno.points}}</h5>
+                      <p>Points</p>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{yesno.value}}</h6>
               </div>
@@ -43,13 +45,15 @@
             <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
               <div class="yes-no-item-statisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h4 class="bold">✓</h4>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{yesno.value}}</h6>
               </div>
