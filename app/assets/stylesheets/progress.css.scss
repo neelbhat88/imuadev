@@ -154,14 +154,14 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	
       	.section--header {
       	      	
-      		padding: 15px;
+      		padding: 20px;
       		border-bottom: 1px solid white(0.1);
       	
       	}
       	
       	.section--inner {
       	
-	      	padding: 20px;
+	      	padding: 40px;
       	
       	}
       
@@ -182,6 +182,47 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     	.gpa-large {
     	
     		@include font-size(10.0);
+    		font-weight: $light;
+    	
+    	}
+    	
+    	.your-grades {
+    	
+    		.section--inner {
+    		
+    			.module-data__item {
+    			
+    			  padding-bottom: 20px;
+    			  border-bottom: 1px solid white(0.1);
+    			  margin-bottom: 20px;
+    			
+    				.module-data__item__class {
+    				
+    					width: 60%;
+    					float: left;
+	    			  text-align: left;
+    				
+    				}
+    				
+    				.module-data__item__grade {
+    				
+    					width: 30%;
+    					float: left;
+    					text-align: center;
+    				
+    				}
+    				
+    				.module-data__item__icons {
+    				
+    					width: 10%;
+    					float: left;
+    					text-align: right;
+    				
+    				}
+    			
+    			}
+    		
+    		}
     	
     	}
     	    
