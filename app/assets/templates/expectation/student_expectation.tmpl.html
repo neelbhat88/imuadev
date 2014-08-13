@@ -38,9 +38,19 @@
 
     </div> <!-- progressCircle-big--container -->
 
+    <div class="meetingExpectations">
+      <h4>Nice work! You are meeting all of your expectations</h4>
+    </div>
+
   </div>
 
-  <div class="expectationsLower">
+  <div class="expectationLower">
+
+    <div class="module-header">
+      <h4 class="bold">
+        {{student.first_name}}'s Expectations
+      </h4>
+    </div>
 
     <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
       <div class="expectations-list-item" ng-repeat="expectation in expectations">
