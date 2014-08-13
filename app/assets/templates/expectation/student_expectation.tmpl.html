@@ -1,15 +1,58 @@
 <div class="studentExpectationContainer">
 
-  <h4>{{student.first_last_initial}}'s Expectations</h4>
-  <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
-    <div class="expectations-list-item" ng-repeat="expectation in expectations">
-      <div class="expectation-title">{{expectation.title}}</div>
-      <div class="expectation-btn-group">
-        <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-        <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-        <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+  <div class="upper expectationUpper">
+
+    <ul class="clear">
+
+      <li class="progressStudent narrow addBorderright"><a class="js-nav-link" ng-href="#/progress/{{student.id}}">Your Progress</a></li>
+
+      <li class="studentExpectations wide">
+
+        <div class="progressStudent-wrapper clear">
+
+          <div class="progressSelector">
+
+            <h5><span class="bold">{{student.first_last_initial}}'s</span> Expectations</h5>
+
+          </div>
+
+        </div>
+
+      </li>
+
+      <li class="studentMentors narrow addBorderleft">Your Mentors</li>
+
+    </ul>
+
+  </div>
+
+  <div class="expectationMiddle clear">
+
+    <div class="progressCircle-big--container">
+
+      <div class="progressCircle-big">
+        <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
+          <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+        </div>
+      </div>
+
+    </div> <!-- progressCircle-big--container -->
+
+  </div>
+
+  <div class="expectationsLower">
+
+    <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
+      <div class="expectations-list-item" ng-repeat="expectation in expectations">
+        <div class="expectation-title">{{expectation.title}}</div>
+        <div class="expectation-btn-group">
+          <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+          <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+          <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+        </div>
       </div>
     </div>
+
   </div>
 
 </div>

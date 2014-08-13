@@ -1,3 +1,46 @@
+.expectationUpper {
+
+  background: $grey;
+  color: white;
+  border-bottom: 1px $darkborder solid;
+
+  ul {
+
+    margin-bottom: 0;
+
+    li {
+
+      float: left;
+
+    }
+
+    .wide {
+
+      width: 70%;
+      padding: 50px 100px 0 100px;
+
+    }
+
+    .narrow {
+
+      width: 15%;
+      padding: 60px 0;
+      text-align: center;
+
+    }
+
+    .addBorderleft {
+      border-left: 1px solid $darkborder;
+    }
+
+    .addBorderright {
+      border-right: 1px solid $darkborder;
+    }
+
+  }
+
+}
+
 .organizationExpectationContainer {
 
   margin-top: 20px;
