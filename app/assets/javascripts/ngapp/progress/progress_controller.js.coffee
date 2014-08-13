@@ -62,7 +62,7 @@ angular.module('myApp')
     if $scope.selected_semester && $scope.selected_module && !$scope.loaded_milestones
       ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
         .success (data) ->
-          $scope.milestones = data.recalculated_module_milestones
+          $scope.milestones = data.recalculated_milestones
           $scope.loaded_milestones = true
           $scope.new_selected_semester = $scope.selected_semester
 
@@ -70,7 +70,7 @@ angular.module('myApp')
     if $scope.selected_module && !$scope.loaded_milestones
       ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
         .success (data) ->
-          $scope.milestones = data.recalculated_module_milestones
+          $scope.milestones = data.recalculated_milestones
           $scope.loaded_milestones = true
   , true
 
@@ -94,7 +94,7 @@ angular.module('myApp')
 
     ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->
-        $scope.milestones = data.recalculated_module_milestones
+        $scope.milestones = data.recalculated_milestones
 
     ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->

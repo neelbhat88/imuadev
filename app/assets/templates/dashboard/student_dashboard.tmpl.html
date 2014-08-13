@@ -34,7 +34,33 @@
         </div>
       </div>
 
-      <div class="middle-content-container"></div>
+      <div class="middle-content-container">
+
+        <div class="module-yes-nos" ng-if="milestones.length > 0">
+
+          <div class="yes-nos-unsatisfied section--subsection clear">
+
+            <div class="section--subhead">Next Milestones</div>
+
+            <div class="yes-no-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
+              <div class="yes-no-item-unstatisfied">
+
+                <h6>{{milestone | printMilestone}}</h6>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
+                  </div>
+                </label>
+
+              </div>
+            </div>
+
+          </div>
+
+      </div>
 
     </div>
 
