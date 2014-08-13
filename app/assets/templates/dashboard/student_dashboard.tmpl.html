@@ -3,22 +3,30 @@
 
     <div class="dashboard-header dashboard-header--student">
       
-      <div class="student-header--wrapper clear">
-
-        <div class="progressCircle-big--container">
+      <div class="student-header--wrapper">
       
-          <div class="progressCircle-big">
-          	<div class="big-progress-circle" ng-if="student_with_modules_progress">
-          		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
-          	</div>
+        <div class="student-header--content clear">
+        
+          <div class="progressCircle-big--container">
+        
+            <a class="js-nav-link" href="#/progress/{{current_user.id}}">
+        
+              <div class="progressCircle-big">
+              	<div class="big-progress-circle" ng-if="student_with_modules_progress">
+              		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
+              	</div>
+              </div>
+            
+            </a>
+            
+          </div> <!-- progressCircle-big--container -->
+          
+          <div class="greeting">
+            <h5 class="greeting__small">Hey there {{student.first_name}},</h5>
+            <h2 class="greeting__large">Welcome back!</h2>
           </div>
           
-        </div> <!-- progressCircle-big--container -->
-        
-        <div class="greeting">
-          <div class="greeting__small">Hey there {{student.first_name}},</div>
-          <div class="greeting__large">Welcome back!</div>
-        </div>
+        </div> <!-- /student-header--content -->
 
       </div> <!-- student-header--wrapper -->
       

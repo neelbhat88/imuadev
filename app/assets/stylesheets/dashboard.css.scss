@@ -2,7 +2,7 @@
 
 .dashboard-header {
 	width: 100%;
-	padding: 60px 0;
+	padding: 60px $wrapper-width;
 	margin: 0;
 	border-bottom: 1px solid $darkborder;
 }
@@ -21,10 +21,38 @@
 
   .dashboard-header {
   
+  	padding: 80px $wrapper-width; //override
   	background: $grey;
   	color: white;
-  	
-  	
+
+    .student-header--wrapper {
+    
+      width: 100%;
+      
+      .student-header--content {
+      
+        width: 1000px;
+        margin: 0 auto;
+            	
+        .progressCircle-big--container {
+        
+        	width: 240px;
+        	margin-right: 40px;
+        	float: left;
+        
+        }
+        
+        .greeting {
+        
+        	width: 700px;
+        	padding-top: 40px;
+        	float: left;
+        
+        }
+      
+      } //.student-header--content
+    
+    } //.student-header--wrapper
   
   }
 
