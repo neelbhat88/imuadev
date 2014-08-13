@@ -11,3 +11,8 @@ angular.module('myApp')
     if milestone.submodule == 'YesNo'
       return milestone.value
     return milestone.description + " " + milestone.value
+
+angular.module('myApp')
+.filter 'existsInArray', () ->
+  (element, array) ->
+    return element in array

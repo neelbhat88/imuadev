@@ -28,8 +28,13 @@
   }
 }
 
+.needs-attention {
+	background-color: $red;
+}
+
 .dashboard-attention {
-  height: 100px;
+  height: 100%;
+	text-align: center;
 }
 
 .dashboard-content {
