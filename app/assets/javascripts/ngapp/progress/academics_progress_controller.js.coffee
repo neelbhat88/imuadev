@@ -8,7 +8,6 @@ angular.module('myApp')
       if $scope.selected_semester
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
-            console.log(data)
             $scope.user_classes = data.user_classes
             $scope.$emit('loaded_module_milestones');
 

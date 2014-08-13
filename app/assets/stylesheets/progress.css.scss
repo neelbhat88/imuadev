@@ -304,7 +304,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     				
     				}
     			
-    			}
+    			} //.module-data__item
     		
     		}
     	
@@ -581,6 +581,47 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         .section--header { background: $testing-color; }
     	
     	}
+    	
+			.module-data__item {
+			
+			  padding-bottom: 20px;
+			  border-bottom: 1px solid white(0.1);
+			  margin-bottom: 20px;
+			
+				.module-data__item__test-date {
+				
+					width: 25%;
+					float: left;
+  			  text-align: left;
+				
+				}
+				
+				.module-data__item__test-name {
+				
+					width: 45%;
+					float: left;
+					text-align: left;
+				
+				}
+				
+				.module-data__item__test-score {
+				
+					width: 20%;
+					float: left;
+					text-align: left;
+				
+				}
+				
+				.module-data__item__icons {
+				
+					width: 10%;
+					float: right;
+					text-align: right;
+				
+				}
+			
+			} //.module-data__item
+
     	
     	.section--milestones {
       	

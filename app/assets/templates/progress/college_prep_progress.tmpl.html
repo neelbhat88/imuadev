@@ -21,14 +21,16 @@
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-                    <h5 class="bold">{{milestone.points}}</h5>
-                    <p>Points</p>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{milestone | printMilestone}}</h6>
               </div>
@@ -43,13 +45,15 @@
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-                    <h4 class="bold">✓</h4>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{milestone | printMilestone}}</h6>
               </div>
