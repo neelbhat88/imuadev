@@ -380,6 +380,45 @@ header {
   z-index: 999; // Just below the header
 }
 
+/* ===============================================
+   Milestone Classes
+   =============================================== */
+
+.yes-no-item {
+
+  width: 44%;
+  float: left;
+  margin: 10px 3%;
+
+  .yes-no--point-circle {
+
+    @include circle(90px);
+    background: white(1.0);
+    margin: 0 auto;
+    padding-bottom: 10px;
+
+    .point-circle--inside {
+
+      padding-top: 20px;
+
+    }
+
+  } //yes-no--point-circle
+
+  .yes-no-item-statisfied {
+
+    opacity: 0.6;
+
+    .point-circle--inside {
+
+      padding-top: 10px;
+
+    }
+
+  }
+
+} //yes-no-item
+
 
 /* ===============================================
    Helper Classes
