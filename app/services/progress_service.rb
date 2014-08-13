@@ -40,7 +40,7 @@ class ProgressService
     # Get all Milestones for given category and time_unit
     # Loop through and call has_earned? method
     # Add to UserMilestone if earned, Delete if not earned and user had previously earned the milestone
-    org_milestones = Milestone.where(:module => module_title, :time_unit_id => time_unit_id)
+    org_milestones = OrgMilestone.where(:module => module_title, :time_unit_id => time_unit_id)
     users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
 
     # ToDo: We can probably filter out all the Yes/No milestones here and skip calling has_earned? on all Yes/No milestones

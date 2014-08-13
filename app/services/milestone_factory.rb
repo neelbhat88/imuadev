@@ -1,5 +1,5 @@
 class MilestoneFactory
-  def self.get_milestone(mod, submodule, milestone=nil)
+  def self.get_org_milestone(mod, submodule, milestone=nil)
     case submodule
     when Constants.SubModules[:ACADEMICS_GPA]
       return GpaMilestone.new(milestone)

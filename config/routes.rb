@@ -16,6 +16,11 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users, shallow: true do
         resources :user_class, except: [:new, :edit]
+        resources :user_milestone, except: [:new, :edit]
+      end
+
+      resources :organizations, shallow: true do
+        resources :org_milestone, except: [:new, :edit]
       end
 
       resources :users do
