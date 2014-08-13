@@ -38,9 +38,13 @@
 
     </div> <!-- progressCircle-big--container -->
 
+    <div class="meetingExpectations">
+      <h4>Nice work! You are meeting all of your expectations</h4>
+    </div>
+
   </div>
 
-  <div class="expectationsLower">
+  <div class="expectationLower">
 
     <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
       <div class="expectations-met-message" ng-if="meetingExpectations">
@@ -57,6 +61,7 @@
           <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
         </div>
       </div>
+
     </div>
 
   </div>
