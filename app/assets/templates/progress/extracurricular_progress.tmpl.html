@@ -76,9 +76,9 @@
 
       <div class="section--inner">
 
-      	<div class="user-class-greeting" ng-show="user_classes.length != 0">
+      	<div class="user-class-greeting" wait-to-load="loaded_semester_activities">
           Hey {{current_user.first_name}}, you are participating in
-          <h4><span class="numbers-large">###</span><br>activities</h4> this semester.
+          <h4><span class="numbers-large">{{semester_activities}}</span><br>activities</h4> this semester.
         </div>
 
       </div>

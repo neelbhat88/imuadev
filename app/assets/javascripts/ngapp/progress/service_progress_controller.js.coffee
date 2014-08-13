@@ -12,7 +12,6 @@ angular.module('myApp')
           for event in activity.events
             if event.hours
               $scope.semester_service_hours += parseFloat event.hours
-            $scope.semester_service_hours += parseFloat event.hours
       $scope.loaded_semester_service_hours = true
     , true
 
