@@ -25,7 +25,7 @@
               <div class="module-data__item__activity">
 
                 <span ng-hide="user_service_activity.editing">{{user_service_activity.name}}</span>
-                <input ng-show="user_service_activity.editing" class="form-field" ng-model="user_service_activity.new_name" placeholder="Service Organization Name" name="serviceActivityName">
+                <input ng-show="user_service_activity.editing" class="form-field" ng-model="user_service_activity.new_name" placeholder="Service Activity Name" name="serviceActivityName">
 
               </div><!-- module-data__item__activity -->
 
@@ -64,14 +64,14 @@
                   <div class="module-data__item__event--description">
 
                     <span ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
-                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription">
+                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_description" placeholder="Service Event Description" name="serviceEventDescription">
 
                   </div>
 
                   <div class="module-data__item__event--hours">
 
                     <span ng-hide="user_service_event.editing">{{user_service_event.hours}}<br><span class="hours">Hours</span></span>
-                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
+                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Service Event Hours" name="serviceEventHours">
 
                   </div>
 
@@ -101,7 +101,7 @@
               </div><!-- module-data__item (event) -->
 
               <div ng-if="editable(current_user, selected_semester)"
-                  class="module-data__button" ng-click="addEvent(activityIndex, user_service_activity.id)" ng-hide="user_service_activities[activityIndex].events.editing">Add Hours
+                  class="module-data__button" ng-click="addEvent(activityIndex, user_service_activity.id)" ng-hide="user_service_activities[activityIndex].events.editing">Add Event
               </div>
 
             </div><!-- module-data__item -->
@@ -109,7 +109,7 @@
           </div>
 
           <div ng-if="editable(current_user, selected_semester)"
-              class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add Service Organization
+              class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_service_activities.editing">Add New Service Activity
           </div>
         </div>
 
@@ -151,16 +151,14 @@
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
 
-                <label for="yesNoCheckbox">
-                  <div class="yes-no--point-circle">
-                    <div class="point-circle--inside">
-                      <h5 class="bold">{{milestone.points}}</h5>
-                      <p>Points</p>
-                    </div>
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+                    <h5 class="bold">{{milestone.points}}</h5>
+                    <p>Points</p>
                   </div>
-                </label>
+                </div>
 
-                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{milestone | printMilestone}}</h6>
               </div>
@@ -175,15 +173,13 @@
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
 
-                <label for="yesNoCheckbox">
-                  <div class="yes-no--point-circle">
-                    <div class="point-circle--inside">
-                      <h4 class="bold">✓</h4>
-                    </div>
+                <div class="yes-no--point-circle">
+                  <div class="point-circle--inside">
+                    <h4 class="bold">✓</h4>
                   </div>
-                </label>
+                </div>
 
-                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
                 <h6>{{milestone | printMilestone}}</h6>
               </div>
