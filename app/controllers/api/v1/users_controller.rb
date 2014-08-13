@@ -175,7 +175,7 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.unassign(userId, assignee_id)
 
-    render stauts: result.status,
+    render status: result.status,
       json: {
         info: result.info
       }
@@ -192,6 +192,28 @@ class Api::V1::UsersController < ApplicationController
       json: {
         info: "Assigned students",
         students: viewStudents
+      }
+  end
+
+  # GET /relationship/assigned_students_for_group?user_ids[]=#
+  def get_assigned_students_for_group
+    userIds = params[:user_ids]
+
+    userIds.each do | userId |
+      # TODO
+      # user = UserRepository.new.get_user(userId)
+      # if !can?(current_user, :read_assigned_students, user)
+      #   render status: :forbidden,
+      #     json: {}
+      #   return
+    end
+
+    result = UserRepository.new.get_assigned_students_for_group(userIds)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        assigned_students_for_group: result.object
       }
   end
 
