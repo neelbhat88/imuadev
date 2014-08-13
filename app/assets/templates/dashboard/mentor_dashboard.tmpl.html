@@ -11,15 +11,15 @@
 
 				  	<div class="text">
 
-					<h2>{{attention_students.length}}</h2>
-		            <span class="subhead">students need<br>your attention</span>
+					    <h2>{{attention_students.length}}</h2>
+		          <span ng-if="attention_students.length != 1" class="subhead">students need<br>your attention</span>
+              <span ng-if="attention_students.length == 1" class="subhead">student needs<br>your attention</span>
+
 				  	</div>
 
 			  	</div>
 
-
-
-		  </div>
+		    </div>
 	    </div>
   </div>
 
@@ -42,25 +42,25 @@
   </div>
 
   <div class="dashboard-content dashboard-content--mentor">
-	    <div class="user-list-header">
-	    	<h4><span class="bold">{{user.first_name}}'s</span> Students</h4>
+    <div class="user-list-header">
+    	<h4><span class="bold">{{user.first_name}}'s</span> Students</h4>
+    </div>
+    <div ng-hide="assigned_students.length > 0">
+      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
+    </div>
+    <div class="user-list-container">
+	    <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
+	      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+	      <a ng-href="#/progress/{{student.id}}" title="View Student">
+	        <progress-circle student="student" identifier="list"></progress-circle>
+	      </a>
+	      <a ng-href="#/profile/{{student.id}}" title="View student info">
+	        <div class="avatar-block__name">
+	          <h6>{{student.first_name}} {{student.last_name}}</h6>
+	        </div>
+	      </a>
 	    </div>
-	    <div ng-hide="assigned_students.length > 0">
-	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
-	    </div>
-	    <div class="user-list-container">
-		    <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
-		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-		      <a ng-href="#/progress/{{student.id}}" title="View Student">
-		        <progress-circle student="student" identifier="list"></progress-circle>
-		      </a>
-		      <a ng-href="#/profile/{{student.id}}" title="View student info">
-		        <div class="avatar-block__name">
-		          <h6>{{student.first_name}} {{student.last_name}}</h6>
-		        </div>
-		      </a>
-		    </div>
 
-	    </div>
+    </div>
   </div>
 </div>
