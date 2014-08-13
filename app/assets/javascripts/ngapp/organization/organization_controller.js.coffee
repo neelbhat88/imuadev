@@ -1,11 +1,12 @@
 angular.module('myApp')
-.controller 'OrganizationCtrl', ['$scope', '$modal', 'current_user', 'organization', 'UsersService', 'ProgressService',
-  ($scope, $modal, current_user, organization, UsersService, ProgressService) ->
+.controller 'OrganizationCtrl', ['$scope', '$modal', 'current_user', 'organization', 'UsersService', 'ProgressService', 'ExpectationService',
+  ($scope, $modal, current_user, organization, UsersService, ProgressService, ExpectationService) ->
     $scope.current_user = current_user
     $scope.organization = organization
     $scope.mentors = []
     $scope.students_with_progress = []
     $scope.groupedStudents = []
+    $scope.attention_students = []
 
     $('input, textarea').placeholder()
 
@@ -44,7 +45,12 @@ angular.module('myApp')
               break
 
         $scope.groupedStudents = _.groupBy($scope.students_with_progress, "class_of")
-
+      ExpectationService.getUserExpectations(student)
+        .success (data) ->
+          for ue in data.user_expectations
+            if ue.status >= 2
+              $scope.attention_students.push(ue.user_id)
+              break
     $scope.loaded_users = true
 
     $scope.fullName = (user) ->
