@@ -2,7 +2,6 @@ angular.module('myApp')
 .controller 'ProfileController', ['$scope', 'current_user', 'user', 'UsersService', 'LoadingService',
 ($scope, current_user, user, UsersService, LoadingService) ->
   $scope.user = user
-  $scope.current_user = current_user
   $scope.origUser = angular.copy($scope.user)
   $scope.editingInfo = false
   $scope.editingPassword = false
@@ -12,11 +11,11 @@ angular.module('myApp')
     $scope.editingInfo || $scope.editingPassword
 
   $scope.editable = () ->
-    $scope.current_user.role != $scope.CONSTANTS.USER_ROLES.student ||
-    $scope.current_user.id == user.id
+    current_user.role != $scope.CONSTANTS.USER_ROLES.student ||
+    current_user.id == user.id
 
   $scope.editablePassword = () ->
-    $scope.current_user.id == $scope.user.id
+    current_user.id == $scope.user.id
 
   $scope.editUserInfo = () ->
     $scope.editingInfo = true

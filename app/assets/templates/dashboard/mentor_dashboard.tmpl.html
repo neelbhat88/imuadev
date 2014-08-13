@@ -1,6 +1,6 @@
-<div ng-controller="MentorDashboardController" id="mentorDashboard">
+<div ng-controller="MentorDashboardController">
   <div class="dashboard-header dashboard-header--mentor">
-	    <div class="mentor-header--wrapper clear">
+	    <div class="mentor-header clear">
 	      <div class="greeting">
 	        <h5>Hey there {{user.first_name}},</h5>
 	        <h2>Welcome back!</h2>
@@ -11,7 +11,7 @@
 
 				  	<div class="text">
 
-					<h2>{{attention_students.length}}</h2>
+					<h2>0</h2>
 		            <span class="subhead">students need<br>your attention</span>
 				  	</div>
 
@@ -23,22 +23,8 @@
 	    </div>
   </div>
 
-  <div class="dashboard-attention dashboard-attention--mentor" ng-hide="attention_students.length == 0">
-
-    <div class="user-list-container">
-      <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'" ng-if="student.id | existsInArray: attention_students">
-        <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-        <a ng-href="#/progress/{{student.id}}" title="View Student">
-          <progress-circle student="student"></progress-circle>
-        </a>
-        <a ng-href="#/profile/{{student.id}}" title="View student info">
-          <div class="avatar-block__name">
-            <h6>{{student.first_name}} {{student.last_name}}</h6>
-          </div>
-        </a>
-      </div>
-    </div>
-
+  <div class="dashboard-attention dashboard-attention--mentor displayNone">
+    <div>This is where things that need attention go</div>
   </div>
 
   <div class="dashboard-content dashboard-content--mentor">
@@ -49,14 +35,14 @@
 	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
 	    </div>
 	    <div class="user-list-container">
-		    <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
+		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
 		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-		      <a ng-href="#/progress/{{student.id}}" title="View Student">
+		      <a ng-href="#/progress/{{student.user.id}}" title="View Student">
 		        <progress-circle student="student"></progress-circle>
 		      </a>
-		      <a ng-href="#/profile/{{student.id}}" title="View student info">
+		      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
 		        <div class="avatar-block__name">
-		          <h6 class="bold">{{student.user.first_last_initial}}</h6>
+		          <h6>{{student.user.first_name}} {{student.user.last_name}}</h6>
 		        </div>
 		      </a>
 		    </div>

@@ -51,20 +51,6 @@
 
       </div>
 
-      <!-- This can be done better - will change this when we come back to revamping
-           the profile page -->
-      <!-- Students can't update their Class Of and Class Of dropdown only
-            shows up on a student -->
-      <div ng-if="!current_user.is_student && user.is_student" class="pbs">
-        <div ng-hide="editingInfo">
-          <span class="form--profile__field-label">Class of: </span>
-          <span ng-if="editable()" ng-hide="editingInfo" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Click update below to add"}}</span>
-          <span ng-if="!editable()" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Not entered"}}</span>
-        </div>
-
-        <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
-      </div>
-
       <ul class="errorText ptm" ng-show="editingInfo && errors" >
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>

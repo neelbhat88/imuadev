@@ -18,10 +18,6 @@
       <input class="form-field" ng-model="user.last_name" placeholder="Last Name">
     </div>
 
-    <div ng-if="user.is_student" class="ptm pbs">
-      <class-of-dropdown model="user"></class-of-dropdown>
-    </div>
-
     <ul class="errorText ptm" ng-show="errors">
       <li ng-repeat="error in errors">{{error}}</li>
     </ul>

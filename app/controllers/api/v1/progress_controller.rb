@@ -4,12 +4,11 @@ class Api::V1::ProgressController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
-  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, userServiceActivityService=nil, userExtracurricularActivityService=nil, orgRepo=nil)
+  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, userServiceActivityService=nil, userExtracurricularActivityService=nil )
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
     @userServiceActivityService = userServiceActivityService ? userServiceActivityService : UserServiceActivityService.new
-    @organizationRepository = orgRepo ? orgRepo : OrganizationRepository.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -50,7 +49,7 @@ class Api::V1::ProgressController < ApplicationController
     time_unit_id = params[:time_unit_id]
     mod = params[:module]
 
-    result = @progressService.get_recalculated_module_progress(userId, time_unit_id, mod)
+    result = @progressService.check_progress(userId, time_unit_id, mod)
 
     render status: result.status,
       json: {
@@ -59,9 +58,9 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
-  # get /progress/recalculated_milestones?user_id=#&time_unit_id=#module_title=#
+  # get /progress/recalculated_module_milestones?user_id=#&time_unit_id=#module_title=#
   # Runs through milestones of a given module to see if any have been earned
-  def get_recalculated_milestones
+  def get_recalculated_module_milestones
     userId = params[:user_id]
     timeUnitId = params[:time_unit_id]
     moduleTitle = params[:module_title]
@@ -74,20 +73,12 @@ class Api::V1::ProgressController < ApplicationController
     #   return
     # end
 
-    # TODO
-    # org = @organizationRespository.get_organization(user.organization_id)
-    # if !can?(current_user, :read_milestones, org)
-    #   render status: :forbidden,
-    #     json: {}
-    #   return
-    # end
-
-    result = @progressService.get_recalculated_milestones(userId, timeUnitId, moduleTitle)
+    result = @progressService.get_recalculated_module_milestones(userId, timeUnitId, moduleTitle)
 
     render status: result.status,
       json: {
         info: result.info,
-        recalculated_milestones: result.object
+        recalculated_module_milestones: result.object
       }
   end
 

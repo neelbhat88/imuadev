@@ -20,14 +20,14 @@ angular.module('myApp')
     UsersService.unassign($scope.mentor.id, student.id)
       .success (data) ->
         for a_student, index in $scope.assigned_students
-          if a_student.id == student.id
+          if a_student.user.id == student.id
             $scope.assigned_students.splice(index, 1)
             break;
 
   $scope.isAssigned = (student) ->
     assigned = false
     for s in $scope.assigned_students
-      if student.id == s.id
+      if student.id == s.user.id
         assigned = true
         break
 

@@ -62,16 +62,4 @@ class Api::V1::MilestoneController < ApplicationController
       }
   end
 
-  # Temporary method to update all milestone org_ids
-  # GET /milestone/update_org_id
-  def update_org_id
-    Milestone.all.each do | m |
-      m.update_attributes(:organization_id => m.time_unit.organization_id)
-    end
-
-    render status: :ok,
-      json: {
-        info: "Updated all milestones"
-      }
-  end
 end
