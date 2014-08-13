@@ -1,11 +1,3 @@
-/* ========================= */
-/*           Colors          */
-/* ========================= */
-
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
-
 .progressUpper {
 
   background: $grey;
@@ -275,7 +267,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
         			.yes-no--point-circle {
 
-        				color: $academics-color;
+                background: white;
+                color: $academics-color;
 
         			} //yes-no--point-circle
 
@@ -385,7 +378,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
       			.yes-no--point-circle {
 
-      				color: $service-color;
+      				background: white;
+              color: $service-color;
 
       			} //yes-no--point-circle
 
@@ -487,7 +481,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
         			.yes-no--point-circle {
 
-        				color: $extracurricular-color;
+        				background: white;
+                color: $extracurricular-color;
 
         			} //yes-no--point-circle
 
@@ -517,7 +512,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
         			.yes-no--point-circle {
 
-        				color: $college_prep-color;
+        				background: white;
+                color: $college_prep-color;
 
         			} //yes-no--point-circle
 
@@ -588,7 +584,8 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 
         			.yes-no--point-circle {
 
-        				color: $testing-color;
+        				background: white;
+                color: $testing-color;
 
         			} //yes-no--point-circle
 

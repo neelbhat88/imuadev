@@ -39,14 +39,14 @@
     <div class="dashboard-content dashboard-content--student clear">
 
       <div class="upcoming-milestones section">
+
+        <div class="list-header"><h6>Upcoming <span class="bold">Milestones</span></h6></div>
+
         <div class="module-yes-nos" ng-if="milestones.length > 0">
           <div class="yes-nos-unsatisfied section--subsection clear">
-            <div class="list-header">
-              <h6>Upcoming <span class="bold">Milestones</span></h6>
-            </div>
             <div class="yes-no-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
-                <div class="yes-no--point-circle">
+                <div class="yes-no--point-circle" modulecolor="{{milestone.module}}">
                   <div class="point-circle--inside">
                     <h5 class="bold">{{milestone.points}}</h5>
                     <p>Points</p>
@@ -54,10 +54,10 @@
                 </div>
                 <h6>{{milestone | printMilestone}}</h6>
               </div>
-
             </div>
           </div>
         </div>
+
       </div>
 
       <div class="studentExpectationContainer section">

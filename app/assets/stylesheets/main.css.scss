@@ -79,6 +79,8 @@ $extracurricular-color-dark: $darkred;
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
 
+$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
+$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
@@ -387,15 +389,20 @@ header {
 .yes-no-item {
 
   width: 44%;
+  min-width: 175px;
   float: left;
   margin: 10px 3%;
+  text-align: center;
 
   .yes-no--point-circle {
 
     @include circle(90px);
-    background: white(1.0);
     margin: 0 auto;
     padding-bottom: 10px;
+
+    @each $category, $color in $colormap {
+      &.color--#{$category} { background: $color; color: white; }
+    }
 
     .point-circle--inside {
 
@@ -416,6 +423,12 @@ header {
     }
 
   }
+
+  .yes-no--point-circle {
+
+    color: $darkgrey;
+
+  } //yes-no--point-circle
 
 } //yes-no-item
 
