@@ -29,7 +29,7 @@
       <div class="avatar-block progress-circles avatar-block--list" ng-class="{needsAttention: {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'" ng-if="student.id | existsInArray: attention_students">
         <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
         <a ng-href="#/progress/{{student.id}}" title="View Student">
-          <progress-circle student="student"></progress-circle>
+          <progress-circle student="student" identifier="attention"></progress-circle>
         </a>
         <a ng-href="#/profile/{{student.id}}" title="View student info">
           <div class="avatar-block__name">
@@ -52,7 +52,7 @@
 		    <div class="avatar-block progress-circles avatar-block--list" ng-class="{needsAttention: {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
 		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
 		      <a ng-href="#/progress/{{student.id}}" title="View Student">
-		        <progress-circle student="student"></progress-circle>
+		        <progress-circle student="student" identifier="list"></progress-circle>
 		      </a>
 		      <a ng-href="#/profile/{{student.id}}" title="View student info">
 		        <div class="avatar-block__name">

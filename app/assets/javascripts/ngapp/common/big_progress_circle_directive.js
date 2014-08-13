@@ -3,7 +3,8 @@ angular.module('myApp')
   return {
     restrict: 'EA',
     scope: {
-      student: '='
+      student: '=',
+      identifier: '@'
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
@@ -11,20 +12,20 @@ angular.module('myApp')
       var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
-      				.attr("id", scope.student.id)
+      				.attr("id", scope.student.id + "_" + scope.identifier)
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
-                .attr("id", "svg" + scope.student.id)
-      			   .append("g")
-          			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
+                .attr("id", "svg" + scope.student.id + "_" + scope.identifier)
+                  .append("g")
+                    .attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
       var radius = Math.min(width, height) / 2;
 
       scope.render = function(student) {
         chart.selectAll("g").remove();
-        d3.select("#svg" + scope.student.id + " circle").remove();
-        d3.select("#svg" + scope.student.id + " pattern").remove();
+        d3.select("#svg" + student.id + "_" + scope.identifier + " circle").remove();
+        d3.select("#svg" + student.id + "_" + scope.identifier + " pattern").remove();
 
         var color = d3.scale.ordinal()
             .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
@@ -53,7 +54,7 @@ angular.module('myApp')
             .outerRadius(radius)
             .innerRadius(radius - 14);
 
-        var svg = $('#' + student.id + ' svg')[0];
+        var svg = $('#' + student.id + '_' + scope.identifier + ' svg')[0];
 
         var photoCircle = d3.select(svg)
                             .append("circle")
