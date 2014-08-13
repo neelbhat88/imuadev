@@ -1,86 +1,8 @@
 class Api::V1::MilestoneController < ApplicationController
-  respond_to :json
 
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
-  before_filter :load_services
-
-  def load_services ( milestoneService = nil, organizationRepo = nil, userRepo = nil )
-    @milestoneService = milestoneService ? milestoneService : MilestoneService.new
-    @organizationRepository = organizationRepo ? organizationRepo : OrganizationRepository.new
-    @userRepository = userRepo ? userRepo : UserRepository.new
-  end
-
-  # GET /organization/:id/milestones?time_unit_id=#
-  def get_org_milestones
-    orgId      = params[:id]
-    timeUnitId = params[:time_unit_id]
-
-    org = @organizationRepository.get_organization(orgId)
-    if !can?(current_user, :read_org_milestones, org)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @milestoneService.get_org_milestones(orgId, timeUnitId)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        milestones: result.object
-      }
-  end
-
-  # GET /user/:id/user_milestones?time_unit_id=#
-  def get_user_milestones
-    userId     = params[:id]
-    timeUnitId = params[:time_unit_id]
-
-    user = @userRepository.get_user(userId)
-    if !can?(current_user, :read_user_milestones, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @milestoneService.get_user_milestones(userId, timeUnitId)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        milestones: result.object
-      }
-  end
-
-  # GET /user/:id/milestones?time_unit_id=#
-  def get_user_and_org_milestones
-    userId     = params[:id]
-    timeUnitId = params[:time_unit_id]
-
-    user = @userRepository.get_user(userId)
-    if !can?(current_user, :read_user_milestones, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    orgId = user.organization_id
-    org = @organizationRepository.get_organization(orgId)
-    if !can?(current_user, :read_org_milestones, org)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @milestoneService.get_user_and_org_milestones(userId, orgId, timeUnitId)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        milestones: result.object
-      }
-  end
+  respond_to :json
 
   # POST /milestone
   def create_milestone

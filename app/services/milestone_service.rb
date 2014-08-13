@@ -1,149 +1,61 @@
 class MilestoneService
+  def create_milestone(ms)
+    milestone = MilestoneFactory.get_milestone(ms[:module], ms[:submodule])
 
-  #####################################
-  ########### ORGANIZATION ############
-  #####################################
+    milestone.value = ms[:value]
+    milestone.points = ms[:points]
+    milestone.time_unit_id = ms[:time_unit_id]
+    milestone.organization_id = ms[:organization_id]
 
-  def get_org_milestone(orgMilestoneId)
-    orgMilestone = OrgMilestone.find(orgMilestoneId)
-    info = "OrgMilestone id: #{orgMilestone.id}."
-    return ReturnObject.new(:ok, info, orgMilestone)
-  end
+    if !milestone.valid?
+    end
 
-  def get_org_milestones(orgId, timeUnitId = nil)
-    orgMilestones = nil
-    info = ""
+    newmilestone = Milestone.new do | m |
+      m.module = milestone.module
+      m.submodule = milestone.submodule
+      m.title = milestone.title
+      m.description = milestone.description
+      m.value = milestone.value
+      m.time_unit_id = milestone.time_unit_id
+      m.importance = milestone.importance
+      m.points = milestone.points
+      m.icon = milestone.icon
+      m.organization_id = milestone.organization_id
+    end
 
-    if timeUnitId.nil?
-      orgMilestones = OrgMilestone.where(:organization_id => orgId)
-      info = "All OrgMilestones for orgId: #{orgId}."
+    if newmilestone.save
+      return ReturnObject.new(:ok, "Successfully created Milestone id: #{newmilestone.id}.", newmilestone)
     else
-      orgMilestones = OrgMilestone.where(:organization_id => orgId, :time_unit_id => timeUnitId)
-      info = "All OrgMilestones for orgId: #{orgId}, timeUnitId: #{timeUnitId}."
+      return ReturnObject.new(:internal_server_error, newmilestone.errors, nil)
     end
-
-    return ReturnObject.new(:ok, info, orgMilestones)
   end
 
-  def create_org_milestone(orgId, timeUnitId, orgMilestone)
-    factoryOrgMilestone = MilestoneFactory.get_org_milestone(orgMilestone[:module], orgMilestone[:submodule])
+  def update_milestone(ms)
+    milestone = Milestone.find(ms[:id])
 
-    factoryOrgMilestone.value = orgMilestone[:value]
-    factoryOrgMilestone.points = orgMilestone[:points]
-    factoryOrgMilestone.time_unit_id = timeUnitId
-    factoryOrgMilestone.organization_id = orgId
-
-    newOrgMilestone = OrgMilestone.new do | m |
-      m.module = factoryOrgMilestone.module
-      m.submodule = factoryOrgMilestone.submodule
-      m.title = factoryOrgMilestone.title
-      m.description = factoryOrgMilestone.description
-      m.value = factoryOrgMilestone.value
-      m.time_unit_id = factoryOrgMilestone.time_unit_id
-      m.importance = factoryOrgMilestone.importance
-      m.points = factoryOrgMilestone.points
-      m.icon = factoryOrgMilestone.icon
-      m.organization_id = factoryOrgMilestone.organization_id
+    if !milestone.time_unit_id.nil? # Default milestones don't have a time_unit
+      milestone.time_unit.milestones.each do | m |
+        if m.id != ms[:id] && (m.module == ms[:module] && m.submodule == ms[:submodule] && m.value == ms[:value])
+          return ReturnObject.new(:conflict, "A milestone of the same type and value already exists in #{milestone.time_unit.name}.", nil)
+        end
+      end
     end
 
-    if !newOrgMilestone.valid?
+    if milestone.update_attributes(:title => ms[:title],
+                                    :description=>ms[:description],
+                                    :points => ms[:points],
+                                    :value => ms[:value])
+      return ReturnObject.new(:ok, "Successfully updated Milestone id: #{milestone.id}.", milestone)
     end
 
-    if newOrgMilestone.save
-      return ReturnObject.new(:ok, "Successfully created OrgMilestone id: #{newOrgMilestone.id}.", newOrgMilestone)
-    end
-
-    return ReturnObject.new(:internal_server_error, newOrgMilestone.errors.inspect, nil)
+    return ReturnObject.new(:internal_server_error, "Failed to update Milestone id: #{milestone.id}.", milestone)
   end
 
-  def update_org_milestone(orgMilestoneId, orgMilestone)
-    dbOrgMilestone = get_org_milestone(orgMilestoneId).object
-
-    if dbOrgMilestone.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find OrgMilestone with id: #{orgMilestoneId}.", nil)
-    end
-
-    if dbOrgMilestone.update_attributes(:title       => ms[:title],
-                                        :description => ms[:description],
-                                        :points      => ms[:points],
-                                        :value       => ms[:value])
-      return ReturnObject.new(:ok, "Successfully updated OrgMilestone id: #{dbOrgMilestone.id}.", dbOrgMilestone)
-    end
-
-    return ReturnObject.new(:internal_server_error, dbOrgMilestone.errors.inspect, dbOrgMilestone)
-  end
-
-  def delete_org_milestone(orgMilestoneId)
-    dbOrgMilestone = get_org_milestone(orgMilestoneId).object
-
-    if dbOrgMilestone.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find OrgMilestone with id: #{orgMilestoneId}.", nil)
-    end
-
-    if dbOrgMilestone.destroy()
-      return ReturnObject.new(:ok, "Successfully deleted OrgMilestone id: #{dbOrgMilestone.id}.", nil)
-    end
-
-    return ReturnObject.new(:internal_server_error, dbOrgMilestone.errors.inspect, nil)
-  end
-
-  #################################
-  ############# USER ##############
-  #################################
-
-  def get_user_milestone(userMilestoneId)
-    userMilestone = UserMilestone.find(userMilestoneId)
-    info = "UserMilestone id: #{userMilestone.id}."
-    return ReturnObject.new(:ok, info, userMilestone)
-  end
-
-  def get_user_milestones(userId, timeUnitId = nil)
-    userMilestones = nil
-    info = ""
-
-    if timeUnitId.nil?
-      userMilestones = UserMilestone.where(:user_id => userId)
-      info = "All UserMilestones for userId: #{userId}."
+  def delete_milestone(milestoneId)
+    if Milestone.find(milestoneId).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted Milestone id: #{milestoneId}.", nil)
     else
-      userMilestones = UserMilestone.where(:user_id => orgId, :time_unit_id => timeUnitId)
-      info = "All UserMilestones for userId: #{orgId}, timeUnitId: #{timeUnitId}."
-    end
-
-    return ReturnObject.new(:ok, info, userMilestones)
-  end
-
-  def create_user_milestone(userId, orgMilestoneId)
-    dbOrgMilestone = get_org_milestone(orgMilestoneId).object
-
-    if dbOrgMilestone.nil?
-      return ReturnObject.new(:internal_server_error, "Failed to find OrgMilestone with id: #{orgMilestoneId}.", nil)
-    end
-
-    newUserMilestone = UserMilestone.new do | m |
-      m.milestone_id = dbOrgMilestone.id
-      m.time_unit_id = dbOrgMilestone.time_unit_id
-      m.user_id      = userId
-      m.module       = dbOrgMilestone.module
-      m.submodule    = dbOrgMilestone.submodule
-    end
-
-    if !newUserMilestone.valid?
-    end
-
-    if newUserMilestone.save
-      returnOrgMilestone = MilestoneFactory.get_org_milestone(dbOrgMilestone.module, dbOrgMilestone.submodule, dbOrgMilestone)
-      returnOrgMilestone.earned = true
-      return ReturnObject.new(:ok, "Successfully created UserMilestone id: #{newUserMilestone.id}", returnOrgMilestone)
-    end
-
-    return ReturnObject.new(:internal_server_error, newUserMilestone.errors.inspect, nil)
-  end
-
-  def delete_user_milestone(userMilestoneId)
-    if UserMilestone.where(:user_id => userId, :milestone_id => milestone_id).destroy_all()
-      return ReturnObject.new(:ok, "Successfully removed User Milestone", nil)
-    else
-      return ReturnObject.new(:internal_server_error, "Failed to remove User Milestone", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete Milestone id: #{milestoneId}.", nil)
     end
   end
 
@@ -169,7 +81,34 @@ class MilestoneService
     return ReturnObject.new(:ok, "All YesNo milestones for #{module_title}", milestones)
   end
 
+  def add_user_milestone(userId, time_unit_id, milestone_id)
+    org_milestone = Milestone.find(milestone_id)
 
+    user_milestone = UserMilestone.new do | um |
+      um.milestone_id = org_milestone.id
+      um.time_unit_id = time_unit_id
+      um.user_id = userId
+      um.module = org_milestone.module
+      um.submodule = org_milestone.submodule
+    end
+
+    if user_milestone.save
+      milestone = MilestoneFactory.get_milestone(org_milestone.module, org_milestone.submodule, org_milestone)
+      milestone.earned = true
+
+      return ReturnObject.new(:ok, "User Milestone added successfully", milestone)
+    end
+
+    return ReturnObject.new(:internal_server_error, "Failed to add User Milestone", nil)
+  end
+
+  def delete_user_milestone(userId, time_unit_id, milestone_id)
+    if UserMilestone.where(:user_id => userId, :time_unit_id => time_unit_id, :milestone_id => milestone_id).destroy_all()
+      return ReturnObject.new(:ok, "Successfully removed User Milestone", nil)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to remove User Milestone", nil)
+    end
+  end
 
   def get_total_points(orgId)
     Milestone.where(:organization_id => orgId).sum(:points)
@@ -177,25 +116,6 @@ class MilestoneService
 
   def get_all_user_milestones(userId)
     UserMilestone.where(:user_id => userId)
-  end
-
-  def get_user_and_org_milestones(userId, orgId, timeUnitId = nil)
-    orgMilestones = nil
-    userMilestones = nil
-    info = ""
-
-    if timeUnitId.nil?
-      orgMilestones = OrgMilestone.where(:organization_id => orgId)
-      userMilestones = UserMilestone.where(:user_id => userId)
-      info = "All User and OrgMilestones for userId: #{userId}, orgId: #{orgId}."
-    else
-      orgMilestones = OrgMilestone.where(:organization_id => orgId, :time_unit_id => timeUnitId)
-      userMilestones = UserMilestone.where(:user_id => userId, :time_unit_id => timeUnitId)
-      info = "All User and OrgMilestones for userId: #{orgId}, orgId: #{orgId}, timeUnitId: #{timeUnitId}."
-    end
-
-    object = { :user_milestones => userMilestones, :org_milestones => orgMilestones }
-    return ReturnObject.new(:ok, info, object)
   end
 
 end

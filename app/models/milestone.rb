@@ -1,6 +1,7 @@
-class OrgMilestone < ActiveRecord::Base
+class Milestone < ActiveRecord::Base
   attr_accessible :title, :description, :value, :module, :submodule,
                   :importance, :points, :time_unit_id, :icon, :organization_id
+
 
   belongs_to :time_unit
   belongs_to :organization
@@ -9,7 +10,7 @@ class OrgMilestone < ActiveRecord::Base
 
   validates :title, presence: true
   validates :description, presence: true
-  validates :value, :uniqueness => { :scope => [ :time_unit_id, :organization_id, :module, :submodule ] }, presence: true
+  validates :value, presence: true
   validates :module, presence: true
   validates :submodule, presence: true
   validates :importance, presence: true
@@ -19,7 +20,7 @@ class OrgMilestone < ActiveRecord::Base
   validates :organization_id, presence: true
 end
 
-class ViewOrgMilestone
+class ViewMilestone
   attr_accessor :id, :description, :importance, :module, :points, :submodule, :title, :icon
 
   def initialize(milestone)

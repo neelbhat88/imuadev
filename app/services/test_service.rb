@@ -67,7 +67,7 @@ class TestService
   #################################
 
   def get_user_test(userTestId)
-    return UserTest.find(userTestId)
+    return UserTest.where(:id => userTestId).first
   end
 
   def get_user_tests(userId)
