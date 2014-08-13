@@ -26,7 +26,8 @@ angular.module('myApp')
     defer = $q.defer()
     @getModules(student, semester_id)
       .success (data) ->
-        defer.resolve({user: student, modules_progress: data.modules_progress})
+        student.modules_progress = data.modules_progress
+        defer.resolve(student)
     defer.promise
 
   @getOverallProgress = (student) ->

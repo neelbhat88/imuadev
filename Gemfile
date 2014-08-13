@@ -49,6 +49,9 @@ gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails'
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
+# Lots of cool JS programming helpers (e.g. _groupBy)
+gem 'underscore-rails'
+
 gem 'mail'
 
 # Images
