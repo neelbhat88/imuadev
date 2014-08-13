@@ -5,7 +5,7 @@ class UserMilestone < ActiveRecord::Base
   belongs_to :user
   belongs_to :time_unit
 
-  validates :milestone_id, :uniqueness => {:scope => [ :time_unit_id, :user_id] }, presence: true
+  validates :milestone_id, :uniqueness => { :scope => :user_id }, presence: true
   validates :module, presence: true
   validates :submodule, presence: true
   validates :time_unit_id, presence: true
