@@ -53,6 +53,7 @@ angular.module('myApp')
           UserExtracurricularActivityService.saveExtracurricularEvent(new_extracurricular_activity.events[0])
             .success (data2) ->
               $scope.user_extracurricular_activities[index].events.push(data2.user_extracurricular_activity_event)
+              $scope.refreshPoints()
 
       $scope.user_extracurricular_activities.editing = false
 
