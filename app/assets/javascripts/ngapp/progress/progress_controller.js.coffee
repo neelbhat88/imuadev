@@ -1,12 +1,13 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService',
-($route, $scope, current_user, student, OrganizationService, ProgressService) ->
+.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService', 'ExpectationService',
+($route, $scope, current_user, student, OrganizationService, ProgressService, ExpectationService) ->
   $scope.modules_progress = []
   $scope.selected_module = null
   $scope.semesters = []
   $scope.selected_semester = null
   $scope.current_user = current_user
   $scope.student = student
+  $scope.needs_attention = false
 
   $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
@@ -57,6 +58,13 @@ angular.module('myApp')
   ProgressService.getOverallProgress($scope.student)
     .success (data) ->
       $scope.overall_points = data.overall_progress
+
+  ExpectationService.getUserExpectations($scope.student)
+    .success (data) ->
+      for ue in data.user_expectations
+        if ue.status >= 2
+          $scope.needs_attention = true
+          break
 
   $scope.$watch 'selected_semester', () ->
     if $scope.selected_semester && $scope.selected_module && !$scope.loaded_milestones

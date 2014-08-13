@@ -55,7 +55,7 @@
 			<div ng-repeat="(group, group_students) in groupedStudents">
 				<h5 ng-if="group != 0" class="pvm">Class of {{group}}</h5>
 				<h5 ng-if="group == 0" class="pvm">Unassigned</h5>
-	      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in group_students | orderBy: 'id'">
+	      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in group_students | orderBy: 'id'" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
 	        <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
 	        <a ng-href="#/progress/{{student.id}}" title="View progress">
 	          <progress-circle student="student"></progress-circle>
