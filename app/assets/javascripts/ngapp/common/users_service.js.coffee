@@ -13,6 +13,7 @@ angular.module('myApp')
     formData.append("user[first_name]", user.first_name)
     formData.append("user[last_name]", user.last_name)
     formData.append("user[phone]", user.phone)
+    formData.append("user[class_of]", user.class_of)
 
     $http.put '/api/v1/users/' + user.id, formData,
       {
@@ -48,6 +49,7 @@ angular.module('myApp')
     phone: ""
     role: CONSTANTS.USER_ROLES.org_admin
     organization_id: orgId
+    is_org_admin: true
 
   @newMentor = (orgId) ->
     email: ""
@@ -56,6 +58,7 @@ angular.module('myApp')
     phone: ""
     role: CONSTANTS.USER_ROLES.mentor
     organization_id: orgId
+    is_mentor: true
 
   @newStudent = (orgId) ->
     email: ""
@@ -64,6 +67,8 @@ angular.module('myApp')
     phone: ""
     role: CONSTANTS.USER_ROLES.student
     organization_id: orgId
+    class_of: 0
+    is_student: true
 
   @
 ]
