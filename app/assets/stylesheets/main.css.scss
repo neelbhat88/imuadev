@@ -79,6 +79,8 @@ $extracurricular-color-dark: $darkred;
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
 
+$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
+$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
@@ -127,12 +129,12 @@ html {
   min-height: 100%;
 
   body {
-    
+
     min-width: 1260px;
     font-family: $font-stack;
     font-weight: $regular;
     @include font-size(1.4);
-    
+
   }
 
 }
@@ -230,9 +232,10 @@ h6 {
    =============================================== */
 
 $wrapper: 0 40px;
+$wrapper-width: 40px;
 $panelwrapper: 0 80px;
 
-.user-list-header {
+.list-header {
 
 	width: 100%;
 	padding-bottom: 20px;
@@ -240,7 +243,7 @@ $panelwrapper: 0 80px;
 
 }
 
-.user-list-container {
+.list-container {
 
 	margin-top: 60px;
 
@@ -378,6 +381,52 @@ header {
   left: 0;
   z-index: 999; // Just below the header
 }
+
+/* ===============================================
+   Milestone Classes
+   =============================================== */
+
+.yes-no-item {
+
+  width: 44%;
+  min-width: 175px;
+  float: left;
+  margin: 10px 3%;
+  text-align: center;
+
+  .yes-no--point-circle {
+
+    @include circle(90px);
+    margin: 0 auto;
+    padding-bottom: 10px;
+
+    .point-circle--inside {
+
+      padding-top: 20px;
+
+    }
+
+  } //yes-no--point-circle
+
+  .yes-no-item-statisfied {
+
+    opacity: 0.6;
+
+    .point-circle--inside {
+
+      padding-top: 10px;
+
+    }
+
+  }
+
+  .yes-no--point-circle {
+
+    color: $darkgrey;
+
+  } //yes-no--point-circle
+
+} //yes-no-item
 
 
 /* ===============================================
