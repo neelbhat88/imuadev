@@ -46,6 +46,8 @@ Imua::Application.routes.draw do
         end
       end
 
+      get '/progress/recalculated_module_milestones' => 'progress#get_recalculated_module_milestones'
+
       get  '/users/:id/service_activity_events' => 'service_activity#user_service_activity_events'
 
       post '/service_activity' => 'service_activity#add_user_service_activity'

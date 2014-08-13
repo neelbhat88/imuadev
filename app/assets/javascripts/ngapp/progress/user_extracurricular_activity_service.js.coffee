@@ -4,18 +4,26 @@ angular.module("myApp")
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/extracurricular_activity_events?time_unit_id=#{time_unit_id}"
 
-  @newExtracurricularActivity = (user, time_unit_id) ->
+  @newExtracurricularActivity = (user, time_unit_id, extracurricularActivityId) ->
     name: "",
     user_id: user.id,
-    editing: true
+    editing: true,
+    events: [{
+      name: "",
+      user_extracurricular_activity_id: "",
+      hours: "",
+      time_unit_id: time_unit_id,
+      user_id: user.id,
+      leadership: "",
+      description: ""
+    }]
 
   @newExtracurricularEvent = (user, time_unit_id, extracurricularActivityId) ->
     name: "",
     user_extracurricular_activity_id: extracurricularActivityId,
-    hours: "",
-    date: "",
     time_unit_id: time_unit_id,
     user_id: user.id,
+    leadership: "",
     description: "",
     editing: true
 

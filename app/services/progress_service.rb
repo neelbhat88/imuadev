@@ -34,7 +34,7 @@ class ProgressService
     return ReturnObject.new(:ok, "Overall progress", obj)
   end
 
-  def check_progress(userId, time_unit_id, module_title)
+  def get_recalculated_module_milestones(userId, time_unit_id, module_title)
     user = UserRepository.new.get_user(userId)
 
     # Get all Milestones for given category and time_unit
@@ -63,11 +63,22 @@ class ProgressService
       end
     end
 
+    return ReturnObject.new(:ok, "Recalculated milestones for #{module_title}", milestones)
+  end
+
+  def get_recalculated_module_progress(userId, time_unit_id, module_title)
+    # Perform recalculation on UserMilestones
+    get_recalculated_module_milestones(userId, time_unit_id, module_title)
+
     # Get total and user points
     points = get_module_and_user_points(userId, time_unit_id, module_title)
     mod = ModuleProgress.new(module_title, time_unit_id, points[:user], points[:total])
 
     return ReturnObject.new(:ok, "#{module_title} progress", mod)
+  end
+
+  def check_progress(userId, time_unit_id, module_title)
+    return get_recalculated_module_progress(userId, time_unit_id, module_title)
   end
 
   private

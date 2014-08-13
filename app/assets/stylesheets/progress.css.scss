@@ -176,6 +176,31 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	  	}
       	  
       	  }
+      	  
+      	  .module-data__button {
+      	  
+      	  	background: white(0.25);
+      	  	padding: 10px;
+      	  	width: 35%;
+      	  	margin: 0 auto;
+      	  	@include font-size(1.2);
+      	  	@include border-radius(4px);
+      	  	opacity: 0.4;
+      	  	
+      	  	&:hover {
+      	  	
+      	  		opacity: 1;
+      	  	
+      	  	}
+      	  
+      	  } //.module-data__button
+      	  
+      	  .button-wide {
+      	  	
+      	  		width: 60%;
+              @include font-size();
+      	  	
+    	  	}
       	
       	}
       	      
@@ -223,8 +248,15 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	}
       	
     	} //section--milestones
+      
+    	.numbers-large {
+    	
+    		@include font-size(10.0);
+    		font-weight: $light;
+    	
+    	}
 
-    }
+    } //.section-wrapper
     
     /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
             
@@ -237,14 +269,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         .section--header { background: $academics-color; }
     	
     	}
-    	
-    	.gpa-large {
-    	
-    		@include font-size(10.0);
-    		font-weight: $light;
-    	
-    	}
-    	
+    	    	
     	.section--grades {
     	
     		.section--inner {
@@ -279,7 +304,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     				
     				}
     			
-    			}
+    			} //.module-data__item
     		
     		}
     	
@@ -314,7 +339,6 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         .section--header { background: $service-color; }
     	
     	}
-
     
 			.module-data__item {
     			
@@ -350,10 +374,18 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 				
 					width: 100%;
 					padding: 0 20px;
+					@include font-size(1.2);
+					opacity: 0.6;
+					
+					&:hover {
+					
+						opacity: 1;
+					
+					}
 					
 					.module-data__item__event--date {
 					
-						width: 20%;
+						width: 25%;
 						float: left;
 						text-align: left;
 					
@@ -369,7 +401,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
 					
 					.module-data__item__event--hours {
 					
-						width: 20%;
+						width: 15%;
 						float: left;
 						text-align: center;
 					
@@ -408,6 +440,108 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     
     } //serviceProgressContainer
     
+    .extracurricularProgressContainer {
+    
+    	.section { 
+  	
+    	  background: $extracurricular-color-dark;
+        
+        .section--header { background: $extracurricular-color; }
+    	
+    	}
+    	
+			.module-data__item {
+    			
+			  padding-bottom: 20px;
+			  border-bottom: 1px solid white(0.1);
+			  margin-bottom: 20px;
+			  
+				.module-data__item__activityContainer {
+				
+          padding-bottom: 20px;
+  			  border-bottom: 1px solid white(0.1);
+  			  margin-bottom: 20px;
+    			  
+  				.module-data__item__activity {
+  				
+  					width: 80%;
+  					float: left;
+    			  text-align: left;
+  				
+  				}
+  				  				
+  				.module-data__item__icons {
+  				
+  					width: 20%;
+  					float: left;
+  					text-align: right;
+  				
+  				}
+				
+				}//__activityContainer
+				
+				.module-data__item__eventContainer {
+				
+					width: 100%;
+					padding: 0 20px;
+					@include font-size(1.2);
+					opacity: 0.6;
+					
+					&:hover {
+					
+						opacity: 1;
+					
+					}
+					
+					.module-data__item__event--leadership {
+					
+						width: 35%;
+						float: left;
+						text-align: left;
+					
+					}
+					
+					.module-data__item__event--description {
+					
+						width: 55%;
+						float: left;
+						text-align: left;
+					
+					}
+										
+					.module-data__item__icons {
+					
+						width: 10%;
+						float: right;
+						text-align: right;
+					
+					}
+				
+				}
+				
+
+      } //module-data__item
+    	
+    	.section--milestones {
+      	
+        	.section--inner {
+        	      	
+        		.yes-no-item {
+        		      			
+        			.yes-no--point-circle {
+        			
+        				color: $extracurricular-color;
+        			
+        			} //yes-no--point-circle
+                    		
+        		} //yes-no-item
+        	
+        	}
+        	
+      	} //section--milestones
+
+    } //extracurricularProgressContainer
+    
     .collegePrepProgressContainer {
     
     	.section { 
@@ -437,37 +571,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	} //section--milestones
 
     } //collegePrepProgressContainer
-    
-    .extracurricularProgressContainer {
-    
-    	.section { 
-  	
-    	  background: $extracurricular-color-dark;
         
-        .section--header { background: $extracurricular-color; }
-    	
-    	}
-    	
-    	.section--milestones {
-      	
-        	.section--inner {
-        	      	
-        		.yes-no-item {
-        		      			
-        			.yes-no--point-circle {
-        			
-        				color: $extracurricular-color;
-        			
-        			} //yes-no--point-circle
-                    		
-        		} //yes-no-item
-        	
-        	}
-        	
-      	} //section--milestones
-
-    } //extracurricularProgressContainer
-    
     .testingProgressContainer {
     
     	.section { 
@@ -477,6 +581,47 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         .section--header { background: $testing-color; }
     	
     	}
+    	
+			.module-data__item {
+			
+			  padding-bottom: 20px;
+			  border-bottom: 1px solid white(0.1);
+			  margin-bottom: 20px;
+			
+				.module-data__item__test-date {
+				
+					width: 25%;
+					float: left;
+  			  text-align: left;
+				
+				}
+				
+				.module-data__item__test-name {
+				
+					width: 45%;
+					float: left;
+					text-align: left;
+				
+				}
+				
+				.module-data__item__test-score {
+				
+					width: 20%;
+					float: left;
+					text-align: left;
+				
+				}
+				
+				.module-data__item__icons {
+				
+					width: 10%;
+					float: right;
+					text-align: right;
+				
+				}
+			
+			} //.module-data__item
+
     	
     	.section--milestones {
       	

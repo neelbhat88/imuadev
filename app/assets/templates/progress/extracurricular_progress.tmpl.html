@@ -1,130 +1,155 @@
 <div ng-controller="ExtracurricularProgressController" class="extracurricularProgressContainer">
+
   <div class="module-userExtracurricularActivities section-wrapper clear">
 
-    <div class="pbxl" ng-show="user_extracurricular_activities.length == 0">
-      <h4>{{student.first_name}}, looks like you haven't entered any data.</h4>
-      <h4>Let's get that taken care of. Add your Extracurricular Activities for this semester below.</h4>
-    </div>
+    <div class="section section--ecActivities">
 
-    <div class="module-data">
-      <div class="noExtracurricularActivities" ng-hide="user_extracurricular_activites.length != 0">No Extracurricular Activities Added</div>
+      <div class="section--header">Extracurricular Activities</div>
 
-      <div class="module-data-items">
-        <div class="module-data__item" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities" ng-class="{'last':$last}">
-
-          <div class="module-data__item__activity">
-            <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</span>
-            <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
-          </div>
-
-          <div class="module-data__item__icons">
-            <div ng-if="editable(current_user, selected_semester)"
-                  ng-hide="user_extracurricular_activity.editing">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
-              <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
-            </div>
-
-            <div ng-show="user_extracurricular_activity.editing">
-              <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
-              <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
-            </div>
-          </div>
-
-          <div class="module-data__item" ng-repeat="(eventIndex, user_extracurricular_event) in user_extracurricular_activity.events" ng-class="{'last':$last}">
-            <div class="module-data__item__event">
-              <span ng-hide="user_extracurricular_event.editing">{{user_extracurricular_event.leadership}}</span>
-              <input ng-show="user_extracurricular_event.editing" class="form-field" ng-model="user_extracurricular_event.new_leadership" placeholder="Leadership" name="extracurricularEventLeadership">
-            </div>
-            <div class="module-data__item__event">
-              <span ng-hide="user_extracurricular_event.editing">{{user_extracurricular_event.description}}</span>
-              <input ng-show="user_extracurricular_event.editing" class="form-field" ng-model="user_extracurricular_event.new_description" placeholder="Event Description" name="extracurricularEventDescription">
-            </div>
-
-            <div class="module-data__item__icons">
-              <div ng-if="editable(current_user, selected_semester)"
-                    ng-hide="user_extracurricular_event.editing">
-                <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
-              </div>
-
-              <div ng-show="user_extracurricular_event.editing">
-                <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_extracurricular_activity.id)"></span>
-                <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
-              </div>
-            </div>
-          </div>
-          <div ng-if="editable(current_user, selected_semester)"
-              class="module-data__button" ng-click="addEvent(activityIndex, user_extracurricular_activity.id)" ng-hide="user_extracurricular_activities[activityIndex].events.editing">Add Event
-          </div>
-        </div>
-      </div>
-
-      <div ng-if="editable(current_user, selected_semester)"
-          class="module-data__button" ng-click="addActivity()" ng-hide="user_extracurricular_activities.editing">Add Extracurricular Activity
-      </div>
-    </div>
-    
-    <div class="section section--milestones">
-    
-    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
-    
       <div class="section--inner">
-              
+
+        <div ng-show="user_extracurricular_activities.length == 0">
+          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
+          <h6>Let's get that taken care of. Add your Extracurricular Activities for this semester below.</h6>
+        </div><!-- /No activities warning -->
+
+        <div class="module-data">
+
+          <div class="module-data-items">
+
+            <div class="module-data__item clear" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities" ng-class="{'last':$last}">
+
+              <div class="module-data__item__activityContainer clear">
+
+                <div class="module-data__item__activity">
+
+                <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</span>
+                <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
+
+                </div>
+                <div class="module-data__item__icons">
+
+                  <div ng-if="editable(current_user, selected_semester)" ng-hide="user_extracurricular_activity.editing">
+                    <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+                  </div>
+
+                  <div ng-show="user_extracurricular_activity.editing">
+                    <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
+                    <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
+                  </div>
+
+                </div>
+
+              </div><!-- /module-data__item__activityContainer -->
+
+                <div class="module-data__item__eventContainer clear">
+
+                  <div class="module-data__item__event--leadership">
+                    <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].leadership}}</span>
+                    <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.events[0].new_leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
+                  </div>
+
+                  <div class="module-data__item__event--description">
+                    <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].description}}</span>
+                    <textarea ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.events[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
+                  </div>
+
+                </div><!-- ..eventContainer -->
+
+            </div>
+
+          </div><!-- /module-data-items -->
+
+          <div ng-if="editable(current_user, selected_semester)"
+              class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_extracurricular_activities.editing">Add Extracurricular Activity
+          </div>
+        </div><!-- /module-data -->
+
+      </div><!-- /section--inner -->
+
+    </div><!-- /section--ecActivities -->
+
+    <div class="section section--activity-totals">
+
+      <div class="section--header">Activities</div>
+
+      <div class="section--inner">
+
+      	<div class="user-class-greeting" wait-to-load="loaded_semester_activities">
+          Hey {{current_user.first_name}}, you are participating in
+          <h4><span class="numbers-large">{{semester_activities}}</span><br>activities</h4> this semester.
+        </div>
+
+      </div>
+
+    </div><!-- /section--gpa -->
+
+    <div class="section section--milestones">
+
+    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+
+      <div class="section--inner">
+
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
-  
-        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
-        
+
+        <div class="module-yes-nos" ng-if="milestones.length > 0">
+
           <div class="yes-nos-unsatisfied section--subsection clear">
-          
+
           	<div class="section--subhead">Next Milestones</div>
-          	
-	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+
+	          <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
-              
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h5 class="bold">{{yesno.points}}</h5>
-                  	<p>Points</p>
+
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
                   </div>
-                </div>
-                
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                </label>
+
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
-          
+
           </div>
-          
+
           <div class="yes-nos-unsatisfied section--subsection clear">
-          
+
           	<div class="section--subhead">Completed Milestones</div>
-            
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+
+            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
-      
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h4 class="bold">✓</h4>
+
+                <label for="yesNoCheckbox"
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
                   </div>
-                </div>
-                
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                </label>
+
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
-          
+
           </div>
-        
+
         </div>
-        
+
       </div><!-- /section-inner -->
-    
+
     </div><!-- /section--milestones -->
-    
+
   </div><!-- section-wrapper -->
 
 </div>
