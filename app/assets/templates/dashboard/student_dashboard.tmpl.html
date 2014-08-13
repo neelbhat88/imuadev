@@ -8,7 +8,7 @@
           <div class="greeting__large">Welcome back!</div>
         </div>
 
-        <div class="progress-circle" ng-if="student_with_modules_progress">
+        <div class="progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
           <a ng-href="#/progress/{{student.id}}" title="View Progress">
             <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
           </a>
@@ -59,6 +59,21 @@
             </div>
 
           </div>
+        </div>
+
+        <div class="studentExpectationContainer"
+          <h4>Unmet Expectations</h4>
+          <div class="expectations-list">
+            <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
+              <div class="expectation-title">{{expectation.title}}</div>
+              <div class="expectation-btn-group">
+                <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
 
