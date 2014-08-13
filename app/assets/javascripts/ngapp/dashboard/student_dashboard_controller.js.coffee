@@ -5,6 +5,7 @@ angular.module('myApp')
   $scope.student = $scope.user
   $scope.overall_points = {user: 0, total: 0, percent: 0}
   $scope.student_mentors = []
+  $scope.milestones = []
 
   setMiddleDimensions = () ->
     windowWidth = $(window).outerWidth()
@@ -42,4 +43,9 @@ angular.module('myApp')
     .success (data) ->
       $scope.student_mentors = data.mentors
       $scope.loaded_student_mentors = true
+
+  ProgressService.getRecalculatedMilestones($scope.student, $scope.student.time_unit_id)
+    .success (data) ->
+      $scope.milestones = data.recalculated_milestones
+      $scope.loaded_milestones = true
 ]
