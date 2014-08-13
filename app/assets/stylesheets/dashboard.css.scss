@@ -1,131 +1,156 @@
+/***** Global Dashboard Styles *****/
+
 .dashboard-header {
-	background-color: $green;
 	width: 100%;
-	padding: 60px 0;
+	padding: 60px $wrapper-width;
 	margin: 0;
-	color: white;
-}
-
-.dashboard-header--student {
-  background-color: white;
-  color: $ink;
-
-  padding: 40px;
-  height: 250px;
-
-  .progress-circle {
-    display: inline-block;
-    vertical-align: middle;
-
-    margin-left: 50px;
-  }
-
-  .overall-circle {
-    display: inline-block;
-    vertical-align: bottom;
-    position: relative;
-    left: -15px;
-  }
-}
-
-.needsAttention {
-	background-color: $red;
-}
-
-.dashboard-attention {
-  height: 100%;
-	text-align: center;
+	border-bottom: 1px solid $darkborder;
 }
 
 .dashboard-content {
-  height: 100%;
   background-color: $darkgrey;
   color: white;
+	width: 100%;
   padding: $wrapper;
   padding-top: 60px;
   padding-bottom: 60px;
 }
 
-.dashboard-content--student {
-  width: 100%;
-  display: inline-block;
+/***** Student Dashboard Styles *****/
 
-  .mentor-list {
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-    width: 220px;
-  }
+#studentDashboard {
 
-  .middle-content-container {
-    display: inline-block;
-    min-width: 782px;
-    vertical-align: top;
-    border-left: 1px solid $light-grey;
-    border-right: 1px solid $light-grey;
-  }
+  .dashboard-header {
 
-  .user-expectations {
-    display: inline-block;
-    text-align: left;
-    vertical-align: top;
-    width: 220px;
-  }
-}
+  	padding: 80px $wrapper-width; //override
+  	background: $grey;
+  	color: white;
 
+    .student-header--wrapper {
 
-/***** Mentor Page *****/
+      width: 100%;
 
-.mentor-header {
+      .student-header--content {
 
-  width: 1100px;
-  height: 300px;
-  margin: 0 auto;
+        width: 1000px;
+        margin: 0 auto;
 
-  .greeting {
+        .progressCircle-big--container {
 
-    margin-top: 80px;
-    float: left;
+        	width: 240px;
+        	margin-right: 40px;
+        	float: left;
+
+        }
+
+        .greeting {
+
+        	width: 700px;
+        	padding-top: 40px;
+        	float: left;
+
+        }
+
+      } //.student-header--content
+
+    } //.student-header--wrapper
 
   }
 
-  .circle-attention {
+  .dashboard-content--student {
 
-		float: right;
+		.section {
+			width: 31%;
+			margin: 1%;
+			float: left;
 
-	  .circle {
-
-	  	width: 288px;
-	  	height: 288px;
-	  	margin: 0 auto;
-
-	    &:after {
-			content: "";
-			display: block;
-			width: 100%;
-			height:0;
-			padding-bottom: 88%;
-			-moz-border-radius: 50%;
-			-webkit-border-radius: 50%;
-			border-radius: 50%;
-		  	border: 22px solid white;
-	    }
-
-	    .text {
-
-			float:left;
-			width:100%;
-			padding-top: 15%;
-			text-align:center;
-			color:white;
-
-			.subhead {
-
-				@include font-size(2);
-
+			.section--inner {
+				padding: 40px 20px;
 			}
 
-	    }
-	 }
-  }
-}
+			.yes-no--point-circle {
+				@each $category, $color in $colormap {
+					&.color--#{$category} { border: 5px solid $color; color: $color; }
+				}
+			}
+
+		}
+
+		.list-header {
+			text-align: center;
+		}
+
+  } //.dashboard-content--student
+
+} //#studentDashboard
+
+/***** Mentor Dashboard Styles *****/
+
+#mentorDashboard {
+
+  .dashboard-header {
+
+    background: $green;
+    color: white;
+		border-bottom: none;
+
+    .mentor-header--wrapper {
+
+      width: 1100px;
+      height: 300px;
+      margin: 0 auto;
+
+      .greeting {
+
+        margin-top: 80px;
+        float: left;
+
+      }
+
+      .circle-attention {
+
+        float: right;
+
+        .circle {
+
+          width: 288px;
+          height: 288px;
+          margin: 0 auto;
+
+          &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height:0;
+            padding-bottom: 88%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            border: 22px solid white;
+          }
+
+          .text {
+
+            float:left;
+            width:100%;
+            padding-top: 15%;
+            text-align:center;
+            color:white;
+
+            .subhead {
+
+              @include font-size(2);
+
+            }
+
+          } //.text
+
+        } //.circle
+
+      } //.circle-attention
+
+    } //.mentor-header
+
+  } //.dashboard-header
+
+} //#mentorDashboard
