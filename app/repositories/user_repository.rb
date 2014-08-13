@@ -202,6 +202,23 @@ class UserRepository
     return students
   end
 
+  def get_assigned_students_for_group(userIds)
+    assigned_students_for_group = []
+
+    userIds.each do | userId |
+      studentIds = []
+
+      students = get_assigned_students(userId)
+      students.each do | student |
+        studentIds << student.id
+      end
+
+      assigned_students_for_group << { :user_id => userId, :student_ids => studentIds}
+    end
+
+    return ReturnObject.new(:ok, "Assigned students for users: #{userIds}.", assigned_students_for_group)
+  end
+
   def get_assigned_mentors(userId)
     relations = Relationship.where(:user_id => userId)
 

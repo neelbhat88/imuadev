@@ -46,6 +46,7 @@ Imua::Application.routes.draw do
         end
       end
 
+      get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
       get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
 
       get  '/users/:id/service_activity_events' => 'service_activity#user_service_activity_events'

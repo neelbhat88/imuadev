@@ -7,28 +7,33 @@ angular.module('myApp')
     $scope.students_with_progress = []
     $scope.groupedStudents = []
     $scope.attention_students = []
+    $scope.mentor_ids = []
 
     $('input, textarea').placeholder()
 
     for mentor in $scope.organization.mentors
-      mentor.assigned_students = []
+      mentor.assigned_student_ids = []
       mentor.modules_progress = []
       $scope.mentors.push(mentor)
+      $scope.mentor_ids.push(mentor.id)
 
     # Super temoprary change since we don't want to make AJAX calls in a for loop
-    if !!$scope.mentors[0]
-      UsersService.getAssignedStudents($scope.mentors[0].id)
-        .success (data) ->
-          $scope.mentors[0].assigned_students = data.students
-          $scope.mentors[0].modules_progress = []
+    UsersService.getAssignedStudentsForGroup($scope.mentor_ids)
+      .success (data) ->
+        for assigned_students_for_user in data.assigned_students_for_group
+          for mentor in $scope.mentors
+            if mentor.id == parseInt assigned_students_for_user.user_id
+              mentor.assigned_student_ids = (id for id in assigned_students_for_user.student_ids)
+              break
+
 
     for student in $scope.organization.students
       ProgressService.getAllModulesProgress(student, student.time_unit_id).then (student_with_modules_progress) ->
         $scope.students_with_progress.unshift(student_with_modules_progress)
         # Tally up mentor progress - this is pretty gross
         for mentor in $scope.mentors
-          for assigned_student in mentor.assigned_students
-            if assigned_student.id == student_with_modules_progress.id
+          for assigned_student_id in mentor.assigned_student_ids
+            if assigned_student_id == student_with_modules_progress.id
               for student_module_progress in student_with_modules_progress.modules_progress
                 found_existing_mentor_module = false
                 for mentor_module_progress in mentor.modules_progress
