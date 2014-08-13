@@ -32,5 +32,8 @@ angular.module('myApp')
   @getOverallProgress = (student) ->
     $http.get "/api/v1/users/#{student.id}/progress"
 
+  @getRecalculatedModuleMilestones = (user, time_unit_id, module_title) ->
+    $http.get "/api/v1/progress/recalculated_module_milestones/?user_id=#{user.id}&time_unit_id=#{time_unit_id}&module_title=#{module_title}"
+
   @
 ]

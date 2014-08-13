@@ -8,7 +8,7 @@ angular.module('myApp')
   $scope.current_user = current_user
   $scope.student = student
 
-  $scope.loaded_yes_no_milestones = false
+  $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
   $scope.loaded_milestones = false
 
@@ -16,10 +16,10 @@ angular.module('myApp')
     $scope.loaded_module_milestones = true
 
   $scope.$watch 'loaded_module_milestones', () ->
-    if $scope.loaded_module_milestones && $scope.loaded_yes_no_milestones
+    if $scope.loaded_module_milestones && $scope.loaded_milestones
       $scope.loaded_milestones = true
-  $scope.$watch 'loaded_yes_no_milestones', () ->
-    if $scope.loaded_yes_no_milestones && $scope.loaded_module_milestones
+  $scope.$watch 'loaded_milestones', () ->
+    if $scope.loaded_module_milestones && $scope.loaded_milestones
       $scope.loaded_milestones = true
 
   setWidth = () ->
@@ -59,19 +59,19 @@ angular.module('myApp')
       $scope.overall_points = data.overall_progress
 
   $scope.$watch 'selected_semester', () ->
-    if $scope.selected_semester && $scope.selected_module && !$scope.loaded_yes_no_milestones
-      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+    if $scope.selected_semester && $scope.selected_module && !$scope.loaded_milestones
+      ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
         .success (data) ->
-          $scope.yes_no_milestones = data.yes_no_milestones
-          $scope.loaded_yes_no_milestones = true
+          $scope.milestones = data.recalculated_module_milestones
+          $scope.loaded_milestones = true
           $scope.new_selected_semester = $scope.selected_semester
 
   $scope.$watch 'selected_module', () ->
-    if $scope.selected_module && !$scope.loaded_yes_no_milestones
-      ProgressService.yesNoMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+    if $scope.selected_module && !$scope.loaded_milestones
+      ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
         .success (data) ->
-          $scope.yes_no_milestones = data.yes_no_milestones
-          $scope.loaded_yes_no_milestones = true
+          $scope.milestones = data.recalculated_module_milestones
+          $scope.loaded_milestones = true
   , true
 
   $scope.toggleYesNoMilestone = (milestone) ->
@@ -89,8 +89,13 @@ angular.module('myApp')
     # then we don't need student_with_modules_progress and the directive can be changed to just
     # accept the modules_progress array
     # ToDo: I don't like how this works, we should revisit. Difference between checking progress
-    # after saving data and then getting progress for all categories, for the full circle, and the
-    # overall progress circle
+    # after saving data and then getting the recalculated milestones, the recalculated (again)
+    # progress for all categories, for the full circle, and the overall progress circle
+
+    ProgressService.getRecalculatedModuleMilestones($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+      .success (data) ->
+        $scope.milestones = data.recalculated_module_milestones
+
     ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
       .success (data) ->
         ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
@@ -115,13 +120,13 @@ angular.module('myApp')
     if $scope.selected_module != mod
       $scope.loaded_milestones = false
       $scope.loaded_module_milestones = false
-      $scope.loaded_yes_no_milestones = false
+      $scope.loaded_milestones = false
       $scope.selected_module = mod
 
   $scope.selectSemester = (sem) ->
     $scope.loaded_milestones = false
     $scope.loaded_module_milestones = false
-    $scope.loaded_yes_no_milestones = false
+    $scope.loaded_milestones = false
 
     # ToDo: If the overall progress circle on this page no longer needs the students picture,
     # then we don't need student_with_modules_progress and the directive can be changed to just

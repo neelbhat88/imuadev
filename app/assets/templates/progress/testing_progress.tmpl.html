@@ -3,37 +3,37 @@
   <div class="module-userTests section-wrapper clear">
 
     <div class="section section--tests">
-    
+
       <div class="section--header">Tests Taken</div>
-      
+
       <div class="section--inner">
-    
+
         <div ng-show="userTests.length == 0">
           <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
           <h6>Let's get that taken care of. Add tests you've taken this semester.</h6>
         </div>
-    
+
         <div class="module-data">
-        
+
           <div class="noUserTests" ng-hide="userTests.length != 0">No tests added</div>
-    
+
           <div class="module-data-items">
-            
+
             <div class="module-data__item clear" ng-repeat="userTest in userTests" ng-class="{'last':$last}">
-    
+
               <div class="module-data__item__test-date">
                 <span ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</span>
                 <datepicker ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" show-weeks="false"></datepicker>
                 <!-- <input datepicker-popup="dd-MM-yyyy" ng-model="userTest.new_date" class="form-control" datepicker-options="dateOptions" show-weeks='false' is-open="opened" min="minDate" max="'2015-06-22'" date-disabled="disabled(date, mode)" close-text="Close" /> -->
               </div>
-              
+
               <div class="module-data__item__test-name">
                 <span ng-hide="userTest.editing">{{userTest.orgTest.title}}</span>
                 <select ng-show="userTest.editing" ng-options="orgTest as orgTest.title for orgTest in orgTests" ng-model="userTest.new_orgTest">
                   <option value="">--- Select Test ---</option>
                 </select>
               </div>
-    
+
               <div class="module-data__item__test-score">
                 <span ng-hide="userTest.editing">{{userTest.score}}</span>
                 <input ng-show="userTest.editing && userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="form-field" ng-model="userTest.new_score" placeholder="Score"></input>
@@ -52,31 +52,31 @@
                   <option value="F">F</option>
                 </select>
               </div><!-- /module-data__item__test-score -->
-    
+
               <div class="module-data__item__icons">
                 <div ng-if="editable(current_user, selected_semester)" ng-hide="userTest.editing">
                   <span class="glyphicon glyphicon-pencil prs" title="Edit Test" ng-click="editUserTest($index)"></span>
                   <span class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteUserTest($index)"></span>
                 </div>
-    
+
                 <div ng-show="userTest.editing">
                   <span class="glyphicon glyphicon-ok prs green" ng-hide="!userTest.new_orgTest || !userTest.new_date" ng-title="Save" ng-click="saveUserTest($index)"></span>
                   <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditUserTest($index)"></span>
                 </div>
               </div><!-- /module-data__item__icons -->
-    
+
             </div><!-- /module-data__item -->
-            
+
           </div><!-- /module-data-items -->
-    
+
           <div ng-if="editable(current_user, selected_semester)"
               class="module-data__button" ng-click="addUserTest()" ng-hide="userTests.editing">Add Test</div>
         </div><!-- /module-data -->
-        
+
       </div>
-    
+
     </div><!-- /section--tests -->
-    
+
     <div class="section section--tests-taken">
 
       <div class="section--header">Total Service Hours</div>
@@ -91,7 +91,7 @@
       </div>
 
     </div><!-- /section--tests-taken -->
-  
+
     <div class="section section--milestones">
 
     	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
@@ -102,27 +102,27 @@
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
-        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+        <div class="module-yes-nos" ng-if="milestones.length > 0">
 
           <div class="yes-nos-unsatisfied section--subsection clear">
 
-          	<div class="section--subhead">Next Milestones</div>
+            <div class="section--subhead">Next Milestones</div>
 
-	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
 
                 <label for="yesNoCheckbox">
                   <div class="yes-no--point-circle">
                     <div class="point-circle--inside">
-                      <h5 class="bold">{{yesno.points}}</h5>
+                      <h5 class="bold">{{milestone.points}}</h5>
                       <p>Points</p>
                     </div>
                   </div>
                 </label>
 
-                <input id="yesNoCheckbox" type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
 
@@ -130,9 +130,9 @@
 
           <div class="yes-nos-unsatisfied section--subsection clear">
 
-          	<div class="section--subhead">Completed Milestones</div>
+            <div class="section--subhead">Completed Milestones</div>
 
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
 
                 <label for="yesNoCheckbox">
@@ -143,9 +143,9 @@
                   </div>
                 </label>
 
-                <input id="yesNoCheckbox" type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
 
@@ -156,7 +156,7 @@
       </div><!-- /section-inner -->
 
     </div><!-- /section--milestones -->
-  
+
   </div>
 
 </div>
