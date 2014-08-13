@@ -3,18 +3,18 @@
   <div class="user-list ptxl pbxl">
     <h4>{{mentor.first_name}}'s Students</h4>
 
-    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
+    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'id'">
       <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-      <a ng-href="#/progress/{{student.user.id}}" title="View progress">
+      <a ng-href="#/progress/{{student.id}}" title="View progress">
         <progress-circle student="student"></progress-circle>
       </a>
-      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+      <a ng-href="#/profile/{{student.id}}" title="View student info">
         <div class="avatar-block__name">
-          {{student.user.first_name}} {{student.user.last_name}}
+          {{student.first_name}} {{student.last_name}}
         </div>
       </a>
       <div class="unassign">
-        <span class="glyphicon glyphicon-remove-circle" title="Unassign" ng-click="unassign(student.user)"></span>
+        <span class="glyphicon glyphicon-remove-circle" title="Unassign" ng-click="unassign(student)"></span>
       </div>
     </div>
 

@@ -11,7 +11,7 @@
 
 				  	<div class="text">
 
-					<h2>0</h2>
+					<h2>{{attention_students.length}}</h2>
 		            <span class="subhead">students need<br>your attention</span>
 				  	</div>
 
@@ -35,12 +35,12 @@
 	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
 	    </div>
 	    <div class="user-list-container">
-		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'user.id'">
+		    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in assigned_students | orderBy: 'id'">
 		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-		      <a ng-href="#/progress/{{student.user.id}}" title="View Student">
+		      <a ng-href="#/progress/{{student.id}}" title="View Student">
 		        <progress-circle student="student"></progress-circle>
 		      </a>
-		      <a ng-href="#/profile/{{student.user.id}}" title="View student info">
+		      <a ng-href="#/profile/{{student.id}}" title="View student info">
 		        <div class="avatar-block__name">
 		          <h6 class="bold">{{student.user.first_last_initial}}</h6>
 		        </div>
