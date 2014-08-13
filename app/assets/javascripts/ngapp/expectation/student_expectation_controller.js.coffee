@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService',
-  ($route, $scope, student, current_user, ExpectationService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService', 'ProgressService',
+  ($route, $scope, student, current_user, ExpectationService, ProgressService) ->
 
     $scope.current_user = current_user
     $scope.student = student
@@ -8,6 +8,11 @@ angular.module('myApp')
     $scope.studentId = $scope.student.id
 
     $scope.expectations = []
+
+    ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+      $scope.modules_progress = student_with_modules_progress.modules_progress
+      $scope.selected_module = $scope.modules_progress[0]
+      $scope.student_with_modules_progress = student_with_modules_progress
 
     ExpectationService.getExpectations($scope.orgId)
       .success (data) ->
