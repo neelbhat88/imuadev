@@ -15,10 +15,11 @@ angular.module('myApp')
       $scope.mentors.push(mentor)
 
     # Super temoprary change since we don't want to make AJAX calls in a for loop
-    UsersService.getAssignedStudents($scope.mentors[0].id)
-      .success (data) ->
-        $scope.mentors[0].assigned_students = data.students
-        $scope.mentors[0].modules_progress = []
+    if !!$scope.mentors[0]
+      UsersService.getAssignedStudents($scope.mentors[0].id)
+        .success (data) ->
+          $scope.mentors[0].assigned_students = data.students
+          $scope.mentors[0].modules_progress = []
 
     for student in $scope.organization.students
       ProgressService.getAllModulesProgress(student, student.time_unit_id).then (student_with_modules_progress) ->
