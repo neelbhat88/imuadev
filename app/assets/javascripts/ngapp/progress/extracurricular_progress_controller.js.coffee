@@ -2,6 +2,19 @@ angular.module('myApp')
 .controller 'ExtracurricularProgressController', ['$scope', 'UserExtracurricularActivityService', 'ProgressService',
   ($scope, UserExtracurricularActivityService, ProgressService) ->
     $scope.user_extracurricular_activities = []
+    $scope.semester_activities = 0
+
+    $scope.$watch 'user_extracurricular_activities', () ->
+      $scope.loaded_semester_activities = false
+      $scope.semester_activities = 0
+      for activity in $scope.user_extracurricular_activities
+        if activity.events
+          for event in activity.events
+            if event.description
+              $scope.semester_activities += 1
+              break
+      $scope.loaded_semester_activities = true
+    , true
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester

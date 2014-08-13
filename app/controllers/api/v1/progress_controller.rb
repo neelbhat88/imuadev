@@ -58,6 +58,30 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # get /progress/recalculated_module_milestones?user_id=#&time_unit_id=#module_title=#
+  # Runs through milestones of a given module to see if any have been earned
+  def get_recalculated_module_milestones
+    userId = params[:user_id]
+    timeUnitId = params[:time_unit_id]
+    moduleTitle = params[:module_title]
+
+    # TODO
+    # user = @userRepository.get_user(userId)
+    # if !can?(current_user, :read_milestones, user)
+    #   render status: :forbidden,
+    #     json: {}
+    #   return
+    # end
+
+    result = @progressService.get_recalculated_module_milestones(userId, timeUnitId, moduleTitle)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        recalculated_module_milestones: result.object
+      }
+  end
+
   # GET  /user/:id/time_unit/:time_unit_id/milestones/:module/yesno
   def yes_no_milestones
     userId = params[:id]

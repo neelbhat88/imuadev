@@ -123,7 +123,7 @@
 
       <div class="section--inner">
 
-      	<div class="user-class-greeting" ng-show="user_classes.length != 0" wait-to-load="{{loaded_semester_service_hours}}">
+      	<div class="user-class-greeting" wait-to-load="{{loaded_semester_service_hours}}">
           Hey {{current_user.first_name}}, you have completed
           <h4><span class="numbers-large">{{semester_service_hours}}</span><br>Service Hours</h4> this semester.
         </div>
@@ -142,25 +142,27 @@
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
-        <div class="module-yes-nos" ng-if="yes_no_milestones.length > 0">
+        <div class="module-yes-nos" ng-if="milestones.length > 0">
 
           <div class="yes-nos-unsatisfied section--subsection clear">
 
-          	<div class="section--subhead">Next Milestones</div>
+            <div class="section--subhead">Next Milestones</div>
 
-	          <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="!yesno.earned">
+            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h5 class="bold">{{yesno.points}}</h5>
-                  	<p>Points</p>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
 
@@ -168,20 +170,22 @@
 
           <div class="yes-nos-unsatisfied section--subsection clear">
 
-          	<div class="section--subhead">Completed Milestones</div>
+            <div class="section--subhead">Completed Milestones</div>
 
-            <div class="yes-no-item" ng-repeat="yesno in yes_no_milestones" ng-if="yesno.earned">
+            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
 
-                <div class="yes-no--point-circle">
-                  <div class="point-circle--inside">
-	                	<h4 class="bold">✓</h4>
+                <label for="yesNoCheckbox">
+                  <div class="yes-no--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
                   </div>
-                </div>
+                </label>
 
-                <input type="checkbox" ng-model="yesno.earned" ng-change="toggleYesNoMilestone(yesno)"
+                <input id="yesNoCheckbox" type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
                   ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{yesno.value}}</h6>
+                <h6>{{milestone | printMilestone}}</h6>
               </div>
             </div>
 
