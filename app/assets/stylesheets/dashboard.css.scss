@@ -10,79 +10,55 @@
 .dashboard-content {
   background-color: $darkgrey;
   color: white;
+	width: 100%;
   padding: $wrapper;
   padding-top: 60px;
   padding-bottom: 60px;
 }
-  
+
 /***** Student Dashboard Styles *****/
 
 #studentDashboard {
 
   .dashboard-header {
-  
+
   	padding: 80px $wrapper-width; //override
   	background: $grey;
   	color: white;
 
     .student-header--wrapper {
-    
+
       width: 100%;
-      
+
       .student-header--content {
-      
+
         width: 1000px;
         margin: 0 auto;
-            	
+
         .progressCircle-big--container {
-        
+
         	width: 240px;
         	margin-right: 40px;
         	float: left;
-        
+
         }
-        
+
         .greeting {
-        
+
         	width: 700px;
         	padding-top: 40px;
         	float: left;
-        
+
         }
-      
+
       } //.student-header--content
-    
+
     } //.student-header--wrapper
-  
+
   }
 
   .dashboard-content--student {
-    
-    width: 100%;
-    display: inline-block;
-  
-    .mentor-list {
-      display: inline-block;
-      text-align: center;
-      vertical-align: top;
-      width: 220px;
-    }
-  
-    .middle-content-container {
-      display: inline-block;
-      min-width: 782px;
-      vertical-align: top;
-      border-left: 1px solid $light-grey;
-      border-right: 1px solid $light-grey;
-    }
-  
-    .user-expectations {
-      display: inline-block;
-      text-align: left;
-      vertical-align: top;
-      width: 220px;
-    }
-  
+
   } //.dashboard-content--student
 
 } //#studentDashboard
@@ -92,33 +68,33 @@
 #mentorDashboard {
 
   .dashboard-header {
-  
+
     background: $green;
     color: white;
 
     .mentor-header--wrapper {
-      
+
       width: 1100px;
       height: 300px;
       margin: 0 auto;
-      
+
       .greeting {
-        
+
         margin-top: 80px;
         float: left;
-        
+
       }
-      
+
       .circle-attention {
-      
+
         float: right;
-        
+
         .circle {
-        
+
           width: 288px;
           height: 288px;
           margin: 0 auto;
-          
+
           &:after {
             content: "";
             display: block;
@@ -130,29 +106,29 @@
             border-radius: 50%;
             border: 22px solid white;
           }
-          
+
           .text {
-          
+
             float:left;
             width:100%;
             padding-top: 15%;
             text-align:center;
             color:white;
-            
+
             .subhead {
-            
+
               @include font-size(2);
-            
+
             }
-            
+
           } //.text
-        
+
         } //.circle
-      
+
       } //.circle-attention
-    
+
     } //.mentor-header
-    
+
   } //.dashboard-header
 
 } //#mentorDashboard

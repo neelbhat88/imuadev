@@ -2,36 +2,36 @@
   <div wait-to-load="{{student_with_modules_progress}}">
 
     <div class="dashboard-header dashboard-header--student">
-      
+
       <div class="student-header--wrapper">
-      
+
         <div class="student-header--content clear">
-        
+
           <div class="progressCircle-big--container">
-        
+
             <a class="js-nav-link" ng-href="#/progress/{{current_user.id}}">
-        
+
               <div class="progressCircle-big">
               	<div class="big-progress-circle" ng-if="student_with_modules_progress">
               		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
               	</div>
               </div>
-            
+
             </a>
-            
+
           </div> <!-- progressCircle-big--container -->
-          
+
           <div class="greeting">
             <h5 class="greeting__small">Hey there {{student.first_name}},</h5>
             <h2 class="greeting__large">Welcome back!</h2>
           </div>
-          
+
         </div> <!-- /student-header--content -->
 
       </div> <!-- student-header--wrapper -->
-      
-    </div>
 
+    </div><!-- dashboard-header--student -->
+    
     <div class="pal dashboard-attention dashboard-attention--student displayNone">
       <div>This is where things that need attention go</div>
     </div>
@@ -59,7 +59,7 @@
             <div class="section--subhead">Next Milestones</div>
 
             <div class="yes-no-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
-              <div class="yes-no-item-unstatisfied">
+              <div class="yes-no-item-unstatisfied {{milestone.module}}">
 
                 <h6>{{milestone | printMilestone}}</h6>
                 <label for="yesNoCheckbox">
