@@ -12,6 +12,7 @@ class UserRepository
     last_name = userObj[:last_name]
     phone = userObj[:phone]
     avatar = userObj[:avatar]
+    class_of = userObj[:class_of]
 
     user = User.find(id)
 
@@ -19,14 +20,16 @@ class UserRepository
       result = user.update_attributes(
                                   :first_name => first_name,
                                   :last_name => last_name,
-                                  :phone => phone
+                                  :phone => phone,
+                                  :class_of => class_of
                                 )
     else
       result = user.update_attributes(
                                   :first_name => first_name,
                                   :last_name => last_name,
                                   :phone => phone,
-                                  :avatar => avatar
+                                  :avatar => avatar,
+                                  :class_of => class_of
                                 )
     end
 
@@ -81,6 +84,7 @@ class UserRepository
 
     if user.role == Constants.UserRole[:STUDENT]
       user.time_unit_id = RoadmapRepository.new.get_time_units(user.organization_id)[0].id
+      user.class_of = user_obj[:class_of]
     end
 
     if user.save
@@ -211,38 +215,5 @@ class UserRepository
 
   def are_related?(studentId, mentorId)
     return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
-  end
-end
-
-class OrgUser
-  attr_accessor :id, :email, :first_name, :last_name, :phone, :role, :organization_id
-
-  def initialize(user_obj)
-    @id = user_obj.id
-    @email = user_obj.email
-    @first_name = user_obj.first_name
-    @last_name = user_obj.last_name
-    @phone = user_obj.phone
-    @role = user_obj.role
-    @organization_id = user_obj.organization_id
-  end
-
-  def create(user_obj)
-
-
-  end
-end
-
-class Student < OrgUser
-  attr_accessor :time_unit_id
-
-  def initialize(user_obj)
-    super
-
-    @time_unit_id = user_obj.time_unit_id
-  end
-
-  def create(user_obj)
-
   end
 end

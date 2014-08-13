@@ -11,10 +11,11 @@ angular.module('myApp')
       var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
-      				.attr("id", scope.student.user.id)
+      				.attr("id", scope.student.id)
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
+                .attr("id", "svg" + scope.student.id)
       			   .append("g")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
@@ -22,8 +23,8 @@ angular.module('myApp')
 
       scope.render = function(student) {
         chart.selectAll("g").remove();
-        d3.selectAll("circle").remove();
-        d3.selectAll("pattern").remove();
+        d3.select("#svg" + scope.student.id + " circle").remove();
+        d3.select("#svg" + scope.student.id + " pattern").remove();
 
         var color = d3.scale.ordinal()
             .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
@@ -52,18 +53,18 @@ angular.module('myApp')
             .outerRadius(radius)
             .innerRadius(radius - 14);
 
-        var svg = $('#' + student.user.id + ' svg')[0];
+        var svg = $('#' + student.id + ' svg')[0];
 
         var photoCircle = d3.select(svg)
                             .append("circle")
                             .attr("cx", width - 120)
                             .attr("cy", height - 120)
                             .attr("r", radius-20)
-                            .style("fill", "url(#photo"+student.user.id+")");
+                            .style("fill", "url(#photo"+student.id+")");
 
         var image = d3.select(svg)
                         .append("pattern")
-                        .attr("id", "photo" + student.user.id)
+                        .attr("id", "photo" + student.id)
                         .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", 1)
@@ -73,7 +74,7 @@ angular.module('myApp')
                         .attr("y", 0)
                         .attr("width", width-40)
                         .attr("height", height-40)
-                        .attr("xlink:href", student.user.square_avatar_url);
+                        .attr("xlink:href", student.square_avatar_url);
 
         var arc2 = d3.svg.arc().outerRadius(radius - 40);
 
