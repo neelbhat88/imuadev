@@ -5,9 +5,13 @@ angular.module('myApp')
     $scope.semester_service_hours = 0
 
     $scope.$watch 'user_service_activities', () ->
+      $scope.loaded_semester_service_hours = false
+      $scope.semester_service_hours = 0
       for activity in $scope.user_service_activities
         if activity.events
           for event in activity.events
+            if event.hours
+              $scope.semester_service_hours += parseFloat event.hours
             $scope.semester_service_hours += parseFloat event.hours
       $scope.loaded_semester_service_hours = true
     , true
