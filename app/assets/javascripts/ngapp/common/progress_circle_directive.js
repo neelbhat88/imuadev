@@ -15,6 +15,7 @@ angular.module('myApp')
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
+                .attr("id", "svg" + scope.student.user.id)
       			   .append("g")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
@@ -22,8 +23,8 @@ angular.module('myApp')
 
       scope.render = function(student) {
         chart.selectAll("g").remove();
-        d3.selectAll("circle").remove();
-        d3.selectAll("pattern").remove();
+        d3.select("#svg" + scope.student.user.id + " circle").remove();
+        d3.select("#svg" + scope.student.user.id + " pattern").remove();
         var color = d3.scale.ordinal()
             .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
 
