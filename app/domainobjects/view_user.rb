@@ -1,7 +1,7 @@
 class ViewUser
 	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial,
 								:phone, :role, :avatar_url,
-								:organization_id, :time_unit_id
+								:organization_id, :time_unit_id, :class_of
 
 	def initialize(user)
 		@id = user.id
@@ -15,5 +15,11 @@ class ViewUser
 		@organization_id = user.organization_id
 		@square_avatar_url = user.avatar.url(:square)
 		@time_unit_id = user.time_unit_id
+		@class_of = user.class_of.to_i
+
+		@is_student = user.student?
+		@is_mentor = user.mentor?
+		@is_org_admin = user.org_admin?
+		@is_super_admin = user.super_admin?
 	end
 end
