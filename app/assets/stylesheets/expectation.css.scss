@@ -41,6 +41,33 @@
 
 }
 
+.expectationMiddle {
+
+  background: $grey;
+
+  .progressCircle-big--container {
+
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    border-right: 1px solid $darkborder;
+
+  }
+
+  .circles {
+
+    width: 80%;
+    float: left;
+    padding-top: 80px;
+    text-align: center;
+    color: white();
+
+  }
+
+}
+
 .organizationExpectationContainer {
 
   margin-top: 20px;
