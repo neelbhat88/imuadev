@@ -2,6 +2,12 @@
 
   <h4>{{student.first_last_initial}}'s Expectations</h4>
   <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
+    <div class="expectations-met-message" ng-if="meetingExpectations">
+      <h4>Meeting Expectations!</h4>
+    </div>
+    <div class="expectations-not-met-message" ng-if="!meetingExpectations">
+      <h4>Not Meeting Expectations!</h4>
+    </div>
     <div class="expectations-list-item" ng-repeat="expectation in expectations">
       <div class="expectation-title">{{expectation.title}}</div>
       <div class="expectation-btn-group">

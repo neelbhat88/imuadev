@@ -51,12 +51,12 @@ angular.module('myApp')
               break
 
         $scope.groupedStudents = _.groupBy($scope.students_with_progress, "class_of")
-      ExpectationService.getUserExpectations(student)
-        .success (data) ->
-          for ue in data.user_expectations
-            if ue.status >= 2
-              $scope.attention_students.push(ue.user_id)
-              break
+      # ExpectationService.getUserExpectations(student)
+      #   .success (data) ->
+      #     for ue in data.user_expectations
+      #       if ue.status >= 2
+      #         $scope.attention_students.push(ue.user_id)
+      #         break
     $scope.loaded_users = true
 
     $scope.fullName = (user) ->
