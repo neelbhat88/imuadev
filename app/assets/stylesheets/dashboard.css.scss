@@ -4,6 +4,7 @@
 	width: 100%;
 	padding: 60px 0;
 	margin: 0;
+	border-bottom: 1px solid $darkborder;
 }
 
 .dashboard-content {
@@ -16,7 +17,14 @@
   
 /***** Student Dashboard Styles *****/
 
-#studentDashboard {  
+#studentDashboard {
+
+  .dashboard-header {
+  
+  	background: $grey;
+  	color: white;
+  
+  }
 
   .dashboard-content--student {
     
