@@ -63,6 +63,21 @@
 			width: 31%;
 			margin: 1%;
 			float: left;
+
+			.section--inner {
+				padding: 40px 20px;
+			}
+
+			.yes-no--point-circle {
+				@each $category, $color in $colormap {
+					&.color--#{$category} { border: 5px solid $color; color: $color; }
+				}
+			}
+
+		}
+
+		.list-header {
+			text-align: center;
 		}
 
   } //.dashboard-content--student

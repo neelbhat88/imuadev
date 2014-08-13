@@ -400,10 +400,6 @@ header {
     margin: 0 auto;
     padding-bottom: 10px;
 
-    @each $category, $color in $colormap {
-      &.color--#{$category} { background: $color; color: white; }
-    }
-
     .point-circle--inside {
 
       padding-top: 20px;
