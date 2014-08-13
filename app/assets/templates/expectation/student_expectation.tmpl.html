@@ -46,21 +46,25 @@
 
   <div class="expectationLower">
 
-    <div class="module-header">
-      <h4 class="bold">
-        {{student.first_name}}'s Expectations
-      </h4>
-    </div>
+    <div class="expectationLower--container">
 
-    <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
-      <div class="expectations-list-item" ng-repeat="expectation in expectations">
-        <div class="expectation-title">{{expectation.title}}</div>
-        <div class="expectation-btn-group">
-          <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-          <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-          <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+      <div class="module-header">
+        <h4 class="bold">
+          {{student.first_name}}'s Expectations
+        </h4>
+      </div>
+
+      <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
+        <div class="expectations-list-item" ng-repeat="expectation in expectations">
+          <div class="expectation-title">{{expectation.title}}</div>
+          <div class="expectation-btn-group">
+            <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+            <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+            <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+          </div>
         </div>
       </div>
+
     </div>
 
   </div>
