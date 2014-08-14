@@ -6,6 +6,7 @@ angular.module('myApp')
     $scope.student = student
     $scope.orgId = $scope.student.organization_id
     $scope.studentId = $scope.student.id
+    $scope.meetingExpectations = true
 
     $scope.expectations = []
 
@@ -27,6 +28,7 @@ angular.module('myApp')
                   break
               if not e.user_expectation?
                 e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
+            $scope.recalculateMeetingExpectations()
             $scope.loaded_expectations = true
 
     $scope.setUserExpectationStatus = (expectation, status) ->
@@ -38,6 +40,14 @@ angular.module('myApp')
             ExpectationService.saveUserExpectation(user_expectation)
               .success (data) ->
                 e.user_expectation = data.user_expectation
+                $scope.recalculateMeetingExpectations()
             break
+
+    $scope.recalculateMeetingExpectations = () ->
+      for expectation in $scope.expectations
+        if expectation.user_expectation.status > 0
+          $scope.meetingExpectations = false
+          return
+      $scope.meetingExpectations = true
 
 ]
