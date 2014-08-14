@@ -11,9 +11,6 @@
   background-color: $darkgrey;
   color: white;
 	width: 100%;
-  padding: $wrapper;
-  padding-top: 60px;
-  padding-bottom: 60px;
 }
 
 /***** Student Dashboard Styles *****/
@@ -152,5 +149,9 @@
     } //.mentor-header
 
   } //.dashboard-header
+
+	.dashboard-content--mentor {
+		padding: 60px $wrapper-width;
+	}
 
 } //#mentorDashboard
