@@ -23,8 +23,7 @@
 
               <div class="module-data__item__test-date">
                 <span ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</span>
-                <datepicker ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" show-weeks="false"></datepicker>
-                <!-- <input datepicker-popup="dd-MM-yyyy" ng-model="userTest.new_date" class="form-control" datepicker-options="dateOptions" show-weeks='false' is-open="opened" min="minDate" max="'2015-06-22'" date-disabled="disabled(date, mode)" close-text="Close" /> -->
+                  <input class="form-control" type="text" ng-show="userTest.editing && userTest.new_orgTest != null" ng-model="userTest.new_date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
               </div>
 
               <div class="module-data__item__test-name">
