@@ -1,15 +1,11 @@
 .orgTestContainer {
-  @extend .organizationExpectationContainer;
   width: 500px;
 
   .orgTests-list {
-    @extend .expectations-list;
 
     .orgTests-list__item {
-      @extend .expectations-list__item;
 
       .orgTests-list__item__title {
-        @extend .expectations-list__item__title;
         border-right: 0px;
       }
 
@@ -23,12 +19,10 @@
       }
 
       .orgTests-list__item__icons {
-        @extend .expectations-list__item__icons;
       }
     }
 
     .add-orgTest__button {
-      @extend .add-expectation__button;
     }
   }
 }
