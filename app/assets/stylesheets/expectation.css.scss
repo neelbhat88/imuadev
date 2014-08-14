@@ -57,7 +57,7 @@
 
   }
 
-  .circles {
+  .meetingExpectations {
 
     width: 80%;
     float: left;
@@ -73,12 +73,28 @@
 
   background: $darkgrey;
   min-height: 500px;
-  border-top: 10px solid $darkborder;
+  border-top: 10px solid $blue;
+  padding: $wrapper;
   color: white;
   text-align: center;
 
   .expectationLower--container {
       padding: 40px 0;
+
+      .module-header {
+        margin-bottom: 40px;
+      }
+
+      .expectations-list-item {
+        width: 48%;
+        float: left;
+
+        .expectation-btn-group--container {
+          width: 65%;
+        }
+
+      }
+
   }
 
 }

@@ -80,6 +80,15 @@
 			text-align: center;
 		}
 
+		.studentExpectationContainer {
+			.section--inner {
+				.expectations-met-message {
+					text-align: center;
+					padding-bottom: 20px;
+				}
+			}
+		}
+
   } //.dashboard-content--student
 
 } //#studentDashboard
