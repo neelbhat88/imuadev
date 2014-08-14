@@ -69,8 +69,9 @@
             <h5 class="bold">Nice work {{student.first_name}}!</h5> <h6>You're meeting all of the Expectations!</h6>
           </div>
           <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
+            <div class="expectations-met-message"><h6>You have a few expectations that need work:<h6></div>
+
             <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
-              <div class="expectations-met-message"><h6>You have a few expectations that need work:<h6></div>
               <div class="expectation-title"><h5>{{expectation.title}}</h5></div>
               <div class="expectation-btn-group--container clear">
                 <div class="slider-bg"></div>
