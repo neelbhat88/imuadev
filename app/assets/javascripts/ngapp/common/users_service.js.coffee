@@ -33,6 +33,12 @@ angular.module('myApp')
   @getAssignedStudents = (userId) ->
     $http.get "/api/v1/users/#{userId}/relationship/students"
 
+  @getAssignedStudentsForGroup = (userIds) ->
+    $http.get "/api/v1/relationship/assigned_students_for_group",
+      {
+        params: {'user_ids[]': userIds}
+      }
+
   @getAssignedMentors = (userId) ->
     $http.get "/api/v1/users/#{userId}/relationship/mentors"
 

@@ -1,32 +1,24 @@
-/* ========================= */
-/*           Colors          */
-/* ========================= */
-
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
-
 .progressUpper {
 
   background: $grey;
   color: white;
 	border-bottom: 1px $darkborder solid;
-  
+
   ul {
-  
+
     margin-bottom: 0;
-    
+
   	li {
-  	
+
   		float: left;
-  		  	
+
   	}
-  	
+
     .progressStudent {
-    
+
       width: 70%;
       padding: 25px 100px 0 100px;
-            
+
       select {
 
       	height: 60px;
@@ -34,37 +26,37 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	background: $grey;
       	border: none;
     		border-bottom: 1px rgb(65, 66, 67) solid;
-      
+
       }
-    
+
     }
-    
+
     .narrow {
-    
+
       width: 15%;
       padding: 60px 0;
       text-align: center;
       border-left: 1px solid $darkborder;
-    
+
     }
-  
+
   }
 
 }
 
 .progressMiddle {
-    
+
   background: $grey;
-  
+
   .progressCircle-big--container {
-  
+
   	float: left;
   	width: 20%;
   	text-align: center;
 	  padding-top: 60px;
     padding-bottom: 60px;
     border-right: 1px solid $darkborder;
-  	
+
   }
 
   .circles {
@@ -80,7 +72,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       width: 20%;
       text-align: center;
       opacity: 0.3;
-      
+
       &.inactive {
         //display: none;
       }
@@ -92,23 +84,23 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
         }
 
     }
-    
+
     .selectedCircle {
-    
+
     	opacity: 1;
-    
+
     }
-    
+
     .notSelectedCircle {
-    
+
     	&:hover {
-    	
+
     		opacity: 0.75;
-    	
+
     	}
-    
+
     }
-          
+
   }
 
 }
@@ -119,7 +111,7 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
   min-height: 500px;
 
   .module-circle {
-  
+
       @each $category, $color in $colormap {
 
       &.color--#{$category} { color: $color; }
@@ -134,51 +126,51 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
     padding: 40px 0;
     text-align: center;
     color: white;
-    
+
     @each $category, $color in $colormap {
 
       &.color--#{$category} { border-top: 6px solid $color; }
 
     }
-      
+
     .section-wrapper {
 
       padding: $wrapper;
       margin-top: 20px;
-    
+
         .section {
-      
+
       	width: 31%;
         margin: 1%;
       	float: left;
-      	
+
       	.section--header {
-      	      	
+
       		padding: 20px;
       		border-bottom: 1px solid white(0.1);
-      	
+
       	}
-      	
+
       	.section--inner {
-      	
+
 	      	padding: 40px;
-      	
+
       	  .section--subsection {
-      	  
+
       	    margin-bottom: 20px;
-      	  
+
       	  	.section--subhead {
-      	  	
+
       			  padding-bottom: 20px;
       			  border-bottom: 1px solid white(0.1);
       			  margin-bottom: 20px;
-      	  	
+
       	  	}
-      	  
+
       	  }
-      	  
+
       	  .module-data__button {
-      	  
+
       	  	background: white(0.25);
       	  	padding: 10px;
       	  	width: 35%;
@@ -186,463 +178,425 @@ $darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, 
       	  	@include font-size(1.2);
       	  	@include border-radius(4px);
       	  	opacity: 0.4;
-      	  	
+
       	  	&:hover {
-      	  	
+
       	  		opacity: 1;
-      	  	
+
       	  	}
-      	  
+
       	  } //.module-data__button
-      	  
+
       	  .button-wide {
-      	  	
+
       	  		width: 60%;
               @include font-size();
-      	  	
+
     	  	}
-      	
+
       	}
-      	      
+
       }
-      
-    	.section--milestones {
-    	
-      	.section--inner {
-      	      	
-      		.yes-no-item {
-      		      			
-      			width: 44%;
-      			float: left;
-      			margin: 10px 3%;
-      			
-      			.yes-no--point-circle {
-      			
-      				@include circle(90px);
-      				background: white(1.0);
-      				margin: 0 auto;
-      				padding-bottom: 10px;
-      				
-      				.point-circle--inside {
-      				
-      					padding-top: 20px;
-      				
-      				}
-      			
-      			} //yes-no--point-circle
-      			
-      			.yes-no-item-statisfied {
-      			
-      				opacity: 0.6;
-      				
-      				.point-circle--inside {
-      				
-      					padding-top: 10px;
-      				
-      				}
-      			
-      			}
-                  		
-      		} //yes-no-item
-      	
-      	}
-      	
-    	} //section--milestones
-      
+
     	.numbers-large {
-    	
+
     		@include font-size(10.0);
     		font-weight: $light;
-    	
+
     	}
 
     } //.section-wrapper
-    
+
     /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
-            
+
     .academicsProgressContainer {
-    
-    	.section { 
-    	
+
+    	.section {
+
     	  background: $academics-color-dark;
-        
+
         .section--header { background: $academics-color; }
-    	
+
     	}
-    	    	
+
     	.section--grades {
-    	
+
     		.section--inner {
-    		
+
     			.module-data__item {
-    			
+
     			  padding-bottom: 20px;
     			  border-bottom: 1px solid white(0.1);
     			  margin-bottom: 20px;
-    			
+
     				.module-data__item__class {
-    				
+
     					width: 60%;
     					float: left;
 	    			  text-align: left;
-    				
+
     				}
-    				
+
     				.module-data__item__grade {
-    				
+
     					width: 30%;
     					float: left;
     					text-align: center;
-    				
+
     				}
-    				
+
     				.module-data__item__icons {
-    				
+
     					width: 10%;
     					float: left;
     					text-align: right;
-    				
+
     				}
-    			
+
     			} //.module-data__item
-    		
+
     		}
-    	
+
     	} // .section--grades
-    	
+
     	.section--milestones {
-      	
+
         	.section--inner {
-        	      	
+
         		.yes-no-item {
-        		      			
+
         			.yes-no--point-circle {
-        			
-        				color: $academics-color;
-        			
+
+                background: white;
+                color: $academics-color;
+
         			} //yes-no--point-circle
-                    		
+
         		} //yes-no-item
-        	
+
         	}
-        	
+
       	} //section--milestones
 
     } //academicsProgressContainer
-    
+
     .serviceProgressContainer {
-    
-    	.section { 
-  	
+
+    	.section {
+
     	  background: $service-color-dark;
-        
+
         .section--header { background: $service-color; }
-    	
+
     	}
-    
+
 			.module-data__item {
-    			
+
 			  padding-bottom: 20px;
 			  border-bottom: 1px solid white(0.1);
 			  margin-bottom: 20px;
-			  
+
 				.module-data__item__activityContainer {
-				
+
           padding-bottom: 20px;
   			  border-bottom: 1px solid white(0.1);
   			  margin-bottom: 20px;
-    			  
+
   				.module-data__item__activity {
-  				
+
   					width: 80%;
   					float: left;
     			  text-align: left;
-  				
+
   				}
-  				  				
+
   				.module-data__item__icons {
-  				
+
   					width: 20%;
   					float: left;
   					text-align: right;
-  				
+
   				}
-				
+
 				}//__activityContainer
-				
+
 				.module-data__item__event {
-				
+
 					width: 100%;
 					padding: 0 20px;
 					@include font-size(1.2);
 					opacity: 0.6;
-					
+
 					&:hover {
-					
+
 						opacity: 1;
-					
+
 					}
-					
+
 					.module-data__item__event--date {
-					
+
 						width: 25%;
 						float: left;
 						text-align: left;
-					
+
 					}
-					
+
 					.module-data__item__event--description {
-					
+
 						width: 50%;
 						float: left;
 						text-align: left;
-					
+
 					}
-					
+
 					.module-data__item__event--hours {
-					
+
 						width: 15%;
 						float: left;
 						text-align: center;
-					
+
 					}
-					
+
 					.module-data__item__icons {
-					
+
 						width: 10%;
 						float: left;
 						text-align: right;
-					
+
 					}
-				
+
 				}
-				
+
 
       } //module-data__item
-      
+
     	.section--milestones {
-    	
+
       	.section--inner {
-      	      	
+
       		.yes-no-item {
-      		      			
+
       			.yes-no--point-circle {
-      			
-      				color: $service-color;
-      			
+
+      				background: white;
+              color: $service-color;
+
       			} //yes-no--point-circle
-                  		
+
       		} //yes-no-item
-      	
+
       	}
-      	
+
     	} //section--milestones
-    
+
     } //serviceProgressContainer
-    
+
     .extracurricularProgressContainer {
-    
-    	.section { 
-  	
+
+    	.section {
+
     	  background: $extracurricular-color-dark;
-        
+
         .section--header { background: $extracurricular-color; }
-    	
+
     	}
-    	
+
 			.module-data__item {
-    			
+
 			  padding-bottom: 20px;
 			  border-bottom: 1px solid white(0.1);
 			  margin-bottom: 20px;
-			  
+
 				.module-data__item__activityContainer {
-				
+
           padding-bottom: 20px;
   			  border-bottom: 1px solid white(0.1);
   			  margin-bottom: 20px;
-    			  
+
   				.module-data__item__activity {
-  				
+
   					width: 80%;
   					float: left;
     			  text-align: left;
-  				
+
   				}
-  				  				
+
   				.module-data__item__icons {
-  				
+
   					width: 20%;
   					float: left;
   					text-align: right;
-  				
+
   				}
-				
+
 				}//__activityContainer
-				
+
 				.module-data__item__eventContainer {
-				
+
 					width: 100%;
 					padding: 0 20px;
 					@include font-size(1.2);
 					opacity: 0.6;
-					
+
 					&:hover {
-					
+
 						opacity: 1;
-					
+
 					}
-					
+
 					.module-data__item__event--leadership {
-					
+
 						width: 35%;
 						float: left;
 						text-align: left;
-					
+
 					}
-					
+
 					.module-data__item__event--description {
-					
+
 						width: 55%;
 						float: left;
 						text-align: left;
-					
+
 					}
-										
+
 					.module-data__item__icons {
-					
+
 						width: 10%;
 						float: right;
 						text-align: right;
-					
+
 					}
-				
+
 				}
-				
+
 
       } //module-data__item
-    	
+
     	.section--milestones {
-      	
+
         	.section--inner {
-        	      	
+
         		.yes-no-item {
-        		      			
+
         			.yes-no--point-circle {
-        			
-        				color: $extracurricular-color;
-        			
+
+        				background: white;
+                color: $extracurricular-color;
+
         			} //yes-no--point-circle
-                    		
+
         		} //yes-no-item
-        	
+
         	}
-        	
+
       	} //section--milestones
 
     } //extracurricularProgressContainer
-    
+
     .collegePrepProgressContainer {
-    
-    	.section { 
-  	
+
+    	.section {
+
     	  background: $college_prep-color-dark;
-        
+
         .section--header { background: $college_prep-color; }
-    	
+
     	}
-    	
+
     	.section--milestones {
-      	
+
         	.section--inner {
-        	      	
+
         		.yes-no-item {
-        		      			
+
         			.yes-no--point-circle {
-        			
-        				color: $college_prep-color;
-        			
+
+        				background: white;
+                color: $college_prep-color;
+
         			} //yes-no--point-circle
-                    		
+
         		} //yes-no-item
-        	
+
         	}
-        	
+
       	} //section--milestones
 
     } //collegePrepProgressContainer
-        
+
     .testingProgressContainer {
-    
-    	.section { 
-  	
+
+    	.section {
+
     	  background: $testing-color-dark;
-        
+
         .section--header { background: $testing-color; }
-    	
+
     	}
-    	
+
 			.module-data__item {
-			
+
 			  padding-bottom: 20px;
 			  border-bottom: 1px solid white(0.1);
 			  margin-bottom: 20px;
-			
+
 				.module-data__item__test-date {
-				
+
 					width: 25%;
 					float: left;
   			  text-align: left;
-				
+
 				}
-				
+
 				.module-data__item__test-name {
-				
+
 					width: 45%;
 					float: left;
 					text-align: left;
-				
+
 				}
-				
+
 				.module-data__item__test-score {
-				
+
 					width: 20%;
 					float: left;
 					text-align: left;
-				
+
 				}
-				
+
 				.module-data__item__icons {
-				
+
 					width: 10%;
 					float: right;
 					text-align: right;
-				
+
 				}
-			
+
 			} //.module-data__item
 
-    	
+
     	.section--milestones {
-      	
+
         	.section--inner {
-        	      	
+
         		.yes-no-item {
-        		      			
+
         			.yes-no--point-circle {
-        			
-        				color: $testing-color;
-        			
+
+        				background: white;
+                color: $testing-color;
+
         			} //yes-no--point-circle
-                    		
+
         		} //yes-no-item
-        	
+
         	}
-        	
+
       	} //section--milestones
 
     } //testingProgressContainer
-  
+
   } //.module-data-container
-  
+
 } //.progressLower

@@ -1,13 +1,19 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService',
-  ($route, $scope, student, current_user, ExpectationService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService', 'ProgressService',
+  ($route, $scope, student, current_user, ExpectationService, ProgressService) ->
 
     $scope.current_user = current_user
     $scope.student = student
     $scope.orgId = $scope.student.organization_id
     $scope.studentId = $scope.student.id
+    $scope.meetingExpectations = true
 
     $scope.expectations = []
+
+    ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
+      $scope.modules_progress = student_with_modules_progress.modules_progress
+      $scope.selected_module = $scope.modules_progress[0]
+      $scope.student_with_modules_progress = student_with_modules_progress
 
     ExpectationService.getExpectations($scope.orgId)
       .success (data) ->
@@ -22,6 +28,7 @@ angular.module('myApp')
                   break
               if not e.user_expectation?
                 e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
+            $scope.recalculateMeetingExpectations()
             $scope.loaded_expectations = true
 
     $scope.setUserExpectationStatus = (expectation, status) ->
@@ -33,6 +40,14 @@ angular.module('myApp')
             ExpectationService.saveUserExpectation(user_expectation)
               .success (data) ->
                 e.user_expectation = data.user_expectation
+                $scope.recalculateMeetingExpectations()
             break
+
+    $scope.recalculateMeetingExpectations = () ->
+      for expectation in $scope.expectations
+        if expectation.user_expectation.status > 0
+          $scope.meetingExpectations = false
+          return
+      $scope.meetingExpectations = true
 
 ]

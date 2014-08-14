@@ -8,6 +8,7 @@ angular.module('myApp')
   $scope.milestones = []
   $scope.needs_attention = false
   $scope.expectations = []
+  $scope.meetingExpectations = true
 
   setMiddleDimensions = () ->
     windowWidth = $(window).outerWidth()
@@ -60,8 +61,10 @@ angular.module('myApp')
             for ue in data.user_expectations
               if e.id == ue.expectation_id
                 e.user_expectation = ue
-                if ue.status >= 2
-                  $scope.needs_attention = true
+                if ue.status > 0
+                  $scope.meetingExpectations = false
+                  if ue.status >= 2
+                    $scope.needs_attention = true
                 break
             if not e.user_expectation?
               e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
