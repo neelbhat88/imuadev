@@ -205,6 +205,10 @@ h5 {
 
 }
 
+.big-text {
+  h5 { line-height: 1rem; }
+}
+
 h6 {
 
   @include font-size(1.8);

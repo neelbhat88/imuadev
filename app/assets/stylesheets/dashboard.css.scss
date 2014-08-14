@@ -11,6 +11,13 @@
   background-color: $darkgrey;
   color: white;
 	width: 100%;
+
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 }
 
 /***** Student Dashboard Styles *****/
@@ -65,6 +72,10 @@
 				@each $category, $color in $colormap {
 					&.color--#{$category} { border: 5px solid $color; color: $color; }
 				}
+			}
+
+			.module-data__button {
+				color: white;
 			}
 
 		}
