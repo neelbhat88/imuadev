@@ -42,10 +42,12 @@ $darkyellow: rgb(187,146,26); // #bb921a
 $purple: rgb(178,97,235); // #9665aa
 $darkpurple: rgb(138,67,187); //#8a43bb
 
-$light-grey: #c0c0c0;
+$lightgrey: rgb(192,192,192); // #c0c0c0
 $grey: rgb(25,26,27); // #191a1b
 $darkgrey: rgb(18,19,20); // #121314
+$boxgrey: rgb(31,31,31); // #1f1f1f
 $grey-hover: #888;
+
 $ink: rgb(43,45,47); // #2b2d2f
 
 $button-blue: #53b5e6;
@@ -201,6 +203,10 @@ h5 {
   @include font-size(3);
   font-weight: $light;
 
+}
+
+.big-text {
+  h5 { line-height: 1rem; }
 }
 
 h6 {
@@ -383,6 +389,85 @@ header {
 }
 
 /* ===============================================
+   Modular Section Classes
+   =============================================== */
+
+.section-wrapper {
+
+  padding: $wrapper;
+  margin-top: 20px;
+
+    .section {
+
+      width: 31%;
+      margin: 1%;
+      float: left;
+
+      .section--header {
+
+        padding: 20px;
+        border-bottom: 1px solid white(0.1);
+        text-align: center;
+
+      }
+
+      .section--inner {
+
+        padding: 40px;
+
+        .section--subsection {
+
+          margin-bottom: 20px;
+
+          .section--subhead {
+
+            padding-bottom: 20px;
+            border-bottom: 1px solid white(0.1);
+            margin-bottom: 20px;
+
+          }
+
+        }
+
+        .module-data__button {
+
+          background: white(0.25);
+          padding: 10px;
+          width: 35%;
+          margin: 0 auto;
+          @include font-size(1.2);
+          @include border-radius(4px);
+          opacity: 0.4;
+
+          &:hover {
+
+            opacity: 1;
+
+          }
+
+        } //.module-data__button
+
+        .button-wide {
+
+            width: 60%;
+            @include font-size();
+
+        }
+
+      }
+
+  }
+
+  .numbers-large {
+
+    @include font-size(10.0);
+    font-weight: $light;
+
+  }
+
+} //.section-wrapper
+
+/* ===============================================
    Milestone Classes
    =============================================== */
 
@@ -390,8 +475,9 @@ header {
 
   width: 44%;
   min-width: 175px;
-  float: left;
-  margin: 10px 3%;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 3% 20px 3%;
   text-align: center;
 
   .yes-no--point-circle {
@@ -433,7 +519,7 @@ header {
 } //yes-no-item
 
 /* ===============================================
-   Milestone Classes
+   Expectation Classes
    =============================================== */
 
 .expectations-list-item {

@@ -147,7 +147,7 @@ html {
   	
   	a {
   	
-			color: $light-grey;
+			color: $lightgrey;
   	
   		&:hover {
   		
@@ -161,8 +161,8 @@ html {
   	.login-link--border {
   	
   		padding: 10px 30px;
-  		color: $light-grey;
-  		border: 1px solid $light-grey;
+  		color: $lightgrey;
+  		border: 1px solid $lightgrey;
   		@include border-radius(30px);
   		
   		&:hover {
@@ -210,7 +210,7 @@ html {
   	  
       .subhead {
       
-      	color: $light-grey;
+      	color: $lightgrey;
       
       }
   	
@@ -236,8 +236,8 @@ html {
 	  		width: 200px;
 	  		margin: 0 auto;
 	  		padding: 10px 30px;
-    		color: $light-grey;
-    		border: 1px solid $light-grey;
+    		color: $lightgrey;
+    		border: 1px solid $lightgrey;
     		@include border-radius(30px);
     		
     		&:hover {
@@ -289,7 +289,7 @@ html {
 	  	width: 50%;
     	display: inline-block;
 	  	padding: 40px 4% 40px 0;
-	  	border-right: 1px solid $light-grey;
+	  	border-right: 1px solid $lightgrey;
 	  	margin-right: 5%;
 	  	text-align: right;
 	  	
@@ -305,7 +305,7 @@ html {
 	  	width: 50%;
     	display: inline-block;
 	  	padding: 40px 0 40px 4%;
-	  	border-left: 1px solid $light-grey;
+	  	border-left: 1px solid $lightgrey;
 	  	margin-left: 5%;
 	  	text-align: left;
 	  	

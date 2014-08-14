@@ -155,7 +155,7 @@
     color: $ink;
     text-align: center;
     font-size: 22px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
   }
 
@@ -169,13 +169,13 @@
   .semester__header-title--editing {
     padding: 10px;
     background-color: #e0e0e0;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
   }
 
   .milestone {
     padding: 7px 26px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     width: 100%;
     border-top: none;
     display: inline-block;
@@ -203,7 +203,7 @@
       .milestone__info__weight {
         width: 100%;
         display: inline-block;
-        color: $light-grey;
+        color: $lightgrey;
       }
 
       .milestone__info__icons {
@@ -223,10 +223,10 @@
 
   .semester__footer {
     padding: 10px 10px 10px 20px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
     cursor: pointer;
-    color: $light-grey;
+    color: $lightgrey;
 
     &:hover {
       background-color: #e0fee0;
@@ -296,7 +296,7 @@
       margin-bottom: 15px;
       padding: 10px;
       padding-right: 14px;
-      border: 1px solid $light-grey;
+      border: 1px solid $lightgrey;
       background-color: white;
       img {
         margin-left: 0px;
