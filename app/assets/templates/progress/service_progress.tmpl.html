@@ -57,7 +57,7 @@
                   <div class="module-data__item__event--date">
 
                     <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</span>
-                    <datepicker ng-show="user_service_event.editing" ng-model="user_service_event.new_date" show-weeks="false"></datepicker>
+                    <input class="form-control" type="text" ng-show="user_service_event.editing" ng-model="user_service_event.new_date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
 
                   </div>
 
