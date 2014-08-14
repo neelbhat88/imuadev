@@ -56,23 +56,23 @@
 
             <% if current_user.mentor? || current_user.student? %>
             <li>
-              <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
+              <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
             </li>
             <% end %>
 
             <% if current_user.student? %>
             <li>
-              <a class="js-nav-link" href="#/progress/<%= current_user.id %>">Progress</a>
+              <a class="js-nav-link" href="#/progress/<%= current_user.id %>">My Progress</a>
             </li>
             <% end %>
 
             <% if current_user.student? %>
             <li>
-              <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">Expectations</a>
+              <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">My Expectations</a>
             </li>
             <% end %>
 
-            <% if !current_user.super_admin? %>
+            <% if current_user.org_admin? || current_user.mentor? %>
             <li>
               <a class="js-nav-link" href="#/roadmap/">Roadmap</a>
             </li>
