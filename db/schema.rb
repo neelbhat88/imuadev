@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140812151833) do
+ActiveRecord::Schema.define(:version => 20140814223619) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(:version => 20140812151833) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "expectations", ["organization_id", "title"], :name => "index_expectations_on_organization_id_and_title", :unique => true
 
   create_table "milestone_levels", :force => true do |t|
     t.integer  "milestone_id"
@@ -59,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20140812151833) do
     t.datetime "updated_at",      :null => false
   end
 
+  add_index "org_tests", ["organization_id", "title"], :name => "index_org_tests_on_organization_id_and_title", :unique => true
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -81,6 +85,8 @@ ActiveRecord::Schema.define(:version => 20140812151833) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
+
+  add_index "relationships", ["user_id", "assigned_to_id"], :name => "index_relationships_on_user_id_and_assigned_to_id", :unique => true
 
   create_table "roadmaps", :force => true do |t|
     t.string   "name"
@@ -125,6 +131,8 @@ ActiveRecord::Schema.define(:version => 20140812151833) do
     t.datetime "updated_at",     :null => false
   end
 
+  add_index "user_expectations", ["expectation_id", "user_id"], :name => "index_user_expectations_on_expectation_id_and_user_id", :unique => true
+
   create_table "user_extracurricular_activities", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -153,6 +161,8 @@ ActiveRecord::Schema.define(:version => 20140812151833) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "user_milestones", ["user_id", "milestone_id"], :name => "index_user_milestones_on_user_id_and_milestone_id", :unique => true
 
   create_table "user_service_activities", :force => true do |t|
     t.string   "name"
