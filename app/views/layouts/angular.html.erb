@@ -43,39 +43,39 @@
         <nav class="right">
           <ul>
             <% if current_user.super_admin? %>
-            <li>
-              <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
-            </li>
+              <li>
+                <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
+              </li>
             <% end %>
 
             <% if current_user.org_admin? %>
-            <li>
-              <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Users</a>
-            </li>
+              <li>
+                <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Users</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="#/roadmap/">Our Roadmap</a>
+              </li>
             <% end %>
 
-            <% if current_user.mentor? || current_user.student? %>
-            <li>
-              <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
-            </li>
+            <% if current_user.mentor? %>
+              <li>
+                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="#/roadmap/">Our Roadmap</a>
+              </li>
             <% end %>
 
             <% if current_user.student? %>
-            <li>
-              <a class="js-nav-link" href="#/progress/<%= current_user.id %>">My Progress</a>
-            </li>
-            <% end %>
-
-            <% if current_user.student? %>
-            <li>
-              <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">My Expectations</a>
-            </li>
-            <% end %>
-
-            <% if current_user.org_admin? || current_user.mentor? %>
-            <li>
-              <a class="js-nav-link" href="#/roadmap/">Roadmap</a>
-            </li>
+              <li>
+                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="#/progress/<%= current_user.id %>">My Progress</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">My Expectations</a>
+              </li>
             <% end %>
 
             <li class="dropdown cog js-cog">
