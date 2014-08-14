@@ -471,8 +471,9 @@ header {
 
   width: 44%;
   min-width: 175px;
-  float: left;
-  margin: 10px 3%;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 3% 20px 3%;
   text-align: center;
 
   .yes-no--point-circle {

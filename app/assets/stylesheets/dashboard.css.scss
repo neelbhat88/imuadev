@@ -59,6 +59,7 @@
 		.section {
 
 			background: $boxgrey;
+			text-align: center;
 
 			.yes-no--point-circle {
 				@each $category, $color in $colormap {
@@ -71,7 +72,6 @@
 		.studentExpectationContainer {
 			.section--inner {
 				.expectations-met-message {
-					text-align: center;
 					padding-bottom: 20px;
 				}
 			}
