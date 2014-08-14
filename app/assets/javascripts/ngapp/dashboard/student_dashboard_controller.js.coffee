@@ -65,7 +65,6 @@ angular.module('myApp')
                   $scope.meetingExpectations = false
                   if ue.status >= 2
                     $scope.needs_attention = true
-                if ue.stat
                 break
             if not e.user_expectation?
               e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
