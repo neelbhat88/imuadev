@@ -9,7 +9,7 @@ class Organization < ActiveRecord::Base
   has_many :org_tests, dependent: :destroy
 end
 
-class ViewOrganization
+class ViewOrganizationWithUsers
   attr_accessor :id, :name, :orgAdmins, :students, :mentors
 
   def initialize(org)

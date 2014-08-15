@@ -50,7 +50,7 @@ describe Api::V1::OrganizationController do
       it "returns 403 if :id is not current users organization" do
         subject.current_user.organization_id = 10
 
-        get :get_organization, {:id => 5555}
+        get :organization_with_users, {:id => 5555}
 
         expect(response.status).to eq(403)
       end
@@ -63,7 +63,7 @@ describe Api::V1::OrganizationController do
         org1 = create(:organization)
         org2 = create(:organization)
 
-        get :get_organization, {:id => org1.id}
+        get :organization_with_users, {:id => org1.id}
 
         expect(response.status).to eq(200)
         expect(json["organization"]["id"]).to eq(org1.id)

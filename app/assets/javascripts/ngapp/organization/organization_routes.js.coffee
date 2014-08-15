@@ -10,7 +10,7 @@ angular.module('myApp')
         organization: ['$route', '$q', 'OrganizationService', ($route, $q, OrganizationService) ->
           defer = $q.defer()
 
-          OrganizationService.getOrganization($route.current.params.id)
+          OrganizationService.getOrganizationWithUsers($route.current.params.id)
             .success (data) ->
               defer.resolve(data.organization)
 

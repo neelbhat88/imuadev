@@ -6,7 +6,7 @@ angular.module('myApp')
   $scope.current_user = current_user
   $scope.mentor = user
 
-  OrganizationService.getOrganization($scope.mentor.organization_id)
+  OrganizationService.getOrganizationWithUsers($scope.mentor.organization_id)
   .success (data) ->
     $scope.all_students = data.organization.students
 
