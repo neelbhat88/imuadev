@@ -153,13 +153,12 @@
         border-bottom: 1px solid white(0.1);
         margin-bottom: 20px;
 
-        .edit-icons {
-          display: inline-block;
-          margin-left: 10px;
-          opacity: 0.3;
-          &:hover { opacity: 1; }
-        }
+      }
 
+      .edit-icons {
+        display: inline-block;
+        opacity: 0.3;
+        &:hover { opacity: 1; }
       }
 
       .editor-wrapper {
@@ -192,60 +191,66 @@
 
     	}
 
-    	.section--grades {
+    	.module-data__item {
 
-    		.section--inner {
+        .item__key-class {
+          width: 70%;
+          float: left;
+        }
 
-    			.module-data__item {
+        .item__key-grade {
+          width: 30%;
+          float: left;
+        }
 
-    				.item__class {
+       .item__class {
 
-    					width: 60%;
-    					float: left;
-	    			  text-align: left;
+         width: 90%;
+         float: left;
+         text-align: left;
 
-    				}
+         .item__class-name {
+           width: 80%;
+           display: inline-block;
+         }
 
-    				.item__grade {
+         .item__class-grade {
+            width: 15%;
+            display: inline-block;
+            @include font-size(2.2);
+            font-weight: $light;
+         }
 
-    					width: 30%;
-    					float: left;
-    					text-align: center;
+       }
 
-    				}
+       .item__icons {
 
-    				.item__icons {
+         width: 10%;
+         float: left;
+         text-align: right;
 
-    					width: 10%;
-    					float: left;
-    					text-align: right;
+       }
 
-    				}
+     } //.module-data__item
 
-    			} //.module-data__item
+  	.section--milestones {
 
-    		}
+      	.section--inner {
 
-    	} // .section--grades
+      		.yes-no-item {
 
-    	.section--milestones {
+      			.yes-no--point-circle {
 
-        	.section--inner {
+              background: white;
+              color: $academics-color;
 
-        		.yes-no-item {
+      			} //yes-no--point-circle
 
-        			.yes-no--point-circle {
+      		} //yes-no-item
 
-                background: white;
-                color: $academics-color;
+      	}
 
-        			} //yes-no--point-circle
-
-        		} //yes-no-item
-
-        	}
-
-      	} //section--milestones
+    	} //section--milestones
 
     } //academicsProgressContainer
 
@@ -267,6 +272,7 @@
           .item__activity-name {
             @include font-size(2.2);
             font-weight: $bold;
+            margin-right: 10px;
           }
 
 				}
