@@ -68,7 +68,7 @@ Imua::Application.routes.draw do
 
 
       get  '/organization' => 'organization#all_organizations'
-      get  '/organization/:id' => 'organization#get_organization'
+      get  '/organization/:id/info_with_users' => 'organization#organization_with_users'
       # params[:name]
       post '/organization' => 'organization#create_organization'
       # params[:id]

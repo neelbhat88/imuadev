@@ -5,10 +5,11 @@ class Api::V1::OrganizationController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil )
+  def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil, progressService = nil )
     @organizationRepository = organizationRepo ? organizationRepo : OrganizationRepository.new
     @roadmapRepository = roadmapRepo ? roadmapRepo : RoadmapRepository.new
     @enabledModules = enabledModules ? enabledModules : EnabledModules.new
+    @progressService = progressService ? progressService : ProgressService.new
   end
 
   # GET /organization
@@ -29,8 +30,8 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
-  # GET /organization/:id
-  def get_organization
+  # GET /organization/:id/info_with_users
+  def organization_with_users
     orgId = params[:id].to_i
 
     if !same_organization?(orgId)
@@ -40,8 +41,12 @@ class Api::V1::OrganizationController < ApplicationController
     end
 
     org = @organizationRepository.get_organization(orgId)
+    viewOrg = ViewOrganizationWithUsers.new(org) unless org.nil?
 
-    viewOrg = ViewOrganization.new(org) unless org.nil?
+    viewOrg.students.each do | s |
+      s.modules_progress = @progressService.get_all_progress(s.id, s.time_unit_id).object
+    end
+
     render status: :ok,
       json: {
         info: "Organization",
