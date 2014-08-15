@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'RoadmapController', ['$scope', '$modal', 'current_user', 'RoadmapService', 'LoadingService',
-($scope, $modal, current_user, RoadmapService, LoadingService) ->
+.controller 'RoadmapController', ['$scope', '$modal', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService'
+($scope, $modal, current_user, RoadmapService, LoadingService, OrganizationService) ->
   $scope.current_user = current_user
   $scope.loading = true
   orgId = if $scope.current_user.organization_id == null then -1 else $scope.current_user.organization_id
@@ -16,6 +16,9 @@ angular.module('myApp')
       {name: "Year 3", semesters: [$scope.roadmap.time_units[4], $scope.roadmap.time_units[5]] },
       {name: "Year 4", semesters: [$scope.roadmap.time_units[6], $scope.roadmap.time_units[7]] }
     ]
+
+    OrganizationService.getOrganization($scope.roadmap.organization_id).then (data) ->
+      $scope.organization = data.organization
 
     $scope.loading = false
   , (data) -> # Error
