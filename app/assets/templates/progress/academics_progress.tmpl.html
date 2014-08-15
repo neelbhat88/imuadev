@@ -17,48 +17,62 @@
           <div class="noclasses" ng-hide="user_classes.length != 0">No classes added</div>
 
           <div class="module-data-items">
-            <div class="module-data__item module-data__key clear">
-            	<div class="module-data__item__class">Class</div>
-            	<div class="module-data__item__grade">Grade</div>
+
+            <div class="module-data__item">
+              <div class="module-data__key clear">
+                <div class="item__key-class bold">Class</div>
+                <div class="item__key-grade bold">Grade</div>
+              </div>
             </div>
+
             <div class="module-data__item clear" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
 
-              <div class="module-data__item__class">
-                <span ng-hide="user_class.editing">{{user_class.name}}</span>
-                <input ng-show="user_class.editing" class="form-field" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
+              <div class="item__class">
+
+                <div class="item__class-name">
+                  <span ng-hide="user_class.editing">{{user_class.name}}</span>
+
+                  <div class="editor-wrapper" ng-show="user_class.editing">
+                    <input class="form-editor" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
+                  </div>
+
+                </div>
+
+                <div class="item__class-grade">
+                  <span ng-hide="user_class.editing">{{user_class.grade}}</span>
+                  <div class="editor-wrapper" ng-show="user_class.editing">
+                    <select ng-model="user_class.new_grade">
+                      <option value="A">A</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B">B</option>
+                      <option value="B-">B-</option>
+                      <option value="C+">C+</option>
+                      <option value="C">C</option>
+                      <option value="C-">C-</option>
+                      <option value="D+">D+</option>
+                      <option value="D">D</option>
+                      <option value="D-">D-</option>
+                      <option value="F">F</option>
+                    </select>
+                  </div>
+                </div><!-- /item__grade -->
+
               </div>
 
-              <div class="module-data__item__grade">
-                <span ng-hide="user_class.editing">{{user_class.grade}}</span>
-                <select ng-show="user_class.editing" ng-model="user_class.new_grade">
-                  <option value="A">A</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B">B</option>
-                  <option value="B-">B-</option>
-                  <option value="C+">C+</option>
-                  <option value="C">C</option>
-                  <option value="C-">C-</option>
-                  <option value="D+">D+</option>
-                  <option value="D">D</option>
-                  <option value="D-">D-</option>
-                  <option value="F">F</option>
-                </select>
-              </div><!-- /module-data__item__grade -->
-
-              <div class="module-data__item__icons">
-
-                <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
-                  <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-                  <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
+              <div class="item__icons">
+                <div class="edit-icons">
+                  <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
+                    <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass(\$index)"></span>
+                  </div>
                 </div>
+              </div><!-- /item__icons -->
 
-                <div ng-show="user_class.editing">
-                  <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveClass($index)"></span>
-                  <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEdit($index)"></span>
-                </div>
-
-              </div><!-- /module-data__item__icons -->
+              <div class="edit-buttons" ng-show="user_class.editing">
+                  <div class="confirm-button" title="Confirm" ng-click="saveClass($index)">Confirm</div>
+                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit($index)">Cancel</div>
+              </div>
 
             </div>
 
