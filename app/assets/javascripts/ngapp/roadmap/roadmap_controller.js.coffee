@@ -1,9 +1,9 @@
 angular.module('myApp')
 .controller 'RoadmapController', ['$scope', '$modal', 'current_user', 'RoadmapService', 'LoadingService',
 ($scope, $modal, current_user, RoadmapService, LoadingService) ->
+  $scope.current_user = current_user
   $scope.loading = true
-  $scope.user = current_user
-  orgId = if $scope.user.organization_id == null then -1 else $scope.user.organization_id
+  orgId = if $scope.current_user.organization_id == null then -1 else $scope.current_user.organization_id
 
   $('input, textarea').placeholder()
 
