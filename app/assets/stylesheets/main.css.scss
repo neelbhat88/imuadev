@@ -438,6 +438,7 @@ header {
           margin: 0 auto;
           @include font-size(1.2);
           @include border-radius(4px);
+          text-align: center;
           opacity: 0.4;
 
           &:hover {

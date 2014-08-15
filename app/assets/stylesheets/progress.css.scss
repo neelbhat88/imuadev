@@ -137,22 +137,13 @@
       padding-bottom: 20px;
       border-bottom: 1px solid white(0.1);
       margin-bottom: 20px;
+      text-align: left;
 
       .item {
         text-align: left;
         padding-bottom: 20px;
         border-bottom: 1px solid white(0.1);
         margin-bottom: 20px;
-
-        .sub-item {
-
-          padding: 0 20px;
-          padding-bottom: 20px;
-          border-bottom: 1px solid white(0.1);
-          margin-bottom: 20px;
-          text-align: left;
-
-        }
 
         .edit-icons {
           display: inline-block;
@@ -161,6 +152,13 @@
           &:hover { opacity: 1; }
         }
 
+      }
+
+      .form-editor {
+        color: $ink;
+        padding: 10px;
+        width: 100%;
+        @include border-radius(5px);
       }
 
     }
@@ -249,7 +247,8 @@
           width: 100%;
 
           .item__activity-name {
-            @include font-size(2.4);
+            @include font-size(2.2);
+            font-weight: $bold;
           }
 
 				}
@@ -257,31 +256,73 @@
 				.item__event {
 
   				width: 100%;
-					padding: 0 20px;
-					@include font-size(1.2);
-					opacity: 0.6;
+					margin: 0 20px;
+					@include font-size(1.0);
 
-					&:hover {
+          a {
+            color: white;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
 
-						opacity: 1;
+          .item__event-left {
+            width: 70%;
+            float: left;
+          }
 
-					}
+          .item__event-right {
+            width: 30%;
+            float: left;
+            text-align: center;
+          }
 
-					.item__event--date {
+          .item__event--description {
 
-					}
+            @include font-size(1.6);
+            padding-bottom: 8px;
 
-					.item__event--description {
+            .item__event--description-editor {
+              width: 90%;
+              color: $ink;
 
-					}
+            }
 
-					.item__event--hours {
+          }
 
-					}
+          .item__event--date {
+            opacity: 0.3;
 
-					.item__icons {
+            &:hover {
+              opacity: 1;
+            }
 
-					}
+            .item__event--edit-links {
+              display: inline-block;
+              margin-left: 8px;
+
+              .edit-link {
+                margin-right: 8px;
+              }
+
+            }
+
+          }
+
+          .item-event--date-editor {
+            opacity: 1;
+            width: 90%;
+
+          }
+
+          .item__event--hours {
+            .number-hours {
+              @include font-size(2.2);
+              font-weight: $light;
+              padding-bottom: 5px;
+            }
+
+          }
 
 				}
 

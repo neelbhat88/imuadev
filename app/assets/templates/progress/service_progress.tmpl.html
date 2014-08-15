@@ -40,49 +40,59 @@
 
               <div class="module-data__item" ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
 
-                <div class="item__event">
+                <div class="item__event clear">
 
-                  <div class="sub-item item__event--description">
+                  <div class="item__event-left">
 
-                    <span ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
-                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription">
+                    <div class="sub-item item__event--description">
 
-                  </div>
+                      <span class="item__event--description" ng-hide="user_service_event.editing">{{user_service_event.description}}</span>
 
-                  <div class="sub-item item__event--hours">
-
-                    <span ng-hide="user_service_event.editing">
-                      {{user_service_event.hours}}<br>
-                      <span class="hours">Hours</span>
-                    </span>
-
-                    <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
-
-                  </div>
-
-                  <div class="sub-item item__event--date">
-
-                    <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</span>
-                    <input class="form-control" type="text" ng-show="user_service_event.editing" ng-model="user_service_event.new_date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
-
-                  </div>
-
-                  <div class="item__icons">
-
-                    <div ng-if="editable(current_user, selected_semester)"
-                          ng-hide="user_service_event.editing">
-
-                      <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
-
-                      <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+                      <div class="item__event--description-editor" ng-show="user_service_event.editing">
+                        <input class="form-field" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription">
+                      </div>
 
                     </div>
 
-                    <div ng-show="user_service_event.editing">
+                    <div class="sub-item item__event--date">
 
-                      <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)"></span>
+                      <span ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</span>
+                        <div class="item__event--edit-links" ng-if="editable(current_user, selected_semester)"
+                              ng-hide="user_service_event.editing">
+                          <a class="edit-link" ng-click="editEvent(activityIndex, eventIndex)">Edit</a>
+                          <a class="edit-link" ng-click="deleteEvent(activityIndex, eventIndex)">Delete</a>
+                        </div>
 
-                      <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
+                    </div>
+
+                    <div class="item-event--date-editor" ng-show="user_service_event.editing">
+                      <input class="form-editor" type="text" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
+                    </div>
+
+                  </div>
+
+                  <div class="item__event-right">
+
+                    <div class="sub-item item__event--hours">
+
+                      <span ng-hide="user_service_event.editing">
+                        <span class="number-hours">{{user_service_event.hours}}</span><br>
+                        <span class="hours">Hours</span>
+                      </span>
+
+                      <input ng-show="user_service_event.editing" class="form-field" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
+
+                    </div>
+
+                    <div class="item__icons">
+
+                      <div ng-show="user_service_event.editing">
+
+                        <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)"></span>
+
+                        <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)"></span>
+
+                      </div>
 
                     </div>
 
