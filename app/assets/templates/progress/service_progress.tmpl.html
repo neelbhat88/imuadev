@@ -23,22 +23,27 @@
               <div class="item item__activity">
 
                 <span class="item__activity-name" ng-hide="user_service_activity.editing">{{user_service_activity.name}}</span>
-                <input ng-show="user_service_activity.editing" class="form-field" ng-model="user_service_activity.new_name" placeholder="Organization Name" name="serviceActivityName">
+
+                <div class="editor-wrapper" ng-show="user_service_activity.editing">
+                  <div>Who was the service for?</div>
+                  <input class="form-editor" ng-model="user_service_activity.new_name" placeholder="Organization Name" name="serviceActivityName">
+                </div>
 
                 <div class="edit-icons">
                   <div ng-if="editable(current_user, selected_semester)" ng-hide="user_service_activity.editing">
                     <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
                     <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
                   </div>
-                  <div ng-show="user_service_activity.editing">
-                    <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
-                    <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
-                  </div>
-                </div><!-- item__icons -->
+                </div><!-- edit-icons -->
+
+                <div class="edit-buttons" ng-show="user_service_activity.editing">
+                    <div class="confirm-button" title="Confirm" ng-click="saveActivity(activityIndex)">Confirm</div>
+                    <div class="cancel-button" title="Cancel" ng-click="cancelActivityEdit(activityIndex)">Cancel</div>
+                </div>
 
               </div><!-- item__activity -->
 
-              <div class="module-data__item" ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
+              <div class="module-data__sub-item" ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
 
                 <div class="item__event clear">
 
@@ -50,7 +55,7 @@
 
                     </div>
 
-                    <div class="item__event--description-editor" ng-show="user_service_event.editing">
+                    <div class="editor-wrapper item__event--description-editor" ng-show="user_service_event.editing">
                       <div>What did you do?</div>
                       <input class="form-editor" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription">
                     </div>
@@ -66,17 +71,14 @@
 
                     </div>
 
-                    <div class="item-event--date-editor" ng-show="user_service_event.editing">
+                    <div class="editor-wrapper item-event--date-editor" ng-show="user_service_event.editing">
                       <div>Date</div>
                       <input class="form-editor" type="text" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
                     </div>
 
                     <div class="edit-buttons" ng-show="user_service_event.editing">
-
                         <div class="confirm-button" title="Confirm" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)">Confirm</div>
-
                         <div class="cancel-button" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)">Cancel</div>
-
                     </div>
 
                   </div>
@@ -92,7 +94,7 @@
 
                     </div>
 
-                    <div class="item__event--hours-editor" ng-show="user_service_event.editing">
+                    <div class="editor-wrapper item__event--hours-editor" ng-show="user_service_event.editing">
                       <div>How many hours?</div>
                       <input class="form-editor" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
                     </div>

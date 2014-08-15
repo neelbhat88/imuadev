@@ -136,8 +136,16 @@
     .module-data__item {
       padding-bottom: 20px;
       border-bottom: 1px solid white(0.1);
-      margin-bottom: 20px;
+      margin-bottom: 40px;
       text-align: left;
+
+      .module-data__sub-item {
+        padding-bottom: 20px;
+        border-bottom: 1px solid white(0.1);
+        margin-bottom: 20px;
+        text-align: left;
+
+      }
 
       .item {
         text-align: left;
@@ -152,6 +160,12 @@
           &:hover { opacity: 1; }
         }
 
+      }
+
+      .editor-wrapper {
+        width: 90%;
+        opacity: 1;
+        text-align: left;
       }
 
       .form-editor {
@@ -248,6 +262,7 @@
 
 				.item__activity {
           width: 100%;
+          border-bottom: 1px solid white(0.4);
 
           .item__activity-name {
             @include font-size(2.2);
@@ -287,11 +302,6 @@
 
           }
 
-          .item__event--description-editor {
-            width: 90%;
-
-          }
-
           .item__event--date {
             opacity: 0.3;
 
@@ -311,12 +321,6 @@
 
           }
 
-          .item-event--date-editor {
-            opacity: 1;
-            width: 90%;
-
-          }
-
           .item__event--hours {
 
             .number-hours {
@@ -325,11 +329,6 @@
               padding-bottom: 5px;
             }
 
-          }
-
-          .item-event--hours-editor {
-            width: 100%;
-            text-align: center;
           }
 
 				}
