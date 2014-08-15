@@ -158,7 +158,10 @@
         color: $ink;
         padding: 10px;
         width: 100%;
+        @include font-size(1.4);
         @include border-radius(5px);
+        border: 1px solid black(0.5);
+        margin-bottom: 10px;
       }
 
     }
@@ -282,11 +285,10 @@
             @include font-size(1.6);
             padding-bottom: 8px;
 
-            .item__event--description-editor {
-              width: 90%;
-              color: $ink;
+          }
 
-            }
+          .item__event--description-editor {
+            width: 90%;
 
           }
 
@@ -316,12 +318,18 @@
           }
 
           .item__event--hours {
+
             .number-hours {
               @include font-size(2.2);
               font-weight: $light;
               padding-bottom: 5px;
             }
 
+          }
+
+          .item-event--hours-editor {
+            width: 100%;
+            text-align: center;
           }
 
 				}

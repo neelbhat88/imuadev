@@ -456,6 +456,18 @@ header {
 
         }
 
+        .confirm-button {
+          @extend .module-data__button;
+          background: $green;
+          display: inline-block;
+        }
+
+        .cancel-button {
+          @extend .module-data__button;
+          background: $red;
+          display: inline-block;
+        }
+
       }
 
   }
