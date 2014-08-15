@@ -1,4 +1,4 @@
-<div class="progressContainer" wait-to-load="{{selected_module}}">
+<div class="progressContainer">
 <!-- SEMESTER CHANGER THING
   <div class="semester-changer" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
     <span class="glyphicon glyphicon-backward semester-changer__prev" title="Previous Semester"
@@ -48,7 +48,7 @@
 
   </div>
 
-  <div class="progressMiddle clear">
+  <div class="progressMiddle clear" wait-to-load="{{selected_module}}">
 
     <div class="progressCircle-big--container">
 
