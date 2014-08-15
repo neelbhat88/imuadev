@@ -133,6 +133,53 @@
 
     }
 
+    .module-data__item {
+      padding-bottom: 20px;
+      border-bottom: 1px solid white(0.1);
+      margin-bottom: 40px;
+      text-align: left;
+
+      .module-data__sub-item {
+        padding-bottom: 20px;
+        border-bottom: 1px solid white(0.1);
+        margin-bottom: 20px;
+        text-align: left;
+
+      }
+
+      .item {
+        text-align: left;
+        padding-bottom: 20px;
+        border-bottom: 1px solid white(0.1);
+        margin-bottom: 20px;
+
+        .edit-icons {
+          display: inline-block;
+          margin-left: 10px;
+          opacity: 0.3;
+          &:hover { opacity: 1; }
+        }
+
+      }
+
+      .editor-wrapper {
+        width: 90%;
+        opacity: 1;
+        text-align: left;
+      }
+
+      .form-editor {
+        color: $ink;
+        padding: 10px;
+        width: 100%;
+        @include font-size(1.4);
+        @include border-radius(5px);
+        border: 1px solid black(0.5);
+        margin-bottom: 10px;
+      }
+
+    }
+
     /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
 
     .academicsProgressContainer {
@@ -151,11 +198,7 @@
 
     			.module-data__item {
 
-    			  padding-bottom: 20px;
-    			  border-bottom: 1px solid white(0.1);
-    			  margin-bottom: 20px;
-
-    				.module-data__item__class {
+    				.item__class {
 
     					width: 60%;
     					float: left;
@@ -163,7 +206,7 @@
 
     				}
 
-    				.module-data__item__grade {
+    				.item__grade {
 
     					width: 30%;
     					float: left;
@@ -171,7 +214,7 @@
 
     				}
 
-    				.module-data__item__icons {
+    				.item__icons {
 
     					width: 10%;
     					float: left;
@@ -211,85 +254,82 @@
     	.section {
 
     	  background: $service-color-dark;
-
         .section--header { background: $service-color; }
 
     	}
 
 			.module-data__item {
 
-			  padding-bottom: 20px;
-			  border-bottom: 1px solid white(0.1);
-			  margin-bottom: 20px;
+				.item__activity {
+          width: 100%;
+          border-bottom: 1px solid white(0.4);
 
-				.module-data__item__activityContainer {
+          .item__activity-name {
+            @include font-size(2.2);
+            font-weight: $bold;
+          }
 
-          padding-bottom: 20px;
-  			  border-bottom: 1px solid white(0.1);
-  			  margin-bottom: 20px;
+				}
 
-  				.module-data__item__activity {
+				.item__event {
 
-  					width: 80%;
-  					float: left;
-    			  text-align: left;
+  				width: 100%;
+					margin: 0 20px;
+					@include font-size(1.0);
 
-  				}
+          a {
+            color: white;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
 
-  				.module-data__item__icons {
+          .item__event-left {
+            width: 70%;
+            float: left;
+          }
 
-  					width: 20%;
-  					float: left;
-  					text-align: right;
+          .item__event-right {
+            width: 30%;
+            float: left;
+            text-align: center;
+          }
 
-  				}
+          .item__event--description {
 
-				}//__activityContainer
+            @include font-size(1.6);
+            padding-bottom: 8px;
 
-				.module-data__item__event {
+          }
 
-					width: 100%;
-					padding: 0 20px;
-					@include font-size(1.2);
-					opacity: 0.6;
+          .item__event--date {
+            opacity: 0.3;
 
-					&:hover {
+            &:hover {
+              opacity: 1;
+            }
 
-						opacity: 1;
+            .item__event--edit-links {
+              display: inline-block;
+              margin-left: 8px;
 
-					}
+              .edit-link {
+                margin-right: 8px;
+              }
 
-					.module-data__item__event--date {
+            }
 
-						width: 25%;
-						float: left;
-						text-align: left;
+          }
 
-					}
+          .item__event--hours {
 
-					.module-data__item__event--description {
+            .number-hours {
+              @include font-size(2.2);
+              font-weight: $light;
+              padding-bottom: 5px;
+            }
 
-						width: 50%;
-						float: left;
-						text-align: left;
-
-					}
-
-					.module-data__item__event--hours {
-
-						width: 15%;
-						float: left;
-						text-align: center;
-
-					}
-
-					.module-data__item__icons {
-
-						width: 10%;
-						float: left;
-						text-align: right;
-
-					}
+          }
 
 				}
 
@@ -329,17 +369,13 @@
 
 			.module-data__item {
 
-			  padding-bottom: 20px;
-			  border-bottom: 1px solid white(0.1);
-			  margin-bottom: 20px;
-
-				.module-data__item__activityContainer {
+				.item__activityContainer {
 
           padding-bottom: 20px;
   			  border-bottom: 1px solid white(0.1);
   			  margin-bottom: 20px;
 
-  				.module-data__item__activity {
+  				.item__activity {
 
   					width: 80%;
   					float: left;
@@ -347,7 +383,7 @@
 
   				}
 
-  				.module-data__item__icons {
+  				.item__icons {
 
   					width: 20%;
   					float: left;
@@ -357,7 +393,7 @@
 
 				}//__activityContainer
 
-				.module-data__item__eventContainer {
+				.item__eventContainer {
 
 					width: 100%;
 					padding: 0 20px;
@@ -370,7 +406,7 @@
 
 					}
 
-					.module-data__item__event--leadership {
+					.item__event--leadership {
 
 						width: 35%;
 						float: left;
@@ -378,7 +414,7 @@
 
 					}
 
-					.module-data__item__event--description {
+					.item__event--description {
 
 						width: 55%;
 						float: left;
@@ -386,7 +422,7 @@
 
 					}
 
-					.module-data__item__icons {
+					.item__icons {
 
 						width: 10%;
 						float: right;
@@ -463,11 +499,7 @@
 
 			.module-data__item {
 
-			  padding-bottom: 20px;
-			  border-bottom: 1px solid white(0.1);
-			  margin-bottom: 20px;
-
-				.module-data__item__test-date {
+				.item__test-date {
 
 					width: 25%;
 					float: left;
@@ -475,7 +507,7 @@
 
 				}
 
-				.module-data__item__test-name {
+				.item__test-name {
 
 					width: 45%;
 					float: left;
@@ -483,7 +515,7 @@
 
 				}
 
-				.module-data__item__test-score {
+				.item__test-score {
 
 					width: 20%;
 					float: left;
@@ -491,7 +523,7 @@
 
 				}
 
-				.module-data__item__icons {
+				.item__icons {
 
 					width: 10%;
 					float: right;

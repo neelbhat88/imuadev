@@ -408,6 +408,7 @@ header {
         padding: 20px;
         border-bottom: 1px solid white(0.1);
         text-align: center;
+        font-weight: $bold;
 
       }
 
@@ -437,6 +438,7 @@ header {
           margin: 0 auto;
           @include font-size(1.2);
           @include border-radius(4px);
+          text-align: center;
           opacity: 0.4;
 
           &:hover {
@@ -452,6 +454,18 @@ header {
             width: 60%;
             @include font-size();
 
+        }
+
+        .confirm-button {
+          @extend .module-data__button;
+          background: $green;
+          display: inline-block;
+        }
+
+        .cancel-button {
+          @extend .module-data__button;
+          background: $red;
+          display: inline-block;
         }
 
       }
