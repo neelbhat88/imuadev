@@ -3,6 +3,11 @@
 
 }
 
+.orgsetupLower {
+  padding: 0 $wrapper-width;
+  margin-bottom: 40px;
+}
+
 .roadmapContainer {
   width: 45%;
   margin-right: 10%;
@@ -238,4 +243,87 @@
 .rightContainer {
   width: 45%;
   float: left;
+
+  .expectations-title {
+    border-bottom: 1px solid black(0.1);
+    margin-bottom: 15px;
+  }
+
+  .expectations-list {
+
+    width: 100%;
+    padding: 0 $wrapper-width;
+    margin-bottom: 40px;
+
+    .expectations-list__item {
+      width: 100%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid black(0.1);
+      margin-bottom: 15px;
+
+      .expectations-list__item__title {
+        width: 80%;
+        display: inline-block;
+      }
+
+      .expectations-list__item__icons {
+        width: 15%;
+        display: inline-block;
+      }
+
+      .form-field {
+        width: 90%;
+      }
+
+    }
+
+    .add-expectation {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 15px;
+    }
+
+  }
+
+  .orgTests-title {
+    border-bottom: 1px solid black(0.1);
+    margin-bottom: 15px;
+  }
+
+  .orgTests-list {
+    width: 100%;
+    padding: 0 $wrapper-width;
+    margin-bottom: 40px;
+
+    .orgTests-list__item {
+      width: 100%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid black(0.1);
+      margin-bottom: 15px;
+
+      .orgTests-list__item__title {
+        width: 60%;
+        display: inline-block;
+      }
+
+      .orgTests-list__item__score_type {
+        width: 20%;
+        display: inline-block;
+      }
+
+      .orgTests-list__item__icons {
+        width: 15%;
+        display: inline-block;
+      }
+
+    }
+
+  }
+
+  .add-orgTest {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
 }
