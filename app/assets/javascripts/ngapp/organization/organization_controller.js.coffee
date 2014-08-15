@@ -79,6 +79,7 @@ angular.module('myApp')
 
       modalInstance.result.then (user) ->
         $scope.organization.students.push(user)
+        $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
 
     $scope.addMentor = () ->
       modalInstance = $modal.open
@@ -91,6 +92,6 @@ angular.module('myApp')
           new_user: () -> UsersService.newMentor($scope.organization.id)
 
       modalInstance.result.then (user) ->
-        $scope.organization.mentors.push(user)
+        $scope.mentors.push(user)
 
 ]
