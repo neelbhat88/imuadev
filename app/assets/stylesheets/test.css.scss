@@ -1,33 +1,3 @@
-.orgTestContainer {
-  width: 500px;
-
-  .orgTests-list {
-
-    .orgTests-list__item {
-
-      .orgTests-list__item__title {
-        border-right: 0px;
-      }
-
-      .orgTests-list__item__score_type {
-        display: inline-block;
-        vertical-align: middle;
-        border-right: 1px solid $lightgrey;
-
-        width: 145px;
-        font-size: 12px;
-      }
-
-      .orgTests-list__item__icons {
-      }
-    }
-
-    .add-orgTest__button {
-    }
-  }
-}
-
-
 .module-data__item {
 
   .item__userTest__title {
