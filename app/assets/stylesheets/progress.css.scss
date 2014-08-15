@@ -157,7 +157,7 @@
 
     			.module-data__item {
 
-    				.module-data__item__class {
+    				.item__class {
 
     					width: 60%;
     					float: left;
@@ -165,7 +165,7 @@
 
     				}
 
-    				.module-data__item__grade {
+    				.item__grade {
 
     					width: 30%;
     					float: left;
@@ -173,7 +173,7 @@
 
     				}
 
-    				.module-data__item__icons {
+    				.item__icons {
 
     					width: 10%;
     					float: left;
@@ -220,13 +220,13 @@
 
 			.module-data__item {
 
-				.module-data__item__activityContainer {
+				.item__activityContainer {
 
           padding-bottom: 20px;
   			  border-bottom: 1px solid white(0.1);
   			  margin-bottom: 20px;
 
-  				.module-data__item__activity {
+  				.item__activity {
 
   					width: 80%;
   					float: left;
@@ -234,7 +234,7 @@
 
   				}
 
-  				.module-data__item__icons {
+  				.item__icons {
 
   					width: 20%;
   					float: left;
@@ -244,7 +244,7 @@
 
 				}//__activityContainer
 
-				.module-data__item__event {
+				.item__event {
 
 					width: 100%;
 					padding: 0 20px;
@@ -257,7 +257,7 @@
 
 					}
 
-					.module-data__item__event--date {
+					.item__event--date {
 
 						width: 25%;
 						float: left;
@@ -265,7 +265,7 @@
 
 					}
 
-					.module-data__item__event--description {
+					.item__event--description {
 
 						width: 50%;
 						float: left;
@@ -273,7 +273,7 @@
 
 					}
 
-					.module-data__item__event--hours {
+					.item__event--hours {
 
 						width: 15%;
 						float: left;
@@ -281,7 +281,7 @@
 
 					}
 
-					.module-data__item__icons {
+					.item__icons {
 
 						width: 10%;
 						float: left;
@@ -327,13 +327,13 @@
 
 			.module-data__item {
 
-				.module-data__item__activityContainer {
+				.item__activityContainer {
 
           padding-bottom: 20px;
   			  border-bottom: 1px solid white(0.1);
   			  margin-bottom: 20px;
 
-  				.module-data__item__activity {
+  				.item__activity {
 
   					width: 80%;
   					float: left;
@@ -341,7 +341,7 @@
 
   				}
 
-  				.module-data__item__icons {
+  				.item__icons {
 
   					width: 20%;
   					float: left;
@@ -351,7 +351,7 @@
 
 				}//__activityContainer
 
-				.module-data__item__eventContainer {
+				.item__eventContainer {
 
 					width: 100%;
 					padding: 0 20px;
@@ -364,7 +364,7 @@
 
 					}
 
-					.module-data__item__event--leadership {
+					.item__event--leadership {
 
 						width: 35%;
 						float: left;
@@ -372,7 +372,7 @@
 
 					}
 
-					.module-data__item__event--description {
+					.item__event--description {
 
 						width: 55%;
 						float: left;
@@ -380,7 +380,7 @@
 
 					}
 
-					.module-data__item__icons {
+					.item__icons {
 
 						width: 10%;
 						float: right;
@@ -457,7 +457,7 @@
 
 			.module-data__item {
 
-				.module-data__item__test-date {
+				.item__test-date {
 
 					width: 25%;
 					float: left;
@@ -465,7 +465,7 @@
 
 				}
 
-				.module-data__item__test-name {
+				.item__test-name {
 
 					width: 45%;
 					float: left;
@@ -473,7 +473,7 @@
 
 				}
 
-				.module-data__item__test-score {
+				.item__test-score {
 
 					width: 20%;
 					float: left;
@@ -481,7 +481,7 @@
 
 				}
 
-				.module-data__item__icons {
+				.item__icons {
 
 					width: 10%;
 					float: right;
