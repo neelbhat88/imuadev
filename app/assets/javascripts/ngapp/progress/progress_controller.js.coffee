@@ -104,20 +104,20 @@ angular.module('myApp')
       .success (data) ->
         $scope.milestones = data.recalculated_milestones
 
-    ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
-      .success (data) ->
-        ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
-          $scope.student_with_modules_progress = student_with_modules_progress
+        ProgressService.progressForModule($scope.student, $scope.selected_semester.id, $scope.selected_module.module_title)
+          .success (data) ->
+            ProgressService.getAllModulesProgress($scope.student, $scope.selected_semester.id).then (student_with_modules_progress) ->
+              $scope.student_with_modules_progress = student_with_modules_progress
 
-          selected_mod_progress = null
-          for mod in $scope.modules_progress
-            selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
+              selected_mod_progress = null
+              for mod in $scope.modules_progress
+                selected_mod_progress = mod if mod.module_title == $scope.selected_module.module_title
 
-          # Only change the selected one so all of the cicrles don't refresh
-          for mod in student_with_modules_progress.modules_progress
-            selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
+              # Only change the selected one so all of the cicrles don't refresh
+              for mod in student_with_modules_progress.modules_progress
+                selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
 
-        refreshOverallProgress()
+            refreshOverallProgress()
 
   refreshOverallProgress = () ->
     ProgressService.getOverallProgress($scope.student)
