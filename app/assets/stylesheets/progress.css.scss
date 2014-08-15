@@ -457,10 +457,18 @@
 
 			.module-data__item {
 
+        margin-bottom: 0;
+        border-bottom: 0;
+
+        .item__test {
+          width: 100%;
+          margin-bottom: 0;
+        }
+
 				.item__test-date {
 
 					width: 25%;
-					float: left;
+          float: left;
   			  text-align: left;
 
 				}
@@ -468,15 +476,15 @@
 				.item__test-name {
 
 					width: 45%;
-					float: left;
-					text-align: left;
+          float: left;
+          text-align: left;
 
 				}
 
 				.item__test-score {
 
 					width: 20%;
-					float: left;
+          float: left;
 					text-align: left;
 
 				}
@@ -484,7 +492,7 @@
 				.item__icons {
 
 					width: 10%;
-					float: right;
+          float: left;
 					text-align: right;
 
 				}
