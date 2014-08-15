@@ -67,8 +67,9 @@ Imua::Application.routes.draw do
       delete '/extracurricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
 
 
-      get  '/organization' => 'organization#all_organizations'
-      get  '/organization/:id/info_with_users' => 'organization#organization_with_users'
+      get '/organization' => 'organization#all_organizations'
+      get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'
+      get '/organization/:id/info_with_users' => 'organization#organization_with_users'
       # params[:name]
       post '/organization' => 'organization#create_organization'
       # params[:id]
