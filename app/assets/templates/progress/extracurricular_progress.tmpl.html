@@ -19,43 +19,44 @@
 
             <div class="module-data__item clear" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities" ng-class="{'last':$last}">
 
-              <div class="module-data__item__activityContainer clear">
+                <div class="item item__ecActivity">
 
-                <div class="module-data__item__activity">
+                  <span class="item__ecActivity-name" ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</span>
 
-                <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</span>
-                <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
-
-                </div>
-                <div class="module-data__item__icons">
-
-                  <div ng-if="editable(current_user, selected_semester)" ng-hide="user_extracurricular_activity.editing">
-                    <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+                  <div class="editor-wrapper" ng-show="user_extracurricular_activity.editing">
+                    <div>What Activity did you participate in?</div>
+                    <input class="form-editor" ng-model="user_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
                   </div>
 
-                  <div ng-show="user_extracurricular_activity.editing">
-                    <span class="glyphicon glyphicon-ok prs green" title="Save" ng-click="saveActivity(activityIndex)"></span>
-                    <span class="glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelActivityEdit(activityIndex)"></span>
+                  <div class="edit-icons">
+                    <div ng-if="editable(current_user, selected_semester)" ng-hide="user_extracurricular_activity.editing">
+                      <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
+                      <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+                    </div>
                   </div>
 
                 </div>
 
-              </div><!-- /module-data__item__activityContainer -->
-
-                <div class="module-data__item__eventContainer clear">
-
-                  <div class="module-data__item__event--leadership">
-                    <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].leadership}}</span>
-                    <input ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.events[0].new_leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
+                <div class="item__event--leadership">
+                  <span class="bold" ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].leadership}}</span>
+                  <div class="editor-wrapper" ng-show="user_extracurricular_activity.editing">
+                    <div>Leadership Role (Optional)</div>
+                    <input class="form-editor" ng-model="user_extracurricular_activity.events[0].new_leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
                   </div>
+                </div>
 
-                  <div class="module-data__item__event--description">
-                    <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].description}}</span>
-                    <textarea ng-show="user_extracurricular_activity.editing" class="form-field" ng-model="user_extracurricular_activity.events[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
+                <div class="item__event--description">
+                  <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].description}}</span>
+                  <div class="editor-wrapper" ng-show="user_extracurricular_activity.editing">
+                    <div>Description (Optional)</div>
+                    <textarea class="form-editor" ng-model="user_extracurricular_activity.events[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
                   </div>
+                </div>
 
-                </div><!-- ..eventContainer -->
+              <div class="edit-buttons" ng-show="user_extracurricular_activity.editing">
+                  <div class="confirm-button" title="Confirm" ng-click="saveActivity(activityIndex)">Confirm</div>
+                  <div class="cancel-button" title="Cancel" ng-click="cancelActivityEdit(activityIndex)">Cancel</div>
+              </div>
 
             </div>
 

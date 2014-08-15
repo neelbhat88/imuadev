@@ -11,9 +11,13 @@
   background-color: $darkgrey;
   color: white;
 	width: 100%;
-  padding: $wrapper;
-  padding-top: 60px;
-  padding-bottom: 60px;
+
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 }
 
 /***** Student Dashboard Styles *****/
@@ -60,13 +64,9 @@
   .dashboard-content--student {
 
 		.section {
-			width: 31%;
-			margin: 1%;
-			float: left;
 
-			.section--inner {
-				padding: 40px 20px;
-			}
+			background: $boxgrey;
+			text-align: center;
 
 			.yes-no--point-circle {
 				@each $category, $color in $colormap {
@@ -74,10 +74,18 @@
 				}
 			}
 
+			.module-data__button {
+				color: white;
+			}
+
 		}
 
-		.list-header {
-			text-align: center;
+		.studentExpectationContainer {
+			.section--inner {
+				.expectations-met-message {
+					padding-bottom: 20px;
+				}
+			}
 		}
 
   } //.dashboard-content--student
@@ -152,5 +160,9 @@
     } //.mentor-header
 
   } //.dashboard-header
+
+	.dashboard-content--mentor {
+		padding: 60px $wrapper-width;
+	}
 
 } //#mentorDashboard
