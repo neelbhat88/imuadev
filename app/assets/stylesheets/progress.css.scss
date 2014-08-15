@@ -375,69 +375,21 @@
 
 			.module-data__item {
 
-				.item__activityContainer {
+        border-bottom: 1px solid white(0.1);
 
-          padding-bottom: 20px;
-  			  border-bottom: 1px solid white(0.1);
-  			  margin-bottom: 20px;
+        .item__ecActivity {
+          width: 100%;
+          border: 0;
+          padding-bottom: 0;
+          margin-bottom: 10px;
 
-  				.item__activity {
+          .item__ecActivity-name {
+            @include font-size(2.2);
+            font-weight: $bold;
+            margin-right: 10px;
+          }
 
-  					width: 80%;
-  					float: left;
-    			  text-align: left;
-
-  				}
-
-  				.item__icons {
-
-  					width: 20%;
-  					float: left;
-  					text-align: right;
-
-  				}
-
-				}//__activityContainer
-
-				.item__eventContainer {
-
-					width: 100%;
-					padding: 0 20px;
-					@include font-size(1.2);
-					opacity: 0.6;
-
-					&:hover {
-
-						opacity: 1;
-
-					}
-
-					.item__event--leadership {
-
-						width: 35%;
-						float: left;
-						text-align: left;
-
-					}
-
-					.item__event--description {
-
-						width: 55%;
-						float: left;
-						text-align: left;
-
-					}
-
-					.item__icons {
-
-						width: 10%;
-						float: right;
-						text-align: right;
-
-					}
-
-				}
-
+        }
 
       } //module-data__item
 
