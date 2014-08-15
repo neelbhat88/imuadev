@@ -302,18 +302,22 @@
       margin-bottom: 15px;
 
       .orgTests-list__item__title {
-        width: 60%;
+        width: 40%;
         display: inline-block;
       }
 
       .orgTests-list__item__score_type {
-        width: 20%;
+        width: 40%;
         display: inline-block;
       }
 
       .orgTests-list__item__icons {
         width: 15%;
         display: inline-block;
+      }
+
+      .form-field {
+        width: 100%;
       }
 
     }
