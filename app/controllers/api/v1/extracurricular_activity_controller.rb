@@ -25,7 +25,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       return
     end
 
-    activities_result = @userExtracurricularActivityService.get_user_extracurricular_activities(userId)
+    activities_result = @userExtracurricularActivityService.get_user_extracurricular_activities(userId, time_unit_id)
 
     events_result = @userExtracurricularActivityService.get_user_extracurricular_activity_events(userId, time_unit_id)
 

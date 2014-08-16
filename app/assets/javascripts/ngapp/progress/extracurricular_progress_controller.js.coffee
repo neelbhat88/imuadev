@@ -8,11 +8,9 @@ angular.module('myApp')
       $scope.loaded_semester_activities = false
       $scope.semester_activities = 0
       for activity in $scope.user_extracurricular_activities
-        if activity.events
-          for event in activity.events
-            if event.description
-              $scope.semester_activities += 1
-              break
+        if activity.time_unit_id >= $scope.selected_semester.id
+          $scope.semester_activities += 1
+
       $scope.loaded_semester_activities = true
     , true
 
@@ -23,10 +21,11 @@ angular.module('myApp')
             $scope.user_extracurricular_activities = data.user_extracurricular_activities
 
             for user_extracurricular_activity in $scope.user_extracurricular_activities
-              user_extracurricular_activity.events = []
-              for user_extracurricular_activity_event in data.user_extracurricular_activity_events
-                if user_extracurricular_activity.id == user_extracurricular_activity_event.user_extracurricular_activity_id
-                  user_extracurricular_activity.events.push(user_extracurricular_activity_event)
+              if user_extracurricular_activity.time_unit_id >= $scope.selected_semester.id
+                user_extracurricular_activity.events = []
+                for user_extracurricular_activity_event in data.user_extracurricular_activity_events
+                  if user_extracurricular_activity.id == user_extracurricular_activity_event.user_extracurricular_activity_id
+                    user_extracurricular_activity.events.push(user_extracurricular_activity_event)
 
             $scope.$emit('loaded_module_milestones')
 

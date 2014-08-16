@@ -50,6 +50,7 @@ FactoryGirl.define do
     name "Test Extracurricular Activity"
     description ""
     user_id -1
+    time_unit_id 1
   end
 
   factory :user_extracurricular_activity_event do
