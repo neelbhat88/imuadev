@@ -171,10 +171,8 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   # GET /extracurricular_activity/update_time_unit_id
 
   def update_time_unit_id
-    UserExtracurricularActivity.all.each do | m |
-      event = UserExtracurricularActivityEvent.where(:user_extracurricular_activity_id => m.id)
-      timeUnit = event[0][:time_unit_id].to_i
-      m.update_attributes(:time_unit_id => timeUnit)
+    UserExtracurricularActivity.all.each do | a |
+      a.update_attributes(:time_unit_id => a.user_extracurricular_activity_events.first.time_unit_id)
     end
 
     render status: :ok,
