@@ -167,4 +167,18 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       }
   end
 
+  # XXX: QUICK FIX to update activity ids
+  # GET /extracurricular_activity/update_time_unit_id
+
+  def update_time_unit_id
+    UserExtracurricularActivity.all.each do | a |
+      a.update_attributes(:time_unit_id => a.user_extracurricular_activity_events.first.time_unit_id)
+    end
+
+    render status: :ok,
+      json: {
+        info: "Updated activities"
+    }
+  end
+
 end
