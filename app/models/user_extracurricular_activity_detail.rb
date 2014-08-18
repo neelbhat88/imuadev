@@ -1,4 +1,4 @@
-class UserExtracurricularActivityEvent < ActiveRecord::Base
+class UserExtracurricularActivityDetail < ActiveRecord::Base
   attr_accessible :description, :user_extracurricular_activity_id, :user_id,
     :time_unit_id, :leadership, :name
 

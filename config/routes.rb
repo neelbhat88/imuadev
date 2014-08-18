@@ -49,23 +49,22 @@ Imua::Application.routes.draw do
       get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
       get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
 
-      get  '/users/:id/service_activity_events' => 'service_activity#user_service_activity_events'
+      get  '/users/:id/service_orgs_hours' => 'service_organization#user_service_orgs_hour'
 
-      post '/service_activity' => 'service_activity#add_user_service_activity'
-      post '/service_activity_event' => 'service_activity#add_user_service_activity_event'
-      put  '/service_activity/:id' => 'service_activity#update_user_service_activity'
-      put  '/service_activity_event/:id' => 'service_activity#update_user_service_activity_event'
-      delete '/service_activity/:id' => 'service_activity#delete_user_service_activity'
-      delete '/service_activity_event/:id' => 'service_activity#delete_user_service_activity_event'
+      post '/service_organization' => 'service_organization#add_user_service_organization'
+      post '/service_hour' => 'service_organization#add_user_service_hour'
+      put  '/service_organization/:id' => 'service_organization#update_user_service_organization'
+      put  '/service_hour/:id' => 'service_organization#update_user_service_hour'
+      delete '/service_organization/:id' => 'service_organization#delete_user_service_organization'
+      delete '/service_hour/:id' => 'service_organization#delete_user_service_hour'
 
-      get  '/users/:id/extracurricular_activity_events' => 'extracurricular_activity#user_extracurricular_activity_events'
+      get  '/users/:id/extracurricular_activity_details' => 'extracurricular_activity#user_extracurricular_activity_details'
       post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
-      post '/extracurricular_activity_event' => 'extracurricular_activity#add_user_extracurricular_activity_event'
+      post '/extracurricular_activity_detail' => 'extracurricular_activity#add_user_extracurricular_activity_detail'
       put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
-      put  '/extracurricular_activity_event/:id' => 'extracurricular_activity#update_user_extracurricular_activity_event'
+      put  '/extracurricular_activity_detail/:id' => 'extracurricular_activity#update_user_extracurricular_activity_detail'
       delete '/extracurricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
-      delete '/extracurricular_activity_event/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_event'
-      get '/extracurricular_activity/update_time_unit_id' => 'extracurricular_activity#update_time_unit_id'
+      delete '/extracurricular_activity_detail/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_detail'
 
 
       get '/organization' => 'organization#all_organizations'
@@ -116,6 +115,7 @@ Imua::Application.routes.draw do
 
       # TODO: SUPER HACKY! Are migrations better for this stuff??
       get '/milestone/update_org_id' => 'milestone#update_org_id'
+      get '/extracurricular_activity/update_time_unit_id' => 'extracurricular_activity#update_time_unit_id'
     end # end :v1
   end # end :api
 

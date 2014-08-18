@@ -1,144 +1,144 @@
-class Api::V1::ServiceActivityController < ApplicationController
+class Api::V1::ServiceOrganizationController < ApplicationController
   respond_to :json
 
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
-  def load_services( userServiceActivityService=nil, userRepo=nil)
-    @userServiceActivityService = userServiceActivityService ? userServiceActivityService : UserServiceActivityService.new
+  def load_services( userServiceOrganizationService=nil, userRepo=nil)
+    @userServiceOrganizationService = userServiceOrganizationService ? userServiceOrganizationService : UserServiceOrganizationService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /users/:id/service_activity_events?time_unit_id=#
-  def user_service_activity_events
+  # GET /users/:id/service_hours?time_unit_id=#
+  def user_service_orgs_hours
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_events, user)
+    if !can?(current_user, :manage_user_service_hours, user)
       render status: :forbidden,
         json: {}
       return
-    elsif !can?(current_user, :manage_user_activities, user)
+    elsif !can?(current_user, :manage_user_service_organizations, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    activities_result = @userServiceActivityService.get_user_service_activities(userId)
+    organizations_result = @userServiceOrganizationService.get_user_service_organizations(userId)
 
-    events_result = @userServiceActivityService.get_user_service_activity_events(userId, time_unit_id)
+    hours_result = @userServiceOrganizationService.get_user_service_hours(userId, time_unit_id)
 
     render status: :ok,
       json: {
-        info: "User's Service Activities and Events",
-        user_service_activities: activities_result,
-        user_service_activity_events: events_result
+        info: "User's Service Organizations and hours",
+        user_service_organizations: organizations_result,
+        user_service_hours: hours_result
       }
   end
 
-  # POST /service_activity
-  def add_user_service_activity
-    new_service_activity = params[:user_service_activity]
-    userId = params[:user_service_activity][:user_id].to_i
+  # POST /service_organization
+  def add_user_service_organization
+    new_service_organization = params[:user_service_organization]
+    userId = params[:user_service_organization][:user_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_activities, user)
+    if !can?(current_user, :manage_user_service_organizations, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.save_user_service_activity(new_service_activity)
+    result = @userServiceOrganizationService.save_user_service_organization(new_service_organization)
 
     render status: result.status,
       json: {
         info: result.info,
-        user_service_activity: result.object
+        user_service_organization: result.object
       }
   end
 
-  # POST /service_activity_event
-  def add_user_service_activity_event
-    new_service_activity_event = params[:user_service_activity_event]
-    userId = params[:user_service_activity_event][:user_id].to_i
+  # POST /service_hour
+  def add_user_service_hour
+    new_service_hour = params[:user_service_hour]
+    userId = params[:user_service_hour][:user_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_events, user)
+    if !can?(current_user, :manage_user_service_hours, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.save_user_service_activity_event(new_service_activity_event)
+    result = @userServiceOrganizationService.save_user_service_hour(new_service_hour)
 
     render status: result.status,
       json: {
         info: result.info,
-        user_service_activity_event: result.object
+        user_service_hour: result.object
       }
   end
 
-  # PUT /service_activity/:id
-  def update_user_service_activity
-    serviceActivityId = params[:id].to_i
-    updated_service_activity = params[:user_service_activity]
+  # PUT /service_organization/:id
+  def update_user_service_organization
+    serviceOrganizationId = params[:id].to_i
+    updated_service_organization = params[:user_service_organization]
 
-    userServiceActivity = @userServiceActivityService.get_user_service_activity(serviceActivityId)
+    userServiceOrganization = @userServiceOrganizationService.get_user_service_organization(serviceOrganizationId)
 
-    user = @userRepository.get_user(userServiceActivity.user_id)
-    if !can?(current_user, :manage_user_activities, user)
+    user = @userRepository.get_user(userServiceOrganization.user_id)
+    if !can?(current_user, :manage_user_service_organizations, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.update_user_service_activity(serviceActivityId, updated_service_activity)
+    result = @userServiceOrganizationService.update_user_service_organization(serviceOrganizationId, updated_service_organization)
 
     render status: result.status,
       json: {
         info: result.info,
-        user_service_activity: result.object
+        user_service_organization: result.object
       }
   end
 
-  # PUT /service_activity_event/:id
-  def update_user_service_activity_event
-    serviceActivityEventId = params[:id].to_i
-    updated_service_activity_event = params[:user_service_activity_event]
+  # PUT /service_hour/:id
+  def update_user_service_hour
+    serviceHourId = params[:id].to_i
+    updated_service_hour = params[:user_service_hour]
 
-    userServiceActivityEvent = @userServiceActivityService.get_user_service_activity_event(serviceActivityEventId)
+    userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
 
-    user = @userRepository.get_user(userServiceActivityEvent.user_id)
-    if !can?(current_user, :manage_user_events, user)
+    user = @userRepository.get_user(userServiceHour.user_id)
+    if !can?(current_user, :manage_user_service_hours, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.update_user_service_activity_event(serviceActivityEventId, updated_service_activity_event)
+    result = @userServiceOrganizationService.update_user_service_hour(serviceHourId, updated_service_hour)
 
     render status: result.status,
       json: {
         info: result.info,
-        user_service_activity_event: result.object
+        user_service_hour: result.object
       }
   end
 
-  # DELETE /service_activity/:id
-  def delete_user_service_activity
-    serviceActivityId = params[:id].to_i
+  # DELETE /service_organization/:id
+  def delete_user_service_organization
+    serviceOrganizationId = params[:id].to_i
 
-    userServiceActivity = @userServiceActivityService.get_user_service_activity(serviceActivityId)
+    userServiceOrganization = @userServiceOrganizationService.get_user_service_organization(serviceOrganizationId)
 
-    user = @userRepository.get_user(userServiceActivity.user_id)
-    if !can?(current_user, :manage_user_activities, user)
+    user = @userRepository.get_user(userServiceOrganization.user_id)
+    if !can?(current_user, :manage_user_service_organizations, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.delete_user_service_activity(serviceActivityId)
+    result = @userServiceOrganizationService.delete_user_service_organization(serviceOrganizationId)
 
     render status: result.status,
       json: {
@@ -146,20 +146,20 @@ class Api::V1::ServiceActivityController < ApplicationController
       }
   end
 
-  # DELETE /service_activity_event/:id
-  def delete_user_service_activity_event
-    serviceActivityEventId = params[:id].to_i
+  # DELETE /service_hour/:id
+  def delete_user_service_hour
+    serviceHourId = params[:id].to_i
 
-    userServiceActivityEvent = @userServiceActivityService.get_user_service_activity_event(serviceActivityEventId)
+    userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
 
-    user = @userRepository.get_user(userServiceActivityEvent.user_id)
-    if !can?(current_user, :manage_user_events, user)
+    user = @userRepository.get_user(userServiceHour.user_id)
+    if !can?(current_user, :manage_user_service_hours, user)
       render status: :forbidden,
         json: {}
       return
     end
 
-    result = @userServiceActivityService.delete_user_service_activity_event(serviceActivityEventId)
+    result = @userServiceOrganizationService.delete_user_service_hour(serviceHourId)
 
     render status: result.status,
       json: {
