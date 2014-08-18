@@ -11,8 +11,8 @@ describe Api::V1::ExtracurricularActivityController do
       let(:org_id) { subject.current_user.organization_id }
 
       before :each do
-        activity1 = create(:user_extracurricular_activity, user_id: subject.current_user.id)
-        activity2 = create(:user_extracurricular_activity, user_id: subject.current_user.id)
+        activity1 = create(:user_extracurricular_activity, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
+        activity2 = create(:user_extracurricular_activity, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
         activity3 = create(:user_extracurricular_activity)
         event1 = create(:user_extracurricular_activity_event, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
         event2 = create(:user_extracurricular_activity_event, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
@@ -58,8 +58,8 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 200 with user_extracurricular_activity_events" do
         user = create(:student)
-        activity1 = create(:user_extracurricular_activity, user_id: user.id)
-        activity2 = create(:user_extracurricular_activity, user_id: user.id)
+        activity1 = create(:user_extracurricular_activity, user_id: user.id, time_unit_id: user.time_unit_id)
+        activity2 = create(:user_extracurricular_activity, user_id: user.id, time_unit_id: user.time_unit_id)
         event1 = create(:user_extracurricular_activity_event, user_id: user.id, time_unit_id: user.time_unit_id)
         event2 = create(:user_extracurricular_activity_event, user_id: user.id)
 

@@ -22,7 +22,7 @@ class ActivitiesMilestone < ImuaMilestone
   def has_earned?(user, time_unit_id)
     user_activities = []
 
-    activities = UserExtracurricularActivityService.new.get_user_extracurricular_activities(user.id)
+    activities = UserExtracurricularActivityService.new.get_user_extracurricular_activities(user.id, time_unit_id)
     events = UserExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, time_unit_id)
 
     activities.each do | a |
