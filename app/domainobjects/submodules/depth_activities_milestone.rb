@@ -23,7 +23,7 @@ class DepthActivitiesMilestone < ImuaMilestone
     max_user_depth_activities = 0
     userExtracurricularActivityService = UserExtracurricularActivityService.new
 
-    activities = userExtracurricularActivityService.get_user_extracurricular_activities(user.id)
+    activities = userExtracurricularActivityService.get_user_extracurricular_activities(user.id, time_unit_id)
     _activities_array = []
     activities.each do | a |
       _activities_array << {:activity => a, :depth_activities => 0}
