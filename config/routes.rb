@@ -49,7 +49,7 @@ Imua::Application.routes.draw do
       get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
       get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
 
-      get  '/users/:id/service_orgs_hours' => 'service_organization#user_service_orgs_hour'
+      get  '/users/:id/service_organizations_hours' => 'service_organization#user_service_organizations_hours'
 
       post '/service_organization' => 'service_organization#add_user_service_organization'
       post '/service_hour' => 'service_organization#add_user_service_hour'

@@ -9,17 +9,13 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /users/:id/service_hours?time_unit_id=#
-  def user_service_orgs_hours
+  # GET /users/:id/service_organizations_hours?time_unit_id=#
+  def user_service_organizations_hours
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_service_hours, user)
-      render status: :forbidden,
-        json: {}
-      return
-    elsif !can?(current_user, :manage_user_service_organizations, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -43,7 +39,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userId = params[:user_service_organization][:user_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_service_organizations, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -64,7 +60,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userId = params[:user_service_hour][:user_id].to_i
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_service_hours, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -87,7 +83,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userServiceOrganization = @userServiceOrganizationService.get_user_service_organization(serviceOrganizationId)
 
     user = @userRepository.get_user(userServiceOrganization.user_id)
-    if !can?(current_user, :manage_user_service_organizations, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -110,7 +106,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
 
     user = @userRepository.get_user(userServiceHour.user_id)
-    if !can?(current_user, :manage_user_service_hours, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -132,7 +128,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userServiceOrganization = @userServiceOrganizationService.get_user_service_organization(serviceOrganizationId)
 
     user = @userRepository.get_user(userServiceOrganization.user_id)
-    if !can?(current_user, :manage_user_service_organizations, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return
@@ -153,7 +149,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
 
     user = @userRepository.get_user(userServiceHour.user_id)
-    if !can?(current_user, :manage_user_service_hours, user)
+    if !can?(current_user, :manage_user_extracurricular_and_service, user)
       render status: :forbidden,
         json: {}
       return

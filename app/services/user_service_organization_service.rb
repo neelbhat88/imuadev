@@ -81,7 +81,7 @@ class UserServiceOrganizationService
     if UserServiceHour.find(serviceHourId).destroy()
       return ReturnObject.new(:ok, "Successfully deleted Service Hour, id: #{serviceHourId}", nil)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create Service Hour. id: #{serviceHourId}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete Service Hour. id: #{serviceHourId}", nil)
     end
   end
 

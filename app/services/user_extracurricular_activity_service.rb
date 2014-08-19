@@ -2,7 +2,7 @@ class UserExtracurricularActivityService
 
   # time_unit_id will be used for now, discuss later
   def get_user_extracurricular_activities(userId)
-    return UserExtracurricularActivity.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
+    return UserExtracurricularActivity.where(:user_id => userId).order(:id)
   end
 
   def get_user_extracurricular_activity_details(userId, time_unit_id)
