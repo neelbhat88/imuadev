@@ -4,8 +4,10 @@ angular.module('myApp')
     $scope.userTests = []
     $scope.orgTests = []
 
+
     # Note: orgTests are reloaded on semester switch
     $scope.$watch 'selected_semester', () ->
+      $scope.numUserTests = 0
       if $scope.selected_semester
         TestService.getOrgTests($scope.student.organization_id)
           .success (data) ->
@@ -17,6 +19,7 @@ angular.module('myApp')
                   for ot in $scope.orgTests
                     if ot.id == ut.org_test_id
                       ut.orgTest = ot
+                      $scope.numUserTests += 1
                       break
                 $scope.$emit('loaded_module_milestones');
 
@@ -46,6 +49,7 @@ angular.module('myApp')
           for ot in $scope.orgTests
             if ot.id == $scope.userTests[index].org_test_id
               $scope.userTests[index].orgTest = ot
+              $scope.numUserTests += 1
               break
           $scope.userTests[index].editing = false
           $scope.userTests.editing = false
@@ -56,6 +60,7 @@ angular.module('myApp')
         TestService.deleteUserTest($scope.userTests[index])
           .success (data) ->
             $scope.userTests.splice(index, 1)
+            $scope.numUserTests -= 1
             $scope.refreshPoints()
 
     $scope.addUserTest = () ->

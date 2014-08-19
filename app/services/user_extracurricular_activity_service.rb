@@ -1,8 +1,8 @@
 class UserExtracurricularActivityService
 
   # time_unit_id will be used for now, discuss later
-  def get_user_extracurricular_activities(userId)
-    return UserExtracurricularActivity.where(:user_id => userId).order(:id)
+  def get_user_extracurricular_activities(userId, time_unit_id)
+    return UserExtracurricularActivity.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
   def get_user_extracurricular_activity_events(userId, time_unit_id)
@@ -26,6 +26,7 @@ class UserExtracurricularActivityService
       u.user_id = user_extracurricular_activity[:user_id]
       u.name = user_extracurricular_activity[:name]
       u.description = user_extracurricular_activity[:description]
+      u.time_unit_id = user_extracurricular_activity[:time_unit_id]
     end
 
     if new_extracurricular.save
@@ -56,7 +57,7 @@ class UserExtracurricularActivityService
   def update_user_extracurricular_activity(extracurricularActivityId, user_extracurricular_activity)
     db_class = UserExtracurricularActivity.find(extracurricularActivityId)
 
-    if db_class.update_attributes(:name => user_extracurricular_activity[:name], :description => user_extracurricular_activity[:description])
+    if db_class.update_attributes(:name => user_extracurricular_activity[:name], :description => user_extracurricular_activity[:description], :time_unit_id => user_extracurricular_activity[:time_unit_id])
       return ReturnObject.new(:ok, "Successfully updated Extracurricular Activity, id: #{db_class.id}", db_class)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update Extracurricular Activity. Errors: #{db_class.errors.inspect}", nil)

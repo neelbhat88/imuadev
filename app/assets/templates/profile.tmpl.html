@@ -13,8 +13,12 @@
     <form class="form form--profile" ng-hide="editingPassword">
 
       <div class="pbs">
-        <span ng-hide="editingInfo" class="form--profile__field-label">Email: </span>
-        <span>{{user.email}}</span>
+        <div ng-hide="editingInfo">
+          <span ng-hide="editingInfo" class="form--profile__field-label">Email: </span>
+          <span>{{user.email}}</span>
+        </div>
+
+        <input class="form-field" ng-show="editingInfo" ng-model="user.email" placeholder="Email" autofocus="true">
       </div>
 
       <div class="pbs">
@@ -24,7 +28,7 @@
           <span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
         </div>
 
-        <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name" autofocus="true">
+        <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name">
 
       </div>
 

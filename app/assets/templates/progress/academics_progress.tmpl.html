@@ -64,7 +64,7 @@
                 <div class="edit-icons">
                   <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
                     <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass(\$index)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
                   </div>
                 </div>
               </div><!-- /item__icons -->

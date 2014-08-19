@@ -15,9 +15,7 @@ class Api::V1::OrganizationController < ApplicationController
   # GET /organization
   def all_organizations
     if !current_user.super_admin?
-      render status: :forbidden,
-        json: {}
-
+      render status: :forbidden, json: {}
       return
     end
 
@@ -30,13 +28,33 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
+  # GET /organization/:id/info_with_roadmap
+  def organization_with_roadmap
+    orgId = params[:id].to_i
+
+    if !same_organization?(orgId)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    org = @organizationRepository.get_organization(orgId)
+    roadmap = @roadmapRepository.get_roadmap_by_organization(orgId)
+    viewRoadmap = ViewRoadmap.new(roadmap) unless roadmap.nil?
+
+    render status: :ok,
+      json: {
+        info: "Organization with Roadmap",
+        organization: org,
+        roadmap: viewRoadmap
+      }
+  end
+
   # GET /organization/:id/info_with_users
   def organization_with_users
     orgId = params[:id].to_i
 
     if !same_organization?(orgId)
       render status: :forbidden, json: {}
-
       return
     end
 
@@ -49,7 +67,7 @@ class Api::V1::OrganizationController < ApplicationController
 
     render status: :ok,
       json: {
-        info: "Organization",
+        info: "Organization with Users",
         organization: viewOrg
       }
   end
