@@ -1,11 +1,11 @@
 <div ng-controller="OrganizationExpectationController" class="organizationExpectationContainer">
 
-  <h4>Expectations</h4>
+  <div class="expectations-title"><h4 class="bold">Student Expectations</h4></div>
   <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
 
     <div class="expectations-list__item" ng-repeat="expectation in expectations">
       <div class="expectations-list__item__title">
-        <span ng-hide="expectation.editing">{{expectation.title}}</span>
+        <h5 ng-hide="expectation.editing">{{expectation.title}}</h5>
         <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_title" placeholder="Expectation Title" name="expectation_title">
       </div>
       <div class="expectations-list__item__icons" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
@@ -20,8 +20,10 @@
       </div>
     </div>
 
-    <div class="add-expectation__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing"></div>
-    <div class="add-expectation__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing" ng-click="addExpectation()">Add Expectation</div>
+    <div class="add-expectation">
+      <div class="add-expectation__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing"></div>
+      <button type="submit" class="submit add-expectation__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing" ng-click="addExpectation()">Add a Student Expectation</button>
+    </div>
 
   </div>
 

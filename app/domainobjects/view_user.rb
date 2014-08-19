@@ -22,5 +22,7 @@ class ViewUser
 		@is_mentor = user.mentor?
 		@is_org_admin = user.org_admin?
 		@is_super_admin = user.super_admin?
+
+		@modules_progress = []
 	end
 end
