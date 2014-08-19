@@ -10,6 +10,7 @@ angular.module('myApp')
     $http.post '/api/v1/users', { user: user }
 
   @updateUserInfoWithPicture = (user, formData) ->
+    formData.append("user[email]", user.email)
     formData.append("user[first_name]", user.first_name)
     formData.append("user[last_name]", user.last_name)
     formData.append("user[phone]", user.phone)
