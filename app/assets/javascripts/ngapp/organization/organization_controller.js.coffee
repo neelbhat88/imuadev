@@ -25,21 +25,17 @@ angular.module('myApp')
           # Find the student's mentors
           student.mentors = []
           for mentor_id in _.uniq(_.pluck(student.relationships, "assigned_to_id"))
-            student.mentors.push(_.find($scope.organization.mentors, (mentor) -> mentor.id == mentor_id))
-          # Calculate modules_progress for the student
-          for module_title, user_milestones_by_module of _.groupBy(student.user_milestones, "module")
-            org_milestones = $scope.org_milestones[student.time_unit_id][module_title]
+            student.mentors.push(_.findWhere($scope.organization.mentors, { id: mentor_id }))
+          # Calculate progress for each module
+          for module_title, org_milestones_by_module of $scope.org_milestones[student.time_unit_id]
             new_module_progress = { module_title: module_title, time_unit_id: student.time_unit_id,\
-                                    points: { user: 0, total: org_milestones.totalPoints } }
-            for user_milestone in user_milestones_by_module
-              if user_milestone.time_unit_id == student.time_unit_id
-                new_module_progress.points.user += _.find(org_milestones, (org_milestone) ->
-                                                    org_milestone.id == user_milestone.milestone_id).points
+                                    points: { user: 0, total: org_milestones_by_module.totalPoints } }
+            for user_milestone in _.where(student.user_milestones, { time_unit_id: student.time_unit_id, module: module_title } )
+              new_module_progress.points.user += _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } ).points
             student.modules_progress.push(new_module_progress)
             # Apply module_progress to the student's mentors
             for mentor in student.mentors
-              mentor_module_progress = _.find(mentor.modules_progress, (mentor_module_progress) ->
-                mentor_module_progress.module_title == new_module_progress.module_title)
+              mentor_module_progress = _.findWhere(mentor.modules_progress, { module_title: new_module_progress.module_title } )
               if mentor_module_progress != undefined
                 mentor_module_progress.points.user += new_module_progress.points.user
                 mentor_module_progress.points.total += new_module_progress.points.total
