@@ -22,7 +22,7 @@ class ProgressService
     totalPoints = MilestoneService.new.get_total_points(user.organization_id)
 
     totalUserPoints = 0
-    userMilestones = MilestoneService.new.get_all_user_milestones(user.id)
+    userMilestones = MilestoneService.new.get_user_milestones(user.id)
     userMilestones.each do | um |
       totalUserPoints += um.milestone.points
     end
@@ -94,7 +94,7 @@ class ProgressService
     milestones.each do | m |
       # TODO - has_earned shouldn't depend on time_unit_id
       earned = m.has_earned?(user, time_unit_id)
-      user_has_milestone = user_milestones.select{|um| um.milestone_id == m.id}.length > 0
+      user_has_milestone = user_milestones.select{|um| um.milestone_id === m.id}.length > 0
 
       Rails.logger.debug "*****Milestone id: #{m.id}, value: #{m.value} earned? #{earned}"
       if earned and !user_has_milestone
