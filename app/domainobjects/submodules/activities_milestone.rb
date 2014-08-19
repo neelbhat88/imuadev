@@ -23,10 +23,10 @@ class ActivitiesMilestone < ImuaMilestone
     user_activities = []
 
     activities = UserExtracurricularActivityService.new.get_user_extracurricular_activities(user.id)
-    events = UserExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, time_unit_id)
+    details = UserExtracurricularActivityService.new.get_user_extracurricular_activity_details(user.id, time_unit_id)
 
     activities.each do | a |
-      if events.select{|e| e.user_extracurricular_activity_id == a.id}.length > 0
+      if details.select{|d| d.user_extracurricular_activity_id == a.id}.length > 0
         user_activities << a
       end
     end

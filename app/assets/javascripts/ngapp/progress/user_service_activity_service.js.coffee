@@ -1,18 +1,18 @@
 angular.module("myApp")
-.service "UserServiceActivityService", ['$http', ($http) ->
+.service "UserServiceOrganizationService", ['$http', ($http) ->
 
   @all = (userId, time_unit_id) ->
-    $http.get "/api/v1/users/#{userId}/service_activity_events?time_unit_id=#{time_unit_id}"
+    $http.get "/api/v1/users/#{userId}/service_organizations_hours?time_unit_id=#{time_unit_id}"
 
-  @newServiceActivity = (user, time_unit_id) ->
+  @newServiceOrganization = (user, time_unit_id) ->
     name: "",
     description: "",
     user_id: user.id,
     editing: true
 
-  @newServiceEvent = (user, time_unit_id, service_activity_id) ->
+  @newServiceHour = (user, time_unit_id, service_organization_id) ->
     name: "",
-    user_service_activity_id: service_activity_id,
+    user_service_organization_id: service_organization_id,
     hours: "",
     date: "",
     time_unit_id: time_unit_id,
@@ -20,23 +20,23 @@ angular.module("myApp")
     description: "",
     editing: true
 
-  @saveServiceActivity = (user_service_activity) ->
-    if user_service_activity.id
-      return $http.put "/api/v1/service_activity/#{user_service_activity.id}", {user_service_activity: user_service_activity}
+  @saveServiceOrganization = (user_service_organization) ->
+    if user_service_organization.id
+      return $http.put "/api/v1/service_organization/#{user_service_organization.id}", {user_service_organization: user_service_organization}
     else
-      return $http.post "/api/v1//service_activity", {user_service_activity: user_service_activity}
+      return $http.post "/api/v1//service_organization", {user_service_organization: user_service_organization}
 
-  @saveServiceEvent = (user_service_activity_event) ->
-    if user_service_activity_event.id
-      return $http.put "/api/v1/service_activity_event/#{user_service_activity_event.id}", {user_service_activity_event: user_service_activity_event}
+  @saveServiceHour = (user_service_hour) ->
+    if user_service_hour.id
+      return $http.put "/api/v1/service_hour/#{user_service_hour.id}", {user_service_hour: user_service_hour}
     else
-      return $http.post "/api/v1/service_activity_event", {user_service_activity_event: user_service_activity_event}
+      return $http.post "/api/v1/service_hour", {user_service_hour: user_service_hour}
 
-  @deleteServiceActivity = (user_service_activity) ->
-    return $http.delete "/api/v1/service_activity/#{user_service_activity.id}"
+  @deleteServiceOrganization = (user_service_organization) ->
+    return $http.delete "/api/v1/service_organization/#{user_service_organization.id}"
 
-  @deleteServiceEvent = (user_service_activity_event) ->
-    return $http.delete "/api/v1/service_activity_event/#{user_service_activity_event.id}"
+  @deleteServiceHour = (user_service_hour) ->
+    return $http.delete "/api/v1/service_hour/#{user_service_hour.id}"
 
   @
 ]

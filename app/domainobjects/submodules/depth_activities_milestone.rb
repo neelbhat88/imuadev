@@ -32,10 +32,10 @@ class DepthActivitiesMilestone < ImuaMilestone
     time_units = RoadmapRepository.new.get_time_units(user.organization_id)
     time_units.each do | tu |
       if tu.id <= time_unit_id.to_i
-        events = userExtracurricularActivityService.get_user_extracurricular_activity_events(user.id, tu.id)
+        details = userExtracurricularActivityService.get_user_extracurricular_activity_details(user.id, tu.id)
         _activities_array.each do | a |
           # Check that we have at least one event for this activity in the time_unit
-          if events.select{|e| e.user_extracurricular_activity_id == a[:activity].id}.length > 0
+          if details.select{|d| d.user_extracurricular_activity_id == a[:activity].id}.length > 0
             a[:depth_activities] += 1
           end
         end
