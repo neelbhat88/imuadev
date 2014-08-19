@@ -81,6 +81,7 @@ class Api::V1::UsersController < ApplicationController
     user = params[:user]
     user[:id] = params[:id]
 
+    # ToDo: Add authorization check here
     result = UserRepository.new.update_user_info(user)
 
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
