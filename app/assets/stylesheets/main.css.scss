@@ -24,8 +24,10 @@
 }
 
 @function white($opacity:1){
-    @return rgba(255,255,255,$opacity)
+    @return rgba(255,255,255,$opacity);
 }
+
+/* Status Colors */
 
 $green: rgb(64,174,73); // #41ad49
 $darkgreen: rgb(43,151,51); //#2b8333
@@ -33,14 +35,24 @@ $darkgreen: rgb(43,151,51); //#2b8333
 $red: rgb(239,65,61); // #ef413d
 $darkred: rgb(181,45,42); // #b52d2a
 
-$blue: rgb(37,170,225); // #27aae1
-$darkblue: rgb(21,126,170); // #157eaa
+/* Catagory Colors */
+
+$teal: rgb(97,235,165); // #61eba5
+$darkteal: rgb(73,160,116); // #49a074
 
 $yellow: rgb(242,190,40); // #e8be28
 $darkyellow: rgb(187,146,26); // #bb921a
 
+$orange: rgb(239,102,41); // #ef6629
+$darkorange: rgb(184,92,51); // #b85c33
+
 $purple: rgb(178,97,235); // #9665aa
 $darkpurple: rgb(138,67,187); //#8a43bb
+
+$blue: rgb(37,170,225); // #27aae1
+$darkblue: rgb(21,126,170); // #157eaa
+
+/* Greys */
 
 $lightgrey: rgb(192,192,192); // #c0c0c0
 $grey: rgb(25,26,27); // #191a1b
