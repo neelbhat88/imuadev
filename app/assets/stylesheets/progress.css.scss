@@ -205,6 +205,23 @@
 
       }
 
+      .module--submodule {
+        margin-bottom: 40px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .module--subhead {
+          @include font-size(1.8);
+          font-weight: bold;
+          padding-bottom: 20px;
+          border-bottom: 1px solid white(0.1);
+          margin-bottom: 20px;
+        }
+
+      }
+
     } //.module
 
   } //.module-container
