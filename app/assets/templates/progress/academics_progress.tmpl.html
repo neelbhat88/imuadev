@@ -15,19 +15,9 @@
 
         <div class="module-data">
 
-          <div class="module-data-items">
-
-            <div class="module-data__item">
-              <div class="module-data__key clear">
-                <div class="item__key-class bold">Class</div>
-                <div class="item__key-grade bold">Grade</div>
-              </div>
-            </div>
-
-            <div class="module-data__item clear" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
-
+          <div class="module-data__group">
+            <div class="module-data__row clear" ng-repeat="user_class in user_classes" ng-class="{'last':\$last}">
               <div class="item__class">
-
                 <div class="item__class-name">
                   <span ng-hide="user_class.editing">{{user_class.name}}</span>
 
@@ -55,7 +45,7 @@
                       <option value="F">F</option>
                     </select>
                   </div>
-                </div><!-- /item__grade -->
+                </div>
 
               </div>
 
@@ -63,14 +53,14 @@
                 <div class="edit-icons">
                   <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
                     <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass(\$index)"></span>
                   </div>
                 </div>
-              </div><!-- /item__icons -->
+              </div>
 
               <div class="edit-buttons" ng-show="user_class.editing">
-                  <div class="confirm-button" title="Confirm" ng-click="saveClass($index)">Confirm</div>
-                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit($index)">Cancel</div>
+                  <div class="confirm-button" title="Confirm" ng-click="saveClass(\$index)">Confirm</div>
+                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit(\$index)">Cancel</div>
               </div>
 
             </div>

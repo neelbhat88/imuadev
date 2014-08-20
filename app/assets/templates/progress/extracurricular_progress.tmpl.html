@@ -15,7 +15,7 @@
 
         <div class="module-data">
 
-          <div class="module-data-items">
+          <div class="module-data-group">
 
             <div class="module-data__item clear" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities" ng-class="{'last':$last}">
 
@@ -60,7 +60,7 @@
 
             </div>
 
-          </div><!-- /module-data-items -->
+          </div><!-- /module-data-group -->
 
           <div ng-if="editable(current_user, selected_semester)"
               class="module-data__button button-wide" ng-click="addActivity()" ng-hide="user_extracurricular_activities.editing">Add Extracurricular Activity
