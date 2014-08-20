@@ -8,6 +8,7 @@ class UserRepository
 
   def update_user_info(userObj)
     id = userObj[:id]
+    email = userObj[:email]
     first_name = userObj[:first_name]
     last_name = userObj[:last_name]
     phone = userObj[:phone]
@@ -15,33 +16,20 @@ class UserRepository
     class_of = userObj[:class_of]
 
     user = User.find(id)
+    user.email = email
+    user.first_name = first_name
+    user.last_name = last_name
+    user.phone = phone
+    user.class_of = class_of
 
-    if avatar == nil
-      result = user.update_attributes(
-                                  :first_name => first_name,
-                                  :last_name => last_name,
-                                  :phone => phone,
-                                  :class_of => class_of
-                                )
-    else
-      result = user.update_attributes(
-                                  :first_name => first_name,
-                                  :last_name => last_name,
-                                  :phone => phone,
-                                  :avatar => avatar,
-                                  :class_of => class_of
-                                )
+    if avatar != nil
+      user.avatar = avatar
     end
 
-    if (result)
-      new_user = get_user(id)
-
-      return { :status => :ok, :info => "User info updated successfully!", :user => new_user }
-
+    if user.save
+      return { :status => :ok, :info => "User info updated successfully!", :user => user }
     else
-      old_user = get_user(id)
-
-      return { :status => :bad_request, :info => user.errors.messages[:avatar], :user => old_user}
+      return { :status => :bad_request, :info => user.errors.full_messages, :user => user}
     end
   end
 
