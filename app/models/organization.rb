@@ -15,6 +15,7 @@ class ViewOrganizationWithUsers
   def initialize(org)
     @id = org.id
     @name = org.name
+    @milestones = org.milestones.map{|m| ViewMilestone.new(m)}
 
     users = org.users.map{|u| ViewUser.new(u)}
     @orgAdmins = users.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}

@@ -4,6 +4,16 @@
   color: white;
 	border-bottom: 1px $darkborder solid;
 
+  .progress-subnav {
+    a {
+      color: white;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   ul {
 
     margin-bottom: 0;

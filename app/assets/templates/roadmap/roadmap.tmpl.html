@@ -95,7 +95,7 @@
 
     </div>
 
-    <div class="rightContainer">
+    <div class="rightContainer" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
 
       <div class="expectations" ng-include="'expectation/organization_expectation.html'"></div>
 

@@ -28,7 +28,7 @@ angular.module('myApp')
         d3.select("#svg" + student.id + "_" + scope.identifier + " pattern").remove();
 
         var color = d3.scale.ordinal()
-            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#808080']);
+            .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080']);
 
         var total_points = 0;
         var user_points = 0;

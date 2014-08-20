@@ -53,17 +53,20 @@ class Api::V1::OrganizationController < ApplicationController
   def organization_with_users
     orgId = params[:id].to_i
 
+    # TODO Change authorization to check this particular function
     if !same_organization?(orgId)
       render status: :forbidden, json: {}
       return
     end
 
     org = @organizationRepository.get_organization(orgId)
-    viewOrg = ViewOrganizationWithUsers.new(org) unless org.nil?
+    # TODO Check authorization for this function
+    # if !can?(current_user, :read_organization_with_users, org)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
-    viewOrg.students.each do | s |
-      s.modules_progress = @progressService.get_all_progress(s.id, s.time_unit_id).object
-    end
+    viewOrg = ViewOrganizationWithUsers.new(org) unless org.nil?
 
     render status: :ok,
       json: {

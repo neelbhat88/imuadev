@@ -12,12 +12,11 @@ class Api::V1::ParentGuardianContactController < ApplicationController
 
   # GET /users/:id/parent_guardian_contacts
   def get_parent_guardian_contacts
-    userId = params[:id]
+    userId = params[:id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :read_parent_guardian_contacts, user)
-      render status: :forbidden,
-        json: {}
+      render status: :forbidden, json: {}
       return
     end
 
@@ -26,28 +25,28 @@ class Api::V1::ParentGuardianContactController < ApplicationController
     render status: :ok,
       json: {
         info: "All parent_guardian_contacts",
-        parentGuardianContacts: result
+        parent_guardian_contacts: result
       }
   end
 
-  # POST /parent_guardian_contact
+  # POST /users/:id/parent_guardian_contact
   def create_parent_guardian_contact
     parentGuardianContact = params[:parent_guardian_contact]
-    userId                = params[:parent_guardian_contact][:user_id].to_i
+    userId                = params[:id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_parent_guardian_contacts, user)
-      render status: :forbidden,
-        json: {}
+      render status: :forbidden, json: {}
       return
     end
 
+    parentGuardianContact[:user_id] = userId
     result = @parentGuardianContactService.create_parent_guardian_contact(parentGuardianContact)
 
     render status: result.status,
       json: {
         info: result.info,
-        parentGuardianContact: result.object
+        parent_guardian_contact: result.object
       }
   end
 
@@ -59,8 +58,7 @@ class Api::V1::ParentGuardianContactController < ApplicationController
     parentGuardianContact = @parentGuardianContactService.get_parent_guardian_contact(parentGuardianContactId)
     user = @userRepository.get_user(parentGuardianContact.user_id)
     if !can?(current_user, :manage_parent_guardian_contacts, user)
-      render status: :forbidden,
-        json: {}
+      render status: :forbidden, json: {}
       return
     end
 
@@ -69,7 +67,7 @@ class Api::V1::ParentGuardianContactController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        parentGuardianContact: result.object
+        parent_guardian_contact: result.object
       }
   end
 
@@ -80,8 +78,7 @@ class Api::V1::ParentGuardianContactController < ApplicationController
     parentGuardianContact = @parentGuardianContactService.get_parent_guardian_contact(parentGuardianContactId)
     user = @userRepository.get_user(parentGuardianContact.user_id)
     if !can?(current_user, :manage_parent_guardian_contacts, user)
-      render status: :forbidden,
-        json: {}
+      render status: :forbidden, json: {}
       return
     end
 
