@@ -73,7 +73,14 @@
 
                     <div class="editor-wrapper item-event--date-editor" ng-show="user_service_event.editing">
                       <div>Date</div>
-                      <input class="form-editor" type="text" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
+                      <div ng-controller="DatepickerCtrl">
+                        <p class="input-group">
+                          <input class="form-editor" type="text" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup='MM/dd/yyyy' is-open="opened" ng-required="true" show-button-bar="false" ng-click="opened=false">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+                      </div>
                     </div>
 
                     <div class="edit-buttons" ng-show="user_service_event.editing">
