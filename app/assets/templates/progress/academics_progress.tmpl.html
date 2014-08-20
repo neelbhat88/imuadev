@@ -1,7 +1,5 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
-  <div class="section-wrapper clear">
-
     <div class="module module--grades">
 
       <div class="module--header">Grades</div>
@@ -13,7 +11,7 @@
           <h6>Let's get that taken care of. Add your classes for this semester below.</h6>
         </div>
 
-        <div class="module-data">
+        <div class="module--data">
 
           <table>
             <thead>
@@ -31,7 +29,7 @@
                   <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
                 </td>
 
-                <td ng-show="user_class.editing" colspan="3">
+                <td class="editing" ng-show="user_class.editing" colspan="3">
                   <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
                   <select class="form-control" ng-model="user_class.new_grade">
                     <option value="A">A</option>
@@ -47,8 +45,10 @@
                     <option value="D-">D-</option>
                     <option value="F">F</option>
                   </select>
+
                   <button class="submit" title="Confirm" ng-click="saveClass($index)">Confirm</button>
                   <button class="cancel" title="Cancel" ng-click="cancelEdit($index)">Cancel</button>
+
                 </td>
 
               </tr>
@@ -58,7 +58,7 @@
 
           <button ng-hide="classes.editing" class="btn btn-default" ng-if="editable(current_user, selected_semester)" ng-click="addClass()">Add Class</button>
 
-        </div><!-- /module-data -->
+        </div><!-- /module--data -->
 
       </div><!-- /module--content -->
 
@@ -70,7 +70,7 @@
 
       <div class="module--content">
 
-      	<div class="user-class-greeting" ng-show="user_classes.length != 0">
+      	<div class="module--data user-class-greeting" ng-show="user_classes.length != 0">
           Hey {{student.first_name}}, you are currently earning a
           <h4><span class="numbers-large">{{gpa}}</span> GPA</h4> this semester.
         </div>
@@ -85,11 +85,11 @@
 
       <div class="module--content">
 
-        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+        <div class="module--no-data" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
-        <div class="module-yes-nos" ng-if="milestones.length > 0">
+        <div class="module--data module-yes-nos" ng-if="milestones.length > 0">
 
           <div class="yes-nos-unsatisfied module--submodule clear">
 
@@ -139,7 +139,5 @@
       </div><!-- /module-inner -->
 
     </div><!-- /academic-milestones -->
-
-  </div>
 
 </div>

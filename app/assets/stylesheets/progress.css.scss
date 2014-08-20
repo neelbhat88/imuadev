@@ -116,18 +116,21 @@
 }
 
 .progressLower {
-
   background: $darkgrey;
   min-height: 500px;
 
-  /* ===============================================
-     Modular Section Classes
-     =============================================== */
+  .module-container {
 
-  .section-wrapper {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    color: white;
 
-    padding: $wrapper;
-    margin-top: 20px;
+    @each $category, $color in $colormap {
+
+      &.color--#{$category} { border-top: 6px solid $color; }
+
+    }
 
     .module {
 
@@ -148,7 +151,7 @@
 
         padding: 40px;
 
-        .module-data {
+        .module--data {
 
           table {
             width: 100%;
@@ -174,87 +177,26 @@
 
           } //table
 
-        } //.module-data
+          .editing {
+            text-align: center;
+            input, select, button {
+              margin-bottom: 10px;
+            }
+          }
+
+        } //.module--data
       }
-    }
 
-    .numbers-large {
+      .numbers-large {
 
-      @include font-size(10.0);
-      font-weight: $light;
-
-    }
-
-  } //.section-wrapper
-
-  .module-circle {
-
-      @each $category, $color in $colormap {
-
-      &.color--#{$category} { color: $color; }
-
-    }
-
-  }
-
-  .module-data-container {
-
-    width: 100%;
-    padding: 40px 0;
-    text-align: center;
-    color: white;
-
-    @each $category, $color in $colormap {
-
-      &.color--#{$category} { border-top: 6px solid $color; }
-
-    }
-
-    .module-data__item {
-      padding-bottom: 20px;
-      border-bottom: 1px solid white(0.1);
-      margin-bottom: 40px;
-      text-align: left;
-
-      .module-data__sub-item {
-        padding-bottom: 20px;
-        border-bottom: 1px solid white(0.1);
-        margin-bottom: 20px;
-        text-align: left;
+        @include font-size(10.0);
+        font-weight: $light;
 
       }
 
-      .item {
-        text-align: left;
-        padding-bottom: 20px;
-        border-bottom: 1px solid white(0.1);
-        margin-bottom: 20px;
+    } //.module
 
-      }
-
-      .edit-icons {
-        display: inline-block;
-        opacity: 0.3;
-        &:hover { opacity: 1; }
-      }
-
-      .editor-wrapper {
-        width: 90%;
-        opacity: 1;
-        text-align: left;
-      }
-
-      .form-editor {
-        color: $ink;
-        padding: 10px;
-        width: 100%;
-        @include font-size(1.4);
-        @include border-radius(5px);
-        border: 1px solid black(0.5);
-        margin-bottom: 10px;
-      }
-
-    }
+  } //.module-container
 
     /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
 
@@ -597,7 +539,5 @@
       	} //module--milestones
 
     } //testingProgressContainer
-
-  } //.module-data-container
 
 } //.progressLower
