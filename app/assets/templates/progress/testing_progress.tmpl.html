@@ -17,7 +17,7 @@
 
           <div class="noUserTests" ng-hide="userTests.length != 0">No tests added</div>
 
-          <div class="module-data-group">
+          <div class="module-data-items">
 
             <div class="module-data__item clear" ng-repeat="userTest in userTests" ng-class="{'last':$last}">
 
@@ -84,7 +84,7 @@
 
             </div><!-- /module-data__item -->
 
-          </div><!-- /module-data-group -->
+          </div><!-- /module-data-items -->
 
           <div ng-if="editable(current_user, selected_semester)"
               class="module-data__button" ng-click="addUserTest()" ng-hide="userTests.editing">Add Test</div>

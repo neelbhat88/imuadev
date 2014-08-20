@@ -121,7 +121,7 @@
   min-height: 500px;
 
   /* ===============================================
-     Module Classes
+     Modular Section Classes
      =============================================== */
 
   .section-wrapper {
@@ -129,52 +129,79 @@
     padding: $wrapper;
     margin-top: 20px;
 
-    .module {
+      .module {
 
-      width: 31%;
-      margin: 1%;
-      float: left;
+        width: 31%;
+        margin: 1%;
+        float: left;
 
-      .module--header {
+        .module--header {
 
-        padding: 20px;
-        border-bottom: 1px solid white(0.1);
-        text-align: center;
-        font-weight: $bold;
+          padding: 20px;
+          border-bottom: 1px solid white(0.1);
+          text-align: center;
+          font-weight: $bold;
 
-      }
-
-      .module--content {
-        padding: 40px;
-
-        .module-data {
-          table {
-            width: 100%;
-            text-align: left;
-            thead {
-              border-bottom: 1px solid white(0.1);
-              font-weight: $bold;
-              th {
-                padding-bottom: 20px;
-              }
-            }//thead
-            tbody {
-              tr {
-                border-bottom: 1px solid white(0.1);
-
-                td {
-                  padding: 20px 0;
-                }
-
-                input, textarea, keygen, select, button {
-                  display: block;
-                }
-
-              }
-            }//tbody
-          } //table
         }
-      }
+
+        .module--content {
+
+          padding: 40px;
+
+          .module--submodule {
+
+            margin-bottom: 20px;
+
+            .module--subhead {
+
+              padding-bottom: 20px;
+              border-bottom: 1px solid white(0.1);
+              margin-bottom: 20px;
+
+            }
+
+          }
+
+          .module-data__button {
+
+            background: white(0.25);
+            padding: 10px;
+            width: 35%;
+            margin: 0 auto;
+            @include font-size(1.2);
+            @include border-radius(4px);
+            text-align: center;
+            opacity: 0.4;
+
+            &:hover {
+
+              opacity: 1;
+
+            }
+
+          } //.module-data__button
+
+          .button-wide {
+
+              width: 60%;
+              @include font-size();
+
+          }
+
+          .confirm-button {
+            @extend .module-data__button;
+            background: $green;
+            display: inline-block;
+          }
+
+          .cancel-button {
+            @extend .module-data__button;
+            background: $red;
+            display: inline-block;
+          }
+
+        }
+
     }
 
     .numbers-large {
@@ -210,6 +237,10 @@
     }
 
     .module-data__item {
+      padding-bottom: 20px;
+      border-bottom: 1px solid white(0.1);
+      margin-bottom: 40px;
+      text-align: left;
 
       .module-data__sub-item {
         padding-bottom: 20px;
@@ -256,48 +287,54 @@
     .academicsProgressContainer {
 
     	.module {
+
     	  background: $academics-color-dark;
+
         .module--header { background: $academics-color; }
+
     	}
 
-      .item__key-class {
-        width: 70%;
-        float: left;
-      }
+    	.module-data__item {
 
-      .item__key-grade {
-        width: 30%;
-        float: left;
-      }
+        .item__key-class {
+          width: 70%;
+          float: left;
+        }
 
-     .item__class {
+        .item__key-grade {
+          width: 30%;
+          float: left;
+        }
 
-       width: 90%;
-       float: left;
-       text-align: left;
+       .item__class {
 
-       .item__class-name {
-         width: 80%;
-         display: inline-block;
+         width: 90%;
+         float: left;
+         text-align: left;
+
+         .item__class-name {
+           width: 80%;
+           display: inline-block;
+         }
+
+         .item__class-grade {
+            width: 15%;
+            display: inline-block;
+            @include font-size(2.2);
+            font-weight: $light;
+         }
+
        }
 
-       .item__class-grade {
-          width: 15%;
-          display: inline-block;
-          @include font-size(2.2);
-          font-weight: $light;
+       .item__icons {
+
+         width: 10%;
+         float: left;
+         text-align: right;
+
        }
 
-     }
-
-     .item__icons {
-
-       width: 10%;
-       float: left;
-       text-align: right;
-
-     }
-
+     } //.module-data__item
 
   	.module--milestones {
 
