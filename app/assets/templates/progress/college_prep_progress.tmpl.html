@@ -2,21 +2,21 @@
 
   <div class="section-wrapper clear">
 
-    <div class="section section--milestones">
+    <div class="module module--milestones">
 
-    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+    	<div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
 
-      <div class="section--inner">
+      <div class="module--content">
 
-        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+        <div class="module--no-data" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
         <div class="module-yes-nos" ng-if="milestones.length > 0">
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="yes-nos-unsatisfied module--submodule clear">
 
-            <div class="section--subhead">Next Milestones</div>
+            <div class="module--subhead">Next Milestones</div>
 
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
@@ -36,9 +36,9 @@
 
           </div>
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="yes-nos-unsatisfied module--submodule clear">
 
-            <div class="section--subhead">Completed Milestones</div>
+            <div class="module--subhead">Completed Milestones</div>
 
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
@@ -59,9 +59,9 @@
 
         </div>
 
-      </div><!-- /section-inner -->
+      </div><!-- /module-inner -->
 
-    </div><!-- /section--milestones -->
+    </div><!-- /module--milestones -->
 
   </div><!-- /section-wrapper -->
 

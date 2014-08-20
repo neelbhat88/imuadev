@@ -120,6 +120,99 @@
   background: $darkgrey;
   min-height: 500px;
 
+  /* ===============================================
+     Modular Section Classes
+     =============================================== */
+
+  .section-wrapper {
+
+    padding: $wrapper;
+    margin-top: 20px;
+
+      .module {
+
+        width: 31%;
+        margin: 1%;
+        float: left;
+
+        .module--header {
+
+          padding: 20px;
+          border-bottom: 1px solid white(0.1);
+          text-align: center;
+          font-weight: $bold;
+
+        }
+
+        .module--content {
+
+          padding: 40px;
+
+          .module--submodule {
+
+            margin-bottom: 20px;
+
+            .module--subhead {
+
+              padding-bottom: 20px;
+              border-bottom: 1px solid white(0.1);
+              margin-bottom: 20px;
+
+            }
+
+          }
+
+          .module-data__button {
+
+            background: white(0.25);
+            padding: 10px;
+            width: 35%;
+            margin: 0 auto;
+            @include font-size(1.2);
+            @include border-radius(4px);
+            text-align: center;
+            opacity: 0.4;
+
+            &:hover {
+
+              opacity: 1;
+
+            }
+
+          } //.module-data__button
+
+          .button-wide {
+
+              width: 60%;
+              @include font-size();
+
+          }
+
+          .confirm-button {
+            @extend .module-data__button;
+            background: $green;
+            display: inline-block;
+          }
+
+          .cancel-button {
+            @extend .module-data__button;
+            background: $red;
+            display: inline-block;
+          }
+
+        }
+
+    }
+
+    .numbers-large {
+
+      @include font-size(10.0);
+      font-weight: $light;
+
+    }
+
+  } //.section-wrapper
+
   .module-circle {
 
       @each $category, $color in $colormap {
@@ -193,11 +286,11 @@
 
     .academicsProgressContainer {
 
-    	.section {
+    	.module {
 
     	  background: $academics-color-dark;
 
-        .section--header { background: $academics-color; }
+        .module--header { background: $academics-color; }
 
     	}
 
@@ -243,9 +336,9 @@
 
      } //.module-data__item
 
-  	.section--milestones {
+  	.module--milestones {
 
-      	.section--inner {
+      	.module--content {
 
       		.yes-no-item {
 
@@ -260,16 +353,16 @@
 
       	}
 
-    	} //section--milestones
+    	} //module--milestones
 
     } //academicsProgressContainer
 
     .serviceProgressContainer {
 
-    	.section {
+    	.module {
 
     	  background: $service-color-dark;
-        .section--header { background: $service-color; }
+        .module--header { background: $service-color; }
 
     	}
 
@@ -352,9 +445,9 @@
 
       } //module-data__item
 
-    	.section--milestones {
+    	.module--milestones {
 
-      	.section--inner {
+      	.module--content {
 
       		.yes-no-item {
 
@@ -369,17 +462,17 @@
 
       	}
 
-    	} //section--milestones
+    	} //module--milestones
 
     } //serviceProgressContainer
 
     .extracurricularProgressContainer {
 
-    	.section {
+    	.module {
 
     	  background: $extracurricular-color-dark;
 
-        .section--header { background: $extracurricular-color; }
+        .module--header { background: $extracurricular-color; }
 
     	}
 
@@ -403,9 +496,9 @@
 
       } //module-data__item
 
-    	.section--milestones {
+    	.module--milestones {
 
-        	.section--inner {
+        	.module--content {
 
         		.yes-no-item {
 
@@ -420,23 +513,23 @@
 
         	}
 
-      	} //section--milestones
+      	} //module--milestones
 
     } //extracurricularProgressContainer
 
     .collegePrepProgressContainer {
 
-    	.section {
+    	.module {
 
     	  background: $college_prep-color-dark;
 
-        .section--header { background: $college_prep-color; }
+        .module--header { background: $college_prep-color; }
 
     	}
 
-    	.section--milestones {
+    	.module--milestones {
 
-        	.section--inner {
+        	.module--content {
 
         		.yes-no-item {
 
@@ -451,17 +544,17 @@
 
         	}
 
-      	} //section--milestones
+      	} //module--milestones
 
     } //collegePrepProgressContainer
 
     .testingProgressContainer {
 
-    	.section {
+    	.module {
 
     	  background: $testing-color-dark;
 
-        .section--header { background: $testing-color; }
+        .module--header { background: $testing-color; }
 
     	}
 
@@ -510,9 +603,9 @@
 			} //.module-data__item
 
 
-    	.section--milestones {
+    	.module--milestones {
 
-        	.section--inner {
+        	.module--content {
 
         		.yes-no-item {
 
@@ -527,7 +620,7 @@
 
         	}
 
-      	} //section--milestones
+      	} //module--milestones
 
     } //testingProgressContainer
 

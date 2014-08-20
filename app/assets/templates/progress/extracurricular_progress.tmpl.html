@@ -1,14 +1,14 @@
 <div ng-controller="ExtracurricularProgressController" class="extracurricularProgressContainer">
 
-  <div class="module-userExtracurricularActivities section-wrapper clear">
+  <div class="section-wrapper clear">
 
-    <div class="section section--ecActivities">
+    <div class="module module--ecActivities">
 
-      <div class="section--header">Extracurricular Activities</div>
+      <div class="module--header">Extracurricular Activities</div>
 
-      <div class="section--inner">
+      <div class="module--content">
 
-        <div ng-show="user_extracurricular_activities.length == 0">
+        <div class="module--no-data" ng-show="user_extracurricular_activities.length == 0">
           <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
           <h6>Let's get that taken care of. Add your Extracurricular Activities for this semester below.</h6>
         </div><!-- /No activities warning -->
@@ -67,15 +67,15 @@
           </div>
         </div><!-- /module-data -->
 
-      </div><!-- /section--inner -->
+      </div><!-- /module--content -->
 
-    </div><!-- /section--ecActivities -->
+    </div><!-- /module--ecActivities -->
 
-    <div class="section section--activity-totals">
+    <div class="module module--activity-totals">
 
-      <div class="section--header">Activities</div>
+      <div class="module--header">Activities</div>
 
-      <div class="section--inner">
+      <div class="module--content">
 
       	<div class="user-class-greeting" wait-to-load="loaded_semester_activities">
           Hey {{student.first_name}}, you are participating in
@@ -84,13 +84,13 @@
 
       </div>
 
-    </div><!-- /section--gpa -->
+    </div><!-- /module--gpa -->
 
-    <div class="section section--milestones">
+    <div class="module module--milestones">
 
-    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+    	<div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
 
-      <div class="section--inner">
+      <div class="module--content">
 
         <div class="module-data-content" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
@@ -98,9 +98,9 @@
 
         <div class="module-yes-nos" ng-if="milestones.length > 0">
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="yes-nos-unsatisfied module--submodule clear">
 
-          	<div class="section--subhead">Next Milestones</div>
+          	<div class="module--subhead">Next Milestones</div>
 
 	          <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
               <div class="yes-no-item-unstatisfied">
@@ -120,9 +120,9 @@
 
           </div>
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="yes-nos-unsatisfied module--submodule clear">
 
-          	<div class="section--subhead">Completed Milestones</div>
+          	<div class="module--subhead">Completed Milestones</div>
 
             <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
               <div class="yes-no-item-statisfied">
@@ -143,9 +143,9 @@
 
         </div>
 
-      </div><!-- /section-inner -->
+      </div><!-- /module-inner -->
 
-    </div><!-- /section--milestones -->
+    </div><!-- /module--milestones -->
 
   </div><!-- section-wrapper -->
 
