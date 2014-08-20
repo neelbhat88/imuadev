@@ -63,22 +63,51 @@
               <div class="item__icons">
                 <div class="edit-icons">
                   <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
-                    <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
+                    <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="editClass(user_class)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass(user_class)"></span>
                   </div>
                 </div>
               </div><!-- /item__icons -->
 
+              <div class="more-info clear">
+                <div class="more-info__fields" ng-show="showMoreInfo && !user_class.editing">
+                  <div>Credit Hours: {{user_class.credit_hours}}</div>
+                  <div>Level: {{user_class.level}}</div>
+                  <div>Subject: {{user_class.subject}}</div>
+                  <div>Period: {{user_class.period}}</div>
+                  <div>Room: {{user_class.room}}</div>
+                </div>
+
+                <div class="more-info__fields--editing" ng-show="user_class.editing">
+                  <input class="form-editor" ng-model="user_class.new_credit_hours" placeholder="Credit Hours" name="credithours">
+                  <select class="form-editor" ng-model="user_class.new_level" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS">
+                    <option value="">--Select Level--</option>
+                  </select>
+                  <select class="form-editor" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                    <option value="">--Select Subject--</option>
+                  </select>
+                  <input class="form-editor" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+                  <input class="form-editor" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
+                </div>
+
+                <div ng-hide="user_class.editing" ng-click="showMoreInfo = !showMoreInfo"
+                      class="more-info__buttons module-data__button">
+                  <span ng-hide="showMoreInfo">More info</span>
+                  <span ng-show="showMoreInfo">Less info</span>
+                </div>
+              </div>
+
               <div class="edit-buttons" ng-show="user_class.editing">
-                  <div class="confirm-button" title="Confirm" ng-click="saveClass($index)">Confirm</div>
-                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit($index)">Cancel</div>
+                  <div class="confirm-button" title="Confirm" ng-click="saveClass(user_class)">Confirm</div>
+                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</div>
               </div>
 
             </div>
 
           </div>
 
-          <div ng-if="editable(current_user, selected_semester)" class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">
+          <div ng-if="editable(current_user, selected_semester)" class="module-data__button" ng-click="addClass()"
+                ng-hide="classes.editing">
             Add Class
           </div>
 
