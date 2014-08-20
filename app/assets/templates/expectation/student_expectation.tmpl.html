@@ -39,11 +39,13 @@
     </div> <!-- progressCircle-big--container -->
 
     <div class="meetingExpectations">
-      <div class="expectations-met-message" ng-if="meetingExpectations">
-        <h3 class="bold">Nice work {{student.first_name}}!</h3> <h5>You're meeting all of the Expectations!</h5>
-      </div>
-      <div class="expectations-not-met-message" ng-if="!meetingExpectations">
-        <h3>Hey {{student.first_name}},</h3> <h5>there are some expectations you aren't currently meeting.</h5>
+      <div class="expectations-message" wait-to-load="{{loaded_expectations}}">
+        <div class="expectations-met-message" ng-hide="!meetingExpectations">
+          <h3 class="bold">Nice work {{student.first_name}}!</h3> <h5>You're meeting all of the Expectations!</h5>
+        </div>
+        <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+          <h3>Hey {{student.first_name}},</h3> <h5>there are some expectations you aren't currently meeting.</h5>
+        </div>
       </div>
     </div>
 
