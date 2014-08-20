@@ -112,10 +112,4 @@ angular.module('myApp')
       $scope.user_service_activities[parentIndex].events[index].new_hours = $scope.user_service_activities[parentIndex].events[index].hours
       $scope.user_service_activities[parentIndex].events[index].new_date= $scope.user_service_activities[parentIndex].events[index].date
 
-    $scope.DatepickerCtrl = ($scope) ->
-      $scope.open = ($event) ->
-        $event.preventDefault()
-        $event.stopPropagation()
-        $scope.opened = !$scope.opened
-
 ]
