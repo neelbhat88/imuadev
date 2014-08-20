@@ -44,11 +44,11 @@
 
           <div class="section--header"><h6>Upcoming <span class="bold">Milestones</span></h6></div>
           <div class="section--inner">
-            <div class="module-yes-nos" ng-if="milestones.length > 0">
-              <div class="yes-nos-unsatisfied section--subsection clear">
-                <div class="yes-no-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
-                  <div class="yes-no-item-unstatisfied">
-                    <div class="yes-no--point-circle" modulecolor="{{milestone.module}}">
+            <div class="module-milestones" ng-if="milestones.length > 0">
+              <div class="milestones-unsatisfied section--subsection clear">
+                <div class="milestone-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
+                  <div class="milestone-item-unstatisfied">
+                    <div class="milestone--point-circle" modulecolor="{{milestone.module}}">
                       <div class="point-circle--inside">
                         <h5 class="bold">{{milestone.points}}</h5>
                         <p>Points</p>

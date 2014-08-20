@@ -81,24 +81,24 @@
 
     <div class="module module--milestones">
 
-    	<div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+        <div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
 
-      <div class="module--content">
+        <div class="module--content">
 
         <div class="module--no-data" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
-        <div class="module--data module-yes-nos" ng-if="milestones.length > 0">
+        <div class="module--data" ng-if="milestones.length > 0">
 
-          <div class="yes-nos-unsatisfied module--submodule clear">
+          <div class="milestones-unsatisfied module--submodule clear">
 
           	<div class="module--subhead">Next Milestones</div>
 
-	          <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
-              <div class="yes-no-item-unstatisfied">
+	          <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
+              <div class="milestone-item-unstatisfied">
 
-                <div class="yes-no--point-circle">
+                <div class="milestone--point-circle">
                   <div class="point-circle--inside">
                     <h5 class="bold">{{milestone.points}}</h5>
                     <p>Points</p>
@@ -113,14 +113,14 @@
 
           </div>
 
-          <div class="yes-nos-unsatisfied module--submodule clear">
+          <div class="milestones-unsatisfied module--submodule clear">
 
           	<div class="module--subhead">Completed Milestones</div>
 
-            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
-              <div class="yes-no-item-statisfied">
+            <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
+              <div class="milestone-item-statisfied">
 
-                <div class="yes-no--point-circle">
+                <div class="milestone--point-circle">
                   <div class="point-circle--inside">
                     <h4 class="bold">✓</h4>
                   </div>

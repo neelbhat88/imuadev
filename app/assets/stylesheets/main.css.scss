@@ -404,7 +404,7 @@ header {
    Milestone Classes
    =============================================== */
 
-.yes-no-item {
+.milestone-item {
 
   width: 44%;
   min-width: 175px;
@@ -413,7 +413,7 @@ header {
   margin: 0 3% 20px 3%;
   text-align: center;
 
-  .yes-no--point-circle {
+  .milestone--point-circle {
 
     @include circle(90px);
     margin: 0 auto;
@@ -429,9 +429,9 @@ header {
 
     }
 
-  } //yes-no--point-circle
+  } //milestone--point-circle
 
-  .yes-no-item-statisfied {
+  .milestone-item-statisfied {
 
     opacity: 0.6;
 
@@ -443,13 +443,13 @@ header {
 
   }
 
-  .yes-no--point-circle {
+  .milestone--point-circle {
 
     color: $darkgrey;
 
-  } //yes-no--point-circle
+  } //milestone--point-circle
 
-} //yes-no-item
+} //milestone-item
 
 /* ===============================================
    Expectation Classes

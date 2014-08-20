@@ -129,10 +129,10 @@
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
         .module { background: $color; }
-        .yes-no--point-circle {
+        .milestone--point-circle {
           background: white;
           color: $color;
-        } //yes-no--point-circle
+        } //milestone--point-circle
       }
     }
 

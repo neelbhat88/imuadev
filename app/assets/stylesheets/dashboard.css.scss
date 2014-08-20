@@ -68,7 +68,7 @@
 			background: $boxgrey;
 			text-align: center;
 
-			.yes-no--point-circle {
+			.milestone--point-circle {
 				@each $category, $color in $colormap {
 					&.color--#{$category} { border: 5px solid $color; color: $color; }
 				}
