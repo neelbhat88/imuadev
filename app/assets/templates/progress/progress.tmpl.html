@@ -7,7 +7,7 @@
 
   <div class="upper progressUpper">
 
-    <ul class="clear">
+    <ul class="progress-subnav clear">
 
       <li class="progressStudent">
 
@@ -15,7 +15,7 @@
 
           <div class="progressSelector">
 
-  	        <h5><span class="bold">{{student.first_last_initial}}'s</span> Progress
+  	        <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
 
             <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
                 <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
