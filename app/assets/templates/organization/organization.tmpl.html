@@ -41,6 +41,12 @@
             {{fullName(mentor)}}
           </div>
         </a>
+				<div>
+					Login count: {{mentor.login_count}}
+				</div>
+				<div>
+					Last login: {{mentor.last_login}}
+				</div>
       </div>
 
       <div class="user-list__add" ng-click="addMentor()">
@@ -65,6 +71,12 @@
 	            {{student.first_name}} {{student.last_name}}
 	          </div>
 	        </a>
+					<div>
+						Login count: {{student.login_count}}
+					</div>
+					<div>
+						Last login: {{student.last_login}}
+					</div>
 	      </div>
 			</div>
 
