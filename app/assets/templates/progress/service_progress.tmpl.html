@@ -18,7 +18,7 @@
           <div class="module--subhead left" ng-hide="user_service_activity.editing">
             {{user_service_activity.name}}
             <div class="glyphicon-container">
-              <span class="glyphicon glyphicon-pencil prs" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
+              <span class="glyphicon glyphicon-pencil" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
               <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
             </div>
           </div>
@@ -39,9 +39,11 @@
                 <td ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</td>
                 <td ng-hide="user_service_event.editing">{{user_service_event.description}}</td>
                 <td ng-hide="user_service_event.editing">{{user_service_event.hours}}</td>
-                <td ng-hide="user_service_event.editing">
-                  <span class="glyphicon glyphicon-pencil prs" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
-                  <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+                <td ng-hide="user_service_event.editing" class="glyphicons">
+                  <div class="glyphicon-container">
+                    <span class="glyphicon glyphicon-pencil" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+                  </div>
                 </td>
 
                 <td class="editing" ng-show="user_service_event.editing" colspan="4">
@@ -71,7 +73,7 @@
         </div>
 
         <button ng-hide="user_service_activities.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addActivity()">Add Service Organization</button>
-      
+
       </div>
 
   	</div>

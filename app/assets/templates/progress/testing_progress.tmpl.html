@@ -25,9 +25,11 @@
               <td ng-hide="userTest.editing">{{userTest.date | date: 'MM/dd/yy'}}</td>
               <td ng-hide="userTest.editing">{{userTest.orgTest.title}}</td>
               <td ng-hide="userTest.editing">{{userTest.score}}</td>
-              <td ng-hide="userTest.editing">
-                <span class="glyphicon glyphicon-pencil prs" title="Edit Test" ng-click="editUserTest($index)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteUserTest($index)"></span>
+              <td ng-hide="userTest.editing" class="glyphicons">
+                <div class="glyphicon-container">
+                  <span class="glyphicon glyphicon-pencil" title="Edit Test" ng-click="editUserTest($index)"></span>
+                  <span class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteUserTest($index)"></span>
+                </div>
               </td>
 
               <td ng-show="userTest.editing" class="editing" colspan="4">

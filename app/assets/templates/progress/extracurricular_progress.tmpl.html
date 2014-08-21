@@ -25,9 +25,11 @@
               <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</td>
               <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].leadership}}</td>
               <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.events[0].description}}</td>
-              <td ng-hide="user_extracurricular_activity.editing">
-                <span class="glyphicon glyphicon-pencil prs" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+              <td ng-hide="user_extracurricular_activity.editing" class="glyphicons">
+                <div class="glyphicon-container">
+                  <span class="glyphicon glyphicon-pencil" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
+                  <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+                </div>
               </td>
 
               <td class="editing" ng-show="user_extracurricular_activity.editing" colspan="4">
