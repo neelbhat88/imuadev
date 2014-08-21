@@ -220,9 +220,13 @@
       .glyphicon-container {
         display: inline-block;
         @include font-size(1.2);
-        opacity: 0.3;
-        &:hover {
-          opacity: 1;
+
+        .glyphicon {
+          opacity: 0.3;
+
+          &:hover {
+            opacity: 1;
+          }
         }
         .glyphicon {
           margin: 2px;

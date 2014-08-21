@@ -1,5 +1,5 @@
 angular.module("myApp")
-.service "UserClassService", ['$http', ($http) ->
+.service "UserClassService", ['$http', 'CONSTANTS', ($http, CONSTANTS) ->
 
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/user_class?time_unit=#{time_unit_id}"
@@ -7,6 +7,12 @@ angular.module("myApp")
   @new = (user, time_unit_id) ->
     name: "",
     grade: "",
+    gpa: 0,
+    period: "",
+    room: "",
+    credit_hours: 1,
+    level: CONSTANTS.CLASS_LEVELS.regular
+    subject: ""
     time_unit_id: time_unit_id,
     user_id: user.id,
     editing: true
@@ -22,18 +28,18 @@ angular.module("myApp")
 
   @getGPA = (user_classes) ->
     totalGPA = 0
-    totalClasses = 0
+    totalClassCredits = 0
 
     return 0 if user_classes.length == 0
 
     for c in user_classes
       if c.id
-        totalGPA += c.gpa
-        totalClasses++
+        totalGPA += (c.gpa * c.credit_hours)
+        totalClassCredits += c.credit_hours
 
-    return 0 if totalClasses == 0
+    return 0 if totalClassCredits == 0
 
-    return (totalGPA / totalClasses).toFixed(2)
+    return (totalGPA / totalClassCredits).toFixed(2)
 
   @
 ]
