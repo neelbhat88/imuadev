@@ -28,18 +28,18 @@ angular.module("myApp")
 
   @getGPA = (user_classes) ->
     totalGPA = 0
-    totalClasses = 0
+    totalClassCredits = 0
 
     return 0 if user_classes.length == 0
 
     for c in user_classes
       if c.id
-        totalGPA += c.gpa
-        totalClasses++
+        totalGPA += (c.gpa * c.credit_hours)
+        totalClassCredits += c.credit_hours
 
-    return 0 if totalClasses == 0
+    return 0 if totalClassCredits == 0
 
-    return (totalGPA / totalClasses).toFixed(2)
+    return (totalGPA / totalClassCredits).toFixed(2)
 
   @
 ]

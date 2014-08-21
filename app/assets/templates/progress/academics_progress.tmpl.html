@@ -79,14 +79,20 @@
                 </div>
 
                 <div class="more-info__fields--editing" ng-show="user_class.editing">
-                  <input class="form-editor" ng-model="user_class.new_credit_hours" placeholder="Credit Hours" name="credithours">
-                  <select class="form-editor" ng-model="user_class.new_level" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS">
-                    <option value="">--Select Level--</option>
+                  Credit Hours:
+                  <input class="form-editor" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1"
+                        placeholder="Credit Hours" name="credithours">
+                  Level:
+                  <select class="form-editor" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'"
+                        ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS">
                   </select>
+                  Subject:
                   <select class="form-editor" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
                     <option value="">--Select Subject--</option>
                   </select>
+                  Period:
                   <input class="form-editor" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+                  Room:
                   <input class="form-editor" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
                 </div>
 
