@@ -14,6 +14,7 @@ class UserRepository
     phone = userObj[:phone]
     avatar = userObj[:avatar]
     class_of = userObj[:class_of]
+    time_unit_id = userObj[:time_unit_id]
 
     user = User.find(id)
     user.email = email
@@ -21,6 +22,7 @@ class UserRepository
     user.last_name = last_name
     user.phone = phone
     user.class_of = class_of
+    user.time_unit_id = time_unit_id
 
     if avatar != nil
       user.avatar = avatar

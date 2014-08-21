@@ -112,6 +112,33 @@ class Api::V1::UsersController < ApplicationController
     }
   end
 
+  # GET /users/:id/user_with_contacts
+  def get_user_with_contacts
+    userId = params[:id]
+
+    viewUser = nil
+    user = UserRepository.new.get_user(userId)
+    if can?(current_user, :view_profile, user)
+      viewUser = ViewUser.new(user)
+    end
+
+    viewContacts = nil
+    if can?(current_user, :read_parent_guardian_contacts, user)
+      contacts = ParentGuardianContactService.new.get_parent_guardian_contacts(userId)
+      viewContacts = contacts.map{|c| ViewParentGuardianContact.new(c)}
+    end
+
+    # TODO Make this fit in better
+    timeUnits = RoadmapRepository.new.get_time_units(user.organization_id) unless user.nil?
+
+    render status: :ok,
+    json: {
+      info: "User info with contacts for userId: #{userId}.",
+      # TODO Replace with ViewUser
+      user_with_contacts: { :user => viewUser, :contacts => viewContacts, :time_units => timeUnits }
+    }
+  end
+
   # PUT /users/:id/update_password
   def update_password
     userObj = params[:user]

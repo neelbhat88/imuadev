@@ -23,14 +23,6 @@
 
             </h5>
 
-            <div class="semester-changer" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
-              <span class="glyphicon glyphicon-backward semester-changer__prev" title="Previous Semester"
-                  ng-hide="student.time_unit_id == semesters[0].id" ng-click="prevSemester()"></span>
-              <span>Update student's current semester</span>
-              <span class="glyphicon glyphicon-forward semester-changer__next" title="Next Semester"
-                  ng-hide="student.time_unit_id == semesters[semesters.length - 1].id" ng-click="nextSemester()"></span>
-            </div>
-
           </div>
 
         </div>

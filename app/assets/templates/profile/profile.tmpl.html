@@ -1,0 +1,214 @@
+<div class="profileContainer">
+
+  <div class="user-profile">
+
+    <div class="pbm">
+
+      <div class="avatar-block">
+        <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+
+        <div class="ptl" ng-show="editingInfo">
+          <input class="avatar-block__upload js-upload" ng-show="editingInfo" type="file" file-input="files" />
+        </div>
+      </div>
+
+      <!-- UserInfo form -->
+      <form class="form form--profile" ng-hide="editingPassword">
+
+        <div class="pbs">
+          <div ng-hide="editingInfo">
+            <span ng-hide="editingInfo" class="form--profile__field-label">Email: </span>
+            <span>{{user.email}}</span>
+          </div>
+
+          <input class="form-field" ng-show="editingInfo" ng-model="user.email" placeholder="Email" autofocus="true">
+        </div>
+
+        <div class="pbs">
+
+          <div ng-hide="editingInfo">
+            <span class="form--profile__field-label">First Name: </span>
+            <span ng-class="{italic: !user.first_name}">{{user.first_name ? user.first_name : "Click update below to add" }}</span>
+          </div>
+
+          <input class="form-field" ng-show="editingInfo" ng-model="user.first_name" placeholder="First Name">
+
+        </div>
+
+        <div class="pbs">
+
+          <div ng-hide="editingInfo">
+            <span class="form--profile__field-label">Last Name: </span>
+            <span ng-class="{italic: !user.last_name}">{{user.last_name ? user.last_name : "Click update below to add"}}</span>
+          </div>
+
+          <input class="form-field" ng-show="editingInfo" ng-model="user.last_name" placeholder="Last Name">
+
+        </div>
+
+        <div class="pbs">
+
+          <div ng-hide="editingInfo">
+            <span class="form--profile__field-label">Phone Number: </span>
+            <span ng-if="editable()" ng-hide="editingInfo" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Click update below to add"}}</span>
+            <span ng-if="!editable()" ng-class="{italic: !user.phone}">{{user.phone ? user.phone : "Not entered"}}</span>
+          </div>
+
+          <input class="form-field" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
+
+        </div>
+
+        <!-- This can be done better - will change this when we come back to revamping
+             the profile page -->
+        <!-- Students can't update their Class Of and Class Of dropdown only
+              shows up on a student -->
+        <div ng-if="!current_user.is_student && user.is_student" class="pbs">
+          <div ng-hide="editingInfo">
+            <span class="form--profile__field-label">Class of: </span>
+            <span ng-if="editable()" ng-hide="editingInfo" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Click update below to add"}}</span>
+            <span ng-if="!editable()" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Not entered"}}</span>
+
+            <h6>Roadmap: {{_.findWhere(time_units, { id: user.time_unit_id }).name}}</h6>
+          </div>
+
+          <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
+
+          <div class="semester-changer" ng-show="editingInfo">
+            <h6>Roadmap: </h6>
+            <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
+          </div>
+        </div>
+
+        <ul class="errorText ptm" ng-show="editingInfo && errors" >
+          <li ng-repeat="error in errors">{{error}}</li>
+        </ul>
+
+        <div class="buttonGroup pvl" ng-show="editingInfo" >
+
+          <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
+
+          <button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
+
+        </div>
+
+      </form>
+      <!-- UserInfo form -->
+
+      <!-- Password Form -->
+      <form class="form form--profile" ng-show="editingPassword">
+        <h4>Change Password</h4>
+
+        <div class="pbs">
+          <input type="password" class="form-field" ng-model="password.current" placeholder="Current Password" name="current" required>
+        </div>
+
+        <div class="pbs">
+          <input type="password" class="form-field" ng-model="password.new" placeholder="New Password" name="new" required>
+        </div>
+
+        <div class="pbs">
+          <input type="password" class="form-field" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
+        </div>
+
+        <ul class="errorText ptm" ng-show="errors">
+          <li ng-repeat="error in errors">{{error}}</li>
+        </ul>
+
+        <div class="buttonGroup pvl">
+          <button ng-click="updateUserPassword($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
+
+          <button class="cancel" ng-click="cancelUpdatePassword()"><span>Cancel</span></button>
+        </div>
+
+      </form>
+      <!-- Password Form -->
+
+    </div>
+
+    <div class="buttonGroup pvl" ng-hide="editing()" >
+
+      <input value="Update Info" type="button" class="submit" ng-if="editable()" ng-click="editUserInfo()">
+
+      <input value="Change Password" type="button" class="submit" ng-if="editablePassword()" ng-click="editUserPassword()">
+
+    </div>
+
+  </div>
+  <!-- user-profile -->
+
+  <div class="parent-guardian-contacts-container" ng-if="user.is_student">
+    <h4>{{user.first_name}}'s Contacts:</h4>
+    <div class="contacts-list">
+
+      <div class="pbm" ng-repeat="contact in contacts">
+
+        <div class="pbs">
+          <div ng-hide="contact.editing">
+            <span class="form--profile__field-label">Name: </span>
+            <span>{{contact.name}}</span>
+          </div>
+
+          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_name" placeholder="Name" autofocus="true">
+        </div>
+
+        <div class="pbs">
+          <div ng-hide="contact.editing">
+            <span class="form--profile__field-label">Relationship: </span>
+            <span>{{contact.relationship}}</span>
+          </div>
+
+          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
+        </div>
+
+        <div class="pbs">
+          <div ng-hide="contact.editing">
+            <span class="form--profile__field-label">Email: </span>
+            <span>{{contact.email}}</span>
+          </div>
+
+          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_email" placeholder="Email" autofocus="true">
+        </div>
+
+        <div class="pbs">
+          <div ng-hide="contact.editing">
+            <span class="form--profile__field-label">Phone: </span>
+            <span>{{contact.phone}}</span>
+          </div>
+
+          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
+        </div>
+
+        <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()" >
+
+          <input value="Update Contact" type="button" class="submit" ng-click="editParentGuardianContact($index)">
+          <input value="Delete Contact" type="button" class="delete" ng-click="deleteParentGuardianContact($index)">
+
+        </div>
+
+        <div class="buttonGroup pvl" ng-hide="!contact.editing" ng-if="editable()">
+
+          <input value="Save" type="button" class="submit" ng-click="saveParentGuardianContact($index)">
+          <input value="Cancel" type="button" class="cancel" ng-click="cancelEditParentGuardianContact($index)">
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()">
+
+      <input value="Add New Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
+
+    </div>
+
+  </div>
+  <!-- parent-guardian-contacts -->
+
+
+
+</div>
+
+<script>
+  $(function() { $('input, textarea').placeholder();});
+</script>

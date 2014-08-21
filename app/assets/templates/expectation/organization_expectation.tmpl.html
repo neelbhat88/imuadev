@@ -8,7 +8,7 @@
         <h5 ng-hide="expectation.editing">{{expectation.title}}</h5>
         <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_title" placeholder="Expectation Title" name="expectation_title">
       </div>
-      <div class="expectations-list__item__icons" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
+      <div class="expectations-list__item__icons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
         <div ng-hide="expectation.editing">
           <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editExpectation($index)"></span>
           <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteExpectation($index)"></span>
@@ -21,8 +21,8 @@
     </div>
 
     <div class="add-expectation">
-      <div class="add-expectation__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing"></div>
-      <button type="submit" class="submit add-expectation__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.student && !expectations.editing" ng-click="addExpectation()">Add a Student Expectation</button>
+      <div class="add-expectation__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.mentor && !expectations.editing"></div>
+      <button type="submit" class="submit add-expectation__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.mentor && !expectations.editing" ng-click="addExpectation()">Add a Student Expectation</button>
     </div>
 
   </div>

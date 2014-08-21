@@ -2,7 +2,7 @@ class ViewUser
 	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial,
 								:phone, :role, :avatar_url,
 								:organization_id, :time_unit_id, :class_of,
-								:modules_progress
+								:modules_progress, :user_milestones, :relationships
 
 	def initialize(user)
 		@id = user.id
@@ -24,5 +24,7 @@ class ViewUser
 		@is_super_admin = user.super_admin?
 
 		@modules_progress = []
+		@user_milestones = user.user_milestones
+		@relationships = user.relationships
 	end
 end

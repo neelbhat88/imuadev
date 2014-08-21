@@ -1,7 +1,8 @@
 angular.module('myApp')
 .service 'UsersService', ['$http', 'CONSTANTS', ($http, CONSTANTS) ->
 
-  @getUserInfo = (userId) ->
+  @getUserWithContacts = (userId) ->
+    $http.get "/api/v1/users/#{userId}/user_with_contacts"
 
   @getUser = (userId) ->
     $http.get "/api/v1/users/#{userId}"
@@ -15,6 +16,7 @@ angular.module('myApp')
     formData.append("user[last_name]", user.last_name)
     formData.append("user[phone]", user.phone)
     formData.append("user[class_of]", user.class_of)
+    formData.append("user[time_unit_id]", user.time_unit_id)
 
     $http.put '/api/v1/users/' + user.id, formData,
       {
@@ -49,6 +51,15 @@ angular.module('myApp')
   @unassign = (mentorId, studentId) ->
     $http.delete "/api/v1/users/#{mentorId}/relationship/#{studentId}"
 
+  @saveParentGuardianContact = (contact) ->
+    if contact.id
+      $http.put "api/v1/parent_guardian_contact/#{contact.id}", parent_guardian_contact: contact
+    else
+      $http.post "api/v1/users/#{contact.user_id}/parent_guardian_contact", parent_guardian_contact: contact
+
+  @deleteParentGuardianContact = (contact) ->
+    $http.delete "api/v1/parent_guardian_contact/#{contact.id}"
+
   @newOrgAdmin = (orgId) ->
     email: ""
     first_name: ""
@@ -76,6 +87,14 @@ angular.module('myApp')
     organization_id: orgId
     class_of: 0
     is_student: true
+
+  @newParentGuardianContact = (userId) ->
+    id: null
+    user_id: userId
+    name: ""
+    relationship: ""
+    email: ""
+    phone: ""
 
   @
 ]
