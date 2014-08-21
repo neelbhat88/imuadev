@@ -1,7 +1,18 @@
 <div ng-controller="OrgAdminDashboardController" id="OrgAdminDashboard">
+
   <div class="dashboard-header dashboard-header--orgadmin">
     <div class="orgadmin-header--wrapper">
-      Test
+      <div class="greeting">
+        <h2>Hey there {{user.first_name}}</h2>
+        <h5>Here's a look at how your organization is doing today:</h5>
+      </div>
     </div>
   </div>
+
+  <div class="dashboard-attention dashboard-attention--orgadmin" ng-hide="true">Placeholder for Alerts</div>
+
+  <div class="dashboard-content dashboard-content--orgadmin">
+    Lower Area
+  </div>
+
 </div>
