@@ -15,7 +15,7 @@
 
         <div class="module--submodule" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations" ng-class="{'last':$last}">
 
-          <div class="module--subhead left" ng-hide="user_service_organization.editing">
+          <div class="module--subhead text-left" ng-hide="user_service_organization.editing">
             {{user_service_organization.name}}
             <div class="glyphicon-container">
               <span class="glyphicon glyphicon-pencil" title="Edit Service Organization" ng-click="editOrganization(organizationIndex)"></span>
