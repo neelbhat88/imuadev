@@ -171,6 +171,7 @@
 
             thead {
               border-bottom: 1px solid white(0.1);
+              width: 100%;
               th {
                 font-weight: bold;
                 padding-bottom: 20px;
@@ -181,7 +182,7 @@
               tr {
                 border-bottom: 1px solid white(0.1);
                 td {
-                  padding: 20px 0;
+                  padding: 20px 5px;
                 }
               }
             }
@@ -212,6 +213,19 @@
 
       }
 
+      .glyphicons {
+        width: 45px;
+      }
+
+      .glyphicon-container {
+        display: inline-block;
+        @include font-size(1.2);
+        opacity: 0.3;
+        &:hover {
+          opacity: 1;
+        }
+      }
+
       .module--submodule {
         margin-bottom: 40px;
         width: 100%;
@@ -228,13 +242,7 @@
           border-bottom: 1px solid white(0.1);
 
           .glyphicon-container {
-            display: inline-block;
-            @include font-size(1.2);
             margin-left: 10px;
-            opacity: 0.2;
-            &:hover {
-              opacity: 1;
-            }
           }
 
         }
