@@ -174,7 +174,8 @@
               width: 100%;
               th {
                 font-weight: bold;
-                padding-bottom: 20px;
+                padding: 20px 5px;
+                vertical-align: bottom;
               }
             }
 
@@ -183,6 +184,37 @@
                 border-bottom: 1px solid white(0.1);
                 td {
                   padding: 20px 5px;
+                }
+              }
+            }
+
+            .table-primary {
+              margin-bottom: 0;
+              @include font-size(2.2);
+              tr {
+                border: none;
+                td {
+                  padding: 10px 5px;
+                }
+              }
+            }
+
+            .table-secondary {
+              width: 95%;
+              margin: 5px auto 0 auto;
+              @include font-size(1.2);
+              thead {
+                border: none;
+                th {
+                  padding: 5px;
+                  text-align: center;
+                }
+              }
+              tr {
+                border: none;
+                td {
+                  padding: 5px;
+                  text-align: center;
                 }
               }
             }
@@ -214,7 +246,8 @@
       }
 
       .glyphicons {
-        width: 45px;
+        width: 70px;
+        text-align: right;
       }
 
       .glyphicon-container {

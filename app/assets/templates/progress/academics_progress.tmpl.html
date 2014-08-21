@@ -14,17 +14,17 @@
         <div class="module--data">
 
           <table>
+            <thead>
+              <th width="60%">Class</th>
+              <th>Grade</th>
+            </thead>
             <tbody>
               <tr ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
-                <td ng-hide="user_class.editing">
+                <td ng-hide="user_class.editing" colspan="2">
                     <table class="table-primary">
-                        <thead>
-                          <th>Class</th>
-                          <th>Grade</th>
-                        </thead>
                         <tbody>
                             <tr>
-                                <td>{{user_class.name}}</td>
+                                <td width="60%">{{user_class.name}}</td>
                                 <td>{{user_class.grade}}</td>
                                 <td class="glyphicons">
                                   <div class="glyphicon-container">
@@ -45,16 +45,18 @@
                             <th>Room</th>
                         </thead>
                         <tbody>
-                            <td>{{user_class.credit_hours}}</td>
-                            <td>{{user_class.level}}</td>
-                            <td>{{user_class.subject}}</td>
-                            <td>{{user_class.period}}</td>
-                            <td>{{user_class.room}}</td>
+                            <tr>
+                                <td>{{user_class.credit_hours}}</td>
+                                <td>{{user_class.level}}</td>
+                                <td>{{user_class.subject}}</td>
+                                <td>{{user_class.period}}</td>
+                                <td>{{user_class.room}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </td>
 
-                <td class="editing" ng-show="user_class.editing">
+                <td class="editing" ng-show="user_class.editing" colspan="2">
 
                   <span class="input-group">
                       <label>Class</label>
