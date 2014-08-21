@@ -125,7 +125,7 @@ Imua::Application.routes.draw do
 
       # TODO: SUPER HACKY! Are migrations better for this stuff??
       get '/milestone/update_org_id' => 'milestone#update_org_id'
-      get '/extracurricular_activity/update_time_unit_id' => 'extracurricular_activity#update_time_unit_id'
+
     end # end :v1
   end # end :api
 
