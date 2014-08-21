@@ -26,7 +26,7 @@
 
     .progressStudent {
 
-      width: 70%;
+      width: 85%;
       padding: 25px 100px 0 100px;
 
       select {
@@ -116,421 +116,152 @@
 }
 
 .progressLower {
-
   background: $darkgrey;
   min-height: 500px;
 
-  .module-circle {
-
-      @each $category, $color in $colormap {
-
-      &.color--#{$category} { color: $color; }
-
-    }
-
-  }
-
-  .module-data-container {
+  .module-container {
 
     width: 100%;
     padding: 40px 0;
     text-align: center;
     color: white;
 
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        .module { background: $color; }
+        .milestone--point-circle {
+          background: white;
+          color: $color;
+        } //milestone--point-circle
+      }
+    }
+
     @each $category, $color in $colormap {
-
-      &.color--#{$category} { border-top: 6px solid $color; }
-
+      &.color--#{$category} {
+        border-top: 6px solid $color;
+        .module--header { background: $color; }
+      }
     }
 
-    .module-data__item {
-      padding-bottom: 20px;
-      border-bottom: 1px solid white(0.1);
-      margin-bottom: 40px;
-      text-align: left;
+    .module {
 
-      .module-data__sub-item {
-        padding-bottom: 20px;
+      width: 31%;
+      margin: 1%;
+      float: left;
+
+      .module--header {
+
+        padding: 20px;
         border-bottom: 1px solid white(0.1);
-        margin-bottom: 20px;
-        text-align: left;
+        text-align: center;
+        font-weight: $bold;
 
       }
 
-      .item {
-        text-align: left;
-        padding-bottom: 20px;
-        border-bottom: 1px solid white(0.1);
-        margin-bottom: 20px;
+      .module--content {
 
-      }
+        padding: 40px;
 
-      .edit-icons {
-        display: inline-block;
-        opacity: 0.3;
-        &:hover { opacity: 1; }
-      }
+        .module--data {
 
-      .editor-wrapper {
-        width: 90%;
-        opacity: 1;
-        text-align: left;
-      }
+          table {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
 
-      .form-editor {
-        color: $ink;
-        padding: 10px;
-        width: 100%;
-        @include font-size(1.4);
-        @include border-radius(5px);
-        border: 1px solid black(0.5);
-        margin-bottom: 10px;
-      }
-
-    }
-
-    /*------------- Category-specific styles (can probably be made more DRY later) ----------------*/
-
-    .academicsProgressContainer {
-
-    	.section {
-
-    	  background: $academics-color-dark;
-
-        .section--header { background: $academics-color; }
-
-    	}
-
-    	.module-data__item {
-
-        .item__key-class {
-          width: 70%;
-          float: left;
-        }
-
-        .item__key-grade {
-          width: 30%;
-          float: left;
-        }
-
-       .item__class {
-
-         width: 90%;
-         float: left;
-         text-align: left;
-
-         .item__class-name {
-           width: 80%;
-           display: inline-block;
-         }
-
-         .item__class-grade {
-            width: 15%;
-            display: inline-block;
-            @include font-size(2.2);
-            font-weight: $light;
-         }
-
-       }
-
-       .item__icons {
-
-         width: 10%;
-         float: left;
-         text-align: right;
-
-       }
-
-     } //.module-data__item
-
-  	.section--milestones {
-
-      	.section--inner {
-
-      		.yes-no-item {
-
-      			.yes-no--point-circle {
-
-              background: white;
-              color: $academics-color;
-
-      			} //yes-no--point-circle
-
-      		} //yes-no-item
-
-      	}
-
-    	} //section--milestones
-
-    } //academicsProgressContainer
-
-    .serviceProgressContainer {
-
-    	.section {
-
-    	  background: $service-color-dark;
-        .section--header { background: $service-color; }
-
-    	}
-
-			.module-data__item {
-
-				.item__activity {
-          width: 100%;
-          border-bottom: 1px solid white(0.4);
-
-          .item__activity-name {
-            @include font-size(2.2);
-            font-weight: $bold;
-            margin-right: 10px;
-          }
-
-				}
-
-				.item__event {
-
-  				width: 100%;
-					margin: 0 20px;
-					@include font-size(1.0);
-
-          a {
-            color: white;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-
-          .item__event-left {
-            width: 70%;
-            float: left;
-          }
-
-          .item__event-right {
-            width: 30%;
-            float: left;
-            text-align: center;
-          }
-
-          .item__event--description {
-
-            @include font-size(1.6);
-            padding-bottom: 8px;
-
-          }
-
-          .item__event--date {
-            opacity: 0.3;
-
-            &:hover {
-              opacity: 1;
-            }
-
-            .item__event--edit-links {
-              display: inline-block;
-              margin-left: 8px;
-
-              .edit-link {
-                margin-right: 8px;
+            thead {
+              border-bottom: 1px solid white(0.1);
+              width: 100%;
+              th {
+                font-weight: bold;
+                padding-bottom: 20px;
               }
-
             }
 
-          }
-
-          .item__event--hours {
-
-            .number-hours {
-              @include font-size(2.2);
-              font-weight: $light;
-              padding-bottom: 5px;
+            tbody {
+              tr {
+                border-bottom: 1px solid white(0.1);
+                td {
+                  padding: 20px 5px;
+                }
+              }
             }
 
+          } //table
+
+          .editing {
+            text-align: center;
+            input, select, button, textarea {
+              margin-bottom: 15px;
+            }
+            textarea {
+              resize: vertical;
+            }
+            .input-group {
+              text-align: left;
+              width: 100%;
+            }
           }
 
-				}
+        } //.module--data
+      }
 
+      .numbers-large {
 
-      } //module-data__item
+        @include font-size(10.0);
+        font-weight: $light;
 
-    	.section--milestones {
+      }
 
-      	.section--inner {
+      .glyphicons {
+        width: 45px;
+      }
 
-      		.yes-no-item {
+      .glyphicon-container {
+        display: inline-block;
+        @include font-size(1.2);
 
-      			.yes-no--point-circle {
+        .glyphicon {
+          opacity: 0.3;
 
-      				background: white;
-              color: $service-color;
-
-      			} //yes-no--point-circle
-
-      		} //yes-no-item
-
-      	}
-
-    	} //section--milestones
-
-    } //serviceProgressContainer
-
-    .extracurricularProgressContainer {
-
-    	.section {
-
-    	  background: $extracurricular-color-dark;
-
-        .section--header { background: $extracurricular-color; }
-
-    	}
-
-			.module-data__item {
-
-        border-bottom: 1px solid white(0.1);
-
-        .item__ecActivity {
-          width: 100%;
-          border: 0;
-          padding-bottom: 0;
-          margin-bottom: 10px;
-
-          .item__ecActivity-name {
-            @include font-size(2.2);
-            font-weight: $bold;
-            margin-right: 10px;
+          &:hover {
+            opacity: 1;
           }
-
         }
+        .glyphicon {
+          margin: 2px;
+        }
+      }
 
-      } //module-data__item
+      .module--submodule {
+        margin-bottom: 40px;
+        width: 100%;
 
-    	.section--milestones {
-
-        	.section--inner {
-
-        		.yes-no-item {
-
-        			.yes-no--point-circle {
-
-        				background: white;
-                color: $extracurricular-color;
-
-        			} //yes-no--point-circle
-
-        		} //yes-no-item
-
-        	}
-
-      	} //section--milestones
-
-    } //extracurricularProgressContainer
-
-    .collegePrepProgressContainer {
-
-    	.section {
-
-    	  background: $college_prep-color-dark;
-
-        .section--header { background: $college_prep-color; }
-
-    	}
-
-    	.section--milestones {
-
-        	.section--inner {
-
-        		.yes-no-item {
-
-        			.yes-no--point-circle {
-
-        				background: white;
-                color: $college_prep-color;
-
-        			} //yes-no--point-circle
-
-        		} //yes-no-item
-
-        	}
-
-      	} //section--milestones
-
-    } //collegePrepProgressContainer
-
-    .testingProgressContainer {
-
-    	.section {
-
-    	  background: $testing-color-dark;
-
-        .section--header { background: $testing-color; }
-
-    	}
-
-			.module-data__item {
-
-        margin-bottom: 0;
-        border-bottom: 0;
-
-        .item__test {
-          width: 100%;
+        &:last-of-type {
           margin-bottom: 0;
         }
 
-				.item__test-date {
+        .module--subhead {
+          @include font-size(2);
+          font-weight: bold;
+          width: 100%;
+          padding-bottom: 20px;
+          border-bottom: 1px solid white(0.1);
 
-					width: 25%;
-          float: left;
-  			  text-align: left;
+          .glyphicon-container {
+            margin-left: 10px;
+          }
 
-				}
+        }
 
-				.item__test-name {
-
-					width: 45%;
-          float: left;
+        .left {
           text-align: left;
+        }
 
-				}
+      }
 
-				.item__test-score {
+    } //.module
 
-					width: 20%;
-          float: left;
-					text-align: left;
-
-				}
-
-				.item__icons {
-
-					width: 10%;
-          float: left;
-					text-align: right;
-
-				}
-
-			} //.module-data__item
-
-
-    	.section--milestones {
-
-        	.section--inner {
-
-        		.yes-no-item {
-
-        			.yes-no--point-circle {
-
-        				background: white;
-                color: $testing-color;
-
-        			} //yes-no--point-circle
-
-        		} //yes-no-item
-
-        	}
-
-      	} //section--milestones
-
-    } //testingProgressContainer
-
-  } //.module-data-container
+  } //.module-container
 
 } //.progressLower

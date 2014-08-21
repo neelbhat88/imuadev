@@ -23,14 +23,6 @@
 
             </h5>
 
-            <div class="semester-changer" ng-if="current_user.role < CONSTANTS.USER_ROLES.student">
-              <span class="glyphicon glyphicon-backward semester-changer__prev" title="Previous Semester"
-                  ng-hide="student.time_unit_id == semesters[0].id" ng-click="prevSemester()"></span>
-              <span>Update student's current semester</span>
-              <span class="glyphicon glyphicon-forward semester-changer__next" title="Next Semester"
-                  ng-hide="student.time_unit_id == semesters[semesters.length - 1].id" ng-click="nextSemester()"></span>
-            </div>
-
           </div>
 
         </div>
@@ -40,8 +32,6 @@
       <li class="studentExpectations narrow">
         <a class="js-nav-link" ng-href="#/expectations/{{student.id}}">Your Expectations</a>
       </li>
-
-      <li class="studentMentors narrow">Your Mentors</li>
 
     </ul>
 
@@ -73,10 +63,10 @@
 
   <div class="progressLower">
 
-    <div class="module-data-container" modulecolor="{{selected_module.module_title}}">
+    <div class="module-container" modulecolor="{{selected_module.module_title}}">
 
       <!--MAIN PANEL-->
-        <div class="module-header">
+        <div class="module-container--header">
 
   	        <h4 class="bold">
     	        {{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}
@@ -84,11 +74,11 @@
 
         </div>
 
-        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+        <div class="module-container--no-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
         </div>
 
-        <div class="module-data-content" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
+        <div class="module-container--content clear" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
         </div>
       <!--/MAIN PANEL-->
