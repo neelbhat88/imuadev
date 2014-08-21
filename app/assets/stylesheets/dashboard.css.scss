@@ -63,10 +63,26 @@
 
   .dashboard-content--student {
 
+		padding: 40px $wrapper-width;
+
 		.section {
 
 			background: $boxgrey;
 			text-align: center;
+			width: 31%;
+			margin: 1%;
+			float: left;
+
+			.section--header {
+				padding: 20px;
+				border-bottom: 1px solid white(0.1);
+				text-align: center;
+				font-weight: $bold;
+			}
+
+			.section--inner {
+				padding: 40px;
+			}
 
 			.milestone--point-circle {
 				@each $category, $color in $colormap {
