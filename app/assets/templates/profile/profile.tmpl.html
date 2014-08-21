@@ -137,7 +137,7 @@
   <!-- user-profile -->
 
   <div class="parent-guardian-contacts-container" ng-if="user.is_student">
-    <h4>{{user.first_name}}'s Contacts:</h4>
+    <h5>{{user.first_name}}'s Parent/Guardian Contacts:</h5>
     <div class="contacts-list">
 
       <div class="pbm" ng-repeat="contact in contacts">
@@ -198,7 +198,7 @@
 
     <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()">
 
-      <input value="Add New Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
+      <input value="Add New Parent/Guardian Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
 
     </div>
 
