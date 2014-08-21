@@ -24,8 +24,7 @@ class Ability
           :change_semester,
           :read_user_tests,
           :manage_user_tests,
-          :manage_user_activities,
-          :manage_user_events,
+          :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
           :manage_parent_guardian_contacts
         ]
@@ -41,8 +40,7 @@ class Ability
           :edit_user_info,
           :read_user_tests,
           :manage_user_tests,
-          :manage_user_activities,
-          :manage_user_events,
+          :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
           :manage_parent_guardian_contacts
         ]
@@ -55,8 +53,7 @@ class Ability
           :change_semester,
           :read_user_tests,
           :manage_user_tests,
-          :manage_user_activities,
-          :manage_user_events,
+          :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
           :manage_parent_guardian_contacts
         ]
@@ -71,8 +68,7 @@ class Ability
               :edit_user_info,
               :read_user_tests,
               :manage_user_tests,
-              :manage_user_activities,
-              :manage_user_events,
+              :manage_user_extracurricular_and_service,
               :read_parent_guardian_contacts,
               :manage_parent_guardian_contacts
             ]
