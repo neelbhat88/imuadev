@@ -401,112 +401,19 @@ header {
 }
 
 /* ===============================================
-   Modular Section Classes
-   =============================================== */
-
-.section-wrapper {
-
-  padding: $wrapper;
-  margin-top: 20px;
-
-    .section {
-
-      width: 31%;
-      margin: 1%;
-      float: left;
-
-      .section--header {
-
-        padding: 20px;
-        border-bottom: 1px solid white(0.1);
-        text-align: center;
-        font-weight: $bold;
-
-      }
-
-      .section--inner {
-
-        padding: 40px;
-
-        .section--subsection {
-
-          margin-bottom: 20px;
-
-          .section--subhead {
-
-            padding-bottom: 20px;
-            border-bottom: 1px solid white(0.1);
-            margin-bottom: 20px;
-
-          }
-
-        }
-
-        .module-data__button {
-
-          background: white(0.25);
-          padding: 10px;
-          width: 35%;
-          margin: 0 auto;
-          @include font-size(1.2);
-          @include border-radius(4px);
-          text-align: center;
-          opacity: 0.4;
-
-          &:hover {
-
-            opacity: 1;
-
-          }
-
-        } //.module-data__button
-
-        .button-wide {
-
-            width: 60%;
-            @include font-size();
-
-        }
-
-        .confirm-button {
-          @extend .module-data__button;
-          background: $green;
-          display: inline-block;
-        }
-
-        .cancel-button {
-          @extend .module-data__button;
-          background: $red;
-          display: inline-block;
-        }
-
-      }
-
-  }
-
-  .numbers-large {
-
-    @include font-size(10.0);
-    font-weight: $light;
-
-  }
-
-} //.section-wrapper
-
-/* ===============================================
    Milestone Classes
    =============================================== */
 
-.yes-no-item {
+.milestone-item {
 
   width: 44%;
   min-width: 175px;
   display: inline-block;
   vertical-align: top;
-  margin: 0 3% 20px 3%;
+  margin: 20px 3%;
   text-align: center;
 
-  .yes-no--point-circle {
+  .milestone--point-circle {
 
     @include circle(90px);
     margin: 0 auto;
@@ -522,9 +429,9 @@ header {
 
     }
 
-  } //yes-no--point-circle
+  } //milestone--point-circle
 
-  .yes-no-item-statisfied {
+  .milestone-item-statisfied {
 
     opacity: 0.6;
 
@@ -536,13 +443,13 @@ header {
 
   }
 
-  .yes-no--point-circle {
+  .milestone--point-circle {
 
     color: $darkgrey;
 
-  } //yes-no--point-circle
+  } //milestone--point-circle
 
-} //yes-no-item
+} //milestone-item
 
 /* ===============================================
    Expectation Classes

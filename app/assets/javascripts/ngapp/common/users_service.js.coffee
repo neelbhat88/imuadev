@@ -16,6 +16,7 @@ angular.module('myApp')
     formData.append("user[last_name]", user.last_name)
     formData.append("user[phone]", user.phone)
     formData.append("user[class_of]", user.class_of)
+    formData.append("user[time_unit_id]", user.time_unit_id)
 
     $http.put '/api/v1/users/' + user.id, formData,
       {
