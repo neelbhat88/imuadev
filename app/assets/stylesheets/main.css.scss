@@ -93,8 +93,23 @@ $extracurricular-color-dark: $darkorange;
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
 
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
+$colormap: (
+  academics: $academics-color,
+  service: $service-color,
+  testing: $testing-color,
+  extracurricular: $extracurricular-color,
+  college_prep: $college_prep-color,
+  no_category: $boxgrey
+);
+
+$darkcolormap: (
+  academics: $academics-color-dark,
+  service: $service-color-dark,
+  testing: $testing-color-dark,
+  extracurricular: $extracurricular-color-dark,
+  college_prep: $college_prep-color-dark,
+  no_category: $grey
+);
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
