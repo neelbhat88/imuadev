@@ -31,7 +31,7 @@
     <div class="user-list">
       <h4>Mentors</h4>
 
-      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in mentors | orderBy: 'id'">
+      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
         <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
           <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
           <progress-circle student="mentor"></progress-circle>

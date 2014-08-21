@@ -8,3 +8,17 @@ class ParentGuardianContact < ActiveRecord::Base
   validates :relationship, presence: true
   validates :phone, presence: true
 end
+
+class ViewParentGuardianContact
+  attr_accessor :id, :user_id, :name, :relationship, :email, :phone
+
+  def initialize(contact)
+    @id           = contact.id
+    @user_id      = contact.user_id
+    @name         = contact.name
+    @relationship = contact.relationship
+    @email        = contact.email
+    @phone        = contact.phone
+  end
+
+end
