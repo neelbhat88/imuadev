@@ -69,6 +69,7 @@
               </tr>
             </tbody>
           </table>
+          <button ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addHour(organizationIndex, user_service_organization.id)" ng-hide="user_service_organizations[organizationIndex].hours.editing">Add Hours</button>
 
         </div>
 
