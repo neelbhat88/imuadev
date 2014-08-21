@@ -15,7 +15,7 @@ angular.module('myApp')
 
   $scope.editable = () ->
     $scope.current_user.role != $scope.CONSTANTS.USER_ROLES.student ||
-    $scope.current_user.id == user.id
+    $scope.current_user.id == $scope.user.id
 
   $scope.editablePassword = () ->
     $scope.current_user.id == $scope.user.id
