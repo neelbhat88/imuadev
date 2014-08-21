@@ -1,128 +1,165 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
-  <div class="module-user-classes section-wrapper clear">
+    <div class="module module--grades">
 
-    <div class="section section--grades">
+      <div class="module--header">Grades</div>
 
-      <div class="section--header">Grades</div>
+      <div class="module--content">
 
-      <div class="section--inner">
-
-        <div ng-show="user_classes.length == 0">
+        <div class="module--no-data" ng-show="user_classes.length == 0">
           <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
           <h6>Let's get that taken care of. Add your classes for this semester below.</h6>
         </div>
 
-        <div class="module-data">
-          <div class="noclasses" ng-hide="user_classes.length != 0">No classes added</div>
+        <div class="module--data">
 
-          <div class="module-data-items">
+          <table>
+            <thead>
+              <th width="60%">Class</th>
+              <th>Grade</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
+                <td ng-hide="user_class.editing" colspan="2">
+                    <table class="table-primary">
+                        <tbody>
+                            <tr>
+                                <td width="60%">{{user_class.name}}</td>
+                                <td>{{user_class.grade}}</td>
+                                <td class="glyphicons">
+                                  <div class="glyphicon-container">
+                                    <span class="glyphicon glyphicon-info-sign" title="More Info" ng-click="showMoreInfo = !showMoreInfo"></span>
+                                    <span class="glyphicon glyphicon-pencil" title="Edit Class" ng-click="editClass(user_class)"></span>
+                                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass(user_class)"></span>
+                                  </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-secondary" ng-show="showMoreInfo && !user_class.editing">
+                        <thead>
+                            <th>Credit Hours</th>
+                            <th>Level</th>
+                            <th>Subject</th>
+                            <th>Period</th>
+                            <th>Room</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{user_class.credit_hours}}</td>
+                                <td>{{user_class.level}}</td>
+                                <td>{{user_class.subject}}</td>
+                                <td>{{user_class.period}}</td>
+                                <td>{{user_class.room}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
 
-            <div class="module-data__item">
-              <div class="module-data__key clear">
-                <div class="item__key-class bold">Class</div>
-                <div class="item__key-grade bold">Grade</div>
-              </div>
-            </div>
+                <td class="editing" ng-show="user_class.editing" colspan="2">
 
-            <div class="module-data__item clear" ng-repeat="user_class in user_classes" ng-class="{'last':$last}">
+                  <span class="input-group">
+                      <label>Class</label>
+                      <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
+                  </span>
 
-              <div class="item__class">
+                  <span class="input-group">
+                      <label>Grade</label>
+                      <select class="form-control" ng-model="user_class.new_grade">
+                        <option value="A">A</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="C-">C-</option>
+                        <option value="D+">D+</option>
+                        <option value="D">D</option>
+                        <option value="D-">D-</option>
+                        <option value="F">F</option>
+                      </select>
+                  </span>
 
-                <div class="item__class-name">
-                  <span ng-hide="user_class.editing">{{user_class.name}}</span>
+                  <span class="input-group half-width">
+                    <label>Credit Hours</label>
+                    <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+                  </span>
 
-                  <div class="editor-wrapper" ng-show="user_class.editing">
-                    <input class="form-editor" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
-                  </div>
+                  <span class="input-group half-width">
+                      <label>Level</label>
+                      <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                  </span>
 
-                </div>
+                  <span class="input-group">
+                      <label>Subject</label>
+                      <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                          <option value="">--Select Subject--</option>
+                      </select>
+                  </span>
 
-                <div class="item__class-grade">
-                  <span ng-hide="user_class.editing">{{user_class.grade}}</span>
-                  <div class="editor-wrapper" ng-show="user_class.editing">
-                    <select ng-model="user_class.new_grade">
-                      <option value="A">A</option>
-                      <option value="A-">A-</option>
-                      <option value="B+">B+</option>
-                      <option value="B">B</option>
-                      <option value="B-">B-</option>
-                      <option value="C+">C+</option>
-                      <option value="C">C</option>
-                      <option value="C-">C-</option>
-                      <option value="D+">D+</option>
-                      <option value="D">D</option>
-                      <option value="D-">D-</option>
-                      <option value="F">F</option>
-                    </select>
-                  </div>
-                </div><!-- /item__grade -->
+                  <span class="input-group half-width">
+                      <label>Period</label>
+                      <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+                  </span>
 
-              </div>
+                  <span class="input-group half-width">
+                      <label>Room</label>
+                      <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
+                  </span>
 
-              <div class="item__icons">
-                <div class="edit-icons">
-                  <div ng-if="editable(current_user, selected_semester)" ng-hide="user_class.editing">
-                    <span class="glyphicon glyphicon-pencil prs" title="Edit Class" ng-click="classes.editing=true;user_class.editing=true;user_class.new_name=user_class.name;user_class.new_grade=user_class.grade;"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Class" ng-click="deleteClass($index)"></span>
-                  </div>
-                </div>
-              </div><!-- /item__icons -->
+                  <button class="submit" title="Confirm" ng-click="saveClass(user_class)">Confirm</button>
+                  <button class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</button>
 
-              <div class="edit-buttons" ng-show="user_class.editing">
-                  <div class="confirm-button" title="Confirm" ng-click="saveClass($index)">Confirm</div>
-                  <div class="cancel-button" title="Cancel" ng-click="cancelEdit($index)">Cancel</div>
-              </div>
+                </td>
+              </tr>
+            </tbody>
 
-            </div>
+          </table>
 
-          </div>
+          <button ng-hide="classes.editing" class="btn btn-default" ng-if="editable(current_user, selected_semester)" ng-click="addClass()">Add Class</button>
 
-          <div ng-if="editable(current_user, selected_semester)" class="module-data__button" ng-click="addClass()" ng-hide="classes.editing">
-            Add Class
-          </div>
+        </div><!-- /module--data -->
 
-        </div><!-- /module-data -->
+      </div><!-- /module--content -->
 
-      </div><!-- /section--inner -->
+    </div><!-- /module--grades -->
 
-    </div><!-- /section--grades -->
+    <div class="module module--gpa">
 
-    <div class="section section--gpa">
+      <div class="module--header">GPA</div>
 
-      <div class="section--header">GPA</div>
+      <div class="module--content">
 
-      <div class="section--inner">
-
-      	<div class="user-class-greeting" ng-show="user_classes.length != 0">
+      	<div class="module--data user-class-greeting" ng-show="user_classes.length != 0">
           Hey {{student.first_name}}, you are currently earning a
           <h4><span class="numbers-large">{{gpa}}</span> GPA</h4> this semester.
         </div>
 
       </div>
 
-    </div><!-- /section--gpa -->
+    </div><!-- /module--gpa -->
 
-    <div class="section section--milestones">
+    <div class="module module--milestones">
 
-    	<div class="section--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
+        <div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
 
-      <div class="section--inner">
+        <div class="module--content">
 
-        <div class="module-data-content" ng-show="selected_module.points.total == 0">
+        <div class="module--no-data" ng-show="selected_module.points.total == 0">
           <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
         </div>
 
-        <div class="module-yes-nos" ng-if="milestones.length > 0">
+        <div class="module--data" ng-if="milestones.length > 0">
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="module--submodule">
 
-          	<div class="section--subhead">Next Milestones</div>
+          	<div class="module--subhead">Next Milestones</div>
 
-	          <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
-              <div class="yes-no-item-unstatisfied">
+              <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
+              <div class="milestone-item-unstatisfied">
 
-                <div class="yes-no--point-circle">
+                <div class="milestone--point-circle">
                   <div class="point-circle--inside">
                     <h5 class="bold">{{milestone.points}}</h5>
                     <p>Points</p>
@@ -137,14 +174,14 @@
 
           </div>
 
-          <div class="yes-nos-unsatisfied section--subsection clear">
+          <div class="milestones-unsatisfied module--submodule clear">
 
-          	<div class="section--subhead">Completed Milestones</div>
+          	<div class="module--subhead">Completed Milestones</div>
 
-            <div class="yes-no-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
-              <div class="yes-no-item-statisfied">
+            <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
+              <div class="milestone-item-statisfied">
 
-                <div class="yes-no--point-circle">
+                <div class="milestone--point-circle">
                   <div class="point-circle--inside">
                     <h4 class="bold">✓</h4>
                   </div>
@@ -160,10 +197,8 @@
 
         </div>
 
-      </div><!-- /section-inner -->
+      </div><!-- /module-inner -->
 
     </div><!-- /academic-milestones -->
-
-  </div>
 
 </div>

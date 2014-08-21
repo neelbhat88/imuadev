@@ -14,7 +14,7 @@ describe Api::V1::ParentGuardianContactController do
       it "returns 200 when requesting all parent guardian contacts." do
         get :get_parent_guardian_contacts, {:id => student.id}
         expect(response.status).to eq(200)
-        expect(json["parentGuardianContacts"].length).to eq(2)
+        expect(json["parent_guardian_contacts"].length).to eq(2)
       end
     end
   end
@@ -27,10 +27,10 @@ describe Api::V1::ParentGuardianContactController do
       let!(:student) { create(:student) }
 
       it "returns 200 when creating a parent guardian contact." do
-        parentGuardianContact = attributes_for(:parent_guardian_contact, user_id: student.id)
-        post :create_parent_guardian_contact, {:parent_guardian_contact => parentGuardianContact}
+        parentGuardianContact = attributes_for(:parent_guardian_contact, user_id: student.id + 1)
+        post :create_parent_guardian_contact, {:id => student.id, :parent_guardian_contact => parentGuardianContact}
         expect(response.status).to eq(200)
-        expect(json["parentGuardianContact"]["user_id"]).to eq(student.id)
+        expect(json["parent_guardian_contact"]["user_id"]).to eq(student.id)
       end
     end
   end
@@ -53,12 +53,12 @@ describe Api::V1::ParentGuardianContactController do
         put :update_parent_guardian_contact, {:id => parentGuardianContact.id,
                                               :parent_guardian_contact => updatedParentGuardianContact}
         expect(response.status).to eq(200)
-        expect(json["parentGuardianContact"]["id"]).to eq(parentGuardianContact.id)
-        expect(json["parentGuardianContact"]["user_id"]).to eq(student.id)
-        expect(json["parentGuardianContact"]["name"]).to eq("Updated Name")
-        expect(json["parentGuardianContact"]["relationship"]).to eq("Updated Relationship")
-        expect(json["parentGuardianContact"]["email"]).to eq("Updated@email.com")
-        expect(json["parentGuardianContact"]["phone"]).to eq("444-444-4444")
+        expect(json["parent_guardian_contact"]["id"]).to eq(parentGuardianContact.id)
+        expect(json["parent_guardian_contact"]["user_id"]).to eq(student.id)
+        expect(json["parent_guardian_contact"]["name"]).to eq("Updated Name")
+        expect(json["parent_guardian_contact"]["relationship"]).to eq("Updated Relationship")
+        expect(json["parent_guardian_contact"]["email"]).to eq("Updated@email.com")
+        expect(json["parent_guardian_contact"]["phone"]).to eq("444-444-4444")
       end
     end
   end

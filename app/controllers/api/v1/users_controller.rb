@@ -128,10 +128,14 @@ class Api::V1::UsersController < ApplicationController
       viewContacts = contacts.map{|c| ViewParentGuardianContact.new(c)}
     end
 
+    # TODO Make this fit in better
+    timeUnits = RoadmapRepository.new.get_time_units(user.organization_id) unless user.nil?
+
     render status: :ok,
     json: {
       info: "User info with contacts for userId: #{userId}.",
-      user_with_contacts: { :user => viewUser, :contacts => viewContacts }
+      # TODO Replace with ViewUser
+      user_with_contacts: { :user => viewUser, :contacts => viewContacts, :time_units => timeUnits }
     }
   end
 

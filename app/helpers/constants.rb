@@ -47,4 +47,12 @@ class Constants
     }
   end
 
+  def self.ClassLevels
+    return {
+      REGULAR:  "Regular",
+      HONORS:   "Honors",
+      AP:       "AP"
+    }
+  end
+
 end

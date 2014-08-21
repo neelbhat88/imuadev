@@ -16,3 +16,18 @@ angular.module('myApp')
     testing: "Testing"
     extracurriculars: "Extracurricular"
     college_prep: "College_Prep"
+
+  'CLASS_LEVELS':
+    ap: "AP"
+    honors: "Honors"
+    regular: "Regular"
+
+  'CLASS_SUBJECTS':
+    english: "English"
+    social_science: "Social Science"
+    lab_science: "Laboratory Science"
+    social_studies: "Social Studies"
+    math_core: "Math - Core"
+    math_other: "Math - Other"
+    foreign_language: "Foreign Language"
+    elective: "Elective"

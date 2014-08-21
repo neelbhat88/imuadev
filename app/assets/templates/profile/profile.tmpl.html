@@ -67,9 +67,16 @@
             <span class="form--profile__field-label">Class of: </span>
             <span ng-if="editable()" ng-hide="editingInfo" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Click update below to add"}}</span>
             <span ng-if="!editable()" ng-class="{italic: !user.class_of}">{{user.class_of ? user.class_of : "Not entered"}}</span>
+
+            <h6>Roadmap: {{_.findWhere(time_units, { id: user.time_unit_id }).name}}</h6>
           </div>
 
           <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
+
+          <div class="semester-changer" ng-show="editingInfo">
+            <h6>Roadmap: </h6>
+            <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
+          </div>
         </div>
 
         <ul class="errorText ptm" ng-show="editingInfo && errors" >
@@ -130,7 +137,7 @@
   <!-- user-profile -->
 
   <div class="parent-guardian-contacts-container" ng-if="user.is_student">
-    <h4>{{user.first_name}}'s Contacts:</h4>
+    <h5>{{user.first_name}}'s Parent/Guardian Contacts:</h5>
     <div class="contacts-list">
 
       <div class="pbm" ng-repeat="contact in contacts">
@@ -191,7 +198,7 @@
 
     <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()">
 
-      <input value="Add New Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
+      <input value="Add New Parent/Guardian Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
 
     </div>
 
