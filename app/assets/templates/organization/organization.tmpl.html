@@ -36,17 +36,13 @@
           <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
           <progress-circle student="mentor"></progress-circle>
         </a>
-        <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-          <div class="avatar-block__name">
-            {{fullName(mentor)}}
-          </div>
-        </a>
-				<div>
-					Login count: {{mentor.login_count}}
-				</div>
-				<div>
-					Last login: {{mentor.last_login}}
-				</div>
+        <div class="avatar-block__name">
+          <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
+					<ul class="circle-subnav">
+						<li class="extra-info">Last Login: {{mentor.last_login}}</li>
+						<li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+					</ul>
+        </div>
       </div>
 
       <div class="user-list__add" ng-click="addMentor()">
@@ -62,20 +58,19 @@
 				<h5 ng-if="group != 0" class="pvm">Class of {{group}}</h5>
 				<h5 ng-if="group == 0" class="pvm">Unassigned</h5>
 	      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in group_students | orderBy: 'id'">
-	        <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-	        <a ng-href="#/progress/{{student.id}}" title="View progress">
-	          <progress-circle student="student"></progress-circle>
-	        </a>
-	        <a ng-href="#/profile/{{student.id}}" title="View student info">
-	          <div class="avatar-block__name">
-	            {{student.first_name}} {{student.last_name}}
-	          </div>
-	        </a>
-					<div>
-						Login count: {{student.login_count}}
-					</div>
-					<div>
-						Last login: {{student.last_login}}
+						<!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+						<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
+							<progress-circle student="student"></progress-circle>
+						</a>
+						<a>
+							<div class="avatar-block__name">
+								<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
+								<ul class="circle-subnav">
+									<li class="extra-info">Last Login: {{student.last_login}}</li>
+									<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+								</ul>
+							</div>
+						</a>
 					</div>
 	      </div>
 			</div>
