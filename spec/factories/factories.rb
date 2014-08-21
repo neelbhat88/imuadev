@@ -30,15 +30,15 @@ FactoryGirl.define do
     name "Test Org"
   end
 
-  factory :user_service_activity do
-    name "Test Service Activity"
+  factory :user_service_organization do
+    name "Test Service Organization"
     description ""
     user_id -1
   end
 
-  factory :user_service_activity_event do
-    user_service_activity_id -1
-    name "Test Service Activity Event"
+  factory :user_service_hour do
+    user_service_organization_id -1
+    name "Test Service Activity Hour"
     hours 10
     description ""
     date "2014/08/01"
@@ -50,12 +50,11 @@ FactoryGirl.define do
     name "Test Extracurricular Activity"
     description ""
     user_id -1
-    time_unit_id 1
   end
 
-  factory :user_extracurricular_activity_event do
+  factory :user_extracurricular_activity_detail do
     user_extracurricular_activity_id -1
-    name "Test Extracurricular Activity Event"
+    name "Test Extracurricular Activity Detail"
     leadership ""
     description ""
     time_unit_id 1

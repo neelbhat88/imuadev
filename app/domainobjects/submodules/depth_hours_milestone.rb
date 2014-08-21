@@ -22,20 +22,20 @@ class DepthHoursMilestone < ImuaMilestone
   def has_earned?(user, time_unit_id)
     max_user_depth_hours = 0
 
-    activities = UserServiceActivityService.new.get_user_service_activities(user.id)
-    _activities_array = []
-    activities.each do | a |
-      _activities_array << {:activity => a, :depth_hours => 0}
+    organizations = UserServiceOrganizationService.new.get_user_service_organizations(user.id)
+    _organizations_array = []
+    organizations.each do | o |
+      _organizations_array << {:organization => o, :depth_hours => 0}
     end
 
     time_units = RoadmapRepository.new.get_time_units(user.organization_id)
     time_units.each do | tu |
       if tu.id <= time_unit_id.to_i
-        events = UserServiceActivityService.new.get_user_service_activity_events(user.id, tu.id)
+        events = UserServiceOrganizationService.new.get_user_service_hours(user.id, tu.id)
         events.each do | e |
-          _activities_array.each do | a |
-            if e.user_service_activity_id == a[:activity].id
-              a[:depth_hours] += e.hours
+          _organizations_array.each do | o |
+            if e.user_service_organization_id == o[:organization].id
+              o[:depth_hours] += e.hours
               break
             end
           end
@@ -43,9 +43,9 @@ class DepthHoursMilestone < ImuaMilestone
       end
     end
 
-    _activities_array.each do | a |
-      if a[:depth_hours] > max_user_depth_hours
-        max_user_depth_hours = a[:depth_hours]
+    _organizations_array.each do | o |
+      if o[:depth_hours] > max_user_depth_hours
+        max_user_depth_hours = o[:depth_hours]
       end
     end
 

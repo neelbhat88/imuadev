@@ -6,73 +6,74 @@
 
   	<div class="module--content">
 
-	    <div class="module--no-data" ng-show="user_service_activities.length == 0">
+	    <div class="module--no-data" ng-show="user_service_organizations.length == 0">
         <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
-        <h6>Let's get that taken care of. Add your Service Activities for this semester below.</h6>
+        <h6>Let's get that taken care of. Add your Service Organizations for this semester below.</h6>
       </div>
 
       <div class="module--data">
 
-        <div class="module--submodule" ng-repeat="(activityIndex, user_service_activity) in user_service_activities" ng-class="{'last':$last}">
+        <div class="module--submodule" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations" ng-class="{'last':$last}">
 
-          <div class="module--subhead left" ng-hide="user_service_activity.editing">
-            {{user_service_activity.name}}
+          <div class="module--subhead left" ng-hide="user_service_organization.editing">
+            {{user_service_organization.name}}
             <div class="glyphicon-container">
-              <span class="glyphicon glyphicon-pencil" title="Edit Service Activity" ng-click="editActivity(activityIndex)"></span>
-              <span class="glyphicon glyphicon-trash" title="Delete Activity" ng-click="deleteActivity(activityIndex)"></span>
+              <span class="glyphicon glyphicon-pencil" title="Edit Service Organization" ng-click="editOrganization(organizationIndex)"></span>
+              <span class="glyphicon glyphicon-trash" title="Delete Organization" ng-click="deleteOrganization(organizationIndex)"></span>
             </div>
           </div>
 
-          <div class="editing" ng-show="user_service_activity.editing">
+          <div class="editing" ng-show="user_service_organization.editing">
             <span class="input-group">
               <label>Who was the service for?</label>
-              <input class="form-control" ng-model="user_service_activity.new_name" placeholder="Organization Name" name="serviceActivityName">
+              <input class="form-control" ng-model="user_service_organization.new_name" placeholder="Organization Name" name="serviceActivityName">
             </span>
-            <div class="submit" title="Confirm" ng-click="saveActivity(activityIndex)">Confirm</div>
-            <div class="cancel" title="Cancel" ng-click="cancelActivityEdit(activityIndex)">Cancel</div>
+            <div class="submit" title="Confirm" ng-click="saveOrganization(organizationIndex)">Confirm</div>
+            <div class="cancel" title="Cancel" ng-click="cancelOrganizationEdit(organizationIndex)">Cancel</div>
           </div>
 
           <table>
             <tbody>
-              <tr ng-repeat="(eventIndex, user_service_event) in user_service_activity.events" ng-class="{'last':$last}">
+              <tr ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours" ng-class="{'last':$last}">
 
-                <td ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</td>
-                <td ng-hide="user_service_event.editing">{{user_service_event.description}}</td>
-                <td ng-hide="user_service_event.editing">{{user_service_event.hours}}</td>
-                <td ng-hide="user_service_event.editing" class="glyphicons">
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.date | date: 'MM/dd/yy'}}</td>
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.description}}</td>
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.hours}}</td>
+                <td ng-hide="user_service_hour.editing" class="glyphicons">
                   <div class="glyphicon-container">
-                    <span class="glyphicon glyphicon-pencil" title="Edit Event" ng-click="editEvent(activityIndex, eventIndex)"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(activityIndex, eventIndex)"></span>
+                    <span class="glyphicon glyphicon-pencil" title="Edit Hour" ng-click="editHour(organizationIndex, hourIndex)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Hour" ng-click="deleteHour(organizationIndex, hourIndex)"></span>
                   </div>
                 </td>
 
-                <td class="editing" ng-show="user_service_event.editing" colspan="4">
+                <td class="editing" ng-show="user_service_hour.editing" colspan="4">
 
                   <span class="input-group">
                     <label>Date</label>
-                    <input class="form-control" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
+                    <input class="form-control" ng-model="user_service_hour.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
                   </span>
                   <span class="input-group">
                     <label>What type of service did you do?</label>
-                    <textarea class="form-control" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                    <textarea class="form-control" ng-model="user_service_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
                   </span>
                   <span class="input-group">
                     <label>How many hours?</label>
-                    <input class="form-control" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
+                    <input class="form-control" ng-model="user_service_hour.new_hours" placeholder="Hours" name="serviceEventHours">
                   </span>
 
-                  <button class="submit" title="Confirm" ng-click="saveEvent(activityIndex, eventIndex, user_service_activity.id)">Confirm</button>
-                  <button class="cancel" title="Cancel" ng-click="cancelEventEdit(activityIndex, eventIndex)">Cancel</button>
+                  <button class="submit" title="Confirm" ng-click="saveHour(organizationIndex, hourIndex, user_service_organization.id)">Confirm</button>
+                  <button class="cancel" title="Cancel" ng-click="cancelHourEdit(organizationIndex, hourIndex)">Cancel</button>
 
                 </td>
 
               </tr>
             </tbody>
           </table>
+          <button ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addHour(organizationIndex, user_service_organization.id)" ng-hide="user_service_organizations[organizationIndex].hours.editing">Add Hours</button>
 
         </div>
 
-        <button ng-hide="user_service_activities.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addActivity()">Add Service Organization</button>
+        <button ng-hide="user_service_organizations.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addOrganization()">Add Service Organization</button>
 
       </div>
 
