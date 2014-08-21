@@ -3,12 +3,15 @@ angular.module('myApp')
 ($scope, current_user, user_with_contacts, UsersService, LoadingService) ->
   $scope.user = user_with_contacts.user
   $scope.contacts = user_with_contacts.contacts
+  $scope.time_units = user_with_contacts.time_units
   $scope.current_user = current_user
   $scope.origUser = angular.copy($scope.user)
   $scope.editingInfo = false
   $scope.editingPassword = false
   $scope.editingParentGuardianContacts = false
   $scope.password = {current: "", new: "", confirm: ""}
+
+  $scope._ = _
 
   $scope.editing = () ->
     $scope.editingInfo || $scope.editingPassword
