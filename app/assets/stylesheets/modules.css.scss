@@ -28,6 +28,24 @@
     margin: 1%;
     float: left;
 
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        background: $color;
+        .milestone--point-circle {
+          background: white;
+          color: $color;
+        } //milestone--point-circle
+      }
+    }
+
+    @each $category, $color in $colormap {
+      &.color--#{$category} {
+        border-top: 6px solid $color;
+        .module--header { background: $color; }
+      }
+    }
+
+
     .module--header {
 
       padding: 20px;
