@@ -26,9 +26,9 @@ class LeadershipActivitiesMilestone < ImuaMilestone
     time_units = RoadmapRepository.new.get_time_units(user.organization_id)
     time_units.each do | tu |
       if tu.id <= time_unit_id.to_i
-        events = userExtracurricularActivityService.get_user_extracurricular_activity_events(user.id, tu.id)
-        events.each do | e |
-          if !e.leadership.nil? && !e.leadership.empty?
+        details = userExtracurricularActivityService.get_user_extracurricular_activity_details(user.id, tu.id)
+        details.each do | d |
+          if !d.leadership.nil? && !d.leadership.empty?
             user_leadership_activities += 1
           end
         end

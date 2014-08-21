@@ -19,9 +19,9 @@ class User < ActiveRecord::Base
   has_many :relationships, dependent: :destroy
   has_many :user_tests, dependent: :destroy
   has_many :user_extracurricular_activities, dependent: :destroy
-  has_many :user_extracurricular_activity_events, dependent: :destroy
-  has_many :user_service_activities, dependent: :destroy
-  has_many :user_service_activity_events, dependent: :destroy
+  has_many :user_extracurricular_activity_details, dependent: :destroy
+  has_many :user_service_organizations, dependent: :destroy
+  has_many :user_service_hours, dependent: :destroy
   has_many :parent_guardian_contacts, dependent: :destroy
   has_many :user_milestones, dependent: :destroy
 
