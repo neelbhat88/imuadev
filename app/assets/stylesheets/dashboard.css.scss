@@ -185,10 +185,22 @@
 			.student-subnav {
 				@include font-size(1.2);
 				visibility: hidden;
-				opacity: 0.2;
-				&:hover {
-					opacity: 1;
+				li {
+					margin-bottom: 2px;
+					&:last-of-type {
+						margin-bottom: 0;
+					}
+					a {
+						opacity: 0.2;
+						&:hover {
+							opacity: 1;
+						}
+					}
 				}
+				.extra-info {
+					opacity: 0.2;
+				}
+
 			}
 
 			&:hover .student-subnav {

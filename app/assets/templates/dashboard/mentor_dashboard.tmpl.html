@@ -58,16 +58,11 @@
 		        <div class="avatar-block__name">
 		          <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
               <ul class="student-subnav">
+                <li class="extra-info">Last Login: {{student.last_login}}</li>
                 <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
               </ul>
 		        </div>
 		      </a>
-          <div>
-            Login count: {{student.login_count}}
-          </div>
-          <div>
-            Last login: {{student.last_login}}
-          </div>
 		    </div>
 	    </div>
   </div>
