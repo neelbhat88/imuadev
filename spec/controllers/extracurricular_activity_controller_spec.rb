@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Api::V1::ExtracurricularActivityController do
 
-  describe "GET #user_extracurricular_activity_events" do
+  describe "GET #user_extracurricular_activity_details" do
     context "as a student" do
       login_student
 
@@ -11,25 +11,25 @@ describe Api::V1::ExtracurricularActivityController do
       let(:org_id) { subject.current_user.organization_id }
 
       before :each do
-        activity1 = create(:user_extracurricular_activity, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
-        activity2 = create(:user_extracurricular_activity, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
+        activity1 = create(:user_extracurricular_activity, user_id: subject.current_user.id)
+        activity2 = create(:user_extracurricular_activity, user_id: subject.current_user.id)
         activity3 = create(:user_extracurricular_activity)
-        event1 = create(:user_extracurricular_activity_event, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
-        event2 = create(:user_extracurricular_activity_event, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
-        event3 = create(:user_extracurricular_activity_event)
+        detail1 = create(:user_extracurricular_activity_detail, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
+        detail2 = create(:user_extracurricular_activity_detail, user_id: subject.current_user.id, time_unit_id: subject.current_user.time_unit_id)
+        detail3 = create(:user_extracurricular_activity_detail)
       end
 
-      it "returns 200 with user_extracurricular_activity_events" do
-        get :user_extracurricular_activity_events, {:id => userId, :time_unit_id => time_unit_id}
+      it "returns 200 with user_extracurricular_activity_details" do
+        get :user_extracurricular_activity_details, {:id => userId, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activities"].length).to eq(2)
-        expect(json["user_extracurricular_activity_events"].length).to eq(2)
+        expect(json["user_details"].length).to eq(2)
       end
 
       it "returns 403 if current_user is not in :org_id" do
         user = create(:student)
-        get :user_extracurricular_activity_events, {:id => user.id, :time_unit_id => time_unit_id}
+        get :user_extracurricular_activity_details, {:id => user.id, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -38,7 +38,7 @@ describe Api::V1::ExtracurricularActivityController do
         subject.current_user.id = 1
         user = create(:student, id: 2)
 
-        get :user_extracurricular_activity_events, {:id => user.id, :time_unit_id => time_unit_id}
+        get :user_extracurricular_activity_details, {:id => user.id, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -51,23 +51,23 @@ describe Api::V1::ExtracurricularActivityController do
         user = create(:student, organization_id: 12345)
         subject.current_user.organization_id = 1
 
-        get :user_extracurricular_activity_events, {:id => user.id, :time_unit_id => user.time_unit_id}
+        get :user_extracurricular_activity_details, {:id => user.id, :time_unit_id => user.time_unit_id}
 
         expect(response.status).to eq(403)
       end
 
-      it "returns 200 with user_extracurricular_activity_events" do
+      it "returns 200 with user_extracurricular_activity_details" do
         user = create(:student)
-        activity1 = create(:user_extracurricular_activity, user_id: user.id, time_unit_id: user.time_unit_id)
-        activity2 = create(:user_extracurricular_activity, user_id: user.id, time_unit_id: user.time_unit_id)
-        event1 = create(:user_extracurricular_activity_event, user_id: user.id, time_unit_id: user.time_unit_id)
-        event2 = create(:user_extracurricular_activity_event, user_id: user.id)
+        activity1 = create(:user_extracurricular_activity, user_id: user.id)
+        activity2 = create(:user_extracurricular_activity, user_id: user.id)
+        detail1 = create(:user_extracurricular_activity_detail, user_id: user.id, time_unit_id: user.time_unit_id)
+        detail2 = create(:user_extracurricular_activity_detail, user_id: user.id)
 
-        get :user_extracurricular_activity_events, {:id => user.id, :time_unit_id => user.time_unit_id}
+        get :user_extracurricular_activity_details, {:id => user.id, :time_unit_id => user.time_unit_id}
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activities"].length).to eq(2)
-        expect(json["user_extracurricular_activity_events"].length).to eq(1)
+        expect(json["user_details"].length).to eq(1)
       end
     end
 
@@ -89,19 +89,19 @@ describe Api::V1::ExtracurricularActivityController do
     end
   end
 
-  describe "POST #user_extracurricular_activity_event" do
+  describe "POST #user_extracurricular_activity_detail" do
     context "as a student" do
       login_student
 
       let(:userId) { subject.current_user.id }
 
-      it "returns 200 with user_extracurricular_activity_event" do
+      it "returns 200 with user_extracurricular_activity_detail" do
         activity1 = create(:user_extracurricular_activity, user_id: userId)
-        event1 = attributes_for(:user_extracurricular_activity_event, user_id: subject.current_user.id , time_unit_id: subject.current_user.time_unit_id, user_extracurricular_activity_id: activity1.id)
-        post :add_user_extracurricular_activity_event, {:user_extracurricular_activity_event => event1}
+        detail1 = attributes_for(:user_extracurricular_activity_detail, user_id: subject.current_user.id , time_unit_id: subject.current_user.time_unit_id, user_extracurricular_activity_id: activity1.id)
+        post :add_user_extracurricular_activity_detail, {:user_extracurricular_activity_detail => detail1}
 
         expect(response.status).to eq(200)
-        expect(json["user_extracurricular_activity_event"]["user_id"]).to eq(userId)
+        expect(json["user_extracurricular_activity_detail"]["user_id"]).to eq(userId)
       end
     end
   end
@@ -115,7 +115,7 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 200 with user_extracurricular_activity" do
         activity1 = attributes_for(:user_extracurricular_activity, user_id: subject.current_user.id,
-                                   name: 'poopHard')
+                                   name: 'poopHard', id: theActivity[:id])
         put :update_user_extracurricular_activity, {:id => theActivity[:id], :user_extracurricular_activity => activity1}
 
         expect(response.status).to eq(200)
@@ -124,20 +124,20 @@ describe Api::V1::ExtracurricularActivityController do
     end
   end
 
-  describe "PUT #user_extracurricular_activity_event" do
+  describe "PUT #user_extracurricular_activity_detail" do
     context "as a student" do
       login_student
 
       let(:userId) { subject.current_user.id }
       let(:time_unit_id) { subject.current_user.time_unit_id }
-      let(:theActivityEvent) { create(:user_extracurricular_activity_event, user_id: subject.current_user.id) }
+      let(:theActivityDetail) { create(:user_extracurricular_activity_detail, user_id: subject.current_user.id) }
 
-      it "returns 200 with user_extracurricular_activity_event" do
-        event1 = attributes_for(:user_extracurricular_activity_event, user_id: subject.current_user.id, name: 'GettingIt')
-        put :update_user_extracurricular_activity_event, {:id => theActivityEvent[:id], :user_extracurricular_activity_event => event1}
+      it "returns 200 with user_extracurricular_activity_detail" do
+        detail1 = attributes_for(:user_extracurricular_activity_detail, user_id: subject.current_user.id, name: 'GettingIt', id: theActivityDetail[:id])
+        put :update_user_extracurricular_activity_detail, {:id => theActivityDetail[:id], :user_extracurricular_activity_detail => detail1}
 
         expect(response.status).to eq(200)
-        expect(json["user_extracurricular_activity_event"]["user_id"]).to eq(userId)
+        expect(json["user_extracurricular_activity_detail"]["user_id"]).to eq(userId)
       end
     end
   end
@@ -158,19 +158,19 @@ describe Api::V1::ExtracurricularActivityController do
     end
   end
 
-  describe "DELETE #user_extracurricular_activity_event" do
+  describe "DELETE #user_extracurricular_activity_detail" do
     context "as a student" do
       login_student
 
       let(:userId) { subject.current_user.id }
       let(:time_unit_id) { subject.current_user.time_unit_id }
-      let(:theActivityEvent) { create(:user_extracurricular_activity_event, user_id: subject.current_user.id) }
+      let(:theActivityDetail) { create(:user_extracurricular_activity_detail, user_id: subject.current_user.id) }
 
-      it "returns 200 with Deleted User Activity Event" do
-        delete :delete_user_extracurricular_activity_event, {:id => theActivityEvent[:id]}
+      it "returns 200 with Deleted User Activity Detail" do
+        delete :delete_user_extracurricular_activity_detail, {:id => theActivityDetail[:id]}
 
         expect(response.status).to eq(200)
-        expect(json["info"]).to eq("Successfully deleted Extracurricular Activity Event, id: #{theActivityEvent[:id]}")
+        expect(json["info"]).to eq("Successfully deleted Extracurricular Activity Detail, id: #{theActivityDetail[:id]}")
       end
     end
   end
