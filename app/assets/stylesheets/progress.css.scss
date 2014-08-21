@@ -190,8 +190,15 @@
 
           .editing {
             text-align: center;
-            input, select, button {
-              margin-bottom: 10px;
+            input, select, button, textarea {
+              margin-bottom: 15px;
+            }
+            textarea {
+              resize: vertical;
+            }
+            .input-group {
+              text-align: left;
+              width: 100%;
             }
           }
 
@@ -207,17 +214,33 @@
 
       .module--submodule {
         margin-bottom: 40px;
+        width: 100%;
 
         &:last-of-type {
           margin-bottom: 0;
         }
 
         .module--subhead {
-          @include font-size(1.8);
+          @include font-size(2);
           font-weight: bold;
+          width: 100%;
           padding-bottom: 20px;
           border-bottom: 1px solid white(0.1);
-          margin-bottom: 20px;
+
+          .glyphicon-container {
+            display: inline-block;
+            @include font-size(1.2);
+            margin-left: 10px;
+            opacity: 0.2;
+            &:hover {
+              opacity: 1;
+            }
+          }
+
+        }
+
+        .left {
+          text-align: left;
         }
 
       }
