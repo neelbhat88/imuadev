@@ -34,35 +34,35 @@
 
           <table>
             <tbody>
-              <tr ng-repeat="(eventIndex, user_service_event) in user_service_organization.events" ng-class="{'last':$last}">
+              <tr ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours" ng-class="{'last':$last}">
 
-                <td ng-hide="user_service_event.editing">{{user_service_event.date | date: 'MM/dd/yy'}}</td>
-                <td ng-hide="user_service_event.editing">{{user_service_event.description}}</td>
-                <td ng-hide="user_service_event.editing">{{user_service_event.hours}}</td>
-                <td ng-hide="user_service_event.editing" class="glyphicons">
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.date | date: 'MM/dd/yy'}}</td>
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.description}}</td>
+                <td ng-hide="user_service_hour.editing">{{user_service_hour.hours}}</td>
+                <td ng-hide="user_service_hour.editing" class="glyphicons">
                   <div class="glyphicon-container">
-                    <span class="glyphicon glyphicon-pencil" title="Edit Event" ng-click="editEvent(organizationIndex, eventIndex)"></span>
-                    <span class="glyphicon glyphicon-trash" title="Delete Event" ng-click="deleteEvent(organizationIndex, eventIndex)"></span>
+                    <span class="glyphicon glyphicon-pencil" title="Edit Hour" ng-click="editHour(organizationIndex, hourIndex)"></span>
+                    <span class="glyphicon glyphicon-trash" title="Delete Hour" ng-click="deleteHour(organizationIndex, hourIndex)"></span>
                   </div>
                 </td>
 
-                <td class="editing" ng-show="user_service_event.editing" colspan="4">
+                <td class="editing" ng-show="user_service_hour.editing" colspan="4">
 
                   <span class="input-group">
                     <label>Date</label>
-                    <input class="form-control" ng-model="user_service_event.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
+                    <input class="form-control" ng-model="user_service_hour.new_date" placeholder="Date" datepicker-popup="MM/dd/yyyy" datepicker-append-to-body="true" is-open="isOpen" ng-click="isOpen = true">
                   </span>
                   <span class="input-group">
                     <label>What type of service did you do?</label>
-                    <textarea class="form-control" ng-model="user_service_event.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                    <textarea class="form-control" ng-model="user_service_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
                   </span>
                   <span class="input-group">
                     <label>How many hours?</label>
-                    <input class="form-control" ng-model="user_service_event.new_hours" placeholder="Hours" name="serviceEventHours">
+                    <input class="form-control" ng-model="user_service_hour.new_hours" placeholder="Hours" name="serviceEventHours">
                   </span>
 
-                  <button class="submit" title="Confirm" ng-click="saveEvent(organizationIndex, eventIndex, user_service_organization.id)">Confirm</button>
-                  <button class="cancel" title="Cancel" ng-click="cancelEventEdit(organizationIndex, eventIndex)">Cancel</button>
+                  <button class="submit" title="Confirm" ng-click="saveHour(organizationIndex, hourIndex, user_service_organization.id)">Confirm</button>
+                  <button class="cancel" title="Cancel" ng-click="cancelHourEdit(organizationIndex, hourIndex)">Cancel</button>
 
                 </td>
 
