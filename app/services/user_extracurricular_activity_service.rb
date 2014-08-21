@@ -18,7 +18,7 @@ class UserExtracurricularActivityService
   end
 
   def get_details_for_activity(user_extracurricular_activity, userId)
-    return UserExtracurricularActivityDetail.where(:extracurricular_activity_id => user_extracurricular_activity[:id], :user_id => userId)
+    return UserExtracurricularActivityDetail.where(:extracurricular_activity_id => user_extracurricular_activity[:id], :user_id => userId).first
   end
 
   def save_user_extracurricular_activity(user_extracurricular_activity)
@@ -53,8 +53,8 @@ class UserExtracurricularActivityService
     end
   end
 
-  def update_user_extracurricular_activity(extracurricularActivityId, user_extracurricular_activity)
-    db_class = UserExtracurricularActivity.find(extracurricularActivityId)
+  def update_user_extracurricular_activity(user_extracurricular_activity)
+    db_class = UserExtracurricularActivity.find(user_extracurricular_activity[:id])
 
     if db_class.update_attributes(:name => user_extracurricular_activity[:name], :description => user_extracurricular_activity[:description])
       return ReturnObject.new(:ok, "Successfully updated Extracurricular Activity, id: #{db_class.id}", db_class)
@@ -63,8 +63,8 @@ class UserExtracurricularActivityService
     end
   end
 
-  def update_user_extracurricular_activity_detail(extracurricularActivityDetailId, user_extracurricular_activity_detail)
-    db_class = UserExtracurricularActivityDetail.find(extracurricularActivityDetailId)
+  def update_user_extracurricular_activity_detail(user_extracurricular_activity_detail)
+    db_class = UserExtracurricularActivityDetail.find(user_extracurricular_activity_detail[:id])
     if db_class.update_attributes(:description => user_extracurricular_activity_detail[:description], :leadership => user_extracurricular_activity_detail[:leadership], :name => user_extracurricular_activity_detail[:name])
       return ReturnObject.new(:ok, "Successfully updated Extracurricular Activity Detail, id: #{db_class.id}", db_class)
     else

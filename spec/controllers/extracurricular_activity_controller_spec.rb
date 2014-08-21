@@ -24,7 +24,7 @@ describe Api::V1::ExtracurricularActivityController do
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activities"].length).to eq(2)
-        expect(json["user_extracurricular_activity_details"].length).to eq(2)
+        expect(json["user_details"].length).to eq(2)
       end
 
       it "returns 403 if current_user is not in :org_id" do
@@ -67,7 +67,7 @@ describe Api::V1::ExtracurricularActivityController do
 
         expect(response.status).to eq(200)
         expect(json["user_extracurricular_activities"].length).to eq(2)
-        expect(json["user_extracurricular_activity_details"].length).to eq(1)
+        expect(json["user_details"].length).to eq(1)
       end
     end
 
@@ -115,7 +115,7 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 200 with user_extracurricular_activity" do
         activity1 = attributes_for(:user_extracurricular_activity, user_id: subject.current_user.id,
-                                   name: 'poopHard')
+                                   name: 'poopHard', id: theActivity[:id])
         put :update_user_extracurricular_activity, {:id => theActivity[:id], :user_extracurricular_activity => activity1}
 
         expect(response.status).to eq(200)
@@ -133,7 +133,7 @@ describe Api::V1::ExtracurricularActivityController do
       let(:theActivityDetail) { create(:user_extracurricular_activity_detail, user_id: subject.current_user.id) }
 
       it "returns 200 with user_extracurricular_activity_detail" do
-        detail1 = attributes_for(:user_extracurricular_activity_detail, user_id: subject.current_user.id, name: 'GettingIt')
+        detail1 = attributes_for(:user_extracurricular_activity_detail, user_id: subject.current_user.id, name: 'GettingIt', id: theActivityDetail[:id])
         put :update_user_extracurricular_activity_detail, {:id => theActivityDetail[:id], :user_extracurricular_activity_detail => detail1}
 
         expect(response.status).to eq(200)

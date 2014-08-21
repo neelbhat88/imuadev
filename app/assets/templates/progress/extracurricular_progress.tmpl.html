@@ -38,18 +38,18 @@
                 </div>
 
                 <div class="item__event--leadership">
-                  <span class="bold" ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details[0].leadership}}</span>
+                  <span class="bold" ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details.leadership}}</span>
                   <div class="editor-wrapper" ng-show="user_extracurricular_activity.editing">
                     <div>Leadership Role (Optional)</div>
-                    <input class="form-editor" ng-model="user_extracurricular_activity.details[0].new_leadership" placeholder="Leadership (optional)" name="extracurricularDetailLeadership">
+                    <input class="form-editor" ng-model="user_extracurricular_activity.details.new_leadership" placeholder="Leadership (optional)" name="extracurricularDetailLeadership">
                   </div>
                 </div>
 
                 <div class="item__event--description">
-                  <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details[0].description}}</span>
+                  <span ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details.description}}</span>
                   <div class="editor-wrapper" ng-show="user_extracurricular_activity.editing">
                     <div>Description (Optional)</div>
-                    <textarea class="form-editor" ng-model="user_extracurricular_activity.details[0].new_description" placeholder="Description (optional)" name="extracurricularDetailDescription"></textarea>
+                    <textarea class="form-editor" ng-model="user_extracurricular_activity.details.new_description" placeholder="Description (optional)" name="extracurricularDetailDescription"></textarea>
                   </div>
                 </div>
 
