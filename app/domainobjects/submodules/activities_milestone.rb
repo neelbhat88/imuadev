@@ -22,11 +22,11 @@ class ActivitiesMilestone < ImuaMilestone
   def has_earned?(user, time_unit_id)
     user_activities = []
 
-    activities = UserExtracurricularActivityService.new.get_user_extracurricular_activities(user.id, time_unit_id)
-    events = UserExtracurricularActivityService.new.get_user_extracurricular_activity_events(user.id, time_unit_id)
+    activities = UserExtracurricularActivityService.new.get_user_extracurricular_activities(user.id)
+    details = UserExtracurricularActivityService.new.get_user_extracurricular_activity_details(user.id, time_unit_id)
 
     activities.each do | a |
-      if events.select{|e| e.user_extracurricular_activity_id == a.id}.length > 0
+      if details.select{|d| d.user_extracurricular_activity_id == a.id}.length > 0
         user_activities << a
       end
     end

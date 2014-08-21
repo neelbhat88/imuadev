@@ -22,10 +22,10 @@ class HoursMilestone < ImuaMilestone
   def has_earned?(user, time_unit_id)
     user_hours = 0
 
-    events = UserServiceActivityService.new.get_user_service_activity_events(user.id, time_unit_id)
+    hours = UserServiceOrganizationService.new.get_user_service_hours(user.id, time_unit_id)
 
-    events.each do | e |
-      user_hours += e.hours
+    hours.each do | h |
+      user_hours += h.hours
     end
 
     @earned = user_hours >= @target_hours
