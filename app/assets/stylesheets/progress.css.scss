@@ -273,12 +273,9 @@
       }
 
       .module--submodule {
-        margin-bottom: 40px;
+        border-bottom: 1px solid white(0.1);
+        margin-bottom: 20px;
         width: 100%;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
 
         .module--subhead {
           @include font-size(2);
@@ -295,6 +292,10 @@
 
         .text-left {
           text-align: left;
+        }
+
+        button {
+          margin-bottom: 20px;
         }
 
       }
