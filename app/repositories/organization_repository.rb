@@ -10,10 +10,6 @@ class OrganizationRepository
     return Organization.where(:id => orgId)[0] #Not using find here because of the exception it throws when not found
   end
 
-  def get_organization_with_milestones(orgId)
-    return Organization.includes(:milestones).where(:id => orgId)[0]
-  end
-
   def create_organization(opts)
     name = opts[:name]
 
