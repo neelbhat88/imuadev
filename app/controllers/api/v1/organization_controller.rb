@@ -54,10 +54,10 @@ class Api::V1::OrganizationController < ApplicationController
     orgId = params[:id].to_i
 
     # TODO Change authorization to check this particular function
-    # if !same_organization?(orgId)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !same_organization?(orgId)
+      render status: :forbidden, json: {}
+      return
+    end
 
     org = @organizationRepository.get_organization(orgId)
     # TODO Check authorization for this function

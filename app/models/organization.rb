@@ -27,22 +27,6 @@ class ViewOrganizationWithUsers
       end
     end
 
-    # User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_each do |user|
-    #   viewUser = ViewUser.new(user)
-    #   case viewUser.role
-    #   when Constants.UserRole[:ORG_ADMIN]
-    #     @orgAdmins << viewUser
-    #   when Constants.UserRole[:MENTOR]
-    #     @mentors << viewUser
-    #   when Constants.UserRole[:STUDENT]
-    #     @students << viewUser
-    #   end
-    # end
-
-    # @orgAdmins = nil
-    # @mentors = nil
-    # @students = nil
-
     User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_in_batches do |users|
       viewUsers = users.map{|u| ViewUser.new(u)}
       if @users.nil?
@@ -50,16 +34,6 @@ class ViewOrganizationWithUsers
       else
         @users << viewUsers
       end
-
-      # if @orgAdmins.nil?
-      #   @orgAdmins = viewUsers.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}
-      #   @mentors = viewUsers.select {|u| u.role == Constants.UserRole[:MENTOR]}
-      #   @students = viewUsers.select {|u| u.role == Constants.UserRole[:STUDENT]}
-      # else
-      #   @orgAdmins << viewUsers.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}
-      #   @mentors << viewUsers.select {|u| u.role == Constants.UserRole[:MENTOR]}
-      #   @students << viewUsers.select {|u| u.role == Constants.UserRole[:STUDENT]}
-      # end
     end
 
   end
