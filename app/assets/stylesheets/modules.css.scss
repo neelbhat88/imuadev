@@ -24,9 +24,7 @@
 
   .module {
 
-    width: 31%;
-    margin: 1%;
-    float: left;
+    width: 400px;
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
