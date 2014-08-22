@@ -25,6 +25,7 @@ class ViewOrganizationWithUsers
       else
         @milestones << milestones
       end
+    end
 
     # User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_each do |user|
     #   viewUser = ViewUser.new(user)
@@ -38,6 +39,10 @@ class ViewOrganizationWithUsers
     #   end
     # end
 
+    # @orgAdmins = nil
+    # @mentors = nil
+    # @students = nil
+
     User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_in_batches do |users|
       viewUsers = users.map{|u| ViewUser.new(u)}
       if @users.nil?
@@ -45,10 +50,6 @@ class ViewOrganizationWithUsers
       else
         @users << viewUsers
       end
-
-      # @orgAdmins = nil
-      # @mentors = nil
-      # @students = nil
 
       # if @orgAdmins.nil?
       #   @orgAdmins = viewUsers.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}
