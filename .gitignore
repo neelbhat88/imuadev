@@ -20,3 +20,5 @@
 *.DS_store
 
 tags
+
+newrelic.yml
