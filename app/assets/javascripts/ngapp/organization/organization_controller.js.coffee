@@ -92,6 +92,6 @@ angular.module('myApp')
           new_user: () -> UsersService.newMentor($scope.organization.id)
 
       modalInstance.result.then (user) ->
-        $scope.mentors.push(user)
+        $scope.organization.mentors.push(user)
 
 ]
