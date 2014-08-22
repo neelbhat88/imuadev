@@ -12,6 +12,11 @@ angular.module('myApp')
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = data.organization
+
+        $scope.organization.students = _.where($scope.organization.users, { role: 50 })
+        $scope.organization.mentors = _.where($scope.organization.users, { role: 40 })
+        $scope.organization.orgAdmins = _.where($scope.organization.users, { role: 10 })
+
         # Sort org_milestones by time_unit_id and module, while tallying up total points
         for time_unit, org_milestones_by_time_unit of _.groupBy($scope.organization.milestones, "time_unit_id")
           $scope.org_milestones[time_unit.toString()] = {}
