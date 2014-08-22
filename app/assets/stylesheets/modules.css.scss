@@ -24,7 +24,11 @@
 
   .module {
 
-    width: 400px;
+    width: 500px;
+    margin: 0 10px 20px 10px;
+    @include border-radius (5px);
+    display: inline-block;
+    vertical-align: top;
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
@@ -38,7 +42,7 @@
 
     @each $category, $color in $colormap {
       &.color--#{$category} {
-        border-top: 6px solid $color;
+        .module-container { border-top: 6px solid $color; }
         .module--header { background: $color; }
       }
     }
@@ -50,6 +54,7 @@
       border-bottom: 1px solid white(0.1);
       text-align: center;
       font-weight: $bold;
+      @include border-radius(5px 5px 0 0);
 
     }
 
