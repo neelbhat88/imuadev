@@ -2,6 +2,7 @@ angular.module('myApp')
 .controller "OrgAdminDashboardController", ["$scope",
 ($scope) ->
 
+  $scope.current_organization = "Hoku Scholars"
   $scope.active_mentors = "5"
   $scope.active_students = "36"
   $scope.average_gpa = "3.14"
