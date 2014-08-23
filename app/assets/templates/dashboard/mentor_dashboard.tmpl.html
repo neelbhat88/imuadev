@@ -49,7 +49,7 @@
 	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
 	    </div>
 	    <div class="list-container">
-		    <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
+		    <div class="progress-circles" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
 		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
 		      <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
 		        <progress-circle student="student"></progress-circle>

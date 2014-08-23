@@ -424,9 +424,17 @@ header {
   width: 170px;
   display: inline-block;
   vertical-align: top;
-  margin-right: 40px;
-  margin-bottom: 20px;
+  margin-right: 50px;
+  margin-bottom: 30px;
   text-align: center;
+  color: inherit;
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
 
   .circle-subnav {
     @include font-size(1.2);

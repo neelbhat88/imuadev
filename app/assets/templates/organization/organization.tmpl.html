@@ -35,18 +35,13 @@
 	<div class="organization-lower">
 
     <div class="progress-circles" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
-      <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
-        <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-        <progress-circle student="mentor"></progress-circle>
-      </a>
-      <div class="avatar-block__name">
-        <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
-				<ul class="circle-subnav">
-					<li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-					<li class="extra-info">Last Login: {{mentor.last_login}}</li>
-					<li class="extra-info">Login Count: {{mentor.login_count}}</li>
-				</ul>
-      </div>
+      <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor"></progress-circle></a>
+      <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
+			<ul class="circle-subnav">
+				<li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+				<li class="extra-info">Last Login: {{mentor.last_login}}</li>
+				<li class="extra-info">Login Count: {{mentor.login_count}}</li>
+			</ul>
     </div>
 
     <div class="user-list__add" ng-click="addMentor()">
