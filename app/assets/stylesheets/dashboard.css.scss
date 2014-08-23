@@ -194,5 +194,9 @@
 	=============================================== */
 
 #OrgAdminDashboard {
-	
+	.dashboard-header {
+		background: $grey;
+		color: white;
+		text-align: center;
+	}
 } //#OrgAdminDashboard

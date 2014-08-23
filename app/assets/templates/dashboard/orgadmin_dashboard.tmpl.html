@@ -3,7 +3,7 @@
   <div class="dashboard-header dashboard-header--orgadmin">
     <div class="orgadmin-header--wrapper">
       <div class="greeting">
-        <h2>Hey there {{user.first_name}}</h2>
+        <h2>Hey there, {{user.first_name}}</h2>
         <h5>Here's a look at how your organization is doing today:</h5>
       </div>
     </div>
@@ -12,21 +12,21 @@
   <div class="dashboard-attention dashboard-attention--orgadmin" ng-hide="true">Placeholder for Alerts</div>
 
   <div class="dashboard-content dashboard-content--orgadmin">
-    <div id="masonry-container" class="module-container clear" modulecolor="no_category">
+    <div id="masonry-container" class="module-container clear">
 
-      <div class="module module--mentor-activity">
+      <div class="module module--mentor-activity" modulecolor="no_category">
         <div class="module--header">Mentor Activity</div>
         <div class="module--content">
-          <h4><span class="numbers-large">5</span></h4>
+          <h4><span class="numbers-large">{{active_mentors}}</span></h4>
           <h5>Active Mentors</h5>
           <p>This Week</p>
         </div>
       </div>
 
-      <div class="module module--student-activity">
+      <div class="module module--student-activity" modulecolor="no_category">
         <div class="module--header">Student Activity</div>
         <div class="module--content">
-          <h4><span class="numbers-large">34</span></h4>
+          <h4><span class="numbers-large">{{active_students}}</span></h4>
           <h5>Active Students</h5>
           <p>This Week</p>
         </div>
@@ -35,7 +35,7 @@
       <div class="module module--avg-gpa" modulecolor="academics">
         <div class="module--header">Grades</div>
         <div class="module--content">
-          <h4><span class="numbers-large">3.14</span></h4>
+          <h4><span class="numbers-large">{{average_gpa}}</span></h4>
           <h5>Average GPA</h5>
         </div>
       </div>
@@ -43,24 +43,27 @@
       <div class="module module--avg-service" modulecolor="service">
         <div class="module--header">Service Hours</div>
         <div class="module--content">
-          <h4><span class="numbers-large">12.34</span></h4>
-          <h5>Average Hours Completed</h5>
+          <p>On average, your students have completed</p>
+          <h4><span class="numbers-large">{{average_serviceHours}}</span></h4>
+          <h5>Service Hours</h5>
         </div>
       </div>
 
       <div class="module module--activities" modulecolor="extracurricular">
         <div class="module--header">Extracurricular</div>
         <div class="module--content">
-          <h4><span class="numbers-large">1.2</span></h4>
-          <h5>Average Number of Extracurricular Activities</h5>
+          <p>Your students participate in</p>
+          <h4><span class="numbers-large">{{average_ecActivities}}</span></h4>
+          <h5>Extracurricular Activities</h5>
         </div>
       </div>
 
       <div class="module module--activities" modulecolor="testing">
         <div class="module--header">Testing</div>
         <div class="module--content">
-          <h4><span class="numbers-large">0.5</span></h4>
-          <h5>Average Number of Tests Taken</h5>
+          <p>Your students average</p>
+          <h4><span class="numbers-large">{{average_testsTaken}}</span></h4>
+          <h5>Tests Taken</h5>
         </div>
       </div>
 
