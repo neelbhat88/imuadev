@@ -50,20 +50,15 @@
 	    </div>
 	    <div class="list-container">
 		    <div class="progress-circles" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
-		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
 		      <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
 		        <progress-circle student="student"></progress-circle>
 		      </a>
-          <a>
-		        <div class="avatar-block__name">
-		          <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
-              <ul class="circle-subnav">
-                <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                <li class="extra-info">Last Login: {{student.last_login}}</li>
-                <li class="extra-info">Login Count: {{student.login_count}}</li>
-              </ul>
-		        </div>
-		      </a>
+          <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
+          <ul class="circle-subnav">
+            <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+            <li class="extra-info">Last Login: {{student.last_login}}</li>
+            <li class="extra-info">Login Count: {{student.login_count}}</li>
+          </ul>
 		    </div>
 	    </div>
   </div>
