@@ -282,27 +282,6 @@ $panelwrapper: 0 80px;
 
 }
 
-.user-list {
-
-  .user-list__add {
-    cursor: pointer;
-
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
-
-    display: inline-block;
-    vertical-align: top;
-
-    text-align: center;
-
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
-
-}
-
-
 /* ===============================================
    Header
    =============================================== */
@@ -461,7 +440,22 @@ header {
     visibility: visible;
   }
 
-} //.avatar-block
+} //.progress-circles
+
+.add-button {
+  @extend .progress-circles;
+  padding-top: 40px;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .glyphicon {
+    @include font-size(8);
+    color: $green;
+  }
+}
 
 /* ===============================================
    Milestone Classes
