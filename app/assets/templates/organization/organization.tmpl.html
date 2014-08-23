@@ -1,7 +1,36 @@
 <div class="organizationContainer" wait-to-load="{{loaded_users}}">
 
-  <div class="user-list">
-    <h4>Mentors</h4>
+    <div class="organization-header">
+			<ul class="mentor-stats clear">
+				<li>
+					<h4 class="bold">Mentors</h4>
+				</li>
+				<li>
+					<div class="clear">
+						<div class="count"><h4><span class="bold">15</span></h4></div>
+						<div class="descript"><h6>Total <br>Mentors</h6></div>
+					</div>
+				</li>
+				<li>
+					<div class="clear">
+						<div class="count"><h4><span class="bold">8</span></h4></div>
+						<div class="descript"><h6>Mentors Active <br>This Week</h6></div>
+					</div>
+				</li>
+				<li>
+					<div class="clear">
+						<div class="count"><h4><span class="bold">1</span></h4></div>
+						<div class="descript"><h6>Mentor <br>Needs Help!</h6></div>
+					</div>
+				</li>
+				<li>
+					<div class="clear">
+						<div class="count"><h4><span class="bold">2</span></h4></div>
+						<div class="descript"><h6>Have students that need attention</h6></div>
+					</div>
+				</li>
+			</ul>
+		</div>
 
     <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
       <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
@@ -22,6 +51,5 @@
       <div class="glyphicon glyphicon-plus-sign"></div>
       <div>Add Mentor</div>
     </div>
-  </div>
 
 </div>

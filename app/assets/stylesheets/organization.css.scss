@@ -1,5 +1,30 @@
 .organizationContainer {
 
-	
+	background: $grey;
+	color: white;
+
+	.mentor-stats {
+		width: 100%;
+		li {
+			float: left;
+			width: 20%;
+			padding: 20px;
+
+			.count, .descript {
+				float: left;
+			}
+
+			.count {
+				margin-right: 10px;
+			}
+
+			.descript {
+				width: 60%;
+				padding-top: 5px;
+				color: $lightgrey;
+			}
+
+		}
+	}
 
 }
