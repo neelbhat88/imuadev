@@ -1,86 +1,47 @@
 <div class="organizationContainer" wait-to-load="{{loaded_users}}">
 
-	<div class="organizationName">
+  <div class="user-list">
 
-	  <h3>{{organization.name}}</h3>
+    	<h4>Organization Admins</h4>
 
-	</div>
+    <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
+      <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
 
-  <div>
-
-    <div class="user-list">
-
-      	<h4>Organization Admins</h4>
-
-      <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
-        <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-
-        <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
-          <div class="avatar-block__name">
-            {{fullName(orgAdmin)}}
-          </div>
-        </a>
-      </div>
-
-      <div class="user-list__add" ng-click="addOrgAdmin()">
-        <div class="glyphicon glyphicon-plus-sign"></div>
-        <div>Add Organization Admin</div>
-      </div>
-    </div>
-
-    <div class="user-list">
-      <h4>Mentors</h4>
-
-      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
-        <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
-          <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-          <progress-circle student="mentor"></progress-circle>
-        </a>
+      <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
         <div class="avatar-block__name">
-          <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
-					<ul class="circle-subnav">
-						<li class="extra-info">Last Login: {{mentor.last_login}}</li>
-						<li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-					</ul>
+          {{fullName(orgAdmin)}}
         </div>
-      </div>
+      </a>
+    </div>
 
-      <div class="user-list__add" ng-click="addMentor()">
-        <div class="glyphicon glyphicon-plus-sign"></div>
-        <div>Add Mentor</div>
+    <div class="user-list__add" ng-click="addOrgAdmin()">
+      <div class="glyphicon glyphicon-plus-sign"></div>
+      <div>Add Organization Admin</div>
+    </div>
+  </div>
+
+  <div class="user-list">
+    <h4>Mentors</h4>
+
+    <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
+      <a ng-href="#/mentor/{{mentor.id}}" title="View progress">
+        <!-- <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
+        <progress-circle student="mentor"></progress-circle>
+      </a>
+      <div class="avatar-block__name">
+        <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
+				<ul class="circle-subnav">
+					<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+					<li class="extra-info">Last Login: {{student.last_login}}</li>
+					<li class="extra-info">Login Count: {{student.login_count}}</li>
+				</ul>
       </div>
     </div>
 
-    <div class="user-list">
-      <h4>Students</h4>
-
-			<div ng-repeat="(group, group_students) in groupedStudents">
-				<h5 ng-if="group != 0" class="pvm">Class of {{group}}</h5>
-				<h5 ng-if="group == 0" class="pvm">Unassigned</h5>
-	      <div class="avatar-block progress-circles avatar-block--list" ng-repeat="student in group_students | orderBy: 'id'">
-					<!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-					<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
-						<progress-circle student="student"></progress-circle>
-					</a>
-					<div class="avatar-block__name">
-						<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">
-							<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">{{student.first_last_initial}}</a>
-						</h6>
-						<ul class="circle-subnav">
-							<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-							<li class="extra-info">Last Login: {{student.last_login}}</li>
-							<li class="extra-info">Login Count: {{student.login_count}}</li>
-						</ul>
-					</div>
-				</div>
-      </div>
-
-      <div class="user-list__add" ng-click="addStudent()">
-        <div class="glyphicon glyphicon-plus-sign"></div>
-        <div>Add Student</div>
-      </div>
+    <div class="user-list__add" ng-click="addMentor()">
+      <div class="glyphicon glyphicon-plus-sign"></div>
+      <div>Add Mentor</div>
     </div>
-
   </div>
 
 </div>
