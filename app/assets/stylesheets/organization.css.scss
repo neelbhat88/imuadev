@@ -1,30 +1,42 @@
 .organizationContainer {
 
-	background: $grey;
+	background: $darkgrey;
 	color: white;
 
-	.mentor-stats {
+	.organization-header {
 		width: 100%;
-		li {
-			float: left;
-			width: 20%;
-			padding: 20px;
+		background: $grey;
+		padding: 20px 120px;
+		border-bottom: 1px solid $darkborder;
 
-			.count, .descript {
+		.mentor-stats {
+			margin: 0;
+
+			li {
 				float: left;
-			}
+				width: 20%;
+				padding: 20px 0;
 
-			.count {
-				margin-right: 10px;
-			}
+				.count, .descript {
+					float: left;
+				}
 
-			.descript {
-				width: 60%;
-				padding-top: 5px;
-				color: $lightgrey;
-			}
+				.count {
+					margin-right: 15px;
+				}
 
+				.descript {
+					width: 60%;
+					padding-top: 17px;
+					color: $lightgrey;
+				}
+
+			}
 		}
+	}
+
+	.organization-lower {
+		padding: 40px $wrapper-width;
 	}
 
 }

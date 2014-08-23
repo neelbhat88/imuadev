@@ -419,7 +419,14 @@ header {
    Progress Circle Classes
    =============================================== */
 
-.avatar-block {
+.progress-circles {
+
+  width: 170px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 40px;
+  margin-bottom: 20px;
+  text-align: center;
 
   .circle-subnav {
     @include font-size(1.2);
