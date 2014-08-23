@@ -15,11 +15,27 @@ class ViewOrganizationWithUsers
   def initialize(org)
     @id = org.id
     @name = org.name
-    @milestones = org.milestones.map{|m| ViewMilestone.new(m)}
+    @milestones = nil
+    @users = nil
 
-    users = org.users.map{|u| ViewUser.new(u)}
-    @orgAdmins = users.select {|u| u.role == Constants.UserRole[:ORG_ADMIN]}
-    @mentors = users.select {|u| u.role == Constants.UserRole[:MENTOR]}
-    @students = users.select {|u| u.role == Constants.UserRole[:STUDENT]}
+    Milestone.where(:organization_id => @id).find_in_batches do |milestones|
+      viewMilestones = milestones.map{|m| ViewMilestone.new(m)}
+      if @milestones.nil?
+        @milestones = milestones
+      else
+        @milestones << milestones
+      end
+    end
+
+    User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_in_batches do |users|
+      viewUsers = users.map{|u| ViewUser.new(u)}
+      if @users.nil?
+        @users = viewUsers
+      else
+        @users << viewUsers
+      end
+    end
+
   end
+
 end

@@ -12,6 +12,11 @@ angular.module('myApp')
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = data.organization
+
+        $scope.organization.students = _.where($scope.organization.users, { role: 50 })
+        $scope.organization.mentors = _.where($scope.organization.users, { role: 40 })
+        $scope.organization.orgAdmins = _.where($scope.organization.users, { role: 10 })
+
         # Sort org_milestones by time_unit_id and module, while tallying up total points
         for time_unit, org_milestones_by_time_unit of _.groupBy($scope.organization.milestones, "time_unit_id")
           $scope.org_milestones[time_unit.toString()] = {}
@@ -31,7 +36,11 @@ angular.module('myApp')
             new_module_progress = { module_title: module_title, time_unit_id: student.time_unit_id,\
                                     points: { user: 0, total: org_milestones_by_module.totalPoints } }
             for user_milestone in _.where(student.user_milestones, { time_unit_id: student.time_unit_id, module: module_title } )
-              new_module_progress.points.user += _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } ).points
+              org_milestone = _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } )
+              if org_milestone
+                new_module_progress.points.user += org_milestone.points
+              else
+                console.log("Error: user_milestone has no matching org_milestone.", user_milestone, org_milestones_by_module, $scope.org_milestones)
             student.modules_progress.push(new_module_progress)
             # Apply module_progress to the student's mentors
             for mentor in student.mentors
