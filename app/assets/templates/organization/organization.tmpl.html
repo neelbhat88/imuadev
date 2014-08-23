@@ -1,26 +1,6 @@
 <div class="organizationContainer" wait-to-load="{{loaded_users}}">
 
   <div class="user-list">
-
-    	<h4>Organization Admins</h4>
-
-    <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
-      <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-
-      <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
-        <div class="avatar-block__name">
-          {{fullName(orgAdmin)}}
-        </div>
-      </a>
-    </div>
-
-    <div class="user-list__add" ng-click="addOrgAdmin()">
-      <div class="glyphicon glyphicon-plus-sign"></div>
-      <div>Add Organization Admin</div>
-    </div>
-  </div>
-
-  <div class="user-list">
     <h4>Mentors</h4>
 
     <div class="avatar-block progress-circles avatar-block--list" ng-repeat="mentor in organization.mentors | orderBy: 'id'">
