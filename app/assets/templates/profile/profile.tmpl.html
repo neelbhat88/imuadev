@@ -65,78 +65,36 @@
 
   </div>
 
-<!-- New Content Ends Here -->
+  <div class="profile--guardian" ng-if="user.is_student">
+    <h5>Parent or Guardian Information</h5>
 
-  <div class="parent-guardian-contacts-container" ng-if="user.is_student">
-    <h5>{{user.first_name}}'s Parent/Guardian Contacts:</h5>
-    <div class="contacts-list">
+    <ul class="guardian-list">
+      <li ng-repeat="contact in contacts">
 
-      <div class="pbm" ng-repeat="contact in contacts">
-
-        <div class="pbs">
-          <div ng-hide="contact.editing">
-            <span class="form--profile__field-label">Name: </span>
-            <span>{{contact.name}}</span>
-          </div>
-
-          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_name" placeholder="Name" autofocus="true">
+        <div ng-hide="contact.editing">
+          <h5><span class="bold">{{contact.name}}</span> ({{contact.relationship}})</h5>
+          <p>{{contact.email}}</p>
+          <p>{{contact.phone}}</p>
+          <button class="submit" ng-click="editParentGuardianContact($index)">Update Parent or Guardian</button>
+          <button class="delete" ng-click="deleteParentGuardianContact($index)">Remove</button>
         </div>
 
-        <div class="pbs">
-          <div ng-hide="contact.editing">
-            <span class="form--profile__field-label">Relationship: </span>
-            <span>{{contact.relationship}}</span>
-          </div>
+        <div ng-show="contact.editing">
+          <input class="form-control" ng-model="contact.new_name" placeholder="Name" autofocus="true">
+          <input class="form-control" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
+          <input class="form-control" ng-model="contact.new_email" placeholder="Email" autofocus="true">
+          <input class="form-control" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
 
-          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
+          <button class="submit" ng-click="saveParentGuardianContact($index)">Save</button>
+          <button class="cancel" ng-click="cancelEditParentGuardianContact($index)">Cancel</button>
         </div>
 
-        <div class="pbs">
-          <div ng-hide="contact.editing">
-            <span class="form--profile__field-label">Email: </span>
-            <span>{{contact.email}}</span>
-          </div>
+      </li>
+    </ul>
 
-          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_email" placeholder="Email" autofocus="true">
-        </div>
-
-        <div class="pbs">
-          <div ng-hide="contact.editing">
-            <span class="form--profile__field-label">Phone: </span>
-            <span>{{contact.phone}}</span>
-          </div>
-
-          <input class="form-field" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
-        </div>
-
-        <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()" >
-
-          <input value="Update Contact" type="button" class="submit" ng-click="editParentGuardianContact($index)">
-          <input value="Delete Contact" type="button" class="delete" ng-click="deleteParentGuardianContact($index)">
-
-        </div>
-
-        <div class="buttonGroup pvl" ng-hide="!contact.editing" ng-if="editable()">
-
-          <input value="Save" type="button" class="submit" ng-click="saveParentGuardianContact($index)">
-          <input value="Cancel" type="button" class="cancel" ng-click="cancelEditParentGuardianContact($index)">
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="buttonGroup pvl" ng-hide="editingParentGuardianContacts" ng-if="editable()">
-
-      <input value="Add New Parent/Guardian Contact" type="button" class="submit" ng-click="addParentGuardianContact()">
-
-    </div>
+    <button class="btn btn-default" ng-click="addParentGuardianContact()">Add Parent or Guardian</button>
 
   </div>
-  <!-- parent-guardian-contacts -->
-
-
 
 </div>
 
