@@ -2,6 +2,12 @@ angular.module('myApp')
 .controller 'OrganizationCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService',
   'OrganizationService',
   ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
+
+    $scope.mentors_total_number = "15"
+    $scope.active_mentors_this_week = "9"
+    $scope.mentor_needs_help = "1"
+    $scope.mentors_students_need_attention = "3"
+
     $scope.current_user = current_user
     $scope.organization = null
     $scope.groupedStudents = []
