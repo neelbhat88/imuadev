@@ -152,6 +152,9 @@ $bold: 700;
 
 }
 
+/* ===============================================
+   Big Global Stuff
+   =============================================== */
 
 html {
   height: 100%;
@@ -163,6 +166,8 @@ html {
     font-family: $font-stack;
     font-weight: $regular;
     @include font-size(1.4);
+    background: $darkgrey;
+    color: white;
 
   }
 
