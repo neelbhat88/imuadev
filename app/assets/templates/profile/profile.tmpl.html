@@ -1,22 +1,70 @@
 <div class="profileContainer">
 
-  <div class="profile--pic">
-    <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}}'s Profile Picture">
-    <div ng-show="editingInfo">
-      <input class=" js-upload" ng-show="editingInfo" type="file" file-input="files" />
-    </div>
-  </div>
+  <div class="profile-header">
 
-  <div class="profile--primary-info">
+    <div class="profile--pic">
+      <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}}'s Profile Picture">
+    </div>
 
     <div ng-hide="editingInfo || editingPassword">
+
       <h3>{{user.first_name}} {{user.last_name}}</h3>
+      <ul class="profile--primary-info">
+        <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
+        <li><span class="glyphicon glyphicon-phone"></span> {{user.phone ? user.phone : "No Phone Number Added"}}</li>
+      </ul>
+
+      <div class="edit-buttons">
+        <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Info</button>
+        <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
+      </div>
+    </div>
+
+    <div class="primary-editing" ng-show="editingInfo">
+
+      <div ng-if="!current_user.is_student">
+        <span class="form-wrapper half">
+          <label>First Name</label>
+          <input class="form-control" ng-model="user.first_name" placeholder="First Name">
+        </span>
+        <span class="form-wrapper half">
+          <label>Last Name</label>
+          <input class="form-control" ng-model="user.last_name" placeholder="Last Name">
+        </span>
+      </div>
+
+      <div class="student-exception" ng-if="current_user.is_student">
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+      </div>
+
+      <div class="form-wrapper">
+        <label>Change Profile Picture</label>
+        <input class="js-upload" type="file" file-input="files" />
+      </div>
+
+      <span class="form-wrapper">
+        <label>Email Address</label>
+        <input class="form-control" ng-model="user.email" placeholder="Email" autofocus="true">
+      </span>
+      <span class="form-wrapper">
+        <label>Phone Number</label>
+        <input class="form-control" ng-model="user.phone" placeholder="Phone Number">
+      </span>
+
+      <div class="edit-buttons">
+        <button ng-click="updateUserInfo(\$event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
+        <button class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="profile-lower">
+
+    <div ng-hide="editingInfo || editingPassword">
       <p>Class of {{user.class_of}}</p>
       <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
-      <p>{{user.email}}</p>
-      <p>{{user.phone ? user.phone : "Click update below to add"}}</p>
-      <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
-      <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
     </div>
 
     <div ng-show="editingInfo">

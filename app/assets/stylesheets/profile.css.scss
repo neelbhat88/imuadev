@@ -1,30 +1,90 @@
 .profileContainer {
 
-  padding-top: 40px;
-  font-size: 18px;
-  text-align: center;
-
-}
-
-.form {
-  padding: 10px;
-}
-
-.form--profile {
-
-  text-align: center;
-
-  .form--profile__field-label
-  {
-    color: grey;
-    padding-right: 10px;
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
   }
 
-  .form-field {
-    min-width: 250px;
+  .profile-header {
+
+    padding: 80px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+    text-align: center;
+
+    .profile--pic {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+
+      img {
+        height: 100%;
+        width: auto;
+        @include border-radius(50%);
+
+      }
+
+    }
+
+    .profile--primary-info {
+
+      .glyphicon {
+        @include font-size(1.4);
+        margin-right: 3px;
+      }
+
+      li {
+        display: inline-block;
+        margin: 0 15px;
+      }
+
+    }
+
+    .edit-buttons {
+      margin-top: 40px;
+      width: 100%;
+      text-align: center;
+
+      button {
+        margin: 0 10px;
+        opacity: 0.4;
+
+        &:hover {
+          opacity: 1;
+        }
+
+      }
+
+    }
+
+    .primary-editing {
+      max-width: 500px;
+      margin: 60px auto 0 auto;
+      text-align: left;
+
+      .form-wrapper {
+        margin: 10px 0;
+        width: 100%;
+        display: inline-block;
+      }
+
+      .half {
+        width: 49%;
+        display: inline-block;
+      }
+
+      .student-exception {
+        text-align: center;
+      }
+
+    }
+
   }
 
 }
+
 
 .avatar-block--list {
   display: inline-block;
