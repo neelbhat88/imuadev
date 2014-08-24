@@ -22,6 +22,10 @@
 
     <div class="primary-editing" ng-show="editingInfo">
 
+      <ul class="errorText" ng-show="editingInfo && errors" >
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
+
       <div ng-if="!current_user.is_student">
         <span class="form-wrapper half">
           <label>First Name</label>
@@ -56,6 +60,26 @@
         <button class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
       </div>
 
+    </div>
+
+    <div class="primary-editing" ng-show="editingPassword">
+
+      <div class="student-exception" ng-if="current_user.is_student">
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+      </div>
+
+      <ul class="errorText ptm" ng-show="errors">
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
+
+      <input type="password" class="form-control" ng-model="password.current" placeholder="Current Password" name="current" required>
+      <input type="password" class="form-control" ng-model="password.new" placeholder="New Password" name="new" required>
+      <input type="password" class="form-control" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
+
+      <div class="edit-buttons">
+        <button ng-click="updateUserPassword($event)" class="submit" data-style="expand-right" data-size="s" data-color="blue">Save</button>
+        <button class="cancel" ng-click="cancelUpdatePassword()">Cancel</button>
+      </div>
     </div>
 
   </div>
@@ -130,10 +154,6 @@
       </div>
 
     </div> <!-- /.module-container -->
-
-    <div ng-hide="editingInfo || editingPassword">
-
-    </div>
 
     <div ng-show="editingInfo">
 
