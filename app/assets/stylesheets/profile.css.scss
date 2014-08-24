@@ -7,6 +7,23 @@
     }
   }
 
+  .edit-buttons {
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
+
+    button {
+      margin: 0 10px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+      }
+
+    }
+
+  }
+
   .profile-header {
 
     padding: 80px $wrapper-width;
@@ -38,23 +55,6 @@
       li {
         display: inline-block;
         margin: 0 15px;
-      }
-
-    }
-
-    .edit-buttons {
-      margin-top: 40px;
-      width: 100%;
-      text-align: center;
-
-      button {
-        margin: 0 10px;
-        opacity: 0.4;
-
-        &:hover {
-          opacity: 1;
-        }
-
       }
 
     }

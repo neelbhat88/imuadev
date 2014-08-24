@@ -15,7 +15,7 @@
       </ul>
 
       <div class="edit-buttons">
-        <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Info</button>
+        <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
       </div>
     </div>
@@ -52,7 +52,7 @@
       </span>
 
       <div class="edit-buttons">
-        <button ng-click="updateUserInfo(\$event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
+        <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
         <button class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
       </div>
 
@@ -62,9 +62,77 @@
 
   <div class="profile-lower">
 
+    <div class="module-container clear">
+
+      <div class="module module--class-info" modulecolor="no_category" ng-if="user.is_student">
+        <div class="module--header">Class Info</div>
+        <div class="module--content">
+          <p>Class of {{user.class_of}}</p>
+          <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
+          <div ng-if="!current_user.is_student" class="edit-buttons">
+            <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
+            <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="module module--guardians" modulecolor="no_category" ng-if="user.is_student">
+        <div class="module--header">Parents or Guardians</div>
+        <div class="module--content">
+          <ul class="guardian-list">
+            <li ng-repeat="contact in contacts">
+
+              <div ng-hide="contact.editing">
+                <h5><span class="bold">{{contact.name}}</span> ({{contact.relationship}})</h5>
+                <p>{{contact.email}}</p>
+                <p>{{contact.phone}}</p>
+                <div class="edit-buttons">
+                  <button class="submit" ng-click="editParentGuardianContact($index)">Update Parent or Guardian</button>
+                  <button class="delete" ng-click="deleteParentGuardianContact($index)">Remove</button>
+                </div>
+              </div>
+
+              <div ng-show="contact.editing">
+                <input class="form-control" ng-model="contact.new_name" placeholder="Name" autofocus="true">
+                <input class="form-control" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
+                <input class="form-control" ng-model="contact.new_email" placeholder="Email" autofocus="true">
+                <input class="form-control" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
+
+                <div class="edit-buttons">
+                  <button class="submit" ng-click="saveParentGuardianContact($index)">Save</button>
+                  <button class="cancel" ng-click="cancelEditParentGuardianContact($index)">Cancel</button>
+                </div>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="edit-buttons">
+            <button class="btn btn-default" ng-click="addParentGuardianContact()">Add Parent or Guardian</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="module module--your-mentors" modulecolor="no_category" ng-if="user.is_student">
+        <div class="module--header">{{user.first_name}}'s <span class="bold">Mentors</span></div>
+        <div class="module--content">
+          <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+            <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+              <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+              <div class="avatar-block__name">
+                {{mentor.first_name}} {{mentor.last_name}}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /.module-container -->
+
     <div ng-hide="editingInfo || editingPassword">
-      <p>Class of {{user.class_of}}</p>
-      <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
+
     </div>
 
     <div ng-show="editingInfo">
@@ -86,7 +154,7 @@
         <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
       </div>
 
-      <input class="form-control" ng-show="editingInfo" ng-model="user.email" placeholder="Email" autofocus="true">
+      <input class="form-control" ng-show="editingInfo" ng-model="user.email" placeholder="Email">
       <input class="form-control" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
 
       <div class="buttonGroup pvl" ng-show="editingInfo" >
