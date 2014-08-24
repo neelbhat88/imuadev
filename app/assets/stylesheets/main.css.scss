@@ -463,6 +463,36 @@ header {
 }
 
 /* ===============================================
+   Circle Picture Classes
+   =============================================== */
+
+.circle-pictures {
+  display: inline-block;
+  margin: 0 20px 30px 20px;
+
+  .circle-picture {
+    display: block;
+    width: 150px;
+    img {
+      width: 100%;
+      height: auto;
+      @include border-radius(50%);
+    }
+  }
+  .circle-picture--name {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
+
+}
+
+/* ===============================================
    Milestone Classes
    =============================================== */
 

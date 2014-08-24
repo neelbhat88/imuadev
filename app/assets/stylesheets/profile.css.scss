@@ -24,6 +24,24 @@
 
   }
 
+  .form-wrapper {
+    margin: 10px 0;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+  }
+
+  .half {
+    width: 49%;
+    display: inline-block;
+  }
+
+  select {
+    width: 100%;
+    @include font-size(2.2);
+  }
+
+
   .profile-header {
 
     padding: 80px $wrapper-width;
@@ -64,17 +82,6 @@
       margin: 0 auto;
       text-align: left;
 
-      .form-wrapper {
-        margin: 10px 0;
-        width: 100%;
-        display: inline-block;
-      }
-
-      .half {
-        width: 49%;
-        display: inline-block;
-      }
-
       .student-exception {
         text-align: center;
       }
@@ -85,53 +92,15 @@
 
 }
 
-
-.avatar-block--list {
-  display: inline-block;
-  vertical-align: top;
-
-  width: 160px;
-  word-wrap: break-word;
-
-  .avatar-block__name { text-align: center; }
-}
-
-.avatar-block {
-
-  padding-bottom: 40px;
-  text-align: center;
-
-  &.progress-circles { width: 190px; }
-
-  .avatar-block__img {
-    display: block;
-    margin: auto;
-
-    @extend .img-thumbnail;
-
-    // ToDo - Has to be a better way to include bootstrap style and then overwrite parts of it
-    &.avatar-block__img--thumbnail {
-      height: 140px;
-      width: 140px;
-      border-radius: 65px;
+.profile-lower {
+  li {
+    padding-bottom: 30px;
+    border-bottom: 1px solid $darkborder;
+    margin-bottom: 30px;
+    &:last-of-type {
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
     }
   }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-
-    &:hover {
-      color: inherit;
-    }
-  }
-
-  .avatar-block__upload {
-
-    width: 230px;
-    margin: auto;
-    display: inline-block;
-
-  }
-
 }

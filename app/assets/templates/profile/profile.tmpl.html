@@ -15,7 +15,8 @@
       </ul>
 
       <div class="edit-buttons">
-        <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
+        <a href="/#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
+        <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
       </div>
     </div>
@@ -91,18 +92,58 @@
       <div class="module module--class-info" modulecolor="no_category" ng-if="user.is_student">
         <div class="module--header">Class Info</div>
         <div class="module--content">
-          <p>Class of {{user.class_of}}</p>
-          <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
-          <div ng-if="!current_user.is_student" class="edit-buttons">
-            <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
-            <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
+          <ul ng-if="current_user.is_student">
+            <li>
+              <h5>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</h5>
+              <h6>Student</h6>
+            </li>
+
+            <li>
+              <h6>Class of</h6>
+              <h4>{{user.class_of}}</h4>
+            </li>
+          </ul>
+
+          <ul ng-if="!current_user.is_student" ng-hide="editingInfo">
+            <li>
+              <h5>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</h5>
+              <h6>Student</h6>
+            </li>
+
+            <li>
+              <h6>Class of</h6>
+              <h4>{{user.class_of}}</h4>
+            </li>
+          </ul>
+
+          <div ng-if="!current_user.is_student">
+
+            <div class="edit-buttons" ng-hide="editingInfo">
+              <button class="submit" ng-if="editable()" ng-click="editUserInfo()">Edit</button>
+              <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
+            </div>
+
+            <div ng-show="editingInfo">
+              <span class="form-wrapper">
+                <label>Imua Semester</label>
+                <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
+              </span>
+              <span class="form-wrapper">
+                <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
+              </span>
+              <div class="edit-buttons">
+                <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Update</span></button>
+                <button class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
+              </div>
+            </div>
+
           </div>
 
         </div>
       </div>
 
       <div class="module module--guardians" modulecolor="no_category" ng-if="user.is_student">
-        <div class="module--header">Parents or Guardians</div>
+        <div class="module--header">Parents & Guardians</div>
         <div class="module--content">
           <ul class="guardian-list">
             <li ng-repeat="contact in contacts">
@@ -112,20 +153,32 @@
                 <p>{{contact.email}}</p>
                 <p>{{contact.phone}}</p>
                 <div class="edit-buttons">
-                  <button class="submit" ng-click="editParentGuardianContact($index)">Update Parent or Guardian</button>
+                  <button class="btn btn-default" ng-click="editParentGuardianContact($index)">Update</button>
                   <button class="delete" ng-click="deleteParentGuardianContact($index)">Remove</button>
                 </div>
               </div>
 
               <div ng-show="contact.editing">
-                <input class="form-control" ng-model="contact.new_name" placeholder="Name" autofocus="true">
-                <input class="form-control" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
-                <input class="form-control" ng-model="contact.new_email" placeholder="Email" autofocus="true">
-                <input class="form-control" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
+                <div class="form-wrapper">
+                  <label>Parent or Guardian Name</label>
+                  <input class="form-control" ng-model="contact.new_name" placeholder="Name" autofocus="true">
+                </div>
+                <div class="form-wrapper">
+                  <label>Relationship</label>
+                  <input class="form-control" ng-model="contact.new_relationship" placeholder="Relationship">
+                </div>
+                <div class="form-wrapper">
+                  <label>Email Address</label>
+                  <input class="form-control" ng-model="contact.new_email" placeholder="Email">
+                </div>
+                <div class="form-wrapper">
+                  <label>Phone Number</label>
+                  <input class="form-control" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone">
+                </div>
 
                 <div class="edit-buttons">
                   <button class="submit" ng-click="saveParentGuardianContact($index)">Save</button>
-                  <button class="cancel" ng-click="cancelEditParentGuardianContact($index)">Cancel</button>
+                  <button class="btn btn-default" ng-click="cancelEditParentGuardianContact($index)">Cancel</button>
                 </div>
               </div>
 
@@ -133,7 +186,7 @@
           </ul>
 
           <div class="edit-buttons">
-            <button class="btn btn-default" ng-click="addParentGuardianContact()">Add Parent or Guardian</button>
+            <button class="submit" ng-click="addParentGuardianContact()">Add Parent or Guardian</button>
           </div>
 
         </div>
@@ -142,98 +195,17 @@
       <div class="module module--your-mentors" modulecolor="no_category" ng-if="user.is_student">
         <div class="module--header">{{user.first_name}}'s <span class="bold">Mentors</span></div>
         <div class="module--content">
-          <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+          <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
             <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-              <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-              <div class="avatar-block__name">
-                {{mentor.first_name}} {{mentor.last_name}}
+              <div class="circle-picture">
+                <img ng-src="{{mentor.square_avatar_url}}">
               </div>
+                <h6 class="bold">{{mentor.first_name}} {{mentor.last_name}}</h6>
             </a>
           </div>
         </div>
       </div>
 
     </div> <!-- /.module-container -->
-
-    <div ng-show="editingInfo">
-
-      <ul class="errorText" ng-show="editingInfo && errors" >
-        <li ng-repeat="error in errors">{{error}}</li>
-      </ul>
-
-      <div ng-if="!current_user.is_student">
-        <input class="form-control" ng-model="user.first_name" placeholder="First Name">
-        <input class="form-control" ng-model="user.last_name" placeholder="Last Name">
-        <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
-        <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
-      </div>
-
-      <div ng-if="current_user.is_student">
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
-        <p>Class of {{user.class_of}}</p>
-        <p>{{_.findWhere(time_units, { id: user.time_unit_id }).name}}</p>
-      </div>
-
-      <input class="form-control" ng-show="editingInfo" ng-model="user.email" placeholder="Email">
-      <input class="form-control" ng-show="editingInfo" ng-model="user.phone" placeholder="Phone Number">
-
-      <div class="buttonGroup pvl" ng-show="editingInfo" >
-        <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
-        <button class="cancel" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
-      </div>
-
-    </div>
-
-    <div ng-show="editingPassword">
-
-      <ul class="errorText ptm" ng-show="errors">
-        <li ng-repeat="error in errors">{{error}}</li>
-      </ul>
-
-      <input type="password" class="form-control" ng-model="password.current" placeholder="Current Password" name="current" required>
-      <input type="password" class="form-control" ng-model="password.new" placeholder="New Password" name="new" required>
-      <input type="password" class="form-control" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
-
-      <button ng-click="updateUserPassword($event)" class="submit" data-style="expand-right" data-size="s" data-color="blue">Save</button>
-      <button class="cancel" ng-click="cancelUpdatePassword()">Cancel</button>
-
-    </div>
-
   </div>
-
-  <div class="profile--guardian" ng-if="user.is_student">
-    <h5>Parent or Guardian Information</h5>
-
-    <ul class="guardian-list">
-      <li ng-repeat="contact in contacts">
-
-        <div ng-hide="contact.editing">
-          <h5><span class="bold">{{contact.name}}</span> ({{contact.relationship}})</h5>
-          <p>{{contact.email}}</p>
-          <p>{{contact.phone}}</p>
-          <button class="submit" ng-click="editParentGuardianContact($index)">Update Parent or Guardian</button>
-          <button class="delete" ng-click="deleteParentGuardianContact($index)">Remove</button>
-        </div>
-
-        <div ng-show="contact.editing">
-          <input class="form-control" ng-model="contact.new_name" placeholder="Name" autofocus="true">
-          <input class="form-control" ng-model="contact.new_relationship" placeholder="Relationship" autofocus="true">
-          <input class="form-control" ng-model="contact.new_email" placeholder="Email" autofocus="true">
-          <input class="form-control" ng-show="contact.editing" ng-model="contact.new_phone" placeholder="Phone" autofocus="true">
-
-          <button class="submit" ng-click="saveParentGuardianContact($index)">Save</button>
-          <button class="cancel" ng-click="cancelEditParentGuardianContact($index)">Cancel</button>
-        </div>
-
-      </li>
-    </ul>
-
-    <button class="btn btn-default" ng-click="addParentGuardianContact()">Add Parent or Guardian</button>
-
-  </div>
-
 </div>
-
-<script>
-  $(function() { $('input, textarea').placeholder();});
-</script>

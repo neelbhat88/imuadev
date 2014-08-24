@@ -103,15 +103,14 @@
 
       <div class="user-list">
 
-          <h4>Organization Admins</h4>
+        <h4>Organization Admins</h4>
 
-        <div class="avatar-block avatar-block--list" ng-repeat="orgAdmin in organization.orgAdmins">
-          <img ng-src="{{orgAdmin.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-
+        <div class="circle-pictures" ng-repeat="orgAdmin in organization.orgAdmins">
           <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
-            <div class="avatar-block__name">
-              {{fullName(orgAdmin)}}
+            <div class="circle-picture">
+              <img ng-src="{{orgAdmin.square_avatar_url}}">
             </div>
+            <h6>{{fullName(orgAdmin)}}</h6>
           </a>
         </div>
 
