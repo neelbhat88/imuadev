@@ -5,7 +5,7 @@ class ViewUser
 								:modules_progress, :user_milestones, :relationships,
 								:login_count, :last_login
 
-	def initialize(user)
+	def initialize(user, org = nil)
 		@id = user.id
 		@email = user.email
 		@first_name = user.first_name
@@ -15,7 +15,7 @@ class ViewUser
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
-		@organization_name = OrganizationRepository.new.get_organization(@organization_id).name
+		@organization_name = (!org.nil?) ? org.name : OrganizationRepository.new.get_organization(@organization_id).name
 		@square_avatar_url = user.avatar.url(:square)
 		@time_unit_id = user.time_unit_id
 		@class_of = user.class_of.to_i
