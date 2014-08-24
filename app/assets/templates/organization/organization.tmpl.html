@@ -7,13 +7,13 @@
 			</li>
 			<li>
 				<div class="clear">
-					<div class="count"><h4><span class="bold">{{mentors_total_number}}</span></h4></div>
+					<div class="count"><h4><span class="bold">{{organization.mentors.length}}</span></h4></div>
 					<div class="descript">Total <br>Mentors</div>
 				</div>
 			</li>
 			<li>
 				<div class="clear">
-					<div class="count"><h4><span class="bold">{{active_mentors_this_week}}</span></h4></div>
+					<div class="count"><h4><span class="bold">{{active_mentors}}</span></h4></div>
 					<div class="descript">Mentors Active <br>This Week</div>
 				</div>
 			</li>
@@ -25,7 +25,7 @@
 			</li>
 			<li>
 				<div class="clear">
-					<div class="count"><h4><span class="bold">{{mentors_students_need_attention}}</span></h4></div>
+					<div class="count"><h4><span class="bold">{{_.uniq(_.pluck(_.where(organization.students, { needs_attention: true }), "assigned_to_id")).length}}</span></h4></div>
 					<div class="descript">Mentors have students <br>that need attention</div>
 				</div>
 			</li>

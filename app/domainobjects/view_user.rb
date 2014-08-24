@@ -15,6 +15,7 @@ class ViewUser
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
+		@organization_name = OrganizationRepository.new.get_organization(@organization_id).name
 		@square_avatar_url = user.avatar.url(:square)
 		@time_unit_id = user.time_unit_id
 		@class_of = user.class_of.to_i
@@ -29,5 +30,12 @@ class ViewUser
 		@modules_progress = []
 		@user_milestones = user.user_milestones
 		@relationships = user.relationships
+		@user_expectations = user.user_expectations
+
+		@user_classes = user.user_classes
+		@user_extracurricular_activity_details = user.user_extracurricular_activity_details
+		@user_service_hours = user.user_service_hours
+		@user_tests = user.user_tests
+
 	end
 end
