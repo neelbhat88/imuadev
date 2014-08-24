@@ -36,7 +36,11 @@ angular.module('myApp')
             new_module_progress = { module_title: module_title, time_unit_id: student.time_unit_id,\
                                     points: { user: 0, total: org_milestones_by_module.totalPoints } }
             for user_milestone in _.where(student.user_milestones, { time_unit_id: student.time_unit_id, module: module_title } )
-              new_module_progress.points.user += _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } ).points
+              org_milestone = _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } )
+              if org_milestone
+                new_module_progress.points.user += org_milestone.points
+              else
+                console.log("Error: user_milestone has no matching org_milestone.", user_milestone, org_milestones_by_module, $scope.org_milestones)
             student.modules_progress.push(new_module_progress)
             # Apply module_progress to the student's mentors
             for mentor in student.mentors
