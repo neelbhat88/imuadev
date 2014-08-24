@@ -101,6 +101,25 @@
 
       <div class="orgTests" ng-include="'organization/org_test_manager.html'"></div>
 
+      <div class="user-list">
+
+        <h4>Organization Admins</h4>
+
+        <div class="circle-pictures" ng-repeat="orgAdmin in organization.orgAdmins">
+          <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
+            <div class="circle-picture">
+              <img ng-src="{{orgAdmin.square_avatar_url}}">
+            </div>
+            <h6>{{fullName(orgAdmin)}}</h6>
+          </a>
+        </div>
+
+        <div class="user-list__add" ng-click="addOrgAdmin()">
+          <div class="glyphicon glyphicon-plus-sign"></div>
+          <div>Add Organization Admin</div>
+        </div>
+      </div>
+
     </div>
 
   </div>

@@ -93,8 +93,23 @@ $extracurricular-color-dark: $darkorange;
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
 
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
+$colormap: (
+  academics: $academics-color,
+  service: $service-color,
+  testing: $testing-color,
+  extracurricular: $extracurricular-color,
+  college_prep: $college_prep-color,
+  no_category: $boxgrey
+);
+
+$darkcolormap: (
+  academics: $academics-color-dark,
+  service: $service-color-dark,
+  testing: $testing-color-dark,
+  extracurricular: $extracurricular-color-dark,
+  college_prep: $college_prep-color-dark,
+  no_category: $grey
+);
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
@@ -137,6 +152,9 @@ $bold: 700;
 
 }
 
+/* ===============================================
+   Big Global Stuff
+   =============================================== */
 
 html {
   height: 100%;
@@ -148,6 +166,8 @@ html {
     font-family: $font-stack;
     font-weight: $regular;
     @include font-size(1.4);
+    background: $darkgrey;
+    color: white;
 
   }
 
@@ -267,27 +287,6 @@ $panelwrapper: 0 80px;
 
 }
 
-.user-list {
-
-  .user-list__add {
-    cursor: pointer;
-
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
-
-    display: inline-block;
-    vertical-align: top;
-
-    text-align: center;
-
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
-
-}
-
-
 /* ===============================================
    Header
    =============================================== */
@@ -404,7 +403,22 @@ header {
    Progress Circle Classes
    =============================================== */
 
-.avatar-block {
+.progress-circles {
+
+  width: 170px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: inherit;
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
 
   .circle-subnav {
     @include font-size(1.2);
@@ -431,7 +445,52 @@ header {
     visibility: visible;
   }
 
-} //.avatar-block
+} //.progress-circles
+
+.add-button {
+  @extend .progress-circles;
+  padding-top: 40px;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .glyphicon {
+    @include font-size(8);
+    color: $green;
+  }
+}
+
+/* ===============================================
+   Circle Picture Classes
+   =============================================== */
+
+.circle-pictures {
+  display: inline-block;
+  margin: 0 20px 30px 20px;
+
+  .circle-picture {
+    display: block;
+    width: 150px;
+    img {
+      width: 100%;
+      height: auto;
+      @include border-radius(50%);
+    }
+  }
+  .circle-picture--name {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
+
+}
 
 /* ===============================================
    Milestone Classes

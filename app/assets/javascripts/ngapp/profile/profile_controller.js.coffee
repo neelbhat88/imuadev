@@ -10,6 +10,7 @@ angular.module('myApp')
   $scope.editingPassword = false
   $scope.editingParentGuardianContacts = false
   $scope.password = {current: "", new: "", confirm: ""}
+  $scope.student_mentors = []
 
   $scope._ = _
 
@@ -130,4 +131,11 @@ angular.module('myApp')
     blank_contact = UsersService.newParentGuardianContact($scope.user.id)
     blank_contact.editing = true
     $scope.contacts.push(blank_contact)
+
+  $scope.loaded_student_mentors = false
+  UsersService.getAssignedMentors($scope.user.id)
+    .success (data) ->
+      $scope.student_mentors = data.mentors
+      $scope.loaded_student_mentors = true
+
 ]

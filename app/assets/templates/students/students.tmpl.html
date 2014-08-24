@@ -1,0 +1,57 @@
+<div class="studentsContainer" wait-to-load="{{loaded_users}}">
+
+	<div class="students-header">
+		<ul class="student-stats clear">
+			<li>
+				<h4 class="bold">Students</h4>
+			</li>
+			<li>
+				<div class="clear">
+					<div class="count"><h4><span class="bold">{{organization.students.length}}</span></h4></div>
+					<div class="descript">Total <br>Students</div>
+				</div>
+			</li>
+			<li>
+				<div class="clear">
+					<div class="count"><h4><span class="bold">{{active_students}}</span></h4></div>
+					<div ng-if="active_students !== 1" class="descript">Students Active <br>This Week</div>
+					<div ng-if="active_students == 1" class="descript">Student Active <br>This Week</div>
+				</div>
+			</li>
+			<li>
+				<div class="clear">
+					<div class="count"><h4><span class="bold">{{_.where(organization.students, { needs_attention: true }).length}}</span></h4></div>
+					<div ng-if="_.where(organization.students, { needs_attention: true }).length !== 1" class="descript">Students Need Attention <br>From Mentors</div>
+					<div ng-if="_.where(organization.students, { needs_attention: true }).length == 1" class="descript">Student Needs Attention <br>From Mentors</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<div class="students-lower">
+		<div ng-repeat="(group, group_students) in groupedStudents">
+			<h5 ng-if="group != 0" class="pvm">Class of <span class="bold">{{group}}</span></h5>
+			<div ng-if="group == 0" class="pvm">
+				<h5>You haven't added any students yet.</h5>
+				<div class="add-button" ng-click="addStudent()">
+					<div class="glyphicon glyphicon-plus-sign"></div>
+					<h6>Add a Student</h6>
+				</div>
+			</div>
+      <div class="progress-circles" ng-repeat="student in group_students | orderBy: 'id'">
+				<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress"><progress-circle student="student"></progress-circle></a>
+					<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">{{student.first_last_initial}}</a></h6>
+					<ul class="circle-subnav">
+						<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+						<li class="extra-info">Last Login: {{student.last_login}}</li>
+						<li class="extra-info">Login Count: {{student.login_count}}</li>
+					</ul>
+			</div>
+			<div class="add-button" ng-click="addStudent()">
+				<div class="glyphicon glyphicon-plus-sign"></div>
+				<h6>Add a Student</h6>
+			</div>
+    </div>
+  </div>
+
+</div>

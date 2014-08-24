@@ -1,0 +1,42 @@
+.studentsContainer {
+
+  background: $darkgrey;
+  color: white;
+
+  .students-header {
+    width: 100%;
+    background: $grey;
+    padding: 20px 120px;
+    border-bottom: 1px solid $darkborder;
+
+    .student-stats {
+      margin: 0;
+
+      li {
+        float: left;
+        width: 25%;
+        padding: 20px 0;
+
+        .count, .descript {
+          float: left;
+        }
+
+        .count {
+          margin-right: 15px;
+        }
+
+        .descript {
+          width: 60%;
+          padding-top: 17px;
+          color: $lightgrey;
+        }
+
+      }
+    }
+  }
+
+  .students-lower {
+    padding: 60px $wrapper-width;
+  }
+
+}

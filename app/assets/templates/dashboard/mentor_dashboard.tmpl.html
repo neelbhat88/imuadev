@@ -23,48 +23,45 @@
 	    </div>
   </div>
 
-  <div class="dashboard-attention dashboard-attention--mentor" ng-hide="attention_students.length == 0">
+  <div class="dashboard-content dashboard-content--mentor">
 
-    <div class="list-container">
-      <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'" ng-if="student.id | existsInArray: attention_students">
-        <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-        <a ng-href="#/progress/{{student.id}}" title="View Student">
-          <progress-circle student="student" identifier="attention"></progress-circle>
-        </a>
-        <a ng-href="#/profile/{{student.id}}" title="View student info">
-          <div class="avatar-block__name">
-            <h6>{{student.first_name}} {{student.last_name}}</h6>
-          </div>
-        </a>
+    <div class="dashboard-attention dashboard-attention--mentor" ng-hide="attention_students.length == 0">
+      <div ng-if="attention_students.length == 1" class="list-header">
+        <h4>This student <span class="bold">needs your attention</span></h4>
       </div>
+      <div ng-if="attention_students.length != 1" class="list-header">
+        <h4>These students <span class="bold">need your attention</span></h4>
+      </div>
+      <div class="list-container">
+        <div class="progress-circles" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'" ng-if="student.id | existsInArray: attention_students">
+          <a ng-href="#/progress/{{student.id}}" title="View Student">
+            <progress-circle student="student" identifier="attention"></progress-circle>
+            <h6 class="bold">{{student.first_last_initial}}</h6>
+          </a>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-
-  <div class="dashboard-content dashboard-content--mentor">
-	    <div class="list-header">
-	    	<h4><span class="bold">{{user.first_name}}'s</span> Students</h4>
+    <div class="list-header">
+    	<h4 ng-if="assigned_students.length == 1">Your <span class="bold">Student</span></h4>
+      <h4 ng-if="assigned_students.length != 1">Your <span class="bold">Students</span></h4>
+    </div>
+    <div ng-hide="assigned_students.length > 0">
+      <h5 style="font-style: italic">Hey {{user.first_name}}, it looks like you don't have any students assigned to you yet.</h5>
+    </div>
+    <div class="list-container">
+	    <div class="progress-circles" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
+	      <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
+	        <progress-circle student="student"></progress-circle>
+	      </a>
+        <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
+        <ul class="circle-subnav">
+          <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+          <li class="extra-info">Last Login: {{student.last_login}}</li>
+          <li class="extra-info">Login Count: {{student.login_count}}</li>
+        </ul>
 	    </div>
-	    <div ng-hide="assigned_students.length > 0">
-	      <h5 style="font-style: italic">{{user.first_name}}, looks like no students have been assigned to you yet.</h5>
-	    </div>
-	    <div class="list-container">
-		    <div class="avatar-block progress-circles avatar-block--list" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'id'">
-		      <!-- <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" /> -->
-		      <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
-		        <progress-circle student="student"></progress-circle>
-		      </a>
-          <a>
-		        <div class="avatar-block__name">
-		          <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
-              <ul class="circle-subnav">
-                <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                <li class="extra-info">Last Login: {{student.last_login}}</li>
-                <li class="extra-info">Login Count: {{student.login_count}}</li>
-              </ul>
-		        </div>
-		      </a>
-		    </div>
-	    </div>
+    </div>
   </div>
 </div>

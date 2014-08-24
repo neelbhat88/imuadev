@@ -1,9 +1,7 @@
 angular.module('myApp')
-.controller 'OrganizationCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService',
-  'OrganizationService',
+.controller 'StudentsCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService',
+  'StudentsService',
   ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
-
-    $scope.mentor_needs_help = "1*"
 
     $scope.active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
 

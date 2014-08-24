@@ -1,41 +1,42 @@
 .organizationContainer {
 
-	padding: $wrapper;
-	padding-bottom: 60px;
+	background: $darkgrey;
+	color: white;
 
-}
+	.organization-header {
+		width: 100%;
+		background: $grey;
+		padding: 20px 120px;
+		border-bottom: 1px solid $darkborder;
 
-.organizationName {
+		.mentor-stats {
+			margin: 0;
 
-	width: 100%;
-	text-align: center;
-	padding-top: 60px;
-	padding-bottom: 20px;
-	border-bottom: 1px black(0.25) solid;
-	margin-bottom: 60px;
+			li {
+				float: left;
+				width: 20%;
+				padding: 20px 0;
 
+				.count, .descript {
+					float: left;
+				}
 
-}
+				.count {
+					margin-right: 15px;
+				}
 
-a.avatar-block {
-  text-decoration: none;
-  color: $ink;
+				.descript {
+					width: 60%;
+					padding-top: 17px;
+					color: $lightgrey;
+				}
 
-  &:hover {
-    color: $ink;
-  }
-}
+			}
+		}
+	}
 
-
-.user-modal {
-    background-color: $darkgrey;
-    color: white;
-}
-
-.form--user {
-
-  .form-field {
-    min-width: 235px;
-  }
+	.organization-lower {
+		padding: 60px $wrapper-width;
+	}
 
 }

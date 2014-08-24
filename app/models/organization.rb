@@ -27,8 +27,11 @@ class ViewOrganizationWithUsers
       end
     end
 
-    User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_in_batches do |users|
-      viewUsers = users.map{|u| ViewUser.new(u)}
+    User.includes([:user_milestones, :relationships, :user_expectations,
+                   :user_classes, :user_extracurricular_activity_details,
+                   :user_service_hours, :user_tests])
+                   .where(:organization_id => @id).find_in_batches do |users|
+      viewUsers = users.map{|u| ViewUser.new(u, org)}
       if @users.nil?
         @users = viewUsers
       else
