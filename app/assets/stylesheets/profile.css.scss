@@ -1,77 +1,106 @@
 .profileContainer {
 
-  padding-top: 40px;
-  font-size: 18px;
-  text-align: center;
-
-}
-
-.form {
-  padding: 10px;
-}
-
-.form--profile {
-
-  text-align: center;
-
-  .form--profile__field-label
-  {
-    color: grey;
-    padding-right: 10px;
-  }
-
-  .form-field {
-    min-width: 250px;
-  }
-
-}
-
-.avatar-block--list {
-  display: inline-block;
-  vertical-align: top;
-
-  width: 160px;
-  word-wrap: break-word;
-
-  .avatar-block__name { text-align: center; }
-}
-
-.avatar-block {
-
-  padding-bottom: 40px;
-  text-align: center;
-
-  &.progress-circles { width: 190px; }
-
-  .avatar-block__img {
-    display: block;
-    margin: auto;
-
-    @extend .img-thumbnail;
-
-    // ToDo - Has to be a better way to include bootstrap style and then overwrite parts of it
-    &.avatar-block__img--thumbnail {
-      height: 140px;
-      width: 140px;
-      border-radius: 65px;
-    }
-  }
-
   a {
-    text-decoration: none;
     color: inherit;
-
     &:hover {
       color: inherit;
     }
   }
 
-  .avatar-block__upload {
+  .edit-buttons {
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
 
-    width: 230px;
-    margin: auto;
-    display: inline-block;
+    button {
+      margin: 0 10px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+      }
+
+    }
 
   }
 
+  .form-wrapper {
+    margin: 10px 0;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+  }
+
+  .half {
+    width: 49%;
+    display: inline-block;
+  }
+
+  select {
+    width: 100%;
+    @include font-size(2.2);
+  }
+
+
+  .profile-header {
+
+    padding: 80px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+    text-align: center;
+
+    .profile--pic {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+
+      img {
+        height: 100%;
+        width: auto;
+        @include border-radius(50%);
+
+      }
+
+    }
+
+    .profile--primary-info {
+
+      .glyphicon {
+        @include font-size(1.4);
+        margin-right: 3px;
+      }
+
+      li {
+        display: inline-block;
+        margin: 0 15px;
+      }
+
+    }
+
+    .primary-editing {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: left;
+
+      .student-exception {
+        text-align: center;
+      }
+
+    }
+
+  }
+
+}
+
+.profile-lower {
+  li {
+    padding-bottom: 30px;
+    border-bottom: 1px solid $darkborder;
+    margin-bottom: 30px;
+    &:last-of-type {
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
 }

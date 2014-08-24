@@ -105,12 +105,12 @@
         <div class="module module--your-mentors" modulecolor="no_category">
           <div class="module--header">Your <span class="bold">Mentors</span></div>
           <div class="module--content">
-            <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+            <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
               <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-                <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-                <div class="avatar-block__name">
-                  {{mentor.first_name}} {{mentor.last_name}}
+                <div class="circle-picture">
+                  <img ng-src="{{mentor.square_avatar_url}}">
                 </div>
+                  <h6 class="bold">{{mentor.first_name}} {{mentor.last_name}}</h6>
               </a>
             </div>
           </div>
