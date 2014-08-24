@@ -8,25 +8,29 @@
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{organization.mentors.length}}</span></h4></div>
-					<div class="descript">Total <br>Mentors</div>
+					<div ng-if="organization.mentors.length !== 1" class="descript">Total <br>Mentors</div>
+          <div ng-if="organization.mentors.length == 1" class="descript">Mentor</div>
 				</div>
 			</li>
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{active_mentors}}</span></h4></div>
-					<div class="descript">Mentors Active <br>This Week</div>
+					<div ng-if="active_mentors !== 1" class="descript">Mentors Active <br>This Week</div>
+          <div ng-if="active_mentors == 1" class="descript">Mentor Active <br>This Week</div>
 				</div>
 			</li>
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{mentor_needs_help}}</span></h4></div>
-					<div class="descript">Mentor <br>Needs Help</div>
+					<div ng-if="mentor_needs_help !== 1" class="descript">Mentors <br>Need Help</div>
+          <div ng-if="mentor_needs_help == 1" class="descript">Mentor <br>Needs Help</div>
 				</div>
 			</li>
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{_.uniq(_.pluck(_.where(organization.students, { needs_attention: true }), "assigned_to_id")).length}}</span></h4></div>
-					<div class="descript">Mentors have students <br>that need attention</div>
+					<div ng-if="false" class="descript">Mentors have students <br>that need attention</div>
+          <div ng-if="true" class="descript">Mentor has students <br>that need attention</div>
 				</div>
 			</li>
 		</ul>
