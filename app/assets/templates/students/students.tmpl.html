@@ -14,13 +14,15 @@
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{active_students}}</span></h4></div>
-					<div class="descript">Students Active <br>This Week</div>
+					<div ng-if="active_students !== 1" class="descript">Students Active <br>This Week</div>
+					<div ng-if="active_students == 1" class="descript">Student Active <br>This Week</div>
 				</div>
 			</li>
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{_.where(organization.students, { needs_attention: true }).length}}</span></h4></div>
-					<div class="descript">Students Need Attention <br>From Mentors</div>
+					<div ng-if="_.where(organization.students, { needs_attention: true }).length !== 1" class="descript">Students Need Attention <br>From Mentors</div>
+					<div ng-if="_.where(organization.students, { needs_attention: true }).length == 1" class="descript">Student Needs Attention <br>From Mentors</div>
 				</div>
 			</li>
 		</ul>
