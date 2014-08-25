@@ -3,18 +3,21 @@
    =============================================== */
 
 /* Breakpoints */
+@mixin respond-to($minbreakpoint: 0, $maxbreakpoint, $minbreakpoint) {
+    @media only screen and (min-device-width: $minbreakpoint + px) and (max-width: $maxbreakpoint + px) { @content; }
+}
 
-@mixin respond-to($breakpoint) {
+@mixin respond-to-max($breakpoint) {
     @media only screen and (max-width: $breakpoint + px) { @content; }
+}
+
+@mixin respond-to-min($breakpoint) {
+    @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
 @mixin respond-to-with-height($breakpoint) {
     @media only screen and (max-width: $breakpoint + px),
           screen and (max-height: $breakpoint + px) { @content; }
-}
-
-@mixin respond-to-min($breakpoint) {
-    @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
 /* Colors */
@@ -213,6 +216,8 @@ h2 {
   @include font-size(9);
   font-weight: $bold;
 
+
+
 }
 
 h3 {
@@ -315,7 +320,7 @@ header {
   .wrapper {
 
     margin: $wrapper;
-    @include respond-to(600) { margin: 0 $small-wrapper-width; }
+    @include respond-to-max(600) { margin: 0 $small-wrapper-width; }
 
     .imua-logo {
 
@@ -330,7 +335,7 @@ header {
     }
 
     .nav-expanded {
-      @include respond-to(800) {
+      @include respond-to-max(800) {
         display: none;
       }
     }
@@ -353,8 +358,8 @@ header {
         a { cursor: pointer; }
 
         margin-left: 100px;
-        @include respond-to(1000) { margin-left: 50px; }
-        @include respond-to(660) { margin-left: 20px; }
+        @include respond-to-max(1000) { margin-left: 50px; }
+        @include respond-to-max(660) { margin-left: 20px; }
 
       }
 
