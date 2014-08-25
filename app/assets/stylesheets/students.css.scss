@@ -13,22 +13,50 @@
       margin: 0;
 
       li {
-        float: left;
-        width: 25%;
+        display: inline-block;
         padding: 20px 0;
+        margin-right: 100px;
 
-        .count, .descript {
-          float: left;
+        @include respond-to(1600) { margin-right: 80px; }
+        @include respond-to(1400) { vertical-align: middle; }
+        @include respond-to(1200) { margin-right: 40px; }
+        @include respond-to(900) {
+          display: block;
+          width: 100%;
+          padding: 0;
+          text-align: center;
         }
 
-        .count {
-          margin-right: 15px;
+        &:last-of-type {
+          margin-right: 0;
         }
 
-        .descript {
-          width: 60%;
-          padding-top: 17px;
-          color: $lightgrey;
+        .stat-wrapper {
+          margin: 0 auto;
+          .count, .descript {
+            display: inline-block;
+            @include respond-to(1400) {
+              display: block;
+              text-align: center;
+            }
+            @include respond-to(900) {
+              display: inline-block;
+              text-align: left;
+            }
+          }
+
+          .count {
+            margin-right: 15px;
+            @include respond-to(1400) { margin-right: 0; }
+            @include respond-to(900) { margin-right: 8px; }
+          }
+
+          .descript {
+            padding-top: 17px;
+            color: $lightgrey;
+            @include respond-to(1400) { padding-top: 0; }
+            @include respond-to(900) { padding-top: 12px; }
+          }
         }
 
       }
