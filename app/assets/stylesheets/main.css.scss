@@ -206,14 +206,20 @@ h1 {
   @include font-size(12);
   font-weight: $bold;
 
+  @include respond-to(1200) { @include font-size(10) }
+  @include respond-to(900) { @include font-size(8) }
+  @include respond-to(600) { @include font-size(7) }
+
 }
 
 h2 {
 
   @include font-size(9);
-  font-weight: $bold;
+  font-weight: $light;
 
-  @include respond-to(1200) { @include font-size(7) }
+  @include respond-to(1200) { @include font-size(8) }
+  @include respond-to(900) { @include font-size(6.8) }
+  @include respond-to(600) { @include font-size(5.4) }
 
 }
 
@@ -221,6 +227,10 @@ h3 {
 
   @include font-size(6);
   font-weight: $bold;
+
+  @include respond-to(1200) { @include font-size(5) }
+  @include respond-to(900) { @include font-size(4.2) }
+  @include respond-to(600) { @include font-size(3.6) }
 
 }
 
@@ -230,6 +240,10 @@ h4 {
   @include font-size(4);
   font-weight: $light;
 
+  @include respond-to(1200) { @include font-size(3.5) }
+  @include respond-to(900) { @include font-size(3) }
+  @include respond-to(600) { @include font-size(2.5) }
+
 }
 
 h5 {
@@ -237,16 +251,20 @@ h5 {
   @include font-size(3);
   font-weight: $light;
 
-}
+  @include respond-to(1200) { @include font-size(2.6) }
+  @include respond-to(900) { @include font-size(2.2) }
+  @include respond-to(600) { @include font-size(1.8) }
 
-.big-text {
-  h5 { line-height: 1rem; }
 }
 
 h6 {
 
   @include font-size(1.8);
   font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(1.7) }
+  @include respond-to(900) { @include font-size(1.6) }
+  @include respond-to(600) { @include font-size(1.5) }
 
 }
 
@@ -264,7 +282,9 @@ h6 {
 
 .italic { font-style: italic; }
 
-.font-size-normal { font-size: 16px; }
+.big-text {
+  h5 { line-height: 1rem; }
+}
 
 
 /* ===============================================
@@ -770,7 +790,6 @@ button:focus {
 
 .flash-container {
   padding: 20px;
-  @extend .font-size-normal;
   z-index: 10000;
 
   position: absolute;
