@@ -179,23 +179,6 @@
 
 	.dashboard-content--mentor {
 		padding: 60px $wrapper-width;
-
-		.avatar-block {
-
-			.student-subnav {
-				@include font-size(1.2);
-				visibility: hidden;
-				opacity: 0.2;
-				&:hover {
-					opacity: 1;
-				}
-			}
-
-			&:hover .student-subnav {
-				visibility: visible;
-			}
-
-		} //.avatar-block
 	}
 
 } //#mentorDashboard

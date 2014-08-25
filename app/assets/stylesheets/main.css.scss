@@ -401,6 +401,39 @@ header {
 }
 
 /* ===============================================
+   Progress Circle Classes
+   =============================================== */
+
+.avatar-block {
+
+  .circle-subnav {
+    @include font-size(1.2);
+    visibility: hidden;
+    li {
+      margin-bottom: 2px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+      a {
+        opacity: 0.4;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    .extra-info {
+      opacity: 0.4;
+    }
+
+  }
+
+  &:hover .circle-subnav {
+    visibility: visible;
+  }
+
+} //.avatar-block
+
+/* ===============================================
    Milestone Classes
    =============================================== */
 
