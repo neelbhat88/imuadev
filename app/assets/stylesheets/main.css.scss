@@ -3,7 +3,7 @@
    =============================================== */
 
 /* Breakpoints */
-@mixin respond-to($minbreakpoint: 0, $maxbreakpoint, $minbreakpoint) {
+@mixin respond-to($maxbreakpoint, $minbreakpoint) {
     @media only screen and (min-device-width: $minbreakpoint + px) and (max-width: $maxbreakpoint + px) { @content; }
 }
 
