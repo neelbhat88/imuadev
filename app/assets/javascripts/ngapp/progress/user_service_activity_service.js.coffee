@@ -4,7 +4,7 @@ angular.module("myApp")
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/service_organizations_hours?time_unit_id=#{time_unit_id}"
 
-  @newServiceOrganization = (user, time_unit_id) ->
+  @newServiceOrganization = (user) ->
     name: "",
     description: "",
     user_id: user.id,

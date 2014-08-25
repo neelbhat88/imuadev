@@ -2,6 +2,7 @@ angular.module('myApp')
 .controller 'ServiceProgressController', ['$scope', 'UserServiceOrganizationService', 'ProgressService',
   ($scope, UserServiceOrganizationService, ProgressService) ->
     $scope.user_service_organizations = []
+    $scope.previous_organization_list = []
     $scope.semester_service_hours = 0
 
     $scope.$watch 'user_service_organizations', () ->
@@ -19,6 +20,7 @@ angular.module('myApp')
       if $scope.selected_semester
         UserServiceOrganizationService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
+            $scope.previous_organization_list = data.user_service_organizations
             $scope.user_service_organizations = data.user_service_organizations
 
             for user_service_organization in $scope.user_service_organizations
@@ -26,6 +28,7 @@ angular.module('myApp')
               for user_service_hour in data.user_service_hours
                 if user_service_organization.id == user_service_hour.user_service_organization_id
                   user_service_organization.hours.push(user_service_hour)
+            console.log($scope.user_service_organizations)
 
             $scope.$emit('loaded_module_milestones')
 
@@ -34,17 +37,26 @@ angular.module('myApp')
         $scope.$emit('loaded_module_milestones')
 
     $scope.saveOrganization = (index) ->
-      new_service_organization = UserServiceOrganizationService.newServiceOrganization($scope.student, $scope.selected_semester.id)
-      new_service_organization.id = $scope.user_service_organizations[index].id
-      new_service_organization.name = $scope.user_service_organizations[index].new_name
-      service_hours = $scope.user_service_organizations[index].hours
+      if !!$scope.user_service_organizations[index].previous_organization
+        UserServiceOrganizationService
+          .saveServiceOrganization($scope.user_service_organizations[index].previous_organization)
+          .success (data) ->
+            $scope.user_service_organizations[index] = data.user_service_organization
+            $scope.user_service_organizations[index].hours = service_hours
+            $scope.user_service_organizations.editing = false
+            $scope.refreshPoints()
+      else
+        new_service_organization = UserServiceOrganizationService.newServiceOrganization($scope.student)
+        new_service_organization.id = $scope.user_service_organizations[index].id
+        new_service_organization.name = $scope.user_service_organizations[index].new_name
+        service_hours = $scope.user_service_organizations[index].hours
 
-      UserServiceOrganizationService.saveServiceOrganization(new_service_organization)
-        .success (data) ->
-          $scope.user_service_organizations[index] = data.user_service_organization
-          $scope.user_service_organizations[index].hours = service_hours
-          $scope.user_service_organizations.editing = false
-          $scope.refreshPoints()
+        UserServiceOrganizationService.saveServiceOrganization(new_service_organization)
+          .success (data) ->
+            $scope.user_service_organizations[index] = data.user_service_organization
+            $scope.user_service_organizations[index].hours = service_hours
+            $scope.user_service_organizations.editing = false
+            $scope.refreshPoints()
 
     $scope.saveHour = (parentIndex, index, serviceOrganizationId) ->
       new_service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, serviceOrganizationId)
@@ -111,5 +123,11 @@ angular.module('myApp')
       $scope.user_service_organizations[parentIndex].hours[index].new_description = $scope.user_service_organizations[parentIndex].hours[index].description
       $scope.user_service_organizations[parentIndex].hours[index].new_hours = $scope.user_service_organizations[parentIndex].hours[index].hours
       $scope.user_service_organizations[parentIndex].hours[index].new_date= $scope.user_service_organizations[parentIndex].hours[index].date
+
+    $scope.addNewOrganization = (index) ->
+      $scope.user_service_organizations[index].newOrganization = true
+
+    $scope.selectAction = (index) ->
+      console.log($scope.user_service_organizations[index].previous_organization)
 
 ]

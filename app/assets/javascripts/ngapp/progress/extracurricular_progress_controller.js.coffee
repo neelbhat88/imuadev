@@ -3,12 +3,15 @@ angular.module('myApp')
   ($scope, UserExtracurricularActivityService, ProgressService) ->
     $scope.semester_activities = 0
     $scope.user_extracurricular_activities = []
+    $scope.previous_activity_list = []
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
         UserExtracurricularActivityService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_extracurricular_activities = []
+            $scope.previous_activity_list = []
+            $scope.previous_activity_list = data.user_extracurricular_activities
 
             for detail in data.user_details
               for activity in data.user_extracurricular_activities
@@ -21,7 +24,6 @@ angular.module('myApp')
               if !!activity.details
                 $scope.user_extracurricular_activities.push(activity)
 
-            console.log($scope.user_extracurricular_activities)
 
             $scope.$emit('loaded_module_milestones')
 
@@ -36,27 +38,53 @@ angular.module('myApp')
     , true
 
     $scope.saveActivity = (index) ->
-      new_extracurricular_activity = UserExtracurricularActivityService.newExtracurricularActivity($scope.student)
-      new_extracurricular_activity.id = $scope.user_extracurricular_activities[index].id
-      new_extracurricular_activity.name = $scope.user_extracurricular_activities[index].new_name
-      new_extracurricular_activity.details.time_unit_id = $scope.selected_semester.id
-      new_extracurricular_activity.details.leadership = $scope.user_extracurricular_activities[index].details.new_leadership
-      new_extracurricular_activity.details.description = $scope.user_extracurricular_activities[index].details.new_description
-      new_extracurricular_activity.details.user_extracurricular_activity_id =
-      $scope.user_extracurricular_activities[index].id
-      if !!$scope.user_extracurricular_activities[index].details.id
-        new_extracurricular_activity.details.id =
-        $scope.user_extracurricular_activities[index].details.id
+      console.log($scope.user_extracurricular_activities[index].previous_activity)
+      if !!$scope.user_extracurricular_activities[index].previous_activity.id
+        $scope.user_extracurricular_activities[index].previous_activity.details = {}
+        $scope.user_extracurricular_activities[index].previous_activity.details.time_unit_id = $scope.selected_semester.id
+        $scope.user_extracurricular_activities[index].previous_activity.details.leadership =
+        $scope.user_extracurricular_activities[index].details.new_leadership
 
-      console.log($scope.user_extracurricular_activities[index])
+        $scope.user_extracurricular_activities[index].previous_activity.details.description =
+        $scope.user_extracurricular_activities[index].details.new_description
 
-      UserExtracurricularActivityService.saveExtracurricularActivityWithDetail(new_extracurricular_activity)
-        .success (data) ->
-          $scope.user_extracurricular_activities[index] = data.user_extracurricular_activity
-          $scope.user_extracurricular_activities[index].details = data.user_details
-          $scope.refreshPoints()
+        $scope.user_extracurricular_activities[index].previous_activity.details.user_extracurricular_activity_id =
+        $scope.user_extracurricular_activities[index].previous_activity.id
+
+        $scope.user_extracurricular_activities[index].previous_activity.details.user_id =
+        $scope.user_extracurricular_activities[index].user_id
+
+
+        UserExtracurricularActivityService.savePreviousActivityDetail($scope.user_extracurricular_activities[index].previous_activity.details)
+          .success (data) ->
+            $scope.user_extracurricular_activities[index] =
+            $scope.user_extracurricular_activities[index].previous_activity
+            $scope.user_extracurricular_activities[index].details =
+            data.user_extracurricular_activity_detail
+            $scope.refreshPoints()
+
+      else
+        new_extracurricular_activity = UserExtracurricularActivityService.newExtracurricularActivity($scope.student)
+        new_extracurricular_activity.id = $scope.user_extracurricular_activities[index].id
+        new_extracurricular_activity.name = $scope.user_extracurricular_activities[index].new_name
+        new_extracurricular_activity.details.time_unit_id = $scope.selected_semester.id
+        new_extracurricular_activity.details.leadership = $scope.user_extracurricular_activities[index].details.new_leadership
+        new_extracurricular_activity.details.description = $scope.user_extracurricular_activities[index].details.new_description
+        new_extracurricular_activity.details.user_extracurricular_activity_id =
+        $scope.user_extracurricular_activities[index].id
+        if !!$scope.user_extracurricular_activities[index].details.id
+          new_extracurricular_activity.details.id =
+          $scope.user_extracurricular_activities[index].details.id
+
+
+        UserExtracurricularActivityService.saveExtracurricularActivityWithDetail(new_extracurricular_activity)
+          .success (data) ->
+            $scope.user_extracurricular_activities[index] = data.user_extracurricular_activity
+            $scope.user_extracurricular_activities[index].details = data.user_details
+            $scope.refreshPoints()
 
       $scope.user_extracurricular_activities.editing = false
+      $scope.user_extracurricular_activities.newActivity = true
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
@@ -72,6 +100,7 @@ angular.module('myApp')
         $scope.user_extracurricular_activities.splice(index, 1)
 
       $scope.user_extracurricular_activities.editing = false
+      $scope.user_extracurricular_activities.newActivity = true
 
     $scope.addActivity = (index) ->
       $scope.user_extracurricular_activities.editing = true
@@ -80,9 +109,12 @@ angular.module('myApp')
 
     $scope.editActivity = (index) ->
       $scope.user_extracurricular_activities[index].editing = true
+      $scope.user_extracurricular_activities[index].newActivity = true
       $scope.user_extracurricular_activities[index].new_name= $scope.user_extracurricular_activities[index].name
       $scope.user_extracurricular_activities[index].details.new_leadership = $scope.user_extracurricular_activities[index].details.leadership
       $scope.user_extracurricular_activities[index].details.new_description = $scope.user_extracurricular_activities[index].details.description
 
+    $scope.addNewActivity = (index) ->
+      $scope.user_extracurricular_activities[index].newActivity = true
 
 ]
