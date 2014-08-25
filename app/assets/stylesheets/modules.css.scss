@@ -5,6 +5,8 @@
   text-align: center;
   color: white;
 
+  @include respond-to(800) { padding: 0px; }
+
   @each $category, $color in $darkcolormap {
     &.color--#{$category} {
       .module { background: $color; }
