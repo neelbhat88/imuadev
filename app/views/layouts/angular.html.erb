@@ -43,12 +43,7 @@
         <nav class="nav-collapsed right" role="navigation">
           <div class="dropdown js-cog">
             <div class="current-name">
-              <% if current_user.super_admin? %>
-                Administrator
-              <% else %>
-                <%= current_user.first_last_initial %>
-              <% end %>
-              <span class="caret"></span>
+              Menu <span class="caret"></span>
             </div>
             <div class="submenu js-submenu">
               <% if current_user.super_admin? %>

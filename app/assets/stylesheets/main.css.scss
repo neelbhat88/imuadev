@@ -169,6 +169,10 @@ html {
     background: $darkgrey;
     color: white;
 
+    @include respond-to(800) {
+      @include font-size(1.2);
+    }
+
   }
 
 }
