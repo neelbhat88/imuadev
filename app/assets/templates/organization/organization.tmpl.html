@@ -29,8 +29,8 @@
 			<li>
 				<div class="clear">
 					<div class="count"><h4><span class="bold">{{_.uniq(_.pluck(_.where(organization.students, { needs_attention: true }), "assigned_to_id")).length}}</span></h4></div>
-					<div ng-if="false" class="descript">Mentors have students <br>that need attention</div>
-          <div ng-if="true" class="descript">Mentor has students <br>that need attention</div>
+					<div ng-if="true" class="descript">Mentors have students <br>that need attention</div>
+          <div ng-if="false" class="descript">Mentor has students <br>that need attention</div>
 				</div>
 			</li>
 		</ul>

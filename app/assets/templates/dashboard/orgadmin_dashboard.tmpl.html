@@ -18,7 +18,8 @@
         <div class="module--header">Mentor Activity</div>
         <div class="module--content">
           <h4><span class="numbers-large">{{active_mentors}}</span></h4>
-          <h5>Active Mentors</h5>
+          <h5 ng-if="active_mentors != 1">Active Mentors</h5>
+          <h5 ng-if="active_mentors == 1">Active Mentor</h5>
           <p>This Week</p>
         </div>
       </div>
@@ -27,7 +28,8 @@
         <div class="module--header">Student Activity</div>
         <div class="module--content">
           <h4><span class="numbers-large">{{active_students}}</span></h4>
-          <h5>Active Students</h5>
+          <h5 ng-if="active_students != 1">Active Students</h5>
+          <h5 ng-if="active_students == 1">Active Student</h5>
           <p>This Week</p>
         </div>
       </div>

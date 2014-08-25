@@ -162,7 +162,7 @@ html {
 
   body {
 
-    min-width: 1260px;
+    //min-width: 1260px;
     font-family: $font-stack;
     font-weight: $regular;
     @include font-size(1.4);
@@ -271,6 +271,7 @@ h6 {
 
 $wrapper: 0 40px;
 $wrapper-width: 40px;
+$small-wrapper-width: 20px;
 $panelwrapper: 0 80px;
 
 .list-header {
@@ -314,7 +315,7 @@ header {
   .wrapper {
 
     margin: $wrapper;
-    @include respond-to(415) { margin: 0 10px; }
+    @include respond-to(600) { margin: 0 $small-wrapper-width; }
 
     .imua-logo {
 
@@ -328,6 +329,19 @@ header {
 
     }
 
+    .nav-expanded {
+      @include respond-to(800) {
+        display: none;
+      }
+    }
+
+    .nav-collapsed {
+      @include respond-to-min(800) {
+        display: none;
+      }
+    }
+
+
     nav {
 
       margin: 32px 0;
@@ -339,7 +353,7 @@ header {
         a { cursor: pointer; }
 
         margin-left: 100px;
-        @include respond-to(840) { margin-left: 50px; }
+        @include respond-to(1000) { margin-left: 50px; }
         @include respond-to(660) { margin-left: 20px; }
 
       }
