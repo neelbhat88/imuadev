@@ -264,7 +264,6 @@ h6 {
 
   @include respond-to(1200) { @include font-size(1.7) }
   @include respond-to(900) { @include font-size(1.6) }
-  @include respond-to(600) { @include font-size(1.5) }
 
 }
 
