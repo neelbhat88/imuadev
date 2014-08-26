@@ -5,6 +5,8 @@
   text-align: center;
   color: white;
 
+  @include respond-to(800) { padding: 0px; }
+
   @each $category, $color in $darkcolormap {
     &.color--#{$category} {
       .module { background: $color; }
@@ -24,11 +26,19 @@
 
   .module {
 
-    width: 500px;
+    width: 30%;
     margin: 0 10px 20px 10px;
     @include border-radius (5px);
     display: inline-block;
     vertical-align: top;
+
+    @include respond-to(1200) { width: 45% }
+    @include respond-to(800) {
+      width: 100%;
+      margin: 0;
+      @include border-radius(0);
+      display: block;
+    }
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {

@@ -6,7 +6,6 @@
 }
 
 .orgsetupLower {
-  padding: 0 $wrapper-width;
   margin-bottom: 40px;
 }
 
@@ -331,4 +330,8 @@
     padding-bottom: 15px;
   }
 
+}
+
+.roadmapContainer, .rightContainer {
+  @include respond-to(1200) { float: none; width: 100%;}
 }
