@@ -1,8 +1,8 @@
 class AssignmentService
 
-  #####################################
-  ########### ORGANIZATION ############
-  #####################################
+  ###################################
+  ########### ASSIGNMENT ############
+  ###################################
 
   def get_assignment(assignmentId)
     return Assignment.where(:id => assignmentId).first
@@ -63,9 +63,9 @@ class AssignmentService
     end
   end
 
-  #################################
-  ############# USER ##############
-  #################################
+  ############################################
+  ############# USER ASSIGNMENT ##############
+  ############################################
 
   def get_user_assignment(userAssignmentId)
     return UserAssignment.where(:id => userAssignmentId).first
