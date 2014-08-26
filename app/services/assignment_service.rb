@@ -1,5 +1,13 @@
 class AssignmentService
 
+  def collect_assignment(assignmentId)
+    return Assignment.includes(:user_assignments).find(assignmentId)
+  end
+
+  def collect_assignments(userId)
+    return Assignment.includes(:user_assignments).where(:user_id => userId)
+  end
+
   ###################################
   ########### ASSIGNMENT ############
   ###################################

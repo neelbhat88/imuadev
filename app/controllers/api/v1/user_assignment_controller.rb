@@ -8,7 +8,7 @@ class Api::V1::UserAssignmentController < ApplicationController
   def load_services( assignmentService = nil )
     @assignmentService = assignmentService ? assignmentService : AssignmentService.new
   end
-  # GET /user/:id/user_assignments
+  # GET /users/:user_id/user_assignment
   # Returns all UserAssignments for the given User
   def index
     userId = params[:user_id]
@@ -22,7 +22,7 @@ class Api::V1::UserAssignmentController < ApplicationController
       }
   end
 
-  # POST /user/:id/user_assignments
+  # POST /users/:user_id/user_assignment
   # Creates a UserAssignment for the given User
   def create
     userId         = params[:user_id].to_i
@@ -39,7 +39,7 @@ class Api::V1::UserAssignmentController < ApplicationController
       }
   end
 
-  # PUT /user_assignments/:id
+  # PUT /user_assignment/:id
   # Updates a UserAssignment
   def update
     userAssignmentId = params[:id].to_i
@@ -56,7 +56,7 @@ class Api::V1::UserAssignmentController < ApplicationController
       }
   end
 
-  # DELETE /user_assignments/:id
+  # DELETE /user_assignment/:id
   # Deletes a UserAssignment
   def destroy
     userAssignmentId = params[:id].to_i
