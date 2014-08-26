@@ -118,4 +118,14 @@
 .progressLower {
   background: $darkgrey;
   min-height: 500px;
+  text-align: center;
+  padding-top: 40px;
+
+  @each $category, $color in $colormap {
+    &.color--#{$category} {
+      border-top: 6px solid $color;
+    }
+  }
+
+
 } //.progressLower
