@@ -27,7 +27,8 @@
   .module {
 
     width: 350px;
-    @include border-radius (5px);
+    @include border-radius(5px);
+    @include transition(0.3);
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
