@@ -11,12 +11,14 @@ angular.module('myApp')
     user_assignments = _.map(userIds, (userId) -> @newUserAssignment(userId, assignment.id))
     if assignment.id
       $http.put "api/v1/assignment/#{assignment.id}/broadcast"
-      { params: {'assignment': assignment,
-                 'user_assignments[]': user_assignments} }
+      {
+        params: {'assignment': assignment, 'user_assignments[]': user_assignments}
+      }
     else
       $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast"
-      { params: {'assignment': assignment,
-                 'user_assignments[]': user_assignments} }
+      {
+        params: {'assignment': assignment, 'user_assignments[]': user_assignments}
+      }
 
   @collectAssignment = (assignmentId) ->
     $http.get "api/v1/assignment/#{assignmentId}/collect"
