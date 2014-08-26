@@ -31,3 +31,4 @@ angular.module('myApp')
     math_other: "Math - Other"
     foreign_language: "Foreign Language"
     elective: "Elective"
+    other: "Other"
