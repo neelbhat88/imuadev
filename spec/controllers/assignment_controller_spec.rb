@@ -148,7 +148,6 @@ describe Api::V1::AssignmentController do
         it "returns 200 if a mentor tries to collect their own assignment" do
           get :collect, {:id => assignment1.id}
           expect(response.status).to eq(200)
-          Rails.logger.debug(json["assignment_collection"])
           expect(json["assignment_collection"]["id"]).to eq(assignment1.id)
           expect(json["assignment_collection"]["user_assignments"].length).to eq(2)
         end
@@ -158,7 +157,6 @@ describe Api::V1::AssignmentController do
         it "returns 200 if a mentor tries to collect all of their own assignments" do
           get :collect_all, {:user_id => userId}
           expect(response.status).to eq(200)
-          Rails.logger.debug(json["assignment_collections"])
           expect(json["assignment_collections"].length).to eq(2)
           expect(json["assignment_collections"][0]["user_id"]).to eq(userId)
           expect(json["assignment_collections"][0]["user_assignments"].length).to eq(2)
@@ -254,7 +252,7 @@ describe Api::V1::AssignmentController do
                                          due_datetime: new_due_datetime)
 
         mod_student1Assignment1 = attributes_for(:user_assignment,
-                                                 id: student1Assignment1.id + 1, # Check that ignored
+                                                 id: student1Assignment1.id,
                                                  user_id: student1Assignment1.user_id + 1, # Check that ignored
                                                  assignment_id: student1Assignment1.assignment_id + 1, # Check that ignored,
                                                  status: 0)
@@ -279,9 +277,17 @@ describe Api::V1::AssignmentController do
         user_assignments = json["assignment_collection"]["user_assignments"]
         expect(user_assignments.length).to eq(3)
 
-        # TODO Check the status changed to 0 for student1,
-        #      a user_assignment was added for student3,
-        #      and that status stayed as 1 for student 2.
+        user_assignments.each do |ua|
+          expect(ua["assignment_id"]).to eq(assignment1.id)
+          case ua["user_id"]
+          when student1.id
+            expect(ua["id"]).to eq(student1Assignment1.id)
+            expect(ua["status"]).to eq(0)
+          when student2.id
+            expect(ua["id"]).to eq(student2Assignment1.id)
+            expect(ua["status"]).to eq(1)
+          end
+        end
       end
 
     end

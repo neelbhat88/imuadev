@@ -160,9 +160,13 @@ class Api::V1::AssignmentController < ApplicationController
     if assignmentResult.status == :ok
       userAssignmentResults = []
       user_assignments.each do |a|
+        Rails.logger.debug(a)
         a[:assignment_id] = assignmentResult.object.id
-        userAssignmentResults << (a[:id].nil?) ? @assignmentService.create_user_assignment(a) :
-                                                 @assignmentService.update_user_assignment(a)
+        if a[:id].nil?
+          userAssignmentResults << @assignmentService.create_user_assignment(a)
+        else
+          userAssignmentResults << @assignmentService.update_user_assignment(a)
+        end
       end
 
       # TODO What if a userAssignment operation fails?
