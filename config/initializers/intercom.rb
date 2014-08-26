@@ -1,19 +1,19 @@
 IntercomRails.config do |config|
   # == Intercom app_id
   #
-  config.app_id = ENV["INTERCOM_APP_ID"] || "94ykexgw"
+  config.app_id = ENV["INTERCOM_APP_ID"]
 
   # == Intercom secret key
   # This is required to enable secure mode, you can find it on your Intercom
   # "security" configuration page.
   #
-  config.api_secret = "Lnx9auyx5KeK9S_igh5beN2XcWLzB1r3kZmrZDBh"
+  config.api_secret = ENV["INTERCOM_API_SECRET"]
 
   # == Intercom API Key
   # This is required for some Intercom rake tasks like importing your users;
   # you can generate one at https://www.intercom.io/apps/api_keys.
   #
-  config.api_key = "cefb5fdf8f09f0526dd17fbf1e13cd18aa67bd5f"
+  config.api_key = ENV["INTERCOM_API_KEY"]
 
 
   # == Enabled Environments
@@ -37,10 +37,10 @@ IntercomRails.config do |config|
   # You can provide either a method name which will be sent to the current
   # user object, or a Proc which will be passed the current user.
   #
-  # config.user.custom_data = {
-  #   :plan => Proc.new { |current_user| current_user.plan.name },
-  #   :favorite_color => :favorite_color
-  # }
+  config.user.custom_data = {
+    #:plan => Proc.new { |current_user| current_user.plan.name },
+    #:favorite_color => :favorite_color
+  }
 
   # == User -> Company association
   # A Proc that given a user returns an array of companies
@@ -48,6 +48,7 @@ IntercomRails.config do |config|
   #
   # config.user.company_association = Proc.new { |user| user.company }
   # config.user.company_association = Proc.new { |user| [user.company] }
+  config.user.company_association = Proc.new { |user| [user.organization] }
 
   # == Current company method/variable
   # The method/variable that contains the current company for the current user,
@@ -55,16 +56,16 @@ IntercomRails.config do |config|
   # could be a company, app or group.
   #
   # config.company.current = current_company
-  config.company.current = Proc.new {|user| user.organization}
+  config.company.current = Proc.new { @current_company }
 
   # == Company Custom Data
   # A hash of additional data you wish to send about a company.
   # This works the same as User custom data above.
   #
-  # config.company.custom_data = {
-  #   :number_of_messages => Proc.new { |app| app.messages.count },
-  #   :is_interesting => :is_interesting?
-  # }
+  config.company.custom_data = {
+    #:number_of_messages => Proc.new { |app| app.messages.count },
+    #:is_interesting => :is_interesting?
+  }
 
   # == Company Plan name
   # This is the name of the plan a company is currently paying (or not paying) for.
