@@ -90,11 +90,12 @@ class Api::V1::AssignmentController < ApplicationController
     assignmentId = params[:id].to_i
 
     result = @assignmentService.collect_assignment(assignmentId)
+    viewAssignmentCollection = ViewAssignmentCollection.new(result)
 
-    render status: :ok
+    render status: :ok,
       json: {
         info: "Assignment id: #{assignmentId} collection.",
-        assignment_collection: result.object
+        assignment_collection: viewAssignmentCollection
       }
 
   end
@@ -104,12 +105,13 @@ class Api::V1::AssignmentController < ApplicationController
   def collect_all
     userId = params[:user_id].to_i
 
-    result = @assignmentService.collect_assignments(userId)
+    results = @assignmentService.collect_assignments(userId)
+    viewAssignmentCollections = results.map{|r| ViewAssignmentCollection.new(r)}
 
-    render status: :ok
+    render status: :ok,
       json: {
         info: "Assignment collection, user id: #{userId}.",
-        assignment_collections: result.object
+        assignment_collections: viewAssignmentCollections
       }
 
   end
@@ -121,24 +123,26 @@ class Api::V1::AssignmentController < ApplicationController
     assignment = params[:assignment]
     user_assignments = params[:user_assignments]
 
-    assignment.user_id = userId
+    assignment[:user_id] = userId
     assignmentResult = @assignmentService.create_assignment(assignment)
+    viewAssignmentCollection = nil
 
-    userAssignmentResults = []
-    if assignmentResult.status :ok
+    if assignmentResult.status == :ok
+      userAssignmentResults = []
       user_assignments.each do |a|
-        a.assignment_id = assignmentResult.object.id
+        a[:assignment_id] = assignmentResult.object.id
         userAssignmentResults << @assignmentService.create_user_assignment(a)
       end
+
+      # TODO What if a userAssignment operation fails?
+      result = @assignmentService.collect_assignment(assignmentResult.object.id)
+      viewAssignmentCollection = ViewAssignmentCollection.new(result)
     end
 
-    # TODO What if a userAssignment operation fails?
-
-    assignmentResult.object.user_assignment_results = userAssignmentResults
     render status: assignmentResult.status,
       json: {
         info: assignmentResult.info,
-        assignment_broadcast_result: assignmentResult.object
+        assignment_collection: viewAssignmentCollection
       }
   end
 
@@ -149,25 +153,27 @@ class Api::V1::AssignmentController < ApplicationController
     assignment = params[:assignment]
     user_assignments = params[:user_assignments]
 
-    assignment.id = assignmentId
+    assignment[:id] = assignmentId
     assignmentResult = @assignmentService.update_assignment(assignment)
+    viewAssignmentCollection = nil
 
-    userAssignmentResults = []
-    if assignmentResult.status :ok
+    if assignmentResult.status == :ok
+      userAssignmentResults = []
       user_assignments.each do |a|
-        a.assignment_id = assignmentResult.object.id
-        userAssignmentResults << (a.id.nil?) ? @assignmentService.create_user_assignment(a) :
-                                               @assignmentService.update_user_assignment(a)
+        a[:assignment_id] = assignmentResult.object.id
+        userAssignmentResults << (a[:id].nil?) ? @assignmentService.create_user_assignment(a) :
+                                                 @assignmentService.update_user_assignment(a)
       end
+
+      # TODO What if a userAssignment operation fails?
+      result = @assignmentService.collect_assignment(assignmentResult.object.id)
+      viewAssignmentCollection = ViewAssignmentCollection.new(result)
     end
 
-    # TODO What if a userAssignment operation fails?
-
-    assignmentResult.object.user_assignment_results = userAssignmentResults
     render status: assignmentResult.status,
       json: {
         info: assignmentResult.info,
-        assignment_broadcast_result: assignmentResult.object
+        assignment_collection: viewAssignmentCollection
       }
   end
 

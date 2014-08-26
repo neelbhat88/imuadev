@@ -50,8 +50,8 @@ Imua::Application.routes.draw do
 
       get  'assignment/:id/collect'              => 'assignment#collect'
       get  'users/:user_id/assignment/collect'   => 'assignment#collect_all'
-      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
       post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
 
       get 'users/:id/user_with_contacts' => 'users#get_user_with_contacts'
       post 'users/:id/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
