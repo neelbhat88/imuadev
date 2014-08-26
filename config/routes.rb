@@ -16,6 +16,8 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users, shallow: true do
         resources :user_class, except: [:new, :edit]
+        resources :assignment, except: [:new, :edit, :show]
+        resources :user_assignment, except: [:new, :edit, :show]
       end
 
       resources :users do

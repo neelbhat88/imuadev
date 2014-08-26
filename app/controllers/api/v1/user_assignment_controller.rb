@@ -1,0 +1,72 @@
+class Api::V1::UserAssignmentController < ApplicationController
+  respond_to :json
+
+  before_filter :authenticate_user!
+  skip_before_filter :verify_authenticity_token
+  before_filter :load_services
+
+  def load_services( assignmentService = nil )
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new
+  end
+  # GET /user/:id/user_assignments
+  # Returns all UserAssignments for the given User
+  def index
+    userId = params[:user_id]
+
+    result = @assignmentService.get_user_assignments(userId)
+
+    render status: :ok,
+      json: {
+        info: "user_assignments",
+        user_assignments: result
+      }
+  end
+
+  # POST /user/:id/user_assignments
+  # Creates a UserAssignment for the given User
+  def create
+    userId         = params[:user_id].to_i
+    userAssignment = params[:user_assignment]
+
+    userAssignment["user_id"] = userId
+
+    result = @assignmentService.create_user_assignment(userAssignment)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user_assignment: result.object
+      }
+  end
+
+  # PUT /user_assignments/:id
+  # Updates a UserAssignment
+  def update
+    userAssignmentId = params[:id].to_i
+    userAssignment   = params[:user_assignment]
+
+    userAssignment["id"] = userAssignmentId
+
+    result = @assignmentService.update_user_assignment(userAssignment)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user_assignment: result.object
+      }
+  end
+
+  # DELETE /user_assignments/:id
+  # Deletes a UserAssignment
+  def destroy
+    userAssignmentId = params[:id].to_i
+
+    result = @assignmentService.delete_user_assignment(userAssignmentId)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+      }
+  end
+
+end
