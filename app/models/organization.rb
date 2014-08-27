@@ -27,6 +27,8 @@ class ViewOrganizationWithUsers
       end
     end
 
+    users = User.where(:organization_id => @id)
+
     User.includes([:user_milestones, :relationships, :user_expectations,
                    :user_classes, :user_extracurricular_activity_details,
                    :user_service_hours, :user_tests])

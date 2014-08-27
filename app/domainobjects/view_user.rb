@@ -15,7 +15,6 @@ class ViewUser
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
-		@organization_name = org.name unless org.nil?
 		@square_avatar_url = user.avatar.url(:square)
 		@time_unit_id = user.time_unit_id
 		@class_of = user.class_of.to_i
@@ -28,6 +27,8 @@ class ViewUser
 		@is_super_admin = user.super_admin?
 
 		@modules_progress = []
+
+		@organization_name = org.name unless org.nil?
 
 		if user.student?
 			@relationships = user.relationships
