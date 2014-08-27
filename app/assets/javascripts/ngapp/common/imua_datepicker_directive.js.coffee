@@ -3,11 +3,8 @@ angular.module('myApp')
   restrict: 'E'
   scope: {
     date: '='
-    isModal: '&isModal'
   }
   link: (scope, elem, attrs) ->
-
-    scope.append_to_body = !(attrs.isModal == "true")
 
     scope.open = (event) ->
       event.preventDefault()
