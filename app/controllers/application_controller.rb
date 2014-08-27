@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def set_current_company
-    @current_company = current_user.organization
+    @current_company = current_user.organization unless current_user.nil?
   end
 
   def add_abilities
