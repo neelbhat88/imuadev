@@ -36,7 +36,6 @@ class Api::V1::ServiceOrganizationController < ApplicationController
   # POST /service_organization
   def add_user_service_organization
     new_service_organization = params[:user_service_organization]
-    new_service_hour = params[:user_service_hour]
     userId = params[:user_service_organization][:user_id].to_i
 
     user = @userRepository.get_user(userId)
@@ -46,15 +45,12 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       return
     end
 
-    resultOrg = @userServiceOrganizationService.save_user_service_organization(new_service_organization)
-    new_service_hour[:user_service_organization_id] = resultOrg.object.id
-    resultHour = @userServiceOrganizationService.save_user_service_hour(new_service_hour)
+    result = @userServiceOrganizationService.save_user_service_organization(new_service_organization)
 
-    render status: resultOrg.status,
+    render status: result.status,
       json: {
-        info: [resultOrg.info, resultHour.info],
-        user_service_organization: resultOrg.object,
-        user_service_hour: resultHour.object
+        info: result.info,
+        user_service_organization: result.object
       }
   end
 
@@ -125,10 +121,9 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       }
   end
 
-  # DELETE /service_organization/:id?time_unit_id=#
+  # DELETE /service_organization/:id
   def delete_user_service_organization
     serviceOrganizationId = params[:id].to_i
-    time_unit_id = params[:time_unit_id].to_i
 
     userServiceOrganization = @userServiceOrganizationService.get_user_service_organization(serviceOrganizationId)
 
@@ -139,7 +134,7 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       return
     end
 
-    result = @userServiceOrganizationService.delete_user_service_organization(serviceOrganizationId, userServiceOrganization.user_id, time_unit_id)
+    result = @userServiceOrganizationService.delete_user_service_organization(serviceOrganizationId)
 
     render status: result.status,
       json: {

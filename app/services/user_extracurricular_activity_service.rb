@@ -17,8 +17,8 @@ class UserExtracurricularActivityService
     return UserExtracurricularActivityDetail.where(:id => extracurricularActivityDetailId).first
   end
 
-  def get_details_for_activity(user_extracurricular_activity_id, userId)
-    return UserExtracurricularActivityDetail.where(:user_extracurricular_activity_id => user_extracurricular_activity_id, :user_id => userId)
+  def get_details_for_activity(user_extracurricular_activity, userId)
+    return UserExtracurricularActivityDetail.where(:extracurricular_activity_id => user_extracurricular_activity[:id], :user_id => userId).first
   end
 
   def save_user_extracurricular_activity(user_extracurricular_activity)
@@ -72,23 +72,11 @@ class UserExtracurricularActivityService
     end
   end
 
-  def delete_user_extracurricular_activity(extracurricularActivityId, userId, time_unit_id)
-    details = get_details_for_activity(extracurricularActivityId, userId)
-
-    details.delete_if {| d | d.time_unit_id == time_unit_id}
-
-    if details[0].nil?
-      if UserExtracurricularActivity.find(extracurricularActivityId).destroy()
-        return ReturnObject.new(:ok, "Successfully deleted Extracurricular Activity, id: #{extracurricularActivityId}", nil)
-      else
-        return ReturnObject.new(:internal_server_error, "Failed to delete Extracurricular Activity. id: #{extracurricularActivityId}", nil)
-      end
+  def delete_user_extracurricular_activity(extracurricularActivityId)
+    if UserExtracurricularActivity.find(extracurricularActivityId).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted Extracurricular Activity, id: #{extracurricularActivityId}", nil)
     else
-      if UserExtracurricularActivityDetail.destroy_all(:user_extracurricular_activity_id => extracurricularActivityId, :user_id => userId, :time_unit_id => time_unit_id)
-        return ReturnObject.new(:ok, "Successfully deleted all Details in this semester for Extracurricular Activity, id: #{extracurricularActivityId}", nil)
-      else
-        return ReturnObject.new(:internal_server_error, "Failed to delete Details for Extracurricular Activity. id: #{extracurricularActivityId}", nil)
-      end
+      return ReturnObject.new(:internal_server_error, "Failed to delete Extracurricular Activity. id: #{extracurricularActivityId}", nil)
     end
   end
 

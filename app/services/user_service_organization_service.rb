@@ -16,8 +16,8 @@ class UserServiceOrganizationService
     return UserServiceHour.where(:id => serviceHourId).first
   end
 
-  def get_hours_for_organization(user_service_organization_id, userId)
-    return UserServiceHour.where(:user_service_organization_id => user_service_organization_id, :user_id => userId)
+  def get_hours_for_organization(user_service_organization, userId)
+    return UserServiceHour.where(:service_organization_id => user_service_organization[:id], :user_id => userId)
   end
 
   def save_user_service_organization(user_service_organization)
@@ -69,23 +69,11 @@ class UserServiceOrganizationService
     end
   end
 
-  def delete_user_service_organization(serviceOrganizationId, userId, time_unit_id)
-    hours = get_hours_for_organization(serviceOrganizationId, userId)
-
-    hours.delete_if {| hr | hr.time_unit_id == time_unit_id}
-
-    if hours[0].nil?
-      if UserServiceOrganization.find(serviceOrganizationId).destroy()
-        return ReturnObject.new(:ok, "Successfully deleted Service Organization, id: #{serviceOrganizationId}", nil)
-      else
-        return ReturnObject.new(:internal_server_error, "Failed to delete Service Organization. id: #{serviceOrganizationId}", nil)
-      end
+  def delete_user_service_organization(serviceOrganizationId)
+    if UserServiceOrganization.find(serviceOrganizationId).destroy()
+      return ReturnObject.new(:ok, "Successfully deleted Service Organization, id: #{serviceOrganizationId}", nil)
     else
-      if UserServiceHour.destroy_all(:user_service_organization_id => serviceOrganizationId, :user_id => userId, :time_unit_id => time_unit_id)
-        return ReturnObject.new(:ok, "Successfully deleted all Hours in this semester for Service Organization, id: #{serviceOrganizationId}", nil)
-      else
-        return ReturnObject.new(:internal_server_error, "Failed to delete Hours for Service Organization. id: #{serviceOrganizationId}", nil)
-      end
+      return ReturnObject.new(:internal_server_error, "Failed to delete Service Organization. id: #{serviceOrganizationId}", nil)
     end
   end
 
