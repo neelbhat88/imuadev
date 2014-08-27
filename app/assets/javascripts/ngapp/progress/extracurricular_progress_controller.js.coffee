@@ -77,7 +77,9 @@ angular.module('myApp')
       if window.confirm "Are you sure you want to delete this activity?"
         UserExtracurricularActivityService.deleteExtracurricularActivity($scope.user_extracurricular_activities[index], $scope.selected_semester.id)
           .success (data) ->
-            $scope.user_extracurricular_activities.splice(index, 1)
+            $scope.user_extracurricular_activities[index].details = []
+            deletedActivity = $scope.user_extracurricular_activities.splice(index,1)
+            $scope.previous_activity_list.push(deletedActivity[0])
             $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
@@ -95,6 +97,8 @@ angular.module('myApp')
       $scope.new_extracurricular_activity.details = []
       $scope.new_extracurricular_activity.details.push(UserExtracurricularActivityService.newExtracurricularDetail($scope.student, $scope.selected_semester.id, null))
 
+    $scope.cancelNewActivity = () ->
+      $scope.new_extracurricular_activity.editing = false
 
     $scope.editActivity = (index) ->
       $scope.user_extracurricular_activities[index].editing = true
