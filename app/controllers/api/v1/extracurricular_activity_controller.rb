@@ -85,6 +85,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   def update_user_extracurricular_activity
     extracurricularActivityId = params[:id].to_i
     updated_extracurricular_activity = params[:user_extracurricular_activity]
+    updated_extracurricular_detail = params[:user_extracurricular_detail]
 
     user_extracurricular_activity = @userExtracurricularActivityService.get_user_extracurricular_activity(extracurricularActivityId)
 
@@ -95,12 +96,14 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       return
     end
 
-    result = @userExtracurricularActivityService.update_user_extracurricular_activity(updated_extracurricular_activity)
+    resultActivity = @userExtracurricularActivityService.update_user_extracurricular_activity(updated_extracurricular_activity)
+    resultDetail = @userExtracurricularActivityService.update_user_extracurricular_activity_detail(updated_extracurricular_detail)
 
-    render status: result.status,
+    render status: resultDetail.status,
       json: {
-        info: result.info,
-        user_extracurricular_activity: result.object
+        info: [resultActivity.info, resultDetail.info],
+        user_extracurricular_activity: resultActivity.object,
+        user_extracurricular_detail: resultDetail.object
       }
   end
 

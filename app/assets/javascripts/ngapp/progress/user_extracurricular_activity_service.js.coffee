@@ -7,7 +7,7 @@ angular.module("myApp")
   @newExtracurricularActivity = (student) ->
     name: "",
     user_id: student.id,
-    editing: true,
+    editing: true
 
   @newExtracurricularDetail = (student, time_unit_id, extracurricularActivityId) ->
       name: "",

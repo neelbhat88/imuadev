@@ -24,7 +24,7 @@
 
               <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.name}}</td>
               <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details[0].leadership}}</td>
-              <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details.[0].description}}</td>
+              <td ng-hide="user_extracurricular_activity.editing">{{user_extracurricular_activity.details[0].description}}</td>
               <td ng-hide="user_extracurricular_activity.editing" class="glyphicons">
                 <div class="glyphicon-container">
                   <span class="glyphicon glyphicon-pencil" title="Edit Extracurricular Activity" ng-click="editActivity(activityIndex)"></span>
@@ -33,14 +33,7 @@
               </td>
 
               <td class="editing" ng-show="user_extracurricular_activity.editing" colspan="4">
-                <span class="input-group" ng-hide="user_extracurricular_activity.newActivity">
-                  <label>What Activity did you participate in?</label>
-                  <select class="form-control" ng-change="selectPreviousActivity(previous_activity)" ng-options="activity as activity.name for activity in previous_activity_list" ng-model="previous_activity" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
-                    <option value="">--- Select Previous Activity ---</option>
-                  </select>
-                </span>
-                <button class="btn btn-default" ng-click="addNewActivity(activityIndex)" ng-hide="user_extracurricular_activity.newActivity">New Activity?</button>
-                <span class="input-group" ng-show="user_extracurricular_activity.newActivity">
+                <span class="input-group">
                   <label>What Activity did you participate in?</label>
                   <input class="form-control" ng-model="user_extracurricular_activity.name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
                 </span>
@@ -50,7 +43,7 @@
                 </span>
                 <span class="input-group">
                   <label>Description (Optional)</label>
-                  <textarea class="form-control" ng-model="user_extracurricular_activity.details[0].descriptions" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
+                  <textarea class="form-control" ng-model="user_extracurricular_activity.details[0].description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
                 </span>
 
                 <button class="submit" title="Confirm" ng-click="saveActivity(activityIndex)">Confirm</button>
