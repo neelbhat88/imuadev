@@ -12,5 +12,8 @@ angular.module('myApp')
   @getTimeUnits = (orgId) ->
     $http.get('/api/v1/organization/' + orgId + '/time_units')
 
+  @addOrganization = (name) ->
+    $http.post('/api/v1/organization', {name: name})
+
   @ #  Returns 'this', otherwise it'll return the last function
 ]

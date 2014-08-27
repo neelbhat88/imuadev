@@ -1,10 +1,10 @@
 angular.module('myApp')
-.controller 'RoadmapController', ['$scope', '$modal', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
-($scope, $modal, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
+.controller 'RoadmapController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
   $scope.current_user = current_user
   $scope.loading = true
-  # TODO Fix so that a super admin can go in and view Organizations' roadmaps
-  orgId = if $scope.current_user.organization_id == null then -1 else $scope.current_user.organization_id
+
+  orgId = $route.current.params.id
 
   $('input, textarea').placeholder()
 
