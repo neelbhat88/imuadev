@@ -29,7 +29,7 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
-    OrganizationService.getOrganizationWithUsers($scope.current_user.organization_id)
+    OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = data.organization
 

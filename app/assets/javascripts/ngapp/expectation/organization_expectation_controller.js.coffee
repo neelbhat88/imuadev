@@ -3,7 +3,7 @@ angular.module('myApp')
   ($route, $scope, ExpectationService) ->
 
     $scope.user = $scope.current_user
-    $scope.orgId = $scope.user.organization_id
+    $scope.orgId = $route.current.params.id
     $scope.expectations = []
 
     ExpectationService.getExpectations($scope.orgId)
