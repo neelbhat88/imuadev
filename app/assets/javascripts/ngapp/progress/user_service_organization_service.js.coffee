@@ -4,7 +4,7 @@ angular.module("myApp")
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/service_organizations_hours?time_unit_id=#{time_unit_id}"
 
-  @newServiceOrganization = (user, time_unit_id) ->
+  @newServiceOrganization = (user) ->
     name: "",
     description: "",
     user_id: user.id,
@@ -23,8 +23,9 @@ angular.module("myApp")
   @saveServiceOrganization = (user_service_organization) ->
     if user_service_organization.id
       return $http.put "/api/v1/service_organization/#{user_service_organization.id}", {user_service_organization: user_service_organization}
-    else
-      return $http.post "/api/v1//service_organization", {user_service_organization: user_service_organization}
+
+  @saveNewServiceOrganization = (new_service_organization) ->
+      return $http.post "/api/v1/service_organization", {user_service_organization: new_service_organization, user_service_hour: new_service_organization.hours[0]}
 
   @saveServiceHour = (user_service_hour) ->
     if user_service_hour.id
@@ -32,8 +33,8 @@ angular.module("myApp")
     else
       return $http.post "/api/v1/service_hour", {user_service_hour: user_service_hour}
 
-  @deleteServiceOrganization = (user_service_organization) ->
-    return $http.delete "/api/v1/service_organization/#{user_service_organization.id}"
+  @deleteServiceOrganization = (user_service_organization, time_unit_id) ->
+    return $http.delete "/api/v1/service_organization/#{user_service_organization.id}?time_unit_id=#{time_unit_id}"
 
   @deleteServiceHour = (user_service_hour) ->
     return $http.delete "/api/v1/service_hour/#{user_service_hour.id}"
