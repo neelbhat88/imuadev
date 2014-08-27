@@ -167,11 +167,13 @@ angular.module('myApp')
       $scope.new_service_organization.hours = []
       $scope.new_service_organization.hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, null))
       $scope.new_service_organization.newOrganization = true
+      $scope.new_service_organization.show = true
 
     $scope.selectAction = (selectedServiceOrg) ->
       $scope.new_service_organization = selectedServiceOrg
       $scope.new_service_organization.editing = true
       $scope.new_service_organization.hours = []
       $scope.new_service_organization.hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, selectedServiceOrg.id))
+      $scope.new_service_organization.show = true
 
 ]
