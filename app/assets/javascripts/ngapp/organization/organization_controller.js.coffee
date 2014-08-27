@@ -45,20 +45,6 @@ angular.module('myApp')
       else
         user.first_name + " " + user.last_name
 
-    $scope.addStudent = () ->
-      modalInstance = $modal.open
-        templateUrl: 'organization/add_user_modal.html',
-        controller: 'AddUserModalController',
-        backdrop: 'static',
-        size: 'sm',
-        resolve:
-          organization: () -> $scope.organization
-          new_user: () -> UsersService.newStudent($scope.organization.id)
-
-      modalInstance.result.then (user) ->
-        $scope.organization.students.push(user)
-        $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
-
     $scope.addMentor = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',
