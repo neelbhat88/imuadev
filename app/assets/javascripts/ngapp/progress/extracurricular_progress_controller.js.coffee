@@ -107,13 +107,19 @@ angular.module('myApp')
       $scope.user_extracurricular_activities[index].details[0].new_description = $scope.user_extracurricular_activities[index].details[0].description
 
     $scope.addNewActivity = () ->
+      $scope.new_extracurricular_activity = {}
+      $scope.new_extracurricular_activity.editing = true
+      $scope.new_extracurricular_activity = UserExtracurricularActivityService.newExtracurricularActivity($scope.student)
+      $scope.new_extracurricular_activity.details = []
+      $scope.new_extracurricular_activity.details.push(UserExtracurricularActivityService.newExtracurricularDetail($scope.student, $scope.selected_semester.id, null))
       $scope.new_extracurricular_activity.newActivity = true
+      $scope.new_extracurricular_activity.show = true
 
     $scope.selectedActivity = (newActivity) ->
       $scope.new_extracurricular_activity = newActivity
       $scope.new_extracurricular_activity.editing = true
+      $scope.new_extracurricular_activity.show = true
       $scope.new_extracurricular_activity.details = []
       $scope.new_extracurricular_activity.details.push(UserExtracurricularActivityService.newExtracurricularDetail($scope.student, $scope.selected_semester.id, newActivity.id))
-      console.log($scope.new_extracurricular_activity)
 
 ]
