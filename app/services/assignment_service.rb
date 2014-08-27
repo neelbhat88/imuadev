@@ -13,7 +13,7 @@ class AssignmentService
   ###################################
 
   def get_assignment(assignmentId)
-    return Assignment.where(:id => assignmentId).first
+    return Assignment.find(assignmentId)
   end
 
   def get_assignments(userId)
@@ -34,7 +34,7 @@ class AssignmentService
     if newAssignment.save
       return ReturnObject.new(:ok, "Successfully created Assignment, id: #{newAssignment.id}.", newAssignment)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create assignment. Errors: #{newAssignment.errors}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create assignment. Errors: #{newAssignment.errors.inspect}.", nil)
     end
   end
 
@@ -52,7 +52,7 @@ class AssignmentService
                                       :due_datetime => assignment[:due_datetime])
       return ReturnObject.new(:ok, "Successfully updated Assignment, id: #{dbAssignment.id}.", dbAssignment)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update Assignment, id: #{dbAssignment.id}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update Assignment, id: #{dbAssignment.id}. Errors: #{dbAssignment.errors.inspect}.", nil)
     end
   end
 
@@ -67,7 +67,7 @@ class AssignmentService
     if dbAssignment.destroy()
       return ReturnObject.new(:ok, "Successfully deleted Assignment, id: #{dbAssignment.id}.", nil)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to delete Assignment, id: #{dbAssignment.id}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete Assignment, id: #{dbAssignment.id}. Errors: #{dbAssignment.errors.inspect}.", nil)
     end
   end
 
@@ -75,8 +75,16 @@ class AssignmentService
   ############# USER ASSIGNMENT ##############
   ############################################
 
+  def collect_user_assignment(userAssignmentId)
+    return UserAssignment.includes(:assignment).find(userAssignmentId)
+  end
+
+  def collect_user_assignments(userId)
+    return UserAssignment.includes(:assignment).where(:user_id => userId)
+  end
+
   def get_user_assignment(userAssignmentId)
-    return UserAssignment.where(:id => userAssignmentId).first
+    return UserAssignment.find(userAssignmentId)
   end
 
   def get_user_assignments(userId)
@@ -97,7 +105,7 @@ class AssignmentService
     if newUserAssignment.save
       return ReturnObject.new(:ok, "Successfully created UserAssignment, id: #{newUserAssignment.id}.", newUserAssignment)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to create UserAssignment.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to create UserAssignment. Errors: #{newUserAssignment.errors.inspect}.", nil)
     end
   end
 
@@ -113,7 +121,7 @@ class AssignmentService
     if dbUserAssignment.update_attributes(:status => userAssignment[:status])
       return ReturnObject.new(:ok, "Successfully updated UserAssignment, id: #{dbUserAssignment.id}.", dbUserAssignment)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to update UserAssignment, id: #{dbUserAssignment.id}", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to update UserAssignment, id: #{dbUserAssignment.id}.  Errors: #{dbUserAssignment.errors.inspect}.", nil)
     end
   end
 
@@ -127,7 +135,7 @@ class AssignmentService
     if dbUserAssignment.destroy()
       return ReturnObject.new(:ok, "Successfully deleted UserAssignment, id: #{dbUserAssignment.id}.", nil)
     else
-      return ReturnObject.new(:internal_server_error, "Failed to delete UserAssignment, id: #{dbUserAssignment.id}.", nil)
+      return ReturnObject.new(:internal_server_error, "Failed to delete UserAssignment, id: #{dbUserAssignment.id}. Errors: #{dbUserAssignment.errors.inspect}.", nil)
     end
   end
 

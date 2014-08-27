@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService", "UsersService", "ExpectationService",
-($scope, ProgressService, OrganizationService, UsersService, ExpectationService) ->
+.controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService", "UsersService", "ExpectationService", "AssignmentService",
+($scope, ProgressService, OrganizationService, UsersService, ExpectationService, AssignmentService) ->
   $scope.student_with_modules_progress = null
   $scope.student = $scope.user
   $scope.overall_points = {user: 0, total: 0, percent: 0}
@@ -9,6 +9,7 @@ angular.module('myApp')
   $scope.needs_attention = false
   $scope.expectations = []
   $scope.meetingExpectations = true
+  $scope.user_assignments = []
 
   setMiddleDimensions = () ->
     windowWidth = $(window).outerWidth()
@@ -69,4 +70,8 @@ angular.module('myApp')
             if not e.user_expectation?
               e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
           $scope.loaded_expectations = true
+
+  AssignmentService.collectUserAssignments($scope.student.id)
+    .success (data) ->
+      $scope.user_assignments = data.user_assignments
 ]

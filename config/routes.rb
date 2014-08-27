@@ -53,6 +53,9 @@ Imua::Application.routes.draw do
       post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
       put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
 
+      get 'user_assignment/:id/collect'       => 'user_assignment#collect'
+      get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'
+
       get 'users/:id/user_with_contacts' => 'users#get_user_with_contacts'
       post 'users/:id/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
       put 'parent_guardian_contact/:id' => 'parent_guardian_contact#update_parent_guardian_contact'

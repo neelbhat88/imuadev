@@ -7,24 +7,28 @@ angular.module('myApp')
 # "Broadcast" and "Collect" include the associated
 # UserAssignments with the parent Assignment object.
 
+  self = this
+
   @broadcastAssignment = (assignment, userIds) ->
-    user_assignments = _.map(userIds, (userId) -> @newUserAssignment(userId, assignment.id))
+    user_assignments = _.map(userIds, (userId) -> self.newUserAssignment(userId, assignment.id))
     if assignment.id
-      $http.put "api/v1/assignment/#{assignment.id}/broadcast"
-      {
-        params: {'assignment': assignment, 'user_assignments[]': user_assignments}
-      }
+      $http.put "api/v1/assignment/#{assignment.id}/broadcast",
+        { assignment: assignment, user_assignments: user_assignments }
     else
-      $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast"
-      {
-        params: {'assignment': assignment, 'user_assignments[]': user_assignments}
-      }
+      $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast",
+        { assignment: assignment, user_assignments: user_assignments }
 
   @collectAssignment = (assignmentId) ->
     $http.get "api/v1/assignment/#{assignmentId}/collect"
 
   @collectAssignments = (userId) ->
     $http.get "api/v1/users/#{userId}/assignment/collect"
+
+  @collectUserAssignment = (userAssignmentId) ->
+    $http.get "ap1/vi/user_assignment/#{userAssignmentId}/collect"
+
+  @collectUserAssignments = (userId) ->
+    $http.get "api/v1/users/#{userId}/user_assignment/collect"
 
   ###################################
   ########### ASSIGNMENT ############

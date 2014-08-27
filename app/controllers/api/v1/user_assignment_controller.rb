@@ -69,4 +69,34 @@ class Api::V1::UserAssignmentController < ApplicationController
       }
   end
 
+  # GET /user_assignment/:id/collect
+  # Returns the UserAssignment with associated Assignment data
+  def collect
+    userAssignmentId = params[:id].to_i
+
+    result = @assignmentService.collect_user_assignment(userAssignmentId)
+    viewUserAssignment = ViewUserAssignment.new(result)
+
+    render status: :ok,
+      json: {
+        info: "UserAssignment id: #{userAssignmentId}.",
+        user_assignment: viewUserAssignment
+      }
+  end
+
+  # GET /users/:user_id/assignment/collect
+  # Returns all of a User's UserAssignments with their associated Assignment data
+  def collect_all
+    userId = params[:user_id].to_i
+
+    results = @assignmentService.collect_user_assignments(userId)
+    viewUserAssignments = results.map{|r| ViewUserAssignment.new(r)}
+
+    render status: :ok,
+      json: {
+        info: "UserAssignments for use id: #{userId}.",
+        user_assignments: viewUserAssignments
+      }
+  end
+
 end

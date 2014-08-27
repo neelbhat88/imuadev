@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller "MentorDashboardController", ["$scope", "UsersService", "ProgressService", "ExpectationService",
-($scope, UsersService, ProgressService, ExpectationService) ->
+.controller "MentorDashboardController", ["$scope", "$modal", "UsersService", "ProgressService", "ExpectationService",
+($scope, $modal, UsersService, ProgressService, ExpectationService) ->
   $scope.assigned_students = []
   $scope.attention_students = []
   $scope.mentor = $scope.user
@@ -17,5 +17,14 @@ angular.module('myApp')
               $scope.attention_students.push(ue.user_id)
               break
 
+  $scope.addAssignment = () ->
+    modalInstance = $modal.open
+      templateUrl: 'assignment/add_assignment_modal.html',
+      controller: 'AddAssignmentModalController',
+      backdrop: 'static',
+      size: 'sm'
+      resolve:
+        user: () -> $scope.user
+        assignees: () -> $scope.assigned_students
 
 ]
