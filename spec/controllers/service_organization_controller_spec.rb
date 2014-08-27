@@ -87,10 +87,12 @@ describe Api::V1::ServiceOrganizationController do
 
       let(:userId) { subject.current_user.id }
       let(:theOrganization) { create(:user_service_organization, user_id: subject.current_user.id) }
+      let(:theOrganizationHour) { create(:user_service_hour, user_id: subject.current_user.id) }
 
       it "returns 200 with user_service_organization and user_service_hour" do
-        hour = attributes_for(:user_service_hour, user_id: subject.current_user.id, user_service_organization_id: theOrganization[:id])
-        post :add_user_service_organization, {:user_service_organization => theOrganization,
+        organization = attributes_for(:user_service_organization, user_id: userId, id: theOrganization[:id])
+        hour = attributes_for(:user_service_hour, user_id: userId, user_service_organization_id: theOrganization[:id], id: theOrganizationHour[:id])
+        post :add_user_service_organization, {:user_service_organization => organization,
                                               :user_service_hour => hour}
 
         expect(response.status).to eq(200)

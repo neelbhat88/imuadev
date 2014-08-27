@@ -110,7 +110,7 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
   # PUT /extracurricular_activity_detail/:id
   def update_user_extracurricular_activity_detail
     extracurricularActivityDetailId = params[:id].to_i
-    updated_extracurricular_activity_detail = params[:user_extracurricular_activity_detail]
+    updated_extracurricular_activity_detail = params[:user_extracurricular_detail]
 
     user_extracurricular_activity_detail = @userExtracurricularActivityService.get_user_extracurricular_activity_detail(extracurricularActivityDetailId)
 
