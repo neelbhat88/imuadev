@@ -137,19 +137,6 @@ angular.module('myApp')
       else
         user.first_name + " " + user.last_name
 
-    $scope.addOrgAdmin = () ->
-      modalInstance = $modal.open
-        templateUrl: 'organization/add_user_modal.html',
-        controller: 'AddUserModalController',
-        backdrop: 'static',
-        size: 'sm',
-        resolve:
-          organization: () -> $scope.organization
-          new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
-
-      modalInstance.result.then (user) ->
-        $scope.organization.orgAdmins.push(user)
-
     $scope.addStudent = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',

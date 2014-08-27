@@ -3,8 +3,8 @@
   <div class="dashboard-header dashboard-header--orgadmin">
     <div class="orgadmin-header--wrapper">
       <div class="greeting">
-        <h2>Hey there, {{user.first_name}}</h2>
-        <h5>Here's a look at how {{current_organization}} is doing today:</h5>
+        <h2 class="bold">Hey there, {{user.first_name}}</h2>
+        <h5>Here's a look at how {{organization.name}} is doing today:</h5>
       </div>
     </div>
   </div>
@@ -12,12 +12,12 @@
   <div class="dashboard-attention dashboard-attention--orgadmin" ng-hide="true">Placeholder for Alerts</div>
 
   <div class="dashboard-content dashboard-content--orgadmin">
-    <div class="module-container clear">
+    <div class="module-container clear" masonry>
 
       <div class="module module--mentor-activity" modulecolor="no_category">
         <div class="module--header">Mentor Activity</div>
         <div class="module--content">
-          <h4><span class="numbers-large">{{active_mentors}}</span></h4>
+          <h2>{{active_mentors}}</h2>
           <h5 ng-if="active_mentors != 1">Active Mentors</h5>
           <h5 ng-if="active_mentors == 1">Active Mentor</h5>
           <p>This Week</p>
@@ -27,7 +27,7 @@
       <div class="module module--student-activity" modulecolor="no_category">
         <div class="module--header">Student Activity</div>
         <div class="module--content">
-          <h4><span class="numbers-large">{{active_students}}</span></h4>
+          <h2>{{active_students}}</h2>
           <h5 ng-if="active_students != 1">Active Students</h5>
           <h5 ng-if="active_students == 1">Active Student</h5>
           <p>This Week</p>
@@ -37,7 +37,8 @@
       <div class="module module--avg-gpa" modulecolor="academics">
         <div class="module--header">Grades</div>
         <div class="module--content">
-          <h4><span class="numbers-large">{{average_gpa}}</span></h4>
+          <p>Your students have a</p>
+          <h2>{{average_gpa}}</h2>
           <h5>Average GPA</h5>
         </div>
       </div>
@@ -46,7 +47,7 @@
         <div class="module--header">Service Hours</div>
         <div class="module--content">
           <p>On average, your students have completed</p>
-          <h4><span class="numbers-large">{{average_serviceHours}}</span></h4>
+          <h2>{{average_serviceHours}}</h2>
           <h5>Service Hours</h5>
         </div>
       </div>
@@ -55,7 +56,7 @@
         <div class="module--header">Extracurricular</div>
         <div class="module--content">
           <p>Your students participate in</p>
-          <h4><span class="numbers-large">{{average_ecActivities}}</span></h4>
+          <h2>{{average_ecActivities}}</h2>
           <h5>Extracurricular Activities</h5>
         </div>
       </div>
@@ -64,7 +65,7 @@
         <div class="module--header">Testing</div>
         <div class="module--content">
           <p>Your students average</p>
-          <h4><span class="numbers-large">{{average_testsTaken}}</span></h4>
+          <h2>{{average_testsTaken}}</h2>
           <h5>Tests Taken</h5>
         </div>
       </div>

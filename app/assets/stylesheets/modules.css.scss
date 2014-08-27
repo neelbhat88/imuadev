@@ -1,9 +1,11 @@
 .module-container {
 
   width: 100%;
-  padding: 40px 0;
+  padding: 40px;
   text-align: center;
   color: white;
+
+  @include respond-to(800) { padding: 0px; }
 
   @each $category, $color in $darkcolormap {
     &.color--#{$category} {
@@ -17,7 +19,6 @@
 
   @each $category, $color in $colormap {
     &.color--#{$category} {
-      border-top: 6px solid $color;
       .module--header { background: $color; }
     }
   }
@@ -25,10 +26,9 @@
   .module {
 
     width: 500px;
-    margin: 0 10px 20px 10px;
-    @include border-radius (5px);
-    display: inline-block;
-    vertical-align: top;
+    margin: 10px;
+    @include border-radius(5px);
+    //@include transition(0.3);
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
@@ -42,7 +42,6 @@
 
     @each $category, $color in $colormap {
       &.color--#{$category} {
-        .module-container { border-top: 6px solid $color; }
         .module--header { background: $color; }
       }
     }

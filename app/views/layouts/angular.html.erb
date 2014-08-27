@@ -43,12 +43,7 @@
         <nav class="nav-collapsed right" role="navigation">
           <div class="dropdown js-cog">
             <div class="current-name">
-              <% if current_user.super_admin? %>
-                Administrator
-              <% else %>
-                <%= current_user.first_last_initial %>
-              <% end %>
-              <span class="caret"></span>
+              Menu <span class="caret"></span>
             </div>
             <div class="submenu js-submenu">
               <% if current_user.super_admin? %>
@@ -58,6 +53,9 @@
               <% end %>
 
               <% if current_user.org_admin? %>
+                <div class="submenu__link">
+                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+                </div>
                 <div class="submenu__link">
                   <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
                 </div>
@@ -108,6 +106,9 @@
             <% end %>
 
             <% if current_user.org_admin? %>
+              <li>
+                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+              </li>
               <li>
                 <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
               </li>

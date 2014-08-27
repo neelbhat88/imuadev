@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :abilities, :can?
 
   before_filter :add_abilities
+  before_filter :set_current_company
 
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
@@ -11,7 +12,6 @@ class ApplicationController < ActionController::Base
   #   if current_user.super_admin?
   #     return super_admin_profile
   #   end
-
     return root_path
   end
 
@@ -36,6 +36,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def set_current_company
+    @current_company = current_user.organization unless current_user.nil?
+  end
 
   def add_abilities
     abilities << Ability

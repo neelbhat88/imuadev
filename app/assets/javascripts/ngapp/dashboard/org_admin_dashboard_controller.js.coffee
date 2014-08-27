@@ -21,10 +21,10 @@ angular.module('myApp')
   $scope.total_ecActivities = $scope.semester_ecActivities = 0
   $scope.total_testsTaken = $scope.testsTaken = 0
 
-  $scope.average_gpa = ""
-  $scope.average_serviceHours = ""
-  $scope.average_ecActivities = ""
-  $scope.average_testsTaken = ""
+  $scope.average_gpa = 0
+  $scope.average_serviceHours = 0
+  $scope.average_ecActivities = 0
+  $scope.average_testsTaken = 0
 
   $('input, textarea').placeholder()
 
@@ -120,10 +120,11 @@ angular.module('myApp')
 
       # Perform averaging calculations
       num_students = $scope.organization.students.length
-      $scope.average_gpa = "3.14*" # ($scope.semester_gpa / num_students).toFixed(2)
-      $scope.average_serviceHours = ($scope.semester_serviceHours / num_students).toFixed(2)
-      $scope.average_ecActivities = ($scope.semester_ecActivities / num_students).toFixed(2)
-      $scope.average_testsTaken = ($scope.semester_serviceHours / num_students).toFixed(2)
+      if num_students > 0
+        $scope.average_gpa = "3.14*" # ($scope.semester_gpa / num_students).toFixed(2)
+        $scope.average_serviceHours = ($scope.semester_serviceHours / num_students).toFixed(2)
+        $scope.average_ecActivities = ($scope.semester_ecActivities / num_students).toFixed(2)
+        $scope.average_testsTaken = ($scope.semester_serviceHours / num_students).toFixed(2)
 
       $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
       $scope.loaded_users = true
