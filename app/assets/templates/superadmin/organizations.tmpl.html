@@ -7,4 +7,9 @@
     <a ng-href="#/organization/{{org.id}}">Mentors</a> |
     <a ng-href="#/students/{{org.id}}">Students</a>
   </li>
+
+  <div style="padding-top: 20px;">
+    <input class="form-control" ng-model="newOrg.name" style="width: 250px;"/>
+    <button type="submit" class="submit" ng-click="addOrganization(newOrg.name)">Add Organization</button>
+  </div>
 </div>
