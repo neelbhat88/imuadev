@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140827191458) do
+ActiveRecord::Schema.define(:version => 20140822220903) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -241,7 +241,6 @@ ActiveRecord::Schema.define(:version => 20140827191458) do
     t.integer  "organization_id"
     t.integer  "time_unit_id"
     t.integer  "class_of"
-    t.string   "title"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
