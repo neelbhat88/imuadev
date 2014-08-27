@@ -13,6 +13,8 @@ angular.module('myApp')
   @getTimeUnits = (orgId) ->
     $http.get('/api/v1/organization/' + orgId + '/time_units')
 
+  @addOrganization = (name) ->
+    $http.post('/api/v1/organization', {name: name})
 
 
   # Performs all the front end calculations by parsing through the raw OrganizationWithUsers object
@@ -129,7 +131,6 @@ angular.module('myApp')
     org.groupedStudents = _.groupBy(org.students, "class_of")
 
     return org
-
 
 
   @ #  Returns 'this', otherwise it'll return the last function
