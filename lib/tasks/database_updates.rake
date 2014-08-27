@@ -20,9 +20,6 @@ task :update_all_organizations_and_hours => :environment do
       end
     end
 
-    puts duplicateOrgs.to_yaml
-    puts orgNames.to_yaml
-
     duplicateOrgs.each do | orgId, orgName |
       dupOrgs = UserServiceOrganization.where(:user_id => u.id, :name => orgName)
       dupOrgs.each do |dupOrg|
@@ -52,8 +49,6 @@ task :update_all_extracurricular_activities_and_details => :environment do
         activityNames[a.id] = a.name
       end
     end
-
-    puts duplicateActivities.to_yaml
 
     duplicateActivities.each do | activityId, activityName |
       dupActivities = UserExtracurricularActivity.where(:user_id => u.id, :name => activityName)
