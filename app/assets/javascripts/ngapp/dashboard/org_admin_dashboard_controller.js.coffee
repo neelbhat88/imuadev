@@ -2,15 +2,15 @@ angular.module('myApp')
 .controller "OrgAdminDashboardController", ['$scope', 'OrganizationService',
 ($scope, OrganizationService) ->
 
-  $('input, textarea').placeholder()
-
   $scope._ = _
 
   # $scope.current_user = current_user # Set by parent dashboard
   # $scope.user = user # Set by parent dashboard
-  $scope.current_organization = $scope.user.organization_name
+  $scope.current_organization = $scope.current_user.organization_name
 
-  OrganizationService.getOrganizationWithUsers($scope.user.organization_id)
+  $('input, textarea').placeholder()
+
+  OrganizationService.getOrganizationWithUsers($scope.current_user.organization_id)
     .success (data) ->
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
 
