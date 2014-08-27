@@ -24,12 +24,16 @@ namespace :db_update do
         end
       end
 
+      puts 'Duplicate Organizations:'
+      puts duplicateOrgs.to_yaml
+
       duplicateOrgs.each do | orgId, orgName |
         dupOrgs = UserServiceOrganization.where(:user_id => u.id, :name => orgName)
         dupOrgs.each do |dupOrg|
           hours = UserServiceHour.where(:user_service_organization_id => dupOrg.id)
           hours.update_all(:user_service_organization_id => orgId)
           if dupOrg.id != orgId
+            puts 'Deleting ' + dupOrg.name + ' id: ' + dupOrg.id
             UserServiceOrganization.destroy(dupOrg.id)
           end
         end
@@ -52,6 +56,9 @@ namespace :db_update do
           activityNames[a.id] = a.name
         end
       end
+
+      puts 'Duplicate Activities:'
+      puts duplicateActivities.to_yaml
 
       duplicateActivities.each do | activityId, activityName |
         dupActivities = UserExtracurricularActivity.where(:user_id => u.id, :name => activityName)
