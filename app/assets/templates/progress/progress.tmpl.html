@@ -63,24 +63,19 @@
 
   </div><!-- /progressMiddle -->
 
-  <div class="progressLower">
-
-    <div class="module-container" modulecolor="{{selected_module.module_title}}">
+  <div class="progressLower" modulecolor="{{selected_module.module_title}}">
 
       <!--MAIN PANEL-->
-        <div class="module-container--header">
 
-  	        <h4 class="bold">
-    	        {{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}
-            </h4>
-
+        <div class="progressLower--header">
+          <h4 class="bold">{{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}</h4>
         </div>
 
-        <div class="module-container--no-content" ng-show="selected_module.points.total == 0">
+        <div class="progressLower--no-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
         </div>
 
-        <div class="module-container--content clear" wait-to-load="{{loaded_milestones}}" ng-show="selected_module.points.total > 0">
+        <div class="progressLower--content">
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
         </div>
       <!--/MAIN PANEL-->

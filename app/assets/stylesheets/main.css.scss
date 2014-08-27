@@ -152,6 +152,14 @@ $bold: 700;
 
 }
 
+@mixin transition($seconds) {
+  -webkit-transition-duration: $seconds + s;
+  -moz-transition-duration: $seconds + s;
+  -ms-transition-duration: $seconds + s;
+  -o-transition-duration: $seconds + s;
+  transition-duration: $seconds + s;
+}
+
 /* ===============================================
    Big Global Stuff
    =============================================== */
