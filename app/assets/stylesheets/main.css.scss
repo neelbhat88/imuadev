@@ -795,6 +795,10 @@ button:focus {
    Misc
    =============================================== */
 
+.modal-body {
+  color: $ink;
+}
+
 .displayNone {
   display: none;
 }
