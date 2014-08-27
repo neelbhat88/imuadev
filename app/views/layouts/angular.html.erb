@@ -54,6 +54,9 @@
 
               <% if current_user.org_admin? %>
                 <div class="submenu__link">
+                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+                </div>
+                <div class="submenu__link">
                   <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
                 </div>
                 <div class="submenu__link">
@@ -103,6 +106,9 @@
             <% end %>
 
             <% if current_user.org_admin? %>
+              <li>
+                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+              </li>
               <li>
                 <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
               </li>
