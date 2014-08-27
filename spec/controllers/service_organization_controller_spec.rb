@@ -86,13 +86,18 @@ describe Api::V1::ServiceOrganizationController do
       login_student
 
       let(:userId) { subject.current_user.id }
+      let(:theOrganization) { create(:user_service_organization, user_id: subject.current_user.id) }
+      let(:theOrganizationHour) { create(:user_service_hour, user_id: subject.current_user.id) }
 
-      it "returns 200 with user_service_organization" do
-        organization1 = attributes_for(:user_service_organization, user_id: subject.current_user.id)
-        post :add_user_service_organization, {:user_service_organization => organization1}
+      it "returns 200 with user_service_organization and user_service_hour" do
+        organization = attributes_for(:user_service_organization, user_id: userId, id: theOrganization[:id])
+        hour = attributes_for(:user_service_hour, user_id: userId, user_service_organization_id: theOrganization[:id], id: theOrganizationHour[:id])
+        post :add_user_service_organization, {:user_service_organization => organization,
+                                              :user_service_hour => hour}
 
         expect(response.status).to eq(200)
         expect(json["user_service_organization"]["user_id"]).to eq(userId)
+        expect(json["user_service_hour"]["user_id"]).to eq(userId)
       end
     end
   end
@@ -149,19 +154,54 @@ describe Api::V1::ServiceOrganizationController do
     end
   end
 
-  describe "DELETE #user_service_organization" do
+  describe "DELETE #user_service_organization with hours in multipe time_units" do
     context "as a student" do
       login_student
 
-      let(:userId) { subject.current_user.id }
-      let(:theOrganization) { create(:user_service_organization, user_id: subject.current_user.id) }
+      before :each do
+        userId = subject.current_user.id
+        organization = create(:user_service_organization, user_id: userId, id: 5)
+        organizationHour1 =  create(:user_service_hour, user_id: userId, time_unit_id: 5, user_service_organization_id: 5)
+        organizationHour2 =  create(:user_service_hour, user_id: userId, time_unit_id: 7, user_service_organization_id: 5)
+      end
 
-      it "returns 200 with Deleted User Organization" do
-        delete :delete_user_service_organization, {:id => theOrganization[:id]}
+      let(:theOrganizationHour3) { create(:user_service_hour,
+                                          user_id: subject.current_user.id,
+                                          time_unit_id: 7,
+                                          user_service_organization_id: 5) }
+
+      it "returns 200 with Deleted Hours for User Organization Id" do
+        delete :delete_user_service_organization, {:id => 5, :time_unit_id => 5}
 
         expect(response.status).to eq(200)
-        expect(json["info"]).to eq("Successfully deleted Service Organization, id: #{theOrganization[:id]}")
+        expect(json["info"]).to eq("Successfully deleted all Hours in this semester for Service Organization, id: #{theOrganizationHour3[:user_service_organization_id]}")
       end
+
+    end
+  end
+
+  describe "DELETE #user_service_organization with hours only in one time_unit" do
+    context "as a student" do
+      login_student
+
+      before :each do
+        userId = subject.current_user.id
+        organization = create(:user_service_organization, user_id: userId, id: 5)
+        organizationHour1 =  create(:user_service_hour, user_id: userId, time_unit_id: 5, user_service_organization_id: 5)
+      end
+
+      let(:theOrganizationHour2) { create(:user_service_hour,
+                                          user_id: subject.current_user.id,
+                                          time_unit_id: 5,
+                                          user_service_organization_id: 5) }
+
+      it "returns 200 with Deleted Hours for User Organization Id" do
+        delete :delete_user_service_organization, {:id => 5, :time_unit_id => 5}
+
+        expect(response.status).to eq(200)
+        expect(json["info"]).to eq("Successfully deleted Service Organization, id: #{theOrganizationHour2[:user_service_organization_id]}")
+      end
+
     end
   end
 
