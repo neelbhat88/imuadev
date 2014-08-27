@@ -29,12 +29,14 @@ namespace :db_update do
 
       duplicateOrgs.each do | orgId, orgName |
         dupOrgs = UserServiceOrganization.where(:user_id => u.id, :name => orgName)
-        dupOrgs.each do |dupOrg|
-          hours = UserServiceHour.where(:user_service_organization_id => dupOrg.id)
-          hours.update_all(:user_service_organization_id => orgId)
-          if dupOrg.id != orgId
-            puts 'Deleting ' + dupOrg.name + ' id: ' + dupOrg.id
-            UserServiceOrganization.destroy(dupOrg.id)
+        if dupOrgs.any?
+          dupOrgs.each do |dupOrg|
+            hours = UserServiceHour.where(:user_service_organization_id => dupOrg.id)
+            hours.update_all(:user_service_organization_id => orgId)
+            if dupOrg.id != orgId
+              puts 'Deleting ' + dupOrg.name + ' id: ' + dupOrg.id.to_s
+              UserServiceOrganization.destroy(dupOrg.id)
+            end
           end
         end
       end
@@ -62,11 +64,14 @@ namespace :db_update do
 
       duplicateActivities.each do | activityId, activityName |
         dupActivities = UserExtracurricularActivity.where(:user_id => u.id, :name => activityName)
-        dupActivities.each do |dupActivity|
-          details = UserExtracurricularActivityDetail.where(:user_extracurricular_activity_id => dupActivity.id)
-          details.update_all(:user_extracurricular_activity_id => activityId)
-          if dupActivity.id != activityId
-            UserExtracurricularActivity.destroy(dupActivity.id)
+        if dupActivities.any?
+          dupActivities.each do |dupActivity|
+            details = UserExtracurricularActivityDetail.where(:user_extracurricular_activity_id => dupActivity.id)
+            details.update_all(:user_extracurricular_activity_id => activityId)
+            if dupActivity.id != activityId
+              puts 'Deleting ' + dupActivity.name + ' id: ' + dupActivity.id.to_s
+              UserExtracurricularActivity.destroy(dupActivity.id)
+            end
           end
         end
       end
