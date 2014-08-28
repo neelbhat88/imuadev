@@ -1,6 +1,5 @@
 angular.module('myApp')
-.controller 'OrganizationCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService',
-  'OrganizationService',
+.controller 'StudentsCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService'
   ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
 
     $scope._ = _
@@ -34,8 +33,6 @@ angular.module('myApp')
         $scope.average_ecActivities = $scope.organization.average_ecActivities
         $scope.average_testsTaken = $scope.organization.average_testsTaken
 
-        $scope.mentor_needs_help = "1*"
-
         $scope.loaded_users = true
 
 
@@ -45,7 +42,7 @@ angular.module('myApp')
       else
         user.first_name + " " + user.last_name
 
-    $scope.addMentor = () ->
+    $scope.addStudent = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',
         controller: 'AddUserModalController',
@@ -53,9 +50,10 @@ angular.module('myApp')
         size: 'sm',
         resolve:
           organization: () -> $scope.organization
-          new_user: () -> UsersService.newMentor($scope.organization.id)
+          new_user: () -> UsersService.newStudent($scope.organization.id)
 
       modalInstance.result.then (user) ->
-        $scope.organization.mentors.push(user)
+        $scope.organization.students.push(user)
+        $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
 
 ]

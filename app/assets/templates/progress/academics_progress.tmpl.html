@@ -1,5 +1,7 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
 
+  <div class="module-container clear" modulecolor="{{selected_module.module_title}}">
+
     <div class="module module--grades">
 
       <div class="module--header">Grades</div>
@@ -133,7 +135,9 @@
 
       	<div class="module--data user-class-greeting">
           Hey {{student.first_name}}, you are currently earning a
-          <h4><span class="numbers-large">{{gpa}}</span> GPA</h4> this semester.
+          <h2>{{gpa}}</h2>
+          <h4>GPA</h4>
+          this semester.
         </div>
 
       </div>
@@ -200,5 +204,7 @@
       </div><!-- /module-inner -->
 
     </div><!-- /academic-milestones -->
+
+  </div>
 
 </div>

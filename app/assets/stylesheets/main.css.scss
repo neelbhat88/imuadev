@@ -8,13 +8,13 @@
     @media only screen and (max-width: $breakpoint + px) { @content; }
 }
 
+@mixin respond-to-min($breakpoint) {
+    @media only screen and (min-width: $breakpoint + px) { @content; }
+}
+
 @mixin respond-to-with-height($breakpoint) {
     @media only screen and (max-width: $breakpoint + px),
           screen and (max-height: $breakpoint + px) { @content; }
-}
-
-@mixin respond-to-min($breakpoint) {
-    @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
 /* Colors */
@@ -93,8 +93,23 @@ $extracurricular-color-dark: $darkorange;
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
 
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
+$colormap: (
+  academics: $academics-color,
+  service: $service-color,
+  testing: $testing-color,
+  extracurricular: $extracurricular-color,
+  college_prep: $college_prep-color,
+  no_category: $boxgrey
+);
+
+$darkcolormap: (
+  academics: $academics-color-dark,
+  service: $service-color-dark,
+  testing: $testing-color-dark,
+  extracurricular: $extracurricular-color-dark,
+  college_prep: $college_prep-color-dark,
+  no_category: $grey
+);
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
@@ -137,6 +152,17 @@ $bold: 700;
 
 }
 
+@mixin transition($seconds) {
+  -webkit-transition-duration: $seconds + s;
+  -moz-transition-duration: $seconds + s;
+  -ms-transition-duration: $seconds + s;
+  -o-transition-duration: $seconds + s;
+  transition-duration: $seconds + s;
+}
+
+/* ===============================================
+   Big Global Stuff
+   =============================================== */
 
 html {
   height: 100%;
@@ -144,10 +170,16 @@ html {
 
   body {
 
-    min-width: 1260px;
+    //min-width: 1260px;
     font-family: $font-stack;
     font-weight: $regular;
     @include font-size(1.4);
+    background: $darkgrey;
+    color: white;
+
+    @include respond-to(800) {
+      @include font-size(1.2);
+    }
 
   }
 
@@ -186,12 +218,20 @@ h1 {
   @include font-size(12);
   font-weight: $bold;
 
+  @include respond-to(1200) { @include font-size(10) }
+  @include respond-to(900) { @include font-size(8) }
+  @include respond-to(600) { @include font-size(7) }
+
 }
 
 h2 {
 
   @include font-size(9);
-  font-weight: $bold;
+  font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(8) }
+  @include respond-to(900) { @include font-size(6.8) }
+  @include respond-to(600) { @include font-size(5.4) }
 
 }
 
@@ -199,6 +239,10 @@ h3 {
 
   @include font-size(6);
   font-weight: $bold;
+
+  @include respond-to(1200) { @include font-size(5) }
+  @include respond-to(900) { @include font-size(4.2) }
+  @include respond-to(600) { @include font-size(3.6) }
 
 }
 
@@ -208,6 +252,10 @@ h4 {
   @include font-size(4);
   font-weight: $light;
 
+  @include respond-to(1200) { @include font-size(3.5) }
+  @include respond-to(900) { @include font-size(3) }
+  @include respond-to(600) { @include font-size(2.5) }
+
 }
 
 h5 {
@@ -215,16 +263,19 @@ h5 {
   @include font-size(3);
   font-weight: $light;
 
-}
+  @include respond-to(1200) { @include font-size(2.6) }
+  @include respond-to(900) { @include font-size(2.2) }
+  @include respond-to(600) { @include font-size(1.8) }
 
-.big-text {
-  h5 { line-height: 1rem; }
 }
 
 h6 {
 
   @include font-size(1.8);
   font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(1.7) }
+  @include respond-to(900) { @include font-size(1.6) }
 
 }
 
@@ -242,7 +293,9 @@ h6 {
 
 .italic { font-style: italic; }
 
-.font-size-normal { font-size: 16px; }
+.big-text {
+  h5 { line-height: 1rem; }
+}
 
 
 /* ===============================================
@@ -251,6 +304,7 @@ h6 {
 
 $wrapper: 0 40px;
 $wrapper-width: 40px;
+$small-wrapper-width: 20px;
 $panelwrapper: 0 80px;
 
 .list-header {
@@ -266,27 +320,6 @@ $panelwrapper: 0 80px;
 	margin-top: 60px;
 
 }
-
-.user-list {
-
-  .user-list__add {
-    cursor: pointer;
-
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
-
-    display: inline-block;
-    vertical-align: top;
-
-    text-align: center;
-
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
-
-}
-
 
 /* ===============================================
    Header
@@ -315,7 +348,7 @@ header {
   .wrapper {
 
     margin: $wrapper;
-    @include respond-to(415) { margin: 0 10px; }
+    @include respond-to(600) { margin: 0 $small-wrapper-width; }
 
     .imua-logo {
 
@@ -329,6 +362,19 @@ header {
 
     }
 
+    .nav-expanded {
+      @include respond-to(800) {
+        display: none;
+      }
+    }
+
+    .nav-collapsed {
+      @include respond-to-min(800) {
+        display: none;
+      }
+    }
+
+
     nav {
 
       margin: 32px 0;
@@ -336,12 +382,15 @@ header {
       li {
 
         float: left;
+        margin-left: 90px;
+        @include respond-to(1000) { margin-left: 40px; }
+        @include respond-to(660) { margin-left: 20px; }
+
+        &:first-of-type {
+          margin-left: 20px;
+        }
 
         a { cursor: pointer; }
-
-        margin-left: 100px;
-        @include respond-to(840) { margin-left: 50px; }
-        @include respond-to(660) { margin-left: 20px; }
 
       }
 
@@ -404,7 +453,22 @@ header {
    Progress Circle Classes
    =============================================== */
 
-.avatar-block {
+.progress-circles {
+
+  width: 170px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: inherit;
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
 
   .circle-subnav {
     @include font-size(1.2);
@@ -431,7 +495,52 @@ header {
     visibility: visible;
   }
 
-} //.avatar-block
+} //.progress-circles
+
+.add-button {
+  @extend .progress-circles;
+  padding-top: 40px;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .glyphicon {
+    @include font-size(8);
+    color: $green;
+  }
+}
+
+/* ===============================================
+   Circle Picture Classes
+   =============================================== */
+
+.circle-pictures {
+  display: inline-block;
+  margin: 0 20px 30px 20px;
+
+  .circle-picture {
+    display: block;
+    width: 150px;
+    img {
+      width: 100%;
+      height: auto;
+      @include border-radius(50%);
+    }
+  }
+  .circle-picture--name {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
+
+}
 
 /* ===============================================
    Milestone Classes
@@ -689,13 +798,16 @@ button:focus {
    Misc
    =============================================== */
 
+.modal-body {
+  color: $ink;
+}
+
 .displayNone {
   display: none;
 }
 
 .flash-container {
   padding: 20px;
-  @extend .font-size-normal;
   z-index: 10000;
 
   position: absolute;
