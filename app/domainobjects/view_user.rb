@@ -1,5 +1,5 @@
 class ViewUser
-	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial,
+	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial, :title,
 								:phone, :role, :avatar_url,
 								:organization_id, :time_unit_id, :class_of,
 								:modules_progress, :user_milestones, :relationships,
@@ -12,6 +12,7 @@ class ViewUser
 		@last_name = user.last_name
 		@full_name = user.full_name
 		@first_last_initial = user.first_last_initial
+    @title = user.title
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
