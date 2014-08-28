@@ -23,6 +23,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder
-//= require masonry/jquery.masonry
 //= require_tree ../templates
 //= require_tree .

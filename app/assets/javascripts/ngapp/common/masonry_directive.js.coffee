@@ -3,7 +3,7 @@ angular.module('myApp')
   restrict: 'A',
   scope: {},
   link: (scope, elem, attrs) ->
-    $('.module-container').masonry({
-      itemSelector: '.module'
-     });
+    # $('.module-container').masonry({
+    #   itemSelector: '.module'
+    #  });
 ]
