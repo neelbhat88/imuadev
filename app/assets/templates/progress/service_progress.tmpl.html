@@ -73,7 +73,52 @@
 
         </div>
 
-        <button ng-hide="user_service_organizations.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addOrganization()">Add a Service Organization</button>
+        <button ng-hide="new_service_organization.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addOrganization()">Add a Service Organization</button>
+
+        <div class="module--submodule" ng-show="new_service_organization.editing">
+          <div class="editing">
+            <span class="input-group" ng-hide="new_service_organization.newOrganization">
+              <label>Who was the service for?</label>
+              <select class="form-control" ng-change="selectAction(new_service_organization)" ng-options="organization as organization.name for organization in previous_organization_list" ng-model="new_service_organization" name="serviceActivityName">
+                <option value="">--- Select Previous Organization ---</option>
+              </select>
+            </span>
+            <button class="btn btn-default form-control" ng-click="notInPreviousList()" ng-hide="new_service_organization.show">Not in List?</button>
+            <span class="input-group" ng-show="new_service_organization.newOrganization">
+              <label>Who was the service for?</label>
+              <input class="form-control" ng-model="new_service_organization.name" placeholder="Organization Name" name="serviceActivityName">
+            </span>
+
+          </div>
+
+          <table>
+            <tbody>
+              <tr ng-repeat="(hourIndex, user_service_hour) in new_service_organization.hours" ng-class="{'last':$last}">
+                <td class="editing" colspan="4">
+
+                  <span class="input-group" ng-show="new_service_organization.show">
+                    <label>Date</label>
+                    <imua-datepicker date="user_service_hour.date"></imua-datepicker>
+                  </span>
+                  <span class="input-group" ng-show="new_service_organization.show">
+                    <label>What type of service did you do?</label>
+                    <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
+                  </span>
+                  <span class="input-group" ng-show="new_service_organization.show">
+                    <label>How many hours?</label>
+                    <input class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
+                  </span>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="submit" title="Confirm" ng-click="saveNewOrganization()">Confirm</div>
+          <div class="cancel" title="Cancel" ng-click="cancelNewOrganization()">Cancel</div>
+
+        </div>
 
       </div>
 
