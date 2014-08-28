@@ -10,3 +10,21 @@ class UserClass < ActiveRecord::Base
   validates :time_unit_id, presence: true
   validates :user_id, presence: true
 end
+
+class ViewUserClass
+
+  def initialize(uc)
+    @id = uc.id
+    @gpa = uc.gpa
+    @grade = uc.grade
+    @name = uc.name
+    @time_unit_id = uc.time_unit_id
+    @user_id = uc.user_id
+    @period = uc.period
+    @room = uc.room
+    @credit_hours = uc.credit_hours
+    @level = uc.level
+    @subject = uc.subject
+  end
+
+end

@@ -8,3 +8,14 @@ class UserExpectation < ActiveRecord::Base
    validates :user_id, presence: true
    validates :status, presence: true
 end
+
+class ViewUserExpectation
+
+  def initialize(e)
+    @id = e.id
+    @expectation_id = e.expectation_id
+    @user_id = e.user_id
+    @status = e.status
+  end
+
+end

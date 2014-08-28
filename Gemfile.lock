@@ -104,14 +104,13 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    masonry-rails (0.2.1)
-      rails
     mime-types (1.25.1)
     mini_portile (0.5.3)
     multi_json (1.9.3)
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    oj (2.10.2)
     orm_adapter (0.4.0)
     paperclip (4.1.1)
       activemodel (>= 3.0.0)
@@ -219,8 +218,8 @@ DEPENDENCIES
   jquery-rails
   ladda-rails!
   mail
-  masonry-rails (~> 0.2.1)
   newrelic_rpm
+  oj
   paperclip
   pg
   rack-timeout
