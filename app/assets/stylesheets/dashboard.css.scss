@@ -1,4 +1,6 @@
-/***** Global Dashboard Styles *****/
+/* ===============================================
+	**********  Global Dashboard Styles  ***********
+	=============================================== */
 
 .dashboard-header {
 	width: 100%;
@@ -20,7 +22,9 @@
 
 }
 
-/***** Student Dashboard Styles *****/
+/* ===============================================
+	*************  Student Dashboard  *************
+	=============================================== */
 
 #studentDashboard {
 
@@ -65,6 +69,12 @@
 
 		padding: 40px $wrapper-width;
 
+		.milestone--point-circle {
+			@each $category, $color in $colormap {
+				&.color--#{$category} { border: 5px solid $color; color: $color; background: $grey;}
+			}
+		}
+
 		.section {
 
 			background: $boxgrey;
@@ -82,12 +92,6 @@
 
 			.section--inner {
 				padding: 40px;
-			}
-
-			.milestone--point-circle {
-				@each $category, $color in $colormap {
-					&.color--#{$category} { border: 5px solid $color; color: $color; }
-				}
 			}
 
 			.module-data__button {
@@ -108,7 +112,9 @@
 
 } //#studentDashboard
 
-/***** Mentor Dashboard Styles *****/
+/* ===============================================
+	*************  Mentor Dashboard  **************
+	=============================================== */
 
 #mentorDashboard {
 
@@ -182,3 +188,15 @@
 	}
 
 } //#mentorDashboard
+
+/* ===============================================
+	************  Org Admin Dashboard  ************
+	=============================================== */
+
+#OrgAdminDashboard {
+	.dashboard-header {
+		background: $grey;
+		color: white;
+		text-align: center;
+	}
+} //#OrgAdminDashboard

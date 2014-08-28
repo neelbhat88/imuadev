@@ -8,7 +8,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 			json: {
 				success: true,
 				info: "Current User",
-				user: ViewUser.new(current_user)
+				user: ViewUser.new(current_user, current_user.organization)
 			}
 	end
 

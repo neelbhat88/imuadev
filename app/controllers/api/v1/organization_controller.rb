@@ -38,13 +38,15 @@ class Api::V1::OrganizationController < ApplicationController
     end
 
     org = @organizationRepository.get_organization(orgId)
+    admins = org.users.where(:role => Constants.UserRole[:ORG_ADMIN])
+
     roadmap = @roadmapRepository.get_roadmap_by_organization(orgId)
     viewRoadmap = ViewRoadmap.new(roadmap) unless roadmap.nil?
 
     render status: :ok,
       json: {
         info: "Organization with Roadmap",
-        organization: org,
+        organization: {id: org.id, name: org.name, orgAdmins: admins.map {|u| ViewUser.new(u)} },
         roadmap: viewRoadmap
       }
   end
