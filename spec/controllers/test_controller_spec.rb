@@ -381,15 +381,13 @@ describe Api::V1::TestController do
       it "returns 200 if own tests (all)" do
         get :get_user_tests, {:id => userId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(userTest1.id)
-        expect(json["userTests"][1]["id"]).to eq(userTest2.id)
+        expect(json["userTests"].length).to eq(2)
       end
 
       it "returns 200 if own tests (for a particular time unit)" do
         get :get_user_tests, {:id => userId, :time_unit_id => timeUnitId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(userTest1.id)
-        expect(json["userTests"][1]).to eq(nil)
+        expect(json["userTests"].length).to eq(1)
       end
     end
 
@@ -436,15 +434,13 @@ describe Api::V1::TestController do
       it "returns 200 if try to view a student's tests (all) who is assigned to them." do
         get :get_user_tests, {:id => student1.id}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+        expect(json["userTests"].length).to eq(2)
       end
 
       it "returns 200 if try to view a student's tests (for a particular time unit) who is assigned to them." do
         get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]).to eq(nil)
+        expect(json["userTests"].length).to eq(1)
       end
     end
 
@@ -478,6 +474,9 @@ describe Api::V1::TestController do
       let!(:student2Test2) { create(:user_test, org_test_id: otherOrgTest.id,
                                                 user_id: student2.id,
                                                 time_unit_id: timeUnitId + 1) }
+      let!(:student2Test3) { create(:user_test, org_test_id: otherOrgTest.id,
+                                                user_id: student2.id,
+                                                time_unit_id: timeUnitId + 1) }
 
       it "returns 403 if try to view a student's tests (all) for different organization." do
         get :get_user_tests, {:id => student2.id}
@@ -492,15 +491,13 @@ describe Api::V1::TestController do
       it "returns 200 if try to view a student's tests (all) within same organization." do
         get :get_user_tests, {:id => student1.id}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+        expect(json["userTests"].length).to eq(2)
       end
 
       it "returns 200 if try to view a student's tests (for a particular time unit) within same organization." do
         get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]).to eq(nil)
+        expect(json["userTests"].length).to eq(1)
       end
     end
 
@@ -538,29 +535,25 @@ describe Api::V1::TestController do
       it "returns 200 if try to view a student1's tests (all)." do
         get :get_user_tests, {:id => student1.id}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]["id"]).to eq(student1Test2.id)
+        expect(json["userTests"].length).to eq(2)
       end
 
       it "returns 200 if try to view a student1's tests (for a particular time unit)." do
         get :get_user_tests, {:id => student1.id, :time_unit_id => timeUnitId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student1Test1.id)
-        expect(json["userTests"][1]).to eq(nil)
+        expect(json["userTests"].length).to eq(1)
       end
 
       it "returns 200 if try to view a student2's tests (all)." do
         get :get_user_tests, {:id => student2.id}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student2Test1.id)
-        expect(json["userTests"][1]["id"]).to eq(student2Test2.id)
+        expect(json["userTests"].length).to eq(2)
       end
 
       it "returns 200 if try to view a student2's tests (for a particular time unit)." do
         get :get_user_tests, {:id => student2.id, :time_unit_id => timeUnitId}
         expect(response.status).to eq(200)
-        expect(json["userTests"][0]["id"]).to eq(student2Test1.id)
-        expect(json["userTests"][1]).to eq(nil)
+        expect(json["userTests"].length).to eq(1)
       end
     end
 
