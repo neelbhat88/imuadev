@@ -68,6 +68,11 @@
   margin: 0 40px 40px 0;
   display: inline-block;
 
+  @include respond-to(675) {
+    display: block;
+    margin: 0 auto 40px auto;
+  }
+
   .attention-circle {
     width: 170px;
     margin-right: 20px;
@@ -89,6 +94,7 @@
     @include respond-to(1200) {
       display: block;
       text-align: center;
+      margin: 0 auto;
     }
 
     .attention-description {
