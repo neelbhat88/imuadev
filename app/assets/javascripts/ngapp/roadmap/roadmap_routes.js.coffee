@@ -1,6 +1,6 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
-    $routeProvider.when '/roadmap',
+    $routeProvider.when '/roadmap/:id',
       templateUrl: 'roadmap/roadmap.html',
       controller: 'RoadmapController',
       resolve:

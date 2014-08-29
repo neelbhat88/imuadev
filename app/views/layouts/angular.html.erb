@@ -54,13 +54,16 @@
 
               <% if current_user.org_admin? %>
                 <div class="submenu__link">
+                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+                </div>
+                <div class="submenu__link">
                   <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
                 </div>
                 <div class="submenu__link">
                   <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/roadmap/">Organization Setup</a>
+                  <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
                 </div>
               <% end %>
 
@@ -69,7 +72,7 @@
                   <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/roadmap/">Our Roadmap</a>
+                  <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Our Roadmap</a>
                 </div>
               <% end %>
 
@@ -104,13 +107,16 @@
 
             <% if current_user.org_admin? %>
               <li>
+                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Home</a>
+              </li>
+              <li>
                 <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
               </li>
               <li>
                 <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/roadmap/">Organization Setup</a>
+                <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
               </li>
             <% end %>
 
@@ -119,7 +125,7 @@
                 <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/roadmap/">Our Roadmap</a>
+                <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Our Roadmap</a>
               </li>
             <% end %>
 

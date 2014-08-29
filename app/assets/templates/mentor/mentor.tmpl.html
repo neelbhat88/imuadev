@@ -29,19 +29,16 @@
     </div>
   </div>
 
-  <div class="user-list ptxl pbxl all-students" ng-show="assigning">
+  <div class="user-list" ng-show="assigning">
+
     <h4 ng-hide="all_students.length == assigned_students.length">Click the students below to assign them to {{mentor.first_name}}</h4>
-    <div class="avatar-block avatar-block--list" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)"
-          ng-repeat="student in all_students">
-      <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+    <h4 ng-show="all_students.length == assigned_students.length">No students left to assign!</h4>
 
-      <div class="avatar-block__name">
-        {{student.first_name}} {{student.last_name}}
-      </div>
-    </div>
-
-    <div class="pal" ng-show="all_students.length == assigned_students.length">
-      <h4>No students left to assign!</h4>
+    <div class="circle-pictures" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)" ng-repeat="student in all_students">
+        <div class="circle-picture">
+          <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+        </div>
+        <h6 class="bold">{{student.first_last_initial}}</h6>
     </div>
   </div>
 

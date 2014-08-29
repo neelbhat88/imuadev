@@ -54,8 +54,6 @@ gem 'underscore-rails'
 
 gem 'mail'
 
-gem 'masonry-rails', '~> 0.2.1'
-
 # Images
 gem 'rmagick', '2.13.2'
 gem 'paperclip'
@@ -71,6 +69,8 @@ gem "d3-rails"
 gem "six"
 
 gem 'intercom-rails'
+
+gem 'oj'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

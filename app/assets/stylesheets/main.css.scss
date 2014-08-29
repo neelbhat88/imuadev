@@ -382,12 +382,15 @@ header {
       li {
 
         float: left;
+        margin-left: 90px;
+        @include respond-to(1000) { margin-left: 40px; }
+        @include respond-to(660) { margin-left: 20px; }
+
+        &:first-of-type {
+          margin-left: 20px;
+        }
 
         a { cursor: pointer; }
-
-        margin-left: 100px;
-        @include respond-to(1000) { margin-left: 50px; }
-        @include respond-to(660) { margin-left: 20px; }
 
       }
 
@@ -516,6 +519,7 @@ header {
 .circle-pictures {
   display: inline-block;
   margin: 0 20px 30px 20px;
+  text-align: center;
 
   .circle-picture {
     display: block;
@@ -794,6 +798,10 @@ button:focus {
 /* ===============================================
    Misc
    =============================================== */
+
+.modal-body {
+  color: $ink;
+}
 
 .displayNone {
   display: none;

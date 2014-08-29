@@ -110,7 +110,8 @@
             <div class="circle-picture">
               <img ng-src="{{orgAdmin.square_avatar_url}}">
             </div>
-            <h6>{{fullName(orgAdmin)}}</h6>
+            <h6 ng-if="orgAdmin.id != current_user.id">{{orgAdmin.full_name}}</h6>
+            <h6 ng-if="orgAdmin.id == current_user.id">Me</h6>
           </a>
         </div>
 
