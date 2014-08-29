@@ -62,6 +62,11 @@ class User < ActiveRecord::Base
     return self.role.to_i == Constants.UserRole[:STUDENT]
   end
 
+  def role_name
+    index = Constants.UserRole.values.index self.role.to_i
+    Constants.UserRole.keys[index].to_s.capitalize
+  end
+
   def abilities
     @abilities ||= begin
                      abilities = Six.new
