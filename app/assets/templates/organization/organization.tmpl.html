@@ -19,13 +19,13 @@
           <div ng-if="active_mentors == 1" class="descript">Mentor Active <br>This Week</div>
 				</div>
 			</li>
-			<li>
-				<div class="stat-wrapper clear">
-					<div class="count"><h4><span class="bold">{{mentor_needs_help}}</span></h4></div>
-					<div ng-if="mentor_needs_help !== 1" class="descript">Mentors <br>Need Help</div>
-          <div ng-if="mentor_needs_help == 1" class="descript">Mentor <br>Needs Help</div>
-				</div>
-			</li>
+			<!-- <li>
+			  <div class="stat-wrapper clear">
+			    <div class="count"><h4><span class="bold">{{mentor_needs_help}}</span></h4></div>
+			    <div ng-if="mentor_needs_help !== 1" class="descript">Mentors <br>Need Help</div>
+			          <div ng-if="mentor_needs_help == 1" class="descript">Mentor <br>Needs Help</div>
+			  </div>
+			</li> -->
 			<li>
 				<div class="stat-wrapper clear">
 					<div class="count"><h4><span class="bold">{{_.uniq(_.pluck(_.where(organization.students, { needs_attention: true }), "assigned_to_id")).length}}</span></h4></div>

@@ -158,6 +158,10 @@
 
     }
 
+    .coming-soon {
+      color: white(0.4);
+    }
+
     .numbers-large {
 
       @include font-size(10.0);
