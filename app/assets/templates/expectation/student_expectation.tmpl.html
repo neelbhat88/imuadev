@@ -38,11 +38,25 @@
 
     <div class="meetingExpectations">
       <div class="expectations-message" wait-to-load="{{loaded_expectations}}">
-        <div class="expectations-met-message" ng-hide="!meetingExpectations">
-          <h3 class="bold">Nice work {{student.first_name}}!</h3> <h5>You're meeting all of the Expectations!</h5>
+        <div ng-if="current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">Nice work {{student.first_name}}!</h3>
+            <h5>You're meeting all of the Expectations!</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>Hey {{student.first_name}},</h3>
+            <h5>you aren't currently meeting all of your expectations.</h5>
+          </div>
         </div>
-        <div class="expectations-not-met-message" ng-hide="meetingExpectations">
-          <h3>Hey {{student.first_name}},</h3> <h5>there are some expectations you aren't currently meeting.</h5>
+        <div ng-if="!current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">{{student.first_name}} is meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>{{student.first_name}} is not meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
         </div>
       </div>
     </div>
