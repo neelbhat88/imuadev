@@ -32,7 +32,7 @@
 		<div ng-repeat="(group, group_students) in groupedStudents">
 			<h5 class="pvm">Class of <span class="bold">{{group}}</span></h5>
 
-			<div class="progress-circles" ng-repeat="student in group_students | orderBy: 'id'">
+			<div class="progress-circles" ng-repeat="student in group_students | orderBy: 'last_name'">
 				<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress"><progress-circle student="student"></progress-circle></a>
 					<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">{{student.first_last_initial}}</a></h6>
 					<ul class="circle-subnav">
