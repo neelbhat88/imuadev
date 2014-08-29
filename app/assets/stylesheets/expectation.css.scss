@@ -16,14 +16,14 @@
 
     .wide {
 
-      width: 85%;
+      width: 80%;
       padding: 40px 100px 0 100px;
 
     }
 
     .narrow {
 
-      width: 15%;
+      width: 20%;
       padding: 60px 0;
       text-align: center;
 
@@ -55,6 +55,15 @@
     padding-bottom: 60px;
     border-right: 1px solid $darkborder;
 
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border-right: 0;
+      padding: 0;
+      margin-top: 20px;
+    }
+
   }
 
   .meetingExpectations {
@@ -64,6 +73,15 @@
     padding-top: 80px;
     text-align: center;
     color: white();
+
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      margin-bottom: 40px;
+    }
 
   }
 
@@ -88,6 +106,12 @@
       .expectations-list-item {
         width: 48%;
         float: left;
+
+        @include respond-to (900) {
+          float: none;
+          display: block;
+          width: 100%;
+        }
 
         .expectation-btn-group--container {
           width: 65%;
