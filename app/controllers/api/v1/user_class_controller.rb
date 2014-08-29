@@ -11,7 +11,7 @@ class Api::V1::UserClassController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /user/:user_id/user_class?time_unit=#
+  # GET /users/:user_id/user_class?time_unit=#
   def index
     userId = params[:user_id].to_i
     time_unit_id = params[:time_unit].to_i
@@ -40,7 +40,7 @@ class Api::V1::UserClassController < ApplicationController
       }
   end
 
-  # POST /user/:user_id/user_class
+  # POST /users/:user_id/user_class
   def create
     userId = params[:user_id]
     new_class = params[:user_class]

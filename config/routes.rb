@@ -18,6 +18,15 @@ Imua::Application.routes.draw do
         resources :user_class, except: [:new, :edit]
       end
 
+      resources :users, shallow: true do
+        resources :user_extracurricular_activity, except: [:new, :edit]
+      end
+
+      resources :users, shallow: true do
+        resources :user_extracurricular_activity_detail, except: [:new, :edit]
+      end
+
+
       resources :users do
         collection do
           put '/:id/update_password' => 'users#update_password'

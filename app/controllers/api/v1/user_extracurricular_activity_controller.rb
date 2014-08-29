@@ -1,4 +1,4 @@
-class Api::V1::ExtracurricularActivityController < ApplicationController
+class Api::V1::UserExtracurricularActivityController < ApplicationController
   respond_to :json
 
   before_filter :authenticate_user!
@@ -9,8 +9,9 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /users/:id/extracurricular_activity_details?time_unit_id=#
-  def user_extracurricular_activity_details
+  # Currently handles user_extracurricular_activity GET as well.
+  # GET /users/:user_id/user_extracurricular_activity?time_unit_id=#
+  def index
     userId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -33,8 +34,9 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       }
   end
 
-  # POST /extracurricular_activity
-  def add_user_extracurricular_activity
+  # Currently handles user_extracurricular_activity_detail POST as well.
+  # POST /user/:user_id/user_extracurricular_activity
+  def create
     new_extracurricular_activity = params[:user_extracurricular_activity]
     new_extracurricular_detail = params[:user_extracurricular_detail]
     userId = params[:user_extracurricular_activity][:user_id].to_i
@@ -60,29 +62,9 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       }
   end
 
-  # POST /extracurricular_activity_detail
-  def add_user_extracurricular_activity_detail
-    new_extracurricular_activity_detail = params[:user_extracurricular_detail]
-    userId = params[:user_extracurricular_detail][:user_id].to_i
-
-    user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userExtracurricularActivityService.save_user_extracurricular_activity_detail(new_extracurricular_activity_detail)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        user_extracurricular_detail: result.object
-      }
-  end
-
-  # PUT /extracurricular_activity/:id
-  def update_user_extracurricular_activity
+  # Currently handles user_extracurricular_activity_detail PUT as well.
+  # PUT /user_extracurricular_activity/:id
+  def update
     extracurricularActivityId = params[:id].to_i
     updated_extracurricular_activity = params[:user_extracurricular_activity]
     updated_extracurricular_detail = params[:user_extracurricular_detail]
@@ -107,31 +89,8 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
       }
   end
 
-  # PUT /extracurricular_activity_detail/:id
-  def update_user_extracurricular_activity_detail
-    extracurricularActivityDetailId = params[:id].to_i
-    updated_extracurricular_activity_detail = params[:user_extracurricular_detail]
-
-    user_extracurricular_activity_detail = @userExtracurricularActivityService.get_user_extracurricular_activity_detail(extracurricularActivityDetailId)
-
-    user = @userRepository.get_user(user_extracurricular_activity_detail.user_id)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userExtracurricularActivityService.update_user_extracurricular_activity_detail(updated_extracurricular_activity_detail)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        user_extracurricular_detail: result.object
-      }
-  end
-
-  # DELETE /extracurricular_activity/:id
-  def delete_user_extracurricular_activity
+  # DELETE /user_extracurricular_activity/:id
+  def destroy
     extracurricularActivityId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -145,27 +104,6 @@ class Api::V1::ExtracurricularActivityController < ApplicationController
     end
 
     result = @userExtracurricularActivityService.delete_user_extracurricular_activity(extracurricularActivityId, user_extracurricular_activity.user_id, time_unit_id)
-
-    render status: result.status,
-      json: {
-        info: result.info
-      }
-  end
-
-  # DELETE /extracurricular_activity_detail/:id
-  def delete_user_extracurricular_activity_detail
-    extracurricularActivityDetailId = params[:id].to_i
-
-    user_extracurricular_activity_detail = @userExtracurricularActivityService.get_user_extracurricular_activity_detail(extracurricularActivityDetailId)
-
-    user = @userRepository.get_user(user_extracurricular_activity_detail.user_id)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userExtracurricularActivityService.delete_user_extracurricular_activity_detail(extracurricularActivityDetailId)
 
     render status: result.status,
       json: {
