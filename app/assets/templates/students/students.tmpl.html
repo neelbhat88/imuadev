@@ -28,6 +28,32 @@
 		</ul>
 	</div>
 
+	<div class="students-mid">
+		<div class="students-attention" ng-hide="attention_students.length == 0">
+			<div ng-if="attention_students.length == 1" class="list-header">
+				<h5><span class="bold">This student needs attention</span> from their mentor</h5>
+			</div>
+			<div ng-if="attention_students.length != 1" class="list-header">
+				<h5><span class="bold">These students need attention</span> from their mentors</h5>
+			</div>
+			<div class="list-container">
+				<div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'last_name'" ng-if="student.id | existsInArray: attention_students">
+					<div class="attention-circle">
+					<progress-circle student="student" identifier="attention"></progress-circle>
+					</div>
+					<div class="attention-text">
+						<h5 class="bold student-name">{{student.first_last_initial}}</h5>
+						<div class="attention-description">
+							<!-- This should be replaced with a directive or something that allows us to insert custom messages and button links. -->
+							<h6>isn't meeting their expectations.</h6>
+							<a href="#/expectations/{{student.id}}"><button class="btn btn-default">View Problem</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="students-lower">
 		<div ng-repeat="(group, group_students) in groupedStudents">
 			<h5 class="pvm">Class of <span class="bold">{{group}}</span></h5>
