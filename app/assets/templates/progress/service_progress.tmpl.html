@@ -144,7 +144,8 @@
           <span ng-if="current_user.is_student">Hey {{student.first_name}}, you have completed</span>
           <span ng-if="!current_user.is_student">{{student.first_name}} has completed</span>
           <h2>{{semester_service_hours}}</span></h2>
-          <h4>Service Hours</h4>
+          <h4 ng-if="semester_service_hours != 1">Service Hours</h4>
+          <h4 ng-if="semester_service_hours == 1">Service Hour</h4>
           this semester.
         </div>
 

@@ -115,10 +115,11 @@
       <div class="module--content">
 
       	<div class="user-class-greeting" wait-to-load="loaded_semester_activities">
-          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you are participating in</span>
+          <span ng-if="current_user.is_student">You're participating in</span>
           <span ng-if="!current_user.is_student">{{student.first_name}} is participating in</span>
-          <h2>{{semester_activities}}</span></h2>
-          <h4>activities</h4>
+          <h2>{{semester_activities}}</h2>
+          <h4 ng-if="semester_activities != 1">activities</h4>
+          <h4 ng-if="semester_activities == 1">activity</h4>
           this semester.
         </div>
 
