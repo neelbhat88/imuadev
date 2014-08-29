@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :user_service_hours, dependent: :destroy
   has_many :parent_guardian_contacts, dependent: :destroy
   has_many :user_milestones, dependent: :destroy
+  has_many :assignments, dependent: :destroy
+  has_many :user_assignments, dependent: :destroy
 
   has_attached_file :avatar, styles: {
     square: '140x140#',

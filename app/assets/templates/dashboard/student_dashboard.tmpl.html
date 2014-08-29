@@ -32,8 +32,25 @@
 
     </div><!-- dashboard-header--student -->
 
-    <div class="dashboard-attention dashboard-attention--student displayNone">
-      <div>This is where things that need attention go</div>
+    <div class="dashboard-attention dashboard-attention--student" ng-hide="user_assignments.length == 0">
+      <!-- This is where things that need attention go -->
+
+      <div class="circle-pictures" ng-repeat="ua in user_assignments">
+        <span> <h4>TODOs:</h4>
+          <a ng-href="#/profile/{{ua.assigner.id}}" title="View profile">
+            <div class="circle-picture">
+              <img ng-src="{{ua.assigner.square_avatar_url}}">
+            </div>
+          </a>
+          <span>
+            <h6 class="bold">{{ua.assigner.first_name}} {{ua.assigner.last_name}}</h6>
+            <h5 class="bold">{{ua.title}}</h5>
+            <h6>{{ua.description}}</h6>
+            <h6 >Due Date:  {{ua.due_datetime}}</h6>
+          <span>
+        </span>
+      </div>
+
     </div>
 
     <div class="dashboard-content dashboard-content--student clear">

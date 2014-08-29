@@ -799,6 +799,10 @@ button:focus {
    Misc
    =============================================== */
 
+.dropdown-menu {
+  z-index: 5000;
+}
+
 .modal-body {
   color: $ink;
 }
