@@ -68,7 +68,8 @@
       <!--MAIN PANEL-->
 
         <div class="progressLower--header">
-          <h4 class="bold">{{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}</h4>
+          <h4 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}</h4>
+          <h4 class="bold" ng-if="current_user.is_student">Your {{selected_module.module_title | underscoresToSpaces}}</h4>
         </div>
 
         <div class="progressLower--no-content" ng-show="selected_module.points.total == 0">

@@ -9,8 +9,8 @@
       <div class="module--content">
 
         <div class="module--no-data" ng-show="user_classes.length == 0">
-          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
-          <h6>Let's get that taken care of. Add your classes for this semester below.</h6>
+          <h6 ng-if="current_user.is_student">{{student.first_name}}, looks like you haven't added any classes yet. Let's get that taken care of!</h6>
+          <h6 ng-if="!current_user.is_student">{{student.first_name}} hasn't entered any classes yet.</h6>
         </div>
 
         <div class="module--data">
@@ -134,7 +134,8 @@
       <div class="module--content">
 
       	<div class="module--data user-class-greeting">
-          Hey {{student.first_name}}, you are currently earning a
+          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you are currently earning a</span>
+          <span ng-if="!current_user.is_student">{{student.first_name}} is currently earning a</span>
           <h2>{{gpa}}</h2>
           <h4>GPA</h4>
           this semester.
