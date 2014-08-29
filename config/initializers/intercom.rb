@@ -40,7 +40,8 @@ IntercomRails.config do |config|
   config.user.custom_data = {
     #:plan => Proc.new { |current_user| current_user.plan.name },
     #:favorite_color => :favorite_color
-    :name => Proc.new {|current_user| current_user.full_name }
+    :name => Proc.new {|current_user| current_user.full_name },
+    :role => Proc.new {|current_user| current_user.role_name }
   }
 
   # == User -> Company association
