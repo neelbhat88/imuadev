@@ -26,7 +26,7 @@
 
     .progressStudent {
 
-      width: 85%;
+      width: 80%;
       padding: 25px 100px 0 100px;
 
       select {
@@ -43,7 +43,7 @@
 
     .narrow {
 
-      width: 15%;
+      width: 20%;
       padding: 60px 0;
       text-align: center;
       border-left: 1px solid $darkborder;
@@ -67,6 +67,15 @@
     padding-bottom: 60px;
     border-right: 1px solid $darkborder;
 
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border-right: 0;
+      border-bottom: 1px solid $darkborder;
+      padding: 20px 0;
+    }
+
   }
 
   .circles {
@@ -77,11 +86,22 @@
     text-align: center;
     color: white();
 
+    @include respond-to (1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      padding: 20px 0;
+    }
+
     .module-circle {
       display: inline-block;
       width: 20%;
       text-align: center;
       opacity: 0.3;
+
+      @include respond-to (1000) {
+        width: 200px;
+      }
 
       &.inactive {
         //display: none;

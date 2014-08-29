@@ -70,6 +70,11 @@
 
       padding: 40px;
 
+      .module--no-data {
+        margin-bottom: 40px;
+        h5, h6 {margin-bottom: 20px;}
+      }
+
       .module--data {
 
         table {
@@ -150,6 +155,11 @@
         }
 
       } //.module--data
+
+    }
+
+    .coming-soon {
+      color: white(0.4);
     }
 
     .numbers-large {

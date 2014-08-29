@@ -9,13 +9,19 @@
       <div class="module--content">
 
         <div class="module--no-data" ng-show="userTests.length == 0">
-          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
-          <h6>Let's get that taken care of. Add tests you've taken this semester.</h6>
+          <div ng-if="current_user.is_student">
+            <h5>{{student.first_name}}, looks like you haven't added any tests yet.</h5>
+            <p>If you've taken one recently, you should add it here!</p>
+          </div>
+          <div ng-if="!current_user.is_student">
+            <h5>{{student.first_name}} hasn't added any tests this semester.</h5>
+          </div>
+
         </div>
 
         <div class="module--data">
 
-          <table>
+          <table ng-show="userTests.length > 0">
             <thead>
               <th>Date</th>
               <th>Test</th>
@@ -92,9 +98,11 @@
       <div class="module--content">
 
       	<div class="user-class-greeting" wait-to-load="{{loaded_module_milestones}}">
-          Hey {{student.first_name}}, you have finished
+          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you have completed</span>
+          <span ng-if="!current_user.is_student">{{student.first_name}}, has completed</span>
           <h2>{{numUserTests}}</span></h2>
-            <h4>Tests</h4>
+            <h4 ng-if="numUserTests != 1">Tests</h4>
+            <h4 ng-if="numUserTests == 1">Test</h4>
             this semester.
         </div>
 
