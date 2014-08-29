@@ -11,3 +11,16 @@ class UserMilestone < ActiveRecord::Base
   validates :time_unit_id, presence: true
   validates :user_id, presence: true
 end
+
+class ViewUserMilestone
+
+  def initialize(um)
+    @id = um.id
+    @milestone_id = um.milestone_id
+    @module = um.module
+    @submodule = um.submodule
+    @time_unit_id = um.time_unit_id
+    @user_id = um.user_id
+  end
+
+end

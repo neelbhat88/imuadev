@@ -1,5 +1,5 @@
 class ViewUser
-	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial,
+	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial, :title,
 								:phone, :role, :avatar_url,
 								:organization_id, :time_unit_id, :class_of,
 								:modules_progress, :user_milestones, :relationships,
@@ -12,6 +12,7 @@ class ViewUser
 		@last_name = user.last_name
 		@full_name = user.full_name
 		@first_last_initial = user.first_last_initial
+    @title = user.title
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
@@ -31,20 +32,16 @@ class ViewUser
 		@organization_name = org.name unless org.nil?
 
 		if user.student?
-			@relationships = user.relationships
+			@relationships = user.relationships.map{|e| ViewRelationship.new(e)}
+			@user_expectations = user.user_expectations.map{|e| ViewUserExpectation.new(e)}
 
-			@user_expectations = user.user_expectations
-			@user_milestones = user.user_milestones
-
-			@user_classes = user.user_classes
-			@user_extracurricular_activity_details = user.user_extracurricular_activity_details
-			@user_service_hours = user.user_service_hours
-			@user_tests = user.user_tests
-		end
-
-		if user.mentor?
-			@relationships = user.relationships
+			@user_milestones = user.user_milestones.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserMilestone.new(e)}
+			@user_classes = user.user_classes.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserClass.new(e)}
+			@user_extracurricular_activity_details = user.user_extracurricular_activity_details.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserExtracurricularActivityDetail.new(e)}
+			@user_service_hours = user.user_service_hours.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserServiceHour.new(e)}
+			@user_tests = user.user_tests.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserTest.new(e)}
 		end
 
 	end
+	
 end
