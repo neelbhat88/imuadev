@@ -13,17 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20140827191458) do
 
-  create_table "assignments", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.string   "description"
-    t.datetime "due_datetime"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"
-
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
     t.string   "title"
@@ -125,18 +114,6 @@ ActiveRecord::Schema.define(:version => 20140827191458) do
   end
 
   add_index "time_units", ["organization_id"], :name => "index_time_units_on_organization_id"
-
-  create_table "user_assignments", :force => true do |t|
-    t.integer  "assignment_id"
-    t.integer  "user_id"
-    t.integer  "status"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "user_assignments", ["assignment_id", "user_id"], :name => "index_user_assignments_on_assignment_id_and_user_id", :unique => true
-  add_index "user_assignments", ["assignment_id"], :name => "index_user_assignments_on_assignment_id"
-  add_index "user_assignments", ["user_id"], :name => "index_user_assignments_on_user_id"
 
   create_table "user_classes", :force => true do |t|
     t.string   "name"
