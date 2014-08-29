@@ -9,8 +9,14 @@
     	<div class="module--content">
 
   	    <div class="module--no-data" ng-show="user_service_organizations.length == 0">
-          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
-          <h6>Let's get that taken care of. Add your Service Organizations for this semester below.</h6>
+          <div ng-if="current_user.is_student">
+            <h5>{{student.first_name}}, looks like you haven't added any service hours yet.</h5>
+            <p>First things first! Add an organization below so you can start logging your hours!</p>
+          </div>
+          <div ng-if="!current_user.is_student">
+            <h5>{{student.first_name}} hasn't added any service organizations yet.</h5>
+            <p>They can begin adding hours once they've added an organization.</p>
+          </div>
         </div>
 
         <div class="module--data">
@@ -55,7 +61,8 @@
                       <imua-datepicker date="user_service_hour.new_date"></imua-datepicker>
                     </span>
                     <span class="input-group">
-                      <label>What type of service did you do?</label>
+                      <label ng-if="current_user.is_student">What type of service did you do?</label>
+                      <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
                       <textarea class="form-control" ng-model="user_service_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
                     </span>
                     <span class="input-group">
@@ -103,7 +110,8 @@
                       <imua-datepicker date="user_service_hour.date"></imua-datepicker>
                     </span>
                     <span class="input-group" ng-show="new_service_organization.show">
-                      <label>What type of service did you do?</label>
+                      <label ng-if="current_user.is_student">What type of service did you do?</label>
+                      <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
                       <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
                     </span>
                     <span class="input-group" ng-show="new_service_organization.show">
@@ -133,7 +141,8 @@
       <div class="module--content">
 
       	<div class="user-class-greeting" wait-to-load="{{loaded_semester_service_hours}}">
-          Hey {{student.first_name}}, you have completed
+          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you have completed</span>
+          <span ng-if="!current_user.is_student">{{student.first_name}} has completed</span>
           <h2>{{semester_service_hours}}</span></h2>
           <h4>Service Hours</h4>
           this semester.

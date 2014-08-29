@@ -9,13 +9,18 @@
       <div class="module--content">
 
         <div class="module--no-data" ng-show="user_extracurricular_activities.length == 0">
-          <h6>{{student.first_name}}, looks like you haven't entered any data.</h6>
-          <h6>Let's get that taken care of. Add your Extracurricular Activities for this semester below.</h6>
+          <div ng-if="current_user.is_student">
+            <h6>Hey {{student.first_name}}, do you participate in any extracurricular activities?</h6>
+            <p>If so, you should add them by clicking the button below!</p>
+          </div>
+          <div ng-if="!current_user.is_student">
+            <h5>{{student.first_name}} hasn't added any extracurricular activities yet.</h5>
+          </div>
         </div><!-- /No activities warning -->
 
         <div class="module--data">
 
-          <table>
+          <table ng-show="user_extracurricular_activities.length > 0">
 
             <thead>
               <th colspan="4">Activity</th>
@@ -66,14 +71,16 @@
 
                 <td class="editing" colspan="4">
                   <span class="input-group" ng-hide="new_extracurricular_activity.newActivity">
-                    <label>What Activity did you participate in?</label>
+                    <label ng-if="current_user.is_student">What Activity did you participate in?</label>
+                    <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>
                     <select class="form-control" ng-change="selectedActivity(new_extracurricular_activity)" ng-options="activity as activity.name for activity in previous_activity_list" ng-model="new_extracurricular_activity" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
                       <option value="">--- Select Previous Activity ---</option>
                     </select>
                   </span>
                   <button class="btn btn-default" ng-click="addNewActivity()" ng-hide="new_extracurricular_activity.show">Not in List?</button>
                   <span class="input-group" ng-show="new_extracurricular_activity.newActivity">
-                    <label>What Activity did you participate in?</label>
+                    <label ng-if="current_user.is_student">What Activity did you participate in?</label>
+                    <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>
                     <input class="form-control" ng-model="new_extracurricular_activity.name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
                   </span>
                   <span class="input-group" ng-show="new_extracurricular_activity.show">
@@ -108,7 +115,8 @@
       <div class="module--content">
 
       	<div class="user-class-greeting" wait-to-load="loaded_semester_activities">
-          Hey {{student.first_name}}, you are participating in
+          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you are participating in</span>
+          <span ng-if="!current_user.is_student">{{student.first_name}} is participating in</span>
           <h2>{{semester_activities}}</span></h2>
           <h4>activities</h4>
           this semester.
