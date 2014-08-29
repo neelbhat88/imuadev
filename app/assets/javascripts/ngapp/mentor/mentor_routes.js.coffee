@@ -20,16 +20,4 @@ angular.module('myApp')
 
         defer.promise
       ]
-
-      assigned_students: ['$q', '$route', 'UsersService', 'ProgressService', 'OrganizationService',
-      ($q, $route, UsersService, ProgressService, OrganizationService) ->
-        defer = $q.defer()
-
-        UsersService.getAssignedStudents($route.current.params.id)
-          .success (data) ->
-            organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-            defer.resolve(organization.students)
-
-        defer.promise
-      ]
 ]

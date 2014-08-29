@@ -6,7 +6,6 @@ angular.module('myApp')
   UsersService.getAssignedStudents($scope.mentor.id)
     .success (data) ->
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-      console.log($scope.organization)
       $scope.assigned_students = $scope.organization.students
       $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
 

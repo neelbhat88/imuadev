@@ -57,6 +57,9 @@ angular.module('myApp')
         mentor = _.findWhere(org.mentors, { id: mentor_id })
         if mentor
           student.mentors.push(mentor)
+          if !mentor.studentIds
+            mentor.studentIds = []
+          mentor.studentIds.push(student.id)
 
       # Calculate progress for each module
       for module_title, org_milestones_by_module of org.org_milestones[student.time_unit_id]
