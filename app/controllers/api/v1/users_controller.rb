@@ -212,14 +212,18 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/:id/relationship/students
   def get_assigned_students
     userId = params[:id].to_i
+    userRepo = UserRepository.new
 
-    students = UserRepository.new.get_assigned_students(userId)
+    org = userRepo.get_user_org(userId)
 
-    viewStudents = students.map {|s| ViewUser.new(s)}
+    options = {}
+    options[:user_ids] = userRepo.get_assigned_student_ids(userId)
+    viewOrg = ViewOrganizationWithUsers.new(org, options) unless org.nil?
+
     render status: :ok,
       json: {
-        info: "Assigned students",
-        students: viewStudents
+        info: "Organization with assigned students",
+        organization: viewOrg
       }
   end
 

@@ -6,6 +6,11 @@ class UserRepository
     return User.find(userId)
   end
 
+  def get_user_org(userId)
+    # TODO Not sure if this works in a single call, may need to adjust associations
+    return User.includes(:organization).find(userId).organization
+  end
+
   def update_user_info(userObj)
     id = userObj[:id]
     email = userObj[:email]
@@ -182,14 +187,17 @@ class UserRepository
   end
 
   def get_assigned_students(userId)
-    relations = Relationship.where(:assigned_to_id => userId)
+    studentIds = get_assigned_student_ids(userId)
 
-    students = []
-    relations.each do | r |
-      students << r.user
-    end
+    students = User.includes([:user_milestones, :relationships, :user_expectations,
+                   :user_classes, :user_extracurricular_activity_details,
+                   :user_service_hours, :user_tests]).where(:id => studentIds)
 
     return students
+  end
+
+  def get_assigned_student_ids(userId)
+    return Relationship.where(:assigned_to_id => userId).map(&:user_id)
   end
 
   def get_assigned_students_for_group(userIds)

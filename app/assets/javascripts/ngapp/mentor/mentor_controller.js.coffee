@@ -8,7 +8,8 @@ angular.module('myApp')
 
   OrganizationService.getOrganizationWithUsers($scope.mentor.organization_id)
   .success (data) ->
-    $scope.all_students = _.where(data.organization.users, { role: 50 })
+    $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+    $scope.all_students = $scope.organization.students
 
   $scope.assign = (student) ->
     UsersService.assign($scope.mentor.id, student.id)

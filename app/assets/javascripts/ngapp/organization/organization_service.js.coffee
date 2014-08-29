@@ -54,7 +54,9 @@ angular.module('myApp')
       # Find the student's mentors
       student.mentors = []
       for mentor_id in _.uniq(_.pluck(student.relationships, "assigned_to_id"))
-        student.mentors.push(_.findWhere(org.mentors, { id: mentor_id }))
+        mentor = _.findWhere(org.mentors, { id: mentor_id })
+        if mentor
+          student.mentors.push(mentor)
 
       # Calculate progress for each module
       for module_title, org_milestones_by_module of org.org_milestones[student.time_unit_id]
