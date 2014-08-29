@@ -80,7 +80,7 @@
 
   }
 
-  .attention-description {
+  .attention-text {
     width: 250px;
     text-align: left;
     display: inline-block;
@@ -89,6 +89,10 @@
     @include respond-to(1200) {
       display: block;
       text-align: center;
+    }
+
+    .attention-description {
+      color: $red;
     }
 
     button {
