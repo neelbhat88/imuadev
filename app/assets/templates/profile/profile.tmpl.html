@@ -10,6 +10,7 @@
 
       <h3>{{user.first_name}} {{user.last_name}}</h3>
       <ul class="profile--primary-info">
+        <li ng-if="user.is_mentor"><span> {{user.title ? user.title : "No Title Added"}}</li>
         <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
         <li><span class="glyphicon glyphicon-phone"></span> {{user.phone ? user.phone : "No Phone Number Added"}}</li>
       </ul>
@@ -35,6 +36,13 @@
         <span class="form-wrapper half">
           <label>Last Name</label>
           <input class="form-control" ng-model="user.last_name" placeholder="Last Name">
+        </span>
+      </div>
+
+      <div ng-if="!current_user.is_student && user.is_mentor">
+        <span class="form-wrapper half">
+          <label>Title</label>
+          <input class="form-control" ng-model="user.title" placeholder="Title">
         </span>
       </div>
 

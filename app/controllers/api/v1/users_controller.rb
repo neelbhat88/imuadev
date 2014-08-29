@@ -16,6 +16,7 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     email = params[:user][:email]
+    title = params[:user][:title]
     first_name = params[:user][:first_name]
     last_name = params[:user][:last_name]
     phone = params[:user][:phone]
@@ -42,6 +43,7 @@ class Api::V1::UsersController < ApplicationController
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,
+             :title => title,
              :phone => phone,
              :role => role,
              :organization_id => orgId,

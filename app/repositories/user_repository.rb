@@ -11,6 +11,7 @@ class UserRepository
     email = userObj[:email]
     first_name = userObj[:first_name]
     last_name = userObj[:last_name]
+    title = userObj[:title]
     phone = userObj[:phone]
     avatar = userObj[:avatar]
     class_of = userObj[:class_of]
@@ -20,6 +21,7 @@ class UserRepository
     user.email = email
     user.first_name = first_name
     user.last_name = last_name
+    user.title = title
     user.phone = phone
     user.class_of = class_of
     user.time_unit_id = time_unit_id
@@ -66,6 +68,7 @@ class UserRepository
       u.email = user_obj[:email]
       u.first_name = user_obj[:first_name]
       u.last_name = user_obj[:last_name]
+      u.title = user_obj[:title]
       u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
