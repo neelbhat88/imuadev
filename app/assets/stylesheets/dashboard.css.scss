@@ -124,28 +124,43 @@
     color: white;
 		border-bottom: none;
 
+		@include respond-to(900) { padding-top: 0; }
+
     .mentor-header--wrapper {
 
-      width: 1100px;
-      height: 300px;
-      margin: 0 auto;
+			text-align: center;
 
       .greeting {
+				width: 700px;
+				display: inline-block;
+				vertical-align: top;
+				text-align: left;
+				padding-top: 60px;
+				margin-right: 60px;
 
-        margin-top: 80px;
-        float: left;
+				@include respond-to(1200) {
+					display: block;
+					width: 100%;
+					text-align: center;
+				}
 
+				h2 { margin-top: 10px; }
       }
 
       .circle-attention {
 
-        float: right;
+				display: inline-block;
 
         .circle {
 
           width: 288px;
           height: 288px;
           margin: 0 auto;
+
+					@include respond-to(900) {
+						width: 250px;
+						height: 250px;
+					}
 
           &:after {
             content: "";
@@ -157,6 +172,11 @@
             -webkit-border-radius: 50%;
             border-radius: 50%;
             border: 22px solid white;
+
+						@include respond-to(900) {
+							padding-bottom: 82%;
+						}
+
           }
 
           .text {
@@ -166,6 +186,8 @@
             padding-top: 15%;
             text-align:center;
             color:white;
+
+						@include respond-to(900) { padding-top: 10%; }
 
             .subhead {
 
