@@ -4,20 +4,20 @@
 
     <ul class="clear">
 
-      <li class="progressStudent narrow addBorderright"><a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a></li>
+      <li class="studentProgress narrow addBorderright">
+        <a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a>
+      </li>
 
       <li class="studentExpectations wide">
-
         <div class="progressStudent-wrapper clear">
-
           <div class="progressSelector">
-
             <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
-
           </div>
-
         </div>
+      </li>
 
+      <li class="studentProfile narrow addBorderleft">
+        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
       </li>
 
     </ul>
