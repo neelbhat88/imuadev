@@ -4,20 +4,20 @@
 
     <ul class="clear">
 
-      <li class="progressStudent narrow addBorderright"><a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a></li>
+      <li class="studentProgress narrow addBorderright">
+        <a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a>
+      </li>
 
       <li class="studentExpectations wide">
-
         <div class="progressStudent-wrapper clear">
-
           <div class="progressSelector">
-
-            <h5><span class="bold">{{student.first_last_initial}}'s</span> Expectations</h5>
-
+            <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
           </div>
-
         </div>
+      </li>
 
+      <li class="studentProfile narrow addBorderleft">
+        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
       </li>
 
     </ul>
@@ -29,20 +29,36 @@
     <div class="progressCircle-big--container">
 
       <div class="progressCircle-big">
-        <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-          <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
-        </div>
+        <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+          <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
+            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+          </div>
+        </a>
       </div>
 
     </div> <!-- progressCircle-big--container -->
 
     <div class="meetingExpectations">
       <div class="expectations-message" wait-to-load="{{loaded_expectations}}">
-        <div class="expectations-met-message" ng-hide="!meetingExpectations">
-          <h3 class="bold">Nice work {{student.first_name}}!</h3> <h5>You're meeting all of the Expectations!</h5>
+        <div ng-if="current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">Nice work {{student.first_name}}!</h3>
+            <h5>You're meeting all of the Expectations!</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>Hey {{student.first_name}},</h3>
+            <h5>you aren't currently meeting all of your expectations.</h5>
+          </div>
         </div>
-        <div class="expectations-not-met-message" ng-hide="meetingExpectations">
-          <h3>Hey {{student.first_name}},</h3> <h5>there are some expectations you aren't currently meeting.</h5>
+        <div ng-if="!current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">{{student.first_name}} is meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>{{student.first_name}} is not meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
         </div>
       </div>
     </div>

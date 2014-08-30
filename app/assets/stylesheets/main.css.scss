@@ -313,12 +313,13 @@ $panelwrapper: 0 80px;
 	padding-bottom: 20px;
 	border-bottom: 1px white(0.25) solid;
 
+  @include respond-to(900) { text-align: center; }
+
 }
 
 .list-container {
-
-	margin-top: 60px;
-
+	margin: 60px 0;
+  @include respond-to(900) { text-align: center; }
 }
 
 /* ===============================================
@@ -447,100 +448,6 @@ header {
   top: 0;
   left: 0;
   z-index: 999; // Just below the header
-}
-
-/* ===============================================
-   Progress Circle Classes
-   =============================================== */
-
-.progress-circles {
-
-  width: 170px;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 50px;
-  margin-bottom: 30px;
-  text-align: center;
-  color: inherit;
-
-  a {
-    color: inherit;
-    &:hover {
-      color: inherit;
-    }
-  }
-
-  .circle-subnav {
-    @include font-size(1.2);
-    visibility: hidden;
-    li {
-      margin-bottom: 2px;
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-      a {
-        opacity: 0.4;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-    .extra-info {
-      opacity: 0.4;
-    }
-
-  }
-
-  &:hover .circle-subnav {
-    visibility: visible;
-  }
-
-} //.progress-circles
-
-.add-button {
-  @extend .progress-circles;
-  padding-top: 40px;
-  opacity: 0.3;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  .glyphicon {
-    @include font-size(8);
-    color: $green;
-  }
-}
-
-/* ===============================================
-   Circle Picture Classes
-   =============================================== */
-
-.circle-pictures {
-  display: inline-block;
-  margin: 0 20px 30px 20px;
-  text-align: center;
-
-  .circle-picture {
-    display: block;
-    width: 150px;
-    img {
-      width: 100%;
-      height: auto;
-      @include border-radius(50%);
-    }
-  }
-  .circle-picture--name {
-    display: block;
-  }
-
-  a {
-    color: inherit;
-    &:hover {
-      color: inherit;
-    }
-  }
-
 }
 
 /* ===============================================

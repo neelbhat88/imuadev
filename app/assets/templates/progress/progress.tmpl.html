@@ -10,27 +10,23 @@
     <ul class="progress-subnav clear">
 
       <li class="progressStudent">
-
         <div class="progressStudent-wrapper clear">
-
           <div class="progressSelector">
-
   	        <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
-
             <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
                 <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
             </select>
-
             </h5>
-
           </div>
-
         </div>
-
       </li>
 
       <li class="studentExpectations narrow">
         <a class="js-nav-link" ng-href="#/expectations/{{student.id}}">{{student.first_name}}'s Expectations</a>
+      </li>
+
+      <li class="studentExpectations narrow">
+        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
       </li>
 
     </ul>
