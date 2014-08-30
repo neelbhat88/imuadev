@@ -77,7 +77,7 @@
                       <option value="">--- Select Previous Activity ---</option>
                     </select>
                   </span>
-                  <button class="btn btn-default" ng-click="addNewActivity()" ng-hide="new_extracurricular_activity.show">Not in List?</button>
+                  <button class="btn btn-default input-group" ng-click="addNewActivity()" ng-hide="new_extracurricular_activity.show">Not in List?</button>
                   <span class="input-group" ng-show="new_extracurricular_activity.newActivity">
                     <label ng-if="current_user.is_student">What Activity did you participate in?</label>
                     <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>

@@ -28,7 +28,7 @@
 			</li> -->
 			<li>
 				<div class="stat-wrapper clear">
-					<div class="count"><h4><span class="bold">{{_.uniq(_.pluck(_.where(organization.students, { needs_attention: true }), "assigned_to_id")).length}}</span></h4></div>
+					<div class="count"><h4><span class="bold">{{mentors_with_attention_students.length}}</span></h4></div>
 					<div ng-if="true" class="descript">Mentors have students <br>that need attention</div>
           <div ng-if="false" class="descript">Mentor has students <br>that need attention</div>
 				</div>
@@ -65,6 +65,7 @@
     <div class="progress-circles" ng-repeat="mentor in organization.mentors | orderBy: 'last_name'">
       <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor"></progress-circle></a>
       <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
+      <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{mentor.title}}</a></h6>
 			<ul class="circle-subnav">
 				<li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
 				<li class="extra-info">Last Login: {{mentor.last_login}}</li>
