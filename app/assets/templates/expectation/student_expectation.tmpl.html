@@ -12,7 +12,7 @@
 
           <div class="progressSelector">
 
-            <h5><span class="bold">{{student.first_last_initial}}'s</span> Expectations</h5>
+            <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
 
           </div>
 
@@ -29,9 +29,11 @@
     <div class="progressCircle-big--container">
 
       <div class="progressCircle-big">
-        <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-          <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
-        </div>
+        <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+          <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
+            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+          </div>
+        </a>
       </div>
 
     </div> <!-- progressCircle-big--container -->
