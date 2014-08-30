@@ -63,8 +63,12 @@
 		}
 	}
 
-	.organization-mid, .organization-lower {
-		padding: 60px $wrapper-width;
+	.organization-mid {
+		padding: 60px $wrapper-width 0 $wrapper-width;
+	}
+
+	.organization-lower {
+		padding: 0 $wrapper-width;
 	}
 
 }
