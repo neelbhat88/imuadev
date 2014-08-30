@@ -1,22 +1,41 @@
-.all-students {
-  background-color: $darkgrey;
-  color: white;
-}
-
-.all-students {
-  .avatar-block {
-
-    &.assigned { display: none; }
-
-    &:hover { cursor: pointer; }
-  }
-}
-
 .unassign {
   text-align: center;
 
   .glyphicon {
     color: red;
-    cursor: pointer;
   }
+}
+
+.assigned {
+  display: none;
+}
+
+.assign-student-circles {
+
+  opacity: 0.8;
+
+  .add-student-name {
+    display: none;
+  }
+
+  &:hover {
+    opacity: 1;
+    .student-name {
+      display: none;
+    }
+
+    .add-student-name {
+      display: block;
+    }
+
+  }
+
+}
+
+.mentor-mid {
+  padding: 40px $wrapper-width 0 $wrapper-width;
+}
+
+.mentor-lower {
+  padding: 40px $wrapper-width 0 $wrapper-width;
 }

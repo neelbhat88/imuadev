@@ -114,13 +114,16 @@
    =============================================== */
 
 .circle-pictures {
+  width: 150px;
   display: inline-block;
-  margin: 0 20px 30px 20px;
+  vertical-align: top;
+  margin: 0 10px 30px 10px;
   text-align: center;
 
   .circle-picture {
     display: block;
-    width: 150px;
+    width: 130px;
+    margin: 0 auto;
     img {
       width: 100%;
       height: auto;
