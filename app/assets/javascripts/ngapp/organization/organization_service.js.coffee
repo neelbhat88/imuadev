@@ -29,6 +29,7 @@ angular.module('myApp')
 
     org.active_students = _.filter(org.students, (student) -> (new Date(student.last_login)).getTime() >= active_user_threshold).length
     org.active_mentors = _.filter(org.mentors, (mentor) -> (new Date(mentor.last_login)).getTime() >= active_user_threshold).length
+    org.attention_studentIds = []
 
     org.org_milestones = {}
     # Sort org_milestones by time_unit_id and module, while tallying up total points
@@ -124,6 +125,8 @@ angular.module('myApp')
 
       # Determine if student needs attention
       student.needs_attention = if _.findWhere(student.user_expectations, { status: 2 } ) then true else false
+      if student.needs_attention
+        org.attention_studentIds.push(student.id)
 
     # Perform averaging calculations
     num_students = org.students.length
