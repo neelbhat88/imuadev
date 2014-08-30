@@ -519,6 +519,7 @@ header {
 .circle-pictures {
   display: inline-block;
   margin: 0 20px 30px 20px;
+  text-align: center;
 
   .circle-picture {
     display: block;
@@ -797,6 +798,10 @@ button:focus {
 /* ===============================================
    Misc
    =============================================== */
+
+.dropdown-menu {
+  z-index: 5000;
+}
 
 .modal-body {
   color: $ink;
