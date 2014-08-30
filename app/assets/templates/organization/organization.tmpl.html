@@ -48,6 +48,11 @@
         <div class="progress-circles" ng-class="{'needsAttention': {{mentor.id | existsInArray: mentors_with_attention_students}}}" ng-repeat="mentor in mentors_with_attention_students">
           <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor" identifier="attention"></a>
           <h6 class="bold"><a ng-href="#/mentor/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
+          <ul class="circle-subnav">
+            <li>{{mentor.title}}</li>
+            <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+            <li class="extra-info">Last Login: {{mentor.last_login}}</li>
+          </ul>
         </div>
       </div>
     </div>
