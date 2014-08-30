@@ -11,7 +11,7 @@
       <div class="list-container">
         <div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
           <div class="attention-circle">
-          <a href="#/expectations/{{student.id}}"><progress-circle student="student" identifier="attention"></progress-circle></a>
+            <a href="#/expectations/{{student.id}}"><progress-circle student="student" identifier="attention"></progress-circle></a>
           </div>
           <div class="attention-text">
             <a href="#/expectations/{{student.id}}">

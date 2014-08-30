@@ -31,10 +31,10 @@
 	<div class="students-mid" ng-hide="attention_students.length == 0">
 		<div class="students-attention">
 			<div ng-if="attention_students.length == 1" class="list-header">
-				<h5><span class="bold">This student needs attention</span> from their mentor</h5>
+				<h5><span class="bold">One student needs attention</span> from their mentor</h5>
 			</div>
 			<div ng-if="attention_students.length != 1" class="list-header">
-				<h5><span class="bold">These students need attention</span> from their mentors</h5>
+				<h5><span class="bold">{{attention_students.length}} students need attention</span> from their mentors</h5>
 			</div>
 			<div class="list-container">
 				<div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
