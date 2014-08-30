@@ -45,15 +45,17 @@
         <h5>These mentors have students who <span class="bold">need attention</span></h5>
       </div>
       <div class="list-container">
-        <div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'last_name'" ng-if="student.id | existsInArray: attention_students">
-          <div class="progress-circles" ng-repeat="mentor in organization.mentors | orderBy: 'last_name'">
-            <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor"></progress-circle></a>
-            <h6 class="bold"><a ng-href="#/profile/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
-            <ul class="circle-subnav">
-              <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-              <li class="extra-info">Last Login: {{mentor.last_login}}</li>
-              <li class="extra-info">Login Count: {{mentor.login_count}}</li>
-            </ul>
+        <div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
+          <div class="attention-circle">
+          <progress-circle student="student" identifier="attention"></progress-circle>
+          </div>
+          <div class="attention-text">
+            <h5 class="bold student-name">{{student.first_last_initial}}</h5>
+            <div class="attention-description">
+              <!-- This should be replaced with a directive or something that allows us to insert custom messages and button links. -->
+              <h6>isn't meeting their expectations.</h6>
+              <a href="#/expectations/{{student.id}}"><button class="btn btn-default">View Problem</button></a>
+            </div>
           </div>
         </div>
       </div>

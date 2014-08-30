@@ -37,7 +37,7 @@
 				<h5><span class="bold">These students need attention</span> from their mentors</h5>
 			</div>
 			<div class="list-container">
-				<div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'last_name'" ng-if="student.id | existsInArray: attention_students">
+				<div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
 					<div class="attention-circle">
 					<progress-circle student="student" identifier="attention"></progress-circle>
 					</div>
