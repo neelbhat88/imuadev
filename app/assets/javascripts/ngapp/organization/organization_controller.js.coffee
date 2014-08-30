@@ -7,6 +7,7 @@ angular.module('myApp')
 
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
+    $scope.mentors_with_attention_students = []
 
     $('input, textarea').placeholder()
 
@@ -35,7 +36,9 @@ angular.module('myApp')
         $scope.average_testsTaken = $scope.organization.average_testsTaken
 
         $scope.mentor_needs_help = "1*"
+        $scope.mentors_with_attention_students = _.filter($scope.organization.mentors, (mentor) -> _.intersection(mentor.studentIds, $scope.organization.attention_studentIds).length > 0)
 
+        console.log($scope.organization)
         $scope.loaded_users = true
 
 
