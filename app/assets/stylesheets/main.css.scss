@@ -322,6 +322,10 @@ $panelwrapper: 0 80px;
   @include respond-to(900) { text-align: center; }
 }
 
+.no-bottom {
+  margin-bottom: 0;
+}
+
 /* ===============================================
    Header
    =============================================== */

@@ -1,5 +1,23 @@
 <div class="mentorContainer">
 
+  <div class="mentor-header">
+
+    <div class="mentor--pic">
+      <a href="#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><img ng-src="{{mentor.square_avatar_url}}" alt="{{mentor.first_name}}'s Profile Picture"></a>
+    </div>
+
+    <div class="mentor--primary-info">
+
+      <h3>{{mentor.first_name}} {{mentor.last_name}}</h3>
+      <h5>{{mentor.title}}</h5>
+      <div class="view-profile-button">
+        <a href="#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><button class="btn submit">View Full Profile</button></a>
+      </div>
+
+    </div>
+
+  </div>
+
   <div class="mentor-mid" ng-hide="attention_students.length == 0">
     <div class="students-attention">
       <div ng-if="attention_students.length == 1" class="list-header">
@@ -8,7 +26,7 @@
       <div ng-if="attention_students.length != 1" class="list-header">
         <h5>Students assigned to {{mentor.first_name}} <span class="bold">who need attention</span></h5>
       </div>
-      <div class="list-container">
+      <div class="list-container no-bottom">
         <div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
           <div class="attention-circle">
             <a href="#/expectations/{{student.id}}"><progress-circle student="student" identifier="attention"></progress-circle></a>
