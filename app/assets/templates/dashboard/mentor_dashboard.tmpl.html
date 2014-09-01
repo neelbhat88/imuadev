@@ -55,8 +55,6 @@
     	<h4 ng-if="assigned_students.length == 1">Your <span class="bold">Student</span></h4>
       <h4 ng-if="assigned_students.length != 1">Your <span class="bold">Students</span></h4>
 
-      <button class="btn btn-default" ng-click="addAssignment()">Send Assignment To Students</button>
-
     </div>
     <div ng-hide="assigned_students.length > 0">
       <h5 style="font-style: italic">Hey {{user.first_name}}, it looks like you don't have any students assigned to you yet.</h5>
@@ -75,4 +73,6 @@
 	    </div>
     </div>
   </div>
+
+  <!-- <button class="btn btn-default" ng-click="addAssignment()">Send Assignment To Students</button> -->
 </div>
