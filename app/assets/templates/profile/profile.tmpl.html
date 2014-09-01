@@ -9,7 +9,7 @@
     <div ng-hide="editingInfo || editingPassword">
 
       <h3>{{user.first_name}} {{user.last_name}}</h3>
-      <h5 ng-if="user.is_mentor">{{user.title ? user.title : "No Title Added"}}</h5>
+      <h5 ng-if="user.is_mentor">{{user.title}}</h5>
 
       <ul class="profile--primary-info">
         <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
@@ -42,7 +42,7 @@
       </div>
 
       <div ng-if="!current_user.is_student && user.is_mentor">
-        <span class="form-wrapper half">
+        <span class="form-wrapper">
           <label>Title</label>
           <input class="form-control" ng-model="user.title" placeholder="Title">
         </span>
