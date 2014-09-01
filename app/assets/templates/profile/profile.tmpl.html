@@ -1,6 +1,6 @@
 <div class="profileContainer">
 
-  <div class="profile-header">
+  <div class="profile-header student-bg">
 
     <div class="profile--pic">
       <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}}'s Profile Picture">
@@ -9,15 +9,16 @@
     <div ng-hide="editingInfo || editingPassword">
 
       <h3>{{user.first_name}} {{user.last_name}}</h3>
+      <h5 ng-if="user.is_mentor">{{user.title ? user.title : "No Title Added"}}</h5>
+
       <ul class="profile--primary-info">
-        <li ng-if="user.is_mentor"><span> {{user.title ? user.title : "No Title Added"}}</li>
         <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
         <li><span class="glyphicon glyphicon-phone"></span> {{user.phone ? user.phone : "No Phone Number Added"}}</li>
       </ul>
 
       <div class="edit-buttons">
         <a href="/#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
-        <a href="/#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
+        <a href="/#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
         <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
       </div>
