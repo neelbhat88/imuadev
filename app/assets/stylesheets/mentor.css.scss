@@ -1,22 +1,171 @@
-.all-students {
-  background-color: $darkgrey;
-  color: white;
-}
+.mentorContainer {
 
-.all-students {
-  .avatar-block {
+  .mentor-header {
 
-    &.assigned { display: none; }
+    padding: 60px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+    text-align: center;
 
-    &:hover { cursor: pointer; }
+    .mentor--pic {
+      width: 200px;
+      height: 200px;
+      margin-right: 40px;
+      display: inline-block;
+      vertical-align: top;
+
+      img {
+        height: 100%;
+        width: auto;
+        @include border-radius(50%);
+
+      }
+
+    }
+
+    .mentor--primary-info {
+
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+
+      .glyphicon {
+        @include font-size(1.4);
+        margin-right: 3px;
+      }
+
+      li {
+        display: inline-block;
+        margin: 0 15px;
+      }
+
+    }
+
   }
-}
 
-.unassign {
-  text-align: center;
+  .edit-buttons {
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
 
-  .glyphicon {
-    color: red;
-    cursor: pointer;
+    button {
+      margin: 0 10px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+      }
+
+    }
+
   }
+
+  .form-wrapper {
+    margin: 10px 0;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+  }
+
+  .half {
+    width: 49%;
+    display: inline-block;
+  }
+
+  select {
+    width: 100%;
+    @include font-size(2.2);
+  }
+
+
+  .profile-header {
+
+    padding: 80px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+    text-align: center;
+
+    .profile--pic {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+
+      img {
+        height: 100%;
+        width: auto;
+        @include border-radius(50%);
+
+      }
+
+    }
+
+    .profile--primary-info {
+
+      .glyphicon {
+        @include font-size(1.4);
+        margin-right: 3px;
+      }
+
+      li {
+        display: inline-block;
+        margin: 0 15px;
+      }
+
+    }
+
+    .primary-editing {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: left;
+
+      .student-exception {
+        text-align: center;
+      }
+
+    }
+
+  }
+
+  .unassign {
+    text-align: center;
+
+    .glyphicon {
+      color: red;
+    }
+  }
+
+  .assigned {
+    display: none;
+  }
+
+  .assign-student-circles {
+
+    opacity: 0.8;
+
+    .add-student-name {
+      display: none;
+    }
+
+    &:hover {
+      opacity: 1;
+      .student-name {
+        display: none;
+      }
+
+      .add-student-name {
+        display: block;
+      }
+
+    }
+
+  }
+
+  .mentor-mid {
+    padding: 40px $wrapper-width 0 $wrapper-width;
+  }
+
+  .mentor-lower {
+    padding: 40px $wrapper-width 0 $wrapper-width;
+  }
+
 }

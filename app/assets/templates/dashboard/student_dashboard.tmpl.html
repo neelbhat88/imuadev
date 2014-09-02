@@ -32,13 +32,28 @@
 
     </div><!-- dashboard-header--student -->
 
-    <div class="dashboard-attention dashboard-attention--student displayNone">
-      <div>This is where things that need attention go</div>
+    <div class="dashboard-attention dashboard-attention--student" ng-hide="user_assignments.length == 0">
+      <!-- This is where things that need attention go -->
     </div>
 
     <div class="dashboard-content dashboard-content--student clear">
 
       <div class="module-container clear">
+
+        <!-- <div class="module module--todos" modulecolor="no_category">
+          <div class="module--header"><span class="bold">To-do</span></div>
+          <div class="module--content">
+            <div class="module--submodule">
+              <div class="module--subhead">Due Soon!</div>
+              <div ng-repeat="ua in user_assignments">
+                  <h5 class="bold">{{ua.title}}</h5>
+                  <h6>{{ua.description}}</h6>
+                  <h6 >Due Date:  {{ua.due_datetime}}</h6>
+                  <h6 class="bold">{{ua.assigner.first_name}} {{ua.assigner.last_name}}</h6>
+              </div>
+            </div>
+          </div>
+        </div> -->
 
         <div class="module module--upcoming-milestones" modulecolor="no_category">
           <div class="module--header">Upcoming <span class="bold">Milestones</span></div>

@@ -16,8 +16,12 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users, shallow: true do
         resources :user_class, except: [:new, :edit]
+
         resources :user_extracurricular_activity, except: [:new, :edit]
         resources :user_extracurricular_activity_detail, except: [:new, :edit]
+
+        resources :assignment, except: [:new, :edit]
+        resources :user_assignment, except: [:new, :edit, :show]
       end
 
       resources :users do
@@ -47,6 +51,14 @@ Imua::Application.routes.draw do
           delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
+
+      get  'assignment/:id/collect'              => 'assignment#collect'
+      get  'users/:user_id/assignment/collect'   => 'assignment#collect_all'
+      post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
+
+      get 'user_assignment/:id/collect'       => 'user_assignment#collect'
+      get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'
 
       get 'users/:id/user_with_contacts' => 'users#get_user_with_contacts'
       post 'users/:id/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
