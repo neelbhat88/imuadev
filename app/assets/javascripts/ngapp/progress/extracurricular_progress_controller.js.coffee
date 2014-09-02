@@ -95,7 +95,13 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_extracurricular_activities[index].details = []
             deletedActivity = $scope.user_extracurricular_activities.splice(index,1)
+            $scope.previous_activity_list.pop()
             $scope.previous_activity_list.push(deletedActivity[0])
+            other_activity = {}
+            other_activity = UserExtracurricularActivityService
+              .otherActivity($scope.student, $scope.selected_semester.id, null)
+
+            $scope.previous_activity_list.push(other_activity)
             $scope.refreshPoints()
 
     $scope.cancelActivityEdit = (index) ->
