@@ -4,6 +4,7 @@ angular.module('myApp')
     $scope.semester_activities = 0
     $scope.user_extracurricular_activities = []
     $scope.previous_activity_list = []
+    current_activities = []
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -11,6 +12,7 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_extracurricular_activities = []
             $scope.previous_activity_list = []
+            current_activities = []
             current_activities = data.user_extracurricular_activities
 
             for activity in current_activities

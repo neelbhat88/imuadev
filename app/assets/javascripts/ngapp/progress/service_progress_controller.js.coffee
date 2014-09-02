@@ -4,6 +4,7 @@ angular.module('myApp')
     $scope.user_service_organizations = []
     $scope.previous_organization_list = []
     $scope.semester_service_hours = 0
+    current_user_service_organizations = []
 
     $scope.$watch 'user_service_organizations', () ->
       $scope.loaded_semester_service_hours = false
