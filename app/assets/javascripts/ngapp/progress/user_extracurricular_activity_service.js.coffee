@@ -9,13 +9,14 @@ angular.module("myApp")
     user_id: student.id,
     editing: true
 
-  @newExtracurricularDetail = (student, time_unit_id, extracurricularActivityId) ->
-      name: "",
-      user_extracurricular_activity_id: extracurricularActivityId,
-      time_unit_id: time_unit_id,
-      user_id: student.id,
-      leadership: "",
-      description: ""
+  @newExtracurricularDetail = (user, time_unit_id, extracurricularActivityId) ->
+    name: "",
+    user_extracurricular_activity_id: extracurricularActivityId,
+    time_unit_id: time_unit_id,
+    user_id: user.id,
+    leadership: "",
+    description: "",
+    editing: true
 
   @saveExtracurricularActivity = (user_extracurricular_activity) ->
       return $http.put "/api/v1/user_extracurricular_activity/#{user_extracurricular_activity.id}", {user_extracurricular_activity: user_extracurricular_activity, user_extracurricular_detail: user_extracurricular_activity.details[0]}
