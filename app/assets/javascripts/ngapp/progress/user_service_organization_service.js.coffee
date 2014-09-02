@@ -4,6 +4,21 @@ angular.module("myApp")
   @all = (userId, time_unit_id) ->
     $http.get "/api/v1/users/#{userId}/user_service_organization?time_unit_id=#{time_unit_id}"
 
+  @otherOrganization = (user, time_unit_id, service_organization_id) ->
+    name: "Other",
+    description: "",
+    user_id: user.id,
+    hours: [
+      name: "",
+      user_service_organization_id: service_organization_id,
+      hours: "",
+      date: "",
+      time_unit_id: time_unit_id,
+      user_id: user.id,
+      description: "",
+    ]
+
+
   @newServiceOrganization = (user) ->
     name: "",
     description: "",

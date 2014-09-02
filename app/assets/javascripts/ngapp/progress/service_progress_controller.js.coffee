@@ -39,6 +39,12 @@ angular.module('myApp')
               else
                 $scope.previous_organization_list.push(user_service_organization)
 
+            other_organization = {}
+            other_organization = UserServiceOrganizationService
+              .otherOrganization($scope.student, $scope.selected_semester.id, null)
+
+            $scope.previous_organization_list.push(other_organization)
+
             $scope.$emit('loaded_module_milestones')
 
     $scope.$watch 'selected_semester', () ->
@@ -67,13 +73,13 @@ angular.module('myApp')
             $scope.user_service_organizations.push($scope.new_service_organization)
             $scope.new_service_organization.editing = false
             $scope.user_service_organizations.editing = false
-            $scope.refreshPoints()
-            $scope.previous_organization_list = []
             # reset previous organization list
-            for user_service_organization in $scope.user_service_organizations
-              if user_service_organization.hours.length <= 0
-                $scope.previous_organization_list.push(user_service_organization)
+            $scope.previous_organization_list = _.filter($scope.previous_organization_list, (org) ->
+              org.id != data.user_service_hour.user_service_organization_id)
+
+            $scope.refreshPoints()
       else
+        $scope.new_service_organization.name = $scope.new_service_organization.new_name
         UserServiceOrganizationService.saveNewServiceOrganization($scope.new_service_organization)
           .success (data) ->
             data.user_service_organization.hours = []
@@ -81,6 +87,13 @@ angular.module('myApp')
             $scope.user_service_organizations.push(data.user_service_organization)
             $scope.new_service_organization.editing = false
             $scope.user_service_organizations.editing = false
+            # reset previous organization list
+            $scope.previous_organization_list.pop()
+            other_organization = {}
+            other_organization = UserServiceOrganizationService
+              .otherOrganization($scope.student, $scope.selected_semester.id, null)
+
+            $scope.previous_organization_list.push(other_organization)
             $scope.refreshPoints()
 
     $scope.saveHour = (parentIndex, index, serviceOrganizationId) ->
@@ -162,16 +175,9 @@ angular.module('myApp')
       $scope.user_service_organizations[parentIndex].hours[index].new_hours = $scope.user_service_organizations[parentIndex].hours[index].hours
       $scope.user_service_organizations[parentIndex].hours[index].new_date= $scope.user_service_organizations[parentIndex].hours[index].date
 
-    $scope.notInPreviousList = () ->
-      $scope.new_service_organization = {}
-      $scope.new_service_organization.editing = true
-      $scope.new_service_organization = UserServiceOrganizationService.newServiceOrganization($scope.student)
-      $scope.new_service_organization.hours = []
-      $scope.new_service_organization.hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, null))
-      $scope.new_service_organization.newOrganization = true
-      $scope.new_service_organization.show = true
-
     $scope.selectAction = (selectedServiceOrg) ->
+      if selectedServiceOrg.name == 'Other'
+        $scope.new_service_organization.newOrganization = true
       $scope.new_service_organization = selectedServiceOrg
       $scope.new_service_organization.editing = true
       $scope.new_service_organization.hours = []
