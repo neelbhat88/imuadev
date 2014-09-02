@@ -6,6 +6,7 @@ angular.module('myApp')
 
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
+    $scope.attention_students = []
 
     $('input, textarea').placeholder()
 
@@ -32,6 +33,8 @@ angular.module('myApp')
         $scope.average_serviceHours = $scope.organization.average_serviceHours
         $scope.average_ecActivities = $scope.organization.average_ecActivities
         $scope.average_testsTaken = $scope.organization.average_testsTaken
+
+        $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
 
         $scope.loaded_users = true
 

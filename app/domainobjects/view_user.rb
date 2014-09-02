@@ -43,5 +43,5 @@ class ViewUser
 		end
 
 	end
-	
+
 end

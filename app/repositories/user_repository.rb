@@ -6,11 +6,17 @@ class UserRepository
     return User.find(userId)
   end
 
+  def get_user_org(userId)
+    # TODO Not sure if this works in a single call, may need to adjust associations
+    return User.includes(:organization).find(userId).organization
+  end
+
   def update_user_info(userObj)
     id = userObj[:id]
     email = userObj[:email]
     first_name = userObj[:first_name]
     last_name = userObj[:last_name]
+    title = userObj[:title]
     phone = userObj[:phone]
     avatar = userObj[:avatar]
     class_of = userObj[:class_of]
@@ -20,6 +26,7 @@ class UserRepository
     user.email = email
     user.first_name = first_name
     user.last_name = last_name
+    user.title = title
     user.phone = phone
     user.class_of = class_of
     user.time_unit_id = time_unit_id
@@ -66,6 +73,7 @@ class UserRepository
       u.email = user_obj[:email]
       u.first_name = user_obj[:first_name]
       u.last_name = user_obj[:last_name]
+      u.title = user_obj[:title]
       u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
@@ -182,14 +190,17 @@ class UserRepository
   end
 
   def get_assigned_students(userId)
-    relations = Relationship.where(:assigned_to_id => userId)
+    studentIds = get_assigned_student_ids(userId)
 
-    students = []
-    relations.each do | r |
-      students << r.user
-    end
+    students = User.includes([:user_milestones, :relationships, :user_expectations,
+                   :user_classes, :user_extracurricular_activity_details,
+                   :user_service_hours, :user_tests]).where(:id => studentIds)
 
     return students
+  end
+
+  def get_assigned_student_ids(userId)
+    return Relationship.where(:assigned_to_id => userId).map(&:user_id)
   end
 
   def get_assigned_students_for_group(userIds)
