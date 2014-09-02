@@ -21,7 +21,7 @@ angular.module("myApp")
       return $http.put "/api/v1/user_extracurricular_activity/#{user_extracurricular_activity.id}", {user_extracurricular_activity: user_extracurricular_activity, user_extracurricular_detail: user_extracurricular_activity.details[0]}
 
   @saveNewExtracurricularActivity = (new_extracurricular_activity) ->
-      return $http.post "/api/v1/user_extracurricular_activity", {user_extracurricular_activity: new_extracurricular_activity, user_extracurricular_detail: new_extracurricular_activity.details[0]}
+      return $http.post "/api/v1/users/#{new_extracurricular_activity.user_id}/user_extracurricular_activity", {user_extracurricular_activity: new_extracurricular_activity, user_extracurricular_detail: new_extracurricular_activity.details[0]}
 
   @saveExtracurricularDetail = (user_extracurricular_detail) ->
     if user_extracurricular_detail.id
