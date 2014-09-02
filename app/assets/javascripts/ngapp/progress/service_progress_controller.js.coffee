@@ -120,7 +120,13 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_service_organizations[index].hours = []
             deletedOrganization = $scope.user_service_organizations.splice(index,1)
+            $scope.previous_organization_list.pop()
             $scope.previous_organization_list.push(deletedOrganization[0])
+            other_organization = {}
+            other_organization = UserServiceOrganizationService
+              .otherOrganization($scope.student, $scope.selected_semester.id, null)
+
+            $scope.previous_organization_list.push(other_organization)
             $scope.refreshPoints()
 
     $scope.deleteHour = (parentIndex, index) ->
