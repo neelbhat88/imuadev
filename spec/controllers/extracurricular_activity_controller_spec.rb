@@ -36,7 +36,7 @@ describe Api::V1::ExtracurricularActivityController do
 
       it "returns 403 if :id is not current student" do
         subject.current_user.id = 1
-        user = create(:student, id: 2)
+        user = create(:student, id: 9)
 
         get :user_extracurricular_activity_details, {:id => user.id, :time_unit_id => time_unit_id}
 

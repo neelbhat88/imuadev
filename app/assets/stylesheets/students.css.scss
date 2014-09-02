@@ -63,8 +63,12 @@
     }
   }
 
+  .students-mid {
+    padding: 60px $wrapper-width 0 $wrapper-width;
+  }
+
   .students-lower {
-    padding: 60px $wrapper-width;
+    padding: 0 $wrapper-width;
   }
 
 }

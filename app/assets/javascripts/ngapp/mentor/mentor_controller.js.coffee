@@ -1,14 +1,22 @@
 angular.module('myApp')
-.controller 'MentorController', ['$scope', 'current_user', 'user', 'assigned_students', 'UsersService', 'ProgressService', 'OrganizationService',
-($scope, current_user, user, assigned_students, UsersService, ProgressService, OrganizationService) ->
-  $scope.assigned_students = assigned_students
+.controller 'MentorController', ['$scope', 'current_user', 'user', 'UsersService', 'ProgressService', 'OrganizationService',
+($scope, current_user, user, UsersService, ProgressService, OrganizationService) ->
+
   $scope.all_students = []
   $scope.current_user = current_user
   $scope.mentor = user
+  $scope.assigned_students = []
+  $scope.attention_students = []
 
   OrganizationService.getOrganizationWithUsers($scope.mentor.organization_id)
   .success (data) ->
-    $scope.all_students = _.where(data.organization.users, { role: 50 })
+    $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+    user_mentor = _.find($scope.organization.mentors, (mentor) -> mentor.id == $scope.mentor.id)
+    if user_mentor
+      $scope.assigned_students = _.filter($scope.organization.students, (student) -> _.contains(user_mentor.studentIds, student.id))
+      $scope.attention_students = _.where($scope.assigned_students, { needs_attention: true })
+    $scope.all_students = $scope.organization.students
+    $scope.loaded_users = true
 
   $scope.assign = (student) ->
     UsersService.assign($scope.mentor.id, student.id)

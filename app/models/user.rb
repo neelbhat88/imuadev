@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :user_service_hours, dependent: :destroy
   has_many :parent_guardian_contacts, dependent: :destroy
   has_many :user_milestones, dependent: :destroy
+  has_many :assignments, dependent: :destroy
+  has_many :user_assignments, dependent: :destroy
 
   has_attached_file :avatar, styles: {
     square: '140x140#',
@@ -60,6 +62,11 @@ class User < ActiveRecord::Base
 
   def student?
     return self.role.to_i == Constants.UserRole[:STUDENT]
+  end
+
+  def role_name
+    index = Constants.UserRole.values.index self.role.to_i
+    Constants.UserRole.keys[index].to_s.capitalize
   end
 
   def abilities

@@ -17,6 +17,7 @@ angular.module('myApp')
     formData.append("user[phone]", user.phone)
     formData.append("user[class_of]", user.class_of)
     formData.append("user[time_unit_id]", user.time_unit_id)
+    formData.append("user[title]", user.title)
 
     $http.put '/api/v1/users/' + user.id, formData,
       {
@@ -71,6 +72,7 @@ angular.module('myApp')
 
   @newMentor = (orgId) ->
     email: ""
+    title: ""
     first_name: ""
     last_name: ""
     phone: ""
