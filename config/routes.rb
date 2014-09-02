@@ -16,16 +16,9 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users, shallow: true do
         resources :user_class, except: [:new, :edit]
-      end
-
-      resources :users, shallow: true do
         resources :user_extracurricular_activity, except: [:new, :edit]
-      end
-
-      resources :users, shallow: true do
         resources :user_extracurricular_activity_detail, except: [:new, :edit]
       end
-
 
       resources :users do
         collection do
@@ -71,15 +64,6 @@ Imua::Application.routes.draw do
       put  '/service_hour/:id' => 'service_organization#update_user_service_hour'
       delete '/service_organization/:id' => 'service_organization#delete_user_service_organization'
       delete '/service_hour/:id' => 'service_organization#delete_user_service_hour'
-
-      get  '/users/:id/extracurricular_activity_details' => 'extracurricular_activity#user_extracurricular_activity_details'
-      post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
-      post '/extracurricular_activity_detail' => 'extracurricular_activity#add_user_extracurricular_activity_detail'
-      put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
-      put  '/extracurricular_activity_detail/:id' => 'extracurricular_activity#update_user_extracurricular_activity_detail'
-      delete '/extracurricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
-      delete '/extracurricular_activity_detail/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_detail'
-
 
       get '/organization' => 'organization#all_organizations'
       get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'

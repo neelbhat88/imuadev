@@ -5,14 +5,15 @@ class Api::V1::UserExtracurricularActivityController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
   def load_services( userExtracurricularActivityService=nil, userRepo=nil)
-    @userExtracurricularActivityService = userExtracurricularActivityService ? userExtracurricularActivityService : UserExtracurricularActivityService.new
+    @userExtracurricularActivityService = userExtracurricularActivityService ?
+      userExtracurricularActivityService : UserExtracurricularActivityService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
   # Currently handles user_extracurricular_activity GET as well.
   # GET /users/:user_id/user_extracurricular_activity?time_unit_id=#
   def index
-    userId = params[:id].to_i
+    userId = params[:user_id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
     user = @userRepository.get_user(userId)
