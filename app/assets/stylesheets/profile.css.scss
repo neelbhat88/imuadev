@@ -46,6 +46,7 @@
 
     padding: 80px $wrapper-width;
     background: $grey;
+    @include bgcover();
     border-bottom: 1px solid $darkborder;
     text-align: center;
 
@@ -61,6 +62,12 @@
 
       }
 
+    }
+
+    .edit-buttons {
+      button {
+        opacity: 1;
+      }
     }
 
     .profile--primary-info {
@@ -89,6 +96,9 @@
     }
 
   }
+
+  .student-bg { background-image: image-url("student_bg1.jpg"); }
+  .mentor-bg { background-image: image-url("mentor_bg1.jpg"); }
 
 }
 
