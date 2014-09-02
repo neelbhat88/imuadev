@@ -1,4 +1,4 @@
-class Api::V1::ServiceOrganizationController < ApplicationController
+class Api::V1::UserServiceOrganizationController < ApplicationController
   respond_to :json
 
   before_filter :authenticate_user!
@@ -9,9 +9,9 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     @userRepository = userRepo ? userRepo : UserRepository.new
   end
 
-  # GET /users/:id/service_organizations_hours?time_unit_id=#
-  def user_service_organizations_hours
-    userId = params[:id].to_i
+  # GET /users/:user_id/user_service_organization?time_unit_id=#
+  def index
+    userId = params[:user_id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
     user = @userRepository.get_user(userId)
@@ -33,11 +33,11 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       }
   end
 
-  # POST /service_organization
-  def add_user_service_organization
+  # POST users/:user_id/user_service_organization
+  def create
     new_service_organization = params[:user_service_organization]
     new_service_hour = params[:user_service_hour]
-    userId = params[:user_service_organization][:user_id].to_i
+    userId = params[:user_id].to_i
 
     user = @userRepository.get_user(userId)
     if !can?(current_user, :manage_user_extracurricular_and_service, user)
@@ -58,29 +58,8 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       }
   end
 
-  # POST /service_hour
-  def add_user_service_hour
-    new_service_hour = params[:user_service_hour]
-    userId = params[:user_service_hour][:user_id].to_i
-
-    user = @userRepository.get_user(userId)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userServiceOrganizationService.save_user_service_hour(new_service_hour)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        user_service_hour: result.object
-      }
-  end
-
-  # PUT /service_organization/:id
-  def update_user_service_organization
+  # PUT /user_service_organization/:id
+  def update
     serviceOrganizationId = params[:id].to_i
     updated_service_organization = params[:user_service_organization]
 
@@ -102,31 +81,8 @@ class Api::V1::ServiceOrganizationController < ApplicationController
       }
   end
 
-  # PUT /service_hour/:id
-  def update_user_service_hour
-    serviceHourId = params[:id].to_i
-    updated_service_hour = params[:user_service_hour]
-
-    userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
-
-    user = @userRepository.get_user(userServiceHour.user_id)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userServiceOrganizationService.update_user_service_hour(serviceHourId, updated_service_hour)
-
-    render status: result.status,
-      json: {
-        info: result.info,
-        user_service_hour: result.object
-      }
-  end
-
-  # DELETE /service_organization/:id?time_unit_id=#
-  def delete_user_service_organization
+  # DELETE /user_service_organization/:id?time_unit_id=#
+  def destroy
     serviceOrganizationId = params[:id].to_i
     time_unit_id = params[:time_unit_id].to_i
 
@@ -140,27 +96,6 @@ class Api::V1::ServiceOrganizationController < ApplicationController
     end
 
     result = @userServiceOrganizationService.delete_user_service_organization(serviceOrganizationId, userServiceOrganization.user_id, time_unit_id)
-
-    render status: result.status,
-      json: {
-        info: result.info
-      }
-  end
-
-  # DELETE /service_hour/:id
-  def delete_user_service_hour
-    serviceHourId = params[:id].to_i
-
-    userServiceHour = @userServiceOrganizationService.get_user_service_hour(serviceHourId)
-
-    user = @userRepository.get_user(userServiceHour.user_id)
-    if !can?(current_user, :manage_user_extracurricular_and_service, user)
-      render status: :forbidden,
-        json: {}
-      return
-    end
-
-    result = @userServiceOrganizationService.delete_user_service_hour(serviceHourId)
 
     render status: result.status,
       json: {

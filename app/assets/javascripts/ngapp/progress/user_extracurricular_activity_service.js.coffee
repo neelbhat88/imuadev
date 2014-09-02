@@ -2,7 +2,7 @@ angular.module("myApp")
 .service "UserExtracurricularActivityService", ['$http', ($http) ->
 
   @all = (userId, time_unit_id) ->
-    $http.get "/api/v1/users/#{userId}/extracurricular_activity_details?time_unit_id=#{time_unit_id}"
+    $http.get "/api/v1/users/#{userId}/user_extracurricular_activity?time_unit_id=#{time_unit_id}"
 
   @newExtracurricularActivity = (student) ->
     name: "",

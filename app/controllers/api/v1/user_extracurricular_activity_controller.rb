@@ -36,7 +36,7 @@ class Api::V1::UserExtracurricularActivityController < ApplicationController
   end
 
   # Currently handles user_extracurricular_activity_detail POST as well.
-  # POST /user/:user_id/user_extracurricular_activity
+  # POST /users/:user_id/user_extracurricular_activity
   def create
     new_extracurricular_activity = params[:user_extracurricular_activity]
     new_extracurricular_detail = params[:user_extracurricular_detail]
