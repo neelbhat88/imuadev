@@ -1,0 +1,223 @@
+.module-container {
+
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  color: white;
+
+  @include respond-to(800) { padding: 0px; }
+
+  @each $category, $color in $darkcolormap {
+    &.color--#{$category} {
+      .module { background: $color; }
+      .milestone--point-circle {
+        background: white;
+        color: $color;
+      } //milestone--point-circle
+    }
+  }
+
+  @each $category, $color in $colormap {
+    &.color--#{$category} {
+      .module--header { background: $color; }
+    }
+  }
+
+  .module {
+
+    width: 31%;
+    margin: 0 10px 20px 10px;
+    @include border-radius (5px);
+    display: inline-block;
+    vertical-align: top;
+
+    @include respond-to(1200) { width: 45% }
+    @include respond-to(800) {
+      width: 100%;
+      margin: 0;
+      @include border-radius(0);
+      display: block;
+    }
+
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        background: $color;
+        .milestone--point-circle {
+          background: white;
+          color: $color;
+        } //milestone--point-circle
+      }
+    }
+
+    @each $category, $color in $colormap {
+      &.color--#{$category} {
+        .module--header { background: $color; }
+      }
+    }
+
+
+    .module--header {
+
+      padding: 20px;
+      border-bottom: 1px solid white(0.1);
+      text-align: center;
+      font-weight: $bold;
+      @include border-radius(5px 5px 0 0);
+
+    }
+
+    .module--content {
+
+      padding: 40px;
+
+      .module--no-data {
+        margin-bottom: 40px;
+        h5, h6 {margin-bottom: 20px;}
+      }
+
+      .module--data {
+
+        table {
+          width: 100%;
+          text-align: left;
+          margin-bottom: 20px;
+
+          thead {
+            border-bottom: 1px solid white(0.1);
+            width: 100%;
+            th {
+              font-weight: bold;
+              padding: 20px 5px;
+              vertical-align: bottom;
+            }
+          }
+
+          tbody {
+            tr {
+              border-bottom: 1px solid white(0.1);
+              td {
+                padding: 20px 5px;
+              }
+            }
+          }
+
+          .table-primary {
+            margin-bottom: 0;
+            @include font-size(2.2);
+            tr {
+              border: none;
+              td {
+                padding: 10px 5px;
+              }
+            }
+          }
+
+          .table-secondary {
+            width: 95%;
+            margin: 5px auto 0 auto;
+            @include font-size(1.2);
+            thead {
+              border: none;
+              th {
+                padding: 5px;
+                text-align: center;
+              }
+            }
+            tr {
+              border: none;
+              td {
+                padding: 5px;
+                text-align: center;
+              }
+            }
+          }
+
+        } //table
+
+        .editing {
+          text-align: center;
+          input, select, button, textarea {
+            margin-bottom: 15px;
+          }
+          textarea {
+            resize: vertical;
+          }
+          .input-group {
+            text-align: left;
+            width: 100%;
+          }
+          .half-width {
+            width: 47%;
+            margin-right: 1%;
+            margin-left: 1%;
+            display: inline-block;
+          }
+        }
+
+      } //.module--data
+
+    }
+
+    .coming-soon {
+      color: white(0.4);
+    }
+
+    .numbers-large {
+
+      @include font-size(10.0);
+      font-weight: $light;
+
+    }
+
+    .glyphicons {
+      width: 70px;
+      text-align: right;
+    }
+
+    .glyphicon-container {
+      display: inline-block;
+      @include font-size(1.2);
+
+      .glyphicon {
+        opacity: 0.3;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .glyphicon {
+        margin: 2px;
+      }
+    }
+
+    .module--submodule {
+      border-bottom: 1px solid white(0.1);
+      margin-bottom: 20px;
+      width: 100%;
+
+      .module--subhead {
+        @include font-size(2);
+        font-weight: bold;
+        width: 100%;
+        padding-bottom: 20px;
+        border-bottom: 1px solid white(0.1);
+
+        .glyphicon-container {
+          margin-left: 10px;
+        }
+
+      }
+
+      .text-left {
+        text-align: left;
+      }
+
+      button {
+        margin-bottom: 20px;
+      }
+
+    }
+
+  } //.module
+
+} //.module-container

@@ -49,6 +49,9 @@ gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails'
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
+# Lots of cool JS programming helpers (e.g. _groupBy)
+gem 'underscore-rails'
+
 gem 'mail'
 
 # Images
@@ -63,9 +66,11 @@ gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
 
 gem "d3-rails"
 
-gem 'cancancan', '~> 1.9'
+gem "six"
 
+gem 'intercom-rails'
 
+gem 'oj'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

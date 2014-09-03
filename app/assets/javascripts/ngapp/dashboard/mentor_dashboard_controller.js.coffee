@@ -1,13 +1,25 @@
 angular.module('myApp')
-.controller "MentorDashboardController", ["$scope", "UsersService", "ProgressService",
-($scope, UsersService, ProgressService) ->
+.controller "MentorDashboardController", ["$scope", "UsersService", "ProgressService", "ExpectationService", "OrganizationService",
+($scope, UsersService, ProgressService, ExpectationService, OrganizationService) ->
   $scope.assigned_students = []
+  $scope.attention_students = []
   $scope.mentor = $scope.user
 
   UsersService.getAssignedStudents($scope.mentor.id)
-  .success (data) ->
-    for student in data.students
-      ProgressService.getModulesProgress(student).then (student_with_modules_progress) ->
-        $scope.assigned_students.unshift(student_with_modules_progress)
+    .success (data) ->
+      $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+      $scope.assigned_students = $scope.organization.students
+      $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
+      $scope.loaded_users = true
+
+  $scope.addAssignment = () ->
+    modalInstance = $modal.open
+      templateUrl: 'assignment/add_assignment_modal.html',
+      controller: 'AddAssignmentModalController',
+      backdrop: 'static',
+      size: 'sm'
+      resolve:
+        user: () -> $scope.user
+        assignees: () -> $scope.assigned_students
 
 ]

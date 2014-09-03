@@ -1,0 +1,152 @@
+/* ===============================================
+   Progress Circle Classes
+   =============================================== */
+
+.progress-circles {
+
+  width: 170px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: inherit;
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  .circle-subnav {
+    @include font-size(1.2);
+    visibility: hidden;
+    li {
+      margin-bottom: 2px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+      a {
+        opacity: 0.4;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    .extra-info {
+      opacity: 0.4;
+    }
+
+  }
+
+  &:hover .circle-subnav {
+    visibility: visible;
+  }
+
+} //.progress-circles
+
+.add-button {
+  @extend .progress-circles;
+  padding-top: 40px;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .glyphicon {
+    @include font-size(8);
+    color: $green;
+  }
+}
+
+/*----- Needs Attention Circles -----*/
+
+.progress-circles--needs-attention {
+
+  margin: 0 40px 40px 0;
+  display: inline-block;
+
+  @include respond-to(675) {
+    display: block;
+    margin: 0 auto 40px auto;
+  }
+
+  .attention-circle {
+    width: 170px;
+    margin-right: 20px;
+    display: inline-block;
+
+    @include respond-to(1200) {
+      display: block;
+      margin: 0 auto;
+    }
+
+  }
+
+  .attention-text {
+    width: 250px;
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+
+    @include respond-to(1200) {
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .attention-description {
+      color: $red;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+  }
+
+}
+
+/* ===============================================
+   Circle Picture Classes
+   =============================================== */
+
+.circle-pictures {
+  width: 150px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px 30px 10px;
+  text-align: center;
+
+  .circle-picture {
+    display: block;
+    width: 130px;
+    margin: 0 auto;
+    img {
+      width: 100%;
+      height: auto;
+      @include border-radius(50%);
+    }
+  }
+  .circle-picture--name {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+  }
+
+}

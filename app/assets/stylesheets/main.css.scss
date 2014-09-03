@@ -8,13 +8,13 @@
     @media only screen and (max-width: $breakpoint + px) { @content; }
 }
 
+@mixin respond-to-min($breakpoint) {
+    @media only screen and (min-width: $breakpoint + px) { @content; }
+}
+
 @mixin respond-to-with-height($breakpoint) {
     @media only screen and (max-width: $breakpoint + px),
           screen and (max-height: $breakpoint + px) { @content; }
-}
-
-@mixin respond-to-min($breakpoint) {
-    @media only screen and (min-width: $breakpoint + px) { @content; }
 }
 
 /* Colors */
@@ -24,8 +24,10 @@
 }
 
 @function white($opacity:1){
-    @return rgba(255,255,255,$opacity)
+    @return rgba(255,255,255,$opacity);
 }
+
+/* Status Colors */
 
 $green: rgb(64,174,73); // #41ad49
 $darkgreen: rgb(43,151,51); //#2b8333
@@ -33,19 +35,31 @@ $darkgreen: rgb(43,151,51); //#2b8333
 $red: rgb(239,65,61); // #ef413d
 $darkred: rgb(181,45,42); // #b52d2a
 
-$blue: rgb(37,170,225); // #27aae1
-$darkblue: rgb(21,126,170); // #157eaa
+/* Catagory Colors */
+
+$teal: rgb(65,230,178); // #41e6b2
+$darkteal: rgb(54,166,131); // #36a683
 
 $yellow: rgb(242,190,40); // #e8be28
 $darkyellow: rgb(187,146,26); // #bb921a
 
+$orange: rgb(239,102,41); // #ef6629
+$darkorange: rgb(184,92,51); // #b85c33
+
 $purple: rgb(178,97,235); // #9665aa
 $darkpurple: rgb(138,67,187); //#8a43bb
 
-$light-grey: #c0c0c0;
+$blue: rgb(37,170,225); // #27aae1
+$darkblue: rgb(21,126,170); // #157eaa
+
+/* Greys */
+
+$lightgrey: rgb(192,192,192); // #c0c0c0
 $grey: rgb(25,26,27); // #191a1b
 $darkgrey: rgb(18,19,20); // #121314
+$boxgrey: rgb(31,31,31); // #1f1f1f
 $grey-hover: #888;
+
 $ink: rgb(43,45,47); // #2b2d2f
 
 $button-blue: #53b5e6;
@@ -53,6 +67,8 @@ $button-blue-hover: #69bfe9;
 
 $button-red: #cf2622;
 $button-red-hover: #cf6967;
+
+$darkborder: rgb(65, 66, 67);
 
 //These should be removed soon
 .green { color: $green; }
@@ -62,34 +78,44 @@ $button-red-hover: #cf6967;
 /* ========================= */
 /*      Category Colors      */
 /* ========================= */
-$academics-color: $green;
+$academics-color: $teal;
+$academics-color-dark: $darkteal;
+
 $service-color: $yellow;
+$service-color-dark: $darkyellow;
+
 $testing-color: $purple;
-$extracurricular-color: $red;
+$testing-color-dark: $darkpurple;
+
+$extracurricular-color: $orange;
+$extracurricular-color-dark: $darkorange;
+
 $college_prep-color: $blue;
+$college_prep-color-dark: $darkblue;
+
+$colormap: (
+  academics: $academics-color,
+  service: $service-color,
+  testing: $testing-color,
+  extracurricular: $extracurricular-color,
+  college_prep: $college_prep-color,
+  no_category: $boxgrey
+);
+
+$darkcolormap: (
+  academics: $academics-color-dark,
+  service: $service-color-dark,
+  testing: $testing-color-dark,
+  extracurricular: $extracurricular-color-dark,
+  college_prep: $college_prep-color-dark,
+  no_category: $grey
+);
 
 /* Fonts */
-$font-stack: "jaf-facitweb", "proxima-nova-alt", "Helvetica Neue", "Arial", sans-serif;
-$light: 300;
-$regular: 400;
+$font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
+$light: 200;
+$regular: 300;
 $bold: 700;
-
-@mixin headline-font($size) {
-      font-family: $font-stack;
-      font-size: $size;
-      line-height: 1.2;
-      font-weight: 100;
-}
-
-@mixin body-font($size) {
-
-    font-family: $font-stack;
-    font-weight: $light;
-    font-style: normal;
-    font-size: $size;
-    line-height: 1.5;
-
-}
 
 @mixin font-size($size:1.6, $line: $size * 1.2){
     font-size:   ($size * 10) + px;
@@ -118,25 +144,42 @@ $bold: 700;
 
 }
 
+@mixin circle($size) {
+
+	width: $size;
+	height: $size;
+	@include border-radius(100%);
+
+}
+
+@mixin transition($seconds) {
+  -webkit-transition-duration: $seconds + s;
+  -moz-transition-duration: $seconds + s;
+  -ms-transition-duration: $seconds + s;
+  -o-transition-duration: $seconds + s;
+  transition-duration: $seconds + s;
+}
+
+/* ===============================================
+   Big Global Stuff
+   =============================================== */
 
 html {
   height: 100%;
   min-height: 100%;
 
   body {
-    min-width: 1260px;
 
-    &.static-pages {
-      background-color: $darkgrey;
-      background: image-url("bg.jpg") no-repeat center center fixed;
-      @include bgcover();
-      color: $ink;
-      text-align: center;
-      @include body-font(22px);
-      min-height: 100%;
+    //min-width: 1260px;
+    font-family: $font-stack;
+    font-weight: $regular;
+    @include font-size(1.4);
+    background: $darkgrey;
+    color: white;
+
+    @include respond-to(800) {
+      @include font-size(1.2);
     }
-
-    @include body-font(14px);
 
   }
 
@@ -175,12 +218,20 @@ h1 {
   @include font-size(12);
   font-weight: $bold;
 
+  @include respond-to(1200) { @include font-size(10) }
+  @include respond-to(900) { @include font-size(8) }
+  @include respond-to(600) { @include font-size(7) }
+
 }
 
 h2 {
 
   @include font-size(9);
-  font-weight: $bold;
+  font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(8) }
+  @include respond-to(900) { @include font-size(6.8) }
+  @include respond-to(600) { @include font-size(5.4) }
 
 }
 
@@ -188,6 +239,10 @@ h3 {
 
   @include font-size(6);
   font-weight: $bold;
+
+  @include respond-to(1200) { @include font-size(5) }
+  @include respond-to(900) { @include font-size(4.2) }
+  @include respond-to(600) { @include font-size(3.6) }
 
 }
 
@@ -197,12 +252,20 @@ h4 {
   @include font-size(4);
   font-weight: $light;
 
+  @include respond-to(1200) { @include font-size(3.5) }
+  @include respond-to(900) { @include font-size(3) }
+  @include respond-to(600) { @include font-size(2.5) }
+
 }
 
 h5 {
 
-  @include font-size(3,1);
+  @include font-size(3);
   font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(2.6) }
+  @include respond-to(900) { @include font-size(2.2) }
+  @include respond-to(600) { @include font-size(1.8) }
 
 }
 
@@ -210,6 +273,9 @@ h6 {
 
   @include font-size(1.8);
   font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(1.7) }
+  @include respond-to(900) { @include font-size(1.6) }
 
 }
 
@@ -227,49 +293,38 @@ h6 {
 
 .italic { font-style: italic; }
 
-.font-size-normal { font-size: 16px; }
+.big-text {
+  h5 { line-height: 1rem; }
+}
 
 
 /* ===============================================
    Global Classes
    =============================================== */
 
-$wrapper: 0 80px;
+$wrapper: 0 40px;
+$wrapper-width: 40px;
+$small-wrapper-width: 20px;
+$panelwrapper: 0 80px;
 
-.user-list-header {
+.list-header {
 
 	width: 100%;
 	padding-bottom: 20px;
 	border-bottom: 1px white(0.25) solid;
-	
-}
 
-.user-list-container {
-
-	margin-top: 60px;
+  @include respond-to(900) { text-align: center; }
 
 }
 
-.user-list {
-
-  .user-list__add {
-    cursor: pointer;
-
-    padding: 20px 10px;
-    width: 160px;
-    word-wrap: break-word;
-
-    display: inline-block;
-    vertical-align: top;
-
-    text-align: center;
-
-    .glyphicon { font-size: 62px; color: $green; }
-    .text { text-align: center; }
-  }
-
+.list-container {
+	margin: 60px 0;
+  @include respond-to(900) { text-align: center; }
 }
 
+.no-bottom {
+  margin-bottom: 0;
+}
 
 /* ===============================================
    Header
@@ -280,12 +335,9 @@ header {
   width: 100%;
   background: $darkgrey;
   color: white();
-  border-bottom: 1px white(0.25) solid;
+  border-bottom: 1px $darkborder solid;
   position: relative;
   z-index: 1000;
-
-  min-width: 415px;
-  @include respond-to(415) { min-width: 345px; }
 
   a {
 
@@ -301,19 +353,32 @@ header {
   .wrapper {
 
     margin: $wrapper;
-    @include respond-to(415) { margin: 0 10px; }
+    @include respond-to(600) { margin: 0 $small-wrapper-width; }
 
     .imua-logo {
 
       margin: 22px 0;
-      
+
       img {
-      
+
       	margin-right: 5px;
-      
+
       }
 
     }
+
+    .nav-expanded {
+      @include respond-to(800) {
+        display: none;
+      }
+    }
+
+    .nav-collapsed {
+      @include respond-to-min(800) {
+        display: none;
+      }
+    }
+
 
     nav {
 
@@ -322,20 +387,32 @@ header {
       li {
 
         float: left;
+        margin-left: 90px;
+        @include respond-to(1000) { margin-left: 40px; }
+        @include respond-to(660) { margin-left: 20px; }
+
+        &:first-of-type {
+          margin-left: 20px;
+        }
 
         a { cursor: pointer; }
 
-        margin-left: 100px;
-        @include respond-to(840) { margin-left: 50px; }
-        @include respond-to(660) { margin-left: 20px; }
-
-        &.cog {
-          margin-left: 50px;
-        }
       }
 
-      .cog .glyphicon {
-        font-size: 22px;
+      .cog {
+
+	      .current-name {
+	      	display: inline-block;
+	      	padding-right: 6px;
+	      }
+
+	      .glyphicon {
+          display: inline-block;
+          font-size: 22px;
+	      	vertical-align: middle;
+	      	margin-top: -6px;
+        }
+
       }
 
       .dropdown {
@@ -376,6 +453,124 @@ header {
   left: 0;
   z-index: 999; // Just below the header
 }
+
+/* ===============================================
+   Milestone Classes
+   =============================================== */
+
+.milestone-item {
+
+  width: 44%;
+  min-width: 175px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px 3%;
+  text-align: center;
+
+  .milestone--point-circle {
+
+    @include circle(90px);
+    margin: 0 auto;
+    padding-bottom: 10px;
+
+    .point-circle--inside {
+
+      padding-top: 20px;
+
+      h5 {
+        line-height: 1rem;
+      }
+
+    }
+
+  } //milestone--point-circle
+
+  .milestone-item-statisfied {
+
+    opacity: 0.6;
+
+    .point-circle--inside {
+
+      padding-top: 10px;
+
+    }
+
+  }
+
+  .milestone--point-circle {
+
+    color: $darkgrey;
+
+  } //milestone--point-circle
+
+} //milestone-item
+
+/* ===============================================
+   Expectation Classes
+   =============================================== */
+
+.expectations-list-item {
+    margin: 0 1%;
+    margin-bottom: 80px;
+    width: 100%;
+    text-align: center;
+
+    .expectation-title {
+      padding-bottom: 20px;
+    }
+
+    .expectation-btn-group--container {
+      width: 80%;
+      margin: 0 auto;
+
+      .expectation-selector {
+        width: 33%;
+        float: left;
+
+        .button-wrapper {
+
+          width: 50px;
+          height: 50px;
+          margin: 0 auto;
+
+          button {
+
+            width: 30px;
+            height: 30px;
+            margin-top: 8px;
+            background: white;
+            border: 0;
+            @include border-radius (50%);
+            opacity: 0.1;
+
+          }
+
+          .expectation-btn-alert { background: $red; }
+          .expectation-btn-warn { background: $yellow; }
+          .expectation-btn-good { background: $green; }
+
+        }
+        .button-label {
+          padding: 20px 0;
+        }
+
+        .selected {
+
+          button {
+            width: 50px;
+            height: 50px;
+            margin: 0;
+            opacity: 1;
+          }
+
+        }
+
+      }
+
+    }
+
+}
+
 
 
 /* ===============================================
@@ -515,13 +710,20 @@ button:focus {
    Misc
    =============================================== */
 
+.dropdown-menu {
+  z-index: 5000;
+}
+
+.modal-body {
+  color: $ink;
+}
+
 .displayNone {
   display: none;
 }
 
 .flash-container {
   padding: 20px;
-  @extend .font-size-normal;
   z-index: 10000;
 
   position: absolute;

@@ -16,14 +16,74 @@ class ProgressService
     return ReturnObject.new(:ok, "All modules progress", modules_progress)
   end
 
-  def check_progress(userId, time_unit_id, module_title)
+  def overall_progress(userId)
     user = UserRepository.new.get_user(userId)
+
+    totalPoints = MilestoneService.new.get_total_points(user.organization_id)
+
+    totalUserPoints = 0
+    userMilestones = MilestoneService.new.get_user_milestones(user.id)
+    userMilestones.each do | um |
+      totalUserPoints += um.milestone.points
+    end
+
+    percentComplete = ((totalUserPoints.to_f / totalPoints.to_f) * 100.0).round(0)
+
+    obj = { :totalUserPoints => totalUserPoints, :totalPoints => totalPoints, :percentComplete => percentComplete }
+
+    return ReturnObject.new(:ok, "Overall progress", obj)
+  end
+
+  def get_recalculated_milestones(user_id, time_unit_id, module_title)
+    org_milestones = []
+    user_milestones = []
+
+    user = UserRepository.new.get_user(user_id)
+    organization_id = user.organization_id
+
+    # Get org Milestones based on the given parameters
+    conditions = []
+    arguments = {}
+
+    conditions << 'organization_id = :organization_id'
+    arguments[:organization_id] = organization_id
+
+    unless time_unit_id.nil?
+      conditions << 'time_unit_id = :time_unit_id'
+      arguments[:time_unit_id] = time_unit_id
+    end
+
+    unless module_title.nil?
+      conditions << 'module = :module'
+      arguments[:module] = module_title
+    end
+
+    all_conditions = conditions.join(' AND ')
+    org_milestones = Milestone.find(:all, :conditions => [all_conditions, arguments])
+
+    # Get UserMilestones based on the given parameters
+    conditions = []
+    arguments = {}
+
+    conditions << 'user_id = :user_id'
+    arguments[:user_id] = user_id
+
+    unless time_unit_id.nil?
+      conditions << 'time_unit_id = :time_unit_id'
+      arguments[:time_unit_id] = time_unit_id
+    end
+
+    unless module_title.nil?
+      conditions << 'module = :module'
+      arguments[:module] = module_title
+    end
+
+    all_conditions = conditions.join(' AND ')
+    user_milestones = UserMilestone.find(:all, :conditions => [all_conditions, arguments])
 
     # Get all Milestones for given category and time_unit
     # Loop through and call has_earned? method
     # Add to UserMilestone if earned, Delete if not earned and user had previously earned the milestone
-    org_milestones = Milestone.where(:module => module_title, :time_unit_id => time_unit_id)
-    users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
 
     # ToDo: We can probably filter out all the Yes/No milestones here and skip calling has_earned? on all Yes/No milestones
     # to save a DB call. Yes/No milestone are simple and we know they earned or lost based on checking/unchecking a checkbox so don't need to check again
@@ -32,18 +92,26 @@ class ProgressService
     milestones = MilestoneFactory.get_milestone_objects(org_milestones)
 
     milestones.each do | m |
+      # TODO - has_earned shouldn't depend on time_unit_id
       earned = m.has_earned?(user, time_unit_id)
-      user_has_milestone = users_milestones.select{|um| um.milestone_id == m.id}.length > 0
+      user_has_milestone = user_milestones.select{|um| um.milestone_id === m.id}.length > 0
 
       Rails.logger.debug "*****Milestone id: #{m.id}, value: #{m.value} earned? #{earned}"
       if earned and !user_has_milestone
-        MilestoneService.new.add_user_milestone(userId, time_unit_id, m.id)
+        MilestoneService.new.add_user_milestone(user_id, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone added to UserMilestone table"
       elsif !earned and user_has_milestone
-        MilestoneService.new.delete_user_milestone(userId, time_unit_id, m.id)
+        MilestoneService.new.delete_user_milestone(user_id, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone deleted from UserMilestone table"
       end
     end
+
+    return ReturnObject.new(:ok, "Recalculated milestones for user_id: #{user_id}, time_unit_id: #{time_unit_id}, module_title:#{module_title}.", milestones)
+  end
+
+  def get_recalculated_module_progress(userId, time_unit_id, module_title)
+    # Perform recalculation on UserMilestones
+    get_recalculated_milestones(userId, time_unit_id, module_title)
 
     # Get total and user points
     points = get_module_and_user_points(userId, time_unit_id, module_title)

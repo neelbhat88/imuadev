@@ -6,39 +6,39 @@ class UserRepository
     return User.find(userId)
   end
 
+  def get_user_org(userId)
+    # TODO Not sure if this works in a single call, may need to adjust associations
+    return User.includes(:organization).find(userId).organization
+  end
+
   def update_user_info(userObj)
     id = userObj[:id]
+    email = userObj[:email]
     first_name = userObj[:first_name]
     last_name = userObj[:last_name]
+    title = userObj[:title]
     phone = userObj[:phone]
     avatar = userObj[:avatar]
+    class_of = userObj[:class_of]
+    time_unit_id = userObj[:time_unit_id]
 
     user = User.find(id)
+    user.email = email
+    user.first_name = first_name
+    user.last_name = last_name
+    user.title = title
+    user.phone = phone
+    user.class_of = class_of
+    user.time_unit_id = time_unit_id
 
-    if avatar == nil
-      result = user.update_attributes(
-                                  :first_name => first_name,
-                                  :last_name => last_name,
-                                  :phone => phone
-                                )
-    else
-      result = user.update_attributes(
-                                  :first_name => first_name,
-                                  :last_name => last_name,
-                                  :phone => phone,
-                                  :avatar => avatar
-                                )
+    if avatar != nil
+      user.avatar = avatar
     end
 
-    if (result)
-      new_user = get_user(id)
-
-      return { :status => :ok, :info => "User info updated successfully!", :user => new_user }
-
+    if user.save
+      return { :status => :ok, :info => "User info updated successfully!", :user => user }
     else
-      old_user = get_user(id)
-
-      return { :status => :bad_request, :info => user.errors.messages[:avatar], :user => old_user}
+      return { :status => :bad_request, :info => user.errors.full_messages, :user => user}
     end
   end
 
@@ -68,11 +68,12 @@ class UserRepository
       return { :status => :conflict, :info => "A user with the email #{user_obj[:email]} already exists.", :user => nil }
     end
 
-    password = Devise.friendly_token.first(8)
+    password = generate_password()
     user = User.new do |u|
       u.email = user_obj[:email]
       u.first_name = user_obj[:first_name]
       u.last_name = user_obj[:last_name]
+      u.title = user_obj[:title]
       u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
@@ -81,6 +82,7 @@ class UserRepository
 
     if user.role == Constants.UserRole[:STUDENT]
       user.time_unit_id = RoadmapRepository.new.get_time_units(user.organization_id)[0].id
+      user.class_of = user_obj[:class_of]
     end
 
     if user.save
@@ -95,6 +97,20 @@ class UserRepository
     end
 
     return { :status => :internal_server_error, :info => "Failed to create user.", :user => nil }
+  end
+
+  def generate_password
+    return Devise.friendly_token.first(8)
+  end
+
+  def reset_password(user)
+    new_password = generate_password()
+
+    user.update_attributes(:password => new_password)
+
+    Background.process do
+      UserMailer.reset_password(user, new_password).deliver
+    end
   end
 
   def delete_user(userId)
@@ -174,14 +190,34 @@ class UserRepository
   end
 
   def get_assigned_students(userId)
-    relations = Relationship.where(:assigned_to_id => userId)
+    studentIds = get_assigned_student_ids(userId)
 
-    students = []
-    relations.each do | r |
-      students << r.user
-    end
+    students = User.includes([:user_milestones, :relationships, :user_expectations,
+                   :user_classes, :user_extracurricular_activity_details,
+                   :user_service_hours, :user_tests]).where(:id => studentIds)
 
     return students
+  end
+
+  def get_assigned_student_ids(userId)
+    return Relationship.where(:assigned_to_id => userId).map(&:user_id)
+  end
+
+  def get_assigned_students_for_group(userIds)
+    assigned_students_for_group = []
+
+    userIds.each do | userId |
+      studentIds = []
+
+      students = get_assigned_students(userId)
+      students.each do | student |
+        studentIds << student.id
+      end
+
+      assigned_students_for_group << { :user_id => userId, :student_ids => studentIds}
+    end
+
+    return ReturnObject.new(:ok, "Assigned students for users: #{userIds}.", assigned_students_for_group)
   end
 
   def get_assigned_mentors(userId)
@@ -194,37 +230,8 @@ class UserRepository
 
     return mentors
   end
-end
 
-class OrgUser
-  attr_accessor :id, :email, :first_name, :last_name, :phone, :role, :organization_id
-
-  def initialize(user_obj)
-    @id = user_obj.id
-    @email = user_obj.email
-    @first_name = user_obj.first_name
-    @last_name = user_obj.last_name
-    @phone = user_obj.phone
-    @role = user_obj.role
-    @organization_id = user_obj.organization_id
-  end
-
-  def create(user_obj)
-
-
-  end
-end
-
-class Student < OrgUser
-  attr_accessor :time_unit_id
-
-  def initialize(user_obj)
-    super
-
-    @time_unit_id = user_obj.time_unit_id
-  end
-
-  def create(user_obj)
-
+  def are_related?(studentId, mentorId)
+    return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
   end
 end

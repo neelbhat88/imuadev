@@ -10,18 +10,31 @@ Imua::Application.routes.draw do
         get 'current_user' => 'sessions#show_current_user'
       end
 
+      # **************************************
+      # Start adding new routes here like this
+      # run foreman run rake routes to see what the routes look like
+      # **************************************
+      resources :users, shallow: true do
+        resources :user_class, except: [:new, :edit]
+
+        resources :user_extracurricular_activity, except: [:new, :edit]
+        resources :user_extracurricular_activity_detail, except: [:new, :edit]
+
+        resources :assignment, except: [:new, :edit]
+        resources :user_assignment, except: [:new, :edit, :show]
+
+        resources :user_service_organization, except: [:new, :edit]
+        resources :user_service_hour, except: [:new, :edit]
+      end
+
       resources :users do
         collection do
           put '/:id/update_password' => 'users#update_password'
 
-          get  '/:id/time_unit/:time_unit_id/classes' => 'progress#user_classes'
-          post '/:id/classes' => 'progress#add_user_class'
-          put  '/:id/classes/:class_id' => 'progress#update_user_class'
-          delete '/:id/classes/:class_id' => 'progress#delete_user_class'
-
           put '/:id/time_unit/next' => "users#move_to_next_semester"
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
 
+          get  '/:id/progress' => 'progress#overall_progress'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
@@ -42,8 +55,25 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  '/organization' => 'organization#all_organizations'
-      get  '/organization/:id' => 'organization#get_organization'
+      get  'assignment/:id/collect'              => 'assignment#collect'
+      get  'users/:user_id/assignment/collect'   => 'assignment#collect_all'
+      post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
+
+      get 'user_assignment/:id/collect'       => 'user_assignment#collect'
+      get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'
+
+      get 'users/:id/user_with_contacts' => 'users#get_user_with_contacts'
+      post 'users/:id/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
+      put 'parent_guardian_contact/:id' => 'parent_guardian_contact#update_parent_guardian_contact'
+      delete 'parent_guardian_contact/:id' => 'parent_guardian_contact#delete_parent_guardian_contact'
+
+      get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
+      get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
+
+      get '/organization' => 'organization#all_organizations'
+      get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'
+      get '/organization/:id/info_with_users' => 'organization#organization_with_users'
       # params[:name]
       post '/organization' => 'organization#create_organization'
       # params[:id]
@@ -51,9 +81,24 @@ Imua::Application.routes.draw do
       put  '/organization/:id' => 'organization#update_organization'
       delete '/organization/:id' => 'organization#delete_organization'
 
-      get  '/organization/:id/time_units' => 'organization#time_units'
-      get  '/organization/:id/roadmap' => 'organization#roadmap'
-      get  '/organization/:id/modules' => 'organization#modules'
+      get '/organization/:id/time_units' => 'organization#time_units'
+      get '/organization/:id/roadmap' => 'organization#roadmap'
+      get '/organization/:id/modules' => 'organization#modules'
+
+      get '/organization/:id/tests' => 'test#get_org_tests'
+      post '/org_test' => 'test#create_org_test'
+      put '/org_test/:id' => 'test#update_org_test'
+      delete '/org_test/:id' => 'test#delete_org_test'
+
+      get '/users/:id/tests' => 'test#get_user_tests'
+      post '/user_test' => 'test#create_user_test'
+      put '/user_test/:id' => 'test#update_user_test'
+      delete '/user_test/:id' => 'test#delete_user_test'
+
+      get '/users/:id/parent_guardian_contacts' => 'parent_guardian_contact#get_parent_guardian_contacts'
+      post '/parent_guardian_contact' => 'parent_guardian_contact#create_parent_guardian_contact'
+      put '/parent_guardian_contact/:id' => 'parent_guardian_contact#update_parent_guardian_contact'
+      delete '/parent_guardian_contact/:id' => 'parent_guardian_contact#delete_parent_guardian_contact'
 
       post '/roadmap' => 'roadmap#create'
       put  '/roadmap/:id' => 'roadmap#update'
@@ -63,19 +108,27 @@ Imua::Application.routes.draw do
       put  '/time_unit/:id' => 'roadmap#update_time_unit'
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
-      post '/milestone' => 'roadmap#create_milestone'
-      put  '/milestone/:id' => 'roadmap#update_milestone'
-      delete '/milestone/:id' => 'roadmap#delete_milestone'
+      post '/milestone' => 'milestone#create_milestone'
+      put  '/milestone/:id' => 'milestone#update_milestone'
+      delete '/milestone/:id' => 'milestone#delete_milestone'
 
       get    '/organization/:id/expectations'                 => 'expectation#get_expectations'
       post   '/organization/:id/expectations'                 => 'expectation#create_expectation'
       put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
       delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
+      # TODO: SUPER HACKY! Are migrations better for this stuff??
+      get '/milestone/update_org_id' => 'milestone#update_org_id'
+
     end # end :v1
   end # end :api
 
-  get '/dashboard' => 'static#dashboard', as: 'dashboard'
+  get '/forgot_password' => 'static#forgot_password'
+  post '/reset_password' => 'static#reset_password'
+
+  get '/login' => 'static#login'
+  get '/marketing' => 'static#index'
+
   get '/*path' => redirect("/?goto=%{path}")
   root :to => 'static#index'
   # The priority is based upon order of creation:

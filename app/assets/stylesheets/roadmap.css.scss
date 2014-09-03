@@ -1,124 +1,29 @@
+.orgsetupContainer {
+  padding: 0 $wrapper-width;
+  background: white;
+  color: $ink;
+
+}
+
+.orgsetupLower {
+  margin-bottom: 40px;
+}
+
 .roadmapContainer {
-  border-top: 1px solid;
+  width: 45%;
+  margin-right: 10%;
+  float: left;
 
-  padding: 0 40px 40px 40px;
-
-  .roadmapContainer__title-container {
-    text-align: center;
-  }
-
-  .roadmapContainer__title {
-    display: inline-block;
-    margin-bottom: 20px;
-    border-bottom: 1px solid transparent;
-  }
-
-  .roadmapContainer__title--editable {
-    @extend .roadmapContainer__title;
-
-    cursor: pointer;
-
-    &:hover { border-bottom: 1px solid; }
-  }
 }
 
-.tuContainer {
-  max-width: 1000px; // Fits 4 time units in a row
-  margin: auto;
-}
-
-.tu {
-
-  width: 240px;
-
-  display: inline-block;
-  vertical-align: top;
-
-  padding: 5px;
-  margin: 5px;
-
-  border: 1px solid #e0e0e0;
-  background-color: #e9e9e9;
-  @include border-radius(5px);
-
-  .tu__header {
-
-    font-size: 14px;
-    padding: 10px;
-
-  }
-
-  .tu__header-title {
-    font-weight: bold;
-  }
-
-  .tu__header-title--editable {
-    @extend .tu__header-title;
-
-    cursor: pointer;
-
-    &:hover { border-bottom: 1px solid; }
-  }
-
-  .tu__milestones-container {
-
-    min-height: 100px;
-    padding: 10px;
-
-    max-height: 300px;
-    overflow: auto;
-  }
-
-  .tu__milestone {
-    background-color: white;
-    padding: 5px 10px;
-    @include border-radius(5px);
-    margin-bottom: 10px;
-
-    border-top: 5px solid;
-    border-bottom: 1px solid #9e9e9e;
-
-    .footer {
-      text-align: right;
-    }
-
-    &.color--academics { border-top-color: $academics-color; }
-    &.color--service { border-top-color: $service-color; }
-  }
-
-  .tu__milestone--editable {
-    @extend .tu__milestone;
-
-    cursor: pointer;
-  }
-
-  .tu__footer {
-
-    padding: 10px;
-
-    a {
-
-      color: $grey; text-decoration: none;
-
-      &:hover { color: $ink; }
-
-    }
-
-  }
-
-} // .tu
-
-.milestone
-{
+.milestone {
   input.milestone-title {
     width: 250px;
   }
 }
 
-.year
-{
-  width: 550px;
-  margin: auto;
+.year {
+  width: 100%;
 }
 
 .year__header
@@ -128,7 +33,6 @@
   font-weight: bold;
   background-color: $blue;
   color: white;
-  border-radius: 5px 5px 0 0;
 }
 
 .milestone-title {
@@ -155,7 +59,7 @@
     color: $ink;
     text-align: center;
     font-size: 22px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
   }
 
@@ -169,13 +73,13 @@
   .semester__header-title--editing {
     padding: 10px;
     background-color: #e0e0e0;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
   }
 
   .milestone {
     padding: 7px 26px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     width: 100%;
     border-top: none;
     display: inline-block;
@@ -203,7 +107,7 @@
       .milestone__info__weight {
         width: 100%;
         display: inline-block;
-        color: $light-grey;
+        color: $lightgrey;
       }
 
       .milestone__info__icons {
@@ -223,10 +127,10 @@
 
   .semester__footer {
     padding: 10px 10px 10px 20px;
-    border: 1px solid $light-grey;
+    border: 1px solid $lightgrey;
     border-top: none;
     cursor: pointer;
-    color: $light-grey;
+    color: $lightgrey;
 
     &:hover {
       background-color: #e0fee0;
@@ -286,6 +190,7 @@
     width: 50%;
     text-align: left;
     display: inline-block;
+    vertical-align: top;
     margin-bottom: 15px;
     .selectable_module__title
     {
@@ -295,7 +200,7 @@
       margin-bottom: 15px;
       padding: 10px;
       padding-right: 14px;
-      border: 1px solid $light-grey;
+      border: 1px solid $lightgrey;
       background-color: white;
       img {
         margin-left: 0px;
@@ -333,4 +238,100 @@
 .edit-milestone__title
 {
   @extend .milestone-title;
+}
+
+.rightContainer {
+  width: 45%;
+  float: left;
+
+  .expectations-title {
+    border-bottom: 1px solid black(0.1);
+    margin-bottom: 15px;
+  }
+
+  .expectations-list {
+
+    width: 100%;
+    padding: 0 $wrapper-width;
+    margin-bottom: 40px;
+
+    .expectations-list__item {
+      width: 100%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid black(0.1);
+      margin-bottom: 15px;
+
+      .expectations-list__item__title {
+        width: 80%;
+        display: inline-block;
+      }
+
+      .expectations-list__item__icons {
+        width: 15%;
+        display: inline-block;
+      }
+
+      .form-field {
+        width: 90%;
+      }
+
+    }
+
+    .add-expectation {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 15px;
+    }
+
+  }
+
+  .orgTests-title {
+    border-bottom: 1px solid black(0.1);
+    margin-bottom: 15px;
+  }
+
+  .orgTests-list {
+    width: 100%;
+    padding: 0 $wrapper-width;
+    margin-bottom: 40px;
+
+    .orgTests-list__item {
+      width: 100%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid black(0.1);
+      margin-bottom: 15px;
+
+      .orgTests-list__item__title {
+        width: 40%;
+        display: inline-block;
+      }
+
+      .orgTests-list__item__score_type {
+        width: 40%;
+        display: inline-block;
+      }
+
+      .orgTests-list__item__icons {
+        width: 15%;
+        display: inline-block;
+      }
+
+      .form-field {
+        width: 100%;
+      }
+
+    }
+
+  }
+
+  .add-orgTest {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+}
+
+.roadmapContainer, .rightContainer {
+  @include respond-to(1200) { float: none; width: 100%;}
 }

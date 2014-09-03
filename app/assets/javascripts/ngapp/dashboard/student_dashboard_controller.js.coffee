@@ -1,10 +1,15 @@
 angular.module('myApp')
-.controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService", "UsersService",
-($scope, ProgressService, OrganizationService, UsersService) ->
+.controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService", "UsersService", "ExpectationService", "AssignmentService",
+($scope, ProgressService, OrganizationService, UsersService, ExpectationService, AssignmentService) ->
   $scope.student_with_modules_progress = null
   $scope.student = $scope.user
   $scope.overall_points = {user: 0, total: 0, percent: 0}
   $scope.student_mentors = []
+  $scope.milestones = []
+  $scope.needs_attention = false
+  $scope.expectations = []
+  $scope.meetingExpectations = true
+  $scope.user_assignments = []
 
   setMiddleDimensions = () ->
     windowWidth = $(window).outerWidth()
@@ -20,7 +25,7 @@ angular.module('myApp')
 
   $(window).resize (event) -> setMiddleDimensions()
 
-  ProgressService.getModulesProgress($scope.student).then (student_with_modules_progress) ->
+  ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
     $scope.student_with_modules_progress = student_with_modules_progress
     setMiddleDimensions()
 
@@ -42,4 +47,31 @@ angular.module('myApp')
     .success (data) ->
       $scope.student_mentors = data.mentors
       $scope.loaded_student_mentors = true
+
+  ProgressService.getRecalculatedMilestones($scope.student, $scope.student.time_unit_id)
+    .success (data) ->
+      $scope.milestones = data.recalculated_milestones
+      $scope.loaded_milestones = true
+
+  ExpectationService.getExpectations($scope.student.organization_id)
+    .success (data) ->
+      $scope.expectations = data.expectations
+      ExpectationService.getUserExpectations($scope.student)
+        .success (data) ->
+          for e in $scope.expectations
+            for ue in data.user_expectations
+              if e.id == ue.expectation_id
+                e.user_expectation = ue
+                if ue.status > 0
+                  $scope.meetingExpectations = false
+                  if ue.status >= 2
+                    $scope.needs_attention = true
+                break
+            if not e.user_expectation?
+              e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
+          $scope.loaded_expectations = true
+
+  AssignmentService.collectUserAssignments($scope.student.id)
+    .success (data) ->
+      $scope.user_assignments = data.user_assignments
 ]

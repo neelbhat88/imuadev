@@ -5,18 +5,17 @@ class Api::V1::OrganizationController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil )
+  def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil, progressService = nil )
     @organizationRepository = organizationRepo ? organizationRepo : OrganizationRepository.new
     @roadmapRepository = roadmapRepo ? roadmapRepo : RoadmapRepository.new
     @enabledModules = enabledModules ? enabledModules : EnabledModules.new
+    @progressService = progressService ? progressService : ProgressService.new
   end
 
   # GET /organization
   def all_organizations
     if !current_user.super_admin?
-      render status: :forbidden,
-        json: {}
-
+      render status: :forbidden, json: {}
       return
     end
 
@@ -29,22 +28,51 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
-  # GET /organization/:id
-  def get_organization
+  # GET /organization/:id/info_with_roadmap
+  def organization_with_roadmap
     orgId = params[:id].to_i
 
     if !same_organization?(orgId)
       render status: :forbidden, json: {}
-
       return
     end
 
-    result = @organizationRepository.get_organization(orgId)
+    org = @organizationRepository.get_organization(orgId)
+    admins = org.users.where(:role => Constants.UserRole[:ORG_ADMIN])
 
-    viewOrg = ViewOrganization.new(result.object) unless result.object.nil?
-    render status: result.status,
+    roadmap = @roadmapRepository.get_roadmap_by_organization(orgId)
+    viewRoadmap = ViewRoadmap.new(roadmap) unless roadmap.nil?
+
+    render status: :ok,
       json: {
-        info: result.info,
+        info: "Organization with Roadmap",
+        organization: {id: org.id, name: org.name, orgAdmins: admins.map {|u| ViewUser.new(u)} },
+        roadmap: viewRoadmap
+      }
+  end
+
+  # GET /organization/:id/info_with_users
+  def organization_with_users
+    orgId = params[:id].to_i
+
+    # TODO Change authorization to check this particular function
+    if !same_organization?(orgId)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    org = @organizationRepository.get_organization(orgId)
+    # TODO Check authorization for this function
+    # if !can?(current_user, :read_organization_with_users, org)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    viewOrg = ViewOrganizationWithUsers.new(org) unless org.nil?
+
+    render status: :ok,
+      json: {
+        info: "Organization with Users",
         organization: viewOrg
       }
   end

@@ -3,18 +3,20 @@ angular.module('myApp')
   return {
     restrict: 'EA',
     scope: {
-      student: '='
+      student: '=',
+      identifier: '@'
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      	width = 170 - margin.left - margin.right;
-      	height = width - margin.top - margin.bottom;
+      var width = 170 - margin.left - margin.right;
+      var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
-      				.attr("id", scope.student.user.id)
+      				.attr("id", scope.student.id + "_" + scope.identifier)
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
+                .attr("id", "svg" + scope.student.id + "_" + scope.identifier)
       			   .append("g")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
 
@@ -22,14 +24,23 @@ angular.module('myApp')
 
       scope.render = function(student) {
         chart.selectAll("g").remove();
+        d3.select("#svg" + student.id + "_" + scope.identifier + " circle").remove();
+        d3.select("#svg" + student.id + "_" + scope.identifier + " pattern").remove();
+
         var color = d3.scale.ordinal()
-            .range(['#41ad49', '#e8be28', '#ef413d', '#27aae1', '#9665aa', '#e5e5e5']);
+            .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080']);
 
         var total_points = 0;
         var user_points = 0;
         var data = [6];
+        data[0] = {name: "Academics",       value: 0};
+        data[1] = {name: "Service",         value: 0};
+        data[2] = {name: "Extracurricular", value: 0};
+        data[3] = {name: "College_Prep",    value: 0};
+        data[4] = {name: "Testing",         value: 0};
+        data[5] = {name: "Future Progress", value: 0};
 
-        _ref = student.modules_progress;
+        var _ref = student.modules_progress;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           var index = -1;
           switch (_ref[_i].module_title) {
@@ -47,21 +58,21 @@ angular.module('myApp')
 
         var arc = d3.svg.arc()
             .outerRadius(radius)
-            .innerRadius(radius - 15);
+            .innerRadius(radius - 14);
 
-        var svg = $('#' + student.user.id + ' svg')[0];
+        var svg = $('#' + student.id + '_' + scope.identifier + ' svg')[0];
         var photoCircle = d3.select(svg)
                             .append("circle")
-                            .attr("cx", width-85)
-                            .attr("cy", height-85)
+                            .attr("cx", width/2)
+                            .attr("cy", height/2)
                             .attr("r", radius-20)
 
 
-                            .style("fill", "url(#photo"+student.user.id+")");
+                            .style("fill", "url(#photo"+student.id+")");
 
         var image = d3.select(svg)
                         .append("pattern")
-                        .attr("id", "photo" + student.user.id)
+                        .attr("id", "photo" + student.id)
                         .attr("x", 0)
                         .attr("y", 0)
                         .attr("width", 1)
@@ -70,9 +81,9 @@ angular.module('myApp')
         .append("image")
                          .attr("x", 0)
                         .attr("y", 0)
-                        .attr("width", 130)
-                        .attr("height", 130)
-                        .attr("xlink:href", student.user.square_avatar_url);
+                        .attr("width", width-40)
+                        .attr("height", height-40)
+                        .attr("xlink:href", student.square_avatar_url);
 
         var arc2 = d3.svg.arc().outerRadius(radius - 40);
 
@@ -91,7 +102,7 @@ angular.module('myApp')
 
         g.append("path").attr("fill", function(d, i) { return color(i); })
             .transition()
-                .duration(1300)
+                .duration(800)
                 .attrTween("d", tweenPie);
 
         function tweenPie(b) {
@@ -102,7 +113,7 @@ angular.module('myApp')
         }
       }
 
-      scope.$watch('student', function(){
+      scope.$watch('student', function() {
           scope.render(scope.student);
       }, true);
     }

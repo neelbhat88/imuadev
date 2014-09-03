@@ -20,4 +20,11 @@ class UserMailer < ActionMailer::Base
 
     mail(:to => 'neel@hokuscholars.org', :subject=>"Log Error in Imua #{ENV['ROOT_URL']}")
   end
+
+	def reset_password(user, password)
+		@user = user
+		@password = password
+
+		mail(:to => user.email, :subject => "Imua - Reset password request")
+	end
 end

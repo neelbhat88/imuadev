@@ -6,18 +6,6 @@ angular.module('myApp')
       resolve:
         current_user: ['SessionService', (SessionService) ->
           SessionService.getCurrentUser()
-        ],
-        organization: ['$route', '$q', 'OrganizationService', ($route, $q, OrganizationService) ->
-          defer = $q.defer()
-
-          OrganizationService.getOrganization($route.current.params.id)
-            .success (data) ->
-              defer.resolve(data.organization)
-
-            .error (data) ->
-              defer.reject()
-
-          defer.promise
         ]
       data:
         authorizedRoles: [CONSTANTS.USER_ROLES.super_admin, CONSTANTS.USER_ROLES.org_admin]

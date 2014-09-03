@@ -1,145 +1,132 @@
-.organizationExpectationContainer {
+.expectationUpper {
 
-  margin-top: 20px;
-  margin-bottom: 20px;
+  background: $grey;
+  color: white;
+  border-bottom: 1px $darkborder solid;
 
-  font-size: 18px;
-
-  width: 400px;
-  background-color: white;
-  color: $ink;
-
-  @include border-radius(5px);
-
-  .expectations-list {
-
-    .expectations-list__item {
-      margin-left: 10px;
-      margin-right: 10px;
-      font-size: 14px;
-      vertical-align: middle;
-
-      .expectations-list__item__title {
-        display: inline-block;
-        vertical-align: middle;
-        width: 200px;
-        border-right: 1px solid $light-grey;
-
-        .form-field {
-          width: 100%;
-          margin-top: 10px;
-          margin-left: -10px;
-          padding: 0px 0px 0px 10px;
-          line-height: 2;
-          }
-      }
-
-      .expectations-list__item__icons {
-        cursor: pointer;
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 12px;
-
-        .editing_icon {
-          margin-top: 10px;
-        }
-      }
-    }
-
-    .add-expectation__button {
-      @include border-radius(5px);
-      display: inline-block;
-      vertical-align: middle;
-      margin-top: 10px;
-      padding: 0px 10px 0px 10px;
-      font-size: 14px;
-      line-height: 2;
-
-      background-color: white;
-      color: $light-grey;
-      border: 1px solid $light-grey;
-
-      &:hover {
-        color: $ink;
-        border-color: $ink;
-        background-color: white;
-        cursor: pointer;
-      }
+  a {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
     }
   }
+
+  ul {
+
+    margin-bottom: 0;
+
+    li {
+
+      float: left;
+
+    }
+
+    .wide {
+
+      width: 60%;
+      padding: 40px 100px 0 100px;
+
+    }
+
+    .narrow {
+
+      width: 20%;
+      padding: 60px 0;
+      text-align: center;
+
+    }
+
+    .addBorderleft {
+      border-left: 1px solid $darkborder;
+    }
+
+    .addBorderright {
+      border-right: 1px solid $darkborder;
+    }
+
+  }
+
 }
 
-.studentExpectationContainer {
+.expectationMiddle {
 
-  width: 100%;
-  padding: 20px 20px;
-  background-color: inherit;
-  cursor: default;
+  background: $grey;
+  color: white;
 
-  .expectations-list-item {
-    padding: 25px 0px 0px 0px;
+  .progressCircle-big--container {
 
-    .expectation-title {
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    border-right: 1px solid $darkborder;
+
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border-right: 0;
+      padding: 0;
+      margin-top: 20px;
     }
 
-    .expectation-btn-group {
+  }
 
-      @mixin expectation-btn {
-        height: 15px;
-        width: 15px;
-        background-color: white;
+  .meetingExpectations {
 
-        &:disabled {
-          margin-right: 1px;
-          border: 2px;
-          padding: 2px;
-          border: solid white;
-        }
-        &:hover:enabled {
-          margin-right: 1px;
-          border: 2px;
-          padding: 2px;
-        }
-        &.selected {
-          margin-right: 1px;
-          border: 2px;
-          padding: 2px;
-        }
-      }
+    width: 80%;
+    float: left;
+    padding-top: 80px;
+    text-align: center;
+    color: white();
 
-      .expectation-btn-alert {
-        @include expectation-btn;
-        &.selected {
-          background-color: red;
-          border: solid red;
-        }
-        &:hover:enabled {
-          border: solid red;
-        }
-      }
-
-      .expectation-btn-warn {
-        @include expectation-btn;
-        &.selected {
-          background-color: orange;
-          border: solid orange;
-        }
-        &:hover:enabled {
-          border: solid orange;
-        }
-      }
-
-      .expectation-btn-good {
-        @include expectation-btn;
-        &.selected {
-          background-color: green;
-          border: solid green;
-        }
-        &:hover:enabled {
-          border: solid green;
-        }
-      }
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      margin-bottom: 40px;
     }
+
+  }
+
+}
+
+.expectationLower {
+
+  background: $darkgrey;
+  min-height: 500px;
+  border-top: 10px solid $blue;
+  padding: $wrapper;
+  color: white;
+  text-align: center;
+
+  .expectationLower--container {
+      padding: 40px 0;
+
+      .module-header {
+        margin-bottom: 40px;
+      }
+
+      .expectations-list-item {
+        width: 48%;
+        float: left;
+
+        @include respond-to (900) {
+          float: none;
+          display: block;
+          width: 100%;
+        }
+
+        .expectation-btn-group--container {
+          width: 65%;
+        }
+
+      }
+
   }
 
 }

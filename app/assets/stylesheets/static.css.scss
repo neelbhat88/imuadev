@@ -1,3 +1,22 @@
+html {
+
+  body {
+
+    &.static-pages {
+      background-color: $darkgrey;
+      background: image-url("bg.jpg") no-repeat top center fixed;
+      @include bgcover();
+      text-align: center;
+      @include font-size(2.0);
+      font-weight: $light;
+      min-height: 100%;
+    }
+
+  }
+
+}
+
+
 .login-container {
 
   width: 100%;
@@ -49,7 +68,7 @@
 
     .button {
 
-      @include body-font(14px);
+      @include font-size(1.4);
       padding:5px 40px;
       background:#ccc;
       border:0 none;
@@ -65,7 +84,7 @@
     width: 100%;
     padding-bottom: 20px;
     color: #909090;
-    @include body-font(12px);
+    @include font-size(1.2);
 
     a {
 
@@ -88,4 +107,310 @@
     }
   }
 
+}
+
+
+/***** MARKETING PAGE *****/
+
+.marketing-header {
+
+	color: white;
+
+  a {
+  
+  	color: white;
+  
+  }
+  
+  .wrapper {
+  
+  	margin: $wrapper;
+  
+  }
+  
+  .navigation {
+  
+  	float: right;
+  	@include font-size(1.6);
+  	margin-top: 20px;
+  	
+  	ul {
+  	
+  		li {
+  		
+  			display: inline-block;
+  			margin-left: 40px;
+  		
+  		}
+  	
+  	}
+  	
+  	a {
+  	
+			color: $lightgrey;
+  	
+  		&:hover {
+  		
+  			text-decoration: none;
+  			color: white;
+  		
+  		}
+  	
+  	}
+  	
+  	.login-link--border {
+  	
+  		padding: 10px 30px;
+  		color: $lightgrey;
+  		border: 1px solid $lightgrey;
+  		@include border-radius(30px);
+  		
+  		&:hover {
+  		
+  			color: white;
+  			border: 1px solid white;
+  		
+  		}
+  	
+  	}
+  
+  }
+  
+  .topper {
+  
+  	
+		max-width: 1200px;
+		margin: 0 auto;
+  	padding: 70px 0;
+  	
+  	@include respond-to-min(1400) {
+  	
+	  	padding: 150px 0;
+  	
+  	}
+  	
+  	.imua-logo {
+  	
+  	  width: 300px;
+  	  margin: 0 auto;
+  	
+  		img {
+  		
+  			width: 100%;
+  			height: auto;
+  		
+  		}
+  	
+  	}
+  	
+  	.text {
+  	
+  	  width: 70%;
+      margin: 25px auto 0 auto;
+  	  
+      .subhead {
+      
+      	color: $lightgrey;
+      
+      }
+  	
+  	}
+  	
+  	.find-out {
+  	
+  		margin-top: 40px;
+  		@include font-size(1.6);
+  		
+  		a {
+  		
+  			&:hover {
+  			
+  				text-decoration: none;
+  			
+  			}
+  		
+  		}
+  		
+  		.find-out--button {
+  		
+	  		width: 200px;
+	  		margin: 0 auto;
+	  		padding: 10px 30px;
+    		color: $lightgrey;
+    		border: 1px solid $lightgrey;
+    		@include border-radius(30px);
+    		
+    		&:hover {
+    		
+    			color: white;
+    			border: 1px solid white;
+    		
+    		}
+
+  		} //.find-out--button
+  	
+  	} //.find-out
+  
+  }
+
+}
+
+.marketing-lower {
+
+  .section {
+  
+  	padding: 120px 140px;
+  	
+  	.inner-section {
+  	
+  		padding-bottom: 100px;
+  	
+  	}
+  
+  }
+  
+  .image {
+  
+  	width: 35%;
+  	display: inline-block;
+  	vertical-align: top;
+  	
+	  	img {
+	  	
+	  		width: 100%;
+	  		height: auto;
+	  	
+	  	}
+  
+  }
+  
+	.text--left {
+
+	  	width: 50%;
+    	display: inline-block;
+	  	padding: 40px 4% 40px 0;
+	  	border-right: 1px solid $lightgrey;
+	  	margin-right: 5%;
+	  	text-align: right;
+	  	
+			margin-top: 0;
+      @include respond-to-min(1400) { margin-top: 40px; }
+      //quickfix for now
+
+	
+	}
+	
+	.text--right {
+
+	  	width: 50%;
+    	display: inline-block;
+	  	padding: 40px 0 40px 4%;
+	  	border-left: 1px solid $lightgrey;
+	  	margin-left: 5%;
+	  	text-align: left;
+	  	
+			margin-top: 0;
+      @include respond-to-min(1400) { margin-top: 40px; }
+      //quickfix for now
+	
+	}
+	
+	.section--expectations {
+	
+		background: white;
+		color: $ink;
+		width: 100%;
+				  
+		  .image {
+		  
+		  	max-width: 600px;
+		  			  
+		  }
+	
+	}
+	
+	.section--progress-tracking {
+	
+		background: $grey;
+		color: white;
+		width: 100%;
+		
+		.image--categories {
+		
+			max-width: 450px;
+		
+		}
+		
+		.image--studentlist {
+		
+			max-width: 600px;
+		
+		}
+			
+	}
+	
+	.section--communication {
+	
+		background: white;
+		color: $ink;
+		width: 100%;
+		
+		.image--attention {
+		
+			max-width: 500px;
+		
+		}
+		
+		.image--communication {
+		
+			max-width: 650px;
+		
+		}
+	
+	}
+	
+	.section--organizations {
+	
+		color: white;
+		width: 100%;
+				
+		.org-logos {
+	
+  		width: 100%;
+  		
+  		.org-logo--img {
+  		
+  			width: 200px;
+  			display: inline-block;
+  			margin: 50px;
+  			  			
+  			img {
+  			
+  				width: 100%;
+  				height: auto;
+  				  			
+  			}
+  			
+  		
+  		}
+  		
+  		.org-logo--smaller {
+  		
+  			width: 150px;
+  			display: inline-block;
+  			margin: 0 50px;
+  			  			
+  			img {
+  			
+  				width: 100%;
+  				height: auto;
+  				  			
+  			}
+  		
+  		}
+  	
+  	}
+	
+	}
+	
 }

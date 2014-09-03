@@ -24,7 +24,7 @@ xdescribe "StudentDashboardController", () ->
     CONSTANTS = _CONSTANTS_
 
     ProgressService =
-      getModulesProgress: () ->
+      getAllModulesProgress: () ->
 
     OrganizationService =
       getTimeUnits: () ->
@@ -49,7 +49,7 @@ xdescribe "StudentDashboardController", () ->
     beforeEach () ->
       getModulesDefer = $q.defer()
       getModulesDefer.resolve({hello: "world"}) # Don't really care what this returns for the test
-      spyOn(ProgressService, 'getModulesProgress').and.returnValue(getModulesDefer.promise)
+      spyOn(ProgressService, 'getAllModulesProgress').and.returnValue(getModulesDefer.promise)
 
       spyOn(OrganizationService, 'getTimeUnits').and.callThrough()
       $httpBackend.when("GET", "/api/v1/organization/10/time_units").respond(200)
@@ -64,7 +64,7 @@ xdescribe "StudentDashboardController", () ->
     it "gets module progress from ProgressService", () ->
       scope.$apply(); #Call this to run watchers so that variables being set in callback functions
                       # get set
-      expect(ProgressService.getModulesProgress).toHaveBeenCalled()
+      expect(ProgressService.getAllModulesProgress).toHaveBeenCalled()
       expect(scope.student_with_modules_progress).toEqual({hello: "world"})
 
     it "Loads time units", () ->

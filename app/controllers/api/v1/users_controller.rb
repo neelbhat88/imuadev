@@ -16,11 +16,13 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     email = params[:user][:email]
+    title = params[:user][:title]
     first_name = params[:user][:first_name]
     last_name = params[:user][:last_name]
     phone = params[:user][:phone]
     role = params[:user][:role].to_i
     orgId = params[:user][:organization_id].to_i
+    class_of = params[:user][:class_of].to_i
 
     # Temporary security check - need to find a better way to do this
     if !current_user.super_admin? && role == Constants.UserRole[:SUPER_ADMIN]
@@ -32,12 +34,20 @@ class Api::V1::UsersController < ApplicationController
       return
     end
 
+    organization = OrganizationRepository.new.get_organization(orgId)
+    if organization.nil? || !can?(current_user, :create_user, organization)
+      render status: :forbidden, json: {}
+      return
+    end
+
     user = { :first_name => first_name,
              :last_name => last_name,
              :email => email,
+             :title => title,
              :phone => phone,
              :role => role,
-             :organization_id => orgId }
+             :organization_id => orgId,
+             :class_of => class_of}
 
     result = UserRepository.new.create_user(user, current_user)
 
@@ -52,20 +62,11 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/:id
   def show
     userId = params[:id].to_i
-
-    if !student_can_access?(userId)
-      render status: :forbidden,
-        json: {}
-
-      return
-    end
-
     user = UserRepository.new.get_user(userId)
 
-    if !same_organization?(user.organization_id)
+    if !can?(current_user, :view_profile, user)
       render status: :forbidden,
         json: {}
-
       return
     end
 
@@ -82,6 +83,7 @@ class Api::V1::UsersController < ApplicationController
     user = params[:user]
     user[:id] = params[:id]
 
+    # ToDo: Add authorization check here
     result = UserRepository.new.update_user_info(user)
 
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
@@ -109,6 +111,33 @@ class Api::V1::UsersController < ApplicationController
     render status: result[:status],
     json: {
       info: result[:info]
+    }
+  end
+
+  # GET /users/:id/user_with_contacts
+  def get_user_with_contacts
+    userId = params[:id]
+
+    viewUser = nil
+    user = UserRepository.new.get_user(userId)
+    if can?(current_user, :view_profile, user)
+      viewUser = ViewUser.new(user)
+    end
+
+    viewContacts = nil
+    if can?(current_user, :read_parent_guardian_contacts, user)
+      contacts = ParentGuardianContactService.new.get_parent_guardian_contacts(userId)
+      viewContacts = contacts.map{|c| ViewParentGuardianContact.new(c)}
+    end
+
+    # TODO Make this fit in better
+    timeUnits = RoadmapRepository.new.get_time_units(user.organization_id) unless user.nil?
+
+    render status: :ok,
+    json: {
+      info: "User info with contacts for userId: #{userId}.",
+      # TODO Replace with ViewUser
+      user_with_contacts: { :user => viewUser, :contacts => viewContacts, :time_units => timeUnits }
     }
   end
 
@@ -176,7 +205,7 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.unassign(userId, assignee_id)
 
-    render stauts: result.status,
+    render status: result.status,
       json: {
         info: result.info
       }
@@ -185,14 +214,40 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/:id/relationship/students
   def get_assigned_students
     userId = params[:id].to_i
+    userRepo = UserRepository.new
 
-    students = UserRepository.new.get_assigned_students(userId)
+    org = userRepo.get_user_org(userId)
 
-    viewStudents = students.map {|s| ViewUser.new(s)}
+    options = {}
+    options[:user_ids] = userRepo.get_assigned_student_ids(userId)
+    viewOrg = ViewOrganizationWithUsers.new(org, options) unless org.nil?
+
     render status: :ok,
       json: {
-        info: "Assigned students",
-        students: viewStudents
+        info: "Organization with assigned students",
+        organization: viewOrg
+      }
+  end
+
+  # GET /relationship/assigned_students_for_group?user_ids[]=#
+  def get_assigned_students_for_group
+    userIds = params[:user_ids]
+
+    userIds.each do | userId |
+      # TODO
+      # user = UserRepository.new.get_user(userId)
+      # if !can?(current_user, :read_assigned_students, user)
+      #   render status: :forbidden,
+      #     json: {}
+      #   return
+    end
+
+    result = UserRepository.new.get_assigned_students_for_group(userIds)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        assigned_students_for_group: result.object
       }
   end
 

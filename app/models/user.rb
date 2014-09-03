@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   					:first_name, :last_name, :phone, :role, :avatar, :organization_id,
-            :time_unit_id
+            :time_unit_id, :class_of, :title
   # attr_accessible :title, :body
 
   belongs_to :organization
@@ -17,6 +17,15 @@ class User < ActiveRecord::Base
   has_many :user_classes, dependent: :destroy
   has_many :user_expectations, dependent: :destroy
   has_many :relationships, dependent: :destroy
+  has_many :user_tests, dependent: :destroy
+  has_many :user_extracurricular_activities, dependent: :destroy
+  has_many :user_extracurricular_activity_details, dependent: :destroy
+  has_many :user_service_organizations, dependent: :destroy
+  has_many :user_service_hours, dependent: :destroy
+  has_many :parent_guardian_contacts, dependent: :destroy
+  has_many :user_milestones, dependent: :destroy
+  has_many :assignments, dependent: :destroy
+  has_many :user_assignments, dependent: :destroy
 
   has_attached_file :avatar, styles: {
     square: '140x140#',
@@ -30,6 +39,14 @@ class User < ActiveRecord::Base
   validates_attachment :avatar,
     :content_type => { :content_type => /\Aimage\/.*\Z/, :message => "You must choose an image file" },
     :size => { :in => 0..2.megabytes, :message => "The file must be less than 2 megabytes in size" }
+
+  def full_name
+    return self.first_name + " " + self.last_name
+  end
+
+  def first_last_initial
+    return self.first_name + " " + self.last_name[0].capitalize + "."
+  end
 
   def super_admin?
   	return self.role.to_i == Constants.UserRole[:SUPER_ADMIN]
@@ -45,5 +62,22 @@ class User < ActiveRecord::Base
 
   def student?
     return self.role.to_i == Constants.UserRole[:STUDENT]
+  end
+
+  def role_name
+    index = Constants.UserRole.values.index self.role.to_i
+    Constants.UserRole.keys[index].to_s.capitalize
+  end
+
+  def abilities
+    @abilities ||= begin
+                     abilities = Six.new
+                     abilities << Ability
+                     abilities
+                   end
+  end
+
+  def can? action, subject
+    abilities.allowed?(self, action, subject)
   end
 end

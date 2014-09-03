@@ -1,48 +1,139 @@
-<div ng-controller="StudentDashboardController" class="studentDashboardContainer">
+<div ng-controller="StudentDashboardController" id="studentDashboard" class="studentDashboardContainer">
   <div wait-to-load="{{student_with_modules_progress}}">
 
     <div class="dashboard-header dashboard-header--student">
-      <div class="mentor-header">
-        <div class="greeting">
-          <div class="greeting__small">Hello {{student.first_name}},</div>
-          <div class="greeting__large">Welcome back!</div>
-        </div>
 
-        <div class="progress-circle" ng-if="student_with_modules_progress">
-          <a ng-href="#/progress/{{student.id}}" title="View Progress">
-            <progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
-          </a>
-        </div>
+      <div class="student-header--wrapper">
 
-        <div class="overall-circle" ng-if="loaded_overall_points">
-          <overall-progress-circle points="overall_points"></overall-progress-circle>
-        </div>
-      </div>
+        <div class="student-header--content clear">
+
+          <div class="progressCircle-big--container">
+
+            <a class="js-nav-link" ng-href="#/progress/{{current_user.id}}">
+
+              <div class="progressCircle-big">
+              	<div class="big-progress-circle" ng-if="student_with_modules_progress">
+              		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
+              	</div>
+              </div>
+
+            </a>
+
+          </div> <!-- progressCircle-big--container -->
+
+          <div class="greeting big-text">
+            <h5 class="greeting__small">Hey there {{student.first_name}},</h5>
+            <h2 class="bold">Welcome back!</h2>
+          </div>
+
+        </div> <!-- /student-header--content -->
+
+      </div> <!-- student-header--wrapper -->
+
+    </div><!-- dashboard-header--student -->
+
+    <div class="dashboard-attention dashboard-attention--student" ng-hide="user_assignments.length == 0">
+      <!-- This is where things that need attention go -->
     </div>
 
-    <div class="pal dashboard-attention dashboard-attention--student displayNone">
-      <div>This is where things that need attention go</div>
-    </div>
+    <div class="dashboard-content dashboard-content--student clear">
 
-    <div class="pal dashboard-content dashboard-content--student">
+      <div class="module-container clear">
 
-      <div class="mentor-list">
-        <div class="student-mentors-header">Your Mentors:</div>
-        <div class="avatar-block avatar-block--list" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
-          <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-            <img ng-src="{{mentor.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-            <div class="avatar-block__name">
-              {{mentor.first_name}} {{mentor.last_name}}
+        <!-- <div class="module module--todos" modulecolor="no_category">
+          <div class="module--header"><span class="bold">To-do</span></div>
+          <div class="module--content">
+            <div class="module--submodule">
+              <div class="module--subhead">Due Soon!</div>
+              <div ng-repeat="ua in user_assignments">
+                  <h5 class="bold">{{ua.title}}</h5>
+                  <h6>{{ua.description}}</h6>
+                  <h6 >Due Date:  {{ua.due_datetime}}</h6>
+                  <h6 class="bold">{{ua.assigner.first_name}} {{ua.assigner.last_name}}</h6>
+              </div>
             </div>
-          </a>
+          </div>
+        </div> -->
+
+        <div class="module module--upcoming-milestones" modulecolor="no_category">
+          <div class="module--header">Upcoming <span class="bold">Milestones</span></div>
+          <div class="module--content">
+            <div class="module-milestones" ng-if="milestones.length > 0">
+              <div class="milestones-unsatisfied section--subsection clear">
+                <div class="milestone-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
+                  <div class="milestone-item-unstatisfied">
+                    <a href="#/progress/{{student.id}}">
+                      <div class="milestone--point-circle" modulecolor="{{milestone.module}}">
+                        <div class="point-circle--inside">
+                          <h5 class="bold">{{milestone.points}}</h5>
+                          <p>Points</p>
+                        </div>
+                      </div>
+                    </a>
+                    <h6>{{milestone | printMilestone}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a href="#/progress/{{student.id}}"><button class="btn btn-default">Check out your Progress</button></a>
+          </div>
         </div>
+
+        <div class="module module--expectations" modulecolor="no_category">
+          <div class="module--header">Your <span class="bold">Expectations</span></div>
+          <div class="module--content">
+            <div class="expectations-met-message" ng-if="meetingExpectations">
+              <h5 class="bold">Nice work {{student.first_name}}!</h5> <h6>You're meeting all of the Expectations!</h6>
+            </div>
+            <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
+              <div class="expectations-met-message" ng-if="!meetingExpectations"><h6>You have a few expectations that need work:<h6></div>
+
+              <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
+                <div class="expectation-title"><h5>{{expectation.title}}</h5></div>
+                <div class="expectation-btn-group--container clear">
+                  <div class="slider-bg"></div>
+                  <div class="expectation-selector">
+                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 2}">
+                      <button class="expectation-btn-alert" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                    </div>
+                    <div class="button-label">Not Meeting</div>
+                  </div>
+                  <div class="expectation-selector">
+                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 1}">
+                      <button class="expectation-btn-warn" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                    </div>
+                    <div class="button-label">Needs Work</div>
+                  </div>
+                  <div class="expectation-selector">
+                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 0}">
+                      <button class="expectation-btn-good" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                    </div>
+                    <div class="button-label">Meeting</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a href="#/expectations/{{student.id}}"><button class="btn btn-default">See All Expectations</button></a>
+          </div>
+        </div>
+
+        <div class="module module--your-mentors" modulecolor="no_category">
+          <div class="module--header">Your <span class="bold">Mentors</span></div>
+          <div class="module--content">
+            <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
+              <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+                <div class="circle-picture">
+                  <img ng-src="{{mentor.square_avatar_url}}">
+                </div>
+                  <h6 class="bold">{{mentor.first_name}} {{mentor.last_name}}</h6>
+                  <h6 class="bold">{{mentor.title}}</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="middle-content-container"></div>
-
-      <div class="user-expectations" ng-include="'expectation/student_expectation.html'"></div>
-
-    </div>
-
+    </div><!-- dashboard-content--student -->
   </div>
 </div>

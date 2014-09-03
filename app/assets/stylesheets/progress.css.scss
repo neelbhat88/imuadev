@@ -1,284 +1,151 @@
-/* ========================= */
-/*           Colors          */
-/* ========================= */
-$academics-color-dark: #2c7532;
-$service-color-dark: #8b700f;
-$testing-color-dark: #6d457d;
-$extracurricular-color-dark: #ce1511;
-$college_prep-color-dark: #177ba5;
+.progressUpper {
 
-$colormap: (academics: $academics-color, service: $service-color, testing: $testing-color, extracurricular: $extracurricular-color, college_prep: $college_prep-color);
-$darkcolormap: (academics: $academics-color-dark, service: $service-color-dark, testing: $testing-color-dark, extracurricular: $extracurricular-color-dark, college_prep: $college_prep-color-dark);
+  background: $grey;
+  color: white;
+	border-bottom: 1px $darkborder solid;
 
-.progressContainer {
+  .progress-subnav {
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  ul {
+
+    margin-bottom: 0;
+
+  	li {
+
+  		float: left;
+
+  	}
+
+    .progressStudent {
+
+      width: 60%;
+      padding: 25px 100px 0 100px;
+
+      select {
+
+      	height: 60px;
+      	padding: 5px;
+      	background: $grey;
+      	border: none;
+    		border-bottom: 1px rgb(65, 66, 67) solid;
+
+      }
+
+    }
+
+    .narrow {
+
+      width: 20%;
+      padding: 60px 0;
+      text-align: center;
+      border-left: 1px solid $darkborder;
+
+    }
+
+  }
+
 }
 
-.circles {
-  padding: 60px 20px 0px 180px;
-  width: 100%;
+.progressMiddle {
 
-  .module-circles {
-    width: 100%;
-    margin: auto;
-    display: inline-block;
+  background: $grey;
+
+  .progressCircle-big--container {
+
+  	float: left;
+  	width: 20%;
+  	text-align: center;
+	  padding-top: 60px;
+    padding-bottom: 60px;
+    border-right: 1px solid $darkborder;
+
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border-right: 0;
+      border-bottom: 1px solid $darkborder;
+      padding: 20px 0;
+    }
+
+  }
+
+  .circles {
+
+    width: 80%;
+    float: left;
+    padding-top: 80px;
     text-align: center;
+    color: white();
+
+    @include respond-to (1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      padding: 20px 0;
+    }
 
     .module-circle {
       display: inline-block;
-    }
-  }
+      width: 20%;
+      text-align: center;
+      opacity: 0.3;
 
-}
-
-.progress-circle {
-  .progress-circle__name {
-    text-align: center;
-  }
-}
-
-.overall-circle {
-  font-size: 16px;
-  width: 68px;
-
-  .overall-circle__points {
-    background-color: white;
-    color: $ink;
-
-    .value {text-align: center;}
-    .text {font-size: 10px; text-align: center;}
-  }
-}
-
-.module-circle {
-  cursor: pointer;
-  font-size: 16px;
-  margin: 10px 20px 0 20px;
-
-  width: 170px;
-
-  @each $category, $color in $colormap {
-
-    &.color--#{$category} { color: $color; }
-
-  }
-
-  .module-circle__bg {
-    background-color: $grey;
-    margin: auto;
-    padding: 5px;
-    border-radius: 60px;
-    width: 120px;
-    height: 120px;
-  }
-
-  .module-circle__points {
-    padding: 35px;
-    background-color: white;
-    border-radius: 55px;
-    color: $ink;
-
-    .value {text-align: center;}
-    .text {font-size: 10px; text-align: center;}
-  }
-
-  .module-circle__modtitle {
-    padding: 5px 0;
-    text-align: center;
-
-    @extend .bold;
-  }
-
-  .module-circle__arrow-up {
-    @extend .arrow-up;
-
-    margin: auto;
-
-    @each $category, $color in $colormap {
-
-      &.color--#{$category} {
-        border-bottom-color: $color;
+      @include respond-to (1000) {
+        width: 200px;
       }
 
-    }
-  }
-}
+      &.inactive {
+        //display: none;
+      }
 
-.module-data-container {
+      &:last-of-type {
 
-  @each $category, $color in $colormap {
+        	margin-right: 0;
 
-    &.color--#{$category} {
-      background-color: map-get($darkcolormap, $category);
-
-      .module-data-side-nav {
-        color: #c0c0c0;
-        background-color: map-get($darkcolormap, $category);
-
-        .nav-item.selected {
-          color: white;
-          background-color: $color;
         }
-      }
+
+    }
+
+    .selectedCircle {
+
+    	opacity: 1;
+
+    }
+
+    .notSelectedCircle {
+
+    	&:hover {
+
+    		opacity: 0.75;
+
+    	}
+
     }
 
   }
 
-  color: white;
-
-  .module-data-side-nav {
-    min-height: 450px;
-
-    float: left;
-
-    width: 170px;
-    padding: 40px 0;
-
-    .nav-item {
-      list-style: none;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-  }
-
-  .module-data-content-container {
-    display: inline-block;
-    vertical-align: top;
-    min-width: 850px;
-
-    @each $category, $color in $colormap {
-
-      &.color--#{$category} {
-        background-color: $color;
-      }
-
-    }
-  }
-
-  .module-data-content {
-    min-height: 450px;
-
-    width: 645px;
-    margin: auto;
-    padding: 40px 0px;
-
-    text-align: center;
-  }
-
-  .user-expectations {
-    display: inline-block;
-  }
 }
 
-.user-class-greeting {
-  .line1 { font-size: 18px; }
-  .line2 { font-size: 36px; padding-top: 5px; line-height: 1;}
-}
-
-.module-data {
-  margin-top: 20px;
-  padding: 40px 40px 15px;
+.progressLower {
+  background: $darkgrey;
+  min-height: 500px;
   text-align: center;
+  padding-top: 40px;
 
-  font-size: 18px;
-
-  width: 600px;
-  margin: auto;
-  background-color: white;
-  color: $ink;
-
-  @include border-radius(5px);
-
-  .noclasses {
-    text-align: center;
-    font-style: italic;
-    color: $grey;
-    padding: 0 0 10px 0;
-  }
-
-  .module-data__item
-  {
-    font-size: 18px;
-    color: $ink;
-    text-align: left;
-    border-bottom: 1px solid $light-grey;
-    position: relative;
-
-    &.last {
-      border-bottom: 0 none;
-    }
-
-    .module-data__item__class {
-      display: inline-block;
-      vertical-align: middle;
-      width: 400px;
-      padding: 10px;
-      border-right: 1px solid $light-grey;
-
-      .form-field { width: 100%; }
-    }
-
-    .module-data__item__grade {
-      display: inline-block;
-      vertical-align: middle;
-      width: 50px;
-      padding: 10px;
-    }
-
-    .module-data__item__icons {
-      cursor: pointer;
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 14px;
-      position: absolute;
-      right: 10px;
-      top: 15px;
+  @each $category, $color in $colormap {
+    &.color--#{$category} {
+      border-top: 6px solid $color;
     }
   }
 
-  .module-data__button
-  {
-    @extend .submit;
 
-    font-size: 14px;
-
-    margin: auto;
-    background-color: white;
-    color: $light-grey;
-    border-color: $light-grey;
-
-    &:hover {
-      color: $ink;
-      border-color: $ink;
-      background-color: white;
-    }
-  }
-}
-
-.module-yes-nos
-{
-  @extend .pbxl;
-
-  border-bottom: 1px solid;
-  font-size: 16px;
-  text-align: left;
-}
-
-.yes-no-item
-{
-  input { float:left; }
-  .text { display: block; margin-left: 20px; padding-left: 5px;}
-
-  @extend .pas;
-  width: 320px;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.semester-changer {
-  text-align: right;
-  padding: 10px 40px;
-
-  .semester-changer__next, .semester-changer__prev {
-    cursor: pointer;
-  }
-}
+} //.progressLower

@@ -1,15 +1,110 @@
-<div ng-controller="StudentExpectationController" class="studentExpectationContainer">
+<div class="studentExpectationContainer">
 
-  <h4>Expectations</h4>
-  <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
-    <div class="expectations-list-item" ng-repeat="expectation in expectations">
-      <div class="expectation-title">{{expectation.title}}</div>
-      <div class="expectation-btn-group">
-        <button class="expectation-btn-alert" ng-class="{selected: expectation.user_expectation.status == 2}" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-        <button class="expectation-btn-warn"  ng-class="{selected: expectation.user_expectation.status == 1}" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-        <button class="expectation-btn-good"  ng-class="{selected: expectation.user_expectation.status == 0}" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+  <div class="upper expectationUpper">
+
+    <ul class="clear">
+
+      <li class="studentProgress narrow addBorderright">
+        <a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a>
+      </li>
+
+      <li class="studentExpectations wide">
+        <div class="progressStudent-wrapper clear">
+          <div class="progressSelector">
+            <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
+          </div>
+        </div>
+      </li>
+
+      <li class="studentProfile narrow addBorderleft">
+        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
+      </li>
+
+    </ul>
+
+  </div>
+
+  <div class="expectationMiddle clear">
+
+    <div class="progressCircle-big--container">
+
+      <div class="progressCircle-big">
+        <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+          <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
+            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+          </div>
+        </a>
+      </div>
+
+    </div> <!-- progressCircle-big--container -->
+
+    <div class="meetingExpectations">
+      <div class="expectations-message" wait-to-load="{{loaded_expectations}}">
+        <div ng-if="current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">Nice work {{student.first_name}}!</h3>
+            <h5>You're meeting all of the Expectations!</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>Hey {{student.first_name}},</h3>
+            <h5>you aren't currently meeting all of your expectations.</h5>
+          </div>
+        </div>
+        <div ng-if="!current_user.is_student">
+          <div class="expectations-met-message" ng-hide="!meetingExpectations">
+            <h3 class="bold">{{student.first_name}} is meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
+          <div class="expectations-not-met-message" ng-hide="meetingExpectations">
+            <h3>{{student.first_name}} is not meeting</h3>
+            <h5>all of the expectations.</h5>
+          </div>
+        </div>
       </div>
     </div>
+
+  </div>
+
+  <div class="expectationLower">
+
+    <div class="expectationLower--container">
+
+    <div class="module-header">
+        <h4 class="bold">
+          {{student.first_name}}'s Expectations
+        </h4>
+      </div>
+
+      <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
+        <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-class="{'bad': expectation.user_expectation.status == 2, 'warn': expectation.user_expectation.status == 1, 'good': expectation.user_expectation.status == 0}">
+          <div class="expectation-title"><h5>{{expectation.title}}</h5></div>
+          <div class="expectation-btn-group--container clear">
+            <div class="slider-bg"></div>
+            <div class="expectation-selector">
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 2}">
+                <button class="expectation-btn-alert" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              </div>
+              <div class="button-label">Not Meeting</div>
+            </div>
+            <div class="expectation-selector">
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 1}">
+                <button class="expectation-btn-warn" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              </div>
+              <div class="button-label">Needs Work</div>
+            </div>
+            <div class="expectation-selector">
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 0}">
+                <button class="expectation-btn-good" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              </div>
+              <div class="button-label">Meeting</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>

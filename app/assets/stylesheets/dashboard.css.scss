@@ -1,126 +1,207 @@
+/* ===============================================
+	**********  Global Dashboard Styles  ***********
+	=============================================== */
+
 .dashboard-header {
-	background-color: $green;
 	width: 100%;
-	padding: 60px 0;
+	padding: 60px $wrapper-width;
 	margin: 0;
-	color: white;
-}
-
-.dashboard-header--student {
-  background-color: white;
-  color: $ink;
-
-  padding: 40px;
-  height: 250px;
-
-  .progress-circle {
-    display: inline-block;
-    vertical-align: middle;
-
-    margin-left: 50px;
-  }
-
-  .overall-circle {
-    display: inline-block;
-    vertical-align: bottom;
-    position: relative;
-    left: -15px;
-  }
-}
-
-.dashboard-attention {
-  height: 100px;
+	border-bottom: 1px solid $darkborder;
 }
 
 .dashboard-content {
-  height: 100%;
   background-color: $darkgrey;
   color: white;
-  padding: $wrapper;
-  padding-top: 60px;
-  padding-bottom: 60px;
+	width: 100%;
+
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 }
 
-.dashboard-content--student {
-  width: 100%;
-  display: inline-block;
+/* ===============================================
+	*************  Student Dashboard  *************
+	=============================================== */
 
-  .mentor-list {
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-    width: 220px;
+#studentDashboard {
+
+  .dashboard-header {
+
+  	background: $grey;
+
+    .student-header--wrapper {
+
+      width: 100%;
+
+      .student-header--content {
+
+				text-align: center;
+
+        .progressCircle-big--container {
+
+        	width: 240px;
+					display: inline-block;
+        	margin-right: 40px;
+
+					@include respond-to(1200) {
+						display: block;
+						margin: 0 auto;
+					}
+
+        }
+
+        .greeting {
+
+        	width: 700px;
+					display: inline-block;
+					vertical-align: top;
+					text-align: left;
+        	padding-top: 40px;
+
+					@include respond-to(1200) {
+						display: block;
+						width: 100%;
+						text-align: center;
+					}
+
+        }
+
+      } //.student-header--content
+
+    } //.student-header--wrapper
+
   }
 
-  .middle-content-container {
-    display: inline-block;
-    min-width: 782px;
-    vertical-align: top;
-    border-left: 1px solid $light-grey;
-    border-right: 1px solid $light-grey;
-  }
+  .dashboard-content--student {
 
-  .user-expectations {
-    display: inline-block;
-    text-align: left;
-    vertical-align: top;
-    width: 220px;
-  }
-}
-
-
-/***** Mentor Page *****/
-
-.mentor-header {
-
-  width: 1100px;
-  height: 300px;
-  margin: 0 auto;
-
-  .greeting {
-
-    margin-top: 80px;
-    float: left;
-
-  }
-
-  .circle-attention {
-
-		float: right;
-
-	  .circle {
-
-	  	width: 288px;
-	  	height: 288px;
-	  	margin: 0 auto;
-
-	    &:after {
-			content: "";
-			display: block;
-			width: 100%;
-			height:0;
-			padding-bottom: 88%;
-			-moz-border-radius: 50%;
-			-webkit-border-radius: 50%;
-			border-radius: 50%;
-		  	border: 22px solid white;
-	    }
-
-	    .text {
-
-			float:left;
-			width:100%;
-			padding-top: 15%;
-			text-align:center;
-			color:white;
-
-			.subhead {
-
-				@include font-size(2);
-
+		.milestone--point-circle {
+			@each $category, $color in $colormap {
+				&.color--#{$category} { border: 5px solid $color; color: $color; background: $grey;}
 			}
+		}
 
-	    }
-	 }
-  }
-}
+		.studentExpectationContainer {
+			.section--inner {
+				.expectations-met-message {
+					padding-bottom: 20px;
+				}
+			}
+		}
+
+  } //.dashboard-content--student
+
+} //#studentDashboard
+
+/* ===============================================
+	*************  Mentor Dashboard  **************
+	=============================================== */
+
+#mentorDashboard {
+
+  .dashboard-header {
+
+    background: $green;
+    color: white;
+		border-bottom: none;
+
+		@include respond-to(900) { padding-top: 0; }
+
+    .mentor-header--wrapper {
+
+			text-align: center;
+
+      .greeting {
+				width: 700px;
+				display: inline-block;
+				vertical-align: top;
+				text-align: left;
+				padding-top: 60px;
+				margin-right: 60px;
+
+				@include respond-to(1200) {
+					display: block;
+					width: 100%;
+					text-align: center;
+				}
+
+				h2 { margin-top: 10px; }
+      }
+
+      .circle-attention {
+
+				display: inline-block;
+
+        .circle {
+
+          width: 288px;
+          height: 288px;
+          margin: 0 auto;
+
+					@include respond-to(900) {
+						width: 250px;
+						height: 250px;
+					}
+
+          &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height:0;
+            padding-bottom: 88%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            border: 22px solid white;
+
+						@include respond-to(900) {
+							padding-bottom: 82%;
+						}
+
+          }
+
+          .text {
+
+            float:left;
+            width:100%;
+            padding-top: 15%;
+            text-align:center;
+            color:white;
+
+						@include respond-to(900) { padding-top: 10%; }
+
+            .subhead {
+
+              @include font-size(2);
+
+            }
+
+          } //.text
+
+        } //.circle
+
+      } //.circle-attention
+
+    } //.mentor-header
+
+  } //.dashboard-header
+
+	.dashboard-content--mentor {
+		padding: 60px $wrapper-width;
+	}
+
+} //#mentorDashboard
+
+/* ===============================================
+	************  Org Admin Dashboard  ************
+	=============================================== */
+
+#OrgAdminDashboard {
+	.dashboard-header {
+		background: $grey;
+		color: white;
+		text-align: center;
+	}
+} //#OrgAdminDashboard
