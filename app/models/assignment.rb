@@ -3,7 +3,7 @@ class Assignment < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :user_assignments
+  has_many :user_assignments, dependent: :destroy
 
   validates :user_id, presence: true
   validates :title, presence: true

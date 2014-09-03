@@ -76,11 +76,11 @@ class AssignmentService
   ############################################
 
   def collect_user_assignment(userAssignmentId)
-    return UserAssignment.includes(:assignment).find(userAssignmentId)
+    return UserAssignment.includes(:assignment => :user).find(userAssignmentId)
   end
 
   def collect_user_assignments(userId)
-    return UserAssignment.includes(:assignment).where(:user_id => userId)
+    return UserAssignment.includes(:assignment => :user).where(:user_id => userId)
   end
 
   def get_user_assignment(userAssignmentId)
