@@ -7,6 +7,8 @@ class ViewUserAssignment
     @user_id = userAssignment.user_id
     @assignment_id = userAssignment.assignment_id
     @status = userAssignment.status
+    @created_at = userAssignment.created_at
+    @updated_at = userAssignment.updated_at
 
     if options[:user]
       @user = ViewUser.new(userAssignment.user)

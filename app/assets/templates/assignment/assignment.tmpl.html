@@ -10,9 +10,34 @@
                   Future to show student's faces instead of raw number of students. -->
         <div ng-hide="assignment.editing">
           <h5><span class="bold">{{assignment.title}}</span></h5>
-          <h6><span class="bold">Due: {{assignment.due_datetime}}</span></h6>
-          <h6><span>Assigned by: {{assignment.user_id}}</span></h6>
-          <h6><span>Assigned to: {{assignment.assignees.length}} students</span></h6>
+          <h6><span class="bold">Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</span></h6>
+          <h6><span>Created by: {{user.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
+          <h6><span ng-click="assignment.expanded = !assignment.expanded">
+            Assigned to: {{assignment.assignees.length}} students
+          </span></h6>
+
+          <div class="outgoingAssignment--list--item--expanded--list" ng-show="assignment.expanded">
+            <div class="outgoingAssignment--list--item--expanded--list--item expectations-list-item" ng-repeat="user_assignment in assignment.user_assignments">
+              <h5><span class="bold">{{user_assignment.user.first_last_initial}}</span></h5>
+              <h6><span>Assigned on: {{user_assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
+              <h6><span>Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</span></h6>
+              <div class="expectation-btn-group--container clear">
+                <div class="expectation-selector">
+                  <div class="button-wrapper" ng-class="{selected: user_assignment.status == 0}">
+                    <button class="expectation-btn-alert" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0"></button>
+                  </div>
+                  <div class="button-label">Incomplete</div>
+                </div>
+                <div class="expectation-selector">
+                  <div class="button-wrapper" ng-class="{selected: user_assignment.status == 1}">
+                    <button class="expectation-btn-good" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1"></button>
+                  </div>
+                  <div class="button-label">Complete</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="edit-buttons">
             <button class="btn btn-default" ng-click="editAssignment($index)">Edit</button>
             <button class="delete" ng-click="deleteAssignment($index)">Delete</button>
