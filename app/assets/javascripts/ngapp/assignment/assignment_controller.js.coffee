@@ -15,7 +15,7 @@ angular.module('myApp')
       .success (data) ->
         $scope.outgoing_assignments = data.assignment_collections
         for assignment in $scope.outgoing_assignments
-          assignment.assignees = _.pluck(assignment.user_assignments, 'user')
+          assignment.assignees = []
         $scope.loaded_outgoing_assignments = true
 
     UsersService.getAssignedStudents($scope.user.id)
@@ -52,7 +52,7 @@ angular.module('myApp')
         .success (data) ->
           $scope.outgoing_assignments.splice(index, 1)
           saved_assignment = data.assignment_collection
-          saved_assignment.assignees = _.pluck(saved_assignment.user_assignments, 'user')
+          saved_assignment.assignees = []
           $scope.outgoing_assignments.push(saved_assignment)
           $scope.editing_outgoing_assignments = false
 
@@ -85,5 +85,15 @@ angular.module('myApp')
         .success (data) ->
           user_assignment.status = data.user_assignment.status
           user_assignment.updated_at = data.user_assignment.updated_at
+
+    $scope.deleteUserAssignment = (assignment, user_assignment) ->
+      if window.confirm "Are you sure you want to delete this user's assignment?"
+        AssignmentService.deleteUserAssignment(user_assignment.id)
+          .success (data) ->
+            assignment.user_assignments = _.without(assignment.user_assignments, user_assignment)
+
+    $scope.isAssignable = (assignment, user) ->
+      return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
+             !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
 
 ]
