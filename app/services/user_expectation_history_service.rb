@@ -2,7 +2,7 @@ class UserExpectationHistoryService
 
   def get_expectation_histories(userId, expectationId)
     return UserExpectationHistory.where(:user_id=> userId,
-                             :user_expectation_id => expectationId)
+                             :expectation_id => expectationId)
   end
 
   def create_expectation_history(userExpectation)

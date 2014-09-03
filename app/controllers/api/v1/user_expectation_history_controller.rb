@@ -5,22 +5,22 @@ class Api::V1::UserExpectationHistoryController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( expectationService = nil )
+  def load_services( userExpectationHistoryService = nil )
     @userExpectationHistoryService = userExpectationHistoryService ?
       userExpectationHistoryService : UserExpectationHistoryService.new
   end
 
-  # GET /users/:user_id/user_expectation_history/:user_expectation_id
+  # GET /users/:id/user_expectation_history?expectation_id=#
   def get_user_expectation_history
-    userExpectationId = params[:user_expectation_id]
-    userId = params[:user_id]
+    expectationId = params[:expectation_id]
+    userId = params[:id]
 
-    result = @userExpectationHistoryService.get_expectation_histories(userId, userExpectationId)
+    result = @userExpectationHistoryService.get_expectation_histories(userId, expectationId)
 
     render status: :ok,
       json: {
         info: "User Expectation History",
-        expectations: result
+        expectation_history: result
       }
   end
 

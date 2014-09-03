@@ -48,6 +48,8 @@ Imua::Application.routes.draw do
           get '/:id/relationship/students' => 'users#get_assigned_students'
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
 
+          get '/:id/user_expectation_history' => 'user_expectation_history#get_user_expectation_history'
+
           get    '/:id/expectations'                 => 'expectation#get_user_expectations'
           post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'
           put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'

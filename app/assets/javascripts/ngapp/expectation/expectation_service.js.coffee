@@ -33,6 +33,9 @@ angular.module('myApp')
     status:         status,
     modified_by_id: userId
 
+  @getUserExpectationHistory = (studentId, expectationId) ->
+    $http.get "/api/v1/users/#{studentId}/user_expectation_history?expectation_id=#{expectationId}"
+
   @getUserExpectations = (user) ->
     $http.get "/api/v1/users/#{user.id}/expectations"
 
