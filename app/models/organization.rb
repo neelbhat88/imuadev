@@ -12,29 +12,27 @@ end
 class ViewOrganizationWithUsers
   attr_accessor :id, :name, :orgAdmins, :students, :mentors
 
-  def initialize(org)
+  def initialize(org, options = {})
     @id = org.id
     @name = org.name
-    @milestones = nil
-    @users = nil
 
-    Milestone.where(:organization_id => @id).find_in_batches do |milestones|
-      viewMilestones = milestones.map{|m| ViewMilestone.new(m)}
-      if @milestones.nil?
-        @milestones = milestones
-      else
-        @milestones << milestones
-      end
-    end
+    @milestones = Milestone.where(:organization_id => @id).map{|m| ViewMilestone.new(m)}
+    # @expectations = Expectation.where(:organization_id => @id).map{|e| ViewExpectation.new(e)}
+    # @org_tests = OrgTests.where(:organization_id => @id).map{|e| ViewOrgTest.new(e)}
 
-    User.includes([:user_milestones, :relationships]).where(:organization_id => @id).find_in_batches do |users|
-      viewUsers = users.map{|u| ViewUser.new(u)}
-      if @users.nil?
-        @users = viewUsers
-      else
-        @users << viewUsers
-      end
+    users = nil
+    if !options[:user_ids].nil?
+      users = User.includes([:user_milestones, :relationships, :user_expectations,
+                             :user_classes, :user_extracurricular_activity_details,
+                             :user_service_hours, :user_tests])
+                             .where(:id => options[:user_ids])
+    else
+      users = User.includes([:user_milestones, :relationships, :user_expectations,
+                             :user_classes, :user_extracurricular_activity_details,
+                             :user_service_hours, :user_tests])
+                             .where(:organization_id => @id)
     end
+    @users = users.map{|u| ViewUser.new(u)} unless users.nil?
 
   end
 

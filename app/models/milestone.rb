@@ -21,13 +21,12 @@ class Milestone < ActiveRecord::Base
 end
 
 class ViewMilestone
-  attr_accessor :id, :description, :importance, :module, :points, :submodule, :title, :icon, :time_unit_id
+  attr_accessor :id, :description, :module, :points, :submodule, :title, :icon, :time_unit_id
 
   def initialize(milestone)
     @id = milestone.id
     @title = milestone.title
     @description = milestone.description
-    @importance = milestone.importance
     @module = milestone.module
     @submodule = milestone.submodule
     @points = milestone.points

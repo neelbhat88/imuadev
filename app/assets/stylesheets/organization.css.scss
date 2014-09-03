@@ -1,41 +1,74 @@
 .organizationContainer {
 
-	padding: $wrapper;
-	padding-bottom: 60px;
+	background: $darkgrey;
+	color: white;
 
-}
+	.organization-header {
+		width: 100%;
+		background: $grey;
+		padding: 20px 80px;
+		border-bottom: 1px solid $darkborder;
 
-.organizationName {
+		.mentor-stats {
+			margin: 0;
 
-	width: 100%;
-	text-align: center;
-	padding-top: 60px;
-	padding-bottom: 20px;
-	border-bottom: 1px black(0.25) solid;
-	margin-bottom: 60px;
+			li {
+				display: inline-block;
+				padding: 20px 0;
+				margin-right: 100px;
 
+				@include respond-to(1600) { margin-right: 80px; }
+				@include respond-to(1400) { vertical-align: middle; }
+				@include respond-to(1200) { margin-right: 40px; }
+				@include respond-to(900) {
+					display: block;
+					width: 100%;
+					padding: 0;
+					text-align: center;
+				}
 
-}
+				&:last-of-type {
+					margin-right: 0;
+				}
 
-a.avatar-block {
-  text-decoration: none;
-  color: $ink;
+				.stat-wrapper {
+					margin: 0 auto;
+					.count, .descript {
+						display: inline-block;
+						@include respond-to(1400) {
+							display: block;
+							text-align: center;
+						}
+						@include respond-to(900) {
+							display: inline-block;
+							text-align: left;
+						}
+					}
 
-  &:hover {
-    color: $ink;
-  }
-}
+					.count {
+						margin-right: 15px;
+						@include respond-to(1400) { margin-right: 0; }
+						@include respond-to(900) { margin-right: 8px; }
+					}
 
+					.descript {
+						padding-top: 17px;
+						color: $lightgrey;
+						@include respond-to(1400) { padding-top: 0; }
+						@include respond-to(900) { padding-top: 12px; }
+					}
+				}
 
-.user-modal {
-    background-color: $darkgrey;
-    color: white;
-}
+			}
+		}
+	}
 
-.form--user {
+	.organization-mid {
+		padding: 60px $wrapper-width 0 $wrapper-width;
+	}
 
-  .form-field {
-    min-width: 235px;
-  }
+	.organization-lower {
+		padding: 0 $wrapper-width;
+	}
 
 }

@@ -69,6 +69,8 @@ gem "d3-rails"
 gem "six"
 
 gem 'intercom-rails'
+
+gem 'oj'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -9,7 +9,7 @@ angular.module('myApp')
     ]
 
     $scope.user = $scope.current_user
-    $scope.orgId = $scope.user.organization_id
+    $scope.orgId = $route.current.params.id
     $scope.orgTests = []
 
     TestService.getOrgTests($scope.orgId)

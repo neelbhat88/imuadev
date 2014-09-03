@@ -6,7 +6,7 @@
 
   .progress-subnav {
     a {
-      color: white;
+      color: inherit;
       text-decoration: none;
       &:hover {
         text-decoration: underline;
@@ -26,7 +26,7 @@
 
     .progressStudent {
 
-      width: 85%;
+      width: 60%;
       padding: 25px 100px 0 100px;
 
       select {
@@ -43,7 +43,7 @@
 
     .narrow {
 
-      width: 15%;
+      width: 20%;
       padding: 60px 0;
       text-align: center;
       border-left: 1px solid $darkborder;
@@ -67,6 +67,15 @@
     padding-bottom: 60px;
     border-right: 1px solid $darkborder;
 
+    @include respond-to(1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      border-right: 0;
+      border-bottom: 1px solid $darkborder;
+      padding: 20px 0;
+    }
+
   }
 
   .circles {
@@ -77,11 +86,22 @@
     text-align: center;
     color: white();
 
+    @include respond-to (1275) {
+      float: none;
+      display: block;
+      width: 100%;
+      padding: 20px 0;
+    }
+
     .module-circle {
       display: inline-block;
       width: 20%;
       text-align: center;
       opacity: 0.3;
+
+      @include respond-to (1000) {
+        width: 200px;
+      }
 
       &.inactive {
         //display: none;
@@ -118,190 +138,14 @@
 .progressLower {
   background: $darkgrey;
   min-height: 500px;
+  text-align: center;
+  padding-top: 40px;
 
-  .module-container {
-
-    width: 100%;
-    padding: 40px 0;
-    text-align: center;
-    color: white;
-
-    @each $category, $color in $darkcolormap {
-      &.color--#{$category} {
-        .module { background: $color; }
-        .milestone--point-circle {
-          background: white;
-          color: $color;
-        } //milestone--point-circle
-      }
+  @each $category, $color in $colormap {
+    &.color--#{$category} {
+      border-top: 6px solid $color;
     }
+  }
 
-    @each $category, $color in $colormap {
-      &.color--#{$category} {
-        border-top: 6px solid $color;
-        .module--header { background: $color; }
-      }
-    }
-
-    .module {
-
-      width: 31%;
-      margin: 1%;
-      float: left;
-
-      .module--header {
-
-        padding: 20px;
-        border-bottom: 1px solid white(0.1);
-        text-align: center;
-        font-weight: $bold;
-
-      }
-
-      .module--content {
-
-        padding: 40px;
-
-        .module--data {
-
-          table {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 20px;
-
-            thead {
-              border-bottom: 1px solid white(0.1);
-              width: 100%;
-              th {
-                font-weight: bold;
-                padding: 20px 5px;
-                vertical-align: bottom;
-              }
-            }
-
-            tbody {
-              tr {
-                border-bottom: 1px solid white(0.1);
-                td {
-                  padding: 20px 5px;
-                }
-              }
-            }
-
-            .table-primary {
-              margin-bottom: 0;
-              @include font-size(2.2);
-              tr {
-                border: none;
-                td {
-                  padding: 10px 5px;
-                }
-              }
-            }
-
-            .table-secondary {
-              width: 95%;
-              margin: 5px auto 0 auto;
-              @include font-size(1.2);
-              thead {
-                border: none;
-                th {
-                  padding: 5px;
-                  text-align: center;
-                }
-              }
-              tr {
-                border: none;
-                td {
-                  padding: 5px;
-                  text-align: center;
-                }
-              }
-            }
-
-          } //table
-
-          .editing {
-            text-align: center;
-            input, select, button, textarea {
-              margin-bottom: 15px;
-            }
-            textarea {
-              resize: vertical;
-            }
-            .input-group {
-              text-align: left;
-              width: 100%;
-            }
-            .half-width {
-              width: 47%;
-              margin-right: 1%;
-              margin-left: 1%;
-              display: inline-block;
-            }
-          }
-
-        } //.module--data
-      }
-
-      .numbers-large {
-
-        @include font-size(10.0);
-        font-weight: $light;
-
-      }
-
-      .glyphicons {
-        width: 70px;
-        text-align: right;
-      }
-
-      .glyphicon-container {
-        display: inline-block;
-        @include font-size(1.2);
-
-        .glyphicon {
-          opacity: 0.3;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-        .glyphicon {
-          margin: 2px;
-        }
-      }
-
-      .module--submodule {
-        border-bottom: 1px solid white(0.1);
-        margin-bottom: 20px;
-        width: 100%;
-
-        .module--subhead {
-          @include font-size(2);
-          font-weight: bold;
-          width: 100%;
-          padding-bottom: 20px;
-          border-bottom: 1px solid white(0.1);
-
-          .glyphicon-container {
-            margin-left: 10px;
-          }
-
-        }
-
-        .text-left {
-          text-align: left;
-        }
-
-        button {
-          margin-bottom: 20px;
-        }
-
-      }
-
-    } //.module
-
-  } //.module-container
 
 } //.progressLower

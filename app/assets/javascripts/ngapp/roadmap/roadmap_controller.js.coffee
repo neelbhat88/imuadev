@@ -1,10 +1,10 @@
 angular.module('myApp')
-.controller 'RoadmapController', ['$scope', '$modal', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService'
-($scope, $modal, current_user, RoadmapService, LoadingService, OrganizationService) ->
+.controller 'RoadmapController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
   $scope.current_user = current_user
   $scope.loading = true
-  # TODO Fix so that a super admin can go in and view Organizations' roadmaps
-  orgId = if $scope.current_user.organization_id == null then -1 else $scope.current_user.organization_id
+
+  orgId = $route.current.params.id
 
   $('input, textarea').placeholder()
 
@@ -114,4 +114,17 @@ angular.module('myApp')
           .success (data) ->
             tu.milestones.splice(index, 1)
           break
-  ]
+
+  $scope.addOrgAdmin = () ->
+    modalInstance = $modal.open
+      templateUrl: 'organization/add_user_modal.html',
+      controller: 'AddUserModalController',
+      backdrop: 'static',
+      size: 'sm',
+      resolve:
+        organization: () -> $scope.organization
+        new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
+
+    modalInstance.result.then (user) ->
+      $scope.organization.orgAdmins.push(user)
+]

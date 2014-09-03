@@ -10,27 +10,23 @@
     <ul class="progress-subnav clear">
 
       <li class="progressStudent">
-
         <div class="progressStudent-wrapper clear">
-
           <div class="progressSelector">
-
   	        <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
-
             <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)">
                 <!-- <option value="selected_semester">{{selected_semester.name}}</option> -->
             </select>
-
             </h5>
-
           </div>
-
         </div>
-
       </li>
 
       <li class="studentExpectations narrow">
-        <a class="js-nav-link" ng-href="#/expectations/{{student.id}}">Your Expectations</a>
+        <a class="js-nav-link" ng-href="#/expectations/{{student.id}}">{{student.first_name}}'s Expectations</a>
+      </li>
+
+      <li class="studentExpectations narrow">
+        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
       </li>
 
     </ul>
@@ -42,9 +38,11 @@
     <div class="progressCircle-big--container">
 
       <div class="progressCircle-big">
-      	<div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-      		<big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
-      	</div>
+      	<a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+          <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
+        		<big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+        	</div>
+        </a>
       </div>
 
     </div> <!-- progressCircle-big--container -->
@@ -61,24 +59,20 @@
 
   </div><!-- /progressMiddle -->
 
-  <div class="progressLower">
-
-    <div class="module-container" modulecolor="{{selected_module.module_title}}">
+  <div class="progressLower" modulecolor="{{selected_module.module_title}}">
 
       <!--MAIN PANEL-->
-        <div class="module-container--header">
 
-  	        <h4 class="bold">
-    	        {{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}
-            </h4>
-
+        <div class="progressLower--header">
+          <h4 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s {{selected_module.module_title | underscoresToSpaces}}</h4>
+          <h4 class="bold" ng-if="current_user.is_student">Your {{selected_module.module_title | underscoresToSpaces}}</h4>
         </div>
 
-        <div class="module-container--no-content" ng-show="selected_module.points.total == 0">
+        <div class="progressLower--no-content" ng-show="selected_module.points.total == 0">
           <h4>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</h4>
         </div>
 
-        <div class="module-container--content clear" wait-to-load="{{loaded_milestones}}">
+        <div class="progressLower--content">
           <div ng-include="getModuleTemplate(selected_module.module_title)"></div>
         </div>
       <!--/MAIN PANEL-->

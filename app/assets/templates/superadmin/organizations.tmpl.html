@@ -2,6 +2,14 @@
   <h4 ng-show="organizations.length == 0">No organizations created. Use the REST API to create one</h4>
 
   <li ng-repeat="org in organizations">
-    <a ng-href="#/organization/{{org.id}}">{{org.name}}</a>
+    {{org.name}} |
+    <a ng-href="#/roadmap/{{org.id}}">Org Setup</a> |
+    <a ng-href="#/organization/{{org.id}}">Mentors</a> |
+    <a ng-href="#/students/{{org.id}}">Students</a>
   </li>
+
+  <div style="padding-top: 20px;">
+    <input class="form-control" ng-model="newOrg.name" style="width: 250px;"/>
+    <button type="submit" class="submit" ng-click="addOrganization(newOrg.name)">Add Organization</button>
+  </div>
 </div>
