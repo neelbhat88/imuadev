@@ -1,5 +1,5 @@
 angular.module('myApp')
-.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
+.controller 'OutgoingAssignmentsController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, user, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _

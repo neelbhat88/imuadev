@@ -1,8 +1,8 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
   $routeProvider.when '/assignments/:user_id',
-    templateUrl: 'assignment/assignment.html',
-    controller: 'AssignmentController',
+    templateUrl: 'assignment/outgoing_assignments.html',
+    controller: 'OutgoingAssignmentsController',
     resolve:
       current_user: ['SessionService', (SessionService) ->
         SessionService.getCurrentUser()
