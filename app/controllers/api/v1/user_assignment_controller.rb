@@ -90,7 +90,7 @@ class Api::V1::UserAssignmentController < ApplicationController
     userId = params[:user_id].to_i
 
     results = @assignmentService.collect_user_assignments(userId)
-    viewUserAssignments = results.map{|r| ViewUserAssignment.new(r)}
+    viewUserAssignments = results.map{|r| ViewUserAssignment.new(r, {assignment: true})}
 
     render status: :ok,
       json: {
