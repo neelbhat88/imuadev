@@ -5,7 +5,7 @@ class AssignmentService
   end
 
   def collect_assignments(userId)
-    return Assignment.includes(:user_assignments).where(:user_id => userId)
+    return Assignment.includes(:user_assignments => :user).where(:user_id => userId)
   end
 
   ###################################
