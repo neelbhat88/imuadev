@@ -3,7 +3,7 @@
   <div class="outgoingAssignmentContainer">
     <!-- On initial view, show all outgoing assignments -->
     <h4>{{user.first_last_initial}}'s Outgoing Assignments:</h4>
-    <div class="outgoingAssignment--list" wait-to-load="loaded_outgoing_assignments && loaded_assignable_users">
+    <div class="outgoingAssignment--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
       <div class="outgoingAssignment--list--item" ng-repeat="assignment in outgoing_assignments">
         <!-- TODO Simple list view, like github:
                   Title, who assigned it, due date, how many students are assigned.

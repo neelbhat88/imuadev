@@ -55,6 +55,7 @@ GEM
     bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     builder (3.0.4)
+    cancancan (1.9.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -208,6 +209,7 @@ DEPENDENCIES
   angularjs-rails
   aws-sdk
   bootstrap-sass (~> 3.1.1)
+  cancancan (~> 1.9)
   coffee-rails
   d3-rails
   devise
