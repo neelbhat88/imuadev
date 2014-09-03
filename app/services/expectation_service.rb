@@ -87,6 +87,7 @@ class ExpectationService
       e.user_id = userExpectation[:user_id]
       e.expectation_id = userExpectation[:expectation_id]
       e.status = userExpectation[:status]
+      e.modified_by_id = userExpectation[:modified_by_id]
     end
 
     if !newUserExpectation.valid?
@@ -112,7 +113,8 @@ class ExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with userId: #{userId} and expectationId: #{expectationId}.", nil)
     end
 
-    if dbUserExpectation.update_attributes(:status => userExpectation[:status])
+    if dbUserExpectation.update_attributes(:status => userExpectation[:status],
+                                           :modified_by_id => userExpectation[:modified_by_id])
       return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", dbUserExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation, id: #{dbUserExpectation.id}", nil)

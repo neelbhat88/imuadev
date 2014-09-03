@@ -12,5 +12,6 @@ FactoryGirl.define do
     expectation_id 1
     user_id        1
     status         1
+    modified_by_id 1
   end
 end

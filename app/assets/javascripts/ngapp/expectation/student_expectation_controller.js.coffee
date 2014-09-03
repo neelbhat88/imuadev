@@ -35,7 +35,8 @@ angular.module('myApp')
       if expectation.user_expectation.status != status
         for e in $scope.expectations
           if e.id == expectation.id
-            user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, status)
+            user_expectation = ExpectationService
+              .newUserExpectation($scope.studentId, e.id, status, $scope.current_user.id)
             user_expectation.id = e.user_expectation.id
             ExpectationService.saveUserExpectation(user_expectation)
               .success (data) ->

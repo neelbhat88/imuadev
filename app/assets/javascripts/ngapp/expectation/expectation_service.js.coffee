@@ -27,10 +27,11 @@ angular.module('myApp')
   ############# USER ##############
   #################################
 
-  @newUserExpectation = (userId, expectationId, status) ->
-    user_id:        userId,
+  @newUserExpectation = (studentId, expectationId, status, userId) ->
+    user_id:        studentId,
     expectation_id: expectationId,
-    status:         status
+    status:         status,
+    modified_by_id: userId
 
   @getUserExpectations = (user) ->
     $http.get "/api/v1/users/#{user.id}/expectations"
