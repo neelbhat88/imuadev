@@ -10,11 +10,14 @@ angular.module('myApp')
 
       assignment: ['$q', '$route', 'AssignmentService', ($q, $route, AssignmentService) ->
         defer = $q.defer()
-        AssignmentService.collectAssignment($route.current.params.assignment_id)
-          .success (data) ->
-            defer.resolve(data.assignment_collection)
-          .error (data) ->
-            defer.reject()
+        if parseInt($route.current.params.assignment_id, 10) == -1
+          defer.resolve(null)
+        else
+          AssignmentService.collectAssignment($route.current.params.assignment_id)
+            .success (data) ->
+              defer.resolve(data.assignment_collection)
+            .error (data) ->
+              defer.reject()
         defer.promise
       ]
 

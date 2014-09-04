@@ -5,10 +5,17 @@ angular.module('myApp')
     $scope._ = _
 
     $scope.current_user = current_user
-    $scope.assignment = assignment
-    $scope.assignment.editing = edit
+
+    if !assignment
+      $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
+      $scope.assignment.editing = true
+      $scope.user = $scope.current_user
+    else
+      $scope.assignment = assignment
+      $scope.assignment.editing = edit
+      $scope.user = $scope.assignment.user
+
     $scope.assignment.assignees = []
-    $scope.user = $scope.assignment.user
     $scope.assignable_users = []
 
     $('input, textarea').placeholder()

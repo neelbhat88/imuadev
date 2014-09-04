@@ -4,7 +4,7 @@
 
     <div class="tasks--list--topper">
       <!-- 'Create New' part of #342 would happen below -->
-      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+      <a href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
     </div>
 
     <!-- On initial view, show all outgoing assignments -->
@@ -59,7 +59,7 @@
 
           <!-- Edit part of #342 would happen below -->
           <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
-          <a href="#/assignment/{{assignment.id}}?edit=true"><button class="btn btn-default">Edit Task</button></a>
+          <a href="#/assignment/{{assignment.id}}?editing=true"><button class="btn btn-default">Edit Task</button></a>
 
         </div>
 
