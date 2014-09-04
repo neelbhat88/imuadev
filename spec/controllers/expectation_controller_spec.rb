@@ -245,6 +245,7 @@ describe Api::V1::ExpectationController do
 
       it "returns 200 if same organization" do
         get :get_user_expectations, {:id => student.id}
+
         expect(response.status).to eq(200)
         expect(json["user_expectations"][0]["user_id"]).to eq(student.id)
         expect(json["user_expectations"][0]["expectation_id"]).to eq(expectation.id)
@@ -311,14 +312,22 @@ describe Api::V1::ExpectationController do
       end
 
       it "returns 200 if an admin tries to create a UserExpectation (with incorrect json)" do
+        @expectationNew = create(:expectation, organization_id: orgId, title: 'poop')
+
         user_expectation = attributes_for(:user_expectation,
-                                          expectation_id: other_expectation.id,
-                                          user_id:        other_student.id)
-        post :create_user_expectation, {:id => student.id,
-                                        :expectation_id => expectation.id,
-                                        :userExpectation => user_expectation}
+                                          expectation_id: @expectationNew.id,
+                                          user_id: student.id)
+        expectation = expect {
+          post :create_user_expectation, {:id => student.id,
+                                          :expectation_id => @expectationNew.id,
+                                          :userExpectation => user_expectation
+                                         }
+        }
+
+        expectation.to change(UserExpectationHistory, :count).by(1)
+
         expect(response.status).to eq(200)
-        expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
+        expect(json["user_expectation"]["expectation_id"]).to eq(@expectationNew.id)
         expect(json["user_expectation"]["user_id"]).to eq(student.id)
       end
     end
@@ -391,14 +400,26 @@ describe Api::V1::ExpectationController do
       end
 
       it "returns 200 if an admin tries to update a UserExpectation (with incorrect json)" do
+        @expectation = create(:expectation, organization_id: orgId, title: 'poop')
+        @userExpectation = create(:user_expectation, user_id: student.id,
+                                  expectation_id: @expectation.id,
+                                  modified_by_id: subject.current_user.id)
+
         user_expectation = attributes_for(:user_expectation,
-                                          expectation_id: other_expectation.id,
-                                          user_id:        other_student.id)
-        put :update_user_expectation, {:id => student.id,
-                                       :expectation_id => expectation.id,
-                                       :userExpectation => user_expectation}
+                                          expectation_id: @userExpectation.expectation_id,
+                                          user_id:        student.id)
+        expectation = expect {
+          put :update_user_expectation, {:id => student.id,
+                                         :expectation_id => @userExpectation.expectation_id,
+                                         :userExpectation => user_expectation}
+
+          @userExpectation = UserExpectation.find(@userExpectation.id)
+        }
+
+        expectation.to change(UserExpectationHistory, :count).by(1)
+
         expect(response.status).to eq(200)
-        expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
+        expect(json["user_expectation"]["expectation_id"]).to eq(@expectation.id)
         expect(json["user_expectation"]["user_id"]).to eq(student.id)
       end
     end

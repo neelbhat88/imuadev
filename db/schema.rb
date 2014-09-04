@@ -176,12 +176,27 @@ ActiveRecord::Schema.define(:version => 20140904170131) do
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
   add_index "user_classes", ["user_id"], :name => "index_user_classes_on_user_id"
 
+  create_table "user_expectation_histories", :force => true do |t|
+    t.integer  "expectation_id"
+    t.integer  "user_expectation_id"
+    t.integer  "modified_by_id"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.string   "title"
+    t.integer  "rank"
+    t.string   "modified_by_name"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
   create_table "user_expectations", :force => true do |t|
     t.integer  "expectation_id"
     t.integer  "user_id"
     t.integer  "status"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "modified_by_id"
+    t.string   "modified_by_name"
   end
 
   add_index "user_expectations", ["expectation_id", "user_id"], :name => "index_user_expectations_on_expectation_id_and_user_id", :unique => true
