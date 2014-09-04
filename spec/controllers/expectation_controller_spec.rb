@@ -245,6 +245,7 @@ describe Api::V1::ExpectationController do
 
       it "returns 200 if same organization" do
         get :get_user_expectations, {:id => student.id}
+
         expect(response.status).to eq(200)
         expect(json["user_expectations"][0]["user_id"]).to eq(student.id)
         expect(json["user_expectations"][0]["expectation_id"]).to eq(expectation.id)
@@ -317,6 +318,8 @@ describe Api::V1::ExpectationController do
         post :create_user_expectation, {:id => student.id,
                                         :expectation_id => expectation.id,
                                         :userExpectation => user_expectation}
+
+        expectation.to change(UserExpectationHistory, :count).by(1)
         expect(response.status).to eq(200)
         expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
         expect(json["user_expectation"]["user_id"]).to eq(student.id)
@@ -397,6 +400,8 @@ describe Api::V1::ExpectationController do
         put :update_user_expectation, {:id => student.id,
                                        :expectation_id => expectation.id,
                                        :userExpectation => user_expectation}
+
+        expectation.to change(UserExpectationHistory, :count).by(1)
         expect(response.status).to eq(200)
         expect(json["user_expectation"]["expectation_id"]).to eq(expectation.id)
         expect(json["user_expectation"]["user_id"]).to eq(student.id)
