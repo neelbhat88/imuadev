@@ -1,11 +1,12 @@
 angular.module('myApp')
-.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, assignment, AssignmentService, UsersService, OrganizationService) ->
+.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'edit', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _
 
     $scope.current_user = current_user
     $scope.assignment = assignment
+    $scope.assignment.editing = edit
     $scope.assignment.assignees = []
     $scope.user = $scope.assignment.user
     $scope.assignable_users = []

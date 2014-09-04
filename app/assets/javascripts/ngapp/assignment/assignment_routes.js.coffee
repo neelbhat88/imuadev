@@ -17,4 +17,8 @@ angular.module('myApp')
             defer.reject()
         defer.promise
       ]
+
+      edit: ['$route', ($route) ->
+        $route.current.params.edit
+      ]
 ]
