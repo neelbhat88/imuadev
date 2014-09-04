@@ -1,0 +1,36 @@
+.tasksContainer {
+
+  padding: 40px $wrapper-width;
+
+  .tasks--list {
+
+    width: 50%;
+    margin: 0 auto;
+
+    .tasks--list--item {
+
+      width: 100%;
+      padding: 20px 40px;
+      border: 1px solid $darkborder;
+
+      &:hover {
+        background: $grey;
+      }
+
+      .tasks--list--item--left {
+        width: 75%;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .tasks--list--item--right {
+        width: 24%;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+    }
+
+  }
+
+}

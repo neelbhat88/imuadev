@@ -1,17 +1,21 @@
-<div class="assignmentContainer">
+<div class="tasksContainer">
 
   <div class="outgoingAssignmentContainer">
+
+    <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+
     <!-- On initial view, show all outgoing assignments -->
-    <h4>{{user.first_last_initial}}'s Outgoing Assignments:</h4>
-    <div class="outgoingAssignment--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
-      <div class="outgoingAssignment--list--item" ng-repeat="assignment in outgoing_assignments">
-        <div ng-hide="assignment.editing">
-          <h5><span class="bold">{{assignment.title}}</span></h5>
-          <h6><span class="bold">Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</span></h6>
-          <h6><span>Created by: {{user.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
-          <h6><span ng-click="assignment.expanded = !assignment.expanded">
+    <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments">
+        <div ng-hide="assignment.editing" ng-click="assignment.expanded = !assignment.expanded">
+          <div class="tasks--list--item--left">
+            <h5><span class="bold">{{assignment.title}}</span></h5>
+            <h6>Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+          </div>
+          <div class="tasks--list--item--right">
+            Created by: {{user.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}
             Assigned to: {{assignment.user_assignments.length}} students
-          </span></h6>
+          </div>
         </div>
 
         <div ng-show="assignment.editing">
@@ -114,14 +118,13 @@
           <button class="btn btn-default" ng-click="cancelEditAssignment($index)">Cancel</button>
         </div>
 
-        <div class="edit-buttons" ng-hide="assignment.editing">
-          <button class="btn btn-default" ng-click="editAssignment($index)">Edit</button>
-          <button class="delete" ng-click="deleteAssignment($index)">Delete</button>
-        </div>
-      </div>
+        <!-- <div class="edit-buttons" ng-hide="assignment.editing">
+          <button class="btn btn-default" ng-click="editAssignment(\$index)">Edit</button>
+          <button class="delete" ng-click="deleteAssignment(\$index)">Delete</button>
+        </div> -->
+      </li>
 
-      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Assignment</button>
-    </div>
+    </ul>
 
   </div>
 
