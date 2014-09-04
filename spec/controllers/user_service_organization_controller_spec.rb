@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::ServiceOrganizationController do
+describe Api::V1::UserServiceOrganizationController do
 
   describe "GET #user_service_organizations_hours" do
     context "as a student" do
@@ -26,7 +26,7 @@ describe Api::V1::ServiceOrganizationController do
       end
 
       it "returns 200 with user_service_organizations_hours" do
-        get :user_service_organizations_hours, {:id => userId, :time_unit_id => time_unit_id}
+        get :index, {:user_id => userId, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(200)
         expect(json["user_service_organizations"].length).to eq(2)
@@ -35,7 +35,7 @@ describe Api::V1::ServiceOrganizationController do
 
       it "returns 403 if current_user is not in :org_id" do
         user = create(:student)
-        get :user_service_organizations_hours, {:id => user.id}
+        get :index, {:user_id => user.id}
 
         expect(response.status).to eq(403)
       end
@@ -44,7 +44,7 @@ describe Api::V1::ServiceOrganizationController do
         subject.current_user.id = 1
         user = create(:student, id: 2)
 
-        get :user_service_organizations_hours, {:id => user.id, :time_unit_id => time_unit_id}
+        get :index, {:user_id => user.id, :time_unit_id => time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -57,7 +57,7 @@ describe Api::V1::ServiceOrganizationController do
         user = create(:student, organization_id: 12345)
         subject.current_user.organization_id = 1
 
-        get :user_service_organizations_hours, {:id => user.id, :time_unit_id => user.time_unit_id}
+        get :index, {:user_id => user.id, :time_unit_id => user.time_unit_id}
 
         expect(response.status).to eq(403)
       end
@@ -71,7 +71,7 @@ describe Api::V1::ServiceOrganizationController do
                         user_service_organization_id: organization1.id)
         hour2 = create(:user_service_hour)
 
-        get :user_service_organizations_hours, {:id => user.id, :time_unit_id => user.time_unit_id}
+        get :index, {:user_id => user.id, :time_unit_id => user.time_unit_id}
 
         expect(response.status).to eq(200)
         expect(json["user_service_organizations"].length).to eq(2)
@@ -92,27 +92,11 @@ describe Api::V1::ServiceOrganizationController do
       it "returns 200 with user_service_organization and user_service_hour" do
         organization = attributes_for(:user_service_organization, user_id: userId, id: theOrganization[:id])
         hour = attributes_for(:user_service_hour, user_id: userId, user_service_organization_id: theOrganization[:id], id: theOrganizationHour[:id])
-        post :add_user_service_organization, {:user_service_organization => organization,
-                                              :user_service_hour => hour}
+        post :create, {:user_id => userId, :user_service_organization => organization,
+                       :user_service_hour => hour}
 
         expect(response.status).to eq(200)
         expect(json["user_service_organization"]["user_id"]).to eq(userId)
-        expect(json["user_service_hour"]["user_id"]).to eq(userId)
-      end
-    end
-  end
-
-  describe "POST #user_service_hour" do
-    context "as a student" do
-      login_student
-
-      let(:userId) { subject.current_user.id }
-
-      it "returns 200 with user_service_hour" do
-        hour1 = attributes_for(:user_service_hour, user_id: subject.current_user.id)
-        post :add_user_service_hour, {:user_service_hour => hour1}
-
-        expect(response.status).to eq(200)
         expect(json["user_service_hour"]["user_id"]).to eq(userId)
       end
     end
@@ -127,29 +111,11 @@ describe Api::V1::ServiceOrganizationController do
 
       it "returns 200 with user_service_organization" do
         organization1 = attributes_for(:user_service_organization, user_id: subject.current_user.id,
-                                   name: 'poopHard')
-        put :update_user_service_organization, {:id => theOrganization[:id], :user_service_organization => organization1}
+                                       name: 'poopHard')
+        put :update, {:id => theOrganization[:id], :user_service_organization => organization1}
 
         expect(response.status).to eq(200)
         expect(json["user_service_organization"]["user_id"]).to eq(userId)
-      end
-    end
-  end
-
-  describe "PUT #user_service_hour" do
-    context "as a student" do
-      login_student
-
-      let(:userId) { subject.current_user.id }
-      let(:time_unit_id) { subject.current_user.time_unit_id }
-      let(:theOrganizationHour) { create(:user_service_hour, user_id: subject.current_user.id) }
-
-      it "returns 200 with user_service_hour" do
-        hour1 = attributes_for(:user_service_hour, user_id: subject.current_user.id, name: 'GettingIt')
-        put :update_user_service_hour, {:id => theOrganizationHour[:id], :user_service_hour => hour1}
-
-        expect(response.status).to eq(200)
-        expect(json["user_service_hour"]["user_id"]).to eq(userId)
       end
     end
   end
@@ -171,7 +137,7 @@ describe Api::V1::ServiceOrganizationController do
                                           user_service_organization_id: 5) }
 
       it "returns 200 with Deleted Hours for User Organization Id" do
-        delete :delete_user_service_organization, {:id => 5, :time_unit_id => 5}
+        delete :destroy, {:id => 5, :time_unit_id => 5}
 
         expect(response.status).to eq(200)
         expect(json["info"]).to eq("Successfully deleted all Hours in this semester for Service Organization, id: #{theOrganizationHour3[:user_service_organization_id]}")
@@ -196,29 +162,12 @@ describe Api::V1::ServiceOrganizationController do
                                           user_service_organization_id: 5) }
 
       it "returns 200 with Deleted Hours for User Organization Id" do
-        delete :delete_user_service_organization, {:id => 5, :time_unit_id => 5}
+        delete :destroy, {:id => 5, :time_unit_id => 5}
 
         expect(response.status).to eq(200)
         expect(json["info"]).to eq("Successfully deleted Service Organization, id: #{theOrganizationHour2[:user_service_organization_id]}")
       end
 
-    end
-  end
-
-  describe "DELETE #user_service_hour" do
-    context "as a student" do
-      login_student
-
-      let(:userId) { subject.current_user.id }
-      let(:time_unit_id) { subject.current_user.time_unit_id }
-      let(:theOrganizationHour) { create(:user_service_hour, user_id: subject.current_user.id) }
-
-      it "returns 200 with user_service_hour" do
-        delete :delete_user_service_hour, {:id => theOrganizationHour[:id]}
-
-        expect(response.status).to eq(200)
-        expect(json["info"]).to eq("Successfully deleted Service Hour, id: #{theOrganizationHour[:id]}")
-      end
     end
   end
 
