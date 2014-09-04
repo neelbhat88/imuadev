@@ -1,20 +1,30 @@
-<div class="assignmentContainer">
+<div class="tasksContainer">
 
-  <div class="outgoingAssignmentContainer">
+  <div class="tasks--list--container">
+
+    <div class="tasks--list--topper">
+      <!-- 'Create New' part of #342 would happen below -->
+      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+    </div>
+
     <!-- On initial view, show all outgoing assignments -->
-    <h4>{{user.first_last_initial}}'s Outgoing Assignments:</h4>
-    <div class="outgoingAssignment--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
-      <div class="outgoingAssignment--list--item" ng-repeat="assignment in outgoing_assignments">
-        <!-- TODO Simple list view, like github:
-                  Title, who assigned it, due date, how many students are assigned.
-                  Future to show student's faces instead of raw number of students. -->
-        <div ng-hide="assignment.editing">
-          <h5><span class="bold">{{assignment.title}}</span></h5>
-          <h6><span class="bold">Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</span></h6>
-          <h6><span>Created by: {{user.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
-          <h6><span ng-click="assignment.expanded = !assignment.expanded">
-            Assigned to: {{assignment.user_assignments.length}} students
-          </span></h6>
+    <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments">
+        <div class="clear" ng-hide="assignment.editing" ng-click="assignment.expanded = !assignment.expanded">
+          <div class="tasks--list--item--left">
+            <h5><span class="bold">{{assignment.title}}</span></h5>
+            Created by
+            <span ng-if="current_user.id == user.id">you</span>
+            <span ng-if="current_user.id != user.id">{{user.first_last_initial}}</span>
+            on {{assignment.created_at | date: 'MM/dd/yy'}}
+          </div>
+          <div class="tasks--list--item--middle">
+            <!-- assignment.user_assignments.completed.length would be needed right here -->
+            <h5>0/{{assignment.user_assignments.length}}</h5> Students Completed
+          </div>
+          <div class="tasks--list--item--right">
+            <span ng-if="assignment.due_datetime != null"><h5>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5> Due Date</span>
+          </div>
         </div>
 
         <div ng-show="assignment.editing">
@@ -32,29 +42,27 @@
           </div>
         </div>
 
-        <div class="outgoingAssignment--list--item--expanded--list" ng-show="assignment.expanded || assignment.editing">
-          <div class="outgoingAssignment--list--item--expanded--list--item expectations-list-item" ng-repeat="user_assignment in assignment.user_assignments">
-            <h5><span class="bold">{{user_assignment.user.first_last_initial}}</span></h5>
-            <h6><span>Assigned on: {{user_assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
-            <h6><span>Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</span></h6>
-            <div class="expectation-btn-group--container clear">
-              <div class="expectation-selector">
-                <div class="button-wrapper" ng-class="{selected: user_assignment.status == 0}">
-                  <button class="expectation-btn-alert" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0"></button>
-                </div>
-                <div class="button-label">Incomplete</div>
-              </div>
-              <div class="expectation-selector">
-                <div class="button-wrapper" ng-class="{selected: user_assignment.status == 1}">
-                  <button class="expectation-btn-good" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1"></button>
-                </div>
-                <div class="button-label">Complete</div>
-              </div>
-            </div>
-            <div class="edit-buttons">
-              <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Delete</button>
-            </div>
+        <div class="tasks--list--item--expanded" ng-show="assignment.expanded || assignment.editing">
+
+          <p>{{assignment.description}}</p>
+
+          <!-- Will also need the 'user_assignment.completed' thing here to filter these lists -->
+          <h6>Students who have not completed this:</h6>
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+            <a href="#/profile/{{user_assignment.user.id}}">
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+            </a>
           </div>
+
+          <h6>Students who have completed this:</h6>
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+          </div>
+
+          <!-- Edit part of #342 would happen below -->
+          <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+          <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">Edit Task</button></a>
+
         </div>
 
         <div class="form-wrapper" ng-show="assignment.editing">
@@ -117,14 +125,13 @@
           <button class="btn btn-default" ng-click="cancelEditAssignment($index)">Cancel</button>
         </div>
 
-        <div class="edit-buttons" ng-hide="assignment.editing">
-          <button class="btn btn-default" ng-click="editAssignment($index)">Edit</button>
-          <button class="delete" ng-click="deleteAssignment($index)">Delete</button>
-        </div>
-      </div>
+        <!-- <div class="edit-buttons" ng-hide="assignment.editing">
+          <button class="btn btn-default" ng-click="editAssignment(\$index)">Edit</button>
+          <button class="delete" ng-click="deleteAssignment(\$index)">Delete</button>
+        </div> -->
+      </li>
 
-      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Assignment</button>
-    </div>
+    </ul>
 
   </div>
 
