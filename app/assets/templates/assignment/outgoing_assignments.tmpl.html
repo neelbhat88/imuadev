@@ -3,6 +3,7 @@
   <div class="tasks--list--container">
 
     <div class="tasks--list--topper">
+      <!-- 'Create New' part of #342 would happen below -->
       <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
     </div>
 
@@ -48,13 +49,19 @@
           <!-- Will also need the 'user_assignment.completed' thing here to filter these lists -->
           <h6>Students who have not completed this:</h6>
           <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
-            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+            <a href="#/profile/{{user_assignment.user.id}}">
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+            </a>
           </div>
 
           <h6>Students who have completed this:</h6>
           <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
             <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
           </div>
+
+          <!-- Edit part of #342 would happen below -->
+          <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+          <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">Edit Task</button></a>
 
         </div>
 
