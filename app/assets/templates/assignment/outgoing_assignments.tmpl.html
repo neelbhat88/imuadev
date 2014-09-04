@@ -45,26 +45,17 @@
 
           <p>{{assignment.description}}</p>
 
-          <div class="outgoingAssignment--list--item--expanded--list--item expectations-list-item" ng-repeat="user_assignment in assignment.user_assignments">
-            <h5><span class="bold">{{user_assignment.user.first_last_initial}}</span></h5>
-            <div class="expectation-btn-group--container clear">
-              <div class="expectation-selector">
-                <div class="button-wrapper" ng-class="{selected: user_assignment.status == 0}">
-                  <button class="expectation-btn-alert" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0"></button>
-                </div>
-                <div class="button-label">Incomplete</div>
-              </div>
-              <div class="expectation-selector">
-                <div class="button-wrapper" ng-class="{selected: user_assignment.status == 1}">
-                  <button class="expectation-btn-good" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1"></button>
-                </div>
-                <div class="button-label">Complete</div>
-              </div>
-            </div>
-            <div class="edit-buttons">
-              <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Delete</button>
-            </div>
+          <!-- Will also need the 'user_assignment.completed' thing here to filter these lists -->
+          <h6>Students who have not completed this:</h6>
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
           </div>
+
+          <h6>Students who have completed this:</h6>
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+          </div>
+
         </div>
 
         <div class="form-wrapper" ng-show="assignment.editing">
