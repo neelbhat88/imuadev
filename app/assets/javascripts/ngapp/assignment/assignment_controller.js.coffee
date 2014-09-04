@@ -1,13 +1,21 @@
 angular.module('myApp')
-.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, assignment, AssignmentService, UsersService, OrganizationService) ->
+.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'edit', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _
 
     $scope.current_user = current_user
-    $scope.assignment = assignment
+
+    if !assignment
+      $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
+      $scope.assignment.editing = true
+      $scope.user = $scope.current_user
+    else
+      $scope.assignment = assignment
+      $scope.assignment.editing = edit
+      $scope.user = $scope.assignment.user
+
     $scope.assignment.assignees = []
-    $scope.user = $scope.assignment.user
     $scope.assignable_users = []
 
     $('input, textarea').placeholder()
