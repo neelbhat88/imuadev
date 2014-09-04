@@ -1,20 +1,27 @@
 <div class="tasksContainer">
 
-  <div class="outgoingAssignmentContainer">
+  <div class="tasks--list--container">
 
-    <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+    <div class="tasks--list--topper">
+      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+    </div>
 
     <!-- On initial view, show all outgoing assignments -->
     <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
-      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments">
+      <li class="tasks--list--item clear" ng-repeat="assignment in outgoing_assignments">
         <div ng-hide="assignment.editing" ng-click="assignment.expanded = !assignment.expanded">
           <div class="tasks--list--item--left">
             <h5><span class="bold">{{assignment.title}}</span></h5>
-            <h6>Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            Created by
+            <span ng-if="current_user.id == user.id">you</span>
+            <span ng-if="current_user.id != user.id">{{user.first_last_initial}}</span>
+            on {{assignment.created_at | date: 'MM/dd/yy'}}
+          </div>
+          <div class="tasks--list--item--middle">
+            <h5>0/{{assignment.user_assignments.length}}</h5> Students Completed
           </div>
           <div class="tasks--list--item--right">
-            Created by: {{user.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}
-            Assigned to: {{assignment.user_assignments.length}} students
+            <h6>Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
           </div>
         </div>
 
