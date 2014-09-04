@@ -6,28 +6,19 @@ class UserExpectationHistoryService
   end
 
   def create_expectation_history(userExpectation, current_user)
-    expectation = Expectation.where(:id => userExpectation[:expectation_id]).first
+    expectation = Expectation.find(userExpectation.expectation_id)
 
-    newExpectationHistory = UserExpectationHistory.new do | e |
-      e.expectation_id = expectation.id
-      e.user_expectation_id = userExpectation.id
-      e.modified_by_id = current_user.id
-      e.modified_by_name = current_user.full_name
-      e.user_id = userExpectation.user_id
-      e.status = userExpectation.status
-      e.title = expectation.title
-      e.rank = expectation.rank
-    end
+    UserExpectationHistory.create(
+      :expectation_id => expectation.id,
+      :user_expectation_id => userExpectation.id,
+      :modified_by_id => current_user.id,
+      :modified_by_name => current_user.full_name,
+      :user_id => userExpectation.user_id,
+      :status => userExpectation.status,
+      :title => expectation.title,
+      :rank => expectation.rank
+    )
 
-    if !newExpectationHistory.valid?
-      # TODO
-    end
-
-    if newExpectationHistory.save
-      return ReturnObject.new(:ok, "Successfully created Expectation History, id: #{newExpectationHistory.id}.", newExpectationHistory)
-    else
-      return ReturnObject.new(:internal_server_error, "Failed to create expectation history. Errors: #{newExpectationHistory.errors}", nil)
-    end
   end
 
 end
