@@ -90,7 +90,7 @@ class Api::V1::AssignmentController < ApplicationController
     assignmentId = params[:id].to_i
 
     result = @assignmentService.collect_assignment(assignmentId)
-    viewAssignmentCollection = ViewAssignmentCollection.new(result)
+    viewAssignmentCollection = ViewAssignmentCollection.new(result, {user: true})
 
     render status: :ok,
       json: {
@@ -159,13 +159,15 @@ class Api::V1::AssignmentController < ApplicationController
 
     if assignmentResult.status == :ok
       userAssignmentResults = []
-      user_assignments.each do |a|
-        Rails.logger.debug(a)
-        a[:assignment_id] = assignmentResult.object.id
-        if a[:id].nil?
-          userAssignmentResults << @assignmentService.create_user_assignment(a)
-        else
-          userAssignmentResults << @assignmentService.update_user_assignment(a)
+      if user_assignments
+        user_assignments.each do |a|
+          Rails.logger.debug(a)
+          a[:assignment_id] = assignmentResult.object.id
+          if a[:id].nil?
+            userAssignmentResults << @assignmentService.create_user_assignment(a)
+          else
+            userAssignmentResults << @assignmentService.update_user_assignment(a)
+          end
         end
       end
 

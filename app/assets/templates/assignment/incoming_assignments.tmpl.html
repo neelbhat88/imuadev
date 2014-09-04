@@ -1,0 +1,29 @@
+<div class="incomingAssignmentsContainer">
+  <!-- On initial view, show all incoming assignments -->
+  <h4>{{user.first_last_initial}}'s incoming Assignments:</h4>
+  <div class="incomingAssignment--list" wait-to-load="{{loaded_incoming_assignments}}">
+    <div class="incomingAssignment--list--item expectations-list-item" ng-repeat="assignment in incoming_assignments">
+      <div class="circle-picture">
+        <img ng-src="{{assignment.assigner.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+      </div>
+      <h5><span class="bold">{{assignment.title}}</span></h5>
+      <h6><span class="bold">Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</span></h6>
+      <h6><span>Created by: {{assignment.assigner.first_last_initial}} on {{assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
+      <h6><span>Last updated: {{assignment.updated_at | date: 'MM/dd/yy'}}</span></h6>
+      <div class="expectation-btn-group--container clear">
+        <div class="expectation-selector">
+          <div class="button-wrapper" ng-class="{selected: assignment.status == 0}">
+            <button class="expectation-btn-alert" ng-click="setUserAssignmentStatus(assignment, 0)" ng-disabled="assignment.status == 0"></button>
+          </div>
+          <div class="button-label">Incomplete</div>
+        </div>
+        <div class="expectation-selector">
+          <div class="button-wrapper" ng-class="{selected: assignment.status == 1}">
+            <button class="expectation-btn-good" ng-click="setUserAssignmentStatus(assignment, 1)" ng-disabled="assignment.status == 1"></button>
+          </div>
+          <div class="button-label">Complete</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

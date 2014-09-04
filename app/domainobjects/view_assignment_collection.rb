@@ -2,7 +2,7 @@
 
 class ViewAssignmentCollection
 
-  def initialize(assignment)
+  def initialize(assignment, options = {})
     @id = assignment.id
     @user_id = assignment.user_id
     @title = assignment.title
@@ -10,6 +10,10 @@ class ViewAssignmentCollection
     @due_datetime = assignment.due_datetime
     @created_at = assignment.created_at
     @user_assignments = assignment.user_assignments.map{|a| ViewUserAssignment.new(a, {user: true})}
+
+    if options[:user]
+      @user = ViewUser.new(assignment.user)
+    end
   end
 
 end

@@ -1,6 +1,6 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/assignments/:user_id',
+  $routeProvider.when '/assignment/:assignment_id',
     templateUrl: 'assignment/assignment.html',
     controller: 'AssignmentController',
     resolve:
@@ -8,16 +8,13 @@ angular.module('myApp')
         SessionService.getCurrentUser()
       ]
 
-      user: ['$q', '$route', 'UsersService', ($q, $route, UsersService) ->
+      assignment: ['$q', '$route', 'AssignmentService', ($q, $route, AssignmentService) ->
         defer = $q.defer()
-
-        UsersService.getUser($route.current.params.user_id)
+        AssignmentService.collectAssignment($route.current.params.assignment_id)
           .success (data) ->
-            defer.resolve(data.user)
-
+            defer.resolve(data.assignment_collection)
           .error (data) ->
             defer.reject()
-
         defer.promise
       ]
 ]
