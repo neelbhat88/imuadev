@@ -40,7 +40,7 @@ angular.module('myApp')
       $scope.editing_outgoing_assignments = false
 
     $scope.saveAssignment = (index) ->
-      new_assignment = AssignmentService.newAssignment($scope.current_user.id)
+      new_assignment = AssignmentService.newAssignment($scope.user.id)
       new_assignment.id = $scope.outgoing_assignments[index].id
       new_assignment.user_id = $scope.outgoing_assignments[index].user_id
       new_assignment.title = $scope.outgoing_assignments[index].new_title
@@ -58,7 +58,7 @@ angular.module('myApp')
 
     $scope.addAssignment = () ->
       $scope.editing_outgoing_assignments = true
-      blank_assignment = AssignmentService.newAssignment($scope.current_user.id)
+      blank_assignment = AssignmentService.newAssignment($scope.user.id)
       blank_assignment.assignees = []
       blank_assignment.editing = true
       $scope.outgoing_assignments.push(blank_assignment)

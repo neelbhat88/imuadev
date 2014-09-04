@@ -150,3 +150,11 @@
   }
 
 }
+
+.tiny-circle-picture {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin: 0 5px 10px 5px;
+  img { width: 100%; height: auto; @include border-radius(50%); }
+}
