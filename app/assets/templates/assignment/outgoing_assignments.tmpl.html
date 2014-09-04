@@ -18,6 +18,7 @@
             on {{assignment.created_at | date: 'MM/dd/yy'}}
           </div>
           <div class="tasks--list--item--middle">
+            <!-- assignment.user_assignments.completed.length would be needed right here -->
             <h5>0/{{assignment.user_assignments.length}}</h5> Students Completed
           </div>
           <div class="tasks--list--item--right">
@@ -46,8 +47,6 @@
 
           <div class="outgoingAssignment--list--item--expanded--list--item expectations-list-item" ng-repeat="user_assignment in assignment.user_assignments">
             <h5><span class="bold">{{user_assignment.user.first_last_initial}}</span></h5>
-            <h6><span>Assigned on: {{user_assignment.created_at | date: 'MM/dd/yy'}}</span></h6>
-            <h6><span>Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</span></h6>
             <div class="expectation-btn-group--container clear">
               <div class="expectation-selector">
                 <div class="button-wrapper" ng-class="{selected: user_assignment.status == 0}">
