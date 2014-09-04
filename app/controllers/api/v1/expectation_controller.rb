@@ -111,9 +111,9 @@ class Api::V1::ExpectationController < ApplicationController
     userExpectation["user_id"]        = userId
     userExpectation["expectation_id"] = expectationId
 
-    result = @expectationService.create_user_expectation(userExpectation)
+    result = @expectationService.create_user_expectation(userExpectation, current_user)
 
-    @userExpectationHistoryService.create_expectation_history(result.object)
+    @userExpectationHistoryService.create_expectation_history(result.object, current_user)
 
     render status: result.status,
       json: {
@@ -132,9 +132,9 @@ class Api::V1::ExpectationController < ApplicationController
     userExpectation["user_id"]        = userId
     userExpectation["expectation_id"] = expectationId
 
-    result = @expectationService.update_user_expectation(userExpectation)
+    result = @expectationService.update_user_expectation(userExpectation, current_user)
 
-    @userExpectationHistoryService.create_expectation_history(result.object)
+    @userExpectationHistoryService.create_expectation_history(result.object, current_user)
 
     render status: result.status,
       json: {

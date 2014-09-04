@@ -1,5 +1,5 @@
 class UserExpectation < ActiveRecord::Base
-  attr_accessible :expectation_id, :user_id, :status, :modified_by_id
+  attr_accessible :expectation_id, :user_id, :status, :modified_by_id, :modified_by_name
 
   belongs_to :expectation
   belongs_to :user

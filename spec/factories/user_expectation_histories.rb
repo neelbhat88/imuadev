@@ -5,6 +5,7 @@ FactoryGirl.define do
     expectation_id 1
     user_expectation_id 1
     modified_by_id 1
+    modified_by_name "Bruh"
     user_id 1
     updated_at "2014-09-03 12:13:26"
     status 1

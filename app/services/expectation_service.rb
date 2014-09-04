@@ -82,12 +82,13 @@ class ExpectationService
     return UserExpectation.where(:user_id => userId)
   end
 
-  def create_user_expectation(userExpectation)
+  def create_user_expectation(userExpectation, current_user)
     newUserExpectation = UserExpectation.new do | e |
       e.user_id = userExpectation[:user_id]
       e.expectation_id = userExpectation[:expectation_id]
       e.status = userExpectation[:status]
-      e.modified_by_id = userExpectation[:modified_by_id]
+      e.modified_by_id = current_user.id
+      e.modified_by_name = current_user.full_name
     end
 
     if !newUserExpectation.valid?
@@ -103,7 +104,7 @@ class ExpectationService
     end
   end
 
-  def update_user_expectation(userExpectation)
+  def update_user_expectation(userExpectation, current_user)
     userId = userExpectation[:user_id]
     expectationId = userExpectation[:expectation_id]
 
@@ -114,7 +115,8 @@ class ExpectationService
     end
 
     if dbUserExpectation.update_attributes(:status => userExpectation[:status],
-                                           :modified_by_id => userExpectation[:modified_by_id])
+                                           :modified_by_id => current_user.id,
+                                           :modified_by_name => current_user.full_name)
       return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", dbUserExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation, id: #{dbUserExpectation.id}", nil)

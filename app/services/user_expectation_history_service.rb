@@ -5,13 +5,14 @@ class UserExpectationHistoryService
                              :expectation_id => expectationId)
   end
 
-  def create_expectation_history(userExpectation)
+  def create_expectation_history(userExpectation, current_user)
     expectation = Expectation.where(:id => userExpectation[:expectation_id]).first
 
     newExpectationHistory = UserExpectationHistory.new do | e |
       e.expectation_id = expectation.id
       e.user_expectation_id = userExpectation.id
-      e.modified_by_id = userExpectation.modified_by_id
+      e.modified_by_id = current_user.id
+      e.modified_by_name = current_user.full_name
       e.user_id = userExpectation.user_id
       e.status = userExpectation.status
       e.title = expectation.title
