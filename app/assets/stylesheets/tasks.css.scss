@@ -1,0 +1,57 @@
+.tasksContainer {
+
+  padding: 40px 0;
+
+  .tasks--list--container {
+    width: 70%;
+    margin: 0 auto;
+
+    @include respond-to(900) { width: 85%; }
+    @include respond-to(600) { width: 100%; }
+  }
+
+  .tasks--list--topper {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .tasks--list {
+
+    width: 100%;
+    margin: 0 auto;
+
+    .tasks--list--item {
+
+      width: 100%;
+      padding: 20px 0;
+      border: 1px solid $darkborder;
+
+      &:hover {
+        background: $grey;
+      }
+
+      .tasks--list--item--left, .tasks--list--item--middle, .tasks--list--item--right { padding: 0 40px;}
+
+      .tasks--list--item--left {
+        width: 50%;
+        float: left;
+      }
+
+      .tasks--list--item--middle, .tasks--list--item--right {
+        width: 25%;
+        float: left;
+        text-align: center;
+      }
+
+      .tasks--list--item--expanded {
+
+        padding: 40px;
+
+      }
+
+    }
+
+  }
+
+}

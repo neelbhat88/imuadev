@@ -1,6 +1,7 @@
 angular.module('myApp')
-.controller "MentorDashboardController", ["$scope", "UsersService", "ProgressService", "ExpectationService", "OrganizationService",
-($scope, UsersService, ProgressService, ExpectationService, OrganizationService) ->
+.controller "MentorDashboardController", ["$scope", "$modal", "UsersService", "ProgressService", "ExpectationService", "OrganizationService",
+($scope, $modal, UsersService, ProgressService, ExpectationService, OrganizationService) ->
+
   $scope.assigned_students = []
   $scope.attention_students = []
   $scope.mentor = $scope.user
