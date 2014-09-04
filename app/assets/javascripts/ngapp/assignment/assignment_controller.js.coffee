@@ -15,6 +15,11 @@ angular.module('myApp')
       $scope.assignment.editing = edit
       $scope.user = $scope.assignment.user
 
+    if $scope.assignment.editing
+      $scope.assignment.new_title = $scope.assignment.title
+      $scope.assignment.new_description = $scope.assignment.description
+      $scope.assignment.new_due_datetime = $scope.assignment.due_datetime
+
     $scope.assignment.assignees = []
     $scope.assignable_users = []
 
