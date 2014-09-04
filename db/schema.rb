@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140903183214) do
+ActiveRecord::Schema.define(:version => 20140904170131) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -138,19 +138,39 @@ ActiveRecord::Schema.define(:version => 20140903183214) do
   add_index "user_assignments", ["assignment_id"], :name => "index_user_assignments_on_assignment_id"
   add_index "user_assignments", ["user_id"], :name => "index_user_assignments_on_user_id"
 
+  create_table "user_class_histories", :force => true do |t|
+    t.integer  "user_class_id"
+    t.string   "name"
+    t.integer  "time_unit_id"
+    t.string   "grade"
+    t.float    "gpa"
+    t.integer  "period"
+    t.string   "room"
+    t.float    "credit_hours"
+    t.string   "level"
+    t.string   "subject"
+    t.integer  "user_id"
+    t.integer  "modified_by_id"
+    t.string   "modified_by_name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
   create_table "user_classes", :force => true do |t|
     t.string   "name"
     t.string   "grade"
     t.float    "gpa"
     t.integer  "user_id"
     t.integer  "time_unit_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "period"
     t.string   "room"
     t.float    "credit_hours"
     t.string   "level"
     t.string   "subject"
+    t.integer  "modified_by_id"
+    t.string   "modified_by_name"
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"

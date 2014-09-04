@@ -6,9 +6,10 @@ class Api::V1::UserClassController < ApplicationController
 
   before_filter :load_services
 
-  def load_services( userClassService=nil, userRepo=nil )
+  def load_services( userClassService=nil, userRepo=nil, userClassHistoryService=nil )
     @userClassService = userClassService ? userClassService : UserClassService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
+    @userClassHistoryService = userClassHistoryService ? userClassHistoryService : UserClassHistoryService.new
   end
 
   # GET /users/:user_id/user_class?time_unit=#
@@ -36,7 +37,7 @@ class Api::V1::UserClassController < ApplicationController
     render status: :ok,
       json: {
         info: "User's academics data",
-        user_classes: classes
+        user_classes: classes.map{|uc| ViewUserClass.new(uc)}
       }
   end
 
@@ -45,12 +46,13 @@ class Api::V1::UserClassController < ApplicationController
     userId = params[:user_id]
     new_class = params[:user_class]
 
-    result = @userClassService.save_user_class(userId, new_class)
+    result = @userClassService.save_user_class(current_user, userId, new_class)
 
+    view_user_class = ViewUserClass.new(result.object) unless result.object.nil?
     render status: result.status,
       json: {
         info: result.info,
-        user_class: result.object
+        user_class: view_user_class
       }
   end
 
@@ -59,7 +61,7 @@ class Api::V1::UserClassController < ApplicationController
     classId = params[:id]
     updated_class = params[:user_class]
 
-    user_class = @userClassService.update_user_class(updated_class)
+    user_class = @userClassService.update_user_class(current_user, classId, updated_class)
 
     if user_class.nil?
       render status: :bad_request,
@@ -69,10 +71,11 @@ class Api::V1::UserClassController < ApplicationController
       return
     end
 
+    view_user_class = ViewUserClass.new(user_class)
     render status: :ok,
       json: {
         info: "Updated user class",
-        user_class: user_class
+        user_class: view_user_class
       }
   end
 
@@ -93,5 +96,18 @@ class Api::V1::UserClassController < ApplicationController
         }
       return
     end
+  end
+
+  # GET /user_class/:id/history
+  def history
+    classId = params[:id].to_i
+
+    class_history = @userClassHistoryService.get_history_for_class(classId)
+
+    render status: :ok,
+      json: {
+        info: "History for class",
+        class_history: class_history
+      }
   end
 end
