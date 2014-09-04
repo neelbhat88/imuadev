@@ -8,8 +8,8 @@
 
     <!-- On initial view, show all outgoing assignments -->
     <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
-      <li class="tasks--list--item clear" ng-repeat="assignment in outgoing_assignments">
-        <div ng-hide="assignment.editing" ng-click="assignment.expanded = !assignment.expanded">
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments">
+        <div class="clear" ng-hide="assignment.editing" ng-click="assignment.expanded = !assignment.expanded">
           <div class="tasks--list--item--left">
             <h5><span class="bold">{{assignment.title}}</span></h5>
             Created by
@@ -21,7 +21,7 @@
             <h5>0/{{assignment.user_assignments.length}}</h5> Students Completed
           </div>
           <div class="tasks--list--item--right">
-            <h6>Due: {{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            <span ng-if="assignment.due_datetime != null"><h5>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5> Due Date</span>
           </div>
         </div>
 
@@ -40,7 +40,10 @@
           </div>
         </div>
 
-        <div class="outgoingAssignment--list--item--expanded--list" ng-show="assignment.expanded || assignment.editing">
+        <div class="tasks--list--item--expanded" ng-show="assignment.expanded || assignment.editing">
+
+          <p>{{assignment.description}}</p>
+
           <div class="outgoingAssignment--list--item--expanded--list--item expectations-list-item" ng-repeat="user_assignment in assignment.user_assignments">
             <h5><span class="bold">{{user_assignment.user.first_last_initial}}</span></h5>
             <h6><span>Assigned on: {{user_assignment.created_at | date: 'MM/dd/yy'}}</span></h6>

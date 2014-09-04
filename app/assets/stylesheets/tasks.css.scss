@@ -41,6 +41,13 @@
       .tasks--list--item--middle, .tasks--list--item--right {
         width: 25%;
         float: left;
+        text-align: center;
+      }
+
+      .tasks--list--item--expanded {
+
+        padding: 40px;
+
       }
 
     }
