@@ -21,7 +21,7 @@ class UserClassService
     return (totalGpa / totalClassCredits).round(2)
   end
 
-  def save_user_class(userId, user_class)
+  def save_user_class(current_user, userId, user_class)
     new_class = UserClass.new do | u |
       u.user_id = userId
       u.name = user_class[:name]
@@ -33,17 +33,20 @@ class UserClassService
       u.credit_hours = user_class[:credit_hours] ? user_class[:credit_hours] : 1
       u.level = user_class[:level] ? user_class[:level] : Constants.ClassLevels[:REGULAR]
       u.subject = user_class[:subject]
+      u.modified_by_id = current_user.id
+      u.modified_by_name = current_user.full_name
     end
 
     if new_class.save
+      UserClassHistoryService.new.log_history(current_user, new_class)
       return ReturnObject.new(:ok, "User class created successfully", new_class)
     else
       return ReturnObject.new(:bad_request, "Failed to create a user class", nil)
     end
   end
 
-  def update_user_class(user_class)
-    db_class = UserClass.find(user_class[:id])
+  def update_user_class(current_user, class_id, user_class)
+    db_class = UserClass.find(class_id)
 
     if db_class.update_attributes(:name => user_class[:name],
                                   :grade => user_class[:grade],
@@ -52,8 +55,13 @@ class UserClassService
                                   :room => user_class[:room],
                                   :credit_hours => user_class[:credit_hours],
                                   :level => user_class[:level],
-                                  :subject => user_class[:subject]
-                                 )
+                                  :subject => user_class[:subject],
+                                  :modified_by_id => current_user.id,
+                                  :modified_by_name => current_user.full_name
+                                  )
+
+      UserClassHistoryService.new.log_history(current_user, db_class)
+
       return db_class
     else
       return nil

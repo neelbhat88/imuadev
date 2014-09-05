@@ -185,7 +185,16 @@ html {
 
 }
 
-a { cursor: pointer; }
+a {
+  cursor: pointer;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  }
 
 .clear:before,
 .clear:after {
