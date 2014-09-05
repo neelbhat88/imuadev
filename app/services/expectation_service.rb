@@ -82,11 +82,13 @@ class ExpectationService
     return UserExpectation.where(:user_id => userId)
   end
 
-  def create_user_expectation(userExpectation)
+  def create_user_expectation(userExpectation, current_user)
     newUserExpectation = UserExpectation.new do | e |
       e.user_id = userExpectation[:user_id]
       e.expectation_id = userExpectation[:expectation_id]
       e.status = userExpectation[:status]
+      e.modified_by_id = current_user.id
+      e.modified_by_name = current_user.full_name
     end
 
     if !newUserExpectation.valid?
@@ -96,13 +98,14 @@ class ExpectationService
     # TODO Check that expectation_id and user_id belong to the same Organization
 
     if newUserExpectation.save
+      UserExpectationHistoryService.new.create_expectation_history(newUserExpectation, current_user)
       return ReturnObject.new(:ok, "Successfully created UserExpectation, id: #{newUserExpectation.id}.", newUserExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create UserExpectation.", nil)
     end
   end
 
-  def update_user_expectation(userExpectation)
+  def update_user_expectation(userExpectation, current_user)
     userId = userExpectation[:user_id]
     expectationId = userExpectation[:expectation_id]
 
@@ -112,7 +115,13 @@ class ExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with userId: #{userId} and expectationId: #{expectationId}.", nil)
     end
 
-    if dbUserExpectation.update_attributes(:status => userExpectation[:status])
+
+    if dbUserExpectation.update_attributes(:status => userExpectation[:status],
+                                           :modified_by_id => current_user.id,
+                                           :modified_by_name => current_user.full_name)
+
+      UserExpectationHistoryService.new.create_expectation_history(dbUserExpectation, current_user)
+
       return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", dbUserExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation, id: #{dbUserExpectation.id}", nil)
