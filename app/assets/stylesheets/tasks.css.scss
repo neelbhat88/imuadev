@@ -1,4 +1,4 @@
-.tasksContainer {
+.tasksListContainer {
 
   padding: 40px 0;
 
@@ -82,6 +82,26 @@
 
       }
 
+    }
+
+  }
+
+}
+
+.taskContainer {
+
+  .task-header {
+    width: 100%;
+    padding: 20px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+
+    .back-link {
+      float: left;
+    }
+
+    .edit-button {
+      float: right;
     }
 
   }
