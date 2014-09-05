@@ -1,13 +1,26 @@
 angular.module('myApp')
-.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, assignment, AssignmentService, UsersService, OrganizationService) ->
+.controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'edit', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _
 
     $scope.current_user = current_user
-    $scope.assignment = assignment
+
+    if !assignment
+      $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
+      $scope.assignment.editing = true
+      $scope.user = $scope.current_user
+    else
+      $scope.assignment = assignment
+      $scope.assignment.editing = edit
+      $scope.user = $scope.assignment.user
+
+    if $scope.assignment.editing
+      $scope.assignment.new_title = $scope.assignment.title
+      $scope.assignment.new_description = $scope.assignment.description
+      $scope.assignment.new_due_datetime = $scope.assignment.due_datetime
+
     $scope.assignment.assignees = []
-    $scope.user = $scope.assignment.user
     $scope.assignable_users = []
 
     $('input, textarea').placeholder()
@@ -50,6 +63,10 @@ angular.module('myApp')
             # TODO What to do here?
             # $scope.assignment = null
             $scope.assignment.editing = false
+
+    $scope.assignAllAssignableUsers = (assignment) ->
+      all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
+      assignment.assignees = _.filter($scope.assignable_users, (user) -> _.contains(all_assignable_user_ids, user.id))
 
     $scope.assignAssignee = (user, assignment) ->
       assignment.assignees.push(user)

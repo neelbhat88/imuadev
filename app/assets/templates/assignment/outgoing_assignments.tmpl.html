@@ -4,7 +4,7 @@
 
     <div class="tasks--list--topper">
       <!-- 'Create New' part of #342 would happen below -->
-      <button class="btn btn-default" ng-click="addAssignment()" ng-hide="editing_outgoing_assignments">New Task</button>
+      <a href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
     </div>
 
     <!-- On initial view, show all outgoing assignments -->
@@ -19,8 +19,7 @@
             on {{assignment.created_at | date: 'MM/dd/yy'}}
           </div>
           <div class="tasks--list--item--middle">
-            <!-- assignment.user_assignments.completed.length would be needed right here -->
-            <h5>0/{{assignment.user_assignments.length}}</h5> Students Completed
+            <h5>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h5> Students Completed
           </div>
           <div class="tasks--list--item--right">
             <span ng-if="assignment.due_datetime != null"><h5>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5> Due Date</span>
@@ -46,22 +45,21 @@
 
           <p>{{assignment.description}}</p>
 
-          <!-- Will also need the 'user_assignment.completed' thing here to filter these lists -->
           <h6>Students who have not completed this:</h6>
-          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
             <a href="#/profile/{{user_assignment.user.id}}">
               <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
             </a>
           </div>
 
           <h6>Students who have completed this:</h6>
-          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments">
+          <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
             <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
           </div>
 
           <!-- Edit part of #342 would happen below -->
           <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
-          <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">Edit Task</button></a>
+          <a href="#/assignment/{{assignment.id}}?edit=true"><button class="btn btn-default">Edit Task</button></a>
 
         </div>
 

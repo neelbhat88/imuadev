@@ -15,7 +15,9 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :users, shallow: true do
-        resources :user_class, except: [:new, :edit]
+        resources :user_class, except: [:new, :edit] do
+          get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+        end
 
         resources :user_extracurricular_activity, except: [:new, :edit]
         resources :user_extracurricular_activity_detail, except: [:new, :edit]
@@ -47,6 +49,8 @@ Imua::Application.routes.draw do
           delete '/:id/relationship/:assignee_id' => "users#unassign"
           get '/:id/relationship/students' => 'users#get_assigned_students'
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
+
+          get '/:id/user_expectation_history' => 'user_expectation_history#get_user_expectation_history'
 
           get    '/:id/expectations'                 => 'expectation#get_user_expectations'
           post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'

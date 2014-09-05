@@ -98,6 +98,10 @@
             <div class="glyphicon glyphicon-ok-sign green"></div>
             <div>Done Assigning</div>
           </div>
+          <div class="add-button" ng-click="assignAllAssignableUsers(assignment)">
+            <div class="glyphicon glyphicon-ok-sign green"></div>
+            <div>Assign All</div>
+          </div>
         </div>
 
         <h5 ng-show="assignable_users.length == assignment.assignees.length">No users left to assign!</h5>

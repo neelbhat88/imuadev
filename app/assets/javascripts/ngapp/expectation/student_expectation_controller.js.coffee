@@ -35,13 +35,24 @@ angular.module('myApp')
       if expectation.user_expectation.status != status
         for e in $scope.expectations
           if e.id == expectation.id
-            user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, status)
+            user_expectation = ExpectationService
+              .newUserExpectation($scope.studentId, e.id, status)
             user_expectation.id = e.user_expectation.id
             ExpectationService.saveUserExpectation(user_expectation)
               .success (data) ->
                 e.user_expectation = data.user_expectation
                 $scope.recalculateMeetingExpectations()
             break
+
+    $scope.viewExpectationHistory = (expectation) ->
+      ExpectationService.getUserExpectationHistory($scope.studentId, expectation.id)
+        .success (data) ->
+          expectation.user_expectation.history = []
+          expectation.user_expectation.history = data.expectation_history
+          expectation.user_expectation.showHistory = true
+
+    $scope.hideExpectationHistory = (expectation) ->
+      expectation.user_expectation.showHistory = false
 
     $scope.recalculateMeetingExpectations = () ->
       for expectation in $scope.expectations
