@@ -2,6 +2,11 @@
 
   padding: 40px 0;
 
+  .subtext {
+    color: $lightgrey;
+    @include font-size(1.2);
+  }
+
   .tasks--list--container {
     width: 70%;
     margin: 0 auto;
@@ -46,7 +51,22 @@
 
       .tasks--list--item--expanded {
 
-        padding: 40px;
+        padding: 0 40px;
+        text-align: center;
+
+        .expanded--complete, .expanded--not-complete {
+          width: 50%;
+          padding: 20px;
+          float: left;
+          text-align: center;
+
+          .complete-title {
+            margin-bottom: 10px;
+          }
+
+        }
+
+        .edit-buttons { margin-top: 10px; }
 
       }
 
