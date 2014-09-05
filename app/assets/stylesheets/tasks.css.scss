@@ -66,6 +66,18 @@
 
         }
 
+        .expanded--solo {
+          width: 50%;
+          margin: 0 auto;
+          padding: 20px;
+          text-align: center;
+
+          .complete-title {
+            margin-bottom: 10px;
+          }
+
+        }
+
         .edit-buttons { margin-top: 10px; }
 
       }

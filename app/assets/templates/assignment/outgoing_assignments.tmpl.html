@@ -47,7 +47,11 @@
                   <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
                 </a>
               </div>
-              <div class="complete-title green">Have Completed</div>
+              <div class="complete-title green">
+                <span ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1">Has </span>
+                <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != 1">Have </span>
+                Completed the Task
+              </div>
             </div>
 
             <div class="expanded--not-complete">
@@ -56,7 +60,29 @@
                   <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
                 </a>
               </div>
-              <div class="complete-title red">Have Not Completed</div>
+              <div class="complete-title red">
+                <span ng-if="_.where(assignment.user_assignments, {status: 0}).length == 1">Has </span>
+                <span ng-if="_.where(assignment.user_assignments, {status: 0}).length != 1">Have </span>
+                Not Completed the Task
+              </div>
+            </div>
+          </div>
+
+          <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 0">
+            <div class="complete-title red">None of your students have completed the task yet.</div>
+            <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+              </a>
+            </div>
+          </div>
+
+          <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
+            <div class="complete-title green">All students have completed this task.</div>
+            <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+              </a>
             </div>
           </div>
 
