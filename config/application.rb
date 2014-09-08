@@ -73,11 +73,12 @@ module Imua
     config.assets.precompile.shift
 
     # Explicitly register the extensions we are interested in compiling
+    # Removed templates from this list because without Bower precompiling assets
+    # didn't include templates, just images and fonts
     config.assets.precompile.push(Proc.new do |path|
       File.extname(path).in? [
-        '.html', '.erb', '.haml',                         # Templates
         '.png',  '.gif', '.jpg', '.jpeg', '.svg', '.ico', # Images
-        '.eot',  '.otf', '.svc', '.woff', '.ttf',         # Fonts
+        '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
       ]
     end)
   end
