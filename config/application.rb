@@ -70,16 +70,16 @@ module Imua
     # We don't want the default of everything that isn't js or css, because it pulls too many things in
     # Need this because when using Bower, many components have .map files that cause pre-compilation of
     # assets to fail. This apparently skips those
-    config.assets.precompile.shift
+    #config.assets.precompile.shift
 
     # Explicitly register the extensions we are interested in compiling
     # Removed templates from this list because without Bower precompiling assets
     # didn't include templates, just images and fonts
-    config.assets.precompile.push(Proc.new do |path|
-      File.extname(path).in? [
-        '.png',  '.gif', '.jpg', '.jpeg', '.svg', '.ico', # Images
-        '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
-      ]
-    end)
+    # config.assets.precompile.push(Proc.new do |path|
+    #   File.extname(path).in? [
+    #     '.png',  '.gif', '.jpg', '.jpeg', '.svg', '.ico', # Images
+    #     '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
+    #   ]
+    # end)
   end
 end
