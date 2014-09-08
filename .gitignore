@@ -14,9 +14,6 @@
 /log/*.log
 /tmp
 
-# Ignore bower components
-/vendor/assets/components
-
 # Ignore env specific stuff
 .env
 
