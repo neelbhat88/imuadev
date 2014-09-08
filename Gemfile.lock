@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/Promptus/ladda-rails.git
+  revision: bfb34325df1eb19fb8c2e387a1481cc6660cb3c4
+  specs:
+    ladda-rails (0.9.4)
+
+GIT
   remote: https://github.com/jsanders/angular_rails_csrf.git
   revision: 7dba0e6e1c1f00adadbde5bbbfb0b46002bd39ad
   specs:
@@ -39,6 +45,8 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
+    angular-ui-bootstrap-rails (0.11.0)
+    angularjs-rails (1.2.22)
     arel (3.0.3)
     aws-sdk (1.52.0)
       aws-sdk-v1 (= 1.52.0)
@@ -60,6 +68,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    d3-rails (3.4.4)
+      railties (>= 3.1)
     daemons (1.1.9)
     devise (3.3.0)
       bcrypt (~> 3.0)
@@ -87,6 +97,7 @@ GEM
       rake
     jasmine-core (2.0.2)
     journey (1.0.4)
+    jquery-placeholder-rails (2.0.7)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -183,6 +194,7 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    underscore-rails (1.7.0)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -195,15 +207,20 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  angular-ui-bootstrap-rails
   angular_rails_csrf!
+  angularjs-rails
   aws-sdk
   bootstrap-sass (~> 3.1.1)
   coffee-rails
+  d3-rails
   devise
   factory_girl_rails (~> 4.0)
   intercom-rails
   jasmine
+  jquery-placeholder-rails
   jquery-rails
+  ladda-rails!
   mail
   newrelic_rpm
   oj
@@ -218,4 +235,5 @@ DEPENDENCIES
   six
   thin
   uglifier (>= 1.0.3)
+  underscore-rails
   unicorn
