@@ -87,15 +87,17 @@ angular.module('myApp')
 
       # Add up student's gpa
       # TODO This isn't the correct way to calculate gpa
-      student.user_classes.total_gpa = student.user_classes.semester_gpa = 0.0
-      _.each(student.user_classes, (user_class) ->
-        student.user_classes.total_gpa += parseFloat(user_class.gpa)
-        student.user_classes.semester_gpa += if user_class.time_unit_id == student.time_unit_id then parseFloat(user_class.gpa) else 0
+      student.total_gpa = 0.0
+      student.semester_gpa = 0.0
+      _.each(student.user_gpas, (gpa) ->
+        student.total_gpa += gpa.regular_unweighted
       )
-      student.user_classes.total_gpa /= student.user_classes.length
-      student.user_classes.semester_gpa /= _.filter(student.user_classes, (user_class) -> user_class.time_unit_id == student.time_unit_id ).length
-      org.total_gpa += student.user_classes.total_gpa
-      org.semester_gpa += student.user_classes.semester_gpa
+      student.total_gpa /= student.user_gpas.length
+      semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: student.time_unit_id})
+      if semester_gpa
+        student.semester_gpa = semester_gpa.regular_unweighted
+      org.total_gpa += student.total_gpa
+      org.semester_gpa += student.semester_gpa
 
       # Add up student's service hours
       student.user_service_hours.total_hours = student.user_service_hours.semester_hours = 0
@@ -131,7 +133,7 @@ angular.module('myApp')
     # Perform averaging calculations
     num_students = org.students.length
     if num_students > 0
-      org.average_gpa = "3.14*" # (org.semester_gpa / num_students).toFixed(2)
+      org.average_gpa = (org.semester_gpa / num_students).toFixed(2)
       org.average_serviceHours = (org.semester_serviceHours / num_students).toFixed(2)
       org.average_ecActivities = (org.semester_ecActivities / num_students).toFixed(2)
       org.average_testsTaken = (org.semester_serviceHours / num_students).toFixed(2)

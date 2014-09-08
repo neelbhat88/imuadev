@@ -10,11 +10,8 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
+            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             $scope.$emit('loaded_module_milestones');
-
-    $scope.$watch 'user_classes', () ->
-      $scope.gpa = UserClassService.getGPA($scope.user_classes)
-    , true
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
@@ -47,7 +44,8 @@ angular.module('myApp')
               index = i
               break
 
-          $scope.user_classes[index] = data.user_class
+          $scope.user_classes = data.user_classes
+          $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
           $scope.classes.editing = false
 
           $scope.refreshPoints()

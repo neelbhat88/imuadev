@@ -2,8 +2,8 @@ class UserGpaService
   # calculate methods are separate, and currently only using the regular unweighted calculation
   # will move returning the values and making one save/update with all calc'd gpas
 
-  def calculate_regular_weighted
-  end
+#  def calculate_regular_weighted
+#  end
 
   def calculate_regular_unweighted(userId, time_unit_id)
     classes = UserClassService.new.get_user_classes(userId, time_unit_id)
@@ -25,7 +25,7 @@ class UserGpaService
         :time_unit_id => time_unit_id,
         :regular_unweighted => calculatedGpa
       )
-    else
+    elsif !calculatedGpa.nan?
       new_user_gpa = UserGpa.new do |u|
         u.user_id = userId
         u.time_unit_id = time_unit_id
@@ -37,14 +37,15 @@ class UserGpaService
 
   end
 
-  def calculate_core_weighted
-  end
+#  def calculate_core_weighted
+#  end
 
-  def calculate_core_unweighted
-  end
+#  def calculate_core_unweighted
+#  end
 
   def get_user_gpa(userId, time_unit_id)
-    return UserGpa.where(:user_id => userId, :time_unit_id => time_unit_id).first
+    user_gpa = UserGpa.where(:user_id => userId, :time_unit_id => time_unit_id).first
+    return DomainUserGpa.new(user_gpa) unless user_gpa.nil?
   end
 
 end

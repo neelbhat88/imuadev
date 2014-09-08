@@ -14,6 +14,7 @@ angular.module('myApp')
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        console.log($scope.organization)
 
         $scope.groupedStudents = $scope.organization.groupedStudents
         $scope.org_milestones = $scope.organization.org_milestones
