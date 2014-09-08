@@ -20,8 +20,6 @@
 //= require ladda
 //= require d3
 //= require underscore
-//= require angulartics
-//= require angulartics-ga
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder
