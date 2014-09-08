@@ -36,21 +36,17 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# Need this for jquery-ujs in application.js which is used
+# by the logout button
 gem 'jquery-rails'
-# gem 'jquery-ui-rails'
-gem 'jquery-placeholder-rails'
 
 gem 'bootstrap-sass', '~>3.1.1'
 
 gem 'newrelic_rpm'
 
 gem 'angular-rails-templates'
-gem 'angular-ui-bootstrap-rails'
-gem 'angularjs-rails'
-gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
-# Lots of cool JS programming helpers (e.g. _groupBy)
-gem 'underscore-rails'
+gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
 gem 'mail'
 
@@ -61,16 +57,15 @@ gem 'aws-sdk'
 
 # Used for authentication
 gem 'devise'
-
-gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
-
-gem "d3-rails"
-
+# Authorization
 gem "six"
 
+# Analytics
 gem 'intercom-rails'
 
+# Optimizations
 gem 'oj'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

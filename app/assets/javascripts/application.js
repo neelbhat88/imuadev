@@ -10,18 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require angular
-//= require angular-route
-//= require angular-resource
-//= require angular-mocks
-//= require angular-ui-bootstrap-tpls
+//= require angular/angular.min
+//= require angular-route/angular-route.min
+//= require angular-mocks/angular-mocks
+//= require angular-bootstrap/ui-bootstrap-tpls.min
 //= require angular-rails-templates
-//= require spin
-//= require ladda
-//= require d3
-//= require underscore
-//= require jquery
+//= require ladda/dist/spin.min
+//= require ladda/dist/ladda.min
+//= require d3/d3.min
+//= require underscore/underscore-min
+//= require angulartics/dist/angulartics.min
+//= require angulartics/dist/angulartics-ga.min
+//= require jquery/dist/jquery.min
 //= require jquery_ujs
-//= require jquery-placeholder
+//= require jquery-placeholder/jquery.placeholder
 //= require_tree ../templates
 //= require_tree .

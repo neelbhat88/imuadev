@@ -1,5 +1,6 @@
 angular.module 'myApp', ['ngRoute', 'myApp.controllers',
-                          'myApp.directives', 'ui.bootstrap', 'templates']
+                          'myApp.directives', 'ui.bootstrap', 'templates',
+                          'angulartics', 'angulartics.google.analytics']
 
 angular.module('myApp')
 .controller 'AppController', ['$scope', 'CONSTANTS', ($scope, CONSTANTS) ->
