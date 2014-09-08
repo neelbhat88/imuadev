@@ -71,5 +71,14 @@ module Imua
     # Need this because when using Bower, many components have .map files that cause pre-compilation of
     # assets to fail. This apparently skips those
     config.assets.precompile.shift
+
+    # Explicitly register the extensions we are interested in compiling
+    config.assets.precompile.push(Proc.new do |path|
+      File.extname(path).in? [
+        '.html', '.erb', '.haml',                         # Templates
+        '.png',  '.gif', '.jpg', '.jpeg', '.svg', '.ico', # Images
+        '.eot',  '.otf', '.svc', '.woff', '.ttf',         # Fonts
+      ]
+    end)
   end
 end
