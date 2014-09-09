@@ -25,6 +25,7 @@ class UserGpaService
         :time_unit_id => time_unit_id,
         :regular_unweighted => calculatedGpa
       )
+      return db_class
     elsif !calculatedGpa.nan?
       new_user_gpa = UserGpa.new do |u|
         u.user_id = userId
@@ -33,6 +34,7 @@ class UserGpaService
       end
 
       new_user_gpa.save
+      return new_user_gpa
     end
 
   end

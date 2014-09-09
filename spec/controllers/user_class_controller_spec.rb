@@ -58,6 +58,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change{@user_class.grade}.from("A").to("B")
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
@@ -117,6 +118,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
@@ -144,9 +146,9 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
-        expect(json["user_classes"]).to be_nil
       end
     end
 
@@ -167,6 +169,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
@@ -193,6 +196,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
         expect(json["user_classes"]).to be_empty
@@ -213,6 +217,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
@@ -226,6 +231,7 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
         expect(json["user_classes"]).to be_empty

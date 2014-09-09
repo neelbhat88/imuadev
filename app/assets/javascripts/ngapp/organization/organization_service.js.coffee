@@ -92,7 +92,10 @@ angular.module('myApp')
       _.each(student.user_gpas, (gpa) ->
         student.total_gpa += gpa.regular_unweighted
       )
-      student.total_gpa /= student.user_gpas.length
+      if !!student.user_gpas
+        student.total_gpa /= student.user_gpas.length
+      else
+        student.total_gpa = 0
       semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: student.time_unit_id})
       if semester_gpa
         student.semester_gpa = semester_gpa.regular_unweighted
@@ -131,6 +134,7 @@ angular.module('myApp')
         org.attention_studentIds.push(student.id)
 
     # Perform averaging calculations
+    # XXX: not correct for gpa (could include a student in count, but their gpa is 0)
     num_students = org.students.length
     if num_students > 0
       org.average_gpa = (org.semester_gpa / num_students).toFixed(2)

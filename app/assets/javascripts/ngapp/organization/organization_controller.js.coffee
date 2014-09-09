@@ -14,7 +14,6 @@ angular.module('myApp')
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-        console.log($scope.organization)
 
         $scope.groupedStudents = $scope.organization.groupedStudents
         $scope.org_milestones = $scope.organization.org_milestones
@@ -39,7 +38,6 @@ angular.module('myApp')
         $scope.mentor_needs_help = "1*"
         $scope.mentors_with_attention_students = _.filter($scope.organization.mentors, (mentor) -> _.intersection(mentor.studentIds, $scope.organization.attention_studentIds).length > 0)
 
-        console.log($scope.organization)
         $scope.loaded_users = true
 
 

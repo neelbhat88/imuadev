@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904221248) do
+ActiveRecord::Schema.define(:version => 20140909181745) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -224,6 +224,18 @@ ActiveRecord::Schema.define(:version => 20140904221248) do
   end
 
   add_index "user_extracurricular_activity_details", ["user_id"], :name => "index_user_extracurricular_activity_details_on_user_id"
+
+  create_table "user_gpa_histories", :force => true do |t|
+    t.integer  "user_gpa_id"
+    t.integer  "user_id"
+    t.float    "core_unweighted"
+    t.float    "core_weighted"
+    t.float    "regular_weighted"
+    t.float    "regular_unweighted"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "user_gpas", :force => true do |t|
     t.integer  "user_id"

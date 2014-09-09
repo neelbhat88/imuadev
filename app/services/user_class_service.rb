@@ -26,7 +26,9 @@ class UserClassService
 
     if new_class.save
       UserClassHistoryService.new.log_history(current_user, new_class)
-      UserGpaService.new.calculate_regular_unweighted(userId, user_class[:time_unit_id])
+      saved_gpa = UserGpaService.new.calculate_regular_unweighted(
+        userId, user_class[:time_unit_id])
+      UserGpaHistoryService.new.create_gpa_history(saved_gpa)
       return ReturnObject.new(:ok, "User class created successfully", new_class)
     else
       return ReturnObject.new(:bad_request, "Failed to create a user class", nil)
@@ -49,7 +51,9 @@ class UserClassService
                                   )
 
       UserClassHistoryService.new.log_history(current_user, db_class)
-      UserGpaService.new.calculate_regular_unweighted(db_class.user_id, db_class.time_unit_id)
+      updated_gpa = UserGpaService.new.calculate_regular_unweighted(db_class.user_id,
+                                                                    db_class.time_unit_id)
+      UserGpaHistoryService.new.create_gpa_history(updated_gpa)
 
       return db_class
     else
