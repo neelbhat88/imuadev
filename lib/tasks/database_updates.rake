@@ -85,7 +85,10 @@ namespace :db_update do
     users.each do | u |
       time_unit_ids = TimeUnit.where(:organization_id => u.organization_id)
       time_unit_ids.each do | t |
-        UserGpaService.new.calculate_regular_unweighted(u.id, t.id)
+        saved_gpa = UserGpaService.new.calculate_gpa(u.id, t.id)
+        if !saved_gpa.nil?
+         puts 'Created: ' + saved_gpa.to_yaml
+        end
       end
     end
   end

@@ -1,7 +1,6 @@
 class UserGpaHistoryService
 
-  def create_gpa_history(userGpa)
-    user_gpa = UserGpa.find(userGpa.id)
+  def create_gpa_history(user_gpa)
 
     UserGpaHistory.create(
       :user_gpa_id => user_gpa.id,

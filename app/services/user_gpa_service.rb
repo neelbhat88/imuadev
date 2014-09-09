@@ -26,26 +26,31 @@ class UserGpaService
 #  end
 
   def calculate_gpa(userId, time_unit_id)
-    db_class = UserGpa.where(:user_id => userId, :time_unit_id => time_unit_id).first
+    db_gpa = UserGpa.where(:user_id => userId, :time_unit_id => time_unit_id).first
 
     regular_unweighted = calculate_regular_unweighted(userId, time_unit_id)
 
-    if db_class
-      db_class.update_attributes(
+    if db_gpa
+      db_gpa.update_attributes(
         :user_id => userId,
         :time_unit_id => time_unit_id,
         :regular_unweighted => regular_unweighted
       )
-      UserGpaHistoryService.new.create_gpa_history(db_class)
-    elsif !calculatedGpa.nan?
+
+      UserGpaHistoryService.new.create_gpa_history(db_gpa)
+      return db_gpa
+
+    elsif !regular_unweighted.nan?
       new_user_gpa = UserGpa.new do |u|
         u.user_id = userId
         u.time_unit_id = time_unit_id
-        u.regular_unweighted = calculatedGpa
+        u.regular_unweighted = regular_unweighted
       end
 
       new_user_gpa.save
       UserGpaHistoryService.new.create_gpa_history(new_user_gpa)
+
+      return new_user_gpa
     end
 
   end
