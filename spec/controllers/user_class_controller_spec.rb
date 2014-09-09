@@ -27,6 +27,7 @@ describe Api::V1::UserClassController do
 
       expect(response.status).to eq(200)
       expect(json["user_classes"].length).to eq(1)
+      expect(json["user_gpa"]["user_id"]).to eq(@user.id)
     end
 
     it "returns 200 and no user classes if none in the semester" do
@@ -60,6 +61,7 @@ describe Api::V1::UserClassController do
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
+        expect(json["user_gpa"]).to_not be_nil
       end
 
       it "sets modified properties to current user" do
@@ -118,6 +120,7 @@ describe Api::V1::UserClassController do
 
         expect(response.status).to eq(200)
         expect(json["user_classes"]).to_not be_nil
+        expect(json["user_gpa"]).to_not be_nil
       end
 
       it "sets modified properties to current user" do
@@ -143,7 +146,7 @@ describe Api::V1::UserClassController do
         expectation.to change(UserClassHistory, :count).by(0)
 
         expect(response.status).to eq(400)
-        expect(json["user_class"]).to be_nil
+        expect(json["user_classes"]).to be_nil
       end
     end
 
