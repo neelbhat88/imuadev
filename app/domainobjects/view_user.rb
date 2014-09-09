@@ -40,7 +40,7 @@ class ViewUser
 			@user_extracurricular_activity_details = user.user_extracurricular_activity_details.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserExtracurricularActivityDetail.new(e)}
 			@user_service_hours = user.user_service_hours.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserServiceHour.new(e)}
 			@user_tests = user.user_tests.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserTest.new(e)}
-      @user_gpas = user.user_gpas.map{|e| DomainUserGpa.new(e)}
+      @user_gpas = UserGpaService.new.get_user_gpas(user.id)
 		end
 
 	end

@@ -48,4 +48,9 @@ class UserGpaService
     return DomainUserGpa.new(user_gpa) unless user_gpa.nil?
   end
 
+  def get_user_gpas(userId)
+    user_gpas = UserGpa.where(:user_id => userId)
+    return user_gpas.map{|ug| DomainUserGpa.new(ug)} unless user_gpas.empty?
+  end
+
 end
