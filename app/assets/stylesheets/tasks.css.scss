@@ -1,0 +1,109 @@
+.tasksListContainer {
+
+  padding: 40px 0;
+
+  .subtext {
+    color: $lightgrey;
+    @include font-size(1.2);
+  }
+
+  .tasks--list--container {
+    width: 70%;
+    margin: 0 auto;
+
+    @include respond-to(900) { width: 85%; }
+    @include respond-to(600) { width: 100%; }
+  }
+
+  .tasks--list--topper {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .tasks--list {
+
+    width: 100%;
+    margin: 0 auto;
+
+    .tasks--list--item {
+
+      width: 100%;
+      padding: 20px 0;
+      border: 1px solid $darkborder;
+
+      &:hover {
+        background: $grey;
+      }
+
+      .tasks--list--item--left, .tasks--list--item--middle, .tasks--list--item--right { padding: 0 40px;}
+
+      .tasks--list--item--left {
+        width: 50%;
+        float: left;
+      }
+
+      .tasks--list--item--middle, .tasks--list--item--right {
+        width: 25%;
+        float: left;
+        text-align: center;
+      }
+
+      .tasks--list--item--expanded {
+
+        padding: 0 40px;
+        text-align: center;
+
+        .expanded--complete, .expanded--not-complete {
+          width: 50%;
+          padding: 20px;
+          float: left;
+          text-align: center;
+
+          .complete-title {
+            margin-bottom: 10px;
+          }
+
+        }
+
+        .expanded--solo {
+          width: 50%;
+          margin: 0 auto;
+          padding: 20px;
+          text-align: center;
+
+          .complete-title {
+            margin-bottom: 10px;
+          }
+
+        }
+
+        .edit-buttons { margin-top: 10px; }
+
+      }
+
+    }
+
+  }
+
+}
+
+.taskContainer {
+
+  .task-header {
+    width: 100%;
+    padding: 20px $wrapper-width;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+
+    .back-link {
+      float: left;
+    }
+
+    .edit-button {
+      float: right;
+    }
+
+  }
+
+}

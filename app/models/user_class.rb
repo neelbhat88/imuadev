@@ -1,6 +1,7 @@
 class UserClass < ActiveRecord::Base
   attr_accessible :gpa, :grade, :name, :time_unit_id, :user_id,
-                  :period, :room, :credit_hours, :level, :subject
+                  :period, :room, :credit_hours, :level, :subject,
+                  :modified_by_id, :modified_by_name
 
   belongs_to :user
 
@@ -25,6 +26,8 @@ class ViewUserClass
     @credit_hours = uc.credit_hours
     @level = uc.level
     @subject = uc.subject
+    @modified_by_id = uc.modified_by_id
+    @modified_by_name = uc.modified_by_name
   end
 
 end

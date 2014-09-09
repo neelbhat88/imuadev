@@ -1,0 +1,106 @@
+<div class="tasksListContainer">
+
+  <div class="tasks--list--container">
+
+    <div class="tasks--list--topper">
+      <!-- 'Create New' part of #342 would happen below -->
+      <a href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
+    </div>
+
+    <!-- On initial view, show all outgoing assignments -->
+    <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments" ng-click="assignment.expanded = !assignment.expanded">
+        <div class="clear" ng-hide="assignment.expanded">
+          <div class="tasks--list--item--left">
+            <h5><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+            <span class="subtext">
+              <span ng-if="current_user.id == user.id">You </span>
+              <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+            </span>
+          </div>
+          <div class="tasks--list--item--middle">
+            <h5>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h5>
+            <span class="subtext">Students Completed</span>
+          </div>
+          <div class="tasks--list--item--right">
+            <span ng-if="assignment.due_datetime != null"><h5>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+              <span class="subtext">Due Date</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
+          <h5><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+          <h6>{{assignment.description}}</h6>
+          <span class="subtext">
+            <span ng-if="current_user.id == user.id">You </span>
+            <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+          </span>
+
+          <div class="clear" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length && _.where(assignment.user_assignments, {status: 1}).length != 0">
+            <div class="expanded--complete">
+              <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
+                <a href="#/profile/{{user_assignment.user.id}}">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+                </a>
+              </div>
+              <div class="complete-title green">
+                <span ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1">Has </span>
+                <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != 1">Have </span>
+                Completed the Task
+              </div>
+            </div>
+
+            <div class="expanded--not-complete">
+              <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
+                <a href="#/profile/{{user_assignment.user.id}}">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+                </a>
+              </div>
+              <div class="complete-title red">
+                <span ng-if="_.where(assignment.user_assignments, {status: 0}).length == 1">Has </span>
+                <span ng-if="_.where(assignment.user_assignments, {status: 0}).length != 1">Have </span>
+                Not Completed the Task
+              </div>
+            </div>
+          </div>
+
+          <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 0">
+            <div class="complete-title red">None of your students have completed the task yet.</div>
+            <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+              </a>
+            </div>
+          </div>
+
+          <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
+            <div class="complete-title green">All students have completed this task.</div>
+            <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
+              </a>
+            </div>
+          </div>
+
+          <div class="edit-buttons">
+            <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+            <a href="#/assignment/{{assignment.id}}?edit=true"><button class="btn btn-default">Edit Task</button></a>
+          </div>
+
+        </div>
+
+        <!-- <div class="edit-buttons" ng-hide="assignment.editing">
+          <button class="btn btn-default" ng-click="editAssignment(\$index)">Edit</button>
+          <button class="delete" ng-click="deleteAssignment(\$index)">Delete</button>
+        </div> -->
+      </li>
+
+    </ul>
+
+  </div>
+
+</div>

@@ -5,8 +5,10 @@ class Api::V1::ExpectationController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( expectationService = nil )
+  def load_services( expectationService = nil, userExpectationHistoryService = nil )
     @expectationService = expectationService ? expectationService : ExpectationService.new
+    @userExpectationHistoryService = userExpectationHistoryService ?
+      userExpectationHistoryService : UserExpectationHistoryService.new
   end
 
   #####################################
@@ -109,7 +111,7 @@ class Api::V1::ExpectationController < ApplicationController
     userExpectation["user_id"]        = userId
     userExpectation["expectation_id"] = expectationId
 
-    result = @expectationService.create_user_expectation(userExpectation)
+    result = @expectationService.create_user_expectation(userExpectation, current_user)
 
     render status: result.status,
       json: {
@@ -128,7 +130,7 @@ class Api::V1::ExpectationController < ApplicationController
     userExpectation["user_id"]        = userId
     userExpectation["expectation_id"] = expectationId
 
-    result = @expectationService.update_user_expectation(userExpectation)
+    result = @expectationService.update_user_expectation(userExpectation, current_user)
 
     render status: result.status,
       json: {

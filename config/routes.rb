@@ -15,9 +15,18 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :users, shallow: true do
-        resources :user_class, except: [:new, :edit]
+        resources :user_class, except: [:new, :edit] do
+          get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+        end
+
+        resources :user_extracurricular_activity, except: [:new, :edit]
+        resources :user_extracurricular_activity_detail, except: [:new, :edit]
+
         resources :assignment, except: [:new, :edit]
         resources :user_assignment, except: [:new, :edit, :show]
+
+        resources :user_service_organization, except: [:new, :edit]
+        resources :user_service_hour, except: [:new, :edit]
       end
 
       resources :users do
@@ -41,6 +50,8 @@ Imua::Application.routes.draw do
           get '/:id/relationship/students' => 'users#get_assigned_students'
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
 
+          get '/:id/user_expectation_history' => 'user_expectation_history#get_user_expectation_history'
+
           get    '/:id/expectations'                 => 'expectation#get_user_expectations'
           post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'
           put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'
@@ -63,24 +74,6 @@ Imua::Application.routes.draw do
 
       get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
       get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
-
-      get  '/users/:id/service_organizations_hours' => 'service_organization#user_service_organizations_hours'
-
-      post '/service_organization' => 'service_organization#add_user_service_organization'
-      post '/service_hour' => 'service_organization#add_user_service_hour'
-      put  '/service_organization/:id' => 'service_organization#update_user_service_organization'
-      put  '/service_hour/:id' => 'service_organization#update_user_service_hour'
-      delete '/service_organization/:id' => 'service_organization#delete_user_service_organization'
-      delete '/service_hour/:id' => 'service_organization#delete_user_service_hour'
-
-      get  '/users/:id/extracurricular_activity_details' => 'extracurricular_activity#user_extracurricular_activity_details'
-      post '/extracurricular_activity' => 'extracurricular_activity#add_user_extracurricular_activity'
-      post '/extracurricular_activity_detail' => 'extracurricular_activity#add_user_extracurricular_activity_detail'
-      put  '/extracurricular_activity/:id' => 'extracurricular_activity#update_user_extracurricular_activity'
-      put  '/extracurricular_activity_detail/:id' => 'extracurricular_activity#update_user_extracurricular_activity_detail'
-      delete '/extracurricular_activity/:id' => 'extracurricular_activity#delete_user_extracurricular_activity'
-      delete '/extracurricular_activity_detail/:id' => 'extracurricular_activity#delete_user_extracurricular_activity_detail'
-
 
       get '/organization' => 'organization#all_organizations'
       get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'

@@ -61,16 +61,19 @@ gem 'aws-sdk'
 
 # Used for authentication
 gem 'devise'
+# Authorization
+gem "six"
 
 gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
 
 gem "d3-rails"
 
-gem "six"
-
+# Analytics
 gem 'intercom-rails'
 
+# Optimizations
 gem 'oj'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
