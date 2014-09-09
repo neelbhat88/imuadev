@@ -136,7 +136,7 @@ angular.module('myApp')
       org.average_gpa = (org.semester_gpa / num_students).toFixed(2)
       org.average_serviceHours = (org.semester_serviceHours / num_students).toFixed(2)
       org.average_ecActivities = (org.semester_ecActivities / num_students).toFixed(2)
-      org.average_testsTaken = (org.semester_serviceHours / num_students).toFixed(2)
+      org.average_testsTaken = (org.semester_testsTaken / num_students).toFixed(2)
 
     org.groupedStudents = _.groupBy(org.students, "class_of")
 
