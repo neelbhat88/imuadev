@@ -92,10 +92,12 @@ class Api::V1::UserClassController < ApplicationController
   def destroy
     classId = params[:id].to_i
 
-    if @userClassService.delete_user_class(classId)
+    deleted_class = @userClassService.delete_user_class(classId)
+    if deleted_class[:status]
       render status: :ok,
         json: {
-          info: "Deleted User Class"
+          info: "Deleted User Class",
+          user_gpa: deleted_class[:user_gpa]
         }
       return
     else

@@ -55,6 +55,7 @@ angular.module('myApp')
         UserClassService.delete(user_class)
           .success (data) ->
             $scope.user_classes = removeClass($scope.user_classes, user_class)
+            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             $scope.refreshPoints()
 
     $scope.addClass = () ->

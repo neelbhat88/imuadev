@@ -240,6 +240,50 @@ describe Api::V1::UserClassController do
 
   end
 
+  describe "DELETE #update" do
+
+    describe "as a student" do
+      login_student
+
+      before(:each) do
+        @user = subject.current_user
+        @user_class = create(:user_class, user_id: @user.id, grade: "A")
+      end
+
+      it "returns 200 with GPA and deletes in database" do
+        expectation = expect {
+          delete :destroy, {:id => @user_class.id}
+        }
+
+        expectation.to change(UserGpaHistory, :count).by(1)
+
+        expect(response.status).to eq(200)
+        expect(json["user_gpa"]).to_not be_nil
+      end
+
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      before(:each) do
+        @current_user = subject.current_user
+        @student = create(:student)
+        @user_class = create(:user_class, user_id: @student.id, grade: "A")
+      end
+
+      it "sets modified properties to current user" do
+        expectation = expect {
+          delete :destroy, {:id => @user_class.id}
+        }
+
+        expectation.to change(UserGpaHistory, :count).by(1)
+        expect(json["user_gpa"]).to_not be_nil
+      end
+    end
+
+  end
+
   describe "GET #history" do
     login_student
 

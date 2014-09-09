@@ -59,10 +59,17 @@ class UserClassService
   end
 
   def delete_user_class(classId)
-    if UserClass.find(classId).destroy()
-      return true
+    user_class = UserClass.find(classId)
+    userId = user_class.user_id
+    time_unit_id = user_class.time_unit_id
+
+    if user_class.destroy()
+      user_gpa = DomainUserGpa.new(
+        UserGpaService.new.calculate_gpa(userId, time_unit_id)
+      )
+      return {:status => true, :user_gpa => user_gpa}
     else
-      return false
+      return {:status => false}
     end
   end
 
