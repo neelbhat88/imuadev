@@ -51,7 +51,6 @@ angular.module('myApp')
           $scope.user_extracurricular_activities[index] = data.user_extracurricular_activity
           $scope.user_extracurricular_activities[index].details = []
           $scope.user_extracurricular_activities[index].details.push(data.user_extracurricular_detail)
-          console.log($scope.user_extracurricular_activities[index])
           $scope.refreshPoints()
 
       $scope.user_extracurricular_activities.editing = false
