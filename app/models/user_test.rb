@@ -25,3 +25,17 @@ class ViewUserTest
   end
 
 end
+
+class DomainUserTest
+
+  def initialize(ut)
+    @id = ut.id
+    @org_test_id = ut.org_test_id
+    @user_id = ut.user_id
+    @time_unit_id = ut.time_unit_id
+    @date = ut.date
+    @score = ut.score
+    @description = ut.description
+  end
+
+end

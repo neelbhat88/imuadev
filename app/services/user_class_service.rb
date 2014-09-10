@@ -8,6 +8,28 @@ class UserClassService
     return UserClass.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
+  def get_user_classes_2(userId, timeUnitId = nil, moduleTitle = nil)
+    userClasses = nil
+
+    if moduleTitle.nil? || moduleTitle == Constants.Modules[:ACADEMICS]
+      conditions = []
+      arguments = {}
+
+      conditions << 'user_id = :user_id'
+      arguments[:user_id] = userId
+
+      unless timeUnitId.nil?
+        conditions << 'time_unit_id = :time_unit_id'
+        arguments[:time_unit_id] = timeUnitId
+      end
+
+      allConditions = conditions.join(' AND ')
+      userClasses = UserClass.find(:all, :conditions => [allConditions, arguments])
+    end
+
+    return userClasses.map{|uc| DomainUserClass.new(uc)} unless userClasses.nil?
+  end
+
   def user_gpa(userId, time_unit_id)
     classes = get_user_classes(userId, time_unit_id)
 

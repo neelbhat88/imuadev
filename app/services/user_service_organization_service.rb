@@ -8,6 +8,28 @@ class UserServiceOrganizationService
     return UserServiceHour.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
+  def get_user_service_hours_2(userId, timeUnitId = nil, moduleTitle = nil)
+    userServiceHours = nil
+
+    if moduleTitle.nil? || moduleTitle == Constants.Modules[:SERVICE]
+      conditions = []
+      arguments = {}
+
+      conditions << 'user_id = :user_id'
+      arguments[:user_id] = userId
+
+      unless timeUnitId.nil?
+        conditions << 'time_unit_id = :time_unit_id'
+        arguments[:time_unit_id] = timeUnitId
+      end
+
+      allConditions = conditions.join(' AND ')
+      userServiceHours = UserServiceHour.find(:all, :conditions => [allConditions, arguments])
+    end
+
+    return userServiceHours.map{|ush| DomainUserServiceHour.new(ush)} unless userServiceHours.nil?
+  end
+
   def get_user_service_organization(serviceOrganizationId)
     return UserServiceOrganization.where(:id => serviceOrganizationId).first
   end

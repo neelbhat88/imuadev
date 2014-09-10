@@ -1,4 +1,29 @@
 class MilestoneService
+
+  def get_milestones(orgId, timeUnitId = nil, moduleTitle = nil)
+    milestones = nil
+    conditions = []
+    arguments = {}
+
+    conditions << 'organization_id = :organization_id'
+    arguments[:organization_id] = orgId
+
+    unless timeUnitId.nil?
+      conditions << 'time_unit_id = :time_unit_id'
+      arguments[:time_unit_id] = timeUnitId
+    end
+
+    unless moduleTitle.nil?
+      conditions << 'module = :module'
+      arguments[:module] = moduleTitle
+    end
+
+    allConditions = conditions.join(' AND ')
+    milestones = Milestone.find(:all, :conditions => [allConditions, arguments])
+
+    return milestones.map{|m| DomainMilestone.new(m)}
+  end
+
   def create_milestone(ms)
     milestone = MilestoneFactory.get_milestone(ms[:module], ms[:submodule])
 
@@ -116,6 +141,31 @@ class MilestoneService
 
   def get_user_milestones(userId)
     UserMilestone.where(:user_id => userId)
+  end
+
+  # TODO Is this safe from SQL injection?
+  def get_user_milestones_2(userId, timeUnitId = nil, moduleTitle = nil)
+    userMilestones = nil
+    conditions = []
+    arguments = {}
+
+    conditions << 'user_id = :user_id'
+    arguments[:user_id] = userId
+
+    unless timeUnitId.nil?
+      conditions << 'time_unit_id = :time_unit_id'
+      arguments[:time_unit_id] = timeUnitId
+    end
+
+    unless moduleTitle.nil?
+      conditions << 'module = :module'
+      arguments[:module] = moduleTitle
+    end
+
+    allConditions = conditions.join(' AND ')
+    userMilestones = UserMilestone.find(:all, :conditions => [allConditions, arguments])
+
+    return userMilestones.map{|um| DomainUserMilestone.new(um)}
   end
 
 end
