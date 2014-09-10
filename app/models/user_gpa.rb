@@ -6,4 +6,5 @@ class UserGpa < ActiveRecord::Base
 
   validates :time_unit_id, presence: true
   validates :user_id, presence: true
+  validates :regular_unweighted, presence: true
 end

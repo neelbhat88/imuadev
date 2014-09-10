@@ -248,6 +248,8 @@ describe Api::V1::UserClassController do
       before(:each) do
         @user = subject.current_user
         @user_class = create(:user_class, user_id: @user.id, grade: "A")
+        create(:user_class, user_id: @user.id, grade: "B")
+        create(:user_gpa, user_id: @user.id, time_unit_id: 1)
       end
 
       it "returns 200 with GPA and deletes in database" do
@@ -259,6 +261,7 @@ describe Api::V1::UserClassController do
 
         expect(response.status).to eq(200)
         expect(json["user_gpa"]).to_not be_nil
+        expect(json["info"]).to eq("Deleted User Class")
       end
 
     end
@@ -270,15 +273,18 @@ describe Api::V1::UserClassController do
         @current_user = subject.current_user
         @student = create(:student)
         @user_class = create(:user_class, user_id: @student.id, grade: "A")
+        create(:user_class, user_id: @student.id, grade: "B")
+        create(:user_gpa, user_id: @student.id, time_unit_id: 1)
       end
 
-      it "sets modified properties to current user" do
+      it "returns 200 with GPA and deletes in database" do
         expectation = expect {
           delete :destroy, {:id => @user_class.id}
         }
 
         expectation.to change(UserGpaHistory, :count).by(1)
         expect(json["user_gpa"]).to_not be_nil
+        expect(json["info"]).to eq("Deleted User Class")
       end
     end
 
