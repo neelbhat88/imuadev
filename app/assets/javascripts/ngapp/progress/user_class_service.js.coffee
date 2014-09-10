@@ -26,20 +26,5 @@ angular.module("myApp")
   @delete = (user_class) ->
     return $http.delete "/api/v1/user_class/#{user_class.id}"
 
-  @getGPA = (user_classes) ->
-    totalGPA = 0
-    totalClassCredits = 0
-
-    return 0 if user_classes.length == 0
-
-    for c in user_classes
-      if c.id
-        totalGPA += (c.gpa * c.credit_hours)
-        totalClassCredits += c.credit_hours
-
-    return 0 if totalClassCredits == 0
-
-    return (totalGPA / totalClassCredits).toFixed(2)
-
   @
 ]

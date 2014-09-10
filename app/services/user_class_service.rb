@@ -8,19 +8,6 @@ class UserClassService
     return UserClass.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
-  def user_gpa(userId, time_unit_id)
-    classes = get_user_classes(userId, time_unit_id)
-
-    totalGpa = 0.0
-    totalClassCredits = 0.0
-    classes.each do | c |
-      totalGpa += (c.gpa * c.credit_hours)
-      totalClassCredits += c.credit_hours
-    end
-
-    return (totalGpa / totalClassCredits).round(2)
-  end
-
   def save_user_class(current_user, userId, user_class)
     new_class = UserClass.new do | u |
       u.user_id = userId
@@ -39,6 +26,8 @@ class UserClassService
 
     if new_class.save
       UserClassHistoryService.new.log_history(current_user, new_class)
+      UserGpaService.new.calculate_gpa(userId, user_class[:time_unit_id])
+
       return ReturnObject.new(:ok, "User class created successfully", new_class)
     else
       return ReturnObject.new(:bad_request, "Failed to create a user class", nil)
@@ -61,6 +50,7 @@ class UserClassService
                                   )
 
       UserClassHistoryService.new.log_history(current_user, db_class)
+      UserGpaService.new.calculate_gpa(db_class.user_id, db_class.time_unit_id)
 
       return db_class
     else
@@ -69,10 +59,17 @@ class UserClassService
   end
 
   def delete_user_class(classId)
-    if UserClass.find(classId).destroy()
-      return true
+    user_class = UserClass.find(classId)
+    userId = user_class.user_id
+    time_unit_id = user_class.time_unit_id
+
+    if user_class.destroy()
+      user_gpa = DomainUserGpa.new(
+        UserGpaService.new.calculate_gpa(userId, time_unit_id)
+      )
+      return {:status => true, :user_gpa => user_gpa}
     else
-      return false
+      return {:status => false}
     end
   end
 
