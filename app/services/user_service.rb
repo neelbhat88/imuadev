@@ -9,8 +9,6 @@ class UserService
   def get_user_progress(userId, filters = {})
     filters[:user_id] = userId
 
-    Rails.logger.debug("********* get_user_progress: #{filters} ************")
-
     user = User.find(userId)
 
     userOptions = {}

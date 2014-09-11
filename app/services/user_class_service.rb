@@ -9,35 +9,11 @@ class UserClassService
   end
 
   def get_user_classes_2(filters = {})
-    Rails.logger.debug("******* get_user_classes_2 #{filters} *******")
-
     userClasses = nil
 
     if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:ACADEMICS]
       applicable_filters = FilterFactory.new.conditions(UserClass.column_names.map(&:to_sym), filters)
       userClasses = UserClass.find(:all, :conditions => applicable_filters)
-    end
-
-    return userClasses.map{|uc| DomainUserClass.new(uc)} unless userClasses.nil?
-  end
-
-  def get_user_classes_3(userId, timeUnitId = nil, moduleTitle = nil)
-    userClasses = nil
-
-    if moduleTitle.nil? || moduleTitle == Constants.Modules[:ACADEMICS]
-      conditions = []
-      arguments = {}
-
-      conditions << 'user_id = :user_id'
-      arguments[:user_id] = userId
-
-      unless timeUnitId.nil?
-        conditions << 'time_unit_id = :time_unit_id'
-        arguments[:time_unit_id] = timeUnitId
-      end
-
-      allConditions = conditions.join(' AND ')
-      userClasses = UserClass.find(:all, :conditions => [allConditions, arguments])
     end
 
     return userClasses.map{|uc| DomainUserClass.new(uc)} unless userClasses.nil?

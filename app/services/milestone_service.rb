@@ -150,28 +150,4 @@ class MilestoneService
     return userMilestones.map{|um| DomainUserMilestone.new(um)}
   end
 
-  def get_user_milestones_3(userId, timeUnitId = nil, moduleTitle = nil)
-    userMilestones = nil
-    conditions = []
-    arguments = {}
-
-    conditions << 'user_id = :user_id'
-    arguments[:user_id] = userId
-
-    unless timeUnitId.nil?
-      conditions << 'time_unit_id = :time_unit_id'
-      arguments[:time_unit_id] = timeUnitId
-    end
-
-    unless moduleTitle.nil?
-      conditions << 'module = :module'
-      arguments[:module] = moduleTitle
-    end
-
-    allConditions = conditions.join(' AND ')
-    userMilestones = UserMilestone.find(:all, :conditions => [allConditions, arguments])
-
-    return userMilestones.map{|um| DomainUserMilestone.new(um)}
-  end
-
 end
