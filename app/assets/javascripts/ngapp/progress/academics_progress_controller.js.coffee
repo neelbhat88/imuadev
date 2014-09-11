@@ -13,7 +13,7 @@ angular.module('myApp')
             if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
-              $scope.gpa = 0.00
+              $scope.gpa = 0.toFixed(2)
             $scope.$emit('loaded_module_milestones');
 
     $scope.editClass = (user_class) ->
@@ -51,7 +51,7 @@ angular.module('myApp')
           if data.user_gpa
             $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
           else
-            $scope.gpa = 0.00
+            $scope.gpa = 0.toFixed(2)
           $scope.classes.editing = false
 
           $scope.refreshPoints()
@@ -64,7 +64,7 @@ angular.module('myApp')
             if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
-              $scope.gpa = 0.00
+              $scope.gpa = 0.toFixed(2)
             $scope.refreshPoints()
 
     $scope.addClass = () ->
