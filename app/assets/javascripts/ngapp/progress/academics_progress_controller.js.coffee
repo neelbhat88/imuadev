@@ -10,7 +10,7 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
-            if data.user_gpa.regular_unweighted
+            if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
               $scope.gpa = 0
@@ -48,7 +48,7 @@ angular.module('myApp')
               break
 
           $scope.user_classes = data.user_classes
-          if data.user_gpa.regular_unweighted
+          if data.user_gpa
             $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
           else
             $scope.gpa = 0
@@ -61,7 +61,7 @@ angular.module('myApp')
         UserClassService.delete(user_class)
           .success (data) ->
             $scope.user_classes = removeClass($scope.user_classes, user_class)
-            if data.user_gpa.regular_unweighted
+            if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
               $scope.gpa = 0
