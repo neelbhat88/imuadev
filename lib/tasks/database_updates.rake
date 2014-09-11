@@ -1,6 +1,6 @@
 namespace :db_update do
   desc "All db_updates"
-  task :all => [:update_all_organizations_and_hours, :update_all_extracurricular_activities_and_details ]
+  task :all => [:create_initial_user_gpa]
 
   desc "Sets all credit_hours = 1 and level = 'Regular' for all User Classes where those values
         are nil"
@@ -78,4 +78,19 @@ namespace :db_update do
 
     end
   end
+
+  desc "create initial user gpas"
+  task :create_initial_user_gpa => :environment do
+    users = User.where(:role => 50)
+    users.each do | u |
+      time_unit_ids = TimeUnit.where(:organization_id => u.organization_id)
+      time_unit_ids.each do | t |
+        saved_gpa = UserGpaService.new.calculate_gpa(u.id, t.id)
+        if !saved_gpa.nil?
+         puts 'Created: ' + saved_gpa.to_yaml
+        end
+      end
+    end
+  end
+
 end
