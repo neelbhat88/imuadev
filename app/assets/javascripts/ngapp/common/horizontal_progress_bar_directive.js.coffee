@@ -2,35 +2,38 @@ angular.module('myApp')
 .directive 'horizontalProgressBar', [() ->
   restrict: 'EA'
   scope: {
-    module: '='
+    student: '='
   }
-  link: (scope, elem, attrs) ->
+  link: (scope, element, attrs) ->
     w = 500
     h = 50
 
-    dataset = [
-      [{
-        x: 0,
-        y: 20 # use student/module progress
-      }],
-      [{
-        x: 0,
-        y: 30 # use student/module progress
-      }],
-      [{
-        x: 0,
-        y: 90 # use student/module progress
-      }]
-    ]
+    progressData = []
+
+    console.log(scope.student)
+    user_points = 0
+    total_points = 0
+
+    for module in scope.student.modules_progress
+      progressData.push([{ x: 0, y: module.points.user}])
+      user_points += module.points.user
+      total_points += module.points.total
+
+    if total_points == 0
+      progress_to_make = 1
+    else
+      progress_to_make = total_points - user_points
+
+    progressData[5] = [{ x: 0, y: progress_to_make}]
 
     stack = d3.layout.stack()
 
     # Data, stacked
-    stack(dataset)
+    stack(progressData)
 
     # Set up scales
     xScale = d3.scale.linear()
-      .domain([0, d3.max(dataset, (d) ->
+      .domain([0, d3.max(progressData, (d) ->
         d3.max(d, (d) ->
           d.y0 + d.y
         )
@@ -38,7 +41,7 @@ angular.module('myApp')
       .range([0, w])
 
     color = d3.scale.ordinal()
-      .range(["#1459D9", "#148DD9", "#87ceeb", "#daa520"])
+        .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080']);
 
     # Create SVG element
     svg = d3.select("body")
@@ -49,7 +52,7 @@ angular.module('myApp')
 
     # Add a group for each row of data
     groups = svg.selectAll("g")
-      .data(dataset)
+      .data(progressData)
       .enter()
       .append("g")
       .style("fill", (d, i) ->
