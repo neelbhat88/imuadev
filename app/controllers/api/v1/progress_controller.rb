@@ -44,19 +44,21 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
-  # GET /users/:id/progress_2?time_unit_id=XX&module_title=XX&recalculate=XX
+  # GET /users/:id/progress_2?time_unit_id=XX&module=XX&recalculate=XX
   # Returns User's info and progress, filterable by time_unit and module.
   # Optional "recalculate" parameter to perform milestone recalculation.
   def user_progress
     user_id      = params[:id]
     time_unit_id = params[:time_unit_id]
-    module_title = params[:module_title]
+    module_title = params[:module]
+
+    filters = params.except(*[:id, :controller, :action]).symbolize_keys
 
     if params[:recalculate]
       @progressService.get_recalculated_milestones(user_id, time_unit_id, module_title)
     end
 
-    result = @userService.get_user_progress(user_id, time_unit_id, module_title)
+    result = @userService.get_user_progress(user_id, filters)
 
     render status: result.status,
       json: {

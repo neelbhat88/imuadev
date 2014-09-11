@@ -74,23 +74,12 @@ class TestService
     return UserTest.where(:user_id => userId)
   end
 
-  def get_user_tests_2(userId, timeUnitId = nil, moduleTitle = nil)
+  def get_user_tests_2(filters = {})
     userTests = nil
 
-    if moduleTitle.nil? || moduleTitle == Constants.Modules[:TESTING]
-      conditions = []
-      arguments = {}
-
-      conditions << 'user_id = :user_id'
-      arguments[:user_id] = userId
-
-      unless timeUnitId.nil?
-        conditions << 'time_unit_id = :time_unit_id'
-        arguments[:time_unit_id] = timeUnitId
-      end
-
-      allConditions = conditions.join(' AND ')
-      userTests = UserTest.find(:all, :conditions => [allConditions, arguments])
+    if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:TESTING]
+      applicable_filters = FilterFactory.new.conditions(UserTest.column_names.map(&:to_sym), filters)
+      userTests = UserTest.find(:all, :conditions => applicable_filters)
     end
 
     return userTests.map{|ut| DomainUserTest.new(ut)} unless userTests.nil?

@@ -18,6 +18,7 @@ class ViewOrganizationWithUsers
 
     @milestones = Milestone.where(:organization_id => @id).map{|m| ViewMilestone.new(m)}
     @time_units = TimeUnit.where(:organization_id => @id)
+    @enabled_modules = EnabledModules.new.get_enabled_module_titles(@id)
     # @expectations = Expectation.where(:organization_id => @id).map{|e| ViewExpectation.new(e)}
     # @org_tests = OrgTests.where(:organization_id => @id).map{|e| ViewOrgTest.new(e)}
 

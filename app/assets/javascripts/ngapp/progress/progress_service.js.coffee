@@ -40,13 +40,13 @@ angular.module('myApp')
     $http.get "api/v1/users/#{user_id}/progress_2?time_unit_id=#{time_unit_id}"
 
   @getUserProgressForModule = (user_id, module_title) ->
-    $http.get "api/v1/users/#{user_id}/progress_2?module_title=#{module_title}"
+    $http.get "api/v1/users/#{user_id}/progress_2?module=#{module_title}"
 
   @getUserProgressForTimeUnitAndModule = (user_id, time_unit_id, module_title) ->
-    $http.get "api/v1/users/#{user_id}/progress_2?time_unit_id=#{time_unit_id}&module_title=#{module_title}"
+    $http.get "api/v1/users/#{user_id}/progress_2?time_unit_id=#{time_unit_id}&module=#{module_title}"
 
   @getRecalculatedUserProgress = (user_id, time_unit_id, module_title) ->
-    $http.get "/api/v1/users/#{user_id}/progress_2?time_unit_id=#{time_unit_id}&module_title=#{module_title}&recalculate=true"
+    $http.get "/api/v1/users/#{user_id}/progress_2?time_unit_id=#{time_unit_id}&module=#{module_title}&recalculate=true"
 
   @getRecalculatedModuleMilestones = (user, time_unit_id, module_title) ->
     $http.get "/api/v1/progress/recalculated_milestones/?user_id=#{user.id}&time_unit_id=#{time_unit_id}&module_title=#{module_title}"

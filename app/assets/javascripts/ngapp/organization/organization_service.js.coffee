@@ -103,7 +103,7 @@ angular.module('myApp')
         student.total_gpa /= student.user_gpas.length
       else
         student.total_gpa = 0
-      semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: student.time_unit_id})
+      semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: time_unit_id})
       if semester_gpa
         student.semester_gpa = semester_gpa.regular_unweighted
       org.total_gpa += student.total_gpa
@@ -112,8 +112,8 @@ angular.module('myApp')
       # Add up student's service hours
       student.total_service_hours = student.semester_service_hours = 0
       _.each(student.user_service_hours, (ush) ->
-        student.user_service_hours.total_hours += parseFloat(ush.hours)
-        student.user_service_hours.semester_hours += if ush.time_unit_id == time_unit_id then parseFloat(ush.hours) else 0
+        student.total_service_hours += parseFloat(ush.hours)
+        student.semester_service_hours += if ush.time_unit_id == time_unit_id then parseFloat(ush.hours) else 0
       )
       org.total_serviceHours += student.total_service_hours
       org.semester_serviceHours += student.semester_service_hours
