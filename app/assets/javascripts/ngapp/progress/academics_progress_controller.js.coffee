@@ -10,7 +10,10 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
-            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+            if data.user_gpa.regular_unweighted
+              $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+            else
+              $scope.gpa = 0
             $scope.$emit('loaded_module_milestones');
 
     $scope.editClass = (user_class) ->
@@ -45,7 +48,10 @@ angular.module('myApp')
               break
 
           $scope.user_classes = data.user_classes
-          $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+          if data.user_gpa.regular_unweighted
+            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+          else
+            $scope.gpa = 0
           $scope.classes.editing = false
 
           $scope.refreshPoints()
@@ -55,7 +61,10 @@ angular.module('myApp')
         UserClassService.delete(user_class)
           .success (data) ->
             $scope.user_classes = removeClass($scope.user_classes, user_class)
-            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+            if data.user_gpa.regular_unweighted
+              $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+            else
+              $scope.gpa = 0
             $scope.refreshPoints()
 
     $scope.addClass = () ->

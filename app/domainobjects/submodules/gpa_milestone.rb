@@ -20,7 +20,11 @@ class GpaMilestone < ImuaMilestone
   end
 
   def has_earned?(user, time_unit_id)
-    user_gpa = UserGpaService.new.get_user_gpa(user.id, time_unit_id).regular_unweighted
+    if !UserGpaService.new.get_user_gpa(user.id, time_unit_id).nil?
+      user_gpa = UserGpaService.new.get_user_gpa(user.id, time_unit_id).regular_unweighted
+    else
+      user_gpa = nil
+    end
     Rails.logger.debug("****** User's GPA: #{user_gpa}. Target GPA: #{@target_gpa}")
 
     @earned = user_gpa >= @target_gpa
