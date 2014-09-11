@@ -44,7 +44,7 @@ class UserGpaService
       UserGpaHistoryService.new.create_gpa_history(db_gpa)
       return db_gpa
 
-    elsif !regular_unweighted.nan?
+    else
       new_user_gpa = UserGpa.new do |u|
         u.user_id = userId
         u.time_unit_id = time_unit_id
