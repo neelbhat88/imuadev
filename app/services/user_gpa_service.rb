@@ -8,14 +8,18 @@ class UserGpaService
   def calculate_regular_unweighted(userId, time_unit_id)
     classes = UserClassService.new.get_user_classes(userId, time_unit_id)
 
-    totalGpa = 0.0
-    totalClassCredits = 0.0
-    classes.each do | c |
-      totalGpa += (c.gpa * c.credit_hours)
-      totalClassCredits += c.credit_hours
-    end
+    if !classes.empty?
+      totalGpa = 0.0
+      totalClassCredits = 0.0
+      classes.each do | c |
+        totalGpa += (c.gpa * c.credit_hours)
+        totalClassCredits += c.credit_hours
+      end
 
-    return (totalGpa / totalClassCredits).round(2)
+      return (totalGpa / totalClassCredits).round(2)
+    else
+      return 0
+    end
 
   end
 
@@ -40,7 +44,7 @@ class UserGpaService
       UserGpaHistoryService.new.create_gpa_history(db_gpa)
       return db_gpa
 
-    elsif !regular_unweighted.nan?
+    else
       new_user_gpa = UserGpa.new do |u|
         u.user_id = userId
         u.time_unit_id = time_unit_id
