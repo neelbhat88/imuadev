@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904170131) do
+ActiveRecord::Schema.define(:version => 20140911191512) do
+
+  create_table "app_versions", :force => true do |t|
+    t.integer  "version_number"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -224,6 +230,29 @@ ActiveRecord::Schema.define(:version => 20140904170131) do
   end
 
   add_index "user_extracurricular_activity_details", ["user_id"], :name => "index_user_extracurricular_activity_details_on_user_id"
+
+  create_table "user_gpa_histories", :force => true do |t|
+    t.integer  "user_gpa_id"
+    t.integer  "user_id"
+    t.float    "core_unweighted"
+    t.float    "core_weighted"
+    t.float    "regular_weighted"
+    t.float    "regular_unweighted"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "user_gpas", :force => true do |t|
+    t.integer  "user_id"
+    t.float    "core_unweighted"
+    t.float    "core_weighted"
+    t.float    "regular_weighted"
+    t.float    "regular_unweighted"
+    t.integer  "time_unit_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "user_milestones", :force => true do |t|
     t.integer  "user_id"

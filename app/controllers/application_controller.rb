@@ -43,9 +43,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_and_set_version_header
-    @appVersion = "1.0" #ToDo: Get this from the DB instead of hardcoding here
+    @appVersion = AppVersionService.new.get_version_number.to_s
     response.headers['AppVersion'] = @appVersion
 
+    # Only check the AppVersion if the header exists
     if request.headers['AppVersion'] && request.headers['AppVersion'] != @appVersion
       render status: 426, json: {}
     end
