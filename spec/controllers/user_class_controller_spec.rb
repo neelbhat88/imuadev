@@ -8,8 +8,10 @@ describe Api::V1::UserClassController do
     before(:each) do
       @user = subject.current_user
       create(:user_class, user_id: @user.id, time_unit_id: 1)
+      create(:user_gpa, user_id: @user.id, time_unit_id: 1)
 
       create(:user_class, user_id: @user.id, time_unit_id: 2)
+      create(:user_gpa, user_id: @user.id, time_unit_id: 2)
       create(:user_class, time_unit_id: 2)
     end
 
@@ -25,6 +27,7 @@ describe Api::V1::UserClassController do
 
       expect(response.status).to eq(200)
       expect(json["user_classes"].length).to eq(1)
+      expect(json["user_gpa"]["user_id"]).to eq(@user.id)
     end
 
     it "returns 200 and no user classes if none in the semester" do
@@ -55,9 +58,11 @@ describe Api::V1::UserClassController do
 
         expectation.to change{@user_class.grade}.from("A").to("B")
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
-        expect(json["user_class"]).to_not be_nil
+        expect(json["user_classes"]).to_not be_nil
+        expect(json["user_gpa"]).to_not be_nil
       end
 
       it "sets modified properties to current user" do
@@ -100,22 +105,30 @@ describe Api::V1::UserClassController do
 
       before(:each) do
         @user = subject.current_user
+        create(:user_gpa, user_id: @user.id, time_unit_id: @user.time_unit_id)
+        create(:user_class, user_id: @user.id, time_unit_id: @user.time_unit_id)
       end
 
       it "returns 200 and adds user_class to database" do
         expectation = expect {
-          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class)}
+          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class,
+                                                             user_id: @user.id,
+                                                             time_unit_id: @user.time_unit_id)}
         }
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
-        expect(json["user_class"]).to_not be_nil
+        expect(json["user_classes"]).to_not be_nil
+        expect(json["user_gpa"]).to_not be_nil
       end
 
       it "sets modified properties to current user" do
-        post :create, {:user_id => @user.id, user_class: attributes_for(:user_class) }
+        post :create, {:user_id => @user.id, user_class: attributes_for(:user_class,
+                                                           user_id: @user.id,
+                                                           time_unit_id: @user.time_unit_id)}
 
         db_user_class = UserClass.where(:user_id => @user.id).first
 
@@ -126,14 +139,16 @@ describe Api::V1::UserClassController do
       it "returns 400 if there is an error creating a user_class" do
         expectation = expect {
           post :create, {:user_id => @user.id,
-                         user_class: attributes_for(:user_class, name: nil)}
+                         user_class: attributes_for(:user_class, name: nil,
+                                                      user_id: @user.id,
+                                                      time_unit_id: @user.time_unit_id)}
         }
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
-        expect(json["user_class"]).to be_nil
       end
     end
 
@@ -147,18 +162,23 @@ describe Api::V1::UserClassController do
 
       it "returns 200 and adds user_class to database" do
         expectation = expect {
-          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class)}
+          post :create, {:user_id => @user.id, user_class: attributes_for(:user_class,
+                                                            user_id: @user.id,
+                                                            time_unit_id: @user.time_unit_id)}
         }
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
-        expect(json["user_class"]).to_not be_nil
+        expect(json["user_classes"]).to_not be_nil
       end
 
       it "sets modified properties to current user" do
-        post :create, {:user_id => @user.id, user_class: attributes_for(:user_class) }
+        post :create, {:user_id => @user.id, user_class: attributes_for(:user_class,
+                                                            user_id: @user.id,
+                                                            time_unit_id: @user.time_unit_id)}
 
         db_user_class = UserClass.where(:user_id => @user.id).first
 
@@ -169,14 +189,17 @@ describe Api::V1::UserClassController do
       it "returns 400 if there is an error creating a user_class" do
         expectation = expect {
           post :create, {:user_id => @user.id,
-                         user_class: attributes_for(:user_class, name: nil)}
+                         user_class: attributes_for(:user_class, name: nil,
+                                                        user_id: @user.id,
+                                                        time_unit_id: @user.time_unit_id)}
         }
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
-        expect(json["user_class"]).to be_nil
+        expect(json["user_classes"]).to be_empty
       end
     end
 
@@ -194,9 +217,10 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(1)
         expectation.to change(UserClassHistory, :count).by(1)
+        expectation.to change(UserGpaHistory, :count).by(1)
 
         expect(response.status).to eq(200)
-        expect(json["user_class"]).to_not be_nil
+        expect(json["user_classes"]).to_not be_nil
       end
 
       it "returns 400 if there is an error creating a user_class" do
@@ -207,9 +231,60 @@ describe Api::V1::UserClassController do
 
         expectation.to change(UserClass, :count).by(0)
         expectation.to change(UserClassHistory, :count).by(0)
+        expectation.to change(UserGpaHistory, :count).by(0)
 
         expect(response.status).to eq(400)
-        expect(json["user_class"]).to be_nil
+        expect(json["user_classes"]).to be_empty
+      end
+    end
+
+  end
+
+  describe "DELETE #update" do
+
+    describe "as a student" do
+      login_student
+
+      before(:each) do
+        @user = subject.current_user
+        @user_class = create(:user_class, user_id: @user.id, grade: "A")
+        create(:user_class, user_id: @user.id, grade: "B")
+        create(:user_gpa, user_id: @user.id, time_unit_id: 1)
+      end
+
+      it "returns 200 with GPA and deletes in database" do
+        expectation = expect {
+          delete :destroy, {:id => @user_class.id}
+        }
+
+        expectation.to change(UserGpaHistory, :count).by(1)
+
+        expect(response.status).to eq(200)
+        expect(json["user_gpa"]).to_not be_nil
+        expect(json["info"]).to eq("Deleted User Class")
+      end
+
+    end
+
+    describe "as a mentor" do
+      login_mentor
+
+      before(:each) do
+        @current_user = subject.current_user
+        @student = create(:student)
+        @user_class = create(:user_class, user_id: @student.id, grade: "A")
+        create(:user_class, user_id: @student.id, grade: "B")
+        create(:user_gpa, user_id: @student.id, time_unit_id: 1)
+      end
+
+      it "returns 200 with GPA and deletes in database" do
+        expectation = expect {
+          delete :destroy, {:id => @user_class.id}
+        }
+
+        expectation.to change(UserGpaHistory, :count).by(1)
+        expect(json["user_gpa"]).to_not be_nil
+        expect(json["info"]).to eq("Deleted User Class")
       end
     end
 

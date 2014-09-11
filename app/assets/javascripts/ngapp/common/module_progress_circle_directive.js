@@ -14,7 +14,7 @@ angular.module('myApp')
               .append('svg')
       			    .attr("width", width + margin.left + margin.right)
       			    .attr("height", height + margin.top + margin.bottom)
-      			   .append("g")
+      			  .append("g")
       				.attr("id", scope.module.module_title)
       				.attr("class", "module-circle__points")
           			.attr("transform", "translate(" + ((width/2)+margin.left) + "," + ((height/2)+margin.top) + ")");
@@ -27,11 +27,11 @@ angular.module('myApp')
           // Throw in a switch statement for now, try to integrate  module
           // color directive
           switch (module.module_title) {
-              case 'Academics':       var moduleColor = '#41e6b2'; var moduleColorBg = '#172924'; break;
-              case 'Service':         var moduleColor = '#e8be28'; var moduleColorBg = '#2a271b'; break;
-              case 'Extracurricular': var moduleColor = '#ef6629'; var moduleColorBg = '#291b16'; break;
-              case 'College_Prep':    var moduleColor = '#27aae1'; var moduleColorBg = '#142229'; break;
-              case 'Testing':         var moduleColor = '#9665aa'; var moduleColorBg = '#221b2a'; break;
+            case 'Academics':       var moduleColor = '#41e6b2'; var moduleColorBg = '#172924'; break;
+            case 'Service':         var moduleColor = '#e8be28'; var moduleColorBg = '#2a271b'; break;
+            case 'Extracurricular': var moduleColor = '#ef6629'; var moduleColorBg = '#291b16'; break;
+            case 'College_Prep':    var moduleColor = '#27aae1'; var moduleColorBg = '#142229'; break;
+            case 'Testing':         var moduleColor = '#9665aa'; var moduleColorBg = '#221b2a'; break;
           }
 
           var modulePoints = module.points.user;
