@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
   before_filter :add_abilities
   before_filter :set_current_company
 
+  respond_to :html # Without this, POST /sign_in fails - spent hours figuring this out..
+                   # after_sign_in_path_for needs to return HTML since its rendering the view
+  respond_to :json, :only => [:check_and_set_version_header]
+  before_filter :check_and_set_version_header
+
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
     #return dashboard_path
@@ -36,6 +41,15 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def check_and_set_version_header
+    @appVersion = "1.0" #ToDo: Get this from the DB instead of hardcoding here
+    response.headers['AppVersion'] = @appVersion
+
+    if request.headers['AppVersion'] && request.headers['AppVersion'] != @appVersion
+      render status: 426, json: {}
+    end
+  end
 
   def set_current_company
     @current_company = current_user.organization unless current_user.nil?
