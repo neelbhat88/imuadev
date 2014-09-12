@@ -24,12 +24,12 @@ class ViewOrganizationWithUsers
     if !options[:user_ids].nil?
       users = User.includes([:user_milestones, :relationships, :user_expectations,
                              :user_classes, :user_extracurricular_activity_details,
-                             :user_service_hours, :user_tests])
+                             :user_service_hours, :user_tests, :user_gpas])
                              .where(:id => options[:user_ids])
     else
       users = User.includes([:user_milestones, :relationships, :user_expectations,
                              :user_classes, :user_extracurricular_activity_details,
-                             :user_service_hours, :user_tests])
+                             :user_service_hours, :user_tests, :user_gpas])
                              .where(:organization_id => @id)
     end
     @users = users.map{|u| ViewUser.new(u)} unless users.nil?
