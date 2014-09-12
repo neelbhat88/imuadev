@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="version" name="version" content="<%= @appVersion %>" >
     <title>Imua</title>
 
     <%= csrf_meta_tags %>
@@ -160,7 +161,11 @@
       </div>
     </header>
     <div class="mask"></div>
-    <div data-ng-view></div>
+    <div data-ng-view ng-if="!reload_required"></div>
+    <div ng-if="reload_required" style="padding: 30px; text-align: center;">
+      <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
+      <h5>Please refresh your browser window to get the updates!</h5>
+    </div>
   </body>
 
   <script>
