@@ -89,13 +89,9 @@ angular.module('myApp')
       # TODO This isn't the correct way to calculate gpa
       student.total_gpa = 0.0
       student.semester_gpa = 0.0
-      _.each(student.user_gpas, (gpa) ->
-        student.total_gpa += gpa.regular_unweighted
-      )
-      if !!student.user_gpas
+      if !!student.user_gpas && student.user_gpas.length > 0
+        _.each(student.user_gpas, (gpa) -> student.total_gpa += gpa.regular_unweighted)
         student.total_gpa /= student.user_gpas.length
-      else
-        student.total_gpa = 0
       semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: student.time_unit_id})
       if semester_gpa
         student.semester_gpa = semester_gpa.regular_unweighted
