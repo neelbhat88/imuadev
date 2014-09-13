@@ -8,12 +8,7 @@
   }
 
   .tasks--list--container {
-    width: 70%;
-    margin: 0 auto;
     margin-bottom: 40px;
-
-    @include respond-to(900) { width: 85%; }
-    @include respond-to(600) { width: 100%; }
   }
 
   .tasks--list--topper {
@@ -98,7 +93,7 @@
 
   .task-header {
     width: 100%;
-    padding: 20px $wrapper-width;
+    padding: 20px 0;
     background: $grey;
     border-bottom: 1px solid $darkborder;
 
@@ -110,6 +105,16 @@
       float: right;
     }
 
+  }
+
+  .assignment--left {
+    width: 80%;
+    float: left;
+  }
+
+  .assignment--right {
+    width: 20%;
+    float: left;
   }
 
 }

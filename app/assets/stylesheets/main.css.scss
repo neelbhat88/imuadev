@@ -316,6 +316,13 @@ $wrapper-width: 40px;
 $small-wrapper-width: 20px;
 $panelwrapper: 0 80px;
 
+.single-col-wrapper {
+  width: 70%;
+  margin: 0 auto;
+  @include respond-to(900) { width: 85%; }
+  @include respond-to(600) { width: 100%; }
+}
+
 .list-header {
 
 	width: 100%;
