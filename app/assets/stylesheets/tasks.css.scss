@@ -10,6 +10,7 @@
   .tasks--list--container {
     width: 70%;
     margin: 0 auto;
+    margin-bottom: 40px;
 
     @include respond-to(900) { width: 85%; }
     @include respond-to(600) { width: 100%; }
@@ -31,9 +32,10 @@
       width: 100%;
       padding: 20px 0;
       border: 1px solid $darkborder;
+      background: $grey;
 
       &:hover {
-        background: $grey;
+        background: $boxgrey;
       }
 
       .tasks--list--item--left, .tasks--list--item--middle, .tasks--list--item--right { padding: 0 40px;}
@@ -84,6 +86,10 @@
 
     }
 
+  }
+
+  .completed-tasks {
+    color: $lightgrey;
   }
 
 }
