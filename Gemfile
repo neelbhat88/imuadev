@@ -54,6 +54,9 @@ gem 'underscore-rails'
 
 gem 'mail'
 
+# Heroku deployment rake tasks
+gem 'paratrooper'
+
 # Images
 gem 'rmagick', '2.13.2'
 gem 'paperclip'

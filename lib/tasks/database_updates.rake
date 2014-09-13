@@ -1,6 +1,6 @@
 namespace :db_update do
   desc "All db_updates"
-  task :all => [:create_initial_user_gpa]
+  task :all => [:create_app_version]
 
   desc "Sets all credit_hours = 1 and level = 'Regular' for all User Classes where those values
         are nil"
@@ -90,6 +90,16 @@ namespace :db_update do
          puts 'Created: ' + saved_gpa.to_yaml
         end
       end
+    end
+  end
+
+  desc "Create an AppVersion row to store current AppVersion"
+  task :create_app_version => :environment do
+    if AppVersion.all.length == 0
+      AppVersion.create(:version_number => 0)
+      Rails.logger.debug("AppVersion row created")
+    else
+      Rails.logger.debug("AppVersion row already exists")
     end
   end
 

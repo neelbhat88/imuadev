@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="version" name="version" content="<%= @appVersion %>" >
     <title>Imua</title>
 
     <%= csrf_meta_tags %>
@@ -160,21 +161,25 @@
       </div>
     </header>
     <div class="mask"></div>
-    <div data-ng-view></div>
+    <div data-ng-view ng-if="!reload_required"></div>
+    <div ng-if="reload_required" style="padding: 30px; text-align: center;">
+      <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
+      <h5>Please refresh your browser window to get the updates!</h5>
+    </div>
   </body>
 
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '<%= ENV["GA_TRACKING_ID"] %>',
-      <% if ENV["RAILS_ENV"] == 'development' %>
-        { 'cookieDomain': 'none'}
-      <% else %>
-        'auto'
-      <% end %>
+    ga('create', '<%= ENV["GA_TRACKING_ID"] %>',
+    <% if ENV["RAILS_ENV"] == 'development' %>
+      { 'cookieDomain': 'none'}
+    <% else %>
+      'auto'
+    <% end %>
     );
 
     $(document).ready(function(){
