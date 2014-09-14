@@ -13,7 +13,7 @@
         <button class="btn btn-default" ng-click="editAssignment($index)"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
       </div>
       <div class="edit-buttons-top" ng-show="assignment.editing">
-        <button class="btn btn-success" ng-click="saveAssignment($index)"><span class="glyphicon glyphicon-ok"></span> Save</button>
+        <button class="btn btn-success" ng-click="saveAssignment($index)"><span class="glyphicon glyphicon-ok"></span> Save Task</button>
         <button class="btn btn-danger btn-sm" ng-click="cancelEditAssignment($index)"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
     </div>
@@ -21,41 +21,39 @@
 
   <div class="single-col-wrapper clear">
     <div class="assignment--left">
-      <div ng-hide="assignment.editing">
+      <div class="task-content" ng-hide="assignment.editing">
         <h4><span class="bold">{{assignment.title}}</span></h4>
         <h6>{{assignment.description}}</h6>
       </div>
 
-      <div ng-show="assignment.editing">
+      <div class="task-content" ng-show="assignment.editing">
         <div class="form-wrapper">
-          <label>Title:</label>
+          <label><h5>Task Name:</h5></label>
           <input class="form-control" ng-model="assignment.new_title" placeholder="Title" autofocus="true">
         </div>
         <div class="form-wrapper">
-          <label>Description:</label>
-          <input class="form-control" ng-model="assignment.new_description" placeholder="Description">
-        </div>
-        <div class="form-wrapper">
-          <label>Due:</label>
-          <imua-datepicker date="assignment.new_due_datetime"></imua-datepicker>
+          <label><h5>Details:</h5></label>
+          <textarea class="form-control" ng-model="assignment.new_description" placeholder="Description"></textarea>
         </div>
       </div>
 
       <ul class="users-not-completed">
         <h6 class="bold red">Students who have not completed this task:</h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'user.last_name'" ng-if="user_assignment.status == 0">
-          <div class="medium-circle-picture">
-            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-          </div>
+          <a href="#/profile/{{user_assignment.user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+            </div>
+          </a>
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
-          <ul class="circle-subnav">
+          <ul class="circle-subnav" ng-hide="assignment.editing">
             <li>
               <button type="button" class="btn btn-success btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1">Mark Complete</button>
             </li>
           </ul>
-          <!-- <div class="edit-buttons">
-            <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove {{user_assignment.user.first_name}} from this Task</button>
-          </div> -->
+          <div class="edit-buttons" ng-show="assignment.editing">
+            <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
+          </div>
         </li>
       </ul>
 
@@ -66,15 +64,15 @@
             <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
           </div>
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
-          <ul class="circle-subnav">
+          <ul class="circle-subnav" ng-hide="assignment.editing">
             <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
             <li>
               <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
             </li>
           </ul>
-          <!-- <div class="edit-buttons">
-            <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove {{user_assignment.user.first_name}} from this Task</button>
-          </div> -->
+          <div class="edit-buttons" ng-show="assignment.editing">
+            <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
+          </div>
         </li>
       </ul>
 
@@ -138,20 +136,24 @@
       </div>
 
       <div class="edit-buttons-top" ng-show="assignment.editing">
-        <button class="btn btn-success" ng-click="saveAssignment($index)"><span class="glyphicon glyphicon-ok"></span> Save</button>
+        <button class="btn btn-success" ng-click="saveAssignment($index)"><span class="glyphicon glyphicon-ok"></span> Save Task</button>
         <button class="btn btn-danger btn-sm" ng-click="cancelEditAssignment($index)"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
 
       <div class="edit-buttons" ng-hide="assignment.editing">
-        <button class="btn btn-default" ng-click="editAssignment($index)">Edit</button>
-        <button class="delete" ng-click="deleteAssignment($index)">Delete</button>
+        <button class="btn btn-default" ng-click="editAssignment($index)"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
+        <button class="btn btn-danger" ng-click="deleteAssignment($index)"><span class="glyphicon glyphicon-trash"></span> Delete this Task</button>
       </div>
     </div>
     <div class="assignment--right">
       <ul>
-        <li ng-if="assignment.due_datetime != null">
+        <li ng-if="assignment.due_datetime != null" ng-hide="assignment.editing">
           <h6>Due by</h6>
           <h5 class="bold">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+        </li>
+        <li class="form-wrapper" ng-show="assignment.editing">
+          <label><h6>Due Date:</h6></label>
+          <imua-datepicker date="assignment.new_due_datetime"></imua-datepicker>
         </li>
         <li>
           <h6>Students Assigned</h6>

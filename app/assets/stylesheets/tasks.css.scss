@@ -107,11 +107,14 @@
 
   }
 
+  .task-content {
+    margin-bottom: 40px;
+  }
+
   .assignment--left {
     width: 80%;
     float: left;
-    padding-top: 20px;
-    padding-right: 40px;
+    padding: 20px 40px 40px 0;
   }
 
   .assignment--right {
