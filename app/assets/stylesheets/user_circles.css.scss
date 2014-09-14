@@ -2,6 +2,31 @@
    Progress Circle Classes
    =============================================== */
 
+.circle-subnav {
+  @include font-size(1.2);
+  visibility: hidden;
+  li {
+    margin-bottom: 2px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    a {
+      opacity: 0.4;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  .extra-info {
+    opacity: 0.4;
+  }
+
+  button {
+    @include font-size(1);
+  }
+
+}
+
 .progress-circles {
 
   width: 170px;
@@ -17,27 +42,6 @@
     &:hover {
       color: inherit;
     }
-  }
-
-  .circle-subnav {
-    @include font-size(1.2);
-    visibility: hidden;
-    li {
-      margin-bottom: 2px;
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-      a {
-        opacity: 0.4;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-    .extra-info {
-      opacity: 0.4;
-    }
-
   }
 
   &:hover .circle-subnav {
@@ -147,6 +151,29 @@
     &:hover {
       color: inherit;
     }
+  }
+
+  &:hover .circle-subnav {
+    visibility: visible;
+  }
+
+}
+
+.medium-circle-pictures {
+
+  @extend .circle-pictures;
+  width: 100px;
+
+  .medium-circle-picture {
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+    margin: 0 5px 10px 5px;
+    img { width: 100%; height: auto; @include border-radius(50%); }
+  }
+
+  .circle-subnav {
+    margin-top: 5px;
   }
 
 }

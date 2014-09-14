@@ -10,7 +10,7 @@
         </h6>
       </div>
       <div class="edit-button">
-        <button class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
+        <button class="btn btn-default" ng-click="editAssignment($index)"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
       </div>
     </div>
   </div>
@@ -38,17 +38,17 @@
       </div>
 
       <ul class="users-not-completed">
-        <h5>Students who have not completed this task:</h5>
-        <li class="circle-pictures" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
-          <div class="circle-picture">
-            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" />
+        <h6>Students who have not completed this task:</h6>
+        <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'user.last_name'" ng-if="user_assignment.status == 0">
+          <div class="medium-circle-picture">
+            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
           </div>
-          <h6 class="bold">{{user_assignment.user.first_last_initial}}</h6>
-          <p>Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</p>
-          <div class="button-wrapper" ng-class="{selected: user_assignment.status == 1}">
-            <button class="expectation-btn-good" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1"></button>
-          </div>
-          <p>Complete</p>
+          <span class="bold">{{user_assignment.user.first_last_initial}}</span>
+          <ul class="circle-subnav">
+            <li>
+              <button type="button" class="btn btn-success" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1">Mark Complete</button>
+            </li>
+          </ul>
           <!-- <div class="edit-buttons">
             <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove {{user_assignment.user.first_name}} from this Task</button>
           </div> -->
@@ -56,17 +56,18 @@
       </ul>
 
       <ul class="users-completed">
-        <h5>Students who have completed this task:</h5>
-        <li class="circle-pictures" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
-          <div class="circle-picture">
-            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" />
+        <h6>Students who have completed this task:</h6>
+        <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'updated_at'" ng-if="user_assignment.status == 1">
+          <div class="medium-circle-picture">
+            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
           </div>
-          <h6 class="bold">{{user_assignment.user.first_last_initial}}</h6>
-          <p>Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</p>
-          <div class="button-wrapper" ng-class="{selected: user_assignment.status == 0}">
-            <button class="expectation-btn-alert" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0"></button>
-          </div>
-          <p>Incomplete</p>
+          <span class="bold">{{user_assignment.user.first_last_initial}}</span>
+          <ul class="circle-subnav">
+            <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
+            <li>
+              <button type="button" class="btn btn-danger" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
+            </li>
+          </ul>
           <!-- <div class="edit-buttons">
             <button class="delete" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove {{user_assignment.user.first_name}} from this Task</button>
           </div> -->
