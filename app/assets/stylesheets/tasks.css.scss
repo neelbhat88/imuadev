@@ -101,7 +101,7 @@
       float: left;
     }
 
-    .edit-button {
+    .edit-buttons-top {
       float: right;
     }
 
@@ -110,11 +110,18 @@
   .assignment--left {
     width: 80%;
     float: left;
+    padding-top: 20px;
+    padding-right: 40px;
   }
 
   .assignment--right {
     width: 20%;
     float: left;
+    padding-top: 20px;
+
+    li {
+      margin-bottom: 40px;
+    }
   }
 
 }
