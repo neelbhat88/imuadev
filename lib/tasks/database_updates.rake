@@ -97,9 +97,9 @@ namespace :db_update do
   task :create_app_version => :environment do
     if AppVersion.all.length == 0
       AppVersion.create(:version_number => 0)
-      Rails.logger.debug("AppVersion row created")
+      puts "AppVersion row created"
     else
-      Rails.logger.debug("AppVersion row already exists")
+      puts "AppVersion row already exists"
     end
   end
 
