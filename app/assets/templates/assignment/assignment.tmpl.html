@@ -69,9 +69,11 @@
           Nice! All assigned students have completed this task.
         </h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'updated_at'" ng-if="user_assignment.status == 1">
-          <div class="medium-circle-picture">
-            <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-          </div>
+          <a href="#/profile/{{user_assignment.user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+            </div>
+          </a>
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
           <ul class="circle-subnav" ng-hide="assignment.editing">
             <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
@@ -144,6 +146,13 @@
     </div>
     <div class="assignment--right">
       <ul>
+        <!-- <li>
+          <h5>
+            <span class="label label-primary"><span class="glyphicon glyphicon-record"></span> Open</span>
+            <span class="label label-success"><span class="glyphicon glyphicon-ok-circle"></span> Due Soon</span>
+            <span class="label label-success"><span class="glyphicon glyphicon-ok-circle"></span> Complete</span>
+          </h5>
+        </li> -->
         <li ng-if="assignment.due_datetime != null" ng-hide="assignment.editing">
           <h6>Due by</h6>
           <h5 class="bold">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
