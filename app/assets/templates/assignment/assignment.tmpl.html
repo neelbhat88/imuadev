@@ -146,13 +146,19 @@
     </div>
     <div class="assignment--right">
       <ul>
-        <!-- <li>
+        <li>
           <h5>
-            <span class="label label-primary"><span class="glyphicon glyphicon-record"></span> Open</span>
-            <span class="label label-success"><span class="glyphicon glyphicon-ok-circle"></span> Due Soon</span>
-            <span class="label label-success"><span class="glyphicon glyphicon-ok-circle"></span> Complete</span>
+            <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+              <span class="glyphicon glyphicon-record"></span> Open
+            </span>
+            <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
+            <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
+            <span class="label label-success" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
+              <span class="glyphicon glyphicon-ok-circle"></span> Complete
+            </span>
           </h5>
-        </li> -->
+        </li>
         <li ng-if="assignment.due_datetime != null" ng-hide="assignment.editing">
           <h6>Due by</h6>
           <h5 class="bold">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
