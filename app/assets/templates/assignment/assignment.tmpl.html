@@ -37,8 +37,9 @@
         </div>
       </div>
 
-      <ul class="users-not-completed">
-        <h6 class="bold red">Students who have not completed this task:</h6>
+      <ul class="users-not-completed" ng-if="_.where(assignment.user_assignments, {status: 0}).length != 0">
+        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length == 1">{{_.where(assignment.user_assignments, {status: 0}).length}} student has not completed this task</h6>
+        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length != 1">{{_.where(assignment.user_assignments, {status: 0}).length}} students have not completed this task</h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'user.last_name'" ng-if="user_assignment.status == 0">
           <a href="#/profile/{{user_assignment.user.id}}">
             <div class="medium-circle-picture">
@@ -47,18 +48,26 @@
           </a>
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
           <ul class="circle-subnav" ng-hide="assignment.editing">
-            <li>
+            <li class="subnav-button">
               <button type="button" class="btn btn-success btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1">Mark Complete</button>
             </li>
           </ul>
-          <div class="edit-buttons" ng-show="assignment.editing">
+          <div class="edit-buttons subnav-button" ng-show="assignment.editing">
             <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
           </div>
         </li>
       </ul>
 
-      <ul class="users-completed">
-        <h6 class="bold green">Students who have completed this task:</h6>
+      <ul class="users-completed" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 0">
+        <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1">
+          {{_.where(assignment.user_assignments, {status: 1}).length}} student has completed this task
+        </h6>
+        <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 1 && _.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+          {{_.where(assignment.user_assignments, {status: 1}).length}} students have completed this task
+        </h6>
+        <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
+          Nice! All assigned students have completed this task.
+        </h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'updated_at'" ng-if="user_assignment.status == 1">
           <div class="medium-circle-picture">
             <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
@@ -66,66 +75,54 @@
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
           <ul class="circle-subnav" ng-hide="assignment.editing">
             <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
-            <li>
+            <li class="subnav-button">
               <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
             </li>
           </ul>
-          <div class="edit-buttons" ng-show="assignment.editing">
+          <div class="edit-buttons subnav-button" ng-show="assignment.editing">
             <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
           </div>
         </li>
       </ul>
 
       <div class="form-wrapper" ng-show="assignment.editing">
-        <label>New Assignees:</label>
-        <div class="list-container">
-          <div class="circle-pictures" ng-repeat="assignee in assignment.assignees | orderBy: 'last_name'">
-            <div class="circle-picture">
-              <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
-            </div>
-            <h6 class="bold">{{assignee.first_last_initial}}</h6>
-            <ul class="circle-subnav">
-              <li>
-                <a class="unassign" ng-click="unassignAssignee(assignee, assignment)">
-                  <br>
-                  <span class="glyphicon glyphicon-remove-circle" title="Unassign"></span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
         <div class="add-button" ng-click="assignment.assigning_users=true" ng-hide="assignment.assigning_users || assignment.assignees.length == assignable_users.length">
           <div class="glyphicon glyphicon-plus-sign"></div>
-          <h6 class="bold">Assign Users</h6>
+          <h6 class="bold">Assign Students</h6>
         </div>
 
-        <!-- Selected students will be moved to a new "Students you are assigning
-             the task to" section, with the ability to remove the students from that
-             section. -->
-        <div ng-show="assignment.assigning_users">
+        <div class="assigning-students" ng-show="assignment.assigning_users">
 
-          <h4 class="list-header" ng-hide="assignment.assignees.length == assignable_users.length"><span class="bold">Assign Users</span></h4>
+          <h5 class="list-header" ng-hide="assignment.assignees.length == assignable_users.length"><span class="bold">Assign Students</span></h5>
 
           <div class="list-container">
-            <div class="circle-pictures assign-user-circles" ng-if="isAssignable(assignment, user)" ng-click="assignAssignee(user, assignment)" ng-repeat="user in assignable_users | orderBy: 'last_name'">
-              <div class="circle-picture">
-                <img ng-src="{{user.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
+
+            <div class="medium-circle-pictures assigned" ng-repeat="assignee in assignment.assignees | orderBy: 'last_name'">
+              <div class="medium-circle-picture">
+                <img ng-src="{{assignee.square_avatar_url}}" alt="Remove {{assignee.first_last_initial}}">
+              </div>
+              <h6 class="bold">{{assignee.first_last_initial}}</h6>
+              <div class="assigning-buttons">
+                <button class="btn btn-success btn-xs showing-button"><span class="glyphicon glyphicon-ok"></span> Assigning</button>
+                <button class="btn btn-danger btn-xs hidden-button" ng-click="unassignAssignee(assignee, assignment)"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+              </div>
+            </div>
+
+            <div class="medium-circle-pictures not-assigned" ng-if="isAssignable(assignment, user)" ng-click="assignAssignee(user, assignment)" ng-repeat="user in assignable_users | orderBy: 'last_name'">
+              <div class="medium-circle-picture">
+                <img ng-src="{{user.square_avatar_url}}" alt="Assign {{user.first_last_initial}} to this Task" class="avatar-block__img avatar-block__img--thumbnail" />
               </div>
               <div class="user-name">
                 <h6 class="bold">{{user.first_last_initial}}</h6>
               </div>
-              <div class="add-user-name">
-                <h6 class="bold"><span class="glyphicon glyphicon-plus-sign green"></span></h6>
+              <div class="assigning-buttons">
+                <button class="btn btn-default btn-xs showing-button">Not Assigned</button>
+                <button class="btn btn-success btn-xs hidden-button"><span class="glyphicon glyphicon-plus"></span> Assign Student</button>
               </div>
             </div>
-            <div class="add-button" ng-click="assignment.assigning_users=false">
-              <div class="glyphicon glyphicon-ok-sign green"></div>
-              <div>Done Assigning</div>
-            </div>
             <div class="add-button" ng-click="assignAllAssignableUsers(assignment)">
-              <div class="glyphicon glyphicon-ok-sign green"></div>
-              <div>Assign All</div>
+              <div class="glyphicon glyphicon-plus-sign green"></div>
+              <div>Assign All Students</div>
             </div>
           </div>
 
