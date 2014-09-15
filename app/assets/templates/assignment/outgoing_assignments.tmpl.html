@@ -1,31 +1,40 @@
-<div class="tasksListContainer">
+<div class="tasksListContainer" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
 
-  <div class="tasks--list--container">
+  <div class="single-col-wrapper tasks--list--container">
 
-    <div class="tasks--list--topper">
-      <!-- 'Create New' part of #342 would happen below -->
-      <a href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
-    </div>
-
-    <!-- On initial view, show all outgoing assignments -->
-    <ul class="tasks--list" wait-to-load="{{loaded_outgoing_assignments && loaded_assignable_users}}">
-      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments" ng-click="assignment.expanded = !assignment.expanded">
+    <ul class="tasks--list">
+      <li class="tasks--list--item clear">
+        <div class="tasks--list--item--left">
+          <span class="bold">Open Tasks</span>
+        </div>
+        <div class="tasks--list--item--middle">
+          Students Completed
+        </div>
+        <div class="tasks--list--item--right">
+          Due
+        </div>
+      </li>
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
-            <h5><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+            <h6><span class="bold">{{assignment.title}}</span></h6>
             <span class="subtext">
+              <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+                <span class="glyphicon glyphicon-record"></span> Open
+              </span>
+              <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
+              <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+              <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
               <span ng-if="current_user.id == user.id">You </span>
               <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
               created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
             </span>
           </div>
           <div class="tasks--list--item--middle">
-            <h5>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h5>
-            <span class="subtext">Students Completed</span>
+            <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
           </div>
           <div class="tasks--list--item--right">
-            <span ng-if="assignment.due_datetime != null"><h5>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
-              <span class="subtext">Due Date</span>
+            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
             </span>
           </div>
         </div>
@@ -34,6 +43,12 @@
           <h5><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
           <h6>{{assignment.description}}</h6>
           <span class="subtext">
+            <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+              <span class="glyphicon glyphicon-record"></span> Open
+            </span>
+            <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
+            <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
             <span ng-if="current_user.id == user.id">You </span>
             <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
             created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
@@ -77,6 +92,60 @@
             </div>
           </div>
 
+          <div class="edit-buttons">
+            <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+    <div class="tasks--list--topper">
+      <a href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
+    </div>
+  </div>
+
+  <div class="single-col-wrapper tasks--list--container">
+    <ul class="tasks--list completed-tasks">
+      <li class="tasks--list--item clear">
+        <div class="tasks--list--item--left">
+          <span class="bold">Completed Tasks</span>
+        </div>
+      </li>
+      <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length" ng-click="assignment.expanded = !assignment.expanded">
+        <div class="clear" ng-hide="assignment.expanded">
+          <div class="tasks--list--item--left">
+            <h6><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h6>
+            <span class="subtext">
+              <span class="label label-success">
+                <span class="glyphicon glyphicon-ok-circle"></span> Complete
+              </span>
+              <span ng-if="current_user.id == user.id">You </span>
+              <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+            </span>
+          </div>
+          <div class="tasks--list--item--middle">
+            <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
+          </div>
+          <div class="tasks--list--item--right">
+            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            </span>
+          </div>
+        </div>
+
+        <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
+          <h5><span class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+          <h6>{{assignment.description}}</h6>
+          <span class="subtext">
+            <span class="label label-success">
+              <span class="glyphicon glyphicon-ok-circle"></span> Complete
+            </span>
+            <span ng-if="current_user.id == user.id">You </span>
+            <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+          </span>
+
           <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
             <div class="complete-title green">All students have completed this task.</div>
             <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
@@ -88,19 +157,10 @@
 
           <div class="edit-buttons">
             <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
-            <a href="#/assignment/{{assignment.id}}?edit=true"><button class="btn btn-default">Edit Task</button></a>
           </div>
 
         </div>
-
-        <!-- <div class="edit-buttons" ng-hide="assignment.editing">
-          <button class="btn btn-default" ng-click="editAssignment(\$index)">Edit</button>
-          <button class="delete" ng-click="deleteAssignment(\$index)">Delete</button>
-        </div> -->
       </li>
-
     </ul>
-
   </div>
-
 </div>

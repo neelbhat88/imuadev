@@ -1,5 +1,6 @@
-angular.module('myApp').config ['$routeProvider', '$httpProvider', 'CONSTANTS',
-($routeProvider, $httpProvider, CONSTANTS) ->
+angular.module('myApp')
+.config ['$routeProvider', '$httpProvider',
+($routeProvider, $httpProvider) ->
   $routeProvider.when '/',
     templateUrl: 'dashboard/dashboard.html',
     controller: 'DashboardController',
@@ -12,13 +13,9 @@ angular.module('myApp').config ['$routeProvider', '$httpProvider', 'CONSTANTS',
 
   .otherwise
     redirectTo: '/'
-]
 
-
-angular.module('myApp')
-.controller "ExampleController", ["$scope", ($scope) ->
-  $scope.greeting = "Hello World"
-
-  $scope.sayGreeting = () ->
-    $scope.greeting + "! This works!"
+  ######### INTERCEPTORS #########
+  # Install all interceptors here
+  ################################
+  $httpProvider.interceptors.push('AppVersionInterceptor')
 ]
