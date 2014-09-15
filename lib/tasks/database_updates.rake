@@ -1,7 +1,35 @@
 namespace :db_update do
+  ########################################
+  ########################################
+  #              ALL TASKS
+  ########################################
+  ########################################
   desc "All db_updates"
   task :all => [:create_app_version]
 
+  ########################################
+  ########################################
+  #          POST DEPLOY TASKS
+  ########################################
+  ########################################
+  desc "Post deploy updates"
+  task :post_deploy => :environment do
+    puts 'Updating AppVersion...'
+    num = AppVersion.first.version_number
+    new_version = num + 1
+    success = AppVersion.first.update_attributes(:version_number => new_version)
+    if success
+      puts "Updated AppVersion to: #{new_version}"
+    else
+      puts 'ERROR: Failed to updated AppVersion.'
+    end
+  end
+
+  ########################################
+  ########################################
+  #          INDIVIDUAL TASKS
+  ########################################
+  ########################################
   desc "Sets all credit_hours = 1 and level = 'Regular' for all User Classes where those values
         are nil"
   task :update_all_user_classes => :environment do
