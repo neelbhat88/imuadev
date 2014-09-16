@@ -5,11 +5,13 @@ angular.module 'myApp', ['ngRoute', 'myApp.controllers',
 angular.module('myApp')
 .controller 'AppController', ['$scope', 'CONSTANTS', ($scope, CONSTANTS) ->
   $scope.CONSTANTS = CONSTANTS
+
+  $scope.$on "update_required", () ->
+    $scope.reload_required = true
 ]
 
 angular.module('myApp')
 .run ['$rootScope', '$location', 'SessionService', ($rootScope, $location, SessionService) ->
-
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
     # Always calling getCurrentUser on every change/refresh to make sure current_user is set
     SessionService.getCurrentUser()
