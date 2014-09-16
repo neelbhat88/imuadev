@@ -17,6 +17,8 @@ class ViewOrganizationWithUsers
     @name = org.name
 
     @milestones = Milestone.where(:organization_id => @id).map{|m| ViewMilestone.new(m)}
+    @time_units = TimeUnit.where(:organization_id => @id)
+    @enabled_modules = EnabledModules.new.get_enabled_module_titles(@id)
     # @expectations = Expectation.where(:organization_id => @id).map{|e| ViewExpectation.new(e)}
     # @org_tests = OrgTests.where(:organization_id => @id).map{|e| ViewOrgTest.new(e)}
 
@@ -34,6 +36,22 @@ class ViewOrganizationWithUsers
     end
     @users = users.map{|u| ViewUser.new(u)} unless users.nil?
 
+  end
+
+end
+
+class DomainOrganization
+
+  def initialize(org, options = {})
+    @id = org.id
+    @name = org.name
+
+    @time_units = options[:time_units] unless options[:time_units].nil?
+    @enabled_modules = options[:enabled_modules] unless options[:enabled_modules].nil?
+    @milestones = options[:milestones] unless options[:milestones].nil?
+    @expectations = options[:expectations] unless options[:expectations].nil?
+    @org_tests = options[:org_tests] unless options[:org_tests].nil?
+    @users = options[:users] unless options[:users].nil?
   end
 
 end

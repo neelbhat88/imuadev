@@ -3,6 +3,9 @@ angular.module('myApp')
   ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _
+    $scope.today = new Date().getTime()
+    $scope.two_days_ago = $scope.today - (1000*60*60*24*2) # Two days ago
+
 
     $scope.current_user = current_user
 
@@ -93,5 +96,11 @@ angular.module('myApp')
     $scope.isAssignable = (assignment, user) ->
       return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
              !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
+
+    $scope.isPastDue = (assignment) ->
+      return new Date(assignment.due_datetime).getTime() >= $scope.today
+
+    $scope.isDueSoon = (assignment) ->
+      return !isPastDue(assignment) && new Date(assignment.due_datetime).getTime() >= $scope.two_days_ago
 
 ]

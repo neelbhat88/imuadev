@@ -59,7 +59,7 @@
       </ul>
 
       <ul class="users-completed" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 0">
-        <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1">
+        <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1 && assignment.user_assignments.length != 1">
           {{_.where(assignment.user_assignments, {status: 1}).length}} student has completed this task
         </h6>
         <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 1 && _.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">

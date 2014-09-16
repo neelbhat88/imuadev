@@ -20,6 +20,9 @@ namespace :db_update do
     success = AppVersion.first.update_attributes(:version_number => new_version)
     if success
       puts "Updated AppVersion to: #{new_version}"
+
+      puts "Adding new_relic deploy event"
+      sh "curl -H 'x-api-key:#{ENV['NEW_RELIC_API_KEY']}' -d 'deployment[app_name]=#{ENV['NEW_RELIC_APP_NAME']}' -d 'deployment[revision]=v#{new_version}' https://api.newrelic.com/deployments.xml"
     else
       puts 'ERROR: Failed to updated AppVersion.'
     end
