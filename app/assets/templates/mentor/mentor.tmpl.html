@@ -29,7 +29,7 @@
       <div class="list-container no-bottom">
         <div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
           <div class="attention-circle">
-            <a href="#/expectations/{{student.id}}"><progress-circle student="student" identifier="attention"></progress-circle></a>
+            <a href="#/expectations/{{student.id}}"><progress-circle width="170" student="student" identifier="attention"></progress-circle></a>
           </div>
           <div class="attention-text">
             <a href="#/expectations/{{student.id}}">
@@ -52,7 +52,7 @@
     <div class="list-container">
       <div class="progress-circles" ng-repeat="student in assigned_students | orderBy: 'last_name'">
         <a ng-href="#/progress/{{student.id}}" title="View progress">
-          <progress-circle student="student"></progress-circle>
+          <progress-circle width="170" student="student"></progress-circle>
         </a>
         <h6 class="bold">{{student.first_last_initial}}</h6>
         <ul class="circle-subnav">

@@ -4,18 +4,21 @@ angular.module('myApp')
   scope: {
     student: '=',
     width: '=',
+    parentclass: '@',
     identifier: '@'
   }
   link: (scope, element, attrs) ->
-    # 240 current standard width
     width = scope.width
     height = width
+    console.log(scope.parentclass)
 
     chart = d3.select(element[0])
       .attr("id", scope.student.id + "_" + scope.identifier)
       .append('svg')
       .attr("width", width)
       .attr("height", height)
+      .attr("viewBox", "0 0 " + width + " " + height)
+      .attr("preserveAspectRatio", "xMidYMid")
       .attr("id", "svg" + scope.student.id + "_" + scope.identifier)
       .append("g")
       .attr("transform", "translate(" + (width/2) + "," + (height/2) + ")")
@@ -34,11 +37,23 @@ angular.module('myApp')
       total_points = 0
       user_points = 0
 
+      data[0] = {name: "Academics", value: 0}
+      data[1] = {name: "Service", value: 0}
+      data[2] = {name: "Extracurricular", value: 0}
+      data[3] = {name: "College_Prep", value: 0}
+      data[4] = {name: "Testing", value: 0}
+
       for module in student.modules_progress
         user_points += module.points.user
         total_points += module.points.total
-        # data[index] = {name: _ref[_i].module_title, value: _ref[_i].points.user}
-        data.push({ name: module.module_title, value: module.points.user})
+        switch module.module_title
+          when "Academics" then index = 0
+          when "Service" then index = 1
+          when "Extracurricular" then index = 2
+          when "College_Prep" then index = 3
+          when "Testing" then index = 4
+
+        data[index] = {name: module.module_title, value: module.points.user}
 
       if total_points == 0
         progress_to_make = 1
@@ -46,11 +61,10 @@ angular.module('myApp')
         progress_to_make = total_points - user_points
 
       data[5] = {name: "Future Progress", value: progress_to_make}
-      console.log(data)
 
       arc = d3.svg.arc()
         .outerRadius(radius)
-        .innerRadius(radius - ((7/120) * width))
+        .innerRadius(radius - ((7/95) * width))
 
       svg = $('#' + student.id + '_' + scope.identifier + ' svg')[0]
 
@@ -58,7 +72,7 @@ angular.module('myApp')
         .append("circle")
         .attr("cx", width - (width/2))
         .attr("cy", height - (height/2))
-        .attr("r", radius-((1/12) * width))
+        .attr("r", radius-((2/19) * width))
         .style("fill", "url(#photo"+student.id+")")
 
       image = d3.select(svg)
@@ -71,11 +85,11 @@ angular.module('myApp')
         .append("image")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("width", width - ((1/6) * width))
-        .attr("height", height - ((1/6) * height))
+        .attr("width", width - ((1/5) * width))
+        .attr("height", height - ((1/5) * height))
         .attr("xlink:href", student.square_avatar_url)
 
-      arc2 = d3.svg.arc().outerRadius(radius - ((1/6) * width))
+      arc2 = d3.svg.arc().outerRadius(radius - ((2/11) * width))
 
       myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI])
 
@@ -104,4 +118,12 @@ angular.module('myApp')
     scope.$watch('student', () ->
       scope.render(scope.student)
     , true)
+
+    chartSelect = $("#svg"+ scope.student.id + "_" + scope.identifier)
+    container = chartSelect.parent(scope.parentclass)
+    $(window).on('resize', () ->
+      targetWidth = container.width()
+      chartSelect.attr("width", targetWidth)
+      chartSelect.attr("height", targetWidth)
+    ).trigger("resize")
 ]
