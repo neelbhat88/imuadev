@@ -22,7 +22,22 @@ class ViewUserServiceHour
     @user_id = sh.user_id
     @time_unit_id = sh.time_unit_id
     @name = sh.name
-    @description = sh.description    
+    @description = sh.description
+  end
+
+end
+
+class DomainUserServiceHour
+
+  def initialize(sh)
+    @id = sh.id
+    @date = sh.date
+    @hours = sh.hours
+    @user_service_organization_id = sh.user_service_organization_id
+    @user_id = sh.user_id
+    @time_unit_id = sh.time_unit_id
+    @name = sh.name
+    @description = sh.description
   end
 
 end

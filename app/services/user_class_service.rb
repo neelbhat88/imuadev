@@ -8,6 +8,30 @@ class UserClassService
     return UserClass.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
+  def get_user_classes_2(filters = {})
+    userClasses = nil
+
+    if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:ACADEMICS]
+      applicable_filters = FilterFactory.new.conditions(UserClass.column_names.map(&:to_sym), filters)
+      userClasses = UserClass.find(:all, :conditions => applicable_filters)
+    end
+
+    return userClasses.map{|uc| DomainUserClass.new(uc)} unless userClasses.nil?
+  end
+
+  def user_gpa(userId, time_unit_id)
+    classes = get_user_classes(userId, time_unit_id)
+
+    totalGpa = 0.0
+    totalClassCredits = 0.0
+    classes.each do | c |
+      totalGpa += (c.gpa * c.credit_hours)
+      totalClassCredits += c.credit_hours
+    end
+
+    return (totalGpa / totalClassCredits).round(2)
+  end
+
   def save_user_class(current_user, userId, user_class)
     new_class = UserClass.new do | u |
       u.user_id = userId

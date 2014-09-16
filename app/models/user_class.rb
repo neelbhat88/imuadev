@@ -31,3 +31,23 @@ class ViewUserClass
   end
 
 end
+
+class DomainUserClass
+
+  def initialize(uc)
+    @id = uc.id
+    @gpa = uc.gpa
+    @grade = uc.grade
+    @name = uc.name
+    @time_unit_id = uc.time_unit_id
+    @user_id = uc.user_id
+    @period = uc.period
+    @room = uc.room
+    @credit_hours = uc.credit_hours
+    @level = uc.level
+    @subject = uc.subject
+    @modified_by_id = uc.modified_by_id
+    @modified_by_name = uc.modified_by_name
+  end
+
+end

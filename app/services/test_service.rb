@@ -74,6 +74,17 @@ class TestService
     return UserTest.where(:user_id => userId)
   end
 
+  def get_user_tests_2(filters = {})
+    userTests = nil
+
+    if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:TESTING]
+      applicable_filters = FilterFactory.new.conditions(UserTest.column_names.map(&:to_sym), filters)
+      userTests = UserTest.find(:all, :conditions => applicable_filters)
+    end
+
+    return userTests.map{|ut| DomainUserTest.new(ut)} unless userTests.nil?
+  end
+
   def get_user_tests_time_unit(userId, timeUnitId)
     return UserTest.where(:user_id => userId,
                           :time_unit_id => timeUnitId)

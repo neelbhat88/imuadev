@@ -51,6 +51,7 @@ Imua::Application.routes.draw do
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
 
           get  '/:id/progress' => 'progress#overall_progress'
+          get  '/:id/progress_2' => 'progress#user_progress'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
