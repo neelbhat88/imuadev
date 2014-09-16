@@ -7,7 +7,7 @@ class DomainUser
 		@last_name = user.last_name
 		@full_name = user.full_name
 		@first_last_initial = user.first_last_initial
-    @title = user.title
+		@title = user.title
 		@phone = user.phone
 		@role = user.role
 		@organization_id = user.organization_id
