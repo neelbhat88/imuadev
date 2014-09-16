@@ -98,9 +98,9 @@ angular.module('myApp')
              !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
 
     $scope.isPastDue = (assignment) ->
-      return new Date(assignment.due_datetime)).getTime() >= $scope.today
+      return new Date(assignment.due_datetime).getTime() >= $scope.today
 
     $scope.isDueSoon = (assignment) ->
-      return !isPastDue(assignment) && new Date(assignment.due_datetime)).getTime() >= $scope.two_days_ago
+      return !isPastDue(assignment) && new Date(assignment.due_datetime).getTime() >= $scope.two_days_ago
 
 ]
