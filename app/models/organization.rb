@@ -43,8 +43,11 @@ end
 class DomainOrganization
 
   def initialize(org, options = {})
-    @id = org.id
-    @name = org.name
+
+    unless org.nil?
+      @id = org.id
+      @name = org.name
+    end
 
     @time_units = options[:time_units] unless options[:time_units].nil?
     @enabled_modules = options[:enabled_modules] unless options[:enabled_modules].nil?
