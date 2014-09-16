@@ -8,11 +8,7 @@
   }
 
   .tasks--list--container {
-    width: 70%;
-    margin: 0 auto;
-
-    @include respond-to(900) { width: 85%; }
-    @include respond-to(600) { width: 100%; }
+    margin-bottom: 40px;
   }
 
   .tasks--list--topper {
@@ -31,9 +27,14 @@
       width: 100%;
       padding: 20px 0;
       border: 1px solid $darkborder;
+      background: $grey;
 
       &:hover {
-        background: $grey;
+        background: $boxgrey;
+      }
+
+      .label {
+        margin-right: 10px;
       }
 
       .tasks--list--item--left, .tasks--list--item--middle, .tasks--list--item--right { padding: 0 40px;}
@@ -86,13 +87,17 @@
 
   }
 
+  .completed-tasks {
+    color: $lightgrey;
+  }
+
 }
 
 .taskContainer {
 
   .task-header {
     width: 100%;
-    padding: 20px $wrapper-width;
+    padding: 20px 0;
     background: $grey;
     border-bottom: 1px solid $darkborder;
 
@@ -100,10 +105,73 @@
       float: left;
     }
 
-    .edit-button {
+    .edit-buttons-top {
       float: right;
     }
 
+  }
+
+  .task-content {
+    margin-bottom: 40px;
+  }
+
+  .assignment--left {
+    width: 80%;
+    float: left;
+    padding: 20px 40px 40px 0;
+
+    .subnav-button {
+      margin-top: 5px;
+      opacity: 0.3;
+      &:hover { opacity: 1; }
+    }
+
+    .assigning-buttons {
+
+      .hidden-button {
+        display: none;
+      }
+
+      &:hover {
+        .showing-button {
+          display: none;
+        }
+        .hidden-button {
+          display: inline-block;
+        }
+      }
+
+    }
+
+    .not-assigned {
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+
+        .assigning-buttons {
+          .showing-button {
+            display: none;
+          }
+          .hidden-button {
+            display: inline-block;
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+  .assignment--right {
+    width: 20%;
+    float: left;
+    padding-top: 20px;
+
+    li {
+      margin-bottom: 40px;
+    }
   }
 
 }

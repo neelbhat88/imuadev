@@ -1,7 +1,38 @@
 namespace :db_update do
+  ########################################
+  ########################################
+  #              ALL TASKS
+  ########################################
+  ########################################
   desc "All db_updates"
   task :all => [:create_app_version]
 
+  ########################################
+  ########################################
+  #          POST DEPLOY TASKS
+  ########################################
+  ########################################
+  desc "Post deploy updates"
+  task :post_deploy => :environment do
+    puts 'Updating AppVersion...'
+    num = AppVersion.first.version_number
+    new_version = num + 1
+    success = AppVersion.first.update_attributes(:version_number => new_version)
+    if success
+      puts "Updated AppVersion to: #{new_version}"
+
+      puts "Adding new_relic deploy event"
+      sh "curl -H 'x-api-key:#{ENV['NEW_RELIC_API_KEY']}' -d 'deployment[app_name]=#{ENV['NEW_RELIC_APP_NAME']}' -d 'deployment[revision]=v#{new_version}' https://api.newrelic.com/deployments.xml"
+    else
+      puts 'ERROR: Failed to updated AppVersion.'
+    end
+  end
+
+  ########################################
+  ########################################
+  #          INDIVIDUAL TASKS
+  ########################################
+  ########################################
   desc "Sets all credit_hours = 1 and level = 'Regular' for all User Classes where those values
         are nil"
   task :update_all_user_classes => :environment do
@@ -97,9 +128,9 @@ namespace :db_update do
   task :create_app_version => :environment do
     if AppVersion.all.length == 0
       AppVersion.create(:version_number => 0)
-      Rails.logger.debug("AppVersion row created")
+      puts "AppVersion row created"
     else
-      Rails.logger.debug("AppVersion row already exists")
+      puts "AppVersion row already exists"
     end
   end
 
