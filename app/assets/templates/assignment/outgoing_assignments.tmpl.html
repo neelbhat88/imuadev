@@ -17,7 +17,7 @@
       <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
-            <h6><span class="bold">{{assignment.title}}</span></h6>
+            <h6 class="bold">{{assignment.title}}</h6>
             <span class="subtext">
               <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
                 <span class="glyphicon glyphicon-record"></span> Open
@@ -34,8 +34,7 @@
             <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
           </div>
           <div class="tasks--list--item--right">
-            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
-            </span>
+            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
           </div>
         </div>
 
