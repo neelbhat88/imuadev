@@ -4,11 +4,13 @@ class Api::V1::ProgressController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
-  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, orgRepo=nil)
+  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, orgRepo=nil, userService=nil, organizationService=nil)
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
     @organizationRepository = orgRepo ? orgRepo : OrganizationRepository.new
+    @userService = userService ? userService : UserService.new
+    @organizationService = organizationService ? organizationService : OrganizationService.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -39,6 +41,29 @@ class Api::V1::ProgressController < ApplicationController
       json: {
         info: result.info,
         overall_progress: result.object
+      }
+  end
+
+  # GET /users/:id/progress_2?time_unit_id=XX&module=XX&recalculate=XX
+  # Returns User's info and progress, filterable by time_unit and module.
+  # Optional "recalculate" parameter to perform milestone recalculation.
+  def user_progress
+    user_id      = params[:id]
+    time_unit_id = params[:time_unit_id]
+    module_title = params[:module]
+
+    filters = params.except(*[:id, :controller, :action]).symbolize_keys
+
+    if params[:recalculate]
+      @progressService.get_recalculated_milestones(user_id, time_unit_id, module_title)
+    end
+
+    result = @userService.get_user_progress(user_id, filters)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        organization: result.object
       }
   end
 
