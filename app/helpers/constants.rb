@@ -55,4 +55,12 @@ class Constants
     }
   end
 
+  def self.ExpectationStatus
+    return {
+      NOT_MEETING: 2,
+      NEEDS_WORK:  1,
+      MEETING:     0
+    }
+  end
+
 end
