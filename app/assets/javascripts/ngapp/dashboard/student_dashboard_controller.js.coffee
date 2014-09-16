@@ -67,8 +67,7 @@ angular.module('myApp')
                   if ue.status >= 2
                     $scope.needs_attention = true
                 break
-            if not e.user_expectation?
-              e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
+            
           $scope.loaded_expectations = true
 
   AssignmentService.collectUserAssignments($scope.student.id)
