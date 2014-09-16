@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140911191512) do
+ActiveRecord::Schema.define(:version => 20140916140233) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20140911191512) do
     t.string   "modified_by_name"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.text     "comment"
   end
 
   create_table "user_expectations", :force => true do |t|
@@ -203,6 +204,7 @@ ActiveRecord::Schema.define(:version => 20140911191512) do
     t.datetime "updated_at",       :null => false
     t.integer  "modified_by_id"
     t.string   "modified_by_name"
+    t.text     "comment"
   end
 
   add_index "user_expectations", ["expectation_id", "user_id"], :name => "index_user_expectations_on_expectation_id_and_user_id", :unique => true

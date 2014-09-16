@@ -16,7 +16,8 @@ class UserExpectationHistoryService
       :user_id => userExpectation.user_id,
       :status => userExpectation.status,
       :title => expectation.title,
-      :rank => expectation.rank
+      :rank => expectation.rank,
+      :comment => userExpectation.comment
     )
 
   end
