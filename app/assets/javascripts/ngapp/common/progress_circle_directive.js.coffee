@@ -126,10 +126,11 @@ angular.module('myApp')
     chartSelect = $("#svg"+ scope.student.id + "_" + scope.identifier)
 
     resizeParent = () ->
-      onChangeWidth = $('.' + scope.parentclass).outerWidth()
+      if scope.parentclass
+        onChangeWidth = $('.' + scope.parentclass).outerWidth()
 
-      chartSelect.attr("width", onChangeWidth)
-      chartSelect.attr("height", onChangeWidth)
+        chartSelect.attr("width", onChangeWidth)
+        chartSelect.attr("height", onChangeWidth)
 
     $(window).resize (event) -> resizeParent()
 
