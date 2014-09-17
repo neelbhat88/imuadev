@@ -8,9 +8,12 @@ angular.module('myApp')
     identifier: '@'
   }
   link: (scope, element, attrs) ->
-    width = scope.width
-    height = width
-    console.log(scope.parentclass)
+    if scope.parentclass
+      width = $('.' + scope.parentclass).outerWidth()
+      height = width
+    else
+      width = scope.width
+      height = width
 
     chart = d3.select(element[0])
       .attr("id", scope.student.id + "_" + scope.identifier)
@@ -119,11 +122,15 @@ angular.module('myApp')
       scope.render(scope.student)
     , true)
 
+
     chartSelect = $("#svg"+ scope.student.id + "_" + scope.identifier)
-    container = chartSelect.parent(scope.parentclass)
-    $(window).on('resize', () ->
-      targetWidth = container.width()
-      chartSelect.attr("width", targetWidth)
-      chartSelect.attr("height", targetWidth)
-    ).trigger("resize")
+
+    resizeParent = () ->
+      onChangeWidth = $('.' + scope.parentclass).outerWidth()
+
+      chartSelect.attr("width", onChangeWidth)
+      chartSelect.attr("height", onChangeWidth)
+
+    $(window).resize (event) -> resizeParent()
+
 ]
