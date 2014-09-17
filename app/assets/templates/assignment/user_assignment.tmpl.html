@@ -4,9 +4,12 @@
     <div class="single-col-wrapper">
       <div class="back-link">
         <h6>
-          <!-- TODO Fix to be specific to actual previous page -->
-          <a href="#/assignments/{{current_user.id}}">
+          <!-- TODO Fix to be actual breadcrumbs -->
+          <a href="#/assignments/{{current_user.id}}" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to All Tasks
+          </a>
+          <a href="#/user_assignments/{{current_user.id}}" ng-if="current_user.role >= CONSTANTS.USER_ROLES.student">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to My Tasks
           </a>
         </h6>
       </div>
@@ -48,11 +51,10 @@
         <li>
           <h5>
             <span class="label label-primary" ng-if="user_assignment.status == 0">
-              <span class="glyphicon glyphicon-record"></span> Open
+              <span class="glyphicon glyphicon-record" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment)">Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Due Soon</span></span>
+              <span class="label label-danger" ng-if="isPastDue(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Past Due</span></span>
             </span>
-            <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
-            <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
             <span class="label label-success" ng-if="user_assignment.status == 1">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete
             </span>
@@ -65,9 +67,9 @@
         <li>
           <h6>Created by</h6>
           <div class="tiny-circle-picture">
-            <img ng-src="{{user_assignment.assigner.square_avatar_url}}" alt="{{user_assignment.assigner.first_name}} {{user_assignment.assigner.last_name}}" />
+            <img ng-src="{{assigner.square_avatar_url}}" alt="{{assigner.first_name}} {{assigner.last_name}}" />
           </div>
-          <h6 class="bold">{{user_assignment.assigner.first_name}} {{user_assignment.assigner.last_name}}</h6>
+          <h6 class="bold">{{assigner.first_name}} {{assigner.last_name}}</h6>
           <p>on {{user_assignment.created_at | date: 'MM/dd/yy'}}</p>
         </li>
       </ul>
