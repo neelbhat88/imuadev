@@ -48,11 +48,10 @@
         <li>
           <h5>
             <span class="label label-primary" ng-if="user_assignment.status == 0">
-              <span class="glyphicon glyphicon-record"></span> Open
+              <span class="glyphicon glyphicon-record" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment)">Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Due Soon</span></span>
+              <span class="label label-danger" ng-if="isPastDue(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Past Due</span></span>
             </span>
-            <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
-            <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
             <span class="label label-success" ng-if="user_assignment.status == 1">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete
             </span>

@@ -29,12 +29,10 @@
           </div>
           <div class="tasks--list--item--middle">
             <h6>
-              <span class="label label-primary">
-                <span class="glyphicon glyphicon-record"></span> Open
-              </span>
-              <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
+              <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+                <span class="glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)">Open</span>
+                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign">Due Soon</span></span>
+                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign">Past Due</span></span>
               </span>
             </h6>
           </div>
@@ -47,12 +45,10 @@
           <h5 class="bold">{{assignment.title}}</h5>
           <h6>{{assignment.description}}</h6>
           <span class="subtext">
-            <span class="label label-primary">
-              <span class="glyphicon glyphicon-record"></span> Open
-            </span>
-            <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
+            <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+              <span class="glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)">Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign">Due Soon</span></span>
+              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign">Past Due</span></span>
             </span>
             <span ng-if="current_user.id == assignment.assigner.id">You </span>
             <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
