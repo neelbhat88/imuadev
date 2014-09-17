@@ -93,9 +93,19 @@ angular.module('myApp')
           .success (data) ->
             assignment.user_assignments = _.without(assignment.user_assignments, user_assignment)
 
-    $scope.isAssignable = (assignment, user) ->
-      return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
-             !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
+    $scope.deleteUserFromAssignment = (assignment, user) ->
+      if window.confirm "Are you sure you want to delete this user's assignment?"
+        user_assignment = _.filter(assignment.user_assignments, (ua) -> ua.user_id == user.id)
+        this.deleteUserAssignment(assignment, user_assignment)
+
+    $scope.isPendingAssignment = (assignment, user) ->
+      _.contains(_.pluck(assignment.assignees, 'id'), user.id)
+
+    $scope.isAssigned = (assignment, user) ->
+      _.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id)
+
+    $scope.isUnassigned = (assignment, user) ->
+      !this.isPendingAssignment(assignment, user) && !this.isAssigned(assignment, user)
 
     $scope.isPastDue = (assignment) ->
       return new Date(assignment.due_datetime).getTime() >= $scope.today
