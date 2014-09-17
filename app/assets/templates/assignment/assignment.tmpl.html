@@ -167,9 +167,10 @@
             <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
               <span class="glyphicon glyphicon-record"></span> Open
             </span>
-            <!-- Should be connected up so that if status: 1 students != assignment.user_assignments.length && within 2 days of due date, or past due date.
-            <span class="label label-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-            <span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span> -->
+            <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
+              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
+            </span>
             <span class="label label-success" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete
             </span>
