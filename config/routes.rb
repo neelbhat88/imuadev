@@ -11,24 +11,38 @@ Imua::Application.routes.draw do
       end
 
       # **************************************
-      # Start adding new routes here like this
+      #       *NEW WAY OF DOING ROUTES*
       # run foreman run rake routes to see what the routes look like
       # **************************************
-      resources :users, shallow: true do
-        resources :user_class, except: [:new, :edit] do
-          get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+      resources :organization, shallow: true do
+
+        resources :users, shallow: true do
+          resources :user_class, except: [:new, :edit] do
+            get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+          end
+
+          resources :user_extracurricular_activity, except: [:new, :edit]
+          resources :user_extracurricular_activity_detail, except: [:new, :edit]
+
+          resources :assignment, except: [:new, :edit]
+          resources :user_assignment, except: [:new, :edit, :show]
+
+          resources :user_service_organization, except: [:new, :edit]
+          resources :user_service_hour, except: [:new, :edit]
+
+          resources :user_expectation, except: [:new, :edit, :create, :destroy] do
+            get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+          end
         end
 
-        resources :user_extracurricular_activity, except: [:new, :edit]
-        resources :user_extracurricular_activity_detail, except: [:new, :edit]
-
-        resources :assignment, except: [:new, :edit]
-        resources :user_assignment, except: [:new, :edit, :show]
-
-        resources :user_service_organization, except: [:new, :edit]
-        resources :user_service_hour, except: [:new, :edit]
       end
 
+
+      # **************************************
+      #       OLD WAY OF DOING ROUTES
+      # As much as possible, let's move to the structure
+      # above.
+      # **************************************
       resources :users do
         collection do
           put '/:id/update_password' => 'users#update_password'
@@ -37,6 +51,7 @@ Imua::Application.routes.draw do
           put '/:id/time_unit/previous' => "users#move_to_prev_semester"
 
           get  '/:id/progress' => 'progress#overall_progress'
+          get  '/:id/progress_2' => 'progress#user_progress'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
@@ -51,11 +66,6 @@ Imua::Application.routes.draw do
           get '/:id/relationship/mentors' => 'users#get_assigned_mentors'
 
           get '/:id/user_expectation_history' => 'user_expectation_history#get_user_expectation_history'
-
-          get    '/:id/expectations'                 => 'expectation#get_user_expectations'
-          post   '/:id/expectations/:expectation_id' => 'expectation#create_user_expectation'
-          put    '/:id/expectations/:expectation_id' => 'expectation#update_user_expectation'
-          delete '/:id/expectations/:expectation_id' => 'expectation#delete_user_expectation'
         end
       end
 
@@ -75,15 +85,8 @@ Imua::Application.routes.draw do
       get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
       get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
 
-      get '/organization' => 'organization#all_organizations'
       get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'
       get '/organization/:id/info_with_users' => 'organization#organization_with_users'
-      # params[:name]
-      post '/organization' => 'organization#create_organization'
-      # params[:id]
-      # params[:name]
-      put  '/organization/:id' => 'organization#update_organization'
-      delete '/organization/:id' => 'organization#delete_organization'
 
       get '/organization/:id/time_units' => 'organization#time_units'
       get '/organization/:id/roadmap' => 'organization#roadmap'

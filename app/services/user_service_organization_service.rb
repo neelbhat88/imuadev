@@ -8,6 +8,17 @@ class UserServiceOrganizationService
     return UserServiceHour.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
+  def get_user_service_hours_2(filters = {})
+    userServiceHours = nil
+
+    if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:SERVICE]
+      applicable_filters = FilterFactory.new.conditions(UserServiceHour.column_names.map(&:to_sym), filters)
+      userServiceHours = UserServiceHour.find(:all, :conditions => applicable_filters)
+    end
+
+    return userServiceHours.map{|ush| DomainUserServiceHour.new(ush)} unless userServiceHours.nil?
+  end
+
   def get_user_service_organization(serviceOrganizationId)
     return UserServiceOrganization.where(:id => serviceOrganizationId).first
   end

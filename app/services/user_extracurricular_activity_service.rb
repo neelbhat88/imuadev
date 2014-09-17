@@ -9,6 +9,18 @@ class UserExtracurricularActivityService
     return UserExtracurricularActivityDetail.where(:user_id => userId, :time_unit_id => time_unit_id).order(:id)
   end
 
+
+  def get_user_extracurricular_activity_details_2(filters = {})
+    userEADetails = nil
+
+    if !defined?(filters[:module]) || filters[:module] == Constants.Modules[:EXTRACURRICULAR]
+      applicable_filters = FilterFactory.new.conditions(UserExtracurricularActivityDetail.column_names.map(&:to_sym), filters)
+      userEADetails = UserExtracurricularActivityDetail.find(:all, :conditions => applicable_filters)
+    end
+
+    return userEADetails.map{|uead| DomainUserExtracurricularActivityDetail.new(uead)} unless userEADetails.nil?
+  end
+
   def get_user_extracurricular_activity(extracurricularActivityId)
     return UserExtracurricularActivity.where(:id => extracurricularActivityId).first
   end

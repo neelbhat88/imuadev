@@ -17,9 +17,12 @@ angular.module('myApp')
     $http.post('/api/v1/organization', {name: name})
 
 
-  # Performs all the front end calculations by parsing through the raw OrganizationWithUsers object
+  # Performs all the front end calculations by parsing through the raw
+  # OrganizationWithUsers object. Parses student progress based on the given
+  # timeUnitId. If no timeUnitId is given, then it parses student progress
+  # based on the student's current time_unit_id.
   # TODO This needs to be broken down further
-  @parseOrganizationWithUsers = (org) ->
+  @parseOrganizationWithUsers = (org, timeUnitId) ->
 
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
 
@@ -32,14 +35,16 @@ angular.module('myApp')
     org.attention_studentIds = []
 
     org.org_milestones = {}
-    # Sort org_milestones by time_unit_id and module, while tallying up total points
-    for time_unit, org_milestones_by_time_unit of _.groupBy(org.milestones, "time_unit_id")
-      org.org_milestones[time_unit.toString()] = {}
-      for module_title, org_milestones_by_module of _.groupBy(org_milestones_by_time_unit, "module")
-        org.org_milestones[time_unit.toString()][module_title] = org_milestones_by_module
-        org.org_milestones[time_unit.toString()][module_title].totalPoints = 0
-        for org_milestone in org.org_milestones[time_unit.toString()][module_title]
-          org.org_milestones[time_unit.toString()][module_title].totalPoints += org_milestone.points
+    # Sort org_milestones by time_unit_id and module_title, while tallying up total points
+    for time_unit_id in _.pluck(org.time_units, "id")
+      org.org_milestones[time_unit_id.toString()] = {}
+      org_milestones_by_time_unit = _.filter(org.milestones, (m) -> m.time_unit_id == time_unit_id)
+      for module_title in _.pluck(org.enabled_modules, "title")
+        org_milestones_by_module = _.filter(org_milestones_by_time_unit, (m) -> m.module == module_title)
+        org.org_milestones[time_unit_id.toString()][module_title] = org_milestones_by_module
+        org.org_milestones[time_unit_id.toString()][module_title].totalPoints = 0
+        for org_milestone in org_milestones_by_module
+          org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
 
     org.total_gpa = org.semester_gpa = 0
     org.total_serviceHours = org.semester_serviceHours = 0
@@ -52,6 +57,8 @@ angular.module('myApp')
     org.average_testsTaken = 0
 
     for student in org.students
+      time_unit_id = if timeUnitId? then timeUnitId else student.time_unit_id
+
       # Find the student's mentors
       student.mentors = []
       for mentor_id in _.uniq(_.pluck(student.relationships, "assigned_to_id"))
@@ -63,10 +70,11 @@ angular.module('myApp')
           mentor.studentIds.push(student.id)
 
       # Calculate progress for each module
-      for module_title, org_milestones_by_module of org.org_milestones[student.time_unit_id]
-        new_module_progress = { module_title: module_title, time_unit_id: student.time_unit_id,\
+      student.modules_progress = []
+      for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
+        new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
                                 points: { user: 0, total: org_milestones_by_module.totalPoints } }
-        for user_milestone in _.where(student.user_milestones, { time_unit_id: student.time_unit_id, module: module_title } )
+        for user_milestone in _.where(student.user_milestones, { time_unit_id: time_unit_id, module: module_title } )
           org_milestone = _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } )
           if org_milestone
             new_module_progress.points.user += org_milestone.points
@@ -80,6 +88,7 @@ angular.module('myApp')
             mentor_module_progress.points.user += new_module_progress.points.user
             mentor_module_progress.points.total += new_module_progress.points.total
           else
+            mentor.modules_progress = []
             new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
                                            points: { user: new_module_progress.points.user,\
                                                      total: new_module_progress.points.total } }
@@ -89,44 +98,37 @@ angular.module('myApp')
       # TODO This isn't the correct way to calculate gpa
       student.total_gpa = 0.0
       student.semester_gpa = 0.0
-      _.each(student.user_gpas, (gpa) ->
-        student.total_gpa += gpa.regular_unweighted
-      )
-      if !!student.user_gpas
+      if !!student.user_gpas && student.user_gpas.length > 0
+        _.each(student.user_gpas, (gpa) -> student.total_gpa += gpa.regular_unweighted)
         student.total_gpa /= student.user_gpas.length
-      else
-        student.total_gpa = 0
-      semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: student.time_unit_id})
+      semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: time_unit_id})
       if semester_gpa
         student.semester_gpa = semester_gpa.regular_unweighted
       org.total_gpa += student.total_gpa
       org.semester_gpa += student.semester_gpa
 
       # Add up student's service hours
-      student.user_service_hours.total_hours = student.user_service_hours.semester_hours = 0
+      student.total_service_hours = student.semester_service_hours = 0
       _.each(student.user_service_hours, (ush) ->
-        student.user_service_hours.total_hours += parseFloat(ush.hours)
-        student.user_service_hours.semester_hours += if ush.time_unit_id == student.time_unit_id then parseFloat(ush.hours) else 0
+        student.total_service_hours += parseFloat(ush.hours)
+        student.semester_service_hours += if ush.time_unit_id == time_unit_id then parseFloat(ush.hours) else 0
       )
-      org.total_serviceHours += student.user_service_hours.total_hours
-      org.semester_serviceHours += student.user_service_hours.semester_hours
+      org.total_serviceHours += student.total_service_hours
+      org.semester_serviceHours += student.semester_service_hours
 
       # Add up student's activities
-      student.user_extracurricular_activity_details.total_activities =\
-        student.user_extracurricular_activity_details.length
-      student.user_extracurricular_activity_details.semester_activities =\
-        _.filter(student.user_extracurricular_activity_details, (detail) ->
-          detail.time_unit_id == student.time_unit_id).length
-      org.total_ecActivities += student.user_extracurricular_activity_details.total_activities
-      org.semester_ecActivities += student.user_extracurricular_activity_details.semester_activities
+      student.total_extracurricular_activities =\
+        if student.user_extracurricular_activity_details then student.user_extracurricular_activity_details.length else 0
+      student.semester_extracurricular_activities =\
+        _.filter(student.user_extracurricular_activity_details, (detail) -> detail.time_unit_id == time_unit_id).length
+      org.total_ecActivities += student.total_extracurricular_activities
+      org.semester_ecActivities += student.semester_extracurricular_activities
 
       # Add up student's tests
-      student.user_tests.total_tests = student.user_tests.length
-      student.user_tests.semester_tests =\
-        _.filter(student.user_tests, (test) ->
-          test.time_unit_id == student.time_unit_id).length
-      org.total_testsTaken += student.user_tests.total_tests
-      org.semester_testsTaken += student.user_tests.semester_tests
+      student.total_tests = if student.user_tests then student.user_tests.length else 0
+      student.semester_tests = _.filter(student.user_tests, (test) -> test.time_unit_id == time_unit_id).length
+      org.total_testsTaken += student.total_tests
+      org.semester_testsTaken += student.semester_tests
 
       # Determine if student needs attention
       student.needs_attention = if _.findWhere(student.user_expectations, { status: 2 } ) then true else false

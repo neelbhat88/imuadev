@@ -36,3 +36,19 @@ class ViewMilestone
   end
 
 end
+
+class DomainMilestone
+
+  def initialize(milestone)
+    @id = milestone.id
+    @title = milestone.title
+    @description = milestone.description
+    @module = milestone.module
+    @submodule = milestone.submodule
+    @points = milestone.points
+    @value = milestone.value
+    @icon = milestone.icon
+    @time_unit_id = milestone.time_unit_id
+  end
+
+end

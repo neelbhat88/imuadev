@@ -113,7 +113,7 @@
 
       .expectations-list-item {
         width: 48%;
-        float: left;
+        display: inline-block;
 
         @include respond-to (900) {
           float: none;

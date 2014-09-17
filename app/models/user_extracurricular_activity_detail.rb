@@ -23,3 +23,17 @@ class ViewUserExtracurricularActivityDetail
   end
 
 end
+
+class DomainUserExtracurricularActivityDetail
+
+  def initialize(ad)
+    @id = ad.id
+    @description = ad.description
+    @user_extracurricular_activity_id = ad.user_extracurricular_activity_id
+    @user_id = ad.user_id
+    @time_unit_id = ad.time_unit_id
+    @leadership = ad.leadership
+    @name = ad.name
+  end
+
+end

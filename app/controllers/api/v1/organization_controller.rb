@@ -13,7 +13,7 @@ class Api::V1::OrganizationController < ApplicationController
   end
 
   # GET /organization
-  def all_organizations
+  def index
     if !current_user.super_admin?
       render status: :forbidden, json: {}
       return
@@ -25,6 +25,58 @@ class Api::V1::OrganizationController < ApplicationController
       json: {
         info: result.info,
         organizations: result.object
+      }
+  end
+
+  # POST /organization
+  def create
+    name = params[:name]
+
+    if name.nil?
+      render stauts: 200,
+          json: {
+            success: false,
+            info: "Must provide an organization name"
+          }
+
+      return
+    end
+
+    result = @organizationRepository.create_organization({:name => name})
+
+    render stauts: 200,
+      json: {
+        success: result[:success],
+        info: result[:info],
+        organization: result[:organization]
+      }
+  end
+
+  # PUT /organization/:id
+  def update
+    orgId = params[:id]
+    name = params[:name]
+
+    result = @organizationRepository.update_organization({:id => orgId, :name => name})
+
+    render status: 200,
+      json: {
+        success: result[:success],
+        info: result[:info],
+        organization: result[:organization]
+      }
+  end
+
+  # DELETE /organization/:id
+  def destroy
+    orgId = params[:id]
+
+    result = @organizationRepository.delete_organization(orgId)
+
+    render stauts: 200,
+      json: {
+        success: result[:success],
+        info: result[:info]
       }
   end
 
@@ -74,58 +126,6 @@ class Api::V1::OrganizationController < ApplicationController
       json: {
         info: "Organization with Users",
         organization: viewOrg
-      }
-  end
-
-  # POST /organization
-  def create_organization
-    name = params[:name]
-
-    if name.nil?
-      render stauts: 200,
-          json: {
-            success: false,
-            info: "Must provide an organization name"
-          }
-
-      return
-    end
-
-    result = @organizationRepository.create_organization({:name => name})
-
-    render stauts: 200,
-      json: {
-        success: result[:success],
-        info: result[:info],
-        organization: result[:organization]
-      }
-  end
-
-  # PUT /organization/:id
-  def update_organization
-    orgId = params[:id]
-    name = params[:name]
-
-    result = @organizationRepository.update_organization({:id => orgId, :name => name})
-
-    render status: 200,
-      json: {
-        success: result[:success],
-        info: result[:info],
-        organization: result[:organization]
-      }
-  end
-
-  # DELETE /organization/:id
-  def delete_organization
-    orgId = params[:id]
-
-    result = @organizationRepository.delete_organization(orgId)
-
-    render stauts: 200,
-      json: {
-        success: result[:success],
-        info: result[:info]
       }
   end
 

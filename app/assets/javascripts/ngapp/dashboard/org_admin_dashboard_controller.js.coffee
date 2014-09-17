@@ -35,10 +35,12 @@ angular.module('myApp')
       $scope.average_ecActivities = $scope.organization.average_ecActivities
       $scope.average_testsTaken = $scope.organization.average_testsTaken
 
-      $scope.percent_students_with_one_activity =
-        ((_.filter($scope.organization.students, (student) ->
-            student.user_extracurricular_activity_details.semester_activities > 0).length /
-          $scope.organization.students.length) * 100).toFixed(0)
+      if $scope.organization.students.length == 0
+        $scope.percent_students_with_one_activity = 0
+      else
+        $scope.percent_students_with_one_activity =
+          ((_.filter($scope.organization.students, (student) ->
+              student.semester_extracurricular_activities > 0).length / $scope.organization.students.length) * 100).toFixed(0)
 
       $scope.loaded_users = true
 ]

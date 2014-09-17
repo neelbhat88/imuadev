@@ -1,6 +1,8 @@
 module ControllerMacros
   def login_org_admin
     before(:each) do
+      create(:app_version)
+
       @request.env["devise.mapping"] = Devise.mappings[:org_admin]
       org_admin = create(:org_admin) # Using factory girl as an example
       sign_in :user, org_admin
@@ -9,6 +11,8 @@ module ControllerMacros
 
   def login_student
     before(:each) do
+      create(:app_version)
+
       @request.env["devise.mapping"] = Devise.mappings[:student]
       student = create(:student) # Using factory girl as an example
       sign_in :user, student
@@ -17,6 +21,8 @@ module ControllerMacros
 
   def login_mentor
     before(:each) do
+      create(:app_version)
+
       @request.env["devise.mapping"] = Devise.mappings[:mentor]
       mentor = create(:mentor) # Using factory girl as an example
       sign_in :user, mentor
@@ -25,6 +31,8 @@ module ControllerMacros
 
   def login_super_admin
     before(:each) do
+      create(:app_version)
+
       @request.env["devise.mapping"] = Devise.mappings[:super_admin]
       super_admin = create(:super_admin) # Using factory girl as an example
       sign_in :user, super_admin
