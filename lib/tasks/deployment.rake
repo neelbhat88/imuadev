@@ -31,7 +31,7 @@ namespace :deploy do
 
     if system 'bundle exec rspec --fail-fast'
       puts "Deploying #{BRANCH} to #{APP}..."
-      puts `git push -f git@heroku.#{APP}:#{APP}.git #{BRANCH}:master`
+      puts `git push -f git@heroku.com:#{APP}.git #{BRANCH}:master`
     else
       puts "FIX YOUR TESTS"
       fail
