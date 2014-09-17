@@ -4,7 +4,7 @@ angular.module('myApp')
 
     $scope._ = _
     $scope.today = new Date().getTime()
-    $scope.two_days_ago = $scope.today - (1000*60*60*24*2) # Two days ago
+    $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
 
     $scope.current_user = current_user
@@ -108,9 +108,15 @@ angular.module('myApp')
       !this.isPendingAssignment(assignment, user) && !this.isAssigned(assignment, user)
 
     $scope.isPastDue = (assignment) ->
-      return new Date(assignment.due_datetime).getTime() > $scope.today
+      due_date = new Date(assignment.due_datetime).getTime()
+      return due_date < $scope.today
 
     $scope.isDueSoon = (assignment) ->
-      return !isPastDue(assignment) && new Date(assignment.due_datetime).getTime() >= $scope.two_days_ago
+      due_date = new Date(assignment.due_datetime).getTime()
+      return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
+
+    $scope.isComplete = (assignment) ->
+      return _.every(assignment.user_assignments, (a) -> a.status == 1)
+
 
 ]
