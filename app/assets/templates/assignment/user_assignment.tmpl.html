@@ -1,0 +1,79 @@
+<div class="taskContainer">
+
+  <div class="task-header clear">
+    <div class="single-col-wrapper">
+      <div class="back-link">
+        <h6>
+          <!-- TODO Fix to be actual breadcrumbs -->
+          <a href="#/assignments/{{current_user.id}}" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to All Tasks
+          </a>
+          <a href="#/user_assignments/{{current_user.id}}" ng-if="current_user.role >= CONSTANTS.USER_ROLES.student">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to My Tasks
+          </a>
+        </h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-col-wrapper clear">
+    <div class="assignment--left">
+      <div class="task-content">
+        <h4><span class="bold">{{user_assignment.title}}</span></h4>
+        <h6>{{user_assignment.description}}</h6>
+      </div>
+
+      <ul class="users-not-completed">
+        <li class="medium-circle-pictures">
+          <a href="#/profile/{{user_assignment.user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+            </div>
+          </a>
+          <span class="bold">{{user_assignment.user.first_last_initial}}</span>
+          <ul class="circle-subnav" ng-if="user_assignment.status == 0">
+            <li class="subnav-button">
+              <button type="button" class="btn btn-success btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1">Mark Complete</button>
+            </li>
+          </ul>
+          <ul class="circle-subnav" ng-if="user_assignment.status == 1">
+            <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
+            <li class="subnav-button">
+              <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="assignment--right">
+      <ul>
+        <li>
+          <h5>
+            <span class="label label-primary" ng-if="user_assignment.status == 0">
+              <span class="glyphicon glyphicon-record" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment)">Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Due Soon</span></span>
+              <span class="label label-danger" ng-if="isPastDue(user_assignment)"><span class="glyphicon glyphicon-exclamation-sign">Past Due</span></span>
+            </span>
+            <span class="label label-success" ng-if="user_assignment.status == 1">
+              <span class="glyphicon glyphicon-ok-circle"></span> Complete
+            </span>
+          </h5>
+        </li>
+        <li ng-if="user_assignment.due_datetime != null">
+          <h6>Due by</h6>
+          <h5 class="bold">{{user_assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+        </li>
+        <li>
+          <h6>Created by</h6>
+          <div class="tiny-circle-picture">
+            <img ng-src="{{assigner.square_avatar_url}}" alt="{{assigner.first_name}} {{assigner.last_name}}" />
+          </div>
+          <h6 class="bold">{{assigner.first_name}} {{assigner.last_name}}</h6>
+          <p>on {{user_assignment.created_at | date: 'MM/dd/yy'}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

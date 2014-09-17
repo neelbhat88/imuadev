@@ -1,5 +1,52 @@
 class AssignmentService
 
+  def collect_assignment_2(assignmentId, filters = {})
+    filters[:assignment_id] = assignmentId
+
+    domainAssignments = AssignmentService.new.get_assignments_2(filters)
+    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+
+    filters[:user_id] = []
+    filters[:user_id] << domainAssignments.pluck(:user_id)
+    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+
+    domainUsers = UserService.new.get_users(filters)
+    domainUsers.each do |u|
+      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
+      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
+    end
+
+    orgOptions = {}
+    orgOptions[:users] = domainUsers
+
+    return DomainOrganization.new(nil, orgOptions)
+  end
+
+  def collect_assignments_2(userId, filters = {})
+    filters[:user_id] = userId
+
+    domainAssignments = AssignmentService.new.get_assignments_2(filters)
+
+    filters = filters.except(:user_id)
+    filters[:assignment_id] = domainAssignments.pluck(:id)
+    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+
+    filters[:user_id] = []
+    filters[:user_id] << domainAssignments.pluck(:user_id)
+    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+
+    domainUsers = UserService.new.get_users(filters)
+    domainUsers.each do |u|
+      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
+      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
+    end
+
+    orgOptions = {}
+    orgOptions[:users] = domainUsers
+
+    return DomainOrganization.new(nil, orgOptions)
+  end
+
   def collect_assignment(assignmentId)
     return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)
   end

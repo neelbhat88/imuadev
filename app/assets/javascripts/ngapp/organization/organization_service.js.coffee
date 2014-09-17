@@ -70,6 +70,7 @@ angular.module('myApp')
           mentor.studentIds.push(student.id)
 
       # Calculate progress for each module
+      student.modules_progress = []
       for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
         new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
                                 points: { user: 0, total: org_milestones_by_module.totalPoints } }
@@ -87,6 +88,8 @@ angular.module('myApp')
             mentor_module_progress.points.user += new_module_progress.points.user
             mentor_module_progress.points.total += new_module_progress.points.total
           else
+            if mentor.modules_progress == undefined
+              mentor.modules_progress = []
             new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
                                            points: { user: new_module_progress.points.user,\
                                                      total: new_module_progress.points.total } }

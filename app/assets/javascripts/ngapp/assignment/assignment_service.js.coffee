@@ -25,7 +25,7 @@ angular.module('myApp')
     $http.get "api/v1/users/#{userId}/assignment/collect"
 
   @collectUserAssignment = (userAssignmentId) ->
-    $http.get "ap1/vi/user_assignment/#{userAssignmentId}/collect"
+    $http.get "api/v1/user_assignment/#{userAssignmentId}/collect"
 
   @collectUserAssignments = (userId) ->
     $http.get "api/v1/users/#{userId}/user_assignment/collect"

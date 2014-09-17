@@ -1,21 +1,16 @@
 angular.module('myApp')
-.controller 'IncomingAssignmentsController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, user, AssignmentService, UsersService, OrganizationService) ->
+.controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService) ->
 
     $scope._ = _
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
     $scope.current_user = current_user
-    $scope.user = user
-    $scope.incoming_assignments = []
+    $scope.user_assignment = user_assignment
+    $scope.assigner = $scope.user_assignment.assigner
 
     $('input, textarea').placeholder()
-
-    AssignmentService.collectUserAssignments($scope.user.id)
-      .success (data) ->
-        $scope.incoming_assignments = data.user_assignments
-        $scope.loaded_incoming_assignments = true
 
     $scope.setUserAssignmentStatus = (user_assignment, status) ->
       new_user_assignment = AssignmentService.newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
@@ -37,4 +32,5 @@ angular.module('myApp')
     $scope.isDueSoon = (user_assignment) ->
       due_date = new Date(user_assignment.due_datetime).getTime()
       return !this.isPastDue(user_assignment) && due_date <= $scope.two_days_from_now
+
 ]

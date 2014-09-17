@@ -9,7 +9,7 @@ describe Api::V1::OrganizationController do
       org1 = create(:organization)
       org2 = create(:organization)
 
-      get :all_organizations
+      get :index
 
       expect(response.status).to eq(200)
       expect(json["organizations"].length).to eq(2)
@@ -19,7 +19,7 @@ describe Api::V1::OrganizationController do
   describe "GET /organizations as org admin" do
     login_org_admin
     it "returns 403" do
-      get :all_organizations
+      get :index
 
       expect(response.status).to eq(403)
     end
@@ -28,7 +28,7 @@ describe Api::V1::OrganizationController do
   describe "GET /organizations as student" do
     login_student
     it "returns 403" do
-      get :all_organizations
+      get :index
 
       expect(response.status).to eq(403)
     end
@@ -37,7 +37,7 @@ describe Api::V1::OrganizationController do
   describe "GET /organizations as mentor" do
     login_mentor
     it "returns 403" do
-      get :all_organizations
+      get :index
 
       expect(response.status).to eq(403)
     end
