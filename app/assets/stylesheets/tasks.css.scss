@@ -164,14 +164,14 @@
 
     .status-block {
       width: 100%;
-      padding: 20px;
       margin-bottom: 20px;
       background: $grey;
+      @include border-radius(5px);
 
       .status-picture {
-        float: left;
-        margin-right: 20px;
-
+        width: 120px;
+        padding: 20px;
+        vertical-align: top;
         .medium-circle-pictures, .medium-circle-picture {
           margin: 0;
         }
@@ -179,7 +179,8 @@
       }
 
       .status-message {
-        float: left;
+        padding: 20px;
+        padding-left: 0;
       }
 
     }

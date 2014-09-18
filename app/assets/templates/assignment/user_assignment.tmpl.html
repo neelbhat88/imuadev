@@ -22,88 +22,96 @@
         <h6>{{user_assignment.description}}</h6>
       </div>
       <!-- Open Task Status Block -->
-      <div class="status-block clear" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment) && user_assignment.status != 1">
-        <div class="status-picture">
-          <div class="medium-circle-pictures">
-            <a href="#/profile/{{user_assignment.user.id}}">
-              <div class="medium-circle-picture">
-                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="status-message">
-          <h5 class="bold" ng-if="current_user.is_student">{{user_assignment.user.first_name}}, you haven't completed this task yet.</h5>
-          <h5 class="bold" ng-if="!current_user.is_student">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
-          <h6 ng-if="user_assignment.due_datetime != null">It's due {{user_assignment.due_datetime | fromNow}}.</h6>
-        </div>
-      </div>
+      <table class="status-block" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment) && user_assignment.status != 1">
+        <tr>
+          <td class="status-picture">
+            <div class="medium-circle-pictures">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <div class="medium-circle-picture">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                </div>
+              </a>
+            </div>
+          </td>
+          <td class="status-message">
+            <h5 class="bold" ng-if="current_user.is_student">{{user_assignment.user.first_name}}, you haven't completed this task yet.</h5>
+            <h5 class="bold" ng-if="!current_user.is_student">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
+            <h6 ng-if="user_assignment.due_datetime != null">It's due {{user_assignment.due_datetime | fromNow}}.</h6>
+          </td>
+        </tr>
+      </table>
       <!-- Due Soon Status Block -->
-      <div class="status-block due-soon clear" ng-show="isDueSoon(user_assignment) && user_assignment.status != 1">
-        <div class="status-picture">
-          <div class="medium-circle-pictures">
-            <a href="#/profile/{{user_assignment.user.id}}">
-              <div class="medium-circle-picture">
-                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="status-message">
-          <div ng-if="current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}}, this task is due soon!</h5>
-            <h6>It looks like you haven't completed it yet.</h6>
-          </div>
-          <div ng-if="!current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
-            <h6>It's due {{user_assignment.due_datetime | fromNow}}!</h6>
-          </div>
-        </div>
-      </div>
+      <table class="status-block due-soon clear" ng-show="isDueSoon(user_assignment) && user_assignment.status != 1">
+        <tr>
+          <td class="status-picture">
+            <div class="medium-circle-pictures">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <div class="medium-circle-picture">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                </div>
+              </a>
+            </div>
+          </td>
+          <td class="status-message">
+            <div ng-if="current_user.is_student">
+              <h5 class="bold">{{user_assignment.user.first_name}}, this task is due soon!</h5>
+              <h6>It looks like you haven't completed it yet.</h6>
+            </div>
+            <div ng-if="!current_user.is_student">
+              <h5 class="bold">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
+              <h6>It's due {{user_assignment.due_datetime | fromNow}}!</h6>
+            </div>
+          </td>
+        </tr>
+      </table>
       <!-- Past Due Status Block -->
-      <div class="status-block past-due clear" ng-show="isPastDue(user_assignment) && user_assignment.status != 1">
-        <div class="status-picture">
-          <div class="medium-circle-pictures">
-            <a href="#/profile/{{user_assignment.user.id}}">
-              <div class="medium-circle-picture">
-                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="status-message">
-          <div ng-if="current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}}, this task was due on {{user_assignment.due_datetime | date: 'MM/dd/yy'}}!</h5>
-            <h6>Please complete it as soon as possible.</h6>
-          </div>
-          <div ng-if="!current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
-            <h6>This task is past due!</h6>
-          </div>
-        </div>
-      </div>
+      <table class="status-block past-due clear" ng-show="isPastDue(user_assignment) && user_assignment.status != 1">
+        <tr>
+          <td class="status-picture">
+            <div class="medium-circle-pictures">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <div class="medium-circle-picture">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                </div>
+              </a>
+            </div>
+          </td>
+          <td class="status-message">
+            <div ng-if="current_user.is_student">
+              <h5 class="bold">{{user_assignment.user.first_name}}, this task was due on {{user_assignment.due_datetime | date: 'MM/dd/yy'}}!</h5>
+              <h6>Please complete it as soon as possible.</h6>
+            </div>
+            <div ng-if="!current_user.is_student">
+              <h5 class="bold">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
+              <h6>This task is past due!</h6>
+            </div>
+          </td>
+        </tr>
+      </table>
       <!-- Complete Status Block -->
-      <div class="status-block complete clear" ng-show="user_assignment.status == 1">
-        <div class="status-picture">
-          <div class="medium-circle-pictures">
-            <a href="#/profile/{{user_assignment.user.id}}">
-              <div class="medium-circle-picture">
-                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="status-message">
-          <div ng-if="current_user.is_student">
-            <h5 class="bold">Nice work {{user_assignment.user.first_name}}!</h5>
-            <h6>You completed this task {{user_assignment.updated_at | fromNow}}.</h6>
-          </div>
-          <div ng-if="!current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}} completed this task.</h5>
-            <h6>They completed it {{user_assignment.updated_at | fromNow}}</h6>
-          </div>
-        </div>
-      </div>
+      <table class="status-block complete clear" ng-show="user_assignment.status == 1">
+        <tr>
+          <td class="status-picture">
+            <div class="medium-circle-pictures">
+              <a href="#/profile/{{user_assignment.user.id}}">
+                <div class="medium-circle-picture">
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                </div>
+              </a>
+            </div>
+          </td>
+          <td class="status-message">
+            <div ng-if="current_user.is_student">
+              <h5 class="bold">Nice work {{user_assignment.user.first_name}}!</h5>
+              <h6>You completed this task {{user_assignment.updated_at | fromNow}}.</h6>
+            </div>
+            <div ng-if="!current_user.is_student">
+              <h5 class="bold">{{user_assignment.user.first_name}} completed this task.</h5>
+              <h6>They completed it {{user_assignment.updated_at | fromNow}}</h6>
+            </div>
+          </td>
+        </tr>
+      </table>
       <div class="complete-buttons">
         <button class="btn btn-success btn-lg" ng-if="user_assignment.status == 0" ng-click="setUserAssignmentStatus(user_assignment, 1)"><span class="glyphicon glyphicon-ok-circle"></span> Mark this task Complete</button>
         <button class="btn btn-danger btn-lg" ng-if="user_assignment.status == 1" ng-click="setUserAssignmentStatus(user_assignment, 0)"><span class="glyphicon glyphicon-remove-circle"></span> I Didn't Do This Yet</button>
