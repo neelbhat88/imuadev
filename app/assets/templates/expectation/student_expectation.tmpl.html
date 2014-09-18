@@ -76,7 +76,10 @@
       </div>
 
       <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
-        <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-class="{'bad': expectation.user_expectation.status == 2, 'warn': expectation.user_expectation.status == 1, 'good': expectation.user_expectation.status == 0}">
+        <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-click="viewExpectation(expectation.user_expectation.id)"
+              ng-class="{'bad': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
+                         'warn': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
+                         'good': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
           <div class="expectation-title">
             <h5>
               {{expectation.title}}
@@ -86,25 +89,34 @@
             <div class="slider-bg"></div>
             <div class="expectation-selector">
               <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}">
-                <button class="expectation-btn-alert" ng-click="setUserExpectationStatus(expectation, CONSTANTS.EXPECTATION_STATUS.not_meeting)"
-                      ng-disabled="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                <button class="expectation-btn-alert"></button>
               </div>
               <div class="button-label">Not Meeting</div>
             </div>
             <div class="expectation-selector">
               <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}">
-                <button class="expectation-btn-warn" ng-click="setUserExpectationStatus(expectation, CONSTANTS.EXPECTATION_STATUS.needs_work)"
-                      ng-disabled="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                <button class="expectation-btn-warn"></button>
               </div>
               <div class="button-label">Needs Work</div>
             </div>
             <div class="expectation-selector">
               <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-                <button class="expectation-btn-good" ng-click="setUserExpectationStatus(expectation, CONSTANTS.EXPECTATION_STATUS.meeting)"
-                      ng-disabled="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+                <button class="expectation-btn-good"></button>
               </div>
               <div class="button-label">Meeting</div>
             </div>
+          </div>
+
+          <div class="expectation-comment-container">
+
+            <div class="expectation-comment" ng-hide="editing">
+              <div style="padding: 10px 0;">
+                <span class="bold">Reason: </span>
+                <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+                <span ng-if="!expectation.user_expectation.comment">No reason added</span>
+              </div>
+            </div>
+
           </div>
 
         </div>

@@ -14,6 +14,7 @@ class DomainUserExpectation
       @comment = user_expectation.comment
       @modified_by_id = user_expectation.modified_by_id
       @modified_by_name = user_expectation.modified_by_name
+      @updated_at = user_expectation.updated_at
     end
 
     if !expectation.nil?

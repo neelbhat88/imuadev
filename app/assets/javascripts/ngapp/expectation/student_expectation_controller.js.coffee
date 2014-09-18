@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService', 'ProgressService',
-  ($route, $scope, student, current_user, ExpectationService, ProgressService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', '$location', 'student', 'current_user', 'ExpectationService', 'ProgressService',
+  ($route, $scope, $location, student, current_user, ExpectationService, ProgressService) ->
 
     $scope.current_user = current_user
     $scope.student = student
@@ -54,5 +54,8 @@ angular.module('myApp')
           $scope.meetingExpectations = false
           return
       $scope.meetingExpectations = true
+
+    $scope.viewExpectation = (user_expectation_id) ->
+      $location.path("/user_expectation/#{user_expectation_id}")
 
 ]
