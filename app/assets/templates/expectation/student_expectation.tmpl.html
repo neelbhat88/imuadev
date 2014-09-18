@@ -107,6 +107,18 @@
             </div>
           </div>
 
+          <div class="expectation-comment-container">
+
+            <div class="expectation-comment" ng-hide="editing">
+              <div style="padding: 10px 0;">
+                <span class="bold">Reason: </span>
+                <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+                <span ng-if="!expectation.user_expectation.comment">No reason added</span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
