@@ -115,6 +115,10 @@
 
     }
 
+    .module-circle__modupdated {
+      @include font-size(1.0)
+    }
+
     .selectedCircle {
 
     	opacity: 1;

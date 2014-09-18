@@ -55,6 +55,7 @@ angular.module('myApp')
           $scope.classes.editing = false
 
           $scope.refreshPoints()
+          $scope.$emit('just_updated', 'Academics')
 
     $scope.deleteClass = (user_class) ->
       if window.confirm "Are you sure you want to delete this class?"
@@ -66,6 +67,7 @@ angular.module('myApp')
             else
               $scope.gpa = 0.toFixed(2)
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Academics')
 
     $scope.addClass = () ->
       $scope.classes.editing = true
