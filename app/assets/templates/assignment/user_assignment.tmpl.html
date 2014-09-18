@@ -27,7 +27,7 @@
         <li class="medium-circle-pictures">
           <a href="#/profile/{{user_assignment.user.id}}">
             <div class="medium-circle-picture">
-              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
             </div>
           </a>
           <span class="bold">{{user_assignment.user.first_last_initial}}</span>
@@ -37,7 +37,7 @@
             </li>
           </ul>
           <ul class="circle-subnav" ng-if="user_assignment.status == 1">
-            <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
+            <li>Completed: {{user_assignment.updated_at | formatMDY}}</li>
             <li class="subnav-button">
               <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
             </li>
@@ -62,7 +62,7 @@
         </li>
         <li ng-if="user_assignment.due_datetime != null">
           <h6>Due by</h6>
-          <h5 class="bold">{{user_assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+          <h5 class="bold">{{user_assignment.due_datetime | formatMDY}}</h5>
         </li>
         <li>
           <h6>Created by</h6>
@@ -70,7 +70,7 @@
             <img ng-src="{{assigner.square_avatar_url}}" alt="{{assigner.first_name}} {{assigner.last_name}}" />
           </div>
           <h6 class="bold">{{assigner.first_name}} {{assigner.last_name}}</h6>
-          <p>on {{user_assignment.created_at | date: 'MM/dd/yy'}}</p>
+          <p>on {{user_assignment.created_at | formatMDY}}</p>
         </li>
       </ul>
     </div>

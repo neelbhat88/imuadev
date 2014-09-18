@@ -26,14 +26,14 @@
               </span>
               <span ng-if="current_user.id == user.id">You </span>
               <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
-              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+              created this task on {{assignment.created_at | formatMDY}}
             </span>
           </div>
           <div class="tasks--list--item--middle">
             <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
           </div>
           <div class="tasks--list--item--right">
-            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | formatMDY}}</h6>
           </div>
         </div>
 
@@ -48,8 +48,8 @@
             </span>
             <span ng-if="current_user.id == user.id">You </span>
             <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
-            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
-            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+            created this task on {{assignment.created_at | formatMDY}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | formatMDY}}.</span>
           </span>
 
           <div class="clear" ng-if="!isComplete(assignment) && _.where(assignment.user_assignments, {status: 1}).length != 0">
@@ -118,14 +118,14 @@
               </span>
               <span ng-if="current_user.id == user.id">You </span>
               <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
-              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+              created this task on {{assignment.created_at | formatMDY}}
             </span>
           </div>
           <div class="tasks--list--item--middle">
             <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
           </div>
           <div class="tasks--list--item--right">
-            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | formatMDY}}</h6>
             </span>
           </div>
         </div>
@@ -139,8 +139,8 @@
             </span>
             <span ng-if="current_user.id == user.id">You </span>
             <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
-            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
-            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+            created this task on {{assignment.created_at | formatMDY}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | formatMDY}}.</span>
           </span>
 
           <div class="expanded--solo" ng-if="isComplete(assignment)">

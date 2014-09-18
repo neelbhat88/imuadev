@@ -24,7 +24,7 @@
             <span class="subtext">
               <span ng-if="current_user.id == assignment.assigner.id">You </span>
               <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
-              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+              created this task on {{assignment.created_at | formatMDY}}
             </span>
           </div>
           <div class="tasks--list--item--middle">
@@ -37,7 +37,7 @@
             </h6>
           </div>
           <div class="tasks--list--item--right">
-            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | formatMDY}}</h6>
           </div>
         </div>
 
@@ -52,8 +52,8 @@
             </span>
             <span ng-if="current_user.id == assignment.assigner.id">You </span>
             <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
-            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
-            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+            created this task on {{assignment.created_at | formatMDY}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | formatMDY}}.</span>
           </span>
 
           <div class="edit-buttons">
@@ -89,7 +89,7 @@
             <span class="subtext">
               <span ng-if="current_user.id == assignment.assigner.id">You </span>
               <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
-              created this task on {{assignment.created_at | date: 'MM/dd/yy'}}
+              created this task on {{assignment.created_at | formatMDY}}
             </span>
           </div>
           <div class="tasks--list--item--middle">
@@ -100,7 +100,7 @@
             </h6>
           </div>
           <div class="tasks--list--item--right">
-            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h6>
+            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | formatMDY}}</h6>
           </div>
         </div>
 
@@ -113,8 +113,8 @@
             </span>
             <span ng-if="current_user.id == assignment.assigner.id">You </span>
             <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
-            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
-            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+            created this task on {{assignment.created_at | formatMDY}}.
+            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | formatMDY}}.</span>
           </span>
 
           <div class="edit-buttons">
