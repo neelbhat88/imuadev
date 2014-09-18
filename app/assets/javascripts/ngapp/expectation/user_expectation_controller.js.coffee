@@ -1,7 +1,8 @@
 angular.module('myApp')
-.controller 'UserExpectationController', ['$scope', 'current_user', 'user_expectation', 'ExpectationService',
-  ($scope, current_user, user_expectation, ExpectationService) ->
+.controller 'UserExpectationController', ['$scope', 'current_user', 'student', 'user_expectation', 'ExpectationService',
+  ($scope, current_user, student, user_expectation, ExpectationService) ->
     $scope.current_user = current_user
+    $scope.student = student
     $scope.user_expectation = user_expectation
     $scope.user_expectation_history = null
 
