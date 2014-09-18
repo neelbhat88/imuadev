@@ -32,3 +32,8 @@ angular.module('myApp')
     foreign_language: "Foreign Language"
     elective: "Elective"
     other: "Other"
+
+  'EXPECTATION_STATUS':
+    meeting:     0
+    needs_work:  1
+    not_meeting: 2

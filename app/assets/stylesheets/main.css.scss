@@ -470,6 +470,13 @@ header {
   z-index: 999; // Just below the header
 }
 
+.alerts-section {
+  position: absolute;
+  width: 400px;
+  top: 110px;
+  left: 50%;
+  margin-left: -200px;
+}
 /* ===============================================
    Milestone Classes
    =============================================== */

@@ -3,8 +3,6 @@ angular.module('myApp')
   'OrganizationService',
   ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
 
-    $scope._ = _
-
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
     $scope.mentors_with_attention_students = []

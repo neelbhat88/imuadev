@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', 'student', 'current_user', 'ExpectationService', 'ProgressService',
-  ($route, $scope, student, current_user, ExpectationService, ProgressService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', '$location', 'student', 'current_user', 'ExpectationService', 'ProgressService',
+  ($route, $scope, $location, student, current_user, ExpectationService, ProgressService) ->
 
     $scope.current_user = current_user
     $scope.student = student
@@ -26,23 +26,17 @@ angular.module('myApp')
                   e.user_expectation = ue
                   # TODO splice ue out of data.user_expectations
                   break
-              if not e.user_expectation?
-                e.user_expectation = ExpectationService.newUserExpectation($scope.studentId, e.id, 0)
+
             $scope.recalculateMeetingExpectations()
             $scope.loaded_expectations = true
 
     $scope.setUserExpectationStatus = (expectation, status) ->
       if expectation.user_expectation.status != status
-        for e in $scope.expectations
-          if e.id == expectation.id
-            user_expectation = ExpectationService
-              .newUserExpectation($scope.studentId, e.id, status)
-            user_expectation.id = e.user_expectation.id
-            ExpectationService.saveUserExpectation(user_expectation)
-              .success (data) ->
-                e.user_expectation = data.user_expectation
-                $scope.recalculateMeetingExpectations()
-            break
+        expectation.user_expectation.status = status
+        ExpectationService.updateUserExpectation(expectation.user_expectation)
+          .success (data) ->
+            expectation.user_expectation = data.user_expectation
+            $scope.recalculateMeetingExpectations()
 
     $scope.viewExpectationHistory = (expectation) ->
       ExpectationService.getUserExpectationHistory($scope.studentId, expectation.id)
@@ -60,5 +54,8 @@ angular.module('myApp')
           $scope.meetingExpectations = false
           return
       $scope.meetingExpectations = true
+
+    $scope.viewExpectation = (user_expectation_id) ->
+      $location.path("/user_expectation/#{user_expectation_id}")
 
 ]

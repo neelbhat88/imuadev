@@ -31,7 +31,7 @@
       <div class="progressCircle-big">
         <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
           <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+            <progress-circle width="240" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
           </div>
         </a>
       </div>
@@ -76,38 +76,49 @@
       </div>
 
       <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
-        <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-class="{'bad': expectation.user_expectation.status == 2, 'warn': expectation.user_expectation.status == 1, 'good': expectation.user_expectation.status == 0}">
-          <div class="expectation-title"><h5>{{expectation.title}}</h5></div>
+        <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-click="viewExpectation(expectation.user_expectation.id)"
+              ng-class="{'bad': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
+                         'warn': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
+                         'good': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+          <div class="expectation-title">
+            <h5>
+              {{expectation.title}}
+            </h5>
+          </div>
           <div class="expectation-btn-group--container clear">
             <div class="slider-bg"></div>
             <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 2}">
-                <button class="expectation-btn-alert" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}">
+                <button class="expectation-btn-alert"></button>
               </div>
               <div class="button-label">Not Meeting</div>
             </div>
             <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 1}">
-                <button class="expectation-btn-warn" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}">
+                <button class="expectation-btn-warn"></button>
               </div>
               <div class="button-label">Needs Work</div>
             </div>
             <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 0}">
-                <button class="expectation-btn-good" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
+              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+                <button class="expectation-btn-good"></button>
               </div>
               <div class="button-label">Meeting</div>
             </div>
           </div>
-          <!--     HISTORY START
-          <div class="expectation-history">
-            <button ng-hide="expectation.user_expectation.showHistory" class="btn btn-default" ng-click="viewExpectationHistory(expectation)">See History</button>
-            <div class="history-list" ng-show="expectation.user_expectation.showHistory" ng-repeat="history in expectation.user_expectation.history">
-              <h5>{{history.title}}</h5>
+
+          <div class="expectation-comment-container">
+
+            <div class="expectation-comment" ng-hide="editing">
+              <div style="padding: 10px 0;">
+                <span class="bold">Reason: </span>
+                <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+                <span ng-if="!expectation.user_expectation.comment">No reason added</span>
+              </div>
             </div>
-            <button ng-show="expectation.user_expectation.showHistory" class="btn btn-default" ng-click="hideExpectationHistory(expectation)">Hide History</button>
+
           </div>
-                  HISTORY END -->
+
         </div>
 
       </div>

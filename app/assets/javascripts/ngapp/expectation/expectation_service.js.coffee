@@ -27,25 +27,17 @@ angular.module('myApp')
   ############# USER ##############
   #################################
 
-  @newUserExpectation = (studentId, expectationId, status) ->
-    user_id:        studentId,
-    expectation_id: expectationId,
-    status:         status,
-
-  @getUserExpectationHistory = (studentId, expectationId) ->
-    $http.get "/api/v1/users/#{studentId}/user_expectation_history?expectation_id=#{expectationId}"
-
   @getUserExpectations = (user) ->
-    $http.get "/api/v1/users/#{user.id}/expectations"
+    $http.get "/api/v1/users/#{user.id}/user_expectation"
 
-  @saveUserExpectation = (user_expectation) ->
-    if user_expectation.id
-      $http.put "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}", {userExpectation: user_expectation}
-    else
-      $http.post "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}", {userExpectation: user_expectation}
+  @getUserExpectation = (user_expectation_id) ->
+    $http.get "/api/v1/user_expectation/#{user_expectation_id}"
 
-  @deleteUserExpectation = (user_expectation) ->
-    $http.delete "/api/v1/users/#{user_expectation.user_id}/expectations/#{user_expectation.expectation_id}"
+  @updateUserExpectation = (user_expectation) ->
+    $http.put "/api/v1/user_expectation/#{user_expectation.id}", {userExpectation: user_expectation}
+
+  @getUserExpectationHistory = (user_expectation_id) ->
+    $http.get "/api/v1/user_expectation/#{user_expectation_id}/history"
 
   @
 ]

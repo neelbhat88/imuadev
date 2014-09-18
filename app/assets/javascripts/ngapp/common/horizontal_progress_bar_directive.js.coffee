@@ -10,7 +10,6 @@ angular.module('myApp')
 
     progressData = []
 
-    console.log(scope.student)
     user_points = 0
     total_points = 0
 

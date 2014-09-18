@@ -21,3 +21,14 @@ class ViewTimeUnit
     end
   end
 end
+
+class DomainTimeUnit
+
+  def initialize(time_unit, options = {})
+    @id = time_unit.id
+    @name = time_unit.name
+
+    @milestones = options[:milestones]
+  end
+
+end

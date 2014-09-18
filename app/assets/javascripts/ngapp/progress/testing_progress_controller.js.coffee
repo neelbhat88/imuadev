@@ -54,6 +54,7 @@ angular.module('myApp')
           $scope.userTests[index].editing = false
           $scope.userTests.editing = false
           $scope.refreshPoints()
+          $scope.$emit('just_updated', 'Testing')
 
     $scope.deleteUserTest = (index) ->
       if window.confirm "Are you sure you want to delete this test?"
@@ -62,6 +63,7 @@ angular.module('myApp')
             $scope.userTests.splice(index, 1)
             $scope.numUserTests = $scope.userTests.length
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Testing')
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true

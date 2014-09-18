@@ -46,7 +46,7 @@
       </div>
       <div class="list-container">
         <div class="progress-circles" ng-class="{'needsAttention': {{mentor.id | existsInArray: mentors_with_attention_students}}}" ng-repeat="mentor in mentors_with_attention_students">
-          <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor" identifier="attention"></a>
+          <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle width="170" student="mentor" identifier="attention"></a>
           <h6 class="bold"><a ng-href="#/mentor/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
           <ul class="circle-subnav">
             <li>{{mentor.title}}</li>
@@ -67,7 +67,7 @@
     <div class="list-container">
 
       <div class="progress-circles" ng-repeat="mentor in organization.mentors | orderBy: 'last_name'">
-        <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle student="mentor"></progress-circle></a>
+        <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle width="170" student="mentor"></progress-circle></a>
         <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
           <h6 class="bold">{{fullName(mentor)}}</h6>
         </a>

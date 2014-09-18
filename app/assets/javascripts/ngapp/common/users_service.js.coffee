@@ -98,5 +98,14 @@ angular.module('myApp')
     email: ""
     phone: ""
 
+  @determineEarnedMilestones = (orgMilestones, userMilestones) ->
+    for um in userMilestones
+      om = _.find(orgMilestones, (om) -> om.id == um.milestone_id)
+      if om
+        om.earned = true
+      else
+        console.log("Error: user_milestone has no matching org_milestone.", um, orgMilestones)
+    return orgMilestones
+
   @
 ]
