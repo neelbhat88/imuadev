@@ -31,7 +31,7 @@
       <div class="progressCircle-big">
         <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
           <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+            <progress-circle width="240" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
           </div>
         </a>
       </div>
@@ -105,6 +105,18 @@
               </div>
               <div class="button-label">Meeting</div>
             </div>
+          </div>
+
+          <div class="expectation-comment-container">
+
+            <div class="expectation-comment" ng-hide="editing">
+              <div style="padding: 10px 0;">
+                <span class="bold">Reason: </span>
+                <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+                <span ng-if="!expectation.user_expectation.comment">No reason added</span>
+              </div>
+            </div>
+
           </div>
 
         </div>

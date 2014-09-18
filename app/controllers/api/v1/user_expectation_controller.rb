@@ -48,7 +48,7 @@ class Api::V1::UserExpectationController < ApplicationController
   def history
     user_expectation_id = params[:id].to_i
 
-    history = UserExpectationService.new.get_user_expectation_history(user_expectation_id)
+    history = UserExpectationHistoryService.new.get_user_expectation_history(user_expectation_id)
 
     render status: :ok,
       json: {

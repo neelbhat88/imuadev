@@ -39,8 +39,12 @@
           <div class="expectation-comment-container">
 
             <div class="expectation-comment" ng-hide="editing">
-              <div class="mvm">Changed by <span class="bold">{{user_expectation.modified_by_name}}</span>
-                on <span class="bold">{{user_expectation.updated_at}}</span>
+              <div class="mvm">
+                <span ng-if="user_expectation.modified_by_name">Changed
+                  <span class="bold">{{user_expectation.updated_at | fromNow}}</span>
+                  by
+                </span>
+                <span class="bold">{{user_expectation.modified_by_name}}</span>
               </div>
               <div class="mvm">
                 <span class="bold">Reason: </span>
@@ -65,7 +69,9 @@
         <hr />
 
         <div class="expectation-history-item" ng-repeat="history in user_expectation_history">
-          <div><span class="bold">{{history.updated_at}}</span> changed by <span class="bold">{{history.modified_by_name}}</span></div>
+          <div>Changed <span class="bold">{{history.updated_at | fromNow}}</span> by
+            <span class="bold">{{history.modified_by_name}}</span> to:
+          </div>
 
           <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
 

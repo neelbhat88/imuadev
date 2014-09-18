@@ -39,7 +39,7 @@
 			<div class="list-container">
 				<div class="progress-circles--needs-attention" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in attention_students">
 					<div class="attention-circle">
-						<a href="#/progress/{{student.id}}"><progress-circle student="student" identifier="attention"></progress-circle></a>
+						<a href="#/progress/{{student.id}}"><progress-circle width="170" student="student" identifier="attention" parentclass="attention-circle"></progress-circle></a>
 					</div>
 					<div class="attention-text">
 						<a href="#/profile/{{student.id}}"><h5 class="bold student-name">{{student.first_last_initial}}</h5></a>
@@ -62,7 +62,7 @@
 
 			<div class="list-container">
 				<div class="progress-circles" ng-repeat="student in group_students | orderBy: 'last_name'">
-					<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress"><progress-circle student="student"></progress-circle></a>
+					<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress"><progress-circle width="170" student="student" identifier="list" parentclass="progress-circles"></progress-circle></a>
 						<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">{{student.first_last_initial}}</a></h6>
 						<ul class="circle-subnav">
 							<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>

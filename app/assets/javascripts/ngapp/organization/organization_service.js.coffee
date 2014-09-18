@@ -88,7 +88,8 @@ angular.module('myApp')
             mentor_module_progress.points.user += new_module_progress.points.user
             mentor_module_progress.points.total += new_module_progress.points.total
           else
-            mentor.modules_progress = []
+            if mentor.modules_progress == undefined
+              mentor.modules_progress = []
             new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
                                            points: { user: new_module_progress.points.user,\
                                                      total: new_module_progress.points.total } }

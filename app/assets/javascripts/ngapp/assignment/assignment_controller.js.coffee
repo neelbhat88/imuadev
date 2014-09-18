@@ -2,9 +2,8 @@ angular.module('myApp')
 .controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'edit', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
-    $scope._ = _
     $scope.today = new Date().getTime()
-    $scope.two_days_ago = $scope.today - (1000*60*60*24*2) # Two days ago
+    $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
 
     $scope.current_user = current_user
@@ -59,13 +58,13 @@ angular.module('myApp')
           $scope.assignment = saved_assignment
           $scope.assignment.editing = false
 
-    $scope.deleteAssignment = (index) ->
-      if window.confirm "Are you sure you want to delete this assignment?"
+    $scope.deleteAssignment = () ->
+      if window.confirm "Are you sure you want to delete this task?"
         AssignmentService.deleteAssignment($scope.assignment.id)
           .success (data) ->
-            # TODO What to do here?
-            # $scope.assignment = null
             $scope.assignment.editing = false
+            $scope.assignment = null
+            window.location.href = "#/assignments/" + $scope.user.id
 
     $scope.assignAllAssignableUsers = (assignment) ->
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
@@ -93,14 +92,36 @@ angular.module('myApp')
           .success (data) ->
             assignment.user_assignments = _.without(assignment.user_assignments, user_assignment)
 
-    $scope.isAssignable = (assignment, user) ->
-      return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
-             !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
+    $scope.deleteUserFromAssignment = (assignment, user) ->
+      if window.confirm "Are you sure you want to delete this user's assignment?"
+        user_assignment = _.filter(assignment.user_assignments, (ua) -> ua.user_id == user.id)
+        this.deleteUserAssignment(assignment, user_assignment)
+
+    $scope.isPendingAssignment = (assignment, user) ->
+      _.contains(_.pluck(assignment.assignees, 'id'), user.id)
+
+    $scope.isAssigned = (assignment, user) ->
+      _.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id)
+
+    $scope.isUnassigned = (assignment, user) ->
+      !this.isPendingAssignment(assignment, user) && !this.isAssigned(assignment, user)
 
     $scope.isPastDue = (assignment) ->
-      return new Date(assignment.due_datetime).getTime() >= $scope.today
+      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
+      if !due_datetime
+        return false
+      due_date = new Date(due_datetime).getTime()
+      return due_date < $scope.today
 
     $scope.isDueSoon = (assignment) ->
-      return !isPastDue(assignment) && new Date(assignment.due_datetime).getTime() >= $scope.two_days_ago
+      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
+      if !due_datetime
+        return false
+      due_date = new Date(due_datetime).getTime()
+      return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
+
+    $scope.isComplete = (assignment) ->
+      return _.every(assignment.user_assignments, (a) -> a.status == 1)
+
 
 ]

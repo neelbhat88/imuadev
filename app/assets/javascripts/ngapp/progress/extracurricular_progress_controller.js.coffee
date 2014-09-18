@@ -52,6 +52,7 @@ angular.module('myApp')
           $scope.user_extracurricular_activities[index].details = []
           $scope.user_extracurricular_activities[index].details.push(data.user_extracurricular_detail)
           $scope.refreshPoints()
+          $scope.$emit('just_updated', 'Extracurricular')
 
       $scope.user_extracurricular_activities.editing = false
 
@@ -69,6 +70,7 @@ angular.module('myApp')
                 activity.id != data.user_extracurricular_detail.user_extracurricular_activity_id)
 
               $scope.refreshPoints()
+              $scope.$emit('just_updated', 'Extracurricular')
       else
         $scope.new_extracurricular_activity.name = $scope.new_extracurricular_activity.new_name
         UserExtracurricularActivityService.saveNewExtracurricularActivity($scope.new_extracurricular_activity)
@@ -87,6 +89,7 @@ angular.module('myApp')
             $scope.previous_activity_list.push(other_activity)
 
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Extracurricular')
 
     $scope.deleteActivity = (index) ->
       if window.confirm "Are you sure you want to delete this activity?"
@@ -102,6 +105,7 @@ angular.module('myApp')
 
             $scope.previous_activity_list.push(other_activity)
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Extracurricular')
 
     $scope.cancelActivityEdit = (index) ->
       if $scope.user_extracurricular_activities[index].id

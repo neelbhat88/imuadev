@@ -2,8 +2,6 @@ angular.module('myApp')
 .controller "OrgAdminDashboardController", ['$scope', 'OrganizationService',
 ($scope, OrganizationService) ->
 
-  $scope._ = _
-
   # $scope.current_user = current_user # Set by parent dashboard
   # $scope.user = user # Set by parent dashboard
   $scope.current_organization = $scope.current_user.organization_name
@@ -13,7 +11,6 @@ angular.module('myApp')
   OrganizationService.getOrganizationWithUsers($scope.current_user.organization_id)
     .success (data) ->
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-      console.log($scope.organization)
 
       $scope.groupedStudents = $scope.organization.groupedStudents
       $scope.org_milestones = $scope.organization.org_milestones
@@ -35,9 +32,12 @@ angular.module('myApp')
       $scope.average_ecActivities = $scope.organization.average_ecActivities
       $scope.average_testsTaken = $scope.organization.average_testsTaken
 
-      $scope.percent_students_with_one_activity =
-        ((_.filter($scope.organization.students, (student) ->
-            student.semester_extracurricular_activities > 0).length / $scope.organization.students.length) * 100).toFixed(0)
+      if $scope.organization.students.length == 0
+        $scope.percent_students_with_one_activity = 0
+      else
+        $scope.percent_students_with_one_activity =
+          ((_.filter($scope.organization.students, (student) ->
+              student.semester_extracurricular_activities > 0).length / $scope.organization.students.length) * 100).toFixed(0)
 
       $scope.loaded_users = true
 ]
