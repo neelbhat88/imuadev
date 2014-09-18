@@ -12,7 +12,7 @@
       <h5 ng-if="user.is_mentor">{{user.title}}</h5>
 
       <ul class="profile--primary-info">
-        <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
+        <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{user.email}}" target="_blank" alt="Send {{user.first_name}} an Email">{{user.email}}</a></li>
         <li><span class="glyphicon glyphicon-phone"></span> {{user.phone ? user.phone : "No Phone Number Added"}}</li>
       </ul>
 

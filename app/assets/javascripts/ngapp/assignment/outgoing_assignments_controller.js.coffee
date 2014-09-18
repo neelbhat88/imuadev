@@ -2,7 +2,6 @@ angular.module('myApp')
 .controller 'OutgoingAssignmentsController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, user, AssignmentService, UsersService, OrganizationService) ->
 
-    $scope._ = _
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
@@ -98,14 +97,18 @@ angular.module('myApp')
       return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
              !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
 
-    $scope.assignmentIsComplete = (assignment) ->
+    $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)
 
     $scope.isPastDue = (assignment) ->
+      if assignment.due_datetime == null
+        return false
       due_date = new Date(assignment.due_datetime).getTime()
       return due_date < $scope.today
 
     $scope.isDueSoon = (assignment) ->
+      if assignment.due_datetime == null
+        return false
       due_date = new Date(assignment.due_datetime).getTime()
       return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
 

@@ -69,6 +69,9 @@
                   <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
                 </div>
                 <div class="submenu__link">
+                  <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">My Tasks</a>
+                </div>
+                <div class="submenu__link">
                   <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Our Roadmap</a>
                 </div>
               <% end %>
@@ -82,6 +85,9 @@
                 </div>
                 <div class="submenu__link">
                   <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">My Expectations</a>
+                </div>
+                <div class="submenu__link">
+                  <a class="js-nav-link" href="#/user_assignments/<%= current_user.id %>">My Tasks</a>
                 </div>
               <% end %>
               <div class="submenu__link">
@@ -122,6 +128,9 @@
                 <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
               </li>
               <li>
+                <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">My Tasks</a>
+              </li>
+              <li>
                 <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Our Roadmap</a>
               </li>
             <% end %>
@@ -135,6 +144,9 @@
               </li>
               <li>
                 <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">My Expectations</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="#/user_assignments/<%= current_user.id %>">My Tasks</a>
               </li>
             <% end %>
 
@@ -161,8 +173,11 @@
       </div>
     </header>
     <div class="mask"></div>
+    <div class="alerts-section">
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
     <div data-ng-view ng-if="!reload_required"></div>
-    <div ng-if="reload_required" style="padding: 30px; text-align: center;">
+    <div ng-if="reload_required" style="padding: 30px; text-align: center; display:none">
       <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
       <h5>Please refresh your browser window to get the updates!</h5>
     </div>

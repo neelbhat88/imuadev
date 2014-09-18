@@ -56,6 +56,6 @@ angular.module('myApp')
       $scope.meetingExpectations = true
 
     $scope.viewExpectation = (user_expectation_id) ->
-      $location.path("/user_expectation/#{user_expectation_id}")
+      $location.path("/user/#{student.id}/user_expectation/#{user_expectation_id}")
 
 ]

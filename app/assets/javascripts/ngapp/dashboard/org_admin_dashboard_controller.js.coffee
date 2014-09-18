@@ -2,8 +2,6 @@ angular.module('myApp')
 .controller "OrgAdminDashboardController", ['$scope', 'OrganizationService',
 ($scope, OrganizationService) ->
 
-  $scope._ = _
-
   # $scope.current_user = current_user # Set by parent dashboard
   # $scope.user = user # Set by parent dashboard
   $scope.current_organization = $scope.current_user.organization_name

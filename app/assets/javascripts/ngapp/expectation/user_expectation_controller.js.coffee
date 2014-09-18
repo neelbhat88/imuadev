@@ -1,7 +1,8 @@
 angular.module('myApp')
-.controller 'UserExpectationController', ['$scope', 'current_user', 'user_expectation', 'ExpectationService',
-  ($scope, current_user, user_expectation, ExpectationService) ->
+.controller 'UserExpectationController', ['$scope', 'current_user', 'student', 'user_expectation', 'ExpectationService',
+  ($scope, current_user, student, user_expectation, ExpectationService) ->
     $scope.current_user = current_user
+    $scope.student = student
     $scope.user_expectation = user_expectation
     $scope.user_expectation_history = null
 
@@ -31,7 +32,7 @@ angular.module('myApp')
       ExpectationService.updateUserExpectation($scope.user_expectation)
         .success (data) ->
           $scope.user_expectation = data.user_expectation
-          $scope.user_expectation_history.unshift(data.user_expectation)
+          $scope.user_expectation_history.unshift(angular.copy(data.user_expectation))
           $scope.editing = false
           $scope.new_comment = null
 
