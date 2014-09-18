@@ -162,6 +162,28 @@
 
     }
 
+    .status-block {
+      width: 100%;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: $grey;
+
+      .status-picture {
+        float: left;
+        margin-right: 20px;
+
+        .medium-circle-pictures, .medium-circle-picture {
+          margin: 0;
+        }
+
+      }
+
+      .status-message {
+        float: left;
+      }
+
+    }
+
   }
 
   .assignment--right {

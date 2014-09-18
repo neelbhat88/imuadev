@@ -22,27 +22,24 @@
         <h6>{{user_assignment.description}}</h6>
       </div>
 
-      <ul class="users-not-completed">
-        <li class="medium-circle-pictures">
-          <a href="#/profile/{{user_assignment.user.id}}">
-            <div class="medium-circle-picture">
-              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
-            </div>
-            <span class="bold">{{user_assignment.user.first_last_initial}}</span>
-          </a>
-          <ul class="circle-subnav" ng-if="user_assignment.status == 0">
-            <li class="subnav-button">
-              <button type="button" class="btn btn-success btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 1)" ng-disabled="user_assignment.status == 1">Mark Complete</button>
-            </li>
-          </ul>
-          <ul class="circle-subnav" ng-if="user_assignment.status == 1">
-            <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
-            <li class="subnav-button">
-              <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="status-block clear">
+        <div class="status-picture">
+          <div class="medium-circle-pictures">
+            <a href="#/profile/{{user_assignment.user.id}}">
+              <div class="medium-circle-picture">
+                <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="status-message">
+          <h5 class="bold">{{user_assignment.user.first_name}}, you haven't completed this task yet.</h5>
+        </div>
+      </div>
+
+      <button class="btn btn-success btn-lg" ng-if="user_assignment.status == 0" ng-click="setUserAssignmentStatus(user_assignment, 1)"><span class="glyphicon glyphicon-ok-circle"></span> I Did This</button>
+      <button class="btn btn-danger btn-lg" ng-if="user_assignment.status == 1" ng-click="setUserAssignmentStatus(user_assignment, 0)"><span class="glyphicon glyphicon-remove-circle"></span> I Didn't Do This Yet</button>
+
     </div>
 
     <div class="assignment--right">
