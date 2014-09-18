@@ -175,6 +175,28 @@
   }
 }
 
+.userExpectationContainer {
+  .expectation-header {
+    width: 100%;
+    padding: 20px 0;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+  }
+
+  .expectation--left {
+    width: 80%;
+    float: left;
+    padding: 20px 40px 40px 0;
+  }
+
+  .expectation--right {
+    width: 20%;
+    float: left;
+    padding-top: 20px;
+  }
+
+}
+
 .expectation-history-item {
   width: 46%;
   margin: 40px auto;

@@ -107,7 +107,7 @@
             </div>
             <div ng-if="!current_user.is_student">
               <h5 class="bold">{{user_assignment.user.first_name}} completed this task.</h5>
-              <h6>They completed it {{user_assignment.updated_at | fromNow}}</h6>
+              <h6>{{user_assignment.updated_at | fromNow}}</h6>
             </div>
           </td>
         </tr>

@@ -594,7 +594,32 @@ header {
 
 }
 
+/* ===============================================
+   Status Block Classes
+   =============================================== */
 
+.status-block {
+  width: 100%;
+  margin-bottom: 20px;
+  background: $grey;
+  @include border-radius(5px);
+
+  .status-picture {
+    width: 120px;
+    padding: 20px;
+    vertical-align: top;
+    .medium-circle-pictures, .medium-circle-picture {
+      margin: 0;
+    }
+
+  }
+
+  .status-message {
+    padding: 20px;
+    padding-left: 0;
+  }
+
+}
 
 /* ===============================================
    Helper Classes
