@@ -18,6 +18,24 @@
       <h4 class="bold">
         {{user_expectation.title}}
       </h4>
+      <table class="status-block"ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
+                                                     'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
+                                                     'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+        <tr>
+          <td class="status-picture">
+            <div class="medium-circle-pictures">
+              <a href="#/profile/{{student.id}}">
+                <div class="medium-circle-picture">
+                  <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
+                </div>
+              </a>
+            </div>
+          </td>
+          <td class="status-message">
+            <h5 class="bold">{{student.first_name}} is meeting this expectation.</h5>
+          </td>
+        </tr>
+      </table>
     </div>
     <div class="expectation--right">
       Right
