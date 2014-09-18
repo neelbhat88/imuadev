@@ -162,11 +162,10 @@
       <ul>
         <li>
           <h5>
-            <!-- <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length"> -->
             <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-              <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
+              <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
             </span>
             <span class="label label-success" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete

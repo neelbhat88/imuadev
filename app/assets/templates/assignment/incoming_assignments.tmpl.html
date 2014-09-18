@@ -31,11 +31,10 @@
           </div>
           <div class="tasks--list--item--middle">
             <h6>
-              <!-- <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length"> -->
               <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-                <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
+                <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
               </span>
             </h6>
           </div>
@@ -48,21 +47,19 @@
           <h5 class="bold"><a href="#/user_assignment/{{assignment.id}}">{{assignment.title}}</a></h5>
           <h6>{{assignment.description}}</h6>
           <span class="subtext">
-            <!-- <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length"> -->
-              <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
-            </span>
-            <a href="#/profile/{{assignment.assigner.id}}">
-              <span ng-if="current_user.id == assignment.assigner.id">You </span>
-              <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
-            </a>
-            created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
-            <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
+            <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+            <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+            <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
           </span>
+          <a href="#/profile/{{assignment.assigner.id}}">
+            <span ng-if="current_user.id == assignment.assigner.id">You </span>
+            <span ng-if="current_user.id != assignment.assigner.id">{{assignment.assigner.first_last_initial}} </span>
+          </a>
+          created this task on {{assignment.created_at | date: 'MM/dd/yy'}}.
+          <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
 
           <div class="edit-buttons">
-            <button class="btn btn-success" ng-click="setUserAssignmentStatus(assignment, 1)">I Did This</button>
+            <a href="#/user_assignment/{{assignment.id}}"><button class="btn btn-default">View Task Details</button></a>
           </div>
 
         </div>
