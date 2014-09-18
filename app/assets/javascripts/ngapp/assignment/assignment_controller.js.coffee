@@ -59,13 +59,13 @@ angular.module('myApp')
           $scope.assignment = saved_assignment
           $scope.assignment.editing = false
 
-    $scope.deleteAssignment = (index) ->
-      if window.confirm "Are you sure you want to delete this assignment?"
+    $scope.deleteAssignment = () ->
+      if window.confirm "Are you sure you want to delete this task?"
         AssignmentService.deleteAssignment($scope.assignment.id)
           .success (data) ->
-            # TODO What to do here?
-            # $scope.assignment = null
             $scope.assignment.editing = false
+            $scope.assignment = null
+            window.location.href = "#/assignments/" + $scope.user.id
 
     $scope.assignAllAssignableUsers = (assignment) ->
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
