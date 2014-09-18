@@ -36,5 +36,8 @@ angular.module('myApp')
   @updateUserExpectation = (user_expectation) ->
     $http.put "/api/v1/user_expectation/#{user_expectation.id}", {userExpectation: user_expectation}
 
+  @getUserExpectationHistory = (user_expectation_id) ->
+    $http.get "/api/v1/user_expectation/#{user_expectation_id}/history"
+
   @
 ]
