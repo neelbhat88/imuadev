@@ -47,6 +47,7 @@
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.date | date: 'MM/dd/yy'}}</td>
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.description}}</td>
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.hours}}</td>
+                  <td ng-hide="user_service_hour.editing">{{user_service_hour.date | fromNow}}</td>
                   <td ng-hide="user_service_hour.editing" class="glyphicons">
                     <div class="glyphicon-container">
                       <span class="glyphicon glyphicon-pencil" title="Edit Hour" ng-click="editHour(organizationIndex, hourIndex)"></span>

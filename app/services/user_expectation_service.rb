@@ -56,7 +56,9 @@ class UserExpectationService
 
       UserExpectationHistoryService.new.create_expectation_history(dbUserExpectation, current_user)
 
-      return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", DomainUserExpectation.new({:user_expectation => dbUserExpectation}))
+      domainUserExpectation = get_user_expectation(dbUserExpectation.id)
+
+      return ReturnObject.new(:ok, "Successfully updated UserExpectation, id: #{dbUserExpectation.id}.", domainUserExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation, id: #{dbUserExpectation.id}", nil)
     end
