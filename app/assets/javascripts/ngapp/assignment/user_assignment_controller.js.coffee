@@ -2,7 +2,6 @@ angular.module('myApp')
 .controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService) ->
 
-    $scope._ = _
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
