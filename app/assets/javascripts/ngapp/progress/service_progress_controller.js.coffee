@@ -63,6 +63,7 @@ angular.module('myApp')
           $scope.user_service_organizations[index].hours = service_hours
           $scope.user_service_organizations.editing = false
           $scope.refreshPoints()
+          $scope.$emit('just_updated', 'Service')
 
     $scope.saveNewOrganization = () ->
       if $scope.new_service_organization.hours[0].user_service_organization_id
@@ -78,6 +79,7 @@ angular.module('myApp')
               org.id != data.user_service_hour.user_service_organization_id)
 
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Service')
       else
         $scope.new_service_organization.name = $scope.new_service_organization.new_name
         UserServiceOrganizationService.saveNewServiceOrganization($scope.new_service_organization)
@@ -95,6 +97,7 @@ angular.module('myApp')
 
             $scope.previous_organization_list.push(other_organization)
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Service')
 
     $scope.saveHour = (parentIndex, index, serviceOrganizationId) ->
       if $scope.user_service_organizations[parentIndex].hours[index].new_hours != undefined and
@@ -111,6 +114,7 @@ angular.module('myApp')
             $scope.user_service_organizations[parentIndex].hours[index] = data.user_service_hour
             $scope.user_service_organizations[parentIndex].hours[index].editing = false
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Service')
       else
         window.confirm "Please enter the date and hours"
 
@@ -128,6 +132,7 @@ angular.module('myApp')
 
             $scope.previous_organization_list.push(other_organization)
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Service')
 
     $scope.deleteHour = (parentIndex, index) ->
       if window.confirm "Are you sure you want to delete this hour?"
@@ -135,6 +140,7 @@ angular.module('myApp')
           .success (data) ->
             $scope.user_service_organizations[parentIndex].hours.splice(index, 1)
             $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Service')
 
     $scope.cancelOrganizationEdit = (index) ->
       if $scope.user_service_organizations[index].id
