@@ -31,7 +31,7 @@
       <div class="progressCircle-big">
         <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
           <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-            <big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+            <progress-circle width="240" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
           </div>
         </a>
       </div>
