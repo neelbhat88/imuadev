@@ -38,7 +38,7 @@ angular.module('myApp')
     user_id:          userId,
     title:            "",
     description:      "",
-    due_datetime:     new Date().getTime()
+    due_datetime:     new Date()
 
   @getAssignment = (assignmentId) ->
     $http.get "api/v1/assignment/#{assignmentId}"
