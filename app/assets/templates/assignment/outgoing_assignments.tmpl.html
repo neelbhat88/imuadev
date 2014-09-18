@@ -20,11 +20,10 @@
             <!-- <h6 class="bold"><a href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6> -->
             <h6 class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
             <span class="subtext">
-              <!-- <span class="label label-primary" ng-if="!isComplete(assignment)"> -->
               <span ng-if="!isComplete(assignment)">
-                <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
+                <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
               </span>
               <a no-click-propagation href="#/profile/{{user.id}}">
                 <span ng-if="current_user.id == user.id">You </span>
@@ -47,9 +46,9 @@
           <span class="subtext">
             <!-- <span class="label label-primary" ng-if="!isComplete(assignment)"> -->
             <span ng-if="!isComplete(assignment)">
-              <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
+              <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
             </span>
             <a no-click-propagation href="#/profile/{{user.id}}">
               <span ng-if="current_user.id == user.id">You </span>
@@ -100,7 +99,7 @@
           </div>
 
           <div class="edit-buttons">
-            <a href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+            <a no-click-propagation href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
           </div>
 
         </div>
