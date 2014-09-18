@@ -97,7 +97,7 @@ angular.module('myApp')
       return !_.contains(_.pluck(assignment.user_assignments, 'user_id'), user.id) &&
              !_.contains(_.pluck(assignment.assignees, 'id'), user.id)
 
-    $scope.assignmentIsComplete = (assignment) ->
+    $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)
 
     $scope.isPastDue = (assignment) ->
