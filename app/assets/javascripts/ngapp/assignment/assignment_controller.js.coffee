@@ -107,11 +107,17 @@ angular.module('myApp')
       !this.isPendingAssignment(assignment, user) && !this.isAssigned(assignment, user)
 
     $scope.isPastDue = (assignment) ->
-      due_date = new Date(assignment.due_datetime).getTime()
+      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
+      if !due_datetime
+        return false
+      due_date = new Date(due_datetime).getTime()
       return due_date < $scope.today
 
     $scope.isDueSoon = (assignment) ->
-      due_date = new Date(assignment.due_datetime).getTime()
+      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
+      if !due_datetime
+        return false
+      due_date = new Date(due_datetime).getTime()
       return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
 
     $scope.isComplete = (assignment) ->

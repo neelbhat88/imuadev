@@ -101,10 +101,14 @@ angular.module('myApp')
       return _.every(assignment.user_assignments, (a) -> a.status == 1)
 
     $scope.isPastDue = (assignment) ->
+      if assignment.due_datetime == null
+        return false
       due_date = new Date(assignment.due_datetime).getTime()
       return due_date < $scope.today
 
     $scope.isDueSoon = (assignment) ->
+      if assignment.due_datetime == null
+        return false
       due_date = new Date(assignment.due_datetime).getTime()
       return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
 
