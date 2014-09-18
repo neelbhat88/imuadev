@@ -35,7 +35,7 @@
         <div class="status-message">
           <h5 class="bold" ng-if="current_user.is_student">{{user_assignment.user.first_name}}, you haven't completed this task yet.</h5>
           <h5 class="bold" ng-if="!current_user.is_student">{{user_assignment.user.first_name}} hasn't completed this task yet.</h5>
-          <h6>It's due {{user_assignment.due_datetime | fromNow}}.</h6>
+          <h6 ng-if="user_assignment.due_datetime != null">It's due {{user_assignment.due_datetime | fromNow}}.</h6>
         </div>
       </div>
       <!-- Due Soon Status Block -->
@@ -73,7 +73,7 @@
         </div>
         <div class="status-message">
           <div ng-if="current_user.is_student">
-            <h5 class="bold">{{user_assignment.user.first_name}}, this task was due {{user_assignment.due_datetime | fromNow}}!</h5>
+            <h5 class="bold">{{user_assignment.user.first_name}}, this task was due on {{user_assignment.due_datetime | date: 'MM/dd/yy'}}!</h5>
             <h6>Please complete it as soon as possible.</h6>
           </div>
           <div ng-if="!current_user.is_student">
