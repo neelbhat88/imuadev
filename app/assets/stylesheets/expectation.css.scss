@@ -186,8 +186,24 @@
   .expectation-content {
     padding: 20px 0;
 
+    .expectation--current-status {
+      @include border-radius(20px);
+      padding: 30px;
+      text-align: center;
+
+      .circle-pictures, .circle-picture {
+        margin: 5px;
+      }
+
+      .status-buttons {
+        margin-top: 10px;
+      }
+
+    }
+
     .expectation--status-changer {
       width: 100%;
+      margin-bottom: 20px;
       .expectation--status {
         width: 33%;
         float: left;
@@ -206,6 +222,10 @@
         }
       }
 
+    }
+
+    .expectation--comment-box {
+      margin-bottom: 20px;
     }
 
   }

@@ -17,31 +17,44 @@
     <h4 class="bold">
       {{user_expectation.title}}
     </h4>
-    <table class="status-block" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
-                                                   'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
-                                                   'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-      <tr>
-        <td class="status-picture large-pic">
-          <div class="circle-pictures">
-            <a href="#/profile/{{student.id}}">
-              <div class="circle-picture">
-                <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
-              </div>
-            </a>
+    <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
+                                                                         'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
+                                                                         'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+      <div class="circle-pictures">
+        <a href="#/profile/{{student.id}}">
+          <div class="circle-picture">
+            <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
           </div>
-        </td>
-        <td class="status-message">
-          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting">{{student.first_name}} is meeting this expectation.</h5>
-          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work">{{student.first_name}} needs to work on this expectation.</h5>
-          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting">{{student.first_name}} is not meeting this expectation.</h5>
-          <h6 ng-if="user_expectation.comment">{{user_expectation.comment}}</h6>
-          <span ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</span>
-          <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
-            <button class="btn btn-default" ng-click="editExpectation(user_expectation.status)">Change {{student.first_name}}'s Status</button>
-          </div>
-        </td>
-      </tr>
-    </table>
+        </a>
+      </div>
+
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting && current_user.role <= CONSTANTS.USER_ROLES.mentor">
+        <span class="glyphicon glyphicon-star"></span> Nice! {{student.first_name}} is meeting this expectation.
+      </h5>
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting && current_user.role >= CONSTANTS.USER_ROLES.student">
+        <span class="glyphicon glyphicon-star"></span> Nice Job! You're meeting this expectation.
+      </h5>
+
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work && current_user.role <= CONSTANTS.USER_ROLES.mentor">
+        <span class="glyphicon glyphicon-warning-sign"></span> {{student.first_name}} needs to work on this expectation.
+      </h5>
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work && current_user.role >= CONSTANTS.USER_ROLES.student">
+        <span class="glyphicon glyphicon-warning-sign"></span> Hey {{student.first_name}}, you have some work to do on this expectation.
+      </h5>
+
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting && current_user.role <= CONSTANTS.USER_ROLES.mentor">
+        <span class="glyphicon glyphicon-exclamation-sign"></span> {{student.first_name}} is not meeting this expectation.
+      </h5>
+      <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting && current_user.role >= CONSTANTS.USER_ROLES.student">
+        <span class="glyphicon glyphicon-exclamation-sign"></span> {{student.first_name}}, you are not meeting this expectation.
+      </h5>
+
+      <h6 ng-if="user_expectation.comment">{{user_expectation.comment}}</h6>
+      <span ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</span>
+      <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
+        <button class="btn btn-default" ng-click="editExpectation(user_expectation.status)"><span class="glyphicon glyphicon-edit"></span> Change {{student.first_name}}'s Status</button>
+      </div>
+    </div>
 
     <table class="status-block" ng-show="editing" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
       <tr>
@@ -79,8 +92,10 @@
               </div>
             </div>
           </div>
-          <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
-          <textarea ng-model="new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+          <div class="expectation--comment-box">
+            <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
+            <textarea ng-model="new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+          </div>
           <div class="status-buttons buttonGroup">
             <button class="btn btn-success" ng-click="updateExpectation()"><span class="glyphicon glyphicon-ok"></span> Save {{student.first_name}}'s Status</button>
             <button class="btn btn-danger btn-sm" ng-click="cancelEditing()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
@@ -100,7 +115,7 @@
           <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
         </td>
         <td class="status-message">
-          <h6>{{history.modified_by_name}} changed the status of this expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
+          <h6>{{history.modified_by_name}} changed the status of {{student.first_name}}'s expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
           <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
           <div>{{history.updated_at | fromNow}}</div>
         </td>
