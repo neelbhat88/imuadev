@@ -104,34 +104,45 @@
   color: white;
   text-align: center;
 
-  .expectationLower--container {
-      padding: 40px 0;
+  @include respond-to(600) {
+    padding: 0;
+  }
 
-      .module-header {
-        margin-bottom: 40px;
-      }
+  .expectationLower--container {
+    padding: 40px 0;
+
+    .module-header {
+      margin-bottom: 20px;
+    }
+
+    .expectations-list {
 
       .expectations-list-item {
-        width: 48%;
+        width: 30%;
         display: inline-block;
-
+        vertical-align: top;
+        margin: 0 10px 20px 10px;
+        padding: 20px;
+        @include border-radius(10px);
         cursor: pointer;
+        @include respond-to(1200) { width: 45%; }
+        @include respond-to(600) { width: 100%; margin: 3px 0; @include border-radius(0); }
 
-        &:hover {
-          box-shadow: 0 0 10px;
-        }
-
-        @include respond-to (900) {
-          float: none;
-          display: block;
-          width: 100%;
-        }
-
-        .expectation-btn-group--container {
-          width: 65%;
+        .updated-text {
+          margin-top: 10px;
+          @include font-size(1);
         }
 
       }
+
+      &:hover {
+        .expectations-list-item {
+          opacity: 0.8;
+          &:hover {opacity: 1;}
+        }
+      }
+
+    }
 
   }
 
@@ -175,13 +186,84 @@
   }
 }
 
-.expectation-history-item {
-  width: 46%;
-  margin: 40px auto;
+.userExpectationContainer {
+  .expectation-header {
+    width: 100%;
+    padding: 20px 0;
+    background: $grey;
+    border-bottom: 1px solid $darkborder;
+  }
+
+  .expectation-content {
+    padding: 20px 0;
+
+    .expectation--current-status {
+      @include border-radius(20px);
+      padding: 30px;
+      text-align: center;
+
+      .circle-pictures, .circle-picture {
+        margin: 5px;
+      }
+
+      .status-buttons {
+        margin-top: 10px;
+      }
+
+    }
+
+    .expectation--status-changer {
+      width: 100%;
+      margin-bottom: 20px;
+      .expectation--status {
+        width: 33%;
+        float: left;
+        text-align: center;
+        .expectation--status-inner {
+          @include border-radius(20px);
+          margin: 0 10px;
+          padding: 15px;
+          opacity: 0.2;
+          &:hover {
+            opacity: 1;
+          }
+        }
+        .selected {
+          opacity: 1;
+        }
+      }
+
+    }
+
+    .expectation--comment-box {
+      margin-bottom: 20px;
+    }
+
+  }
+
+  .expectation-history {
+    padding: 0 40px;
+
+    .history-block {
+      opacity: 0.6;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .history-comment {
+      padding: 20px;
+    }
+
+  }
+
+}
+
+.expectation-dot {
+  width: 100px;
 }
 
 .expectation-history-status {
-  margin: 20px auto;
   width: 50px;
   height: 50px;
   @include border-radius (50%);

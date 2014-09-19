@@ -529,72 +529,39 @@ header {
 } //milestone-item
 
 /* ===============================================
-   Expectation Classes
+   Status Block Classes
    =============================================== */
 
-.expectations-list-item {
-    margin: 0 1%;
-    margin-bottom: 80px;
-    width: 100%;
-    text-align: center;
+.status-block {
+  width: 100%;
+  margin-bottom: 20px;
+  background: $grey;
+  @include border-radius(5px);
 
-    .expectation-title {
-      padding-bottom: 20px;
+  .status-picture {
+    padding: 20px;
+    vertical-align: top;
+    .circle-pictures, .circle-picture, .medium-circle-pictures, .medium-circle-picture {
+      margin: 0;
     }
 
-    .expectation-btn-group--container {
-      width: 80%;
-      margin: 0 auto;
+  }
 
-      .expectation-selector {
-        width: 33%;
-        float: left;
+  .large-pic, .circle-pictures {
+    width: 150px;
+  }
 
-        .button-wrapper {
 
-          width: 50px;
-          height: 50px;
-          margin: 0 auto;
-
-          button {
-
-            width: 30px;
-            height: 30px;
-            margin-top: 8px;
-            background: white;
-            border: 0;
-            @include border-radius (50%);
-            opacity: 0.1;
-
-          }
-
-          .expectation-btn-alert { background: $red; }
-          .expectation-btn-warn { background: $yellow; }
-          .expectation-btn-good { background: $green; }
-
-        }
-        .button-label {
-          padding: 20px 0;
-        }
-
-        .selected {
-
-          button {
-            width: 50px;
-            height: 50px;
-            margin: 0;
-            opacity: 1;
-          }
-
-        }
-
-      }
-
-    }
+  .status-message {
+    padding: 20px;
+    padding-left: 0;
+  }
 
 }
 
-
+.due-soon, .warn { background: #f0ad4e; }
+.past-due, .bad { background: $darkred; }
+.complete, .good { background: $green; }
 
 /* ===============================================
    Helper Classes

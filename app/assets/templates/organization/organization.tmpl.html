@@ -51,7 +51,8 @@
           <ul class="circle-subnav">
             <li>{{mentor.title}}</li>
             <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-            <li class="extra-info">Last Login: {{mentor.last_login}}</li>
+            <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
+            <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
           </ul>
         </div>
       </div>
@@ -74,7 +75,8 @@
   			<ul class="circle-subnav">
   				<li>{{mentor.title}}</li>
           <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-  				<li class="extra-info">Last Login: {{mentor.last_login}}</li>
+          <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
+          <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
   			</ul>
       </div>
 
