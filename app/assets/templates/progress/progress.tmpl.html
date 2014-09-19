@@ -7,7 +7,7 @@
 
   <div class="progress-header">
 
-    <div class="circles js-circles" modulecolor="{{selected_module.module_title}}">
+    <div class="circles js-circles" modulecolor="{{selected_module.module_title}}" ng-if="selected_module.module_title != null">
       <div class="module-circles js-module-circles">
         <div class="module-circle" ng-click="selectModule('null')">Total Progress Circle</div>
         <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
@@ -24,18 +24,41 @@
   <div class="progressLower">
 
     <div class="progressLowerDefault" ng-if="selected_module.module_title == null">
-      <h4 class="progressLower-title">
-        <a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
-        <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
-      </h4>
+      <div class='progressLower--header'>
+        <h4 class="progressLower-title">
+          <a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
+          <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
+        </h4>
+      </div>
 
-      <div class="progressCircle-big--container">
-        <div class="big-progress-circle">
-          <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
-            <progress-circle width="325" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
-          </a>
+      <div class="progressLower--content">
+        <div class="overall-progress">
+
+          <div class="points points-earned">
+            <h3>560</h3>
+            <h6>Points Earned</h6>
+          </div>
+
+          <div class="progressCircle-big--container">
+            <div class="big-progress-circle">
+              <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+                <progress-circle width="325" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="module-circles js-module-circles">
+        <div class="module-circle" ng-click="selectModule('null')">Total Progress Circle</div>
+        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+          <module-progress-circle module="mod"></module-progress-circle>
+          <div class="module-circle__modtitle"><h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6></div>
+          <div class="module-circle__modupdated" ng-if="mod.last_updated != null"><span>Last Updated {{mod.last_updated | fromNow}}</h6></div>
+          <div class="module-circle__modupdated" ng-if="mod.last_updated == null"><span>Never Updated</span></div>
+        </div>
+      </div>
+
     </div>
 
     <div ng-if="selected_module.module_title != null">
@@ -44,7 +67,10 @@
           <span class="bold">{{student.first_name}}'s</span> {{selected_module.module_title | underscoresToSpaces}}
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
-        <h4 class="bold" ng-if="current_user.is_student">Your {{selected_module.module_title | underscoresToSpaces}}</h4>
+        <h4 class="progressLower-title" ng-if="current_user.is_student">
+          <span class="bold">Your {{selected_module.module_title | underscoresToSpaces}}</span>
+          <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
+        </h4>
       </div>
 
       <div class="progressLower--no-content" ng-show="selected_module.points.total == 0">
