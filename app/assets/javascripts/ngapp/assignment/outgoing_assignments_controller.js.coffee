@@ -42,6 +42,6 @@ angular.module('myApp')
       return _.indexOf(final_order, assignment)
 
     $scope.sortCompletedAssignments = (assignment) ->
-      final_order = _.sortBy($scope.outgoing_assignments, (a) -> if !a.due_datetime then a.due_datetime else a.updated_at).reverse()
+      final_order = _.sortBy($scope.outgoing_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
       return _.indexOf(final_order, assignment)
 ]

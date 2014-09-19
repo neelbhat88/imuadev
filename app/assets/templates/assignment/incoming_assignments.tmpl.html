@@ -59,7 +59,7 @@
           <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | date: 'MM/dd/yy'}}.</span>
 
           <div class="edit-buttons">
-            <a no-click-propagation href="#/user_assignment/{{assignment.id}}"><button class="btn btn-default">View Task Details</button></a>
+            <button class="btn btn-success" ng-click="setUserAssignmentStatus(assignment, 1)">I Did This</button>
           </div>
 
         </div>
