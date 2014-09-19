@@ -79,6 +79,13 @@ class AssignmentService
     end
 
     if newAssignment.save
+      IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.user_id,
+                                                {:task_id => newAssignment.id,
+                                                 :title => newAssignment.title,
+                                                 :description => newAssignment.description
+                                                }
+                                        )
+
       return ReturnObject.new(:ok, "Successfully created Assignment, id: #{newAssignment.id}.", newAssignment)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create assignment. Errors: #{newAssignment.errors.inspect}.", nil)
