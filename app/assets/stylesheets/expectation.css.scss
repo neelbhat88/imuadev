@@ -104,34 +104,45 @@
   color: white;
   text-align: center;
 
-  .expectationLower--container {
-      padding: 40px 0;
+  @include respond-to(600) {
+    padding: 0;
+  }
 
-      .module-header {
-        margin-bottom: 40px;
-      }
+  .expectationLower--container {
+    padding: 40px 0;
+
+    .module-header {
+      margin-bottom: 20px;
+    }
+
+    .expectations-list {
 
       .expectations-list-item {
-        width: 48%;
+        width: 30%;
         display: inline-block;
-
+        vertical-align: top;
+        margin: 0 10px 20px 10px;
+        padding: 20px;
+        @include border-radius(10px);
         cursor: pointer;
+        @include respond-to(1200) { width: 45%; }
+        @include respond-to(600) { width: 100%; margin: 3px 0; @include border-radius(0); }
 
-        &:hover {
-          box-shadow: 0 0 10px;
-        }
-
-        @include respond-to (900) {
-          float: none;
-          display: block;
-          width: 100%;
-        }
-
-        .expectation-btn-group--container {
-          width: 65%;
+        .updated-text {
+          margin-top: 10px;
+          @include font-size(1);
         }
 
       }
+
+      &:hover {
+        .expectations-list-item {
+          opacity: 0.8;
+          &:hover {opacity: 1;}
+        }
+      }
+
+    }
 
   }
 
