@@ -7,7 +7,7 @@ angular.module('myApp')
     },
     link: function(scope, element, attrs) {
       var margin = {top: 0, right: 0, bottom: 0, left: 0};
-      var width = 170 - margin.left - margin.right;
+      var width = 125 - margin.left - margin.right;
       var height = width - margin.top - margin.bottom;
 
       var chart = d3.select(element[0])
@@ -47,7 +47,7 @@ angular.module('myApp')
 
           var arc = d3.svg.arc()
               .outerRadius(radius)
-              .innerRadius(radius - 12);
+              .innerRadius(radius - 10);
 
           var myScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
 
@@ -95,7 +95,7 @@ angular.module('myApp')
           .attr("dy", "0.2em")
           .attr("class", "value")
           .attr("fill", "white")
-          .attr("font-size", "30")
+          .attr("font-size", "22")
           .style("text-anchor", "middle")
           .text(function(d) {
               return modulePoints + "/" + totalPoints;});

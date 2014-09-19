@@ -6,27 +6,20 @@
   .circles {
 
     width: 100%;
-    padding: 40px 0;
+    padding-top: 40px;
     text-align: center;
-
-    @include respond-to (1200) {
-      padding: 20px 0;
-    }
 
     .module-circle {
       display: inline-block;
       text-align: center;
       opacity: 0.3;
-      margin-right: 60px;
+      padding-bottom: 40px;
+      margin: 0 30px;
 
       @include respond-to(1200) {}
 
       &.inactive {
         //display: none;
-      }
-
-      &:last-of-type {
-      	margin-right: 0;
       }
 
     }
@@ -68,7 +61,7 @@
   text-align: center;
   padding-top: 40px;
 
-  .progressLowerDefault {
+  .progressLower-title {
 
     select {
 
