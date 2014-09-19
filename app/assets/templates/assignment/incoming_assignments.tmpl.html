@@ -17,7 +17,7 @@
         </div>
       </li>
 
-      <li class="tasks--list--item" ng-repeat="assignment in incoming_assignments" ng-if="assignment.status == 0" ng-click="assignment.expanded = !assignment.expanded">
+      <li class="tasks--list--item" ng-repeat="assignment in incoming_assignments | orderBy:sortIncompleteAssignments" ng-if="assignment.status == 0" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
             <h6 class="bold"><a no-click-propagation href="#/user_assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
@@ -84,7 +84,7 @@
         </div>
       </li>
 
-      <li class="tasks--list--item" ng-repeat="assignment in incoming_assignments" ng-if="assignment.status == 1" ng-click="assignment.expanded = !assignment.expanded">
+      <li class="tasks--list--item" ng-repeat="assignment in incoming_assignments | orderBy:sortCompletedAssignments" ng-if="assignment.status == 1" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
             <h6 class="bold"><a no-click-propagation href="#/user_assignment/{{assignment.id}}">{{assignment.title}}</a></h6>

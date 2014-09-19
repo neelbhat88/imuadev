@@ -11,6 +11,10 @@ class ViewAssignmentCollection
     @created_at = assignment.created_at
     @user_assignments = assignment.user_assignments.map{|a| ViewUserAssignment.new(a, {user: true})}
 
+    # Most recent change to the assignment or any of its user_assignments
+    updated_ats = [assignment.updated_at] + assignment.user_assignments.pluck(:updated_at)
+    @updated_at = updated_ats.max
+
     if options[:user]
       @user = ViewUser.new(assignment.user)
     end

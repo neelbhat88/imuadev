@@ -40,4 +40,16 @@ angular.module('myApp')
         return false
       due_date = new Date(user_assignment.due_datetime).getTime()
       return !this.isPastDue(user_assignment) && due_date <= $scope.two_days_from_now
+
+    $scope.sortIncompleteAssignments = (user_assignment) ->
+      not_dated = _.filter($scope.incoming_assignments, (a) -> !a.due_datetime)
+      not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
+      dated = _.filter($scope.incoming_assignments, (a) -> a.due_datetime)
+      dated_order = _.sortBy(dated, (a) -> a.due_datetime)
+      final_order = dated_order.concat(not_dated_order)
+      return _.indexOf(final_order, user_assignment)
+
+    $scope.sortCompletedAssignments = (user_assignment) ->
+      final_order = _.sortBy($scope.incoming_assignments, (a) -> if !a.due_datetime then a.due_datetime else a.updated_at).reverse()
+      return _.indexOf(final_order, user_assignment)
 ]
