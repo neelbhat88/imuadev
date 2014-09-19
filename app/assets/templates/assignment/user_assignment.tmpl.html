@@ -28,7 +28,7 @@
             <div class="medium-circle-pictures">
               <a href="#/profile/{{user_assignment.user.id}}">
                 <div class="medium-circle-picture">
-                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
                 </div>
               </a>
             </div>
@@ -47,7 +47,7 @@
             <div class="medium-circle-pictures">
               <a href="#/profile/{{user_assignment.user.id}}">
                 <div class="medium-circle-picture">
-                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
                 </div>
               </a>
             </div>
@@ -71,14 +71,14 @@
             <div class="medium-circle-pictures">
               <a href="#/profile/{{user_assignment.user.id}}">
                 <div class="medium-circle-picture">
-                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
                 </div>
               </a>
             </div>
           </td>
           <td class="status-message">
             <div ng-if="current_user.is_student">
-              <h5 class="bold">{{user_assignment.user.first_name}}, this task was due on {{user_assignment.due_datetime | date: 'MM/dd/yy'}}!</h5>
+              <h5 class="bold">{{user_assignment.user.first_name}}, this task was due on {{user_assignment.due_datetime | formatMDY}}!</h5>
               <h6>Please complete it as soon as possible.</h6>
             </div>
             <div ng-if="!current_user.is_student">
@@ -95,7 +95,7 @@
             <div class="medium-circle-pictures">
               <a href="#/profile/{{user_assignment.user.id}}">
                 <div class="medium-circle-picture">
-                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+                  <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
                 </div>
               </a>
             </div>
@@ -134,7 +134,7 @@
         </li>
         <li ng-if="user_assignment.due_datetime != null">
           <h6>Due by</h6>
-          <h5 class="bold">{{user_assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+          <h5 class="bold">{{user_assignment.due_datetime | formatMDY}}</h5>
         </li>
         <li>
           <h6>Created by</h6>
@@ -144,7 +144,7 @@
             </div>
             <h6 class="bold">{{assigner.first_name}} {{assigner.last_name}}</h6>
           </a>
-          <p>on {{user_assignment.created_at | date: 'MM/dd/yy'}}</p>
+          <p>on {{user_assignment.created_at | formatMDY}}</p>
         </li>
       </ul>
     </div>
