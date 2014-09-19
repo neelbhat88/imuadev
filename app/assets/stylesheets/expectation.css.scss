@@ -183,16 +183,31 @@
     border-bottom: 1px solid $darkborder;
   }
 
-  .expectation--left {
-    width: 80%;
-    float: left;
-    padding: 20px 40px 40px 0;    
-  }
+  .expectation-content {
+    padding: 20px 0;
 
-  .expectation--right {
-    width: 20%;
-    float: left;
-    padding-top: 20px;
+    .expectation--status-changer {
+      width: 100%;
+      .expectation--status {
+        width: 33%;
+        float: left;
+        text-align: center;
+        .expectation--status-inner {
+          @include border-radius(20px);
+          margin: 0 10px;
+          padding: 15px;
+          opacity: 0.2;
+          &:hover {
+            opacity: 1;
+          }
+        }
+        .selected {
+          opacity: 1;
+        }
+      }
+
+    }
+
   }
 
 }

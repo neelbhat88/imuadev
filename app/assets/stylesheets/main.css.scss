@@ -605,21 +605,34 @@ header {
   @include border-radius(5px);
 
   .status-picture {
-    width: 120px;
     padding: 20px;
     vertical-align: top;
-    .medium-circle-pictures, .medium-circle-picture {
+    .circle-pictures, .circle-picture, .medium-circle-pictures, .medium-circle-picture {
       margin: 0;
     }
 
   }
 
+  .large-pic, .circle-pictures {
+    width: 150px;
+  }
+
+
   .status-message {
     padding: 20px;
     padding-left: 0;
+
+    .status-buttons {
+      margin-top: 10px;
+    }
+
   }
 
 }
+
+.due-soon, .warn { background: #f0ad4e; }
+.past-due, .bad { background: $darkred; }
+.complete, .good { background: $green; }
 
 /* ===============================================
    Helper Classes

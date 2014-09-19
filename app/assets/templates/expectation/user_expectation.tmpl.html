@@ -13,40 +13,87 @@
     </div>
   </div>
 
-  <div class="single-col-wrapper clear">
-    <div class="expectation--left">
-      <h4 class="bold">
-        {{user_expectation.title}}
-      </h4>
-      <table class="status-block"ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
-                                                     'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
-                                                     'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-        <tr>
-          <td class="status-picture">
-            <div class="medium-circle-pictures">
-              <a href="#/profile/{{student.id}}">
-                <div class="medium-circle-picture">
-                  <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
-                </div>
-              </a>
+  <div class="single-col-wrapper expectation-content">
+    <h4 class="bold">
+      {{user_expectation.title}}
+    </h4>
+    <table class="status-block" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
+                                                   'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
+                                                   'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+      <tr>
+        <td class="status-picture large-pic">
+          <div class="circle-pictures">
+            <a href="#/profile/{{student.id}}">
+              <div class="circle-picture">
+                <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
+              </div>
+            </a>
+          </div>
+        </td>
+        <td class="status-message">
+          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting">{{student.first_name}} is meeting this expectation.</h5>
+          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work">{{student.first_name}} needs to work on this expectation.</h5>
+          <h5 class="bold" ng-if="user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting">{{student.first_name}} is not meeting this expectation.</h5>
+          <h6 ng-if="user_expectation.comment">{{user_expectation.comment}}</h6>
+          <span ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</span>
+          <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
+            <button class="btn btn-default" ng-click="editExpectation(user_expectation.status)">Change {{student.first_name}}'s Status</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <table class="status-block" ng-show="editing" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
+      <tr>
+        <td class="status-picture large-pic">
+          <div class="circle-pictures">
+            <a href="#/profile/{{student.id}}">
+              <div class="circle-picture">
+                <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
+              </div>
+            </a>
+          </div>
+        </td>
+        <td class="status-message">
+          <h5 class="bold">How is {{student.first_name}} doing on this expectation?</h5>
+          <div class="expectation--status-changer clear">
+            <div class="expectation--status">
+              <div class="expectation--status-inner good" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.meeting)">
+                <h2><span class="glyphicon glyphicon-star"></span></h2>
+                <h5 class="bold">Great!</h5>
+                <p>{{student.first_name}} is meeting this expectation.</p>
+              </div>
             </div>
-          </td>
-          <td class="status-message">
-            <h5 class="bold">{{student.first_name}} is meeting this expectation.</h5>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="expectation--right">
-      Right
-    </div>
+            <div class="expectation--status">
+              <div class="expectation--status-inner warn" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.needs_work)">
+                <h2><span class="glyphicon glyphicon-warning-sign"></span></h2>
+                <h5 class="bold">Needs Work</h5>
+                <p>{{student.first_name}} has a few things to work on to meet this expectation.</p>
+              </div>
+            </div>
+            <div class="expectation--status">
+              <div class="expectation--status-inner bad" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.not_meeting)">
+                <h2><span class="glyphicon glyphicon-exclamation-sign"></span></h2>
+                <h5 class="bold">Not Meeting</h5>
+                <p>{{student.first_name}} is not meeting this expectation at all.</p>
+              </div>
+            </div>
+          </div>
+          <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
+          <textarea ng-model="new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+          <div class="status-buttons buttonGroup">
+            <button class="submit" ng-click="updateExpectation()">Save</button>
+            <button class="delete" ng-click="cancelEditing()">Cancel</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
   </div>
 
       <div class="expectation-view clear">
 
-        <div class="expectations-list-item" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
-                                                       'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
-                                                       'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
+        <div class="expectations-list-item">
           <div class="module-header">
             <h4 class="bold">
               {{user_expectation.title}}
