@@ -44,12 +44,6 @@
 
     }
 
-    /* @each \$category, \$color in \$darkcolormap {
-      &.color--#{\$category} {
-        background: \$color;
-      }
-    } */
-
   }
 
 }
@@ -60,6 +54,14 @@
   min-height: 500px;
   text-align: center;
   padding: 40px $wrapper-width;
+
+  @include respond-to(900) {
+    padding: 40px 20px;
+  }
+
+  @include respond-to(600) {
+    padding: 20px 0;
+  }
 
   .progressLower-title {
 

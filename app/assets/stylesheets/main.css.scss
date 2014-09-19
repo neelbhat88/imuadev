@@ -39,18 +39,23 @@ $darkred: rgb(181,45,42); // #b52d2a
 
 $teal: rgb(65,230,178); // #41e6b2
 $darkteal: rgb(54,166,131); // #36a683
+$bgteal: rgb(3,35,25); // #032319
 
 $yellow: rgb(242,190,40); // #e8be28
 $darkyellow: rgb(187,146,26); // #bb921a
+$bgyellow: rgb(35,27,3); // #231b03
 
 $orange: rgb(239,102,41); // #ef6629
 $darkorange: rgb(184,92,51); // #b85c33
-
-$purple: rgb(178,97,235); // #9665aa
-$darkpurple: rgb(138,67,187); //#8a43bb
+$bgorange: rgb(42,17,6); // #2a1106
 
 $blue: rgb(37,170,225); // #27aae1
 $darkblue: rgb(21,126,170); // #157eaa
+$bgblue: rgb(6,36,49); //#062431
+
+$purple: rgb(178,97,235); // #9665aa
+$darkpurple: rgb(138,67,187); //#8a43bb
+$bgpurple: rgb(28,7,42); // #1c072a
 
 /* Greys */
 
@@ -80,18 +85,23 @@ $darkborder: rgb(65, 66, 67);
 /* ========================= */
 $academics-color: $teal;
 $academics-color-dark: $darkteal;
+$academics-color-bg: $bgteal;
 
 $service-color: $yellow;
 $service-color-dark: $darkyellow;
+$service-color-bg: $bgyellow;
 
 $testing-color: $purple;
 $testing-color-dark: $darkpurple;
+$testing-color-bg: $bgpurple;
 
 $extracurricular-color: $orange;
 $extracurricular-color-dark: $darkorange;
+$extracurricular-color-bg: $bgorange;
 
 $college_prep-color: $blue;
 $college_prep-color-dark: $darkblue;
+$college_prep-color-bg: $bgblue;
 
 $colormap: (
   academics: $academics-color,
@@ -110,6 +120,16 @@ $darkcolormap: (
   college_prep: $college_prep-color-dark,
   no_category: $grey
 );
+
+$bgcolormap: (
+  academics: $academics-color-bg,
+  service: $service-color-bg,
+  testing: $testing-color-bg,
+  extracurricular: $extracurricular-color-bg,
+  college_prep: $college_prep-color-bg,
+  no_category: $grey
+);
+
 
 /* Fonts */
 $font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;

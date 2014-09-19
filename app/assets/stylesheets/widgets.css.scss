@@ -5,7 +5,8 @@
   .widget--header {
     background: $grey;
     padding: 15px 0;
-    margin-bottom: 3px;
+    margin: 0;
+    border-bottom: 3px solid $darkgrey;
   }
 
   .widget--content {
@@ -31,27 +32,38 @@
   .widget--content--table {
     display: table;
     width: 100%;
-    table-layout: fixed; /* optional, for equal spacing */
 
     .widget--content--cell {
       display: table-cell;
-      border-left: 3px solid transparent;
+      border-left: 3px solid $darkgrey;
+      background: $grey;
+
 
       &:first-child {
         border-left: 0;
       }
 
       .cell--inner {
-        background: $grey;
+        height: 100%;
         padding: 20px 0;
       }
 
-      @include respond-to(1000) {
+      @include respond-to(900) {
         display: table-row;
+      }
+
+      @each $category, $color in $bgcolormap {
+        &.color--#{$category} {
+          background: $color;
+        }
       }
 
     }
 
+  }
+
+  .table--fixed {
+    table-layout: fixed; /* For equal horizontal spacing */
   }
 
 }
