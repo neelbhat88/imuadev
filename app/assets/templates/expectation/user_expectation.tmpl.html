@@ -52,7 +52,7 @@
       <h6 ng-if="user_expectation.comment">{{user_expectation.comment}}</h6>
       <span ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</span>
       <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
-        <button class="btn btn-default" ng-click="editExpectation(user_expectation.status)"><span class="glyphicon glyphicon-edit"></span> Change {{student.first_name}}'s Status</button>
+        <button class="btn btn-default" ng-click="editExpectation()"><span class="glyphicon glyphicon-edit"></span> Change {{student.first_name}}'s Status</button>
       </div>
     </div>
 
@@ -71,21 +71,21 @@
           <h5 class="bold">How is {{student.first_name}} doing on this expectation?</h5>
           <div class="expectation--status-changer clear">
             <div class="expectation--status">
-              <div class="expectation--status-inner good" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.meeting)">
+              <div class="expectation--status-inner good" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}" ng-click="user_expectation.status = CONSTANTS.EXPECTATION_STATUS.meeting">
                 <h2><span class="glyphicon glyphicon-star"></span></h2>
                 <h5 class="bold">Great!</h5>
                 <p>{{student.first_name}} is meeting this expectation.</p>
               </div>
             </div>
             <div class="expectation--status">
-              <div class="expectation--status-inner warn" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.needs_work)">
+              <div class="expectation--status-inner warn" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}" ng-click="user_expectation.status = CONSTANTS.EXPECTATION_STATUS.needs_work">
                 <h2><span class="glyphicon glyphicon-warning-sign"></span></h2>
                 <h5 class="bold">Needs Work</h5>
                 <p>{{student.first_name}} has a few things to work on to meet this expectation.</p>
               </div>
             </div>
             <div class="expectation--status">
-              <div class="expectation--status-inner bad" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.not_meeting)">
+              <div class="expectation--status-inner bad" ng-class="{'selected': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}" ng-click="user_expectation.status = CONSTANTS.EXPECTATION_STATUS.not_meeting">
                 <h2><span class="glyphicon glyphicon-exclamation-sign"></span></h2>
                 <h5 class="bold">Not Meeting</h5>
                 <p>{{student.first_name}} is not meeting this expectation at all.</p>
@@ -94,7 +94,7 @@
           </div>
           <div class="expectation--comment-box">
             <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
-            <textarea ng-model="new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+            <textarea ng-model="user_expectation.new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
           </div>
           <div class="status-buttons buttonGroup">
             <button class="btn btn-success" ng-click="updateExpectation()"><span class="glyphicon glyphicon-ok"></span> Save {{student.first_name}}'s Status</button>
