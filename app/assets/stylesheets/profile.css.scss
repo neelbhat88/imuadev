@@ -47,7 +47,6 @@
     padding: 80px $wrapper-width;
     background: $grey;
     @include bgcover();
-    border-bottom: 1px solid $darkborder;
     text-align: center;
 
     .profile--pic {

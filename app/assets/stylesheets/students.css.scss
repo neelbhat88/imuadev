@@ -7,7 +7,6 @@
     width: 100%;
     background: $grey;
     padding: 20px 120px;
-    border-bottom: 1px solid $darkborder;
 
     .student-stats {
       margin: 0;
@@ -63,12 +62,8 @@
     }
   }
 
-  .students-mid {
-    padding: 60px $wrapper-width 0 $wrapper-width;
-  }
-
-  .students-lower {
-    padding: 0 $wrapper-width;
+  .students-mid, .students-lower {
+    padding: 40px $wrapper-width 0 $wrapper-width;
   }
 
 }
