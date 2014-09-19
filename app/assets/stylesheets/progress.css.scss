@@ -3,54 +3,31 @@
   background: $grey;
   text-align: center;
 
-  .progress-header--primary {
-
-    padding: 60px $wrapper-width 20px $wrapper-width;
-
-  }
-
-  select {
-
-    height: 60px;
-    padding: 5px;
-    background: $grey;
-    border: none;
-    border-bottom: 1px rgb(65, 66, 67) solid;
-
-  }
-
   .circles {
 
     width: 100%;
     padding: 40px 0;
     text-align: center;
 
-    @include respond-to (1275) {
-      float: none;
-      display: block;
-      width: 100%;
+    @include respond-to (1200) {
       padding: 20px 0;
     }
 
     .module-circle {
       display: inline-block;
-      width: 20%;
       text-align: center;
       opacity: 0.3;
+      margin-right: 60px;
 
-      @include respond-to (1000) {
-        width: 200px;
-      }
+      @include respond-to(1200) {}
 
       &.inactive {
         //display: none;
       }
 
       &:last-of-type {
-
-        	margin-right: 0;
-
-        }
+      	margin-right: 0;
+      }
 
     }
 
@@ -85,9 +62,24 @@
 }
 
 .progressLower {
+
   background: $darkgrey;
   min-height: 500px;
   text-align: center;
   padding-top: 40px;
+
+  .progressLowerDefault {
+
+    select {
+
+      height: 60px;
+      padding: 5px;
+      background: $grey;
+      border: none;
+      border-bottom: 1px rgb(65, 66, 67) solid;
+
+    }
+
+  }
 
 } //.progressLower
