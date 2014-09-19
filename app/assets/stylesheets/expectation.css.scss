@@ -210,15 +210,29 @@
 
   }
 
+  .expectation-history {
+    padding: 0 40px;
+
+    .history-block {
+      opacity: 0.6;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .history-comment {
+      padding: 20px;
+    }
+
+  }
+
 }
 
-.expectation-history-item {
-  width: 46%;
-  margin: 40px auto;
+.expectation-dot {
+  width: 100px;
 }
 
 .expectation-history-status {
-  margin: 20px auto;
   width: 50px;
   height: 50px;
   @include border-radius (50%);

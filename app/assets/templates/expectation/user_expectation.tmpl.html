@@ -82,97 +82,31 @@
           <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
           <textarea ng-model="new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
           <div class="status-buttons buttonGroup">
-            <button class="submit" ng-click="updateExpectation()">Save</button>
-            <button class="delete" ng-click="cancelEditing()">Cancel</button>
+            <button class="btn btn-success" ng-click="updateExpectation()"><span class="glyphicon glyphicon-ok"></span> Save {{student.first_name}}'s Status</button>
+            <button class="btn btn-danger btn-sm" ng-click="cancelEditing()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="single-col-wrapper expectation-history">
+
+    <h6 class="bold list-header">Previous Updates</h6>
+
+    <table class="status-block history-block" ng-repeat="history in user_expectation_history">
+      <tr>
+        <td class="status-picture expectation-dot">
+          <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
+        </td>
+        <td class="status-message">
+          <h6>{{history.modified_by_name}} changed the status of this expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
+          <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
+          <div>{{history.updated_at | fromNow}}</div>
         </td>
       </tr>
     </table>
 
   </div>
-
-      <div class="expectation-view clear">
-
-        <div class="expectations-list-item">
-          <div class="module-header">
-            <h4 class="bold">
-              {{user_expectation.title}}
-            </h4>
-          </div>
-
-          <div class="expectation-btn-group--container clear">
-            <div class="slider-bg"></div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}">
-                <button class="expectation-btn-alert" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.not_meeting)"
-                      ng-disabled="current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-              </div>
-              <div class="button-label">Not Meeting</div>
-            </div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}">
-                <button class="expectation-btn-warn" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.needs_work)"
-                      ng-disabled="current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-              </div>
-              <div class="button-label">Needs Work</div>
-            </div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-                <button class="expectation-btn-good" ng-click="editExpectation(CONSTANTS.EXPECTATION_STATUS.meeting)"
-                      ng-disabled="current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-              </div>
-              <div class="button-label">Meeting</div>
-            </div>
-          </div>
-
-          <div class="expectation-comment-container">
-
-            <div class="expectation-comment" ng-hide="editing">
-              <div class="mvm">
-                <span ng-if="user_expectation.modified_by_name">Changed
-                  <span class="bold">{{user_expectation.updated_at | fromNow}}</span>
-                  by
-                </span>
-                <span class="bold">{{user_expectation.modified_by_name}}</span>
-              </div>
-              <div class="mvm">
-                <span class="bold">Reason: </span>
-                <span ng-if="user_expectation.comment">{{user_expectation.comment}}</span>
-                <span ng-if="!user_expectation.comment">No reason added</span>
-              </div>
-            </div>
-
-            <div class="expectation-comment--add" ng-show="editing">
-              <textarea ng-model="new_comment" class="form-field expectation-comment-box" rows="4" placeholder="Enter a comment"></textarea>
-              <div class="buttonGroup">
-                <button class="submit" ng-click="updateExpectation()">Save</button>
-                <button class="delete" ng-click="cancelEditing()">Cancel</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      <div class="expectations-history-list">
-        <h5>Expectation History</h5>
-        <hr />
-
-        <div class="expectation-history-item" ng-repeat="history in user_expectation_history">
-          <div>Changed <span class="bold">{{history.updated_at | fromNow}}</span> by
-            <span class="bold">{{history.modified_by_name}}</span> to:
-          </div>
-
-          <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
-
-          <div class="expectation-status-label">{{getStatusText(history.status)}}</div>
-
-          <div>
-            <span class="bold">Reason: </span>
-            <span ng-if="history.comment">{{history.comment}}</span>
-            <span ng-if="!history.comment">No reason added</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
 </div>
