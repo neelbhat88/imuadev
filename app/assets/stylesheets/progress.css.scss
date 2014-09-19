@@ -59,7 +59,7 @@
   background: $darkgrey;
   min-height: 500px;
   text-align: center;
-  padding-top: 40px;
+  padding: 40px $wrapper-width;
 
   .progressLower-title {
 
@@ -75,9 +75,40 @@
 
   }
 
+  .widget {
+
+    margin-bottom: 10px;
+
+    .widget--header {
+      background: $grey;
+      padding: 15px 0;
+      margin-bottom: 3px;
+    }
+
+    .widget--content {
+
+      background: $grey;
+      padding: 20px 0;
+
+      .points {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .points-circle {
+        margin: 0 20px;
+      }
+
+      .points-available {
+        opacity: 0.6;
+      }
+
+    }
+
+  }
+
   .overall-progress {
     width: 100%;
-    background: $grey;
   }
 
 } //.progressLower

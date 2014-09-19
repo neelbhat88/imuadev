@@ -32,31 +32,53 @@
       </div>
 
       <div class="progressLower--content">
-        <div class="overall-progress">
+        <div class="widget overall-progress">
 
-          <div class="points points-earned">
-            <h3>560</h3>
-            <h6>Points Earned</h6>
+          <div class="widget--header">
+            <h6 class="bold">Overall Progress</h6>
           </div>
 
-          <div class="progressCircle-big--container">
-            <div class="big-progress-circle">
-              <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
-                <progress-circle width="325" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
-              </a>
+          <div class="widget--content">
+            <div class="points points-earned">
+              <h3 class="bold">560</h3>
+              <h6>Points Earned</h6>
+            </div>
+
+            <div class="points points-circle progressCircle-big--container">
+              <div class="big-progress-circle">
+                <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+                  <progress-circle width="325" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
+                </a>
+              </div>
+            </div>
+
+            <div class="points points-available">
+              <h5>1020</h5>
+              <h6>Points Available</h6>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="widget module-circle-breakdown">
+
+          <div class="widget--header">
+            <h6 class="bold">Categories</h6>
+          </div>
+
+          <div class="widget--content">
+            <div class="module-circles js-module-circles">
+              <div class="module-circle" ng-click="selectModule('null')">Total Progress Circle</div>
+              <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
+                <module-progress-circle module="mod"></module-progress-circle>
+                <div class="module-circle__modtitle"><h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6></div>
+                <div class="module-circle__modupdated" ng-if="mod.last_updated != null"><span>Last Updated {{mod.last_updated | fromNow}}</h6></div>
+                <div class="module-circle__modupdated" ng-if="mod.last_updated == null"><span>Never Updated</span></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="module-circles js-module-circles">
-        <div class="module-circle" ng-click="selectModule('null')">Total Progress Circle</div>
-        <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
-          <module-progress-circle module="mod"></module-progress-circle>
-          <div class="module-circle__modtitle"><h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6></div>
-          <div class="module-circle__modupdated" ng-if="mod.last_updated != null"><span>Last Updated {{mod.last_updated | fromNow}}</h6></div>
-          <div class="module-circle__modupdated" ng-if="mod.last_updated == null"><span>Never Updated</span></div>
-        </div>
       </div>
 
     </div>
