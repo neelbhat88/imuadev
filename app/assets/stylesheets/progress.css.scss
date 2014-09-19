@@ -77,8 +77,35 @@
 
   }
 
-  .overall-progress {
-    width: 100%;
+} //.progressLower
+
+.widget--content--cell {
+
+  .module-circle--title {
+    margin-bottom: 25px;
   }
 
-} //.progressLower
+  .module-circle__modupdated {
+    margin-top: 20px;
+    opacity: 0.4;
+    @include font-size(1);
+  }
+
+  .module-circle__click-to-view {
+    margin-top: 20px;
+    display: none;
+    opacity: 0.4;
+    @include font-size(1);
+  }
+
+  &:hover {
+    .module-circle__modupdated {
+      display: none;
+    }
+
+    .module-circle__click-to-view {
+      display: block;
+    }
+  }
+
+}

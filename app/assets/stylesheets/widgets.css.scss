@@ -1,6 +1,7 @@
 .widget {
 
   margin-bottom: 10px;
+  width: 100%;
 
   .widget--header {
     background: $grey;
@@ -38,6 +39,8 @@
       border-left: 3px solid $darkgrey;
       background: $grey;
 
+      @include transition(0.3);
+
 
       &:first-child {
         border-left: 0;
@@ -52,14 +55,12 @@
         display: table-row;
       }
 
-      @each $category, $color in $bgcolormap {
-        &.color--#{$category} {
-          background: $color;
-        }
+      &:hover {
+        background: $boxgrey;
       }
 
     }
-
+    
   }
 
   .table--fixed {
