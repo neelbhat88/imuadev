@@ -1,0 +1,57 @@
+.widget {
+
+  margin-bottom: 10px;
+
+  .widget--header {
+    background: $grey;
+    padding: 15px 0;
+    margin-bottom: 3px;
+  }
+
+  .widget--content {
+
+    background: $grey;
+    padding: 20px 0;
+
+    .points {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .points-circle {
+      margin: 0 20px;
+    }
+
+    .points-available {
+      opacity: 0.6;
+    }
+
+  }
+
+  .widget--content--table {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* optional, for equal spacing */
+
+    .widget--content--cell {
+      display: table-cell;
+      border-left: 3px solid transparent;
+
+      &:first-child {
+        border-left: 0;
+      }
+
+      .cell--inner {
+        background: $grey;
+        padding: 20px 0;
+      }
+
+      @include respond-to(1000) {
+        display: table-row;
+      }
+
+    }
+
+  }
+
+}
