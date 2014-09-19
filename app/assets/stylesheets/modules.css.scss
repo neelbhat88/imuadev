@@ -156,6 +156,27 @@
 
       } //.module--data
 
+      .dashboard-expectations--list {
+
+        .dashboard-expectations--list-item {
+
+          .dashboard-expectation {
+            padding: 10px 5px;
+            margin-bottom: 10px;
+            @include border-radius(5px);
+          }
+
+        }
+
+        &:hover {
+          .dashboard-expectations--list-item {
+            opacity: 0.6;
+            &:hover { opacity: 1; }
+          }
+        }
+
+      }
+
     }
 
     .coming-soon {

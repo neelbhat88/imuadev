@@ -22,6 +22,7 @@
 //= require underscore
 //= require angulartics
 //= require angulartics-ga
+//= require moment
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder

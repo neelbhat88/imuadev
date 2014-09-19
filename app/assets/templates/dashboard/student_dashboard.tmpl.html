@@ -13,7 +13,7 @@
 
               <div class="progressCircle-big">
               	<div class="big-progress-circle" ng-if="student_with_modules_progress">
-              		<big-progress-circle student="student_with_modules_progress" ng-if="student_with_modules_progress"></big-progress-circle>
+              		<progress-circle width="240" student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
               	</div>
               </div>
 
@@ -39,21 +39,6 @@
     <div class="dashboard-content dashboard-content--student clear">
 
       <div class="module-container clear">
-
-        <!-- <div class="module module--todos" modulecolor="no_category">
-          <div class="module--header"><span class="bold">To-do</span></div>
-          <div class="module--content">
-            <div class="module--submodule">
-              <div class="module--subhead">Due Soon!</div>
-              <div ng-repeat="ua in user_assignments">
-                  <h5 class="bold">{{ua.title}}</h5>
-                  <h6>{{ua.description}}</h6>
-                  <h6 >Due Date:  {{ua.due_datetime}}</h6>
-                  <h6 class="bold">{{ua.assigner.first_name}} {{ua.assigner.last_name}}</h6>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
         <div class="module module--upcoming-milestones" modulecolor="no_category">
           <div class="module--header">Upcoming <span class="bold">Milestones</span></div>
@@ -85,32 +70,18 @@
             <div class="expectations-met-message" ng-if="meetingExpectations">
               <h5 class="bold">Nice work {{student.first_name}}!</h5> <h6>You're meeting all of the Expectations!</h6>
             </div>
-            <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
-              <div class="expectations-met-message" ng-if="!meetingExpectations"><h6>You have a few expectations that need work:<h6></div>
+            <div class="dashboard-expectations--list clear" wait-to-load="{{loaded_expectations}}">
+              <div class="expectations-met-message" ng-if="!meetingExpectations"><h6>You have expectations that need work<h6></div>
 
-              <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
-                <div class="expectation-title"><h5>{{expectation.title}}</h5></div>
-                <div class="expectation-btn-group--container clear">
-                  <div class="slider-bg"></div>
-                  <div class="expectation-selector">
-                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 2}">
-                      <button class="expectation-btn-alert" ng-click="setUserExpectationStatus(expectation, 2)" ng-disabled="expectation.user_expectation.status == 2 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-                    </div>
-                    <div class="button-label">Not Meeting</div>
+              <div class="dashboard-expectations--list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
+                <a href="#/user/{{student.id}}/user_expectation/{{expectation.user_expectation.id}}">
+                  <div class="dashboard-expectation warn" ng-if="expectation.user_expectation.status == 1">
+                    <h6 class="bold"><span class="glyphicon glyphicon-warning-sign"></span> {{expectation.title}}</h6>
                   </div>
-                  <div class="expectation-selector">
-                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 1}">
-                      <button class="expectation-btn-warn" ng-click="setUserExpectationStatus(expectation, 1)" ng-disabled="expectation.user_expectation.status == 1 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-                    </div>
-                    <div class="button-label">Needs Work</div>
+                  <div class="dashboard-expectation bad" ng-if="expectation.user_expectation.status == 2">
+                    <h6 class="bold"><span class="glyphicon glyphicon-exclamation-sign"></span> {{expectation.title}}</h6>
                   </div>
-                  <div class="expectation-selector">
-                    <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == 0}">
-                      <button class="expectation-btn-good" ng-click="setUserExpectationStatus(expectation, 0)" ng-disabled="expectation.user_expectation.status == 0 || current_user.role >= CONSTANTS.USER_ROLES.student"></button>
-                    </div>
-                    <div class="button-label">Meeting</div>
-                  </div>
-                </div>
+                </a>
               </div>
             </div>
             <a href="#/expectations/{{student.id}}"><button class="btn btn-default">See All Expectations</button></a>

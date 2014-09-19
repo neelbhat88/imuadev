@@ -1,8 +1,16 @@
 class UserExpectationHistoryService
 
-  def get_expectation_histories(userId, expectationId)
-    return UserExpectationHistory.where(:user_id=> userId,
-                             :expectation_id => expectationId)
+  def get_user_expectation_history(user_expectation_id)
+    history = UserExpectationHistory.where(:user_expectation_id => user_expectation_id).order("created_at DESC")
+
+    return history.map{ |h|
+        {
+          :status => h.status,
+          :modified_by_name => h.modified_by_name,
+          :comment => h.comment,
+          :updated_at => h.updated_at
+        }
+      }
   end
 
   def create_expectation_history(userExpectation, current_user)

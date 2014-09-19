@@ -17,7 +17,7 @@ class DomainUser
 			@time_unit_id = user.time_unit_id
 			@class_of = user.class_of.to_i
 			@login_count = user.sign_in_count
-			@last_login = user.current_sign_in_at ? user.current_sign_in_at.strftime("%m/%d/%Y") : "Has not logged in yet"
+			@last_login = user.current_sign_in_at ? user.current_sign_in_at : "Has not logged in yet"
 
 			@is_student = user.student?
 			@is_mentor = user.mentor?

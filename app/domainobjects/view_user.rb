@@ -20,7 +20,7 @@ class ViewUser
 		@time_unit_id = user.time_unit_id
 		@class_of = user.class_of.to_i
 		@login_count = user.sign_in_count
-		@last_login = user.current_sign_in_at ? user.current_sign_in_at.strftime("%m/%d/%Y") : "Has not logged in yet"
+		@last_login = user.current_sign_in_at ? user.current_sign_in_at : "Has not logged in yet"
 
 		@is_student = user.student?
 		@is_mentor = user.mentor?
@@ -41,6 +41,13 @@ class ViewUser
 			@user_service_hours = user.user_service_hours.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserServiceHour.new(e)}
 			@user_tests = user.user_tests.select{|e| e.time_unit_id == @time_unit_id}.map{|e| ViewUserTest.new(e)}
       @user_gpas = user.user_gpas.select{|e| e.time_unit_id == @time_unit_id}.map{|e| DomainUserGpa.new(e)}
+      @modules_last_updated = {
+        :academics => user.user_classes.order("updated_at DESC").pluck(:updated_at).first,
+        :service => user.user_service_hours.order("updated_at DESC").pluck(:updated_at).first,
+        :extracurricular =>
+          user.user_extracurricular_activity_details.order("updated_at DESC").pluck(:updated_at).first,
+        :testing => user.user_tests.order("updated_at DESC").pluck(:updated_at).first
+      }
 		end
 
 	end
