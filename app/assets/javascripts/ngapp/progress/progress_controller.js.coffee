@@ -45,7 +45,7 @@ angular.module('myApp')
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
       $scope.student_with_modules_progress = $scope.organization.students[0]
       $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
-      $scope.selected_module = $scope.modules_progress[0]
+      # $scope.selected_module = $scope.modules_progress[0]
 
       for module in $scope.modules_progress
         switch module.module_title
