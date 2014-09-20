@@ -111,7 +111,7 @@
 }
 
 .academicsProgressContainer {
-  .expanded {
+  .expanded, .editing {
     width: 30%;
   }
 
@@ -119,34 +119,84 @@
     color: white(0.6);
   }
 
-  .expanded-class-name {
+  .expanded-class-info {
     @include respond-to(1200) {
       padding-bottom: 20px;
     }
+
+    .delete-button {
+      margin-bottom: 20px;
+    }
+
   }
 
-  .class-name {
-    @include respond-to(1200) {
-      width: 70%;
-      float: left;
-      text-align: left;
-      padding-left: 10%;
+  .break900 {
+
+    .class-name {
+      @include respond-to(900) {
+        width: 70%;
+        float: left;
+        text-align: left;
+        padding-left: 10%;
+      }
+
+      h6 {
+        font-weight: $bold;
+        @include respond-to(900) { @include font-size(3.8); }
+        @include respond-to(600) { @include font-size(3); }
+      }
     }
 
-    h6 {
-      font-weight: $bold;
-      @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $light; }
-      @include respond-to(900) { @include font-size(3.8); }
-      @include respond-to(600) { @include font-size(3); }
+    .class-grade {
+      @include respond-to(900) {
+        width: 30%;
+        float: left;
+        h3 { margin: 0; }
+      }
+    }
+
+  }
+
+  .break1200 {
+    .class-name {
+      @include respond-to(1200) {
+        width: 70%;
+        float: left;
+        text-align: left;
+        padding-left: 10%;
+      }
+
+      h6 {
+        font-weight: $bold;
+        @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $light; }
+        @include respond-to(900) { @include font-size(3.8); }
+        @include respond-to(600) { @include font-size(3); }
+      }
+    }
+
+    .class-grade {
+      @include respond-to(1200) {
+        width: 30%;
+        float: left;
+        h3 { margin: 0; }
+      }
     }
   }
 
-  .class-grade {
-    @include respond-to(1200) {
-      width: 30%;
-      float: left;
-      h3 { margin: 0; }
-    }
+  /* Editing */
+
+  .input-group {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+    text-align: left;
+  }
+
+  .half-width {
+    width: 44%;
+    max-width: 380px;
+    padding: 0 3%;
+    display: inline-block;
   }
 
 }
