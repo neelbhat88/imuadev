@@ -249,7 +249,7 @@ a {
 h1 {
 
   @include font-size(12);
-  font-weight: $bold;
+  font-weight: $light;
 
   @include respond-to(1200) { @include font-size(10) }
   @include respond-to(900) { @include font-size(8) }
