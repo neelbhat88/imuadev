@@ -109,3 +109,44 @@
   }
 
 }
+
+.academicsProgressContainer {
+  .expanded {
+    width: 30%;
+  }
+
+  .group--title {
+    color: white(0.6);
+  }
+
+  .expanded-class-name {
+    @include respond-to(1200) {
+      padding-bottom: 20px;
+    }
+  }
+
+  .class-name {
+    @include respond-to(1200) {
+      width: 70%;
+      float: left;
+      text-align: left;
+      padding-left: 10%;
+    }
+
+    h6 {
+      font-weight: $bold;
+      @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $light; }
+      @include respond-to(900) { @include font-size(3.8); }
+      @include respond-to(600) { @include font-size(3); }
+    }
+  }
+
+  .class-grade {
+    @include respond-to(1200) {
+      width: 30%;
+      float: left;
+      h3 { margin: 0; }
+    }
+  }
+
+}

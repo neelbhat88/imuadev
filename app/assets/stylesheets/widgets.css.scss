@@ -41,7 +41,6 @@
 
       @include transition(0.3);
 
-
       &:first-child {
         border-left: 0;
       }
@@ -49,10 +48,23 @@
       .cell--inner {
         height: 100%;
         padding: 20px 0;
+
+        .widget--buttons {
+          padding: 20px 5px;
+        }
+
+        .border-bottom {
+          border-bottom: 3px solid $darkgrey;
+        }
+
+        .border-top {
+          border-top: 3px solid $darkgrey;
+        }
+
       }
 
-      @include respond-to(900) {
-        display: table-row;
+      .no-bottom {
+        padding-bottom: 0;
       }
 
       &:hover {
@@ -60,11 +72,57 @@
       }
 
     }
-    
+
+    @mixin breaker() {
+      display: block;
+      width: 100%;
+      border-left: 0;
+      border-bottom: 3px solid $darkgrey;
+    }
+
+    .break900 {
+      @include respond-to(900) {
+        @include breaker();
+      }
+    }
+
+    .break1200 {
+      @include respond-to(1200) {
+        @include breaker();
+      }
+    }
+
+    .breakalways {
+      @include breaker();
+    }
+
+    .widget--content--row {
+      display: table-row;
+    }
+
   }
 
   .table--fixed {
     table-layout: fixed; /* For equal horizontal spacing */
   }
 
+  @each $category, $color in $darkcolormap {
+    &.color--#{$category} {
+      .widget--content--cell { background: $color; }
+    }
+  }
+
+  @each $category, $color in $colormap {
+    &.color--#{$category} {
+      .widget--header { background: $color; }
+      .widget--content--cell {
+        &:hover {
+          background: $color;
+          .widget--content--cell {
+            background: $color; // Makes sure subcells change color with parent cell
+          }
+        }
+      }
+    }
+  }
 }
