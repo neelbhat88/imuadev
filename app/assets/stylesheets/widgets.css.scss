@@ -128,10 +128,6 @@
 
   }
 
-  .table--fixed {
-    table-layout: fixed; /* For equal horizontal spacing */
-  }
-
   @each $category, $color in $darkcolormap {
     &.color--#{$category} {
       .widget--content--cell { background: $color; }
@@ -151,4 +147,30 @@
       }
     }
   }
+}
+
+/* Widget Groups */
+
+.widget-group {
+  width: 100%;
+
+  .widget-group--table {
+    display: table;
+    width: 100%;
+
+    .widget-group--cell {
+      display: table-cell;
+      border-left: 2px solid $darkgrey;
+      &:first-child {
+        border-left: 0;
+      }
+    }
+
+  }
+
+}
+
+/* Global Widget Helpers */
+.table--fixed {
+  table-layout: fixed; /* For equal horizontal spacing */
 }

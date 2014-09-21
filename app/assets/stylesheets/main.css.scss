@@ -132,8 +132,9 @@ $bgcolormap: (
 
 
 /* Fonts */
-$font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
-$light: 200;
+$font-stack: "proxima-nova", "Helvetica Neue", "Arial", sans-serif;
+$headline-font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
+$light: 100;
 $regular: 300;
 $bold: 700;
 
@@ -249,6 +250,7 @@ a {
 h1 {
 
   @include font-size(12);
+  font-family: $headline-font-stack;
   font-weight: $light;
 
   @include respond-to(1200) { @include font-size(10) }
@@ -260,6 +262,7 @@ h1 {
 h2 {
 
   @include font-size(9);
+  font-family: $headline-font-stack;
   font-weight: $light;
 
   @include respond-to(1200) { @include font-size(8) }
@@ -271,6 +274,7 @@ h2 {
 h3 {
 
   @include font-size(6);
+  font-family: $headline-font-stack;
   font-weight: $light;
 
   @include respond-to(1200) { @include font-size(5) }
