@@ -11,8 +11,9 @@
           <div class="widget--content--table">
             <div class="widget--content--cell">
               <div class="cell--padding">
-                <h1 class="bold">{{gpa}}</h1>
-                <h5>GPA</h5>
+                <h1 class="bold">{{semester_service_hours}}</h1>
+                <h5 ng-if="semester_service_hours != 1">Service Hours</h5>
+                <h5 ng-if="semester_service_hours == 1">Service Hour</h5>
               </div>
             </div>
           </div>
@@ -26,7 +27,77 @@
           <div class="widget--content--table">
             <div class="widget--content--cell">
               <div class="cell--padding">
-                <p>Placeholder for GPA Chart</p>
+                <p>Placeholder for Service Hours Chart</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget service-log" modulecolor="{{selected_module.module_title}}">
+    <div class="widget--header">
+      <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s Service Log</h6>
+      <h6 class="bold" ng-if="current_user.is_student">Your Service Log</h6>
+    </div>
+    <div class="widget--content--table table--fixed">
+      <div class="widget--content--cell" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations">
+        <div class="cell--padding">
+          {{user_service_organization.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget-group">
+    <div class="widget-group--table table--fixed" modulecolor="{{selected_module.module_title}}">
+      <div class="widget-group--cell break1200" ng-if="!milestone.earned.length != 0">
+        <div class="widget milestones">
+          <div class="widget--header">
+            <h6 class="bold">Next Milestones</h6>
+          </div>
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
+                <div class="milestone-item-unstatisfied">
+
+                  <div class="milestone--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
+                  </div>
+
+                  <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                    ng-disabled="!editable(current_user, selected_semester)">
+                  <h6>{{milestone | printMilestone}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget-group--cell break1200" ng-if="milestone.earned.length != 0">
+        <div class="widget milestones">
+          <div class="widget--header">
+            <h6 class="bold">Completed Milestones</h6>
+          </div>
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
+                <div class="milestone-item-statisfied">
+
+                  <div class="milestone--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
+                  </div>
+
+                  <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                    ng-disabled="!editable(current_user, selected_semester)">
+                  <h6>{{milestone | printMilestone}}</h6>
+                </div>
               </div>
             </div>
           </div>
@@ -167,25 +238,6 @@
       </div>
 
     </div> <!-- /module--service -->
-
-    <div class="module module--hours">
-
-      <div class="module--header">Total Service Hours</div>
-
-      <div class="module--content">
-
-      	<div class="user-class-greeting" wait-to-load="{{loaded_semester_service_hours}}">
-          <span ng-if="current_user.is_student">Hey {{student.first_name}}, you have completed</span>
-          <span ng-if="!current_user.is_student">{{student.first_name}} has completed</span>
-          <h2>{{semester_service_hours}}</span></h2>
-          <h4 ng-if="semester_service_hours != 1">Service Hours</h4>
-          <h4 ng-if="semester_service_hours == 1">Service Hour</h4>
-          this semester.
-        </div>
-
-      </div>
-
-    </div><!-- /module--gpa -->
 
     <div class="module module--milestones">
 
