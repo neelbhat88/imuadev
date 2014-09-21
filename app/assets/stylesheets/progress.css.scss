@@ -81,6 +81,19 @@
 
 .widget--content--cell {
 
+  .points {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .points-circle {
+    margin: 0 20px;
+  }
+
+  .points-available {
+    opacity: 0.6;
+  }
+
   .module-circle--title {
     margin-bottom: 25px;
   }
