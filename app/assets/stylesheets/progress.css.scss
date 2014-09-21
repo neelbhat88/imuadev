@@ -224,3 +224,18 @@
   }
 
 }
+
+.serviceProgressContainer {
+  .service-hours--meta {
+    width: 25%;
+    float: left;
+    padding: 0 10px;
+  }
+  .service-hours--description {
+    width: 75%;
+    float: left;
+    text-align: left;
+    padding: 0 30px 0 10px;
+
+  }
+}

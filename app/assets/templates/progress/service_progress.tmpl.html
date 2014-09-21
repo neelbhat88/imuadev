@@ -12,7 +12,7 @@
             <div class="widget--content--cell">
               <div class="cell--padding">
                 <h1 class="bold">{{semester_service_hours}}</h1>
-                <h5 ng-if="semester_service_hours != 1">Service Hours</h5>
+                <h5 ng-if="semester_service_hours != 1">Total Service Hours</h5>
                 <h5 ng-if="semester_service_hours == 1">Service Hour</h5>
               </div>
             </div>
@@ -42,9 +42,24 @@
       <h6 class="bold" ng-if="current_user.is_student">Your Service Log</h6>
     </div>
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations">
-        <div class="cell--padding">
-          {{user_service_organization.name}}
+      <div class="widget--content--cell break1200" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations">
+        <div class="widget--content--cell breakalways">
+          <div class="cell--padding">
+            <h4 class="bold">{{user_service_organization.name}}</h4>
+          </div>
+        </div>
+        <div class="widget--content--cell breakalways" ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours">
+          <div class="cell--padding clear">
+            <div class="service-hours--meta">
+              <h4>{{user_service_hour.hours}}</h4>
+              <p ng-if="user_service_hour.hours != 1">Hours</p>
+              <p ng-if="user_service_hour.hours == 1">Hour</p>
+            </div>
+            <div class="service-hours--description">
+              <h6>{{user_service_hour.description}}</h6>
+              <p>Completed on {{user_service_hour.date | formatMDY}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -238,67 +253,6 @@
       </div>
 
     </div> <!-- /module--service -->
-
-    <div class="module module--milestones">
-
-    	<div class="module--header">{{selected_module.module_title | underscoresToSpaces}} Milestones</div>
-
-      <div class="module--content">
-
-        <div class="module-data-content" ng-show="selected_module.points.total == 0">
-          <p>Looks like there aren't any {{selected_module.module_title | underscoresToSpaces}} milestones for this semester.</p>
-        </div>
-
-        <div class="module-milestones" ng-if="milestones.length > 0">
-
-          <div class="milestones-unsatisfied module--submodule">
-
-            <div class="module--subhead">Next Milestones</div>
-
-            <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
-              <div class="milestone-item-unstatisfied">
-
-                <div class="milestone--point-circle">
-                  <div class="point-circle--inside">
-                    <h5 class="bold">{{milestone.points}}</h5>
-                    <p>Points</p>
-                  </div>
-                </div>
-
-                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                  ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{milestone | printMilestone}}</h6>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="milestones-unsatisfied module--submodule">
-
-            <div class="module--subhead">Completed Milestones</div>
-
-            <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
-              <div class="milestone-item-statisfied">
-
-                <div class="milestone--point-circle">
-                  <div class="point-circle--inside">
-                    <h4 class="bold">✓</h4>
-                  </div>
-                </div>
-
-                <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                  ng-disabled="!editable(current_user, selected_semester)">
-                <h6>{{milestone | printMilestone}}</h6>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div><!-- /module-inner -->
-
-    </div><!-- /academic-milestones -->
 
   </div>
 
