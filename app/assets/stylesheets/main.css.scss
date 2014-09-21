@@ -75,7 +75,6 @@ $button-red-hover: #cf6967;
 
 $darkborder: rgb(65, 66, 67);
 
-//These should be removed soon
 .green { color: $green; }
 .red { color: $red; }
 .blue { color: $blue; }
@@ -134,7 +133,8 @@ $bgcolormap: (
 /* Fonts */
 $font-stack: "proxima-nova", "Helvetica Neue", "Arial", sans-serif;
 $headline-font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
-$light: 100;
+$thin: 100; // Proxima Nova's lightest weight
+$light: 200; // Facit's lightest weight (ONLY USED ON h1, h2 & h3)
 $regular: 300;
 $bold: 700;
 
@@ -287,7 +287,7 @@ h3 {
 h4 {
 
   @include font-size(4);
-  font-weight: $light;
+  font-weight: $thin;
 
   @include respond-to(1200) { @include font-size(3.5) }
   @include respond-to(900) { @include font-size(3) }
@@ -298,7 +298,7 @@ h4 {
 h5 {
 
   @include font-size(3);
-  font-weight: $light;
+  font-weight: $thin;
 
   @include respond-to(1200) { @include font-size(2.6) }
   @include respond-to(900) { @include font-size(2.2) }
@@ -309,7 +309,7 @@ h5 {
 h6 {
 
   @include font-size(1.8);
-  font-weight: $light;
+  font-weight: $thin;
 
   @include respond-to(1200) { @include font-size(1.7) }
   @include respond-to(900) { @include font-size(1.6) }
@@ -324,7 +324,7 @@ h6 {
 
 .light {
 
-  font-weight: $light;
+  font-weight: $thin;
 
 }
 

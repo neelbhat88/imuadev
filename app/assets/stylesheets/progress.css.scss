@@ -168,7 +168,7 @@
 
       h6 {
         font-weight: $bold;
-        @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $light; }
+        @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
         @include respond-to(900) { @include font-size(3.8); }
         @include respond-to(600) { @include font-size(3); }
       }
