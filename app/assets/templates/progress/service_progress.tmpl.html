@@ -1,5 +1,40 @@
 <div ng-controller="ServiceProgressController" class="serviceProgressContainer">
 
+  <div class="widget-group">
+    <div class="widget-group--table table--fixed" modulecolor="{{selected_module.module_title}}">
+      <div class="widget-group--cell break900">
+        <div class="widget gpa">
+          <div class="widget--header">
+            <h6 class="bold" ng-if="current_user.is_student">Your Service Hours</h6>
+            <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s Service Hours</h6>
+          </div>
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="cell--padding">
+                <h1 class="bold">{{gpa}}</h1>
+                <h5>GPA</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget-group--cell break900">
+        <div class="widget gpa">
+          <div class="widget--header">
+            <h6 class="bold">Over Time</h6>
+          </div>
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="cell--padding">
+                <p>Placeholder for GPA Chart</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="module-container clear" modulecolor="{{selected_module.module_title}}">
 
     <div class="module module--service">

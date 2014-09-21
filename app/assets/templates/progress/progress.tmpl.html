@@ -23,14 +23,14 @@
       <div class="widget--content--table table--fixed">
 
         <div class="widget--content--cell break900 ng-clickable" ng-click="selectModule('null')">
-          <div class="cell--inner">
+          <div class="cell--padding">
             <h6 class="module-circle__title bold">All Progress</h6>
               <progress-circle width="150" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
           </div>
         </div>
 
         <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
-          <div class="cell--inner">
+          <div class="cell--padding">
             <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
             <module-progress-circle module="mod"></module-progress-circle>
             <div class="module-circle__click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>
@@ -62,7 +62,7 @@
 
           <div class="widget--content--table">
             <div class="widget--content--cell">
-              <div class="cell--inner">
+              <div class="cell--padding">
                 <div class="points points-earned">
                   <h3 class="bold">560</h3>
                   <h6>Points Earned</h6>
@@ -94,7 +94,7 @@
 
           <div class="widget--content--table table--fixed">
             <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
-              <div class="cell--inner">
+              <div class="cell--padding">
                 <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
                 <module-progress-circle module="mod"></module-progress-circle>
                 <div class="module-circle__click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>

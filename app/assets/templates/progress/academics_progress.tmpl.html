@@ -5,12 +5,15 @@
       <div class="widget-group--cell break900">
         <div class="widget gpa">
           <div class="widget--header">
-            <h6 class="bold">{{student.first_name}}'s GPA</h6>
+            <h6 class="bold" ng-if="current_user.is_student">Your GPA</h6>
+            <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s GPA</h6>
           </div>
           <div class="widget--content--table">
             <div class="widget--content--cell">
-              <h1 class="bold">{{gpa}}</h1>
-              <h5>GPA</h5>
+              <div class="cell--padding">
+                <h1 class="bold">{{gpa}}</h1>
+                <h5>GPA</h5>
+              </div>
             </div>
           </div>
         </div>
@@ -22,7 +25,9 @@
           </div>
           <div class="widget--content--table">
             <div class="widget--content--cell">
-              <h1>{{gpa}}</h1>
+              <div class="cell--padding">
+                <p>Placeholder for GPA Chart</p>
+              </div>
             </div>
           </div>
         </div>
@@ -47,10 +52,10 @@
 
     <div class="widget--content--table table--fixed">
 
-      <div class="widget--content--cell" ng-repeat="user_class in user_classes" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
+      <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
         <div ng-hide="user_class.editing">
-          <div class="cell--inner ng-clickable" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
+          <div class="cell--padding" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
             <div class="clear">
               <div class="class-name">
                 <h6>{{user_class.name}}</h6>
@@ -66,7 +71,7 @@
               <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete Class</button>
             </div>
           </div>
-          <div class="cell--inner no-bottom" ng-show="showMoreInfo">
+          <div class="cell--padding no-bottom cursor-fix" ng-show="showMoreInfo">
             <div class="expanded-class-info clear border-bottom">
               <div class="class-name">
                 <h6>{{user_class.name}}</h6>
@@ -81,7 +86,7 @@
             <div ng-hide="classEditor">
               <div class="more-info widget--content--table table--fixed">
                 <div class="widget--content--cell">
-                  <div class="cell--inner">
+                  <div class="cell--padding">
                     <div class="group--title">Period</div>
                     <div class="group--content">
                       <h5 ng-if="user_class.period != null">{{user_class.period}}</h5>
@@ -91,7 +96,7 @@
                 </div>
 
                 <div class="widget--content--cell">
-                  <div class="cell--inner">
+                  <div class="cell--padding">
                     <div class="group--title">Room</div>
                     <div class="group--content">
                       <h5 ng-if="user_class.room != null">{{user_class.room}}</h5>
@@ -101,7 +106,7 @@
                 </div>
 
                 <div class="widget--content--cell" ng-if="user_class.level != 'Regular'">
-                  <div class="cell--inner">
+                  <div class="cell--padding">
                     <div class="group--title">Level</div>
                     <div class="group--content">
                       <h6>{{user_class.level}}</h6>
@@ -110,7 +115,7 @@
                 </div>
 
                 <div class="widget--content--cell" ng-if="user_class.subject != null">
-                  <div class="cell--inner">
+                  <div class="cell--padding">
                     <div class="group--title">Subject</div>
                     <div class="group--content">
                       <h6>{{user_class.subject}}</h6>
@@ -119,7 +124,7 @@
                 </div>
 
                 <div class="widget--content--cell" ng-if="user_class.credit_hours != 1">
-                  <div class="cell--inner">
+                  <div class="cell--padding">
                     <div class="group--title">Credit Hours</div>
                     <div class="group--content">
                       <h5>{{user_class.credit_hours}}</h6>
@@ -137,7 +142,7 @@
 
         <div ng-show="user_class.editing">
 
-          <div class="cell--inner">
+          <div class="cell--padding">
 
             <span class="input-group">
               <label>Class</label>
@@ -201,7 +206,7 @@
       </div>
 
       <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="classEditor && !classes.editing" >
-        <div class="cell--inner clear">
+        <div class="cell--padding clear">
           <div class="class-name">
             <h6 class="bold">Add a Class</h6>
           </div>
@@ -212,7 +217,7 @@
       </div>
 
       <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="classEditor = !classEditor" ng-show="user_classes.length == 0 && !classEditor">
-        <div class="cell--inner clear">
+        <div class="cell--padding clear">
           <div class="class-name">
             <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
             <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>

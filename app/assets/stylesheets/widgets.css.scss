@@ -56,7 +56,7 @@
         border-left: 0;
       }
 
-      .cell--inner {
+      .cell--padding {
         height: 100%;
         padding: 20px 0;
 
@@ -111,16 +111,15 @@
   @each $category, $color in $colormap {
     &.color--#{$category} {
       .widget--header { background: $color; }
-      .widget--content--cell {
+      .ng-clickable {
         &:hover {
           background: $color;
-          .widget--content--cell {
-            background: $color; // Makes sure subcells change color with parent cell
-          }
+          .widget--content--cell { background: $color; }
         }
       }
     }
   }
+
 }
 
 /* Widget Groups */
@@ -175,7 +174,7 @@
   @each $category, $color in $colormap {
     .color--#{$category} {
       .widget--header { background: $color; }
-      .widget-group--cell {
+      .ng-clickable {
         &:hover { background: $color; }
       }
     }
@@ -186,4 +185,8 @@
 /* Global Widget Helpers */
 .table--fixed {
   table-layout: fixed; /* For equal horizontal spacing */
+}
+
+.cursor-fix {
+  cursor: initial;
 }
