@@ -1,5 +1,5 @@
 /* ===============================================
-   *****************  Variables  *****************
+   **************  Global Mixins  ****************
    =============================================== */
 
 /* Breakpoints */
@@ -49,4 +49,12 @@
   -ms-transition-duration: $seconds + s;
   -o-transition-duration: $seconds + s;
   transition-duration: $seconds + s;
+}
+
+@mixin transition-delay($seconds) {
+  -webkit-transition-delay: $seconds + s;
+  -moz-transition-delay: $seconds + s;
+  -ms-transition-delay: $seconds + s;
+  -o-transition-delay: $seconds + s;
+  transition-delay: $seconds + s;
 }

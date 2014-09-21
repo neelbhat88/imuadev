@@ -1,10 +1,16 @@
+@mixin breaker() {
+  display: block;
+  width: 100%;
+  border-left: 0;
+  border-bottom: 2px solid $darkgrey;
+}
+
 .widget {
 
   margin-bottom: 10px;
   width: 100%;
 
   .widget--header {
-    background: $grey;
     padding: 15px 0;
     margin: 0;
     border-bottom: 2px solid $darkgrey;
@@ -38,7 +44,6 @@
 
   .widget--content {
 
-    background: $grey;
     padding: 20px 0;
 
     .points {
@@ -63,7 +68,6 @@
     .widget--content--cell {
       display: table-cell;
       border-left: 2px solid $darkgrey;
-      background: $grey;
 
       @include transition(0.3);
 
@@ -93,17 +97,6 @@
         padding-bottom: 0;
       }
 
-      &:hover {
-        background: $boxgrey;
-      }
-
-    }
-
-    @mixin breaker() {
-      display: block;
-      width: 100%;
-      border-left: 0;
-      border-bottom: 2px solid $darkgrey;
     }
 
     .break900 {
@@ -153,6 +146,7 @@
 
 .widget-group {
   width: 100%;
+  margin-bottom: 10px;
 
   .widget-group--table {
     display: table;
@@ -161,11 +155,49 @@
     .widget-group--cell {
       display: table-cell;
       border-left: 2px solid $darkgrey;
+      @include transition(0.3);
       &:first-child {
         border-left: 0;
       }
+
+      .widget {
+        margin-bottom: 0;
+      }
+
     }
 
+    .break900 {
+      @include respond-to(900) {
+        @include breaker();
+      }
+    }
+
+    .break1200 {
+      @include respond-to(1200) {
+        @include breaker();
+      }
+    }
+
+    .breakalways {
+      @include breaker();
+    }
+
+  }
+
+  @each $category, $color in $darkcolormap {
+    .color--#{$category} {
+      .widget-group--cell { background: $color; }
+      .point-circle--inside { color: $color; }
+    }
+  }
+
+  @each $category, $color in $colormap {
+    .color--#{$category} {
+      .widget--header { background: $color; }
+      .widget-group--cell {
+        &:hover { background: $color; }
+      }
+    }
   }
 
 }

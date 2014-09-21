@@ -213,8 +213,7 @@ header {
 
 .milestone-item {
 
-  width: 44%;
-  min-width: 175px;
+  width: 200px;
   display: inline-block;
   vertical-align: top;
   margin: 20px 3%;
@@ -223,6 +222,7 @@ header {
   .milestone--point-circle {
 
     @include circle(90px);
+    background: white;
     margin: 0 auto;
     padding-bottom: 10px;
 

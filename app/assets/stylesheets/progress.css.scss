@@ -116,7 +116,17 @@
   }
 
   .group--title {
-    color: white(0.6);
+    color: white(0.5);
+  }
+
+  .widget--content--cell {
+    .see-more {
+      opacity: 0;
+      @include transition(0.3);
+    }
+    &:hover {
+      .see-more { opacity: 1; }
+    }
   }
 
   .expanded-class-info {
