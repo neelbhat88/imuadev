@@ -2,7 +2,6 @@
   background: image-url("bg_bluegreen1.jpg") no-repeat center center fixed;
   @include bgcover();
 
-
   .progress-header {
 
     text-align: center;
@@ -264,4 +263,12 @@
     display: inline-block;
   }
 
+}
+
+@each $category, $bgurl in $bgcolormap {
+  .color--bg-#{$category} {
+    background: image-url($bgurl) no-repeat center center fixed;
+    @include bgcover();
+    @include transition(0.3); // Temporary. Theres a better way to ng-animate this.
+  }
 }
