@@ -50,8 +50,6 @@
 
 .progressLower {
 
-  background: $darkgrey;
-  min-height: 500px;
   text-align: center;
   padding: 40px $wrapper-width;
 
@@ -79,6 +77,11 @@
   }
 
 } //.progressLower
+
+.progressContainer {
+  background: image-url("bg_bluegreen1.jpg") no-repeat center center fixed;
+  @include bgcover();
+}
 
 .widget--content--cell {
 
