@@ -127,6 +127,13 @@ $border-color: black(0.2);
       }
     }
 
+    .ng-clickable {
+      @include transition(0.3);
+      &:hover {
+        background: white(0.05);
+      }
+    }
+
   }
 
 }
