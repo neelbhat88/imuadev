@@ -4,9 +4,19 @@
     <div class="widget-group--table table--fixed">
       <div class="widget-group--cell break900">
         <div class="widget gpa">
-          <div class="widget--header">
-            <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your GPA</h6>
-            <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s GPA</h6>
+          <div class="widget--header clear">
+            <div class="clear">
+              <div class="widget--header--left">
+                <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your GPA</h6>
+                <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s GPA</h6>
+              </div>
+              <div class="widget--header--right">
+                <div class="widget--options">
+                  <span class="options--text">Options</span>
+                  <span class="glyphicon glyphicon-align-justify"></span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -23,7 +33,17 @@
       <div class="widget-group--cell break900">
         <div class="widget gpa-ot">
           <div class="widget--header">
-            <h6 class="bold"><div class="color--dot"></div> GPA Over Time</h6>
+            <div class="clear">
+              <div class="widget--header--left">
+                <h6 class="bold"><div class="color--dot"></div> GPA Over Time</h6>
+              </div>
+              <div class="widget--header--right">
+                <div class="widget--options">
+                  <span class="options--text">Options</span>
+                  <span class="glyphicon glyphicon-align-justify"></span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -43,13 +63,19 @@
 
     <div class="widget--header">
       <div class="widget--header-container clear">
-        <div class="widget--header--title widget--header--noleft">
+        <div class="widget--header--left">
           <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades</h6>
           <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Grades</h6>
         </div>
         <div class="widget--header--right" ng-hide="classes.editing">
-          <h6 class="ng-clickable" ng-hide="classEditor" ng-click="classEditor = !classEditor"><span class="glyphicon glyphicon-edit"></span> Edit</h6>
+
+          <div class="widget--options ng-clickable" ng-hide="classEditor" ng-click="classEditor = !classEditor">
+            <span class="options--text">Edit</span>
+            <span class="glyphicon glyphicon-edit"></span>
+          </div>
+
           <button ng-show="classEditor" class="btn btn-primary" ng-click="classEditor = !classEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
+
         </div>
       </div>
     </div>

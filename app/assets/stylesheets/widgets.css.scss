@@ -14,34 +14,32 @@ $border-color: black(0.2);
   width: 100%;
 
   .widget--header {
-    padding: 15px 0;
+    padding: 15px 30px;
     margin: 0;
     background: black(0.1);
     border-bottom: 2px solid $border-color;
-
-
-    .widget--header--title {
-      width: 60%;
-      float: left;
-    }
-
-    .widget--header--left, .widget--header--right {
-      width: 20%;
-      float: left;
-    }
-
-    .widget--header--left {
-      text-align: left;
-      padding-left: 2%;
-    }
+    text-align: left;
+    position: relative;
 
     .widget--header--right {
+      position: absolute;
+      right: 30px;
+      top: 25px;
       text-align: right;
-      padding-right: 2%;
-    }
 
-    .widget--header--noleft {
-      margin-left: 20%;
+      .widget--options {
+        .options--text {
+          margin-right: 10px;
+          opacity: 0;
+          @include transition(0.3);
+        }
+
+        &:hover {
+          .options--text {
+            opacity: 1;
+          }
+        }
+      }
     }
 
   }
@@ -205,6 +203,23 @@ $border-color: black(0.2);
 }
 
 /* Global Widget Helpers */
+.color--dot {
+  display: inline-block;
+  background: $lightgrey;
+  width: 12px;
+  height: 12px;
+  margin-right: 15px;
+  @include circle(14);
+}
+
+@each $category, $color in $colormap {
+  .color--#{$category} {
+    .color--dot {
+      background: $color;
+    }
+  }
+}
+
 .table--fixed {
   table-layout: fixed; /* For equal horizontal spacing */
 }
