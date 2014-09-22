@@ -8,11 +8,13 @@
             <h6 class="bold" ng-if="current_user.is_student">Your GPA</h6>
             <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s GPA</h6>
           </div>
-          <div class="widget--content--table">
-            <div class="widget--content--cell">
-              <div class="cell--padding">
-                <h1 class="bold">{{gpa}}</h1>
-                <h5>GPA</h5>
+          <div class="widget--content">
+            <div class="widget--content--table">
+              <div class="widget--content--cell">
+                <div class="cell--padding">
+                  <h1 class="bold">{{gpa}}</h1>
+                  <h5>GPA</h5>
+                </div>
               </div>
             </div>
           </div>
@@ -23,10 +25,12 @@
           <div class="widget--header">
             <h6 class="bold">Over Time</h6>
           </div>
-          <div class="widget--content--table">
-            <div class="widget--content--cell">
-              <div class="cell--padding">
-                <p>Placeholder for GPA Chart</p>
+          <div class="widget--content">
+            <div class="widget--content--table">
+              <div class="widget--content--cell">
+                <div class="cell--padding">
+                  <p>Placeholder for GPA Chart</p>
+                </div>
               </div>
             </div>
           </div>
@@ -50,182 +54,184 @@
       </div>
     </div>
 
-    <div class="widget--content--table table--fixed">
+    <div class="widget--content">
+      <div class="widget--content--table table--fixed">
 
-      <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
+        <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
-        <div ng-hide="user_class.editing">
-          <div class="cell--padding" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
-            <div class="clear">
-              <div class="class-name">
-                <h6>{{user_class.name}}</h6>
+          <div ng-hide="user_class.editing">
+            <div class="cell--padding" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
+              <div class="clear">
+                <div class="class-name">
+                  <h6>{{user_class.name}}</h6>
+                </div>
+                <div class="class-grade">
+                  <h3 class="bold">{{user_class.grade}}</h3>
+                </div>
               </div>
-              <div class="class-grade">
-                <h3 class="bold">{{user_class.grade}}</h3>
-              </div>
-            </div>
-            <div class="see-more" ng-hide="classEditor">
-              Click to See More
-            </div>
-            <div class="delete-button" ng-show="classEditor">
-              <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete Class</button>
-            </div>
-          </div>
-          <div class="cell--padding no-bottom cursor-fix" ng-show="showMoreInfo">
-            <div class="expanded-class-info clear border-bottom">
-              <div class="class-name">
-                <h6>{{user_class.name}}</h6>
-              </div>
-              <div class="class-grade">
-                <h3 class="bold">{{user_class.grade}}</h3>
+              <div class="see-more" ng-hide="classEditor">
+                Click to See More
               </div>
               <div class="delete-button" ng-show="classEditor">
                 <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete Class</button>
               </div>
             </div>
-            <div ng-hide="classEditor">
-              <div class="more-info widget--content--table table--fixed">
-                <div class="widget--content--cell">
-                  <div class="cell--padding">
-                    <div class="group--title">Period</div>
-                    <div class="group--content">
-                      <h5 ng-if="user_class.period != null">{{user_class.period}}</h5>
-                      <h6 ng-if="user_class.period == null"><span ng-click="editClass(user_class)" class="ng-clickable">Add Period</span></h6>
-                    </div>
-                  </div>
+            <div class="cell--padding no-bottom cursor-fix" ng-show="showMoreInfo">
+              <div class="expanded-class-info clear border-bottom">
+                <div class="class-name">
+                  <h6>{{user_class.name}}</h6>
                 </div>
-
-                <div class="widget--content--cell">
-                  <div class="cell--padding">
-                    <div class="group--title">Room</div>
-                    <div class="group--content">
-                      <h5 ng-if="user_class.room != null">{{user_class.room}}</h5>
-                      <h6 ng-if="user_class.room == null"><span ng-click="editClass(user_class)" class="ng-clickable">Add Room</span></h6>
-                    </div>
-                  </div>
+                <div class="class-grade">
+                  <h3 class="bold">{{user_class.grade}}</h3>
                 </div>
-
-                <div class="widget--content--cell" ng-if="user_class.level != 'Regular'">
-                  <div class="cell--padding">
-                    <div class="group--title">Level</div>
-                    <div class="group--content">
-                      <h6>{{user_class.level}}</h6>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="widget--content--cell" ng-if="user_class.subject != null">
-                  <div class="cell--padding">
-                    <div class="group--title">Subject</div>
-                    <div class="group--content">
-                      <h6>{{user_class.subject}}</h6>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="widget--content--cell" ng-if="user_class.credit_hours != 1">
-                  <div class="cell--padding">
-                    <div class="group--title">Credit Hours</div>
-                    <div class="group--content">
-                      <h5>{{user_class.credit_hours}}</h6>
-                    </div>
-                  </div>
+                <div class="delete-button" ng-show="classEditor">
+                  <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete Class</button>
                 </div>
               </div>
-              <div class="widget--buttons border-top">
-                <button class="btn btn-default btn-sm" ng-click="editClass(user_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{user_class.name}}</button>
-                <button class="btn btn-default btn-sm" ng-click="showMoreInfo = !showMoreInfo"> Show Less</button>
+              <div ng-hide="classEditor">
+                <div class="more-info widget--content--table table--fixed">
+                  <div class="widget--content--cell">
+                    <div class="cell--padding">
+                      <div class="group--title">Period</div>
+                      <div class="group--content">
+                        <h5 ng-if="user_class.period != null">{{user_class.period}}</h5>
+                        <h6 ng-if="user_class.period == null"><span ng-click="editClass(user_class)" class="ng-clickable">Add Period</span></h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="widget--content--cell">
+                    <div class="cell--padding">
+                      <div class="group--title">Room</div>
+                      <div class="group--content">
+                        <h5 ng-if="user_class.room != null">{{user_class.room}}</h5>
+                        <h6 ng-if="user_class.room == null"><span ng-click="editClass(user_class)" class="ng-clickable">Add Room</span></h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="widget--content--cell" ng-if="user_class.level != 'Regular'">
+                    <div class="cell--padding">
+                      <div class="group--title">Level</div>
+                      <div class="group--content">
+                        <h6>{{user_class.level}}</h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="widget--content--cell" ng-if="user_class.subject != null">
+                    <div class="cell--padding">
+                      <div class="group--title">Subject</div>
+                      <div class="group--content">
+                        <h6>{{user_class.subject}}</h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="widget--content--cell" ng-if="user_class.credit_hours != 1">
+                    <div class="cell--padding">
+                      <div class="group--title">Credit Hours</div>
+                      <div class="group--content">
+                        <h5>{{user_class.credit_hours}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget--buttons border-top">
+                  <button class="btn btn-default btn-sm" ng-click="editClass(user_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{user_class.name}}</button>
+                  <button class="btn btn-default btn-sm" ng-click="showMoreInfo = !showMoreInfo"> Show Less</button>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div ng-show="user_class.editing">
+
+            <div class="cell--padding">
+
+              <span class="input-group">
+                <label>Class</label>
+                <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
+              </span>
+
+              <span class="input-group">
+                  <label>Grade</label>
+                  <select class="form-control" ng-model="user_class.new_grade">
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                    <option value="D+">D+</option>
+                    <option value="D">D</option>
+                    <option value="D-">D-</option>
+                    <option value="F">F</option>
+                  </select>
+              </span>
+
+              <span class="input-group half-width">
+                <label>Credit Hours</label>
+                <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+              </span>
+
+              <span class="input-group half-width">
+                  <label>Level</label>
+                  <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+              </span>
+
+              <span class="input-group">
+                  <label>Subject</label>
+                  <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                      <option value="">--Select Subject--</option>
+                  </select>
+              </span>
+
+              <span class="input-group half-width">
+                  <label>Period</label>
+                  <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+              </span>
+
+              <span class="input-group half-width">
+                  <label>Room</label>
+                  <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
+              </span>
+
+              <div class="edit-buttons">
+                <button class="submit" title="Confirm" ng-click="saveClass(user_class)">Confirm</button>
+                <button class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="classEditor && !classes.editing" >
+          <div class="cell--padding clear">
+            <div class="class-name">
+              <h6 class="bold">Add a Class</h6>
+            </div>
+            <div class="class-grade">
+              <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
             </div>
           </div>
         </div>
 
-        <div ng-show="user_class.editing">
-
-          <div class="cell--padding">
-
-            <span class="input-group">
-              <label>Class</label>
-              <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
-            </span>
-
-            <span class="input-group">
-                <label>Grade</label>
-                <select class="form-control" ng-model="user_class.new_grade">
-                  <option value="A">A</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B">B</option>
-                  <option value="B-">B-</option>
-                  <option value="C+">C+</option>
-                  <option value="C">C</option>
-                  <option value="C-">C-</option>
-                  <option value="D+">D+</option>
-                  <option value="D">D</option>
-                  <option value="D-">D-</option>
-                  <option value="F">F</option>
-                </select>
-            </span>
-
-            <span class="input-group half-width">
-              <label>Credit Hours</label>
-              <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
-            </span>
-
-            <span class="input-group half-width">
-                <label>Level</label>
-                <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
-            </span>
-
-            <span class="input-group">
-                <label>Subject</label>
-                <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
-                    <option value="">--Select Subject--</option>
-                </select>
-            </span>
-
-            <span class="input-group half-width">
-                <label>Period</label>
-                <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
-            </span>
-
-            <span class="input-group half-width">
-                <label>Room</label>
-                <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
-            </span>
-
-            <div class="edit-buttons">
-              <button class="submit" title="Confirm" ng-click="saveClass(user_class)">Confirm</button>
-              <button class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</button>
+        <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="classEditor = !classEditor" ng-show="user_classes.length == 0 && !classEditor">
+          <div class="cell--padding clear">
+            <div class="class-name">
+              <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
+              <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>
+              <h5 class="bold">Click here to begin</h5>
             </div>
-
           </div>
-
         </div>
 
       </div>
-
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="classEditor && !classes.editing" >
-        <div class="cell--padding clear">
-          <div class="class-name">
-            <h6 class="bold">Add a Class</h6>
-          </div>
-          <div class="class-grade">
-            <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="classEditor = !classEditor" ng-show="user_classes.length == 0 && !classEditor">
-        <div class="cell--padding clear">
-          <div class="class-name">
-            <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
-            <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>
-            <h5 class="bold">Click here to begin</h5>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -236,21 +242,23 @@
           <div class="widget--header">
             <h6 class="bold">Next Milestones</h6>
           </div>
-          <div class="widget--content--table">
-            <div class="widget--content--cell">
-              <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
-                <div class="milestone-item-unstatisfied">
+          <div class="widget--content">
+            <div class="widget--content--table">
+              <div class="widget--content--cell">
+                <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
+                  <div class="milestone-item-unstatisfied">
 
-                  <div class="milestone--point-circle">
-                    <div class="point-circle--inside">
-                      <h5 class="bold">{{milestone.points}}</h5>
-                      <p>Points</p>
+                    <div class="milestone--point-circle">
+                      <div class="point-circle--inside">
+                        <h5 class="bold">{{milestone.points}}</h5>
+                        <p>Points</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                    ng-disabled="!editable(current_user, selected_semester)">
-                  <h6>{{milestone | printMilestone}}</h6>
+                    <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                      ng-disabled="!editable(current_user, selected_semester)">
+                    <h6>{{milestone | printMilestone}}</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -262,20 +270,22 @@
           <div class="widget--header">
             <h6 class="bold">Completed Milestones</h6>
           </div>
-          <div class="widget--content--table">
-            <div class="widget--content--cell">
-              <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
-                <div class="milestone-item-statisfied">
+          <div class="widget--content">
+            <div class="widget--content--table">
+              <div class="widget--content--cell">
+                <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
+                  <div class="milestone-item-statisfied">
 
-                  <div class="milestone--point-circle">
-                    <div class="point-circle--inside">
-                      <h4 class="bold">✓</h4>
+                    <div class="milestone--point-circle">
+                      <div class="point-circle--inside">
+                        <h4 class="bold">✓</h4>
+                      </div>
                     </div>
-                  </div>
 
-                  <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                    ng-disabled="!editable(current_user, selected_semester)">
-                  <h6>{{milestone | printMilestone}}</h6>
+                    <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
+                      ng-disabled="!editable(current_user, selected_semester)">
+                    <h6>{{milestone | printMilestone}}</h6>
+                  </div>
                 </div>
               </div>
             </div>
