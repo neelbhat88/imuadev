@@ -1,265 +1,267 @@
-.progress-header {
-
-  text-align: center;
-
-  .circles {
-
-    width: 100%;
-    padding-top: 40px;
-    text-align: center;
-
-    .module-circle {
-      display: inline-block;
-      text-align: center;
-      opacity: 0.3;
-      padding-bottom: 40px;
-      margin: 0 30px;
-
-      @include respond-to(1200) {}
-
-      &.inactive {
-        //display: none;
-      }
-
-    }
-
-    .module-circle__modupdated {
-      @include font-size(1.0)
-    }
-
-    .selectedCircle {
-
-    	opacity: 1;
-
-    }
-
-    .notSelectedCircle {
-
-    	&:hover {
-
-    		opacity: 0.75;
-
-    	}
-
-    }
-
-  }
-
-}
-
-.progressLower {
-
-  text-align: center;
-  padding: 40px $wrapper-width;
-
-  @include respond-to(900) {
-    padding: 40px 20px;
-  }
-
-  @include respond-to(600) {
-    padding: 20px 0;
-  }
-
-  .progressLower-title {
-    margin-bottom: 40px;
-
-    select {
-
-      height: 60px;
-      padding: 5px;
-      background: $grey;
-      border: none;
-      border-bottom: 1px rgb(65, 66, 67) solid;
-
-    }
-
-  }
-
-} //.progressLower
-
 .progressContainer {
   background: image-url("bg_bluegreen1.jpg") no-repeat center center fixed;
   @include bgcover();
-}
 
-.widget--content--cell {
 
-  .points {
-    display: inline-block;
-    vertical-align: middle;
-  }
+  .progress-header {
 
-  .points-circle {
-    margin: 0 20px;
-  }
+    text-align: center;
 
-  .points-available {
-    opacity: 0.6;
-  }
+    .circles {
 
-  .module-circle--title {
-    margin-bottom: 25px;
-  }
+      width: 100%;
+      padding-top: 40px;
+      text-align: center;
 
-  .module-circle--meta {
-    margin-top: 10px;
+      .module-circle {
+        display: inline-block;
+        text-align: center;
+        opacity: 0.3;
+        padding-bottom: 40px;
+        margin: 0 30px;
 
-    .click-to-view {
-      opacity: 0;
-      @include transition(0.3);
-    }
+        @include respond-to(1200) {}
 
-    .updated-on {
-      opacity: 0.5;
-    }
+        &.inactive {
+          //display: none;
+        }
 
-  }
+      }
 
-  &:hover {
-    .module-circle--meta{
+      .module-circle__modupdated {
+        @include font-size(1.0)
+      }
 
-      .click-to-view {
-        opacity: 1;
+      .selectedCircle {
+
+      	opacity: 1;
+
+      }
+
+      .notSelectedCircle {
+
+      	&:hover {
+
+      		opacity: 0.75;
+
+      	}
+
       }
 
     }
+
   }
 
-}
+  .progressLower {
 
-.academicsProgressContainer {
-  .expanded, .editing {
-    width: 30%;
-  }
+    text-align: center;
+    padding: 40px $wrapper-width;
 
-  .group--title {
-    color: white(0.5);
-  }
+    @include respond-to(900) {
+      padding: 40px 20px;
+    }
+
+    @include respond-to(600) {
+      padding: 20px 0;
+    }
+
+    .progressLower-title {
+      margin-bottom: 40px;
+
+      select {
+
+        height: 60px;
+        padding: 5px;
+        background: $grey;
+        border: none;
+        border-bottom: 1px rgb(65, 66, 67) solid;
+
+      }
+
+    }
+
+  } //.progressLower
 
   .widget--content--cell {
-    .see-more {
-      opacity: 0;
-      @include transition(0.3);
+
+    .points {
+      display: inline-block;
+      vertical-align: middle;
     }
+
+    .points-circle {
+      margin: 0 20px;
+    }
+
+    .points-available {
+      opacity: 0.6;
+    }
+
+    .module-circle--title {
+      margin-bottom: 25px;
+    }
+
+    .module-circle--meta {
+      margin-top: 10px;
+
+      .click-to-view {
+        opacity: 0;
+        @include transition(0.3);
+      }
+
+      .updated-on {
+        opacity: 0.5;
+      }
+
+    }
+
     &:hover {
-      .see-more { opacity: 1; }
-    }
-  }
+      .module-circle--meta{
 
-  .expanded-class-info {
-    @include respond-to(1200) {
-      padding-bottom: 20px;
-    }
+        .click-to-view {
+          opacity: 1;
+        }
 
-    .delete-button {
-      margin-bottom: 20px;
-    }
-
-  }
-
-  .break900 {
-
-    .class-name {
-      @include respond-to(900) {
-        width: 70%;
-        float: left;
-        text-align: left;
-        padding-left: 10%;
-      }
-
-      h6 {
-        font-weight: $bold;
-        @include respond-to(900) { @include font-size(3.8); }
-        @include respond-to(600) { @include font-size(3); }
-      }
-    }
-
-    .class-grade {
-      @include respond-to(900) {
-        width: 30%;
-        float: left;
-        h3 { margin: 0; }
       }
     }
 
   }
 
-  .break1200 {
-    .class-name {
+  .academicsProgressContainer {
+    .expanded, .editing {
+      width: 30%;
+    }
+
+    .group--title {
+      color: white(0.5);
+    }
+
+    .widget--content--cell {
+      .see-more {
+        opacity: 0;
+        @include transition(0.3);
+      }
+      &:hover {
+        .see-more { opacity: 1; }
+      }
+    }
+
+    .expanded-class-info {
       @include respond-to(1200) {
-        width: 70%;
-        float: left;
-        text-align: left;
-        padding-left: 10%;
+        padding-bottom: 20px;
       }
 
-      h6 {
-        font-weight: $bold;
-        @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
-        @include respond-to(900) { @include font-size(3.8); }
-        @include respond-to(600) { @include font-size(3); }
+      .delete-button {
+        margin-bottom: 20px;
+      }
+
+    }
+
+    .break900 {
+
+      .class-name {
+        @include respond-to(900) {
+          width: 70%;
+          float: left;
+          text-align: left;
+          padding-left: 10%;
+        }
+
+        h6 {
+          font-weight: $bold;
+          @include respond-to(900) { @include font-size(3.8); }
+          @include respond-to(600) { @include font-size(3); }
+        }
+      }
+
+      .class-grade {
+        @include respond-to(900) {
+          width: 30%;
+          float: left;
+          h3 { margin: 0; }
+        }
+      }
+
+    }
+
+    .break1200 {
+      .class-name {
+        @include respond-to(1200) {
+          width: 70%;
+          float: left;
+          text-align: left;
+          padding-left: 10%;
+        }
+
+        h6 {
+          font-weight: $bold;
+          @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
+          @include respond-to(900) { @include font-size(3.8); }
+          @include respond-to(600) { @include font-size(3); }
+        }
+      }
+
+      .class-grade {
+        @include respond-to(1200) {
+          width: 30%;
+          float: left;
+          h3 { margin: 0; }
+        }
       }
     }
 
-    .class-grade {
-      @include respond-to(1200) {
-        width: 30%;
-        float: left;
-        h3 { margin: 0; }
-      }
+  }
+
+  .serviceProgressContainer {
+    .service-org-header {
+      padding: 20px;
     }
-  }
-
-}
-
-.serviceProgressContainer {
-  .service-org-header {
-    padding: 20px;
-  }
-  .service-hours--meta {
-    width: 25%;
-    float: left;
-    padding: 0 10px;
-  }
-  .service-hours--description {
-    width: 75%;
-    float: left;
-    text-align: left;
-    padding: 0 30px 0 10px;
-
-  }
-
-  .cell--service-hours {
-    .small-edit-button {
-      display: none;
+    .service-hours--meta {
+      width: 25%;
+      float: left;
+      padding: 0 10px;
     }
-    &:hover {
+    .service-hours--description {
+      width: 75%;
+      float: left;
+      text-align: left;
+      padding: 0 30px 0 10px;
+
+    }
+
+    .cell--service-hours {
       .small-edit-button {
-        display: block;
+        display: none;
+      }
+      &:hover {
+        .small-edit-button {
+          display: block;
+        }
       }
     }
   }
-}
 
-/* Editing */
+  /* Editing */
 
-.input-group {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto 15px auto;
-  text-align: left;
-  .full-width {
-    width: 100%;
+  .input-group {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+    text-align: left;
+    .full-width {
+      width: 100%;
+    }
   }
-}
 
-.datepicker-label {
-  margin-bottom: 0;
-}
+  .datepicker-label {
+    margin-bottom: 0;
+  }
 
-.half-width {
-  width: 44%;
-  max-width: 380px;
-  padding: 0 3%;
-  display: inline-block;
+  .half-width {
+    width: 44%;
+    max-width: 380px;
+    padding: 0 3%;
+    display: inline-block;
+  }
+
 }
