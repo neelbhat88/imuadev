@@ -113,3 +113,7 @@ h4, h5, h6, .light {
 .big-text {
   h5 { line-height: 1rem; }
 }
+
+.subtext {
+  @include font-size(1);
+}

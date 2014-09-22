@@ -101,26 +101,27 @@
     margin-bottom: 25px;
   }
 
-  .module-circle__modupdated {
-    margin-top: 20px;
-    opacity: 0.4;
-    @include font-size(1);
-  }
+  .module-circle--meta {
+    margin-top: 10px;
 
-  .module-circle__click-to-view {
-    margin-top: 20px;
-    display: none;
-    opacity: 0.4;
-    @include font-size(1);
+    .click-to-view {
+      opacity: 0;
+      @include transition(0.3);
+    }
+
+    .updated-on {
+      opacity: 0.5;
+    }
+
   }
 
   &:hover {
-    .module-circle__modupdated {
-      display: none;
-    }
+    .module-circle--meta{
 
-    .module-circle__click-to-view {
-      display: block;
+      .click-to-view {
+        opacity: 1;
+      }
+
     }
   }
 

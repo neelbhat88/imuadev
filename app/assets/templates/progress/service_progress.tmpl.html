@@ -3,7 +3,7 @@
   <div class="widget-group">
     <div class="widget-group--table table--fixed" modulecolor="{{selected_module.module_title}}">
       <div class="widget-group--cell break900">
-        <div class="widget gpa">
+        <div class="widget service--hours">
           <div class="widget--header">
             <h6 class="bold" ng-if="current_user.is_student">Your Service Hours</h6>
             <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s Service Hours</h6>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="widget-group--cell break900">
-        <div class="widget gpa">
+        <div class="widget service--hours--ot">
           <div class="widget--header">
             <h6 class="bold">Over Time</h6>
           </div>
@@ -225,5 +225,5 @@
       </div>
     </div>
   </div>
-  
+
 </div>
