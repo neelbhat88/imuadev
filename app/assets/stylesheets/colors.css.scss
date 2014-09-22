@@ -44,6 +44,14 @@ $grey: rgb(32,33,34); // #202122
 $darkgrey: rgb(18,19,20); // #121314
 $grey-hover: #888;
 
+@function grey($opacity:1){
+    @return rgba(32,33,34,$opacity)
+}
+
+@function darkgrey($opacity:1){
+    @return rgba(18,19,20,$opacity)
+}
+
 $ink: rgb(43,45,47); // #2b2d2f
 
 $button-blue: #53b5e6;

@@ -13,8 +13,8 @@
   .widget--header {
     padding: 15px 0;
     margin: 0;
-    background: rgba(32,33,34,0.7);
-    border-bottom: 2px solid $darkgrey;
+    background: grey(0.8);
+    border-bottom: 2px solid darkgrey(0.2);
 
 
     .widget--header--title {
@@ -49,7 +49,8 @@
 
     .widget--content--cell {
       display: table-cell;
-      border-left: 2px solid $darkgrey;
+      background: grey(0.7);
+      border-left: 2px solid darkgrey(0.2);
 
       @include transition(0.3);
 
