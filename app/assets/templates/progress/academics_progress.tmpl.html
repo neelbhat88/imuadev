@@ -1,12 +1,12 @@
-<div ng-controller="AcademicsProgressController" class="academicsProgressContainer">
+<div ng-controller="AcademicsProgressController" class="academicsProgressContainer" modulecolor="{{selected_module.module_title}}">
 
   <div class="widget-group">
-    <div class="widget-group--table table--fixed" modulecolor="{{selected_module.module_title}}">
+    <div class="widget-group--table table--fixed">
       <div class="widget-group--cell break900">
         <div class="widget gpa">
           <div class="widget--header">
-            <h6 class="bold" ng-if="current_user.is_student">Your GPA</h6>
-            <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s GPA</h6>
+            <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your GPA</h6>
+            <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s GPA</h6>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -23,7 +23,7 @@
       <div class="widget-group--cell break900">
         <div class="widget gpa-ot">
           <div class="widget--header">
-            <h6 class="bold">Over Time</h6>
+            <h6 class="bold"><div class="color--dot"></div> GPA Over Time</h6>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -39,13 +39,13 @@
     </div>
   </div>
 
-  <div class="widget grades" modulecolor="{{selected_module.module_title}}">
+  <div class="widget grades">
 
     <div class="widget--header">
       <div class="widget--header-container clear">
         <div class="widget--header--title widget--header--noleft">
-          <h6 class="bold" ng-if="!current_user.is_student">{{student.first_name}}'s Grades</h6>
-          <h6 class="bold" ng-if="current_user.is_student">Your Grades</h6>
+          <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades</h6>
+          <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Grades</h6>
         </div>
         <div class="widget--header--right" ng-hide="classes.editing">
           <h6 class="ng-clickable" ng-hide="classEditor" ng-click="classEditor = !classEditor"><span class="glyphicon glyphicon-edit"></span> Edit</h6>
@@ -236,11 +236,11 @@
   </div>
 
   <div class="widget-group">
-    <div class="widget-group--table table--fixed" modulecolor="{{selected_module.module_title}}">
+    <div class="widget-group--table table--fixed">
       <div class="widget-group--cell break1200" ng-if="!milestone.earned.length != 0">
         <div class="widget milestones">
           <div class="widget--header">
-            <h6 class="bold">Next Milestones</h6>
+            <h6 class="bold"><div class="color--dot"></div> Next Milestones</h6>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -268,7 +268,7 @@
       <div class="widget-group--cell break1200" ng-if="milestone.earned.length != 0">
         <div class="widget milestones">
           <div class="widget--header">
-            <h6 class="bold">Completed Milestones</h6>
+            <h6 class="bold"><div class="color--dot"></div> Completed Milestones</h6>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">

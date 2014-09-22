@@ -81,6 +81,22 @@
 
   } //.progressLower
 
+  .color--dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    @include circle(14);
+  }
+
+  @each $category, $color in $colormap {
+    .color--#{$category} {
+      .color--dot {
+        background: $color;
+      }
+    }
+  }
+
   .widget--content--cell {
 
     .points {
