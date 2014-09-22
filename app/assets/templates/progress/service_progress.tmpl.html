@@ -195,64 +195,6 @@
     </div>
   </div>
 
-  <div class="widget-group">
-    <div class="widget-group--table table--fixed">
-      <div class="widget-group--cell break1200" ng-if="!milestone.earned.length != 0">
-        <div class="widget milestones">
-          <div class="widget--header">
-            <h6 class="bold"><div class="color--dot"></div> Next Milestones</h6>
-          </div>
-          <div class="widget--content">
-            <div class="widget--content--table">
-              <div class="widget--content--cell">
-                <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
-                  <div class="milestone-item-unstatisfied">
-
-                    <div class="milestone--point-circle">
-                      <div class="point-circle--inside">
-                        <h5 class="bold">{{milestone.points}}</h5>
-                        <p>Points</p>
-                      </div>
-                    </div>
-
-                    <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                      ng-disabled="!editable(current_user, selected_semester)">
-                    <h6>{{milestone | printMilestone}}</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="widget-group--cell break1200" ng-if="milestone.earned.length != 0">
-        <div class="widget milestones">
-          <div class="widget--header">
-            <h6 class="bold"><div class="color--dot"></div> Completed Milestones</h6>
-          </div>
-          <div class="widget--content">
-            <div class="widget--content--table">
-              <div class="widget--content--cell">
-                <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
-                  <div class="milestone-item-statisfied">
-
-                    <div class="milestone--point-circle">
-                      <div class="point-circle--inside">
-                        <h4 class="bold">✓</h4>
-                      </div>
-                    </div>
-
-                    <input type="checkbox" ng-if="milestone.submodule === 'YesNo'" ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
-                      ng-disabled="!editable(current_user, selected_semester)">
-                    <h6>{{milestone | printMilestone}}</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <milestones-widget></milestones-widget>
 
 </div>
