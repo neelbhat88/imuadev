@@ -5,8 +5,16 @@
       <div class="widget-group--cell break900">
         <div class="widget service--hours">
           <div class="widget--header">
-            <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Hours</h6>
-            <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Hours</h6>
+            <div class="widget--header--left">
+              <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Hours</h6>
+              <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Hours</h6>
+            </div>
+            <div class="widget--header--right">
+              <div class="widget--options ng-clickable">
+                <span class="options--text">Options</span>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </div>
+            </div>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -24,7 +32,15 @@
       <div class="widget-group--cell break900">
         <div class="widget service--hours--ot">
           <div class="widget--header">
-            <h6 class="bold"><div class="color--dot"></div> Service Hours Over Time</h6>
+            <div class="widget--header--left">
+              <h6 class="bold"><div class="color--dot"></div> Service Hours Over Time</h6>
+            </div>
+            <div class="widget--header--right">
+              <div class="widget--options ng-clickable">
+                <span class="options--text">Options</span>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </div>
+            </div>
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
@@ -49,7 +65,10 @@
           <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Log</h6>
         </div>
         <div class="widget--header--right" ng-hide="classes.editing">
-          <h6 class="ng-clickable" ng-hide="serviceEditor" ng-click="serviceEditor = !serviceEditor"><span class="glyphicon glyphicon-edit"></span> Edit</h6>
+          <div class="widget--options ng-clickable" ng-hide="serviceEditor" ng-click="serviceEditor = !serviceEditor">
+            <span class="options--text">Edit</span>
+            <span class="glyphicon glyphicon-edit"></span>
+          </div>
           <button ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
         </div>
       </div>
