@@ -75,52 +75,30 @@
         </h4>
       </div>
 
-      <div class="expectations-list clear" wait-to-load="{{loaded_expectations}}">
+      <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
         <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-click="viewExpectation(expectation.user_expectation.id)"
               ng-class="{'bad': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                          'warn': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                          'good': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-          <div class="expectation-title">
-            <h5>
-              {{expectation.title}}
-            </h5>
-          </div>
-          <div class="expectation-btn-group--container clear">
-            <div class="slider-bg"></div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting}">
-                <button class="expectation-btn-alert"></button>
-              </div>
-              <div class="button-label">Not Meeting</div>
-            </div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work}">
-                <button class="expectation-btn-warn"></button>
-              </div>
-              <div class="button-label">Needs Work</div>
-            </div>
-            <div class="expectation-selector">
-              <div class="button-wrapper" ng-class="{selected: expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
-                <button class="expectation-btn-good"></button>
-              </div>
-              <div class="button-label">Meeting</div>
-            </div>
+          <h5 class="bold">{{expectation.title}}</h5>
+
+          <div ng-if="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting">
+            <h2><span class="glyphicon glyphicon-star"></span></h2>
+            <h6 class="bold">You're meeting this expectation.</h6>
           </div>
 
-          <div class="expectation-comment-container">
-
-            <div class="expectation-comment" ng-hide="editing">
-              <div style="padding: 10px 0;">
-                <span class="bold">Reason: </span>
-                <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
-                <span ng-if="!expectation.user_expectation.comment">No reason added</span>
-              </div>
-            </div>
-
+          <div ng-if="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work">
+            <h2><span class="glyphicon glyphicon-warning-sign"></span></h2>
+            <h6 class="bold">You need some work on this expectation.</h6>
           </div>
 
+          <div ng-if="expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting">
+            <h2><span class="glyphicon glyphicon-exclamation-sign"></span></h2>
+            <h6 class="bold">You are not meeting this expectation!</h6>
+          </div>
+          <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+          <div class="updated-text" ng-if="expectation.user_expectation.modified_by_name">Last Updated {{expectation.user_expectation.updated_at | fromNow}}</div>
         </div>
-
       </div>
 
     </div>

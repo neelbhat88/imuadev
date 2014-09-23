@@ -43,7 +43,7 @@
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'user.last_name'" ng-if="user_assignment.status == 0">
           <a href="#/user_assignment/{{user_assignment.id}}">
             <div class="medium-circle-picture">
-              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
             </div>
             <span class="bold">{{user_assignment.user.first_last_initial}}</span>
           </a>
@@ -71,12 +71,12 @@
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'updated_at'" ng-if="user_assignment.status == 1">
           <a href="#/user_assignment/{{user_assignment.id}}">
             <div class="medium-circle-picture">
-              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | date: 'MM/dd/yy'}}" />
+              <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
             </div>
             <span class="bold">{{user_assignment.user.first_last_initial}}</span>
           </a>
           <ul class="circle-subnav" ng-hide="assignment.editing">
-            <li>Completed: {{user_assignment.updated_at | date: 'MM/dd/yy'}}</li>
+            <li>Completed: {{user_assignment.updated_at | formatMDY}}</li>
             <li class="subnav-button">
               <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)" ng-disabled="user_assignment.status == 0">Mark<br>Incomplete</button>
             </li>
@@ -162,11 +162,10 @@
       <ul>
         <li>
           <h5>
-            <!-- <span class="label label-primary" ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length"> -->
             <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-              <span class="label label-primary glyphicon glyphicon-record" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"> Open</span>
-              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Due Soon</span></span>
-              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"> Past Due</span></span>
+              <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
+              <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
+              <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
             </span>
             <span class="label label-success" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete
@@ -175,7 +174,7 @@
         </li>
         <li ng-if="assignment.due_datetime != null" ng-hide="assignment.editing">
           <h6>Due by</h6>
-          <h5 class="bold">{{assignment.due_datetime | date: 'MM/dd/yy'}}</h5>
+          <h5 class="bold">{{assignment.due_datetime | formatMDY}}</h5>
         </li>
         <li class="form-wrapper" ng-show="assignment.editing">
           <label><h6>Due Date:</h6></label>
@@ -193,7 +192,7 @@
             </div>
             <h6 class="bold">{{user.first_name}} {{user.last_name}}</h6>
           </a>
-          <p>on {{assignment.created_at | date: 'MM/dd/yy'}}</p>
+          <p>on {{assignment.created_at | formatMDY}}</p>
         </li>
       </ul>
     </div>

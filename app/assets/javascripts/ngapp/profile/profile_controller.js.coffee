@@ -12,8 +12,6 @@ angular.module('myApp')
   $scope.password = {current: "", new: "", confirm: ""}
   $scope.student_mentors = []
 
-  $scope._ = _
-
   $scope.editing = () ->
     $scope.editingInfo || $scope.editingPassword
 
@@ -57,6 +55,7 @@ angular.module('myApp')
         #ToDo: Error message here
 
       .finally () ->
+        $scope.addSuccessMessage("Profile info updated successfully!")
         LoadingService.buttonStop()
 
   $scope.editUserPassword = () ->

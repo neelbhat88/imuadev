@@ -173,6 +173,9 @@
       </div>
     </header>
     <div class="mask"></div>
+    <div class="alerts-section">
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
     <div data-ng-view ng-if="!reload_required"></div>
     <div ng-if="reload_required" style="padding: 30px; text-align: center;">
       <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>

@@ -9,9 +9,15 @@ angular.module('myApp')
   $scope.student = student
   $scope.needs_attention = false
 
+  $scope.just_updated = ''
+  $scope.just_updated_module = ''
   $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
   $scope.loaded_milestones = false
+
+  $scope.$on 'just_updated', (event, module) ->
+    $scope.just_updated = module
+    _.findWhere($scope.modules_progress, {module_title: module}).last_updated = new Date()
 
   $scope.$on 'loaded_module_milestones', () ->
     $scope.loaded_module_milestones = true
@@ -40,6 +46,15 @@ angular.module('myApp')
       $scope.student_with_modules_progress = $scope.organization.students[0]
       $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
       $scope.selected_module = $scope.modules_progress[0]
+
+      for module in $scope.modules_progress
+        switch module.module_title
+          when "Academics" then module.last_updated = $scope.student.modules_last_updated.academics
+          when "Service" then module.last_updated = $scope.student.modules_last_updated.service
+          when "Extracurricular" then module.last_updated =
+            $scope.student.modules_last_updated.extracurricular
+          when "College_Prep" then module.last_updated = null
+          when "Testing" then module.last_updated = $scope.student.modules_last_updated.testing
 
       $scope.semesters = []
       for tu in $scope.organization.time_units
