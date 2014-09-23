@@ -31,6 +31,7 @@
   margin-right: 50px;
   margin-bottom: 30px;
   text-align: center;
+  color: inherit;
 
   a {
     color: inherit;
@@ -59,27 +60,6 @@
     color: $green;
   }
 }
-
-/*---------- Responsive Progress Circles ----------*/
-
-
-.progress-circles--default {
-
-  width: 200px;
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-
-  @include respond-to(1200) { width: 140px; }
-
-  .circle-wrapper {
-    width: 80%;
-    margin: 0 auto;
-
-  }
-
-}
-
 
 /*----- Needs Attention Circles -----*/
 

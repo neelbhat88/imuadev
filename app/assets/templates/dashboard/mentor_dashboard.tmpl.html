@@ -61,9 +61,7 @@
     <div class="list-container">
 	    <div class="progress-circles" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}" ng-repeat="student in assigned_students | orderBy: 'last_name'">
 	      <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
-	        <div class="circle-wrapper">
-	          <progress-circle student="student" parentclass="circle-wrapper"></progress-circle>
-	        </div>
+	        <progress-circle width="170" student="student"></progress-circle>
 	      </a>
         <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
         <ul class="circle-subnav">
