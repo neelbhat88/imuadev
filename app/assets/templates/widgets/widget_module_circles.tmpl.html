@@ -1,0 +1,22 @@
+<div class="widget module-circle-breakdown">
+
+  <div class="widget--header">
+    <h6 class="bold"><div class="color--dot"></div> Categories</h6>
+  </div>
+
+  <div class="widget--content">
+    <div class="widget--content--table table--fixed">
+      <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
+        <div class="cell--padding">
+          <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
+          <module-progress-circle module="mod"></module-progress-circle>
+          <div class="module-circle--meta">
+            <div class="click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated != null">Last updated {{mod.last_updated | fromNow}}</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
