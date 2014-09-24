@@ -19,7 +19,7 @@ angular.module('myApp')
       AssignmentService.saveUserAssignment(new_user_assignment)
         .success (data) ->
           user_assignment.status = data.user_assignment.status
-          user_assignment.updated_at = data.user_assignment.updated_at
+          user_assignment.updated_at = new Date()
 
     $scope.isComplete = (user_assignment) ->
       return user_assignment.status == 1
