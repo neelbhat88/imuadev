@@ -92,25 +92,16 @@
           <div class="module--header">Upcoming <span class="bold">Tasks</span></div>
           <div class="module--content">
             <ul>
-              <li class="tasks--list--item" ng-repeat="assignment in incoming_assignments | orderBy:sortIncompleteAssignments" ng-if="assignment.status == 0">
+              <li class="tasks--list--item" ng-repeat="assignment in user_assignments | orderBy:sortIncompleteAssignments" ng-if="assignment.status == 0">
                 <a no-click-propagation href="#/user_assignment/{{assignment.id}}">
-                  {{assignment.title}}
-                  <div class="subtext">
-                    <a no-click-propagation href="#/profile/{{assignment.assigner.id}}">{{assignment.assigner.first_last_initial}}</a>
-                    created this task on {{assignment.created_at | formatMDY}}
+                  <h6 class="bold">{{assignment.title}}</h6>
+                  <div class="subtext" ng-if="assignment.due_datetime != null">
+                    Due {{assignment.due_datetime | fromNow}}
                   </div>
                 </a>
-
-                <span ng-if="_.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-                  <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
-                  <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-                  <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
-                </span>
-
-                <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | formatMDY}}</h6>
-
               </li>
             </ul>
+            <a href="#/user_assignments/{{student.id}}"><button class="btn btn-default">See All Tasks</button></a>
           </div>
         </div>
 
