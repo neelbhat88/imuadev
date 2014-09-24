@@ -9,9 +9,14 @@ angular.module('myApp')
   $scope.student = student
   $scope.needs_attention = false
 
+  $scope.just_updated = ''
   $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
   $scope.loaded_milestones = false
+
+  $scope.$on 'just_updated', (event, module) ->
+    $scope.just_updated = module
+    _.findWhere($scope.modules_progress, {module_title: module}).last_updated = new Date()
 
   $scope.$on 'loaded_module_milestones', () ->
     $scope.loaded_module_milestones = true
@@ -40,6 +45,31 @@ angular.module('myApp')
       $scope.student_with_modules_progress = $scope.organization.students[0]
       $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
       $scope.selected_module = $scope.modules_progress[0]
+
+      for module in $scope.modules_progress
+        switch module.module_title
+          when "Academics"
+            if !_.isEmpty($scope.student.user_classes)
+              sorted_module = _.sortBy($scope.student.user_classes, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
+          when "Service"
+            if !_.isEmpty($scope.student.user_service_hours)
+              console.log($scope.student.user_service_hours)
+              sorted_module = _.sortBy($scope.student.user_service_hours, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
+          when "Extracurricular"
+            if !_.isEmpty($scope.student.user_extracurricular_activity_details)
+              sorted_module = _.sortBy($scope.student.user_extracurricular_activity_details, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
+          when "College_Prep" then module.last_updated = null
+          when "Testing"
+            if !_.isEmpty($scope.student.user_tests)
+              sorted_module = _.sortBy($scope.student.user_tests, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
 
       $scope.semesters = []
       for tu in $scope.organization.time_units

@@ -2,8 +2,6 @@ angular.module('myApp')
 .controller 'StudentsCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService'
   ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
 
-    $scope._ = _
-
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
     $scope.attention_students = []

@@ -70,6 +70,7 @@ gem "d3-rails"
 
 # Analytics
 gem 'intercom-rails'
+gem 'intercom', "~> 2.2.1" #Intercom API
 
 # Optimizations
 gem 'oj'

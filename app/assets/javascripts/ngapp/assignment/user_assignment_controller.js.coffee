@@ -2,7 +2,6 @@ angular.module('myApp')
 .controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService) ->
 
-    $scope._ = _
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
@@ -20,16 +19,20 @@ angular.module('myApp')
       AssignmentService.saveUserAssignment(new_user_assignment)
         .success (data) ->
           user_assignment.status = data.user_assignment.status
-          user_assignment.updated_at = data.user_assignment.updated_at
+          user_assignment.updated_at = new Date()
 
     $scope.isComplete = (user_assignment) ->
       return user_assignment.status == 1
 
     $scope.isPastDue = (user_assignment) ->
+      if user_assignment.due_datetime == null
+        return false
       due_date = new Date(user_assignment.due_datetime).getTime()
       return due_date < $scope.today
 
     $scope.isDueSoon = (user_assignment) ->
+      if user_assignment.due_datetime == null
+        return false
       due_date = new Date(user_assignment.due_datetime).getTime()
       return !this.isPastDue(user_assignment) && due_date <= $scope.two_days_from_now
 

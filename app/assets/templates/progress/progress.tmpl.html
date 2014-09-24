@@ -40,22 +40,26 @@
       <div class="progressCircle-big">
       	<a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
           <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
-        		<big-progress-circle student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></big-progress-circle>
+        		<progress-circle width="240" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
         	</div>
         </a>
       </div>
 
-    </div> <!-- progressCircle-big--container -->
-	  <!--CIRCLES-->
+    </div> <!-- progressCircle-big-container -->
+	  <!-- CIRCLES -->
+
     <div class="circles js-circles">
       <div class="module-circles js-module-circles">
         <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
           <module-progress-circle module="mod"></module-progress-circle>
-          <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</h6></div>
+          <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</span></div>
+          <div class="module-circle__modupdated" ng-if="mod.last_updated != null"><span>Last Updated {{mod.last_updated | fromNow}}</h6></div>
+          <div class="module-circle__modupdated" ng-if="mod.last_updated == null"><span>Has Yet To Update</span></div>
         </div>
       </div>
     </div>
-    <!--/CIRCLES-->
+
+    <!-- /CIRCLES -->
 
   </div><!-- /progressMiddle -->
 

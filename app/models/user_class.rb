@@ -28,6 +28,7 @@ class ViewUserClass
     @subject = uc.subject
     @modified_by_id = uc.modified_by_id
     @modified_by_name = uc.modified_by_name
+    @updated_at = uc.updated_at
   end
 
 end
@@ -48,6 +49,7 @@ class DomainUserClass
     @subject = uc.subject
     @modified_by_id = uc.modified_by_id
     @modified_by_name = uc.modified_by_name
+    @updated_at = uc.updated_at
   end
 
 end
