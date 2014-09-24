@@ -51,7 +51,7 @@
     <div class="circles js-circles">
       <div class="module-circles js-module-circles">
         <div class="module-circle" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" modulecolor="{{mod.module_title}}" ng-click="selectModule(mod)">
-          <module-progress-circle module="mod"></module-progress-circle>
+          <module-progress-circle module="mod" width="170"></module-progress-circle>
           <div class="module-circle__modtitle"><h6>{{mod.module_title | underscoresToSpaces}}</span></div>
           <div class="module-circle__modupdated" ng-if="mod.last_updated != null"><span>Last Updated {{mod.last_updated | fromNow}}</h6></div>
           <div class="module-circle__modupdated" ng-if="mod.last_updated == null"><span>Has Yet To Update</span></div>
