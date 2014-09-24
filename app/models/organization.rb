@@ -58,3 +58,23 @@ class DomainOrganization
   end
 
 end
+
+class ViewOrganization2
+
+  def initialize(options = {})
+
+    org = options[:organization]
+    unless org.nil?
+      @id = org.id unless org.id.nil?
+      @name = org.name unless org.name.nil?
+    end
+
+    @time_units = options[:time_units] unless options[:time_units].nil?
+    @enabled_modules = options[:enabled_modules] unless options[:enabled_modules].nil?
+    @milestones = options[:milestones] unless options[:milestones].nil?
+    @expectations = options[:expectations] unless options[:expectations].nil?
+    @org_tests = options[:org_tests] unless options[:org_tests].nil?
+    @users = options[:users] unless options[:users].nil?
+  end
+
+end

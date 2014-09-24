@@ -1,51 +1,64 @@
 class AssignmentService
 
-  def collect_assignment_2(assignmentId, filters = {})
-    filters[:assignment_id] = assignmentId
+  # Called via :assignment_id
+  def collect_assignment_2(params)
+    conditions = params
 
-    domainAssignments = AssignmentService.new.get_assignments_2(filters)
-    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+    attributes = []
+    assignments = Assignment.find_by_filters(conditions, attributes)
 
-    filters[:user_id] = []
-    filters[:user_id] << domainAssignments.pluck(:user_id)
-    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+    attributes = []
+    userAssignments = UserAssignment.find_by_filters(conditions, attributes)
 
-    domainUsers = UserService.new.get_users(filters)
-    domainUsers.each do |u|
-      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
-      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
+    conditions[:user_id] = []
+    conditions[:user_id] << assignments.pluck(:user_id)
+    conditions[:user_id] << userAssignments.pluck(:user_id)
+
+    viewUsers = []
+    attributes = []
+    User.find_by_filters(conditions, attributes).each do |user|
+      userOptions = {}
+      userOptions[:user] = user
+      userOptions[:assignments] = assignments.select{|a| a.user_id == user.id}.map{|a| ViewAssignment.new({assignment: a})}
+      userOptions[:user_assignments] = userAssignments.select{|ua| ua.user_id == user.id}.map{|ua| ViewUserAssignment.new({user_assignment: ua})}
+      viewUsers << ViewUser.new(userOptions)
     end
 
-    orgOptions = {}
-    orgOptions[:users] = domainUsers
-
-    return DomainOrganization.new(nil, orgOptions)
+    viewOrg = ViewOrganization.new({users: viewUsers})
+    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", viewOrg)
   end
 
-  def collect_assignments_2(userId, filters = {})
-    filters[:user_id] = userId
+  # Called via :user_id
+  def collect_assignments_2(params)
+    conditions = params
 
-    domainAssignments = AssignmentService.new.get_assignments_2(filters)
+    attributes = []
+    assignments = Assignment.find_by_filters(conditions, attributes)
 
-    filters = filters.except(:user_id)
-    filters[:assignment_id] = domainAssignments.pluck(:id)
-    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+    conditions = conditions.except(:user_id)
+    conditions[:assignment_id] = assignments.ids
+    attributes = []
+    userAssignments = UserAssignment.find_by_filters(conditions, attributes)
 
-    filters[:user_id] = []
-    filters[:user_id] << domainAssignments.pluck(:user_id)
-    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+    conditions[:user_id] = []
+    conditions[:user_id] << assignments.pluck(:user_id)
+    conditions[:user_id] << userAssignments.pluck(:user_id)
 
-    domainUsers = UserService.new.get_users(filters)
-    domainUsers.each do |u|
-      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
-      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
+    viewUsers = []
+    attributes = []
+    User.find_by_filters(conditions, attributes).each do |user|
+      userOptions = {}
+      userOptions[:user] = user
+      userOptions[:assignments] = assignments.select{|a| a.user_id == user.id}.map{|a| ViewAssignment.new({assignment: a})}
+      userOptions[:user_assignments] = userAssignments.select{|ua| ua.user_id == user.id}.map{|ua| ViewUserAssignment.new({user_assignment: ua})}
+      viewUsers << ViewUser.new(userOptions)
     end
 
-    orgOptions = {}
-    orgOptions[:users] = domainUsers
-
-    return DomainOrganization.new(nil, orgOptions)
+    viewOrg = ViewOrganization.new({users: viewUsers})
+    return ReturnObject.new(:ok, "Assignment collections for user_id: #{params[:user_id]}.", viewOrg)
   end
+
+
 
   def collect_assignment(assignmentId)
     return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)

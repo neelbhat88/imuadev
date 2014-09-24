@@ -9,7 +9,6 @@ class Api::V1::ProgressController < ApplicationController
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
     @organizationRepository = orgRepo ? orgRepo : OrganizationRepository.new
-    @userService = userService ? userService : UserService.new
     @organizationService = organizationService ? organizationService : OrganizationService.new
   end
 
@@ -48,17 +47,10 @@ class Api::V1::ProgressController < ApplicationController
   # Returns User's info and progress, filterable by time_unit and module.
   # Optional "recalculate" parameter to perform milestone recalculation.
   def user_progress
-    user_id      = params[:id]
-    time_unit_id = params[:time_unit_id]
-    module_title = params[:module]
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
 
-    filters = params.except(*[:id, :controller, :action]).symbolize_keys
-
-    if params[:recalculate]
-      @progressService.get_recalculated_milestones(user_id, time_unit_id, module_title)
-    end
-
-    result = @userService.get_user_progress(user_id, filters)
+    result = @progressService.get_user_progress(url_params)
 
     render status: result.status,
       json: {

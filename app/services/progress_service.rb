@@ -1,37 +1,49 @@
 class ProgressService
 
-  def get_all_progress(userId, time_unit_id)
-    user = UserRepository.new.get_user(userId)
-    enabled_modules = EnabledModules.new.get_modules(user.organization_id).object
+  # TODO: Fix front-end so that org_milestones and user_milestones can be
+  #       filtered by module_title and still have the semester progress circle
+  #       calculated accurately
+  def get_user_progress(params)
 
-    modules_progress = []
-    enabled_modules.each do | m |
-      points = get_module_and_user_points(userId, time_unit_id, m.title)
-
-      mod = ModuleProgress.new(m.title, time_unit_id, points[:user], points[:total])
-
-      modules_progress << mod
+    if params[:recalculate]
+      get_recalculated_milestones(params[:user_id], params[:time_unit_id], params[:module])
     end
 
-    return ReturnObject.new(:ok, "All modules progress", modules_progress)
-  end
+    userOptions = {}
 
-  def overall_progress(userId)
-    user = UserRepository.new.get_user(userId)
+    conditions = params.slice(:user_id)
+    attributes = ["organization_id", "role", "time_unit_id", "avatar"]
+    userOptions[:user] = User.find_by_filters(conditions, attributes).first
 
-    totalPoints = MilestoneService.new.get_total_points(user.organization_id)
+    conditions = params
 
-    totalUserPoints = 0
-    userMilestones = MilestoneService.new.get_user_milestones(user.id)
-    userMilestones.each do | um |
-      totalUserPoints += um.milestone.points
-    end
+    attributes = []
+    userOptions[:user_milestones] = MilestoneService.new.get_user_milestones_2(conditions.except(:module))
+    attributes = []
+    userOptions[:user_classes] = UserClassService.new.get_user_classes_2(conditions)
+    attributes = []
+    userOptions[:user_service_hours] = UserServiceOrganizationService.new.get_user_service_hours_2(conditions)
+    attributes = []
+    userOptions[:user_extracurricular_activity_details] = UserExtracurricularActivityService.new.get_user_extracurricular_activity_details_2(conditions)
+    attributes = []
+    userOptions[:user_tests] = TestService.new.get_user_tests_2(conditions)
+    viewUser = ViewUser2.new(userOptions)
 
-    percentComplete = ((totalUserPoints.to_f / totalPoints.to_f) * 100.0).round(0)
+    conditions[:organization_id] = userOptions[:user].organization_id
 
-    obj = { :totalUserPoints => totalUserPoints, :totalPoints => totalPoints, :percentComplete => percentComplete }
+    orgOptions = {}
+    attributes = []
+    orgOptions[:organization] = OrganizationService.new.get_organizations(conditions.slice(:organization_id)).first
+    attributes = []
+    orgOptions[:time_units] = OrganizationService.new.get_time_units(conditions[:organization_id])
+    attributes = []
+    orgOptions[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    attributes = []
+    orgOptions[:milestones] = MilestoneService.new.get_milestones(conditions[:organization_id], conditions[:time_unit_id])
+    orgOptions[:users] = [viewUser]
+    viewOrg = ViewOrganization2.new(orgOptions)
 
-    return ReturnObject.new(:ok, "Overall progress", obj)
+    return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", viewOrg)
   end
 
   def get_recalculated_milestones(user_id, time_unit_id, module_title)
@@ -109,36 +121,6 @@ class ProgressService
     return ReturnObject.new(:ok, "Recalculated milestones for user_id: #{user_id}, time_unit_id: #{time_unit_id}, module_title:#{module_title}.", milestones)
   end
 
-  def get_recalculated_module_progress(userId, time_unit_id, module_title)
-    # Perform recalculation on UserMilestones
-    get_recalculated_milestones(userId, time_unit_id, module_title)
-
-    # Get total and user points
-    points = get_module_and_user_points(userId, time_unit_id, module_title)
-    mod = ModuleProgress.new(module_title, time_unit_id, points[:user], points[:total])
-
-    return ReturnObject.new(:ok, "#{module_title} progress", mod)
-  end
-
-  private
-
-  def get_module_and_user_points(userId, time_unit_id, module_title)
-    org_milestones = Milestone.where(:module => module_title, :time_unit_id => time_unit_id)
-    total_points = 0
-    org_milestones.each do | om |
-      total_points += om.points
-    end
-
-    users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
-    user_points = 0
-    users_milestones.each do | um |
-      if um.milestone != nil
-        user_points += um.milestone.points
-      end
-    end
-
-    return {:total => total_points, :user => user_points}
-  end
 end
 
 class ModuleProgress

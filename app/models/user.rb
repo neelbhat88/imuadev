@@ -81,4 +81,65 @@ class User < ActiveRecord::Base
   def can? action, subject
     abilities.allowed?(self, action, subject)
   end
+
+  def self.process_selects(selects)
+
+    if selects.include?("avatar") then selects -= %w{avatar}
+      selects << "avatar_file_name"
+      selects << "avatar_content_type"
+      selects << "avatar_file_size"
+      selects << "avatar_updated_at"
+    end
+
+    return super(selects)
+  end
+
+  def self.process_filters(filters)
+    filters[:id] = filters[:user_id]
+    return super(filters)
+  end
+
+end
+
+
+class ViewUser2
+
+  def initialize(options = {})
+
+    user = options[:user]
+    unless user.nil?
+      @id = user.id unless !user.has_attribute?(:id)
+      @email = user.email unless !user.has_attribute?(:email)
+      @first_name = user.first_name unless !user.has_attribute?(:first_name)
+      @last_name = user.last_name unless !user.has_attribute?(:last_name)
+      @full_name = user.full_name unless !user.has_attribute?(:full_name)
+      @first_last_initial = user.first_last_initial unless !user.has_attribute?(:first_last_initial)
+      @title = user.title unless !user.has_attribute?(:title)
+      @phone = user.phone unless !user.has_attribute?(:phone)
+      @role = user.role unless !user.has_attribute?(:role)
+      @organization_id = user.organization_id unless !user.has_attribute?(:organization_id)
+      @square_avatar_url = user.avatar.url(:square) unless !user.has_attribute?(:avatar_file_name)
+      @time_unit_id = user.time_unit_id unless !user.has_attribute?(:time_unit_id)
+      @class_of = user.class_of.to_i unless !user.has_attribute?(:class_of)
+      @login_count = user.sign_in_count unless !user.has_attribute?(:sign_in_count)
+      @last_login = user.current_sign_in_at ? user.current_sign_in_at.strftime("%m/%d/%Y") : "Has not logged in yet" unless !user.has_attribute?(:current_sign_in_at)
+
+      @is_student = user.student? unless !user.has_attribute?(:role)
+      @is_mentor = user.mentor? unless !user.has_attribute?(:role)
+      @is_org_admin = user.org_admin? unless !user.has_attribute?(:role)
+      @is_super_admin = user.super_admin? unless !user.has_attribute?(:role)
+    end
+
+    @organization_name = options[:organization].name unless options[:organization].nil?
+    @relationships = options[:relationships] unless options[:relationships].nil?
+    @user_expectations = options[:user_expectations] unless options[:user_expectations].nil?
+    @user_milestones = options[:user_milestones] unless options[:user_milestones].nil?
+    @user_classes = options[:user_classes] unless options[:user_classes].nil?
+    @user_service_hours = options[:user_service_hours] unless options[:user_service_hours].nil?
+    @user_extracurricular_activity_details = options[:user_extracurricular_activity_details] unless options[:user_extracurricular_activity_details].nil?
+    @user_tests = options[:user_tests] unless options[:user_tests].nil?
+    @assignments = options[:assignments] unless options[:assignments].nil?
+    @user_assignments = options[:user_assignments] unless options[:user_assignments].nil?
+  end
+
 end
