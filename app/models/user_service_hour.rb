@@ -23,6 +23,7 @@ class ViewUserServiceHour
     @time_unit_id = sh.time_unit_id
     @name = sh.name
     @description = sh.description
+    @updated_at = sh.updated_at
   end
 
 end
@@ -38,6 +39,7 @@ class DomainUserServiceHour
     @time_unit_id = sh.time_unit_id
     @name = sh.name
     @description = sh.description
+    @updated_at = sh.updated_at
   end
 
 end
