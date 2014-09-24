@@ -118,6 +118,74 @@
 }
 
 /* ===============================================
+   Responsive Progress Circles
+   =============================================== */
+
+.progress-circle {
+  text-align: center;
+
+  .circle-size {
+    margin: 0 auto;
+  }
+
+  .circle-nav {
+    @include font-size(1.2);
+    opacity: 0;
+    @include transition(0.3);
+
+    li {
+      margin-bottom: 2px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+      a {
+        opacity: 0.4;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    .extra-info {
+      opacity: 0.4;
+    }
+
+  }
+
+  &:hover {
+    .circle-nav {
+      opacity: 1;
+    }
+  }
+
+}
+
+.progress-circle--list {
+  .progress-circle {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+}
+
+.progress-circle--default {
+  width: 220px;
+  .circle-size { width: 75%; }
+
+  @include respond-to(1200) { width: 190px; }
+  @include respond-to(900) { width: 150px; }
+
+  @include respond-to(600) {
+    width: 32%;
+    .circle-nav {
+      display: none;
+    }
+  }
+
+}
+
+
+
+/* ===============================================
    Circle Picture Classes
    =============================================== */
 

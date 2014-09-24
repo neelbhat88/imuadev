@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-	<div class="students-mid" ng-hide="attention_students.length == 0">
+	<div class="students-mid" ng-if="attention_students.length != 0">
 		<div class="students-attention">
 			<div ng-if="attention_students.length == 1" class="list-header">
 				<h5><span class="bold">One student needs attention</span> from their mentor</h5>
@@ -59,18 +59,8 @@
 	<div class="students-lower">
 		<div ng-repeat="(group, group_students) in groupedStudents">
 			<h5 class="list-header">Class of <span class="bold">{{group}}</span></h5>
-
-			<div class="list-container">
-				<div class="progress-circles" ng-repeat="student in group_students | orderBy: 'last_name'">
-					<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress"><progress-circle width="170" student="student" identifier="list" parentclass="progress-circles"></progress-circle></a>
-						<h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">{{student.first_last_initial}}</a></h6>
-						<ul class="circle-subnav">
-							<li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-              <li class="extra-info" ng-if="student.last_login == 'Has not logged in yet'">Last Login: {{student.last_login}}</li>
-							<li class="extra-info" ng-if="student.last_login != 'Has not logged in yet'">Last Login: {{student.last_login | formatMDY}}</li>
-							<li class="extra-info">Login Count: {{student.login_count}}</li>
-						</ul>
-				</div>
+			<div class="list-container progress-circle--list">
+				<progress-circle-default ng-repeat="student in group_students | orderBy: 'last_name'"></progress-circle-default>
 			</div>
     </div>
 
