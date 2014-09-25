@@ -6,7 +6,7 @@
         <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Tests Taken</h6>
         <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Tests Taken</h6>
       </div>
-      <div class="widget--header--right" ng-hide="new_extracurricular_activity.editing">
+      <div class="widget--header--right">
         <div class="widget--options ng-clickable" ng-hide="testsEditor" ng-click="testsEditor = !testsEditor">
           <span class="options--text">Edit</span>
           <span class="glyphicon glyphicon-edit"></span>
@@ -33,12 +33,8 @@
           </div>
           <div class="widget--content--cell breakalways" ng-show="testsEditor">
             <div class="cell--padding">
-              <button class="btn btn-danger" ng-click="deleteActivity(activityIndex)">Delete This Activity</button>
-            </div>
-          </div>
-          <div class="widget--content--cell breakalways" ng-hide="testsEditor">
-            <div class="cell--padding">
               <button class="btn btn-default btn-sm" ng-click="editUserTest($index)">Edit this Test</button>
+              <button class="btn btn-danger btn-sm" ng-click="deleteUserTest($index)">Delete This Test</button>
             </div>
           </div>
         </div>
@@ -83,40 +79,23 @@
         </div>
       </div>
 
-      <div class="widget--content--cell break900" ng-show="testsEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity()">
+      <div class="widget--content--cell break900 ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add A Test</h6>
         </div>
       </div>
 
-      <div class="widget--content--cell break900" ng-show="new_extracurricular_activity.editing">
-        <div class="cell--padding">
-          <span class="input-group">
-            <label ng-if="current_user.is_student">What Activity did you participate in?</label>
-            <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>
-            <select class="form-control" ng-change="selectedActivity(new_extracurricular_activity)" ng-options="activity as activity.name for activity in previous_activity_list" ng-model="new_extracurricular_activity" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
-              <option value="">--- Select Previous Activity ---</option>
-            </select>
-          </span>
-          <span class="input-group" ng-show="new_extracurricular_activity.newActivity">
-            <label ng-if="current_user.is_student">What Activity did you participate in?</label>
-            <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>
-            <input class="form-control" ng-model="new_extracurricular_activity.new_name" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
-          </span>
-          <span class="input-group" ng-show="new_extracurricular_activity.show">
-            <label>Leadership Role (Optional)</label>
-            <input class="form-control" ng-model="new_extracurricular_activity.details[0].leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
-          </span>
-          <span class="input-group" ng-show="new_extracurricular_activity.show">
-            <label>Description (Optional)</label>
-            <textarea class="form-control" ng-model="new_extracurricular_activity.details[0].description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
-          </span>
-
-          <button class="submit" title="Confirm" ng-click="saveNewActivity()">Confirm</button>
-          <button class="cancel" title="Cancel" ng-click="cancelNewActivity()">Cancel</button>
+      <div class="widget--content--cell ng-clickable" ng-click="testsEditor = !testsEditor" ng-show="userTests.length == 0 && !testsEditor">
+        <div class="cell--padding clear">
+          <div class="class-name">
+            <h5 ng-if="current_user.is_student">You haven't added any tests yet.</h5>
+            <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any tests yet.</h5>
+            <h5 class="bold">Click here to begin</h5>
+          </div>
         </div>
       </div>
+
 
     </div>
   </div>

@@ -98,6 +98,16 @@
         </div>
       </div>
 
+      <div class="widget--content--cell ng-clickable" ng-click="ecEditor = !ecEditor" ng-show="user_extracurricular_activities.length == 0 && !ecEditor">
+        <div class="cell--padding clear">
+          <div class="class-name">
+            <h5 ng-if="current_user.is_student">You haven't added any extracurricular activites yet.</h5>
+            <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any extracurricular activites yet.</h5>
+            <h5 class="bold">Click here to begin</h5>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
