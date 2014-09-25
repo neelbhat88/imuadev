@@ -91,6 +91,16 @@
 			}
 		}
 
+		.module--upcoming--tasks {
+			.tasks--list--item {
+				width: 100%;
+				background: $boxgrey;
+				@include border-radius(5px);
+				padding: 10px;
+				margin-bottom: 10px;
+			}
+		}
+
   } //.dashboard-content--student
 
 } //#studentDashboard
