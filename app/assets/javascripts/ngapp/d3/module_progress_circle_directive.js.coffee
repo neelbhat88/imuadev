@@ -92,19 +92,20 @@ angular.module('myApp')
       #  .each( (d) -> this._current = d ) # stores current angles
 
       d3.select("#" + module.module_title).append("text")
-        .attr("dy", "0.2em")
+        .attr("dy", (.035 * width) + "px")
         .attr("class", "value")
         .attr("fill", "white")
-        .attr("font-size", "30")
+        .attr("font-size", (.177 * width))
         .style("text-anchor", "middle")
         .text( (d) ->
           modulePoints + "/" + totalPoints
         )
 
       d3.select("#" + module.module_title).append("text")
-        .attr("dy", "1.7em")
+        .attr("dy", (.145 * width) + "px")
         .attr("class", "text")
         .attr("fill", "white")
+        .attr("font-size", (.0824 * width))
         .style("text-anchor", "middle")
         .text( (d) ->
           "points"
