@@ -8,6 +8,17 @@ class TimeUnit < ActiveRecord::Base
   belongs_to :roadmap
 end
 
+class TimeUnitQuerier < Querier
+  def initialize(viewAttributes, domainOnlyAttributes = [])
+    @column_names = TimeUnit.column_names
+    super(viewAttributes, domainOnlyAttributes)
+  end
+
+  def self.generate_query()
+    return @query = TimeUnit.where(self.conditions).select(self.attributes.all)
+  end
+end
+
 class ViewTimeUnit
   attr_accessor :id, :name, :milestones
 

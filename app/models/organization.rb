@@ -9,6 +9,17 @@ class Organization < ActiveRecord::Base
   has_many :org_tests, dependent: :destroy
 end
 
+class OrganizationQuerier < Querier
+  def initialize(viewAttributes, domainOnlyAttributes = [])
+    @column_names = Organization.column_names
+    super(viewAttributes, domainOnlyAttributes)
+  end
+
+  def self.generate_query()
+    return @query = Organization.where(self.conditions).select(self.attributes.all)
+  end
+end
+
 class ViewOrganizationWithUsers
   attr_accessor :id, :name, :orgAdmins, :students, :mentors
 

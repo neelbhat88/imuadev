@@ -20,6 +20,17 @@ class Milestone < ActiveRecord::Base
   validates :organization_id, presence: true
 end
 
+class MilestoneQuerier < Querier
+  def initialize(viewAttributes, domainOnlyAttributes = [])
+    @column_names = Milestone.column_names
+    super(viewAttributes, domainOnlyAttributes)
+  end
+
+  def self.generate_query()
+    return @query = Milestone.where(self.conditions).select(self.attributes.all)
+  end
+end
+
 class ViewMilestone
   attr_accessor :id, :description, :module, :points, :submodule, :title, :icon, :time_unit_id
 

@@ -9,9 +9,40 @@ class ProgressService
       get_recalculated_milestones(params[:user_id], params[:time_unit_id], params[:module])
     end
 
+    query = {}
+    query[:user] = UserQuerier.new([:role, :time_unit_id, :avatar], [:organization_id])
+    query[:user].set_conditions(params.slice(:user_id))
+    query[:user_milestone] = UserMilestoneQuerier.new([])
+    query[:user_milestone].set_conditions(params.except(:module))
+    query[:user].set_sub_models(query[:user_milestone])
+    
+    params[:organization_id] = query[:user].domain[:organization_id]
+
+    query[:organization] = Organization.new([]).set_conditions(params.slice(:organization_id))
+    query[:time_units] = TimeUnit.new([]).set_conditions(params.slice(:organization_id))
+    query[:milestones] = Milestone.new([]).set_conditions(params.slice(:organization_id, :time_unit_id))
+    query[:organization].set_sub_models(query[:user], query[:time_units], query[:milestones])
+
+    query[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(params[:organization_id])
+    query[:organization].set_sub_hash(:enabled_modules, query[:enabled_modules])
+
+    ret = query[:organization]
+
+    return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", ret.view)
+  end
+
+  # TODO: Fix front-end so that org_milestones and user_milestones can be
+  #       filtered by module_title and still have the semester progress circle
+  #       calculated accurately
+  def get_user_progress_2(params)
+
+    if params[:recalculate]
+      get_recalculated_milestones(params[:user_id], params[:time_unit_id], params[:module])
+    end
+
     userOptions = {}
-    attributes = ["organization_id", "role", "time_unit_id", "avatar"]
-    userOptions[:user] = User.find_by_filters(params.slice(:user_id), attributes).first
+    attributes = [:organization_id, :role, :time_unit_id, :avatar]
+    userOptions[:user] = User.find_by_filters2(params.slice(:user_id), attributes).first
     attributes = []
     userOptions[:user_milestones] = UserMilestone.find_by_filters(params.except(:module), attributes)
     viewUser = ViewUser2.new(userOptions)

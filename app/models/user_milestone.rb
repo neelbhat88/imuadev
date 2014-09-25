@@ -12,6 +12,17 @@ class UserMilestone < ActiveRecord::Base
   validates :user_id, presence: true
 end
 
+class UserMilestoneQuerier < Querier
+  def initialize(viewAttributes, domainOnlyAttributes = [])
+    @column_names = UserMilestone.column_names
+    super(viewAttributes, domainOnlyAttributes)
+  end
+
+  def self.generate_query()
+    return @query = UserMilestone.where(self.conditions).select(self.attributes.all)
+  end
+end
+
 class ViewUserMilestone
 
   def initialize(um)

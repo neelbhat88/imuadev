@@ -101,6 +101,38 @@ class User < ActiveRecord::Base
 
 end
 
+class UserQuerier < Querier
+  def initialize(viewAttributes, domainOnlyAttributes = [])
+    @column_names = User.column_names
+    super(viewAttributes, domainOnlyAttributes)
+  end
+
+  def generate_query()
+    return @query = User.where(self.conditions).select(self.attributes.all)
+  end
+
+  def type_cast_attribute(attr_name, attributes)
+    return User.type_cast_attribute(attr_name, attributes)
+  end
+
+  def self.filter_attributes(attributes)
+
+    if attributes.include?(:avatar) then attributes -= [:avatar]
+      attributes << :avatar_file_name
+      attributes << :avatar_content_type
+      attributes << :avatar_file_size
+      attributes << :avatar_updated_at
+    end
+
+    return super(attributes)
+  end
+
+  def self.filter_conditions(conditions)
+    conditions[:id] = conditions[:user_id]
+    return super(conditions)
+  end
+end
+
 
 class ViewUser2
 
