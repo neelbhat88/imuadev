@@ -240,6 +240,24 @@
     }
   }
 
+  .extracurricularProgressContainer {
+    .extracurricular-activities {
+      //EC Widget
+
+      .widget--content--table {
+        .widget--content--cell {
+          .widget--content--cell {
+            .cell--padding {
+              padding-left: 20px;
+              padding-right: 20px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
   /* Editing */
 
   .input-group {
