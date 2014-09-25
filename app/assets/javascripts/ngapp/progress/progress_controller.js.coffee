@@ -10,7 +10,6 @@ angular.module('myApp')
   $scope.needs_attention = false
 
   $scope.just_updated = ''
-  $scope.just_updated_module = ''
   $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
   $scope.loaded_milestones = false
@@ -49,12 +48,28 @@ angular.module('myApp')
 
       for module in $scope.modules_progress
         switch module.module_title
-          when "Academics" then module.last_updated = $scope.student.modules_last_updated.academics
-          when "Service" then module.last_updated = $scope.student.modules_last_updated.service
-          when "Extracurricular" then module.last_updated =
-            $scope.student.modules_last_updated.extracurricular
+          when "Academics"
+            if !_.isEmpty($scope.student.user_classes)
+              sorted_module = _.sortBy($scope.student.user_classes, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
+          when "Service"
+            if !_.isEmpty($scope.student.user_service_hours)
+              console.log($scope.student.user_service_hours)
+              sorted_module = _.sortBy($scope.student.user_service_hours, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
+          when "Extracurricular"
+            if !_.isEmpty($scope.student.user_extracurricular_activity_details)
+              sorted_module = _.sortBy($scope.student.user_extracurricular_activity_details, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
           when "College_Prep" then module.last_updated = null
-          when "Testing" then module.last_updated = $scope.student.modules_last_updated.testing
+          when "Testing"
+            if !_.isEmpty($scope.student.user_tests)
+              sorted_module = _.sortBy($scope.student.user_tests, (u) ->
+                u.updated_at)
+              module.last_updated = _.last(sorted_module).updated_at
 
       $scope.semesters = []
       for tu in $scope.organization.time_units

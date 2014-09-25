@@ -88,18 +88,20 @@
           </div>
         </div>
 
-        <div class="module module--your-mentors" modulecolor="no_category">
-          <div class="module--header">Your <span class="bold">Mentors</span></div>
+        <div class="module module--upcoming--tasks" modulecolor="no_category">
+          <div class="module--header">Upcoming <span class="bold">Tasks</span></div>
           <div class="module--content">
-            <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
-              <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-                <div class="circle-picture">
-                  <img ng-src="{{mentor.square_avatar_url}}">
-                </div>
-                  <h6 class="bold">{{mentor.first_name}} {{mentor.last_name}}</h6>
-                  <h6 class="bold">{{mentor.title}}</h6>
-              </a>
-            </div>
+            <ul>
+              <li class="tasks--list--item" ng-repeat="assignment in user_assignments | orderBy:sortIncompleteAssignments" ng-if="assignment.status == 0">
+                <a no-click-propagation href="#/user_assignment/{{assignment.id}}">
+                  <h6 class="bold">{{assignment.title}}</h6>
+                  <div class="subtext" ng-if="assignment.due_datetime != null">
+                    Due {{assignment.due_datetime | fromNow}}
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <a href="#/user_assignments/{{student.id}}"><button class="btn btn-default">See All Tasks</button></a>
           </div>
         </div>
 
