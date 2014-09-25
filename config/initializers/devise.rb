@@ -9,6 +9,11 @@ Devise.setup do |config|
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
 
+  # The secret key used by Devise. Devise uses this key to generate
+  # random tokens. Changing this key will render invalid all existing
+  # confirmation, reset password and unlock tokens in the database.
+  config.secret_key = 'x30ce907d5b51ae2ac16928911b13ca0cb628dke94c167fa8e8d11d5ec2d19b2iek3d8b5301bd10f916fbe6275cf063nbd6324ffbd2a10de072fc975f1776e2c'
+
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
