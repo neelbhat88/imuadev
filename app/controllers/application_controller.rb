@@ -13,15 +13,11 @@ class ApplicationController < ActionController::Base
 
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
-    #return dashboard_path
-  #   if current_user.super_admin?
-  #     return super_admin_profile
-  #   end
     return root_path
   end
 
-  def authenticate_user
-    authenticate_user!
+  def after_sign_out_path_for(resource_or_scope)
+    login_path
   end
 
   def student_can_access?(userId)
