@@ -8,7 +8,7 @@
       </div>
       <div class="widget--header--right" ng-hide="new_extracurricular_activity.editing">
         <div class="widget--options ng-clickable" ng-hide="ecEditor" ng-click="ecEditor = !ecEditor">
-          <span class="options--text">Edit</span>
+          <span class="options--text">Edit Activities</span>
           <span class="glyphicon glyphicon-edit"></span>
         </div>
         <button ng-show="ecEditor" class="btn btn-primary" ng-click="ecEditor = !ecEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
@@ -18,11 +18,12 @@
 
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities">
+      <div class="widget--content--cell break900" ng-repeat="(activityIndex, user_extracurricular_activity) in user_extracurricular_activities">
         <div ng-hide="user_extracurricular_activity.editing">
           <div class="widget--content--cell breakalways">
             <div class="cell--padding">
               <h4 class="bold">{{user_extracurricular_activity.name}}</h4>
+              <button class="btn btn-danger" ng-show="ecEditor" ng-click="deleteActivity(activityIndex)">Delete This Activity</button>
             </div>
           </div>
           <div class="widget--content--cell breakalways" ng-if="user_extracurricular_activity.details[0].leadership != null">
@@ -62,14 +63,14 @@
         </div>
       </div>
 
-      <div class="widget--content--cell" ng-show="ecEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity()">
+      <div class="widget--content--cell break900" ng-show="ecEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add An Activity</h6>
         </div>
       </div>
 
-      <div class="widget--content--cell" ng-if="new_extracurricular_activity.editing">
+      <div class="widget--content--cell break900" ng-show="new_extracurricular_activity.editing">
         <div class="cell--padding">
           <span class="input-group">
             <label ng-if="current_user.is_student">What Activity did you participate in?</label>
