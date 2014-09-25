@@ -19,8 +19,7 @@
 
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
-
-      <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
+      <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
         <div ng-hide="user_class.editing">
           <div class="cell--padding" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
@@ -53,7 +52,8 @@
             </div>
             <div ng-hide="classEditor">
               <div class="more-info widget--content--table table--fixed">
-                <div class="widget--content--cell break1400">
+
+                <div class="widget--content--cell" ng-class="{'break1400': user_classes.length >= 6, 'break1200': user_classes.length >= 4, 'break900': user_classes.length < 4}">
                   <div class="cell--padding">
                     <div class="group--title">Period</div>
                     <div class="group--content">
@@ -63,7 +63,7 @@
                   </div>
                 </div>
 
-                <div class="widget--content--cell break1400">
+                <div class="widget--content--cell" ng-class="{'break1400': user_classes.length >= 6, 'break1200': user_classes.length >= 4, 'break900': user_classes.length < 4}">
                   <div class="cell--padding">
                     <div class="group--title">Room</div>
                     <div class="group--content">
@@ -73,7 +73,7 @@
                   </div>
                 </div>
 
-                <div class="widget--content--cell break1400" ng-if="user_class.level != 'Regular'">
+                <div class="widget--content--cell" ng-if="user_class.level != 'Regular'" ng-class="{'break1400': user_classes.length >= 6, 'break1200': user_classes.length >= 4, 'break900': user_classes.length < 4}">
                   <div class="cell--padding">
                     <div class="group--title">Level</div>
                     <div class="group--content">
@@ -82,7 +82,7 @@
                   </div>
                 </div>
 
-                <div class="widget--content--cell break1400" ng-if="user_class.subject != null">
+                <div class="widget--content--cell break1400" ng-if="user_class.subject != null" ng-class="{'break1400': user_classes.length >= 6, 'break1200': user_classes.length >= 4, 'break900': user_classes.length < 4}">
                   <div class="cell--padding">
                     <div class="group--title">Subject</div>
                     <div class="group--content">
@@ -91,7 +91,7 @@
                   </div>
                 </div>
 
-                <div class="widget--content--cell break1400" ng-if="user_class.credit_hours != 1">
+                <div class="widget--content--cell break1400" ng-if="user_class.credit_hours != 1" ng-class="{'break1400': user_classes.length >= 6, 'break1200': user_classes.length >= 4, 'break900': user_classes.length < 4}">
                   <div class="cell--padding">
                     <div class="group--title">Credit Hours</div>
                     <div class="group--content">
