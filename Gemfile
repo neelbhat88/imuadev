@@ -60,7 +60,7 @@ gem 'paperclip'
 gem 'aws-sdk'
 
 # Used for authentication
-gem 'devise'
+gem 'devise', "~> 3.2.2"
 # Authorization
 gem "six"
 
