@@ -10,36 +10,20 @@ class ProgressService
     end
 
     userOptions = {}
-
-    conditions = params.slice(:user_id)
     attributes = ["organization_id", "role", "time_unit_id", "avatar"]
-    userOptions[:user] = User.find_by_filters(conditions, attributes).first
-
-    conditions = params
-
+    userOptions[:user] = User.find_by_filters(params.slice(:user_id), attributes).first
     attributes = []
-    userOptions[:user_milestones] = MilestoneService.new.get_user_milestones_2(conditions.except(:module))
-    attributes = []
-    userOptions[:user_classes] = UserClassService.new.get_user_classes_2(conditions)
-    attributes = []
-    userOptions[:user_service_hours] = UserServiceOrganizationService.new.get_user_service_hours_2(conditions)
-    attributes = []
-    userOptions[:user_extracurricular_activity_details] = UserExtracurricularActivityService.new.get_user_extracurricular_activity_details_2(conditions)
-    attributes = []
-    userOptions[:user_tests] = TestService.new.get_user_tests_2(conditions)
+    userOptions[:user_milestones] = UserMilestone.find_by_filters(params.except(:module), attributes)
     viewUser = ViewUser2.new(userOptions)
 
-    conditions[:organization_id] = userOptions[:user].organization_id
+    params[:organization_id] = userOptions[:user].organization_id
 
     orgOptions = {}
     attributes = []
-    orgOptions[:organization] = OrganizationService.new.get_organizations(conditions.slice(:organization_id)).first
-    attributes = []
-    orgOptions[:time_units] = OrganizationService.new.get_time_units(conditions[:organization_id])
-    attributes = []
-    orgOptions[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
-    attributes = []
-    orgOptions[:milestones] = MilestoneService.new.get_milestones(conditions[:organization_id], conditions[:time_unit_id])
+    orgOptions[:organization] = Organization.find_by_filters(params.slice(:organization_id), attributes).first
+    orgOptions[:time_units] = TimeUnit.find_by_filters(params.slice(:organization_id), attributes)
+    orgOptions[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(params[:organization_id])
+    orgOptions[:milestones] = Milestone.find_by_filters(params.slice(:organization_id, :time_unit_id), attributes)
     orgOptions[:users] = [viewUser]
     viewOrg = ViewOrganization2.new(orgOptions)
 
