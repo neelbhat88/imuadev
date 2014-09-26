@@ -1,0 +1,44 @@
+<div class="widget-group">
+  <div class="widget-group--table table--fixed">
+    <div class="widget-group--cell break900">
+      <div class="widget mentor-activity">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold"><div class="color--dot"></div> Mentor Activity This Week</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="cell--padding">
+                <h1 class="bold">{{active_mentors}}</h1>
+                <h5 ng-if="active_mentors != 1">Mentors active</h5>
+                <h5 ng-if="active_mentors == 1">Mentor active</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="widget-group--cell break900">
+      <div class="widget student-activity">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold"><div class="color--dot"></div> Student Activity This Week</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="cell--padding">
+                <h1 class="bold">{{active_students}}</h1>
+                <h5 ng-if="active_students != 1">Students Active</h5>
+                <h5 ng-if="active_students == 1">Active Student</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
