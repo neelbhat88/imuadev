@@ -10,25 +10,23 @@ class ProgressService
     end
 
     query = {}
-    query[:user] = UserQuerier.new([:role, :time_unit_id, :avatar], [:organization_id])
-    query[:user].set_conditions(params.slice(:user_id))
-    query[:user_milestone] = UserMilestoneQuerier.new([])
-    query[:user_milestone].set_conditions(params.except(:module))
+    query[:user] = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(params.slice(:user_id))
+    query[:user_milestone] = UserMilestoneQuerier.new.where(params.except(:module))
     query[:user].set_sub_models(query[:user_milestone])
     
-    params[:organization_id] = query[:user].domain[:organization_id]
+    params[:organization_id] = query[:user].domain.first[:organization_id]
 
-    query[:organization] = Organization.new([]).set_conditions(params.slice(:organization_id))
-    query[:time_units] = TimeUnit.new([]).set_conditions(params.slice(:organization_id))
-    query[:milestones] = Milestone.new([]).set_conditions(params.slice(:organization_id, :time_unit_id))
+    query[:organization] = OrganizationQuerier.new.where(params.slice(:organization_id))
+    query[:time_units] = TimeUnitQuerier.new.where(params.slice(:organization_id))
+    query[:milestones] = MilestoneQuerier.new.where(params.slice(:organization_id, :time_unit_id))
     query[:organization].set_sub_models(query[:user], query[:time_units], query[:milestones])
 
     query[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(params[:organization_id])
     query[:organization].set_sub_hash(:enabled_modules, query[:enabled_modules])
 
-    ret = query[:organization]
+    view = query[:organization].view.first
 
-    return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", ret.view)
+    return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", view)
   end
 
   # TODO: Fix front-end so that org_milestones and user_milestones can be
@@ -147,4 +145,49 @@ class ModuleProgress
     @points = {:user => user_points, :total => total_points}
   end
 
+end
+
+class UserQuerier < Querier
+  def initialize
+    super(User)
+  end
+
+  def filter_attributes(attributes)
+    if attributes.include?(:avatar) then attributes -= [:avatar]
+      attributes << :avatar_file_name
+      attributes << :avatar_content_type
+      attributes << :avatar_file_size
+      attributes << :avatar_updated_at
+    end
+    return super(attributes)
+  end
+
+  def filter_conditions(conditions)
+    conditions[:id] = conditions[:user_id]
+    return super(conditions)
+  end
+end
+
+class OrganizationQuerier < Querier
+  def initialize
+    super(Organization)
+  end
+end
+
+class TimeUnitQuerier < Querier
+  def initialize
+    super(TimeUnit)
+  end
+end
+
+class UserMilestoneQuerier < Querier
+  def initialize
+    super(UserMilestone)
+  end
+end
+
+class MilestoneQuerier < Querier
+  def initialize
+    super(Milestone)
+  end
 end

@@ -21,13 +21,8 @@ class Milestone < ActiveRecord::Base
 end
 
 class MilestoneQuerier < Querier
-  def initialize(viewAttributes, domainOnlyAttributes = [])
-    @column_names = Milestone.column_names
-    super(viewAttributes, domainOnlyAttributes)
-  end
-
-  def self.generate_query()
-    return @query = Milestone.where(self.conditions).select(self.attributes.all)
+  def initialize
+    return super(Milestone)
   end
 end
 

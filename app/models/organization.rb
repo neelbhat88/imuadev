@@ -10,13 +10,8 @@ class Organization < ActiveRecord::Base
 end
 
 class OrganizationQuerier < Querier
-  def initialize(viewAttributes, domainOnlyAttributes = [])
-    @column_names = Organization.column_names
-    super(viewAttributes, domainOnlyAttributes)
-  end
-
-  def self.generate_query()
-    return @query = Organization.where(self.conditions).select(self.attributes.all)
+  def initialize
+    return super(Organization)
   end
 end
 
