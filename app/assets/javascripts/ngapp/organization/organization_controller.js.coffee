@@ -35,7 +35,6 @@ angular.module('myApp')
 
         $scope.mentor_needs_help = "1*"
         $scope.mentors_with_attention_students = _.filter($scope.organization.mentors, (mentor) -> _.intersection(mentor.studentIds, $scope.organization.attention_studentIds).length > 0)
-
         $scope.loaded_users = true
 
 
