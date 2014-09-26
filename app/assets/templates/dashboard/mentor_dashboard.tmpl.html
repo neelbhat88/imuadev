@@ -32,7 +32,7 @@
       <div ng-if="attention_students.length != 1" class="list-header">
         <h4>These students <span class="bold">need your attention!</span></h4>
       </div>
-      <div class="list-container">
+      <div class="list-container progress-circle--list">
         <progress-circle-needs-attention ng-repeat="student in attention_students"></progress-circle-needs-attention>
       </div>
     </div>

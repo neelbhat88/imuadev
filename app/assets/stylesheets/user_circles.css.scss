@@ -63,7 +63,7 @@
 
 /*----- Needs Attention Circles -----*/
 
-.progress-circles--needs-attention {
+.xprogress-circles--needs-attention {
 
   margin: 0 40px 40px 0;
   display: inline-block;
@@ -121,6 +121,21 @@
    Responsive Progress Circles
    =============================================== */
 
+.progress-circle--list {
+
+  .progress-circle {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+  .progress-circle--needs-attention {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 40px;
+  }
+}
+
+
 .progress-circle {
   text-align: center;
 
@@ -159,14 +174,6 @@
 
 }
 
-.progress-circle--list {
-  .progress-circle {
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: 10px;
-  }
-}
-
 .progress-circle--default {
   width: 220px;
   .circle-size { width: 75%; }
@@ -185,37 +192,29 @@
 
 .progress-circle--needs-attention {
 
-  margin: 0 40px 40px 0;
-  display: inline-block;
-
-  @include respond-to(675) {
+  @include respond-to(900) {
     display: block;
-    margin: 0 auto 40px auto;
+    width: 100%;
+    text-align: center;
   }
 
   .attention-circle {
-    width: 170px;
+    width: 180px;
     margin-right: 20px;
     display: inline-block;
 
-    @include respond-to(1200) {
-      display: block;
-      margin: 0 auto;
-    }
+    @include respond-to(1200) { width: 150px; }
+    @include respond-to(600) { margin: 0 auto; }
 
   }
 
   .attention-text {
-    width: 250px;
+    width: 225px;
     text-align: left;
     display: inline-block;
     vertical-align: top;
 
-    @include respond-to(1200) {
-      display: block;
-      text-align: center;
-      margin: 0 auto;
-    }
+    @include respond-to(600) { display: block; width: 80%; margin: 0 auto; text-align: center; }
 
     .attention-description {
       color: $red;
