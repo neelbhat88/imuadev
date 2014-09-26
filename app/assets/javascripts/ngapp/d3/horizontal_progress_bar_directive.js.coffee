@@ -21,7 +21,7 @@ angular.module('myApp')
       user_points = 0
       total_points = 0
 
-      for module in scope.student.modules_progress
+      for module in student.modules_progress
         progressData.push([{ x: 0, y: module.points.user}])
         user_points += module.points.user
         total_points += module.points.total
@@ -56,7 +56,7 @@ angular.module('myApp')
         .attr("width", w)
         .attr("height", h)
         .append("g")
-        .attr("id", scope.module.module_title)
+        .attr("id", student.id + "_" + scope.identifier)
 
       # Add a group for each row of data
       groups = svg.selectAll("g")
@@ -77,8 +77,8 @@ angular.module('myApp')
           .attr("x", (d) ->
             xScale(d.y0)
           )
-          .attr("y", (height/2))
-          .attr("height", (height/2))
+          .attr("y", (h/2))
+          .attr("height", (h/2))
           .attr("width", (d) ->
             xScale(d.y)
           )
@@ -87,7 +87,7 @@ angular.module('myApp')
       scope.render(scope.student)
     , true)
 
-    chartSelect = $("#"+ scope.module.module_title)
+    chartSelect = $("#"+ scope.student.id + "_" + scope.identifier)
 
     resizeParent = () ->
       if scope.parentclass
