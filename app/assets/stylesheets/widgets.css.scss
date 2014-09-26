@@ -80,6 +80,25 @@ $border-color: black(0.2);
           padding-bottom: 0;
         }
 
+        .module-circle--meta {
+
+          .click-to-view {
+            opacity: 0;
+            @include transition(0.3);
+          }
+
+        }
+
+        &:hover {
+          .module-circle--meta{
+
+            .click-to-view {
+              opacity: 1;
+            }
+
+          }
+        }
+
       }
 
       .break600 {

@@ -96,34 +96,6 @@
       opacity: 0.6;
     }
 
-    .module-circle--title {
-      margin-bottom: 25px;
-    }
-
-    .module-circle--meta {
-      margin-top: 10px;
-
-      .click-to-view {
-        opacity: 0;
-        @include transition(0.3);
-      }
-
-      .updated-on {
-        opacity: 0.5;
-      }
-
-    }
-
-    &:hover {
-      .module-circle--meta{
-
-        .click-to-view {
-          opacity: 1;
-        }
-
-      }
-    }
-
   }
 
   .academicsProgressContainer {
