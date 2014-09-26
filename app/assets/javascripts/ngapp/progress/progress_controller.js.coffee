@@ -44,7 +44,7 @@ angular.module('myApp')
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
       $scope.student_with_modules_progress = $scope.organization.students[0]
       $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
-      $scope.selected_module = $scope.modules_progress[0]
+      # $scope.selected_module = $scope.modules_progress[0]
 
       for module in $scope.modules_progress
         switch module.module_title
@@ -55,6 +55,7 @@ angular.module('myApp')
               module.last_updated = _.last(sorted_module).updated_at
           when "Service"
             if !_.isEmpty($scope.student.user_service_hours)
+              console.log($scope.student.user_service_hours)
               sorted_module = _.sortBy($scope.student.user_service_hours, (u) ->
                 u.updated_at)
               module.last_updated = _.last(sorted_module).updated_at

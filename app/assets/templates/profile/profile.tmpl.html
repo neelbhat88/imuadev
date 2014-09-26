@@ -8,7 +8,7 @@
 
     <div ng-hide="editingInfo || editingPassword">
 
-      <h3>{{user.first_name}} {{user.last_name}}</h3>
+      <h3 class="bold">{{user.first_name}} {{user.last_name}}</h3>
       <h5 ng-if="user.is_mentor">{{user.title}}</h5>
 
       <ul class="profile--primary-info">
@@ -49,7 +49,7 @@
       </div>
 
       <div class="student-exception" ng-if="current_user.is_student">
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        <h3 class="bold">{{user.first_name}} {{user.last_name}}</h3>
       </div>
 
       <div class="form-wrapper">
@@ -76,7 +76,7 @@
     <div class="primary-editing" ng-show="editingPassword">
 
       <div class="student-exception" ng-if="current_user.is_student">
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        <h3 class="bold">{{user.first_name}} {{user.last_name}}</h3>
       </div>
 
       <ul class="errorText ptm" ng-show="errors">
