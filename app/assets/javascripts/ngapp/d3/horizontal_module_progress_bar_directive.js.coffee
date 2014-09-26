@@ -1,0 +1,117 @@
+angular.module('myApp')
+.directive 'horizontalModuleProgressBar', [() ->
+  restrict: 'EA'
+  scope: {
+    module: '=',
+    width: '=',
+    height: '=',
+    parentclass: '@',
+    identifier: '@'
+  }
+  link: (scope, element, attrs) ->
+    if scope.parentclass
+      w = $('.' + scope.parentclass).outerWidth()
+      h = $('.' + scope.parentclass).outerHeight()
+    else
+      w = scope.width
+      h = scope.height
+
+    scope.render = (module) ->
+      switch (module.module_title)
+        when 'Academics'
+          moduleColor = '#41e6b2'
+          moduleColorBg = '#172924'
+        when 'Service'
+          moduleColor = '#e8be28'
+          moduleColorBg = '#2a271b'
+        when 'Extracurricular'
+          moduleColor = '#ef6629'
+          moduleColorBg = '#291b16'
+        when 'College_Prep'
+          moduleColor = '#27aae1'
+          moduleColorBg = '#142229'
+        when 'Testing'
+          moduleColor = '#9665aa'
+          moduleColorBg = '#221b2a'
+
+      modulePoints = module.points.user
+      totalPoints = module.points.total
+
+      if totalPoints == 0
+        module_value = 1
+        remaining_value = 0
+      else
+        module_value = modulePoints
+        remaining_value = totalPoints - modulePoints
+
+      progressData = [
+        [{ x: 0, y: module_value}],
+        [{ x: 0, y: remaining_value}]
+      ]
+
+      stack = d3.layout.stack()
+
+      # Data, stacked
+      stack(progressData)
+
+      # Set up scales
+      xScale = d3.scale.linear()
+        .domain([0, d3.max(progressData, (d) ->
+          d3.max(d, (d) ->
+            d.y0 + d.y
+          )
+        )])
+        .range([0, w])
+
+      color = d3.scale.ordinal()
+        .range([moduleColor, moduleColorBg])
+
+      # Create SVG element
+      svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .append("g")
+        .attr("id", scope.module.module_title)
+
+
+      # Add a group for each row of data
+      groups = svg.selectAll("g")
+        .data(progressData)
+        .enter()
+        .append("g")
+        .style("fill", (d, i) ->
+          color(i)
+        )
+
+      # Add a rect for each data value
+      rects = groups.selectAll("rect")
+        .data((d) ->
+          d
+        )
+        .enter()
+        .append("rect")
+          .attr("x", (d) ->
+            xScale(d.y0)
+          )
+          .attr("y", (h/2))
+          .attr("height", (h/2))
+          .attr("width", (d) ->
+            xScale(d.y)
+          )
+
+    scope.$watch('module', () ->
+      scope.render(scope.module)
+    , true)
+
+    chartSelect = $("#"+ scope.module.module_title)
+
+    resizeParent = () ->
+      if scope.parentclass
+        onChangeWidth = $('.' + scope.parentclass).outerWidth()
+
+        chartSelect.attr("width", onChangeWidth)
+        chartSelect.attr("height", onChangeWidth)
+
+    $(window).resize (event) -> resizeParent()
+]
