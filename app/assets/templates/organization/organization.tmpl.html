@@ -13,7 +13,7 @@
 				</div>
 			</li>
 			<li>
-				<div class="stat-wrapper clear">
+				<div class="stat-wrapper ngclickable clear">
 					<div class="count"><h4><span class="bold">{{active_mentors}}</span></h4></div>
 					<div ng-if="active_mentors !== 1" class="descript">Mentors Active <br>This Week</div>
           <div ng-if="active_mentors == 1" class="descript">Mentor Active <br>This Week</div>
@@ -27,7 +27,7 @@
 			  </div>
 			</li> -->
 			<li>
-				<div class="stat-wrapper clear">
+				<div class="stat-wrapper ngclickable clear" ng-click="attentionList = !attentionList">
 					<div class="count"><h4><span class="bold">{{mentors_with_attention_students.length}}</span></h4></div>
 					<div ng-if="true" class="descript">Mentors have students <br>that need attention</div>
           <div ng-if="false" class="descript">Mentor has students <br>that need attention</div>
@@ -36,7 +36,7 @@
 		</ul>
 	</div>
 
-  <div class="organization-mid" ng-hide="mentors_with_attention_students.length == 0">
+  <div class="organization-mid" ng-if="mentors_with_attention_students.length != 0" ng-show="attentionList">
     <div class="mentors-attention">
       <div ng-if="mentors_with_attention_students.length == 1" class="list-header">
         <h5>This mentor has students who <span class="bold">need attention</span></h5>
@@ -44,17 +44,8 @@
       <div ng-if="mentors_with_attention_students.length != 1" class="list-header">
         <h5>Mentors with students who <span class="bold">need attention</span></h5>
       </div>
-      <div class="list-container">
-        <div class="progress-circles" ng-class="{'needsAttention': {{mentor.id | existsInArray: mentors_with_attention_students}}}" ng-repeat="mentor in mentors_with_attention_students">
-          <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle width="170" student="mentor" identifier="attention"></a>
-          <h6 class="bold"><a ng-href="#/mentor/{{mentor.id}}" title="View mentor info">{{fullName(mentor)}}</a></h6>
-          <ul class="circle-subnav">
-            <li>{{mentor.title}}</li>
-            <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-            <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
-            <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
-          </ul>
-        </div>
+      <div class="list-container progress-circle--list">
+        <progress-circle-mentorattention ng-repeat="mentor in mentors_with_attention_students"></progress-circle-mentorattention>
       </div>
     </div>
   </div>
@@ -65,20 +56,9 @@
       <h4 class="list-header">All <span class="bold">Mentors</span></h4>
     </div>
 
-    <div class="list-container">
+    <div class="list-container progress-circle--list">
 
-      <div class="progress-circles" ng-repeat="mentor in organization.mentors | orderBy: 'last_name'">
-        <a ng-href="#/mentor/{{mentor.id}}" title="View progress"><progress-circle width="170" student="mentor"></progress-circle></a>
-        <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
-          <h6 class="bold">{{fullName(mentor)}}</h6>
-        </a>
-  			<ul class="circle-subnav">
-  				<li>{{mentor.title}}</li>
-          <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-          <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
-          <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
-  			</ul>
-      </div>
+      <progress-circle-mentor ng-repeat="mentor in organization.mentors | orderBy: 'last_name'"></progress-circle-mentor>
 
     </div>
 
