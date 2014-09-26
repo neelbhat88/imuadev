@@ -19,7 +19,7 @@
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
 
-      <div class="widget--content--cell" ng-class="{'breakalways': user_service_organizations.length >= 5, 'break1400': user_service_organizations.length >= 4, 'break1200': user_service_organizations.length == 3, 'break900': user_service_organizations.length == 2}" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations">
+      <div class="widget--content--cell break1200" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations">
 
         <div class="widget--content--cell breakalways">
           <div class="service-org-header" ng-hide="user_service_organization.editing">
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div class="widget--content--cell cell--service-hours breakalways" ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours">
+        <div class="widget--content--cell cell--service-hours breakalways" ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours" ng-hide="serviceEditor">
           <div class="cell--padding">
             <div class="clear" ng-hide="user_service_hour.editing">
               <div class="service-hours--meta">
@@ -83,14 +83,14 @@
 
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-show="serviceEditor" ng-if="!new_service_organization.editing" ng-click="addOrganization()" ng-class="{'breakalways': user_service_organizations.length >= 5, 'break1400': user_service_organizations.length == 4, 'break1200': user_service_organizations.length == 3, 'break900': user_service_organizations.length == 2}">
+      <div class="widget--content--cell ng-clickable break1200" ng-show="serviceEditor" ng-if="!new_service_organization.editing" ng-click="addOrganization()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add a Service Organization</h6>
         </div>
       </div>
 
-      <div class="widget--content--cell break1200" ng-show="new_service_organization.editing" ng-class="{'breakalways': user_service_organizations.length >= 5, 'break1400': user_service_organizations.length >= 4, 'break1200': user_service_organizations.length == 3, 'break900': user_service_organizations.length == 2}">
+      <div class="widget--content--cell break1200" ng-show="new_service_organization.editing">
         <div class="cell--padding">
           <span class="input-group" ng-hide="new_service_organization.newOrganization">
             <label>Who was the service for?</label>
