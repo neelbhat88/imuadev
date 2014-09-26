@@ -101,26 +101,25 @@ class User < ActiveRecord::Base
 
 end
 
-# class UserQuerier < Querier
-#   def initialize
-#     super(User)
-#   end
+class UserQuerier < Querier
+  def initialize
+    super(User)
+  end
 
-#   def filter_attributes(attributes)
-#     if attributes.include?(:avatar) then attributes -= [:avatar]
-#       attributes << :avatar_file_name
-#       attributes << :avatar_content_type
-#       attributes << :avatar_file_size
-#       attributes << :avatar_updated_at
-#     end
-#     return super(attributes)
-#   end
+  def filter_attributes(attributes)
+    if attributes.include?(:avatar) then attributes -= [:avatar]
+      attributes << :avatar_file_name
+      attributes << :avatar_content_type
+      attributes << :avatar_file_size
+      attributes << :avatar_updated_at
+    end
+    return super(attributes)
+  end
 
-#   def filter_conditions(conditions)
-#     conditions[:id] = conditions[:user_id]
-#     return super(conditions)
-#   end
-# end
+  def filter_conditions(conditions)
+    return super(conditions)
+  end
+end
 
 
 class ViewUser2

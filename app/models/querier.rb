@@ -22,12 +22,6 @@ class Querier
     return self
   end
 
-  def set_sub_hash(key, hash)
-    if @subHashes.nil? then @subHashes = {} end
-    @subHashes[key] = hash
-    return self
-  end
-
 
   def domain
     return (@domain.nil?) ? self.generate_domain : @domain
@@ -47,36 +41,6 @@ class Querier
 
   def attributes
     return (@attributes.nil?) ? self.set_attributes([]) : @attributes
-  end
-
-
-
-  def find_by_filters2(filters, selects = [])
-    self.set_conditions(filters)
-    self.set_attributes(selects)
-
-    self.generate_view
-
-    Rails.logger.debug("****** viewAttributes: #{self.attributes.view} *******")
-    Rails.logger.debug("****** domainAttributes: #{self.attributes.domain_only} *******")
-    Rails.logger.debug("****** domain: #{@domain} *******")
-    Rails.logger.debug("****** view: #{@view} *******")
-
-    return self.do_find()
-  end
-
-  def do_find(doProcessing = true)
-    if doProcessing
-      self.process_attributes()
-      self.process_conditions()
-    end
-
-    Rails.logger.debug("****** processedAttributes: #{@processedAttributes} *******")
-    Rails.logger.debug("****** processedConditions: #{@processedConditions} *******")
-
-    result = self.find(:all, :select => @processedAttributes, :conditions => @processedConditions)
-    
-    return result
   end
 
 
@@ -128,12 +92,8 @@ class Querier
       unless @subModels.nil? 
         @subModels.each do |subModel|
           category = subModel.classType.name.underscore.pluralize.to_sym
-          view[category] = subModel.view
+          view[category] = subModel.domain.select {|a| a[@classType.name.foreign_key.to_sym] == d[:id]}
         end
-      end
-      # Include any subHashes
-      unless @subHashes.nil?
-        view = @subHashes.merge(view)
       end
       @view << view
     end
@@ -156,42 +116,6 @@ class Querier
     @query = @classType.where(self.conditions).select(self.attributes.all)
   end
 
-
-
-  # If no selects are specified, assume to select all columns
-  # TODO Only allow a select if there is a matching column
-  def self.process_attributes()
-    attributes = self.attributes.all
-
-    if attributes.empty?
-      attributes = @classType.column_names.map(&:to_str)
-    end
-
-    @processedAttributes = attributes
-
-    return @processedAttributes
-  end
-
-  # Only allow a filter if there is a matching column
-  def self.process_conditions()
-    conditions = []
-    arguments = {}
-
-    applicable_conditions = self.conditions.select { |k,v| @classType.column_names.map(&:to_sym).include?(k) }
-    applicable_conditions.keys.each do |f_key|
-      # Example of what this is doing:
-      # conditions << 'time_unit_id = :time_unit_id'
-      # arguments[:time_unit_id] = timeUnitId
-      f_str = f_key.to_s
-      conditions << f_str + ' = :' + f_str
-      arguments[f_key] = applicable_conditions[f_key]
-    end
-
-    @processedConditions = [conditions.join(' AND '), arguments]
-
-    return @processedConditions
-  end
-
 end
 
 
@@ -210,4 +134,3 @@ class AttributeSelection
     return all
   end
 end
-
