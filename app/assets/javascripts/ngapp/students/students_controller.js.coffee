@@ -33,7 +33,6 @@ angular.module('myApp')
         $scope.average_testsTaken = $scope.organization.average_testsTaken
 
         $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
-        console.log($scope.attention_students)
 
         $scope.loaded_users = true
 
