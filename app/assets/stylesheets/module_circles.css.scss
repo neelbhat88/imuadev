@@ -1,5 +1,13 @@
 .module-circle {
 
+  .circle-size {
+    width: 130px;
+    margin: 0 auto;
+
+    @include respond-to(1200) { width: 100px; }
+    @include respond-to(900) { width: 75px; }
+  }
+
   .module-circle--title {
     margin-bottom: 25px;
   }
