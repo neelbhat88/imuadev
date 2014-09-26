@@ -4,50 +4,8 @@
 
   .progress-header {
 
+    width: 100%;
     text-align: center;
-
-    .circles {
-
-      width: 100%;
-      padding-top: 40px;
-      text-align: center;
-
-      .module-circle {
-        display: inline-block;
-        text-align: center;
-        opacity: 0.3;
-        padding-bottom: 40px;
-        margin: 0 30px;
-
-        @include respond-to(1200) {}
-
-        &.inactive {
-          //display: none;
-        }
-
-      }
-
-      .module-circle__modupdated {
-        @include font-size(1.0)
-      }
-
-      .selectedCircle {
-
-      	opacity: 1;
-
-      }
-
-      .notSelectedCircle {
-
-      	&:hover {
-
-      		opacity: 0.75;
-
-      	}
-
-      }
-
-    }
 
   }
 

@@ -1,12 +1,16 @@
-.module-circle--title {
-  margin-bottom: 25px;
-}
+.module-circle {
 
-.module-circle--meta {
-  margin-top: 10px;
+  .module-circle--title {
+    margin-bottom: 25px;
+  }
 
-  .updated-on {
-    opacity: 0.5;
+  .module-circle--meta {
+    margin-top: 10px;
+
+    .updated-on {
+      opacity: 0.5;
+    }
+
   }
 
 }
