@@ -145,8 +145,7 @@ class Querier
     ActiveRecord::Base.connection.select_all(self.query).each do |obj|
       obj_domain = {}
       obj.each_key do |a|
-        # obj_domain[a.to_sym] = @classType.type_cast_attribute(a, obj)
-        obj_domain[a.to_sym] = obj[a]
+        obj_domain[a.to_sym] = @classType.type_cast_attribute(a, obj)
       end
       @domain << obj_domain
     end

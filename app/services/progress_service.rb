@@ -14,7 +14,7 @@ class ProgressService
     query[:user_milestone] = UserMilestoneQuerier.new.where(params.except(:module))
     query[:user].set_sub_models(query[:user_milestone])
     
-    params[:organization_id] = query[:user].domain.first[:organization_id]
+    params[:organization_id] = query[:user].domain.first[:organization_id].to_s
 
     query[:organization] = OrganizationQuerier.new.where(params.slice(:organization_id))
     query[:time_units] = TimeUnitQuerier.new.where(params.slice(:organization_id))
@@ -163,7 +163,6 @@ class UserQuerier < Querier
   end
 
   def filter_conditions(conditions)
-    conditions[:id] = conditions[:user_id]
     return super(conditions)
   end
 end
