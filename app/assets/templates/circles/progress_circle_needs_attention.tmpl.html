@@ -1,0 +1,15 @@
+<div class="progress-circle--needs-attention">
+  <div class="attention-circle">
+    <a href="#/progress/{{student.id}}"><progress-circle width="170" student="student" identifier="attention" parentclass="attention-circle"></progress-circle></a>
+  </div>
+  <div class="attention-text">
+    <a href="#/profile/{{student.id}}"><h5 class="bold student-name">{{student.first_last_initial}}</h5></a>
+    <a href="#/expectations/{{student.id}}">
+      <div class="attention-description">
+        <!-- This should be replaced with a directive or something that allows us to insert custom messages and button links. -->
+        <h6>isn't meeting their expectations.</h6>
+        <button class="btn btn-default">View Problem</button>
+      </div>
+    </a>
+  </div>
+</div>
