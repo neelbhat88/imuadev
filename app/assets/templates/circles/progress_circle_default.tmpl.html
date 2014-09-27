@@ -1,7 +1,7 @@
 <div class="progress-circle progress-circle--default" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
   <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
     <div class="circle-size">
-      <!-- <progress-circle parentclass="circle-size" identifier="default" student="student"></progress-circle> -->
+      <progress-circle parentclass="circle-size" identifier="default" student="student"></progress-circle>
     </div>
   </a>
   <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
@@ -11,10 +11,4 @@
     <li class="extra-info" ng-if="student.last_login != 'Has not logged in yet'">Last Login: {{student.last_login | formatMDY}}</li>
     <li class="extra-info">Login Count: {{student.login_count}}</li>
   </ul>
-</div>
-
-<div class="progress-bar">
-  <div class="bar-size">
-    <horizontal-progress-bar parentclass="bar-size" identifier="default" student="student"></horizontal-progress-bar>
-  </div>
 </div>

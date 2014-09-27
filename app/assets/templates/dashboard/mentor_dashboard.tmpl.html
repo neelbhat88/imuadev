@@ -45,7 +45,8 @@
       <h5 style="font-style: italic">Hey {{user.first_name}}, it looks like you don't have any students assigned to you yet.</h5>
     </div>
     <div class="list-container progress-circle--list">
-      <progress-circle-default ng-repeat="student in assigned_students | orderBy: 'last_name'"></progress-circle-default>
+      <!-- <progress-circle-default ng-repeat="student in assigned_students | orderBy: 'last_name'"></progress-circle-default> -->
+      <progress-bar-default ng-repeat="student in assigned_students | orderBy: 'last_name'"></progress-circle-default>
     </div>
   </div>
 

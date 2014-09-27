@@ -1,0 +1,8 @@
+<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
+  <div class="student-progress-bar student-progress-bar--default" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
+    <h6 class="bold">{{student.first_last_initial}}</h6>
+    <div class="bar-size">
+      <horizontal-progress-bar width="400" height="100" identifier="default" student="student"></horizontal-progress-bar>
+    </div>
+  </div>
+</a>
