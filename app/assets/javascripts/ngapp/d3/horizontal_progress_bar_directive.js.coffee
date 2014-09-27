@@ -51,7 +51,8 @@ angular.module('myApp')
         .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080'])
 
       # Create SVG element
-      svg = d3.select("body")
+      svg = d3.select(element[0])
+        .attr("id", scope.student.id + "_" + scope.identifier)
         .append("svg")
         .attr("width", w)
         .attr("height", h)
