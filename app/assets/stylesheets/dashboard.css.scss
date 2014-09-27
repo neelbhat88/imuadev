@@ -9,14 +9,15 @@
 }
 
 .dashboard-content {
-  background-color: $darkgrey;
-  color: white;
-	width: 100%;
+	text-align: center;
+	padding: 40px $wrapper-width;
 
-	a {
-		&:hover {
-			text-decoration: none;
-		}
+	@include respond-to(900) {
+		padding: 40px 20px;
+	}
+
+	@include respond-to(600) {
+		padding: 20px 0;
 	}
 
 }
