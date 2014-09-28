@@ -9,13 +9,6 @@ angular.module('myApp')
 
   $('input, textarea').placeholder()
 
-  $scope.selectWidget = (widget) ->
-    if $scope.selected_widget != widget
-      $scope.selected_widget = widget
-
-  $scope.getWidgetTemplate = (widgetTitle) ->
-    'roadmap/widget_orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle
-
   OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
     $scope.organization = data.data.organization
     $scope.roadmap = data.data.roadmap

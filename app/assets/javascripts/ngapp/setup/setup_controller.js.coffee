@@ -7,6 +7,11 @@ angular.module('myApp')
 
   orgId = $route.current.params.id
 
+  OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
+    $scope.organization = data.data.organization
+    $scope.loading = false
+  , (data) -> # Error
+
   $scope.selectWidget = (widget) ->
     if $scope.selected_widget != widget
       $scope.selected_widget = widget
