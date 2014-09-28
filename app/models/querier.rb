@@ -1,11 +1,28 @@
+# Querier.rb
+
+# Once a Querier's view, domain, or query object is accessed, those objects
+# get "locked in" for the lifetime of the Querier. The view object depends on
+# the domain object, and the domain object depends on the query object, so
+# accessing e.g. the Querier's view object, will automatically "lock in" the
+# domain and query objects as well (as a prerequisite). Accessing e.g. the
+# Querier's domain object, will not lock in the view object, though (not until
+# the view object is accessed).
+#
+# ViewObject --> DomainObject --> QueryObject
+#
+# The database will only be queried once in the lifetime of a Querier, at
+# the time that its domain object is first accessed (hence being "locked in").
+
 class Querier
-  attr_accessor :classType, :subViewName
+  attr_accessor :subViewName
 
   # Public
 
   def initialize(classType)
     @classType = classType
     @subViewName = @classType.name.underscore.pluralize.to_sym
+    @foreignKey = @classType.name.foreign_key.to_sym
+    @columnNames = @classType.column_names.map(&:to_sym)
   end
 
   def select(viewAttributes, domainOnlyAttributes = [])
@@ -24,8 +41,8 @@ class Querier
   end
 
 
-  def view(options = {})
-    return (@view.nil?) ? self.generate_view(options) : @view
+  def view
+    return (@view.nil?) ? self.generate_view : @view
   end
 
   def domain
@@ -49,11 +66,40 @@ class Querier
 
   # Only allow an attribute if the column exists
   def filter_attributes(attributes)
-    return attributes.select { |k| @classType.column_names.map(&:to_sym).include?(k)}
+    return attributes.select { |k| @columnNames.include?(k)}
   end
   # Only allow a condition if the column exists
   def filter_conditions(conditions)
-    return conditions.select { |k,v| @classType.column_names.map(&:to_sym).include?(k) }
+    return conditions.select { |k,v| @columnNames.include?(k) }
+  end
+
+  def generate_view(conditions = {})
+    @view = []
+
+    applicable_domains = []
+    if conditions.empty?
+      applicable_domains = self.domain
+    else
+      applicable_domains = self.domain.select {|d| conditions.keys.any? {|key| d[key] == conditions[key]}}
+    end
+
+    applicable_domains.each do |d|
+      view = {}
+      # Include any subQuerier views
+      unless @subQueriers.nil? 
+        @subQueriers.each do |subQuerier|
+          conditions = {}
+          conditions[@foreignKey] = d[:id]
+          view[subQuerier.subViewName] = subQuerier.generate_view(conditions)
+        end
+      end
+      # Add all the viewAttributes from domain object
+      view = view.merge(d.select { |k,v| self.attributes.view.include?(k)})
+      @view << view
+    end
+
+    # TODO - Remove applicable_domains from self.domain once pushed into a view object?
+    return @view
   end
 
   # Private
@@ -64,7 +110,7 @@ class Querier
 
     # If no attributes are specified, assume to select all columns
     if viewAttributes.empty? and domainOnlyAttributes.empty?
-      viewAttributes = @classType.column_names.map(&:to_sym)
+      viewAttributes = @columnNames
     end
     # Always incorporate "id" within the domain object
     unless viewAttributes.include?(:id) or domainOnlyAttributes.include?(:id)
@@ -76,38 +122,12 @@ class Querier
 
   def set_conditions(conditions)
     # Always set :[class_name]_id to :id
-    this_class_condition = conditions[@classType.name.foreign_key.to_sym]
+    this_class_condition = conditions[@foreignKey]
     conditions[:id] = this_class_condition unless this_class_condition.nil?
 
     conditions = filter_conditions(conditions)
 
     return @conditions = conditions
-  end
-
-  def generate_view(options = {})
-    @view = []
-
-    applicable_domains = []
-    if options.empty?
-      applicable_domains = self.domain
-    else
-      applicable_domains = self.domain.select {|d| d[options[:key]] == options[:value]}
-    end
-
-    applicable_domains.each do |d|
-      view = {}
-      # Include any subQuerier views
-      unless @subQueriers.nil? 
-        @subQueriers.each do |subQuerier|
-          view[subQuerier.subViewName] = subQuerier.view({key: @classType.name.foreign_key.to_sym, value: d[:id]})
-        end
-      end
-      # Add all the viewAttributes from domain object
-      view = view.merge(d.select { |k,v| self.attributes.view.include?(k)})
-      @view << view
-    end
-
-    return @view
   end
 
   def generate_domain
