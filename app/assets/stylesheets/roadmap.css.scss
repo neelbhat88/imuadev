@@ -21,6 +21,15 @@
     .orgsetup-pane {
       width: 78%;
       float: left;
+
+      .input-forms {
+        width: 100%;
+        max-width: 800px;
+        text-align: left;
+        margin: 0 auto;
+        margin-bottom: 10px;
+      }
+
     }
 
   }
