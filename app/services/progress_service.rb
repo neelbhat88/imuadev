@@ -12,14 +12,14 @@ class ProgressService
     query = {}
     query[:user] = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(params.slice(:user_id))
     query[:user_milestone] = Querier.new(UserMilestone).where(params.except(:module))
-    query[:user].set_sub_models(query[:user_milestone])
+    query[:user].set_subQueriers(query[:user_milestone])
     
     params[:organization_id] = query[:user].domain.first[:organization_id].to_s
 
     query[:organization] = Querier.new(Organization).where(params.slice(:organization_id))
     query[:time_units] = Querier.new(TimeUnit).where(params.slice(:organization_id))
     query[:milestones] = Querier.new(Milestone).where(params.slice(:organization_id, :time_unit_id))
-    query[:organization].set_sub_models(query[:user], query[:time_units], query[:milestones])
+    query[:organization].set_subQueriers(query[:user], query[:time_units], query[:milestones])
 
     view = query[:organization].view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(params[:organization_id])

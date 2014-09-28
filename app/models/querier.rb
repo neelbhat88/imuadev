@@ -1,10 +1,11 @@
 class Querier
-  attr_accessor :classType
+  attr_accessor :classType, :subViewName
 
   # Public
 
   def initialize(classType)
     @classType = classType
+    @subViewName = @classType.name.underscore.pluralize.to_sym
   end
 
   def select(viewAttributes, domainOnlyAttributes = [])
@@ -17,18 +18,18 @@ class Querier
     return self
   end
 
-  def set_sub_models(*subModels)
-    @subModels = subModels
+  def set_subQueriers(*subQueriers)
+    @subQueriers = subQueriers
     return self
   end
 
 
-  def domain
-    return (@domain.nil?) ? self.generate_domain : @domain
+  def view(options = {})
+    return (@view.nil?) ? self.generate_view(options) : @view
   end
 
-  def view
-    return (@view.nil?) ? self.generate_view : @view
+  def domain
+    return (@domain.nil?) ? self.generate_domain : @domain
   end
 
   def query
@@ -83,20 +84,29 @@ class Querier
     return @conditions = conditions
   end
 
-  def generate_view
+  def generate_view(options = {})
     @view = []
-    self.domain.each do |d|
-      # Include view attributes only
-      view = d.select { |k,v| self.attributes.view.include?(k)}
-      # Include any subModel views
-      unless @subModels.nil? 
-        @subModels.each do |subModel|
-          category = subModel.classType.name.underscore.pluralize.to_sym
-          view[category] = subModel.domain.select {|a| a[@classType.name.foreign_key.to_sym] == d[:id]}
+
+    applicable_domains = []
+    if options.empty?
+      applicable_domains = self.domain
+    else
+      applicable_domains = self.domain.select {|d| d[options[:key]] == options[:value]}
+    end
+
+    applicable_domains.each do |d|
+      view = {}
+      # Include any subQuerier views
+      unless @subQueriers.nil? 
+        @subQueriers.each do |subQuerier|
+          view[subQuerier.subViewName] = subQuerier.view({key: @classType.name.foreign_key.to_sym, value: d[:id]})
         end
       end
+      # Add all the viewAttributes from domain object
+      view = view.merge(d.select { |k,v| self.attributes.view.include?(k)})
       @view << view
     end
+
     return @view
   end
 
