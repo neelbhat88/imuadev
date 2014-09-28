@@ -259,3 +259,28 @@ $border-color: black(0.2);
 .cursor-fix {
   cursor: initial;
 }
+
+/* Special Widgets */
+
+.organizationsetup-nav {
+  .widget--content {
+    .widget--content--table {
+      .widget--content--cell {
+        text-align: left;
+        .cell--padding {
+          padding: 20px 30px;
+
+          .setting-icon, .setting-text {
+            display: inline-block;
+          }
+
+          .setting-icon {
+            width: 12px;
+            margin-right: 15px;
+          }
+
+        }
+      }
+    }
+  }
+}

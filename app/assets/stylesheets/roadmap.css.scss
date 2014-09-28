@@ -1,4 +1,34 @@
 .orgsetupContainer {
+
+  .orgsetup-header {
+    width: 100%;
+    background: $grey;
+    text-align: center;
+    padding: 60px $wrapper-width;
+    margin: 0;
+  }
+
+  .orgsetup-content {
+    text-align: center;
+    padding: 40px $wrapper-width;
+
+    .orgsetup-nav {
+      width: 20%;
+      margin-right: 2%;
+      float: left;
+    }
+
+    .orgsetup-pane {
+      width: 78%;
+      float: left;
+    }
+
+  }
+
+}
+
+.oldorgsetupContainer {
+
   padding: 0 $wrapper-width;
   background: white;
   color: $ink;
