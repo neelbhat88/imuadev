@@ -9,6 +9,15 @@ angular.module('myApp')
 
   OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
     $scope.organization = data.data.organization
+    $scope.roadmap = data.data.roadmap
+
+    $scope.roadmap.years = [
+      {name: "Year 1", semesters: [{name: "Semester 1", semester: $scope.roadmap.time_units[0]}, {name: "Semester 2", semester: $scope.roadmap.time_units[1]}] },
+      {name: "Year 2", semesters: [{name: "Semester 1", semester: $scope.roadmap.time_units[2]}, {name: "Semester 2", semester: $scope.roadmap.time_units[3]}] },
+      {name: "Year 3", semesters: [{name: "Semester 1", semester: $scope.roadmap.time_units[4]}, {name: "Semester 2", semester: $scope.roadmap.time_units[5]}] },
+      {name: "Year 4", semesters: [{name: "Semester 1", semester: $scope.roadmap.time_units[6]}, {name: "Semester 2", semester: $scope.roadmap.time_units[7]}] }
+    ]
+
     $scope.loading = false
   , (data) -> # Error
 
