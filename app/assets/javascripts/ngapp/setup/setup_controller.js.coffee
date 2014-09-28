@@ -17,6 +17,6 @@ angular.module('myApp')
       $scope.selected_widget = widget
 
   $scope.getWidgetTemplate = (widgetTitle) ->
-    'roadmap/widget_orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle
+    'setup/widgets/widget_orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle
 
 ]

@@ -1,5 +1,5 @@
 angular.module('myApp')
 .directive 'widgetOrgsetupNav', [() ->
   restrict: 'E'
-  templateUrl: 'roadmap/widget_orgsetup_nav.html'
+  templateUrl: 'setup/widgets/widget_orgsetup_nav.html'
 ]
