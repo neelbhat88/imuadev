@@ -13,6 +13,7 @@
       <widget-orgsetup-nav></widget-orgsetup-nav>
     </div>
     <div class="orgsetup-pane">
+      <div ng-include="'roadmap/widget_orgsetup_tests.html'"></div>
       <widget-orgsetup-expectations></widget-orgsetup-expectations>
       <widget-orgsetup-admins></widget-orgsetup-admins>
     </div>
@@ -117,30 +118,6 @@
     </div>
 
     <div class="rightContainer" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
-
-      <div class="expectations" ng-include="'expectation/organization_expectation.html'"></div>
-
-      <div class="orgTests" ng-include="'organization/org_test_manager.html'"></div>
-
-      <div class="user-list">
-
-        <h4>Organization Admins</h4>
-
-        <div class="circle-pictures" ng-repeat="orgAdmin in organization.orgAdmins">
-          <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
-            <div class="circle-picture">
-              <img ng-src="{{orgAdmin.square_avatar_url}}">
-            </div>
-            <h6 ng-if="orgAdmin.id != current_user.id">{{orgAdmin.full_name}}</h6>
-            <h6 ng-if="orgAdmin.id == current_user.id">Me</h6>
-          </a>
-        </div>
-
-        <div class="user-list__add" ng-click="addOrgAdmin()">
-          <div class="glyphicon glyphicon-plus-sign"></div>
-          <div>Add Organization Admin</div>
-        </div>
-      </div>
 
     </div>
 
