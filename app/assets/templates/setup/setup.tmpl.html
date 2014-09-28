@@ -1,0 +1,25 @@
+<div class="orgsetupContainer clear">
+
+  <div class="orgsetup-header orgsetup-header--orgadmin">
+    <div class="orgsetup-header--wrapper">
+      <div class="greeting">
+        <h2 class="bold">{{organization.name}} Setup</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="orgsetup-content clear">
+    <div class="orgsetup-nav">
+      <widget-orgsetup-nav></widget-orgsetup-nav>
+    </div>
+    <div class="orgsetup-pane">
+
+      <div ng-include="getWidgetTemplate(selected_widget)"></div>
+
+      <!-- <div ng-include="'roadmap/widget_orgsetup_tests.html'"></div>
+      <widget-orgsetup-expectations></widget-orgsetup-expectations>
+      <widget-orgsetup-admins></widget-orgsetup-admins> -->
+    </div>
+  </div>
+
+</div>

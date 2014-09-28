@@ -1,0 +1,17 @@
+angular.module('myApp')
+.controller 'SetupController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
+  $scope.current_user = current_user
+  $scope.selected_widget = "admins"
+  $scope.loading = true
+
+  orgId = $route.current.params.id
+
+  $scope.selectWidget = (widget) ->
+    if $scope.selected_widget != widget
+      $scope.selected_widget = widget
+
+  $scope.getWidgetTemplate = (widgetTitle) ->
+    'roadmap/widget_orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle
+
+]

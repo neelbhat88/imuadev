@@ -6,19 +6,49 @@
   </div>
   <div class="widget--content">
     <div class="widget--content--table">
-      <div class="widget--content--cell ng-clickable breakalways">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('admins')">
         <div class="cell--padding">
           <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
           <div class="setting-text">Organization Admins</div>
         </div>
       </div>
-      <div class="widget--content--cell ng-clickable breakalways">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('expectations')">
         <div class="cell--padding">
           <div class="setting-icon"><span class="glyphicon glyphicon-star"></span></div>
           <div class="setting-text">Student Expectations</div>
         </div>
       </div>
-      <div class="widget--content--cell ng-clickable breakalways">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('tests')">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
+          <div class="setting-text">Tests</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="widget organizationsetup-nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Roadmap</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('admins')">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
+          <div class="setting-text">Organization Admins</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('expectations')">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-star"></span></div>
+          <div class="setting-text">Student Expectations</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('tests')">
         <div class="cell--padding">
           <div class="setting-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
           <div class="setting-text">Tests</div>
