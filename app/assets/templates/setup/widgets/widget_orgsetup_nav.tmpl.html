@@ -37,24 +37,14 @@
   <div class="widget--content">
     <div class="widget--content--table" ng-repeat="year in roadmap.years">
       <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(year.id)">
-        <h6 class="bold">{{year.name}}</h6>
-      </div>
-      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(1,1)">
         <div class="cell--padding">
-          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
-          <div class="setting-text">Year 1 Semester 1</div>
+          <h6 class="bold">{{year.name}}</h6>
         </div>
       </div>
-      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(1,2)">
+      <div class="widget--content--cell ng-clickable breakalways" ng-repeat="sem in year.semesters" ng-click="selectRoadmap(year.id, sem.id)">
         <div class="cell--padding">
           <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
-          <div class="setting-text">Year 1 Semester 2</div>
-        </div>
-      </div>
-      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(2,1)">
-        <div class="cell--padding">
-          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
-          <div class="setting-text">Year 2 Semester 1</div>
+          <div class="setting-text">{{sem.name}}</div>
         </div>
       </div>
     </div>
