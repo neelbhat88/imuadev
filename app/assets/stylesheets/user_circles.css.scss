@@ -236,9 +236,30 @@
 
 }
 
-.bar-size {
-  width: 250px;
-  height: 100px;
+.student-progress-bar {
+
+  margin-bottom: 10px;
+
+  .progress-bar--left {
+    width: 20%;
+    float: left;
+  }
+
+  .progress-bar--right {
+    width: 80%;
+    padding: 0 10px;
+    text-align: left;
+    float: left;
+    h6 {
+      margin-top: 0;
+      margin-bottom: 2px;
+    }
+    .bar-size {
+      width: 250px;
+      height: 20px;
+    }
+  }
+
 }
 
 
