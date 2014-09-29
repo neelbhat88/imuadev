@@ -10,10 +10,6 @@ class StaticController < ApplicationController
   end
 
   def login
-    if params[:expired] == "true"
-      flash.now[:alert] = "Your session has expired. Please log in again."
-    end
-
     render "login"
   end
 

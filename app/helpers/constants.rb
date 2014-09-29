@@ -63,7 +63,4 @@ class Constants
     }
   end
 
-  def self.SessionTimeout
-    return 15.minutes
-  end
 end

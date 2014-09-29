@@ -208,6 +208,31 @@
     padding: 0 3%;
     display: inline-block;
   }
+  .salvattore-item {
+    border: 1px solid red;
+    padding: 40px;
+  }
+
+  @include respond-to-min(1200) {
+    #grid[data-columns]::before {
+  	content: '3 .column.size-1of3';
+    }
+  }
+  @include respond-to(1200) {
+    #grid[data-columns]::before {
+    content: '2 .column.size-1of2';
+    }
+  }
+  @include respond-to(900) {
+    #grid[data-columns]::before {
+    content: '1 .column.size-1of1';
+    }
+  }
+  /* These are the classes that are going to be applied: */
+  .column { float: left; }
+  .size-1of1 { width: 100%; }
+  .size-1of2 { width: 50%; }
+  .size-1of3 { width: 33.333%; }
 
 }
 
