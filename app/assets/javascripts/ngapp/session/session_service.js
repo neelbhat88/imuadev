@@ -1,6 +1,6 @@
 angular.module('myApp')
-.factory('SessionService', ['$http', '$q',
-  function($http, $q) {
+.factory('SessionService', ['$http', '$q', '$location',
+  function($http, $q, $location) {
 
     var service = {
 
@@ -34,6 +34,18 @@ angular.module('myApp')
 
       isSuperAdmin: function() {
         return !!(service._currentUser && service._currentUser.is_super_admin)
+      },
+
+      logout: function(expired) {
+        return $http.delete('/users/sign_out').then(function(resp) {
+          var login_page = window.location.origin + "/login";
+
+          if (expired)
+            login_page = login_page + "?expired=true"
+
+          console.log("Redirecting to " + login_page)
+          window.location = login_page;
+        });
       }
 
     };
