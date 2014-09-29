@@ -37,6 +37,21 @@
 
     }
 
+    .big-progress-circle {
+      .big-circle-size {
+        width: 325px;
+
+        @include respond-to(900) {
+          width: 250px;
+        }
+
+        @include respond-to(600) {
+          width: 150px;
+        }
+
+      }
+    }
+
   } //.progressLower
 
   .widget--content--cell {
