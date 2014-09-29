@@ -68,6 +68,10 @@ class Querier
     return (@attributes.nil?) ? self.set_attributes([]) : @attributes
   end
 
+  def pluck_all(key)
+    return self.domain.map { |d| d[key] }
+  end
+
 
   # Protected
 

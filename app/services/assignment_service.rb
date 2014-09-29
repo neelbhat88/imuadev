@@ -3,15 +3,13 @@ class AssignmentService
   # Called via :assignment_id
   def collect_assignment_2(params)
     conditions = params
-
     query = {}
+
     query[:assignments] = Querier.new(Assignment).where(conditions)
+    
     query[:user_assignments] = Querier.new(UserAssignment).where(conditions)
 
-    conditions[:user_id] = []
-    conditions[:user_id] << query[:assignments].domain.map { |a| a[:user_id] }
-    conditions[:user_id] << query[:user_assignments].domain.map { |a| a[:user_id] }
-
+    conditions[:user_id] = query[:assignments].pluck_all(:user_id) + query[:user_assignments].pluck_all(:user_id)
     query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
     query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
@@ -23,17 +21,14 @@ class AssignmentService
   # Called via :user_id
   def collect_assignments_2(params)
     conditions = params
-
     query = {}
+
     query[:assignments] = Querier.new(Assignment).where(params)
 
-    conditions[:assignment_id] = query[:assignments].domain.map { |a| a[:id] }
+    conditions[:assignment_id] = query[:assignments].pluck_all(:id)
     query[:user_assignments] = Querier.new(UserAssignment).where(conditions.slice(:assignment_id))
 
-    conditions[:user_id] = []
-    conditions[:user_id] << query[:assignments].domain.map { |a| a[:user_id] }
-    conditions[:user_id] << query[:user_assignments].domain.map { |a| a[:user_id] }
-
+    conditions[:user_id] = query[:assignments].pluck_all(:user_id) + query[:user_assignments].pluck_all(:user_id)
     query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
     query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
