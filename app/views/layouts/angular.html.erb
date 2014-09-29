@@ -176,17 +176,11 @@
     <div class="alerts-section">
       <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     </div>
-    <div data-ng-view ng-if="!reload_required" ng-hide="session_timeout"></div>
-
-    <!-- Used when session is timed out to show loading gif while page is redirected -->
-    <div ng-if="session_timeout" wait-to-load="false">
-    </div>
-
+    <div data-ng-view ng-if="!reload_required"></div>
     <div ng-if="reload_required" style="padding: 30px; text-align: center;">
       <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
       <h5>Please refresh your browser window to get the updates!</h5>
     </div>
-
   </body>
 
   <script>
