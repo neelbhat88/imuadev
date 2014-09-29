@@ -12,12 +12,12 @@
 #
 # The database will only be queried once in the lifetime of a Querier, at
 # the time that its domain object is first accessed (hence being "locked in").
-# 
+#
 # Once a view object is accessed, all of the Querier's subQuerier objects will
 # have their view objects accessed and "locked in" as well.
 #
 # Both view and domain objects are accessed as an array of the Querier's
-# classType. It's up to the caller to know whether the view/domain objects
+# klass. It's up to the caller to know whether the view/domain objects
 # should have a ength of 1.
 
 class Querier
@@ -25,11 +25,19 @@ class Querier
 
   # Public
 
-  def initialize(classType)
-    @classType = classType
-    @subViewName = @classType.name.underscore.pluralize.to_sym
-    @foreignKey = @classType.name.foreign_key.to_sym
-    @columnNames = @classType.column_names.map(&:to_sym)
+  def initialize(klass)
+
+    # TODO - Automatically instantiate child class if already defined
+    # childKlass = (klass.to_s + "Querier").constantize
+    # if Querier.descendants.include?(childKlass)
+    #   Rails.logger.debug("******* child: #{childKlass} *******")
+    #   retClass = childKlass.new(self)
+    # end
+
+    @klass = klass
+    @subViewName = @klass.name.underscore.pluralize.to_sym
+    @foreignKey = @klass.name.foreign_key.to_sym
+    @columnNames = @klass.column_names.map(&:to_sym)
   end
 
   def select(viewAttributes, domainOnlyAttributes = [])
@@ -97,7 +105,7 @@ class Querier
     applicable_domains.each do |d|
       view = {}
       # Include any subQuerier views
-      unless @subQueriers.nil? 
+      unless @subQueriers.nil?
         @subQueriers.each do |subQuerier|
           conditions = {}
           conditions[@foreignKey] = d[:id]
@@ -118,7 +126,7 @@ class Querier
     ActiveRecord::Base.connection.select_all(self.query).each do |obj|
       obj_domain = {}
       obj.each_key do |a|
-        obj_domain[a.to_sym] = @classType.type_cast_attribute(a, obj)
+        obj_domain[a.to_sym] = @klass.type_cast_attribute(a, obj)
       end
       @domain << obj_domain
     end
@@ -126,7 +134,11 @@ class Querier
   end
 
   def generate_query
-    @query = @classType.where(self.conditions).select(self.attributes.all)
+    @query = @klass.where(self.conditions).select(self.attributes.all)
+  end
+
+  def self.descendants
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
   end
 
   # Private
