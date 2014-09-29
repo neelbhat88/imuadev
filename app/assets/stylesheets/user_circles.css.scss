@@ -251,11 +251,16 @@
     width: 70%;
     float: left;
 
-    .bar-size {
-      width: 80%;
+    .progress-bar-size {
+      width: 300px;
+      height: 15px;
       margin: 0 auto;
       margin-top: 3px;
-      height: 15px;
+
+      @include respond-to(600) {
+        width: 240px;
+      }
+
     }
 
   }
