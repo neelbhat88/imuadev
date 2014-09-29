@@ -50,9 +50,9 @@ class Querier
     return self
   end
 
-  def set_subQueriers(subQueriers, filters = [])
+  def set_subQueriers(subQueriers, *matchingAttributes)
     @subQueriers = subQueriers
-    @subQuerierFilters = filters
+    @subQuerierMatchingAttributes = matchingAttributes
     return self
   end
 
@@ -110,7 +110,7 @@ class Querier
       unless @subQueriers.nil?
         conditions = {}
         conditions[@foreignKey] = d[:id]
-        @subQuerierFilters.each do |key|
+        @subQuerierMatchingAttributes.each do |key|
           if d.include?(key) and !d[key].nil?
             conditions[key] = d[key]
           end
