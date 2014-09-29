@@ -130,7 +130,12 @@ class UserQuerier < Querier
         v[:first_last_initial] = v[:first_name] + " " + v[:last_name][0].capitalize + "."
       end
       if v.keys.include?(:role)
-        if v[:role] != Constants.UserRole[:STUDENT]
+        v[:is_student] = v[:role] == Constants.UserRole[:STUDENT]
+        v[:is_mentor] = v[:role] == Constants.UserRole[:MENTOR]
+        v[:is_org_admin] = v[:role] == Constants.UserRole[:ORG_ADMIN]
+        v[:is_super_admin] = v[:role] == Constants.UserRole[:SUPER_ADMIN]
+
+        if !v[:is_student]
           v.delete(:time_unit_id)
           v.delete(:user_milestones)
           v.delete(:relationships)
