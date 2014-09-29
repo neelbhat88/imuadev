@@ -102,8 +102,12 @@ class UserQuerier < Querier
     super
     @domain.each do |d|
       # Set default_url for :avatar_file_name if :avatar_file_name is nil
-      if d.keys.include?(:avatar_file_name) and d[:avatar_file_name].nil?
-        d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
+      if d.keys.include?(:avatar_file_name)
+        if d[:avatar_file_name].nil?
+          d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
+        else
+          d[:avatar_file_name] = Paperclip::Attachment.default_options[:s3_credentials][:bucket] + "/" + d[:avatar_file_name] 
+        end
       end
       if d.keys.include?(:current_sign_in_at) and d[:current_sign_in_at].nil?
         d[:current_sign_in_at] = "Has not logged in yet"
