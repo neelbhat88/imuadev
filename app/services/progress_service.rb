@@ -12,14 +12,14 @@ class ProgressService
 
     userQ = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(conditions.slice(:user_id))
     userMilestoneQ = Querier.new(UserMilestone).where(conditions.except(:module))
-    userQ.set_subQueriers([userMilestonesQ])
+    userQ.set_subQueriers([userMilestoneQ])
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
 
     organizationQ = Querier.new(Organization).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).where(conditions.slice(:organization_id, :time_unit_id))
-    organizationQ.set_subQueriers([userQ, timeUnitsQ, milestonesQ])
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])

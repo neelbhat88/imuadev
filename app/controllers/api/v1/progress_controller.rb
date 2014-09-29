@@ -52,10 +52,10 @@ class Api::V1::ProgressController < ApplicationController
     result = @progressService.get_user_progress(url_params)
 
     render status: result.status,
-      json: {
+      json: Oj.dump({
         info: result.info,
         organization: result.object
-      }
+      }, mode: :compat)
   end
 
   # get /user/:id/time_unit/:time_unit_id/progress/:module
