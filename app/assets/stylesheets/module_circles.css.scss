@@ -22,3 +22,29 @@
   }
 
 }
+
+.module-bar {
+
+  .module-bar--left {
+    width: 30%;
+    float: left;
+    text-align: right;
+    h6 {
+      margin: 0;
+    }
+  }
+
+  .module-bar--right {
+    width: 70%;
+    float: left;
+
+    .bar-size {
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 3px;
+      height: 15px;
+    }
+
+  }
+
+}

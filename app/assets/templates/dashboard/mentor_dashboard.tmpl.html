@@ -1,26 +1,26 @@
 <div ng-controller="MentorDashboardController" id="mentorDashboard">
   <div class="dashboard-header dashboard-header--mentor">
-	    <div class="mentor-header--wrapper clear">
-	      <div class="greeting">
-	        <h5>Hey there {{user.first_name}},</h5>
-	        <h2 class="bold">Welcome back!</h2>
-	      </div>
-	      <div class="circle-attention">
+    <div class="mentor-header--wrapper clear">
+      <div class="greeting">
+        <h5>Hey there {{user.first_name}},</h5>
+        <h2 class="bold">Welcome back!</h2>
+      </div>
+      <div class="circle-attention">
 
-			  	<div class="circle">
+		  	<div class="circle">
 
-				  	<div class="text">
+			  	<div class="text">
 
-					    <h2 class="bold">{{attention_students.length}}</h2>
-		          <span ng-if="attention_students.length != 1" class="subhead">students need<br>your attention!</span>
-              <span ng-if="attention_students.length == 1" class="subhead">student needs<br>your attention!</span>
-
-				  	</div>
+				    <h2 class="bold">{{attention_students.length}}</h2>
+	          <span ng-if="attention_students.length != 1" class="subhead">students need<br>your attention!</span>
+            <span ng-if="attention_students.length == 1" class="subhead">student needs<br>your attention!</span>
 
 			  	</div>
 
-		    </div>
+		  	</div>
+
 	    </div>
+    </div>
   </div>
 
   <div class="dashboard-content dashboard-content--mentor">

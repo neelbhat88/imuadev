@@ -4,8 +4,20 @@
 
       <div class="widget--content--cell break900 ng-clickable" ng-click="selectModule('null')">
         <div class="cell--padding">
-          <h6 class="module-circle__title bold">All Progress</h6>
+          <div class="progress-circle-nav">
+            <h6 class="module-circle__title bold">All Progress</h6>
             <progress-circle width="150" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
+          </div>
+          <div class="progress-bar-nav clear">
+            <div class="progress-bar--left">
+              <h6 class="bold">{{student.first_name}}'s Total Progress</h6>
+            </div>
+            <div class="progress-bar--right">
+              <div class="bar-size">
+                <horizontal-progress-bar student="student_with_modules_progress" identifier="big" parentclass="bar-size"></progress-circle>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -21,6 +33,18 @@
             <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
           </div>
         </div>
+
+        <div class="module-bar cell--padding clear">
+          <div class="module-bar--left">
+            <h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6>
+          </div>
+          <div class="module-bar--right">
+            <div class="bar-size">
+              <horizontal-module-progress-bar module="mod" parentclass="bar-size"></module-progress-circle>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

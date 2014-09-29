@@ -258,9 +258,9 @@ $border-color: black(0.2);
 
 .cursor-fix {
   cursor: initial;
-}
 
-/* Special Widgets */
+
+/* Special Widget Classes */
 
 .organizationsetup-nav {
   .widget--content {
@@ -283,4 +283,20 @@ $border-color: black(0.2);
       }
     }
   }
+}
+
+.module-circle-breakdown {
+  .module-bar, .progress-bar-nav {
+    display: none;
+  }
+
+  @include respond-to(900) {
+    .module-circle, .progress-circle-nav {
+      display: none;
+    }
+    .module-bar, .progress-bar-nav {
+      display: block;
+    }
+  }
+
 }
