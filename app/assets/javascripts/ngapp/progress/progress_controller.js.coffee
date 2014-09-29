@@ -55,7 +55,6 @@ angular.module('myApp')
               module.last_updated = _.last(sorted_module).updated_at
           when "Service"
             if !_.isEmpty($scope.student.user_service_hours)
-              console.log($scope.student.user_service_hours)
               sorted_module = _.sortBy($scope.student.user_service_hours, (u) ->
                 u.updated_at)
               module.last_updated = _.last(sorted_module).updated_at
