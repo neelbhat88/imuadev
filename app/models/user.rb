@@ -82,23 +82,6 @@ class User < ActiveRecord::Base
     abilities.allowed?(self, action, subject)
   end
 
-  def self.process_selects(selects)
-
-    if selects.include?("avatar") then selects -= %w{avatar}
-      selects << "avatar_file_name"
-      selects << "avatar_content_type"
-      selects << "avatar_file_size"
-      selects << "avatar_updated_at"
-    end
-
-    return super(selects)
-  end
-
-  def self.process_filters(filters)
-    filters[:id] = filters[:user_id]
-    return super(filters)
-  end
-
 end
 
 class UserQuerier < Querier
@@ -109,16 +92,33 @@ class UserQuerier < Querier
   def filter_attributes(attributes)
     if attributes.include?(:avatar) then attributes -= [:avatar]
       attributes << :avatar_file_name
-      attributes << :avatar_content_type
-      attributes << :avatar_file_size
-      attributes << :avatar_updated_at
     end
     return super(attributes)
   end
 
-  def filter_conditions(conditions)
-    return super(conditions)
+  def generate_domain
+    super
+    # Set default_url for :avatar_file_name if :avatar_file_name is nil
+    @domain.each do |d|
+      if d.keys.include?(:avatar_file_name) and d[:avatar_file_name].nil?
+        d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
+      end
+    end
+    return @domain
   end
+
+  def generate_view(conditions = {})
+    super(conditions)
+    # Rename :avatar_file_name to :square_avatar_url
+    @view.each do |v|
+      if v.keys.include?(:avatar_file_name)
+        v[:square_avatar_url] = v.delete(:avatar_file_name)
+      end
+    end
+    return @view
+  end
+
+
 end
 
 

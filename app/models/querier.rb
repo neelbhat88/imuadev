@@ -12,6 +12,9 @@
 #
 # The database will only be queried once in the lifetime of a Querier, at
 # the time that its domain object is first accessed (hence being "locked in").
+# 
+# Once a view object is accessed, all of the Querier's subQuerier objects will
+# have their view objects accessed and "locked in" as well.
 
 class Querier
   attr_accessor :subViewName
@@ -102,6 +105,22 @@ class Querier
     return @view
   end
 
+  def generate_domain
+    @domain = []
+    ActiveRecord::Base.connection.select_all(self.query).each do |obj|
+      obj_domain = {}
+      obj.each_key do |a|
+        obj_domain[a.to_sym] = @classType.type_cast_attribute(a, obj)
+      end
+      @domain << obj_domain
+    end
+    return @domain
+  end
+
+  def generate_query
+    @query = @classType.where(self.conditions).select(self.attributes.all)
+  end
+
   # Private
 
   def set_attributes(viewAttributes, domainOnlyAttributes = [])
@@ -128,22 +147,6 @@ class Querier
     conditions = filter_conditions(conditions)
 
     return @conditions = conditions
-  end
-
-  def generate_domain
-    @domain = []
-    ActiveRecord::Base.connection.select_all(self.query).each do |obj|
-      obj_domain = {}
-      obj.each_key do |a|
-        obj_domain[a.to_sym] = @classType.type_cast_attribute(a, obj)
-      end
-      @domain << obj_domain
-    end
-    return @domain
-  end
-
-  def generate_query
-    @query = @classType.where(self.conditions).select(self.attributes.all)
   end
 
 end
