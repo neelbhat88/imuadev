@@ -3,7 +3,8 @@ angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'angulartics', 'angulartics.google.analytics']
 
 angular.module('myApp')
-.controller 'AppController', ['$rootScope','$scope', 'CONSTANTS', ($rootScope, $scope, CONSTANTS) ->
+.controller 'AppController', ['$rootScope','$scope', 'CONSTANTS', "SessionService",
+($rootScope, $scope, CONSTANTS, SessionService) ->
   $scope.CONSTANTS = CONSTANTS
   $scope._ = _
 
@@ -19,6 +20,10 @@ angular.module('myApp')
   $scope.addErrorMessage = (msg) ->
     message = { type: 'danger', msg: msg}
     $scope.alerts.unshift(message)
+
+  $scope.$on "session_timeout", () ->
+    $scope.session_timeout = true
+    SessionService.logout(true)
 
   $scope.$on "update_required", () ->
     $scope.reload_required = true
