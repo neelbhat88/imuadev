@@ -24,7 +24,7 @@ angular.module('myApp')
       .attr("width", w)
       .attr("height", h)
       .attr("viewBox", "0 0 " + w + " " + h)
-      .attr("preserveAspectRatio", "xMidYMid")
+      .attr("preserveAspectRatio", "xMidYMin")
       .attr("id", "bar_" + scope.student.id + "_" + scope.identifier)
       .append("g")
 
@@ -62,8 +62,6 @@ angular.module('myApp')
 
       color = d3.scale.ordinal()
         .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080'])
-
-
 
       # Add a group for each row of data
       groups = svg.selectAll("g")

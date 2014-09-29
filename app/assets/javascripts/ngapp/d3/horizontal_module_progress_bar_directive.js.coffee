@@ -22,7 +22,7 @@ angular.module('myApp')
       .attr("width", w)
       .attr("height", h)
       .attr("viewBox", "0 0 " + w + " " + h)
-      .attr("preserveAspectRatio", "xMidYMid")
+      .attr("preserveAspectRatio", "xMidYMin")
       .attr("id", 'bar_' + scope.module.module_title)
       .append("g")
 
@@ -76,9 +76,6 @@ angular.module('myApp')
       color = d3.scale.ordinal()
         .range([moduleColor, moduleColorBg])
 
-
-
-
       # Add a group for each row of data
       groups = svg.selectAll("g")
         .data(progressData)
@@ -98,7 +95,7 @@ angular.module('myApp')
           .attr("x", (d) ->
             xScale(d.y0)
           )
-          .attr("height", (h/2))
+          .attr("height", h)
           .attr("width", (d) ->
             xScale(d.y)
           )
