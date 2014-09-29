@@ -6,10 +6,10 @@ class AssignmentService
     query = {}
 
     query[:assignments] = Querier.new(Assignment).where(conditions)
-    
+
     query[:user_assignments] = Querier.new(UserAssignment).where(conditions)
 
-    conditions[:user_id] = query[:assignments].pluck_all(:user_id) + query[:user_assignments].pluck_all(:user_id)
+    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
     query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
     query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
@@ -25,10 +25,10 @@ class AssignmentService
 
     query[:assignments] = Querier.new(Assignment).where(params)
 
-    conditions[:assignment_id] = query[:assignments].pluck_all(:id)
+    conditions[:assignment_id] = query[:assignments].pluck(:id)
     query[:user_assignments] = Querier.new(UserAssignment).where(conditions.slice(:assignment_id))
 
-    conditions[:user_id] = query[:assignments].pluck_all(:user_id) + query[:user_assignments].pluck_all(:user_id)
+    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
     query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
     query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 

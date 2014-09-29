@@ -50,8 +50,9 @@ class Querier
     return self
   end
 
-  def set_subQueriers(*subQueriers)
+  def set_subQueriers(subQueriers, filters = [])
     @subQueriers = subQueriers
+    @subQuerierFilters = filters
     return self
   end
 
@@ -76,8 +77,8 @@ class Querier
     return (@attributes.nil?) ? self.set_attributes([]) : @attributes
   end
 
-  def pluck_all(key)
-    return self.domain.map { |d| d[key] }
+  def pluck(key)
+    return self.domain.map { |d| d[key].to_s }
   end
 
 
@@ -95,28 +96,32 @@ class Querier
   def generate_view(conditions = {})
     @view = []
 
+    conditions = conditions.select { |k,v| @columnNames.include?(k) }
     applicable_domains = []
     if conditions.empty?
       applicable_domains = self.domain
     else
-      applicable_domains = self.domain.select {|d| conditions.keys.any? {|key| d[key] == conditions[key]}}
+      applicable_domains = self.domain.select {|d| conditions.keys.all? {|key| d[key] == conditions[key]}}
     end
 
     applicable_domains.each do |d|
-      view = {}
+      view = d.select { |k,v| self.attributes.view.include?(k)}
       # Include any subQuerier views
       unless @subQueriers.nil?
+        conditions = {}
+        conditions[@foreignKey] = d[:id]
+        @subQuerierFilters.each do |key|
+          if d.include?(key) and !d[key].nil?
+            conditions[key] = d[key]
+          end
+        end
         @subQueriers.each do |subQuerier|
-          conditions = {}
-          conditions[@foreignKey] = d[:id]
           view[subQuerier.subViewName] = subQuerier.generate_view(conditions)
         end
       end
       # Add all the viewAttributes from domain object
-      view = view.merge(d.select { |k,v| self.attributes.view.include?(k)})
       @view << view
     end
-
     # TODO - Remove applicable_domains from self.domain once pushed into a view object?
     return @view
   end

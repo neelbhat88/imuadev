@@ -100,10 +100,13 @@ class UserQuerier < Querier
 
   def generate_domain
     super
-    # Set default_url for :avatar_file_name if :avatar_file_name is nil
     @domain.each do |d|
+      # Set default_url for :avatar_file_name if :avatar_file_name is nil
       if d.keys.include?(:avatar_file_name) and d[:avatar_file_name].nil?
         d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
+      end
+      if d.keys.include?(:current_sign_in_at) and d[:current_sign_in_at].nil?
+        d[:current_sign_in_at] = "Has not logged in yet"
       end
     end
     return @domain
@@ -111,10 +114,32 @@ class UserQuerier < Querier
 
   def generate_view(conditions = {})
     super(conditions)
-    # Rename :avatar_file_name to :square_avatar_url on the view
     @view.each do |v|
+      # Final view object manicuring
       if v.keys.include?(:avatar_file_name)
         v[:square_avatar_url] = v.delete(:avatar_file_name)
+      end
+      if v.keys.include?(:sign_in_count)
+        v[:login_count] = v.delete(:sign_in_count)
+      end
+      if v.keys.include?(:current_sign_in_at)
+        v[:last_login] = v.delete(:current_sign_in_at)
+      end
+      if v.keys.include?(:first_name) and v.keys.include?(:last_name)
+        v[:full_name] = v[:first_name] + " " + v[:last_name]
+        v[:first_last_initial] = v[:first_name] + " " + v[:last_name][0].capitalize + "."
+      end
+      if v.keys.include?(:role)
+        if v[:role] != Constants.UserRole[:STUDENT]
+          v.delete(:time_unit_id)
+          v.delete(:user_milestones)
+          v.delete(:relationships)
+          v.delete(:user_expectations)
+          v.delete(:user_gpas)
+          v.delete(:user_extracurricular_activity_details)
+          v.delete(:user_service_hours)
+          v.delete(:user_tests)
+        end
       end
     end
     return @view
