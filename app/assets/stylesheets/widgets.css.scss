@@ -28,6 +28,11 @@ $border-color: black(0.2);
       text-align: right;
 
       .widget--options {
+
+        .standard--text {
+          margin-right: 10px;
+        }
+
         .options--text {
           margin-right: 10px;
           opacity: 0;

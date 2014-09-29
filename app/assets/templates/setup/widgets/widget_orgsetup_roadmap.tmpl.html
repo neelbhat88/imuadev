@@ -1,11 +1,16 @@
 <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
   <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
-    {{year.name}} {{sem.name}}
     <div ng-repeat="mod in setup_modules">
       <div class="widget organizationsetup-roadmap" modulecolor="{{mod}}">
         <div class="widget--header">
           <div class="widget--header--left">
             <h6 class="bold"><div class="color--dot"></div>{{mod}}</h6>
+          </div>
+          <div class="widget--header--right">
+            <div class="widget--options">
+              <span class="standard--text">{{year.name}}, {{sem.name}}</span>
+              <span class="glyphicon glyphicon-time"></span>
+            </div>
           </div>
         </div>
         <div class="widget--content">
