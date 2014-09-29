@@ -39,6 +39,8 @@ angular.module('myApp')
   $scope.selectWidget = (widget) ->
     if $scope.selected_widget != widget
       $scope.selected_widget = widget
+      $scope.selected_year = null
+      $scope.selected_semester = null
 
   $scope.selectRoadmap = (year, semester) ->
     if year != null

@@ -16,6 +16,18 @@
       width: 20%;
       margin-right: 2%;
       float: left;
+
+      .selected {
+        background: white(0.1);
+      }
+
+      .selected-year {
+        background: white(0.05);
+        .selected-semester {
+          background: white(0.1);
+        }
+      }
+
     }
 
     .orgsetup-pane {
