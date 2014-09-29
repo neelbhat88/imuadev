@@ -1,15 +1,23 @@
-<div ng-repeat="year in roadmap.years">
-  <div class="widget organizationsetup-roadmap" ng-repeat="sem in year.semesters">
-    <div class="widget--header">
-      <div class="widget--header--left">
-        <h6><div class="color--dot"></div><span class="year-name bold"> {{year.name}}</span> {{sem.name}}</h6>
-      </div>
-    </div>
-    <div class="widget--content">
-      <div class="widget--content--table">
-        <div class="widget--content--cell">
-          <div class="cell--padding">
-            {{sem}}
+<div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
+  <div ng-repeat="sem in year.semesters" ng-if="sem.id == selected_semester">
+    {{year.name}} {{sem.name}}
+    <div ng-repeat="mod in setup_modules">
+      <div class="widget organizationsetup-roadmap" modulecolor="{{mod}}">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold"><div class="color--dot"></div>{{mod}}</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="widget--content--cell">
+              <div class="cell--padding">
+                <div ng-repeat="milestone in sem.semester.milestones | filter: {module: mod}">
+                  {{milestone}}
+                  <hr>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
