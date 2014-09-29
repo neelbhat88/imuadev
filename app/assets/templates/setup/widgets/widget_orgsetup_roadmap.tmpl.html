@@ -10,12 +10,9 @@
         </div>
         <div class="widget--content">
           <div class="widget--content--table">
-            <div class="widget--content--cell">
+            <div class="widget--content--cell breakalways" ng-repeat="milestone in sem.semester.milestones | filter: {module: mod}">
               <div class="cell--padding">
-                <div ng-repeat="milestone in sem.semester.milestones | filter: {module: mod}">
-                  {{milestone}}
-                  <hr>
-                </div>
+                {{milestone.title}}
               </div>
             </div>
           </div>
