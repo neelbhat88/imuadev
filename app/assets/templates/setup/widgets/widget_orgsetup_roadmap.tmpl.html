@@ -1,5 +1,5 @@
 <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
-  <div ng-repeat="sem in year.semesters" ng-if="sem.id == selected_semester">
+  <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
     {{year.name}} {{sem.name}}
     <div ng-repeat="mod in setup_modules">
       <div class="widget organizationsetup-roadmap" modulecolor="{{mod}}">
