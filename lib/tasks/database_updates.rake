@@ -26,6 +26,11 @@ namespace :db_update do
     else
       puts 'ERROR: Failed to updated AppVersion.'
     end
+
+    # Cleaning up old database sessions greter than 2 minutes past the session timeout time
+    # The 2 minutes is just to add a buffer in case of slight differences in client and server time
+    puts "Deleting expired sessions from the DB..."
+    Session.where("updated_at < '#{DateTime.now.utc - (Constants.SessionTimeout + 2.minutes) }'").delete_all
   end
 
   ########################################
