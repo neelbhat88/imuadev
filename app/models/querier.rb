@@ -8,13 +8,17 @@
 # Querier's domain object, will not lock in the view object, though (not until
 # the view object is accessed).
 #
-# ViewObject --> DomainObject --> QueryObject
+# ViewObject <-- DomainObject <-- QueryObject
 #
 # The database will only be queried once in the lifetime of a Querier, at
 # the time that its domain object is first accessed (hence being "locked in").
 # 
 # Once a view object is accessed, all of the Querier's subQuerier objects will
 # have their view objects accessed and "locked in" as well.
+#
+# Both view and domain objects are accessed as an array of the Querier's
+# classType. It's up to the caller to know whether the view/domain objects
+# should have a ength of 1.
 
 class Querier
   attr_accessor :subViewName

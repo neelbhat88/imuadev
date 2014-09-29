@@ -4,58 +4,42 @@ class AssignmentService
   def collect_assignment_2(params)
     conditions = params
 
-    attributes = []
-    assignments = Assignment.find_by_filters(conditions, attributes)
-
-    attributes = []
-    userAssignments = UserAssignment.find_by_filters(conditions, attributes)
+    query = {}
+    query[:assignments] = Querier.new(Assignment).where(conditions)
+    query[:user_assignments] = Querier.new(UserAssignment).where(conditions)
 
     conditions[:user_id] = []
-    conditions[:user_id] << assignments.pluck(:user_id)
-    conditions[:user_id] << userAssignments.pluck(:user_id)
+    conditions[:user_id] << query[:assignments].domain.map { |a| a[:user_id] }
+    conditions[:user_id] << query[:user_assignments].domain.map { |a| a[:user_id] }
 
-    viewUsers = []
-    attributes = []
-    User.find_by_filters(conditions, attributes).each do |user|
-      userOptions = {}
-      userOptions[:user] = user
-      userOptions[:assignments] = assignments.select{|a| a.user_id == user.id}.map{|a| ViewAssignment.new({assignment: a})}
-      userOptions[:user_assignments] = userAssignments.select{|ua| ua.user_id == user.id}.map{|ua| ViewUserAssignment.new({user_assignment: ua})}
-      viewUsers << ViewUser.new(userOptions)
-    end
+    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
+    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
-    viewOrg = ViewOrganization.new({users: viewUsers})
-    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", viewOrg)
+    view = {organization: {users: query[:users].view}}
+
+    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", view)
   end
 
   # Called via :user_id
   def collect_assignments_2(params)
     conditions = params
 
-    attributes = []
-    assignments = Assignment.find_by_filters(conditions, attributes)
+    query = {}
+    query[:assignments] = Querier.new(Assignment).where(params)
 
-    conditions = conditions.except(:user_id)
-    conditions[:assignment_id] = assignments.ids
-    attributes = []
-    userAssignments = UserAssignment.find_by_filters(conditions, attributes)
+    conditions[:assignment_id] = query[:assignments].domain.map { |a| a[:id] }
+    query[:user_assignments] = Querier.new(UserAssignment).where(conditions.slice(:assignment_id))
 
     conditions[:user_id] = []
-    conditions[:user_id] << assignments.pluck(:user_id)
-    conditions[:user_id] << userAssignments.pluck(:user_id)
+    conditions[:user_id] << query[:assignments].domain.map { |a| a[:user_id] }
+    conditions[:user_id] << query[:user_assignments].domain.map { |a| a[:user_id] }
 
-    viewUsers = []
-    attributes = []
-    User.find_by_filters(conditions, attributes).each do |user|
-      userOptions = {}
-      userOptions[:user] = user
-      userOptions[:assignments] = assignments.select{|a| a.user_id == user.id}.map{|a| ViewAssignment.new({assignment: a})}
-      userOptions[:user_assignments] = userAssignments.select{|ua| ua.user_id == user.id}.map{|ua| ViewUserAssignment.new({user_assignment: ua})}
-      viewUsers << ViewUser.new(userOptions)
-    end
+    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
+    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
-    viewOrg = ViewOrganization.new({users: viewUsers})
-    return ReturnObject.new(:ok, "Assignment collections for user_id: #{params[:user_id]}.", viewOrg)
+    view = {organization: {users: query[:users].view}}
+
+    return ReturnObject.new(:ok, "Assignment collections for user_id: #{params[:user_id]}.", view)
   end
 
 

@@ -85,11 +85,13 @@ class User < ActiveRecord::Base
 end
 
 class UserQuerier < Querier
+
   def initialize
     super(User)
   end
 
   def filter_attributes(attributes)
+    # :avatar attribute is short hand for :avatar_file_name
     if attributes.include?(:avatar) then attributes -= [:avatar]
       attributes << :avatar_file_name
     end
@@ -109,7 +111,7 @@ class UserQuerier < Querier
 
   def generate_view(conditions = {})
     super(conditions)
-    # Rename :avatar_file_name to :square_avatar_url
+    # Rename :avatar_file_name to :square_avatar_url on the view
     @view.each do |v|
       if v.keys.include?(:avatar_file_name)
         v[:square_avatar_url] = v.delete(:avatar_file_name)
@@ -117,7 +119,6 @@ class UserQuerier < Querier
     end
     return @view
   end
-
 
 end
 
