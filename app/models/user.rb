@@ -91,22 +91,34 @@ class UserQuerier < Querier
   end
 
   def filter_attributes(attributes)
-    # :avatar attribute is short hand for :avatar_file_name
     if attributes.include?(:avatar) then attributes -= [:avatar]
       attributes << :avatar_file_name
+      attributes << :avatar_updated_at
     end
     return super(attributes)
   end
 
   def generate_domain
     super
+    # Domain object manicuring
     @domain.each do |d|
-      # Set default_url for :avatar_file_name if :avatar_file_name is nil
       if d.keys.include?(:avatar_file_name)
         if d[:avatar_file_name].nil?
           d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
         else
-          d[:avatar_file_name] = Paperclip::Attachment.default_options[:s3_credentials][:bucket] + "/" + d[:avatar_file_name] 
+          # Hack to generate the s3 user avatar url outside of Paperclip
+          base = "http://s3.amazonaws.com"
+          bucket = Paperclip::Attachment.default_options[:s3_credentials][:bucket]
+          klass = "users"
+          attachment = "avatars"
+          id_partition = sprintf("%09d", d[:id]).split('')
+          id_partition_0 = id_partition[0,3].join('')
+          id_partition_1 = id_partition[3,3].join('')
+          id_partition_2 = id_partition[6,3].join('')
+          style = "square"
+          filename = d[:avatar_file_name]
+          timestamp = d[:avatar_updated_at].to_i.to_s
+          d[:avatar_file_name] = [base, bucket, klass, attachment, id_partition_0, id_partition_1, id_partition_2, style, filename].join("/") + "?" + timestamp
         end
       end
       if d.keys.include?(:current_sign_in_at) and d[:current_sign_in_at].nil?
@@ -118,10 +130,11 @@ class UserQuerier < Querier
 
   def generate_view(conditions = {})
     super(conditions)
+    # Final view object manicuring
     @view.each do |v|
-      # Final view object manicuring
       if v.keys.include?(:avatar_file_name)
         v[:square_avatar_url] = v.delete(:avatar_file_name)
+        v.delete(:avatar_updated_at)
       end
       if v.keys.include?(:sign_in_count)
         v[:login_count] = v.delete(:sign_in_count)
