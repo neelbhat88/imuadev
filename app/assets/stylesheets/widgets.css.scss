@@ -259,3 +259,19 @@ $border-color: black(0.2);
 .cursor-fix {
   cursor: initial;
 }
+
+.module-circle-breakdown {
+  .module-bar, .progress-bar-nav {
+    display: none;
+  }
+
+  @include respond-to(900) {
+    .module-circle, .progress-circle-nav {
+      display: none;
+    }
+    .module-bar, .progress-bar-nav {
+      display: block;
+    }
+  }
+
+}

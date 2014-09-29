@@ -7,6 +7,7 @@
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
       <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
+
         <div class=" module-circle cell--padding">
           <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
           <div class="circle-size">
@@ -18,6 +19,18 @@
             <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
           </div>
         </div>
+
+        <div class="module-bar cell--padding clear">
+          <div class="module-bar--left">
+            <h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6>
+          </div>
+          <div class="module-bar--right">
+            <div class="bar-size">
+              <horizontal-module-progress-bar module="mod" parentclass="bar-size"></module-progress-circle>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
