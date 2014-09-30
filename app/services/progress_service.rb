@@ -6,7 +6,7 @@ class ProgressService
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :first_name, :last_name], [:organization_id]).where(conditions.slice(:user_id))
     conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
     userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
-    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
     userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
