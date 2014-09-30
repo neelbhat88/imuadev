@@ -58,6 +58,17 @@
           }
         }
 
+        .temp-clickable {
+          &:hover {
+            cursor: pointer;
+
+            .descript {
+              text-decoration: underline;
+            }
+
+          }
+        }
+
       }
     }
   }

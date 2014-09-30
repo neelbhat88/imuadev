@@ -1,37 +1,108 @@
 class ProgressService
 
-  def get_all_progress(userId, time_unit_id)
-    user = UserRepository.new.get_user(userId)
-    enabled_modules = EnabledModules.new.get_modules(user.organization_id).object
+  def get_student_expectations(params)
+    conditions = params
 
-    modules_progress = []
-    enabled_modules.each do | m |
-      points = get_module_and_user_points(userId, time_unit_id, m.title)
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :first_name, :last_name], [:organization_id]).where(conditions.slice(:user_id))
+    conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
 
-      mod = ModuleProgress.new(m.title, time_unit_id, points[:user], points[:total])
+    conditions[:organization_id] = userQ.pluck(:organization_id)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
 
-      modules_progress << mod
-    end
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
 
-    return ReturnObject.new(:ok, "All modules progress", modules_progress)
+    return ReturnObject.new(:ok, "Student expectations for user_id: #{params[:user_id]}.", view)
   end
 
-  def overall_progress(userId)
-    user = UserRepository.new.get_user(userId)
+  def get_student_dashboard(params)
+    conditions = params
 
-    totalPoints = MilestoneService.new.get_total_points(user.organization_id)
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id], [:user_id]).where(conditions)
+    relationshipQ = Querier.new(Relationship).select([:user_id, :assigned_to_id]).where(conditions)
+    userAssignmentQ = Querier.new(UserAssignment).select([:status, :id, :assignment_id], [:user_id]).where(conditions)
 
-    totalUserPoints = 0
-    userMilestones = MilestoneService.new.get_user_milestones(user.id)
-    userMilestones.each do | um |
-      totalUserPoints += um.milestone.points
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.new(Assignment).select([:title, :due_datetime, :description, :id, :user_id]).where(conditions.except(:user_id))
+
+    conditions[:user_id] = (assignmentQ.pluck(:user_id) + relationshipQ.pluck(:assigned_to_id) << conditions[:user_id].to_s).uniq
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ, relationshipQ, userAssignmentQ, assignmentQ])
+
+    conditions[:organization_id] = userQ.pluck(:organization_id)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Student dasboard for user_id: #{params[:user_id]}.", view)
+  end
+
+  # TODO: Fix front-end so that org_milestones and user_milestones can be
+  #       filtered by module_title and still have the semester progress circle
+  #       calculated accurately
+  def get_user_progress(params)
+    conditions = params
+
+    if params[:recalculate]
+      get_recalculated_milestones(params[:user_id], params[:time_unit_id], params[:module])
     end
 
-    percentComplete = ((totalUserPoints.to_f / totalPoints.to_f) * 100.0).round(0)
+    userQ = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(conditions.slice(:user_id))
+    userMilestoneQ = Querier.new(UserMilestone).where(conditions.except(:module))
+    userQ.set_subQueriers([userMilestoneQ])
 
-    obj = { :totalUserPoints => totalUserPoints, :totalPoints => totalPoints, :percentComplete => percentComplete }
+    conditions[:organization_id] = userQ.pluck(:organization_id)
 
-    return ReturnObject.new(:ok, "Overall progress", obj)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).where(conditions.slice(:organization_id, :time_unit_id))
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", view)
+  end
+
+  def get_organization_progress(params)
+    conditions = params
+    query = {}
+
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id], [:user_id]).where(conditions)
+    relationshipQ = Querier.new(Relationship).select([:user_id, :assigned_to_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:status], [:user_id]).where(conditions)
+    userGpaQ = Querier.new(UserGpa).select([:core_unweighted, :core_weighted, :regular_unweighted, :regular_weighted, :time_unit_id], [:user_id]).where(conditions)
+    userExtracurricularActivityDetailQ = Querier.new(UserExtracurricularActivityDetail).select([:time_unit_id], [:user_id]).where(conditions)
+    userServiceHourQ = Querier.new(UserServiceHour).select([:hours, :time_unit_id], [:user_id]).where(conditions)
+    userTestQ = Querier.new(UserTest).select([:time_unit_id], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, relationshipQ, userExpectationQ, userGpaQ, userExtracurricularActivityDetailQ, userServiceHourQ, userTestQ], :time_unit_id)
+
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Progress for organization_id: #{params[:organization_id]}.", view)
   end
 
   def get_recalculated_milestones(user_id, time_unit_id, module_title)
@@ -109,36 +180,6 @@ class ProgressService
     return ReturnObject.new(:ok, "Recalculated milestones for user_id: #{user_id}, time_unit_id: #{time_unit_id}, module_title:#{module_title}.", milestones)
   end
 
-  def get_recalculated_module_progress(userId, time_unit_id, module_title)
-    # Perform recalculation on UserMilestones
-    get_recalculated_milestones(userId, time_unit_id, module_title)
-
-    # Get total and user points
-    points = get_module_and_user_points(userId, time_unit_id, module_title)
-    mod = ModuleProgress.new(module_title, time_unit_id, points[:user], points[:total])
-
-    return ReturnObject.new(:ok, "#{module_title} progress", mod)
-  end
-
-  private
-
-  def get_module_and_user_points(userId, time_unit_id, module_title)
-    org_milestones = Milestone.where(:module => module_title, :time_unit_id => time_unit_id)
-    total_points = 0
-    org_milestones.each do | om |
-      total_points += om.points
-    end
-
-    users_milestones = UserMilestone.where(:user_id => userId, :module => module_title, :time_unit_id => time_unit_id)
-    user_points = 0
-    users_milestones.each do | um |
-      if um.milestone != nil
-        user_points += um.milestone.points
-      end
-    end
-
-    return {:total => total_points, :user => user_points}
-  end
 end
 
 class ModuleProgress
