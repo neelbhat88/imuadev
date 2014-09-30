@@ -93,26 +93,43 @@ class Querier
     return conditions.select { |k,v| @columnNames.include?(k) }
   end
 
-  def generate_view(conditions = {})
+  def generate_view(conditions = [])
     @view = []
 
-    conditions = conditions.select { |k,v| @columnNames.include?(k) }
+    filterBy = []
+    conditions.each do |c|
+      if @columnNames.include?(c.keys.first)
+        filterBy << c.keys.first
+      end
+    end
+    new_conds = {}
+    conditions.each{|c| c.map{|k,v| new_conds[k] = v}}
+    conditions = new_conds.select {|k,v| filterBy.include?(k)}
     applicable_domains = []
-    if conditions.empty?
+    if filterBy.empty?
       applicable_domains = self.domain
     else
-      applicable_domains = self.domain(conditions.keys).select {|d| conditions.keys.all? {|key| d[key] == conditions[key]}}
+      # Remove from @domains as its read into the view
+      while !self.domain(filterBy).empty?
+        if conditions.keys.all? {|key| self.domain[0][key] == conditions[key]}
+          applicable_domains << self.domain.shift
+        elsif conditions.keys.all? {|key| self.domain[0][key] <= conditions[key]}
+          self.domain.shift
+        else
+          break
+        end
+      end
     end
 
     applicable_domains.each do |d|
       view = d.select { |k,v| self.attributes.view.include?(k)}
       # Include any subQuerier views
       unless @subQueriers.nil?
-        sqConditions = {}
-        sqConditions[@foreignKey] = d[:id]
+        sqConditions = []
+        sqConditions << {@foreignKey => d[:id]}
         @subQuerierMatchingAttributes.each do |key|
           if d.include?(key) and !d[key].nil?
-            sqConditions[key] = d[key]
+            sqConditions << {key => d[key]}
           end
         end
         @subQueriers.each do |subQuerier|
@@ -122,7 +139,6 @@ class Querier
       # Add all the viewAttributes from domain object
       @view << view
     end
-    # TODO - Remove applicable_domains from self.domain once pushed into a view object?
     return @view
   end
 
@@ -135,9 +151,8 @@ class Querier
       end
       @domain << obj_domain
     end
-    # sortBy << :id
-    # return @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
-    return @domain
+    sortBy << :id
+    return @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
   end
 
   def generate_query
