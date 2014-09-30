@@ -7,13 +7,20 @@ class ProgressService
     conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
     userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
     userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
-    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
     expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+
+    if userExpectationQ.domain.length != expectationQ.domain.length
+      UserExpectationService.new.update_user_expectations(params.slice(:user_id))
+      userExpectationQ = nil
+      userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
+    end
+
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
 
     view = organizationQ.view.first
