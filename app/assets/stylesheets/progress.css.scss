@@ -1,155 +1,260 @@
-.progressUpper {
+.progressContainer {
+  background: image-url("bg_bluegreen1.jpg") no-repeat center center fixed;
+  @include bgcover();
 
-  background: $grey;
-  color: white;
-	border-bottom: 1px $darkborder solid;
+  .progress-header {
 
-  .progress-subnav {
-    a {
-      color: inherit;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+    width: 100%;
+    text-align: center;
+
   }
 
-  ul {
+  .progressLower {
 
-    margin-bottom: 0;
+    text-align: center;
+    padding: 40px $wrapper-width;
 
-  	li {
+    @include respond-to(900) {
+      padding: 40px 20px;
+    }
 
-  		float: left;
+    @include respond-to(600) {
+      padding: 20px 0;
+    }
 
-  	}
-
-    .progressStudent {
-
-      width: 60%;
-      padding: 25px 100px 0 100px;
+    .progressLower-title {
+      margin-bottom: 40px;
 
       select {
 
-      	height: 60px;
-      	padding: 5px;
-      	background: $grey;
-      	border: none;
-    		border-bottom: 1px rgb(65, 66, 67) solid;
+        height: 60px;
+        padding: 5px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px rgb(65, 66, 67) solid;
 
       }
 
     }
 
-    .narrow {
+    .big-progress-circle {
+      .big-circle-size {
+        width: 325px;
 
-      width: 20%;
-      padding: 60px 0;
-      text-align: center;
-      border-left: 1px solid $darkborder;
-
-    }
-
-  }
-
-}
-
-.progressMiddle {
-
-  background: $grey;
-
-  .progressCircle-big--container {
-
-  	float: left;
-  	width: 20%;
-  	text-align: center;
-	  padding-top: 60px;
-    padding-bottom: 60px;
-    border-right: 1px solid $darkborder;
-
-    @include respond-to(1275) {
-      float: none;
-      display: block;
-      width: 100%;
-      border-right: 0;
-      border-bottom: 1px solid $darkborder;
-      padding: 20px 0;
-    }
-
-  }
-
-  .circles {
-
-    width: 80%;
-    float: left;
-    padding-top: 80px;
-    text-align: center;
-    color: white();
-
-    @include respond-to (1275) {
-      float: none;
-      display: block;
-      width: 100%;
-      padding: 20px 0;
-    }
-
-    .module-circle {
-      display: inline-block;
-      width: 20%;
-      text-align: center;
-      opacity: 0.3;
-
-      @include respond-to (1000) {
-        width: 200px;
-      }
-
-      &.inactive {
-        //display: none;
-      }
-
-      &:last-of-type {
-
-        	margin-right: 0;
-
+        @include respond-to(900) {
+          width: 250px;
         }
 
+        @include respond-to(600) {
+          width: 120px;
+        }
+
+      }
     }
 
-    .module-circle__modupdated {
-      @include font-size(1.0)
+  } //.progressLower
+
+  .widget--content--cell {
+
+    .points {
+      display: inline-block;
+      vertical-align: middle;
     }
 
-    .selectedCircle {
-
-    	opacity: 1;
-
+    .points-circle {
+      margin: 0 20px;
     }
 
-    .notSelectedCircle {
-
-    	&:hover {
-
-    		opacity: 0.75;
-
-    	}
-
+    .points-available {
+      opacity: 0.6;
     }
 
   }
+
+  .academicsProgressContainer {
+    .expanded, .editing {
+      width: 30%;
+    }
+
+    .group--title {
+      color: white(0.5);
+    }
+
+    .widget--content--cell {
+      .see-more {
+        opacity: 0;
+        @include transition(0.3);
+      }
+      &:hover {
+        .see-more { opacity: 1; }
+      }
+    }
+
+    .expanded-class-info {
+      @include respond-to(1200) {
+        padding-bottom: 20px;
+      }
+
+      .delete-button {
+        margin-bottom: 20px;
+      }
+
+    }
+
+    .break900 {
+
+      .class-name {
+        @include respond-to(900) {
+          width: 70%;
+          float: left;
+          text-align: left;
+          padding-left: 10%;
+        }
+
+        h6 {
+          font-weight: $bold;
+          @include respond-to(900) { @include font-size(3.8); }
+          @include respond-to(600) { @include font-size(3); }
+        }
+      }
+
+      .class-grade {
+        @include respond-to(900) {
+          width: 30%;
+          float: left;
+          h3 { margin: 0; }
+        }
+      }
+
+    }
+
+    .break1200 {
+      .class-name {
+        @include respond-to(1200) {
+          width: 70%;
+          float: left;
+          text-align: left;
+          padding-left: 10%;
+        }
+
+        h6 {
+          font-weight: $bold;
+          @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
+          @include respond-to(900) { @include font-size(3.8); }
+          @include respond-to(600) { @include font-size(3); }
+        }
+      }
+
+      .class-grade {
+        @include respond-to(1200) {
+          width: 30%;
+          float: left;
+          h3 { margin: 0; }
+        }
+      }
+    }
+
+  }
+
+  .serviceProgressContainer {
+    .service-org-header {
+      padding: 20px;
+    }
+    .service-hours--meta {
+      width: 25%;
+      float: left;
+      padding: 0 10px;
+    }
+    .service-hours--description {
+      width: 75%;
+      float: left;
+      text-align: left;
+      padding: 0 30px 0 10px;
+
+    }
+
+    .cell--service-hours {
+      .small-edit-button {
+        display: none;
+      }
+      &:hover {
+        .small-edit-button {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .extracurricularProgressContainer {
+    .extracurricular-activities {
+      //EC Widget
+
+      .widget--content--table {
+        .widget--content--cell {
+          .cell--padding {
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+        }
+      }
+
+    }
+  }
+
+  /* Editing */
+
+  .input-group {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+    text-align: left;
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .datepicker-label {
+    margin-bottom: 0;
+  }
+
+  .half-width {
+    width: 44%;
+    max-width: 380px;
+    padding: 0 3%;
+    display: inline-block;
+  }
+  .salvattore-item {
+    border: 1px solid red;
+    padding: 40px;
+  }
+
+  @include respond-to-min(1200) {
+    #grid[data-columns]::before {
+  	content: '3 .column.size-1of3';
+    }
+  }
+  @include respond-to(1200) {
+    #grid[data-columns]::before {
+    content: '2 .column.size-1of2';
+    }
+  }
+  @include respond-to(900) {
+    #grid[data-columns]::before {
+    content: '1 .column.size-1of1';
+    }
+  }
+  /* These are the classes that are going to be applied: */
+  .column { float: left; }
+  .size-1of1 { width: 100%; }
+  .size-1of2 { width: 50%; }
+  .size-1of3 { width: 33.333%; }
 
 }
 
-.progressLower {
-  background: $darkgrey;
-  min-height: 500px;
-  text-align: center;
-  padding-top: 40px;
-
-  @each $category, $color in $colormap {
-    &.color--#{$category} {
-      border-top: 6px solid $color;
-    }
+@each $category, $bgurl in $bgcolormap {
+  .color--bg-#{$category} {
+    background: image-url($bgurl) no-repeat center center fixed;
+    @include bgcover();
+    @include transition(0.3); // Temporary. Theres a better way to ng-animate this.
   }
-
-
-} //.progressLower
+}

@@ -8,7 +8,7 @@ html {
       @include bgcover();
       text-align: center;
       @include font-size(2.0);
-      font-weight: $light;
+      font-weight: $thin;
       min-height: 100%;
     }
 

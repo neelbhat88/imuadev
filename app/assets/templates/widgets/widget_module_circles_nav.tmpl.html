@@ -1,0 +1,51 @@
+<div class="widget module-circle-breakdown">
+  <div class="widget--content">
+    <div class="widget--content--table table--fixed">
+
+      <div class="widget--content--cell break900 ng-clickable" ng-click="selectModule('null')">
+        <div class="cell--padding">
+          <div class="progress-circle-nav">
+            <h6 class="module-circle__title bold">All Progress</h6>
+            <progress-circle width="150" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
+          </div>
+          <div class="progress-bar-nav clear">
+            <div class="progress-bar--left">
+              <h6 class="bold">{{student.first_name}}'s Total Progress</h6>
+            </div>
+            <div class="progress-bar--right">
+              <div class="progress-bar-size">
+                <horizontal-progress-bar student="student_with_modules_progress" identifier="big" parentclass="progress-bar-size"></progress-circle>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
+        <div class="module-circle cell--padding">
+          <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
+          <div class="circle-size">
+            <module-progress-circle module="mod" parentclass="circle-size"></module-progress-circle>
+          </div>
+          <div class="module-circle--meta">
+            <div class="click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated != null">Last updated {{mod.last_updated | fromNow}}</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
+          </div>
+        </div>
+
+        <div class="module-bar cell--padding clear">
+          <div class="module-bar--left">
+            <h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6>
+          </div>
+          <div class="module-bar--right">
+            <div class="bar-size">
+              <horizontal-module-progress-bar module="mod" parentclass="bar-size"></module-progress-circle>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

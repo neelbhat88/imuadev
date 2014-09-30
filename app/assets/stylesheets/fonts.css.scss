@@ -1,0 +1,119 @@
+$font-stack: "proxima-nova", "Helvetica Neue", "Arial", sans-serif;
+$headline-font-stack: "jaf-facitweb", "Helvetica Neue", "Arial", sans-serif;
+$thin: 100; // Proxima Nova's lightest weight
+$light: 200; // Facit's lightest weight (ONLY USED ON h1, h2 & h3)
+$regular: 300;
+$bold: 700;
+
+@mixin font-size($size:1.6, $line: $size * 1.2){
+    font-size:   ($size * 10) + px;
+    line-height: ($line * 10) + px;
+    font-size:   $size + rem;
+    line-height: $line + rem;
+}
+
+html {
+  body {
+    font-family: $font-stack;
+    font-weight: $regular;
+    @include font-size(1.4);
+
+    @include respond-to(800) {
+      @include font-size(1.2);
+    }
+
+  }
+}
+
+/* ===============================================
+   Typography
+   =============================================== */
+
+h1 {
+
+  @include font-size(12);
+  font-family: $headline-font-stack;
+  font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(10); }
+  @include respond-to(900) { @include font-size(8); }
+  @include respond-to(600) { @include font-size(7); }
+
+}
+
+h2 {
+
+  @include font-size(9);
+  font-family: $headline-font-stack;
+  font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(8); }
+  @include respond-to(900) { @include font-size(6.8); }
+  @include respond-to(600) { @include font-size(5.4); }
+
+}
+
+h3 {
+
+  @include font-size(6);
+  font-family: $headline-font-stack;
+  font-weight: $light;
+
+  @include respond-to(1200) { @include font-size(5); }
+  @include respond-to(900) { @include font-size(4.2); }
+  @include respond-to(600) { @include font-size(3.6); }
+
+}
+
+
+h4 {
+
+  @include font-size(4);
+  font-weight: $thin;
+
+  @include respond-to(1200) { @include font-size(3.5); }
+  @include respond-to(900) { @include font-size(3); }
+  @include respond-to(600) { @include font-size(2.5); }
+
+}
+
+h5 {
+
+  @include font-size(3);
+  font-weight: $thin;
+
+  @include respond-to(1200) { @include font-size(2.6); }
+  @include respond-to(900) { @include font-size(2.2); }
+  @include respond-to(600) { @include font-size(1.8); }
+
+}
+
+h6 {
+
+  @include font-size(1.8);
+  font-weight: $thin;
+
+  @include respond-to(1200) { @include font-size(1.7); }
+  @include respond-to(900) { @include font-size(1.6); }
+
+}
+
+.light { font-weight: $thin; }
+
+//Fix for super thin text on Mobile
+h4, h5, h6, .light {
+  @include respond-to(600) {
+    font-weight: 300;
+  }
+}
+
+.bold { font-weight: $bold; }
+.italic { font-style: italic; }
+
+.big-text {
+  h5 { line-height: 1rem; }
+}
+
+.subtext {
+  @include font-size(1);
+}

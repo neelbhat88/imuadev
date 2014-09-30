@@ -1,0 +1,15 @@
+<a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
+  <div class="student-progress-bar student-progress-bar--default clear" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
+    <div class="progress-bar--left">
+      <div class="tiny-circle-picture">
+        <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_name}} {{student.last_name}}" />
+      </div>
+    </div>
+    <div class="progress-bar--right">
+      <h6 class="bold">{{student.first_last_initial}}</h6>
+      <div class="bar-size">
+        <horizontal-progress-bar parentclass="bar-size" identifier="default" student="student"></horizontal-progress-bar>
+      </div>
+    </div>
+  </div>
+</a>

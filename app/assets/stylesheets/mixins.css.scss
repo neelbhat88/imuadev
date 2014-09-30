@@ -1,0 +1,64 @@
+/* ===============================================
+   **************  Global Mixins  ****************
+   =============================================== */
+
+/* Breakpoints */
+
+@mixin respond-to($breakpoint) {
+    @media only screen and (max-width: $breakpoint + px) { @content; }
+}
+
+@mixin respond-to-min($breakpoint) {
+    @media only screen and (min-width: $breakpoint + px) { @content; }
+}
+
+@mixin respond-to-both($minbreakpoint, $maxbreakpoint) {
+    @media only screen and (min-width: $minbreakpoint + px) and (max-width: $maxbreakpoint + px) { @content; }
+}
+
+@mixin respond-to-with-height($breakpoint) {
+    @media only screen and (max-width: $breakpoint + px),
+          screen and (max-height: $breakpoint + px) { @content; }
+}
+
+/* Other Mixins */
+
+@mixin bgcover() {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@mixin border-radius($radius) {
+
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius; /* future proofing */
+  -khtml-border-radius: $radius; /* for old Konqueror browsers */
+
+}
+
+@mixin circle($size) {
+
+  width: $size;
+  height: $size;
+  @include border-radius(100%);
+
+}
+
+@mixin transition($seconds) {
+  -webkit-transition-duration: $seconds + s;
+  -moz-transition-duration: $seconds + s;
+  -ms-transition-duration: $seconds + s;
+  -o-transition-duration: $seconds + s;
+  transition-duration: $seconds + s;
+}
+
+@mixin transition-delay($seconds) {
+  -webkit-transition-delay: $seconds + s;
+  -moz-transition-delay: $seconds + s;
+  -ms-transition-delay: $seconds + s;
+  -o-transition-delay: $seconds + s;
+  transition-delay: $seconds + s;
+}

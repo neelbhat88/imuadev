@@ -8,6 +8,7 @@ angular.module('myApp')
     parentclass: '@',
     identifier: '@'
   }
+
   link: (scope, element, attrs) ->
     if scope.parentclass
       w = $('.' + scope.parentclass).outerWidth()
@@ -15,6 +16,22 @@ angular.module('myApp')
     else
       w = scope.width
       h = scope.height
+
+    # this is a terrible hack for the time being
+    if w <= 80
+      w = 475
+
+    # Create SVG element
+    svg = d3.select(element[0])
+      .attr("id", scope.student.id + "_" + scope.identifier)
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("viewBox", "0 0 " + w + " " + h)
+      .attr("preserveAspectRatio", "xMidYMin")
+      .attr("id", "bar_" + scope.student.id + "_" + scope.identifier)
+      .append("g")
+
     scope.render = (student) ->
       progressData = []
 
@@ -50,14 +67,6 @@ angular.module('myApp')
       color = d3.scale.ordinal()
         .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080'])
 
-      # Create SVG element
-      svg = d3.select("body")
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h)
-        .append("g")
-        .attr("id", student.id + "_" + scope.identifier)
-
       # Add a group for each row of data
       groups = svg.selectAll("g")
         .data(progressData)
@@ -77,8 +86,8 @@ angular.module('myApp')
           .attr("x", (d) ->
             xScale(d.y0)
           )
-          .attr("y", (h/2))
-          .attr("height", (h/2))
+
+          .attr("height", h)
           .attr("width", (d) ->
             xScale(d.y)
           )
@@ -87,14 +96,15 @@ angular.module('myApp')
       scope.render(scope.student)
     , true)
 
-    chartSelect = $("#"+ scope.student.id + "_" + scope.identifier)
+    chartSelect = $("#bar_"+ scope.student.id + "_" + scope.identifier)
+    aspect = chartSelect.width() / chartSelect.height()
 
     resizeParent = () ->
       if scope.parentclass
         onChangeWidth = $('.' + scope.parentclass).outerWidth()
 
         chartSelect.attr("width", onChangeWidth)
-        chartSelect.attr("height", onChangeWidth)
+        chartSelect.attr("height", onChangeWidth/aspect)
 
     $(window).resize (event) -> resizeParent()
 ]
