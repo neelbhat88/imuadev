@@ -17,6 +17,10 @@ angular.module('myApp')
       w = scope.width
       h = scope.height
 
+    # this is a terrible hack for the time being
+    if w <= 80
+      w = 475
+
     # Create SVG element
     svg = d3.select(element[0])
       .attr("id", scope.student.id + "_" + scope.identifier)
@@ -93,13 +97,14 @@ angular.module('myApp')
     , true)
 
     chartSelect = $("#bar_"+ scope.student.id + "_" + scope.identifier)
+    aspect = chartSelect.width() / chartSelect.height()
 
     resizeParent = () ->
       if scope.parentclass
         onChangeWidth = $('.' + scope.parentclass).outerWidth()
 
         chartSelect.attr("width", onChangeWidth)
-        chartSelect.attr("height", onChangeWidth)
+        chartSelect.attr("height", onChangeWidth/aspect)
 
     $(window).resize (event) -> resizeParent()
 ]
