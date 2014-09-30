@@ -29,6 +29,8 @@ angular.module('myApp')
       .append("g")
 
     scope.render = (student) ->
+      svg.selectAll("g").remove()
+
       progressData = []
 
       user_points = 0

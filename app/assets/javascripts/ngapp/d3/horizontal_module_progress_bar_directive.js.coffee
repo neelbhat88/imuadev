@@ -27,6 +27,8 @@ angular.module('myApp')
       .append("g")
 
     scope.render = (module) ->
+      svg.selectAll("g").remove()
+
       switch (module.module_title)
         when 'Academics'
           moduleColor = '#41e6b2'
