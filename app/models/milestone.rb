@@ -20,6 +20,12 @@ class Milestone < ActiveRecord::Base
   validates :organization_id, presence: true
 end
 
+class MilestoneQuerier < Querier
+  def initialize
+    return super(Milestone)
+  end
+end
+
 class ViewMilestone
   attr_accessor :id, :description, :module, :points, :submodule, :title, :icon, :time_unit_id
 

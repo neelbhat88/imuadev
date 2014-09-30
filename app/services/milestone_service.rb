@@ -143,11 +143,4 @@ class MilestoneService
     UserMilestone.where(:user_id => userId)
   end
 
-  def get_user_milestones_2(filters = {})
-    applicable_filters = FilterFactory.new.conditions(UserMilestone.column_names.map(&:to_sym), filters)
-    userMilestones = UserMilestone.find(:all, :conditions => applicable_filters)
-
-    return userMilestones.map{|um| DomainUserMilestone.new(um)}
-  end
-
 end
