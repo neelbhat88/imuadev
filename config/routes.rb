@@ -52,6 +52,7 @@ Imua::Application.routes.draw do
 
           get  '/:id/progress' => 'progress#overall_progress'
           get  '/:id/progress_2' => 'progress#user_progress'
+          get  '/:id/student_dashboard' => 'progress#student_dashboard'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 

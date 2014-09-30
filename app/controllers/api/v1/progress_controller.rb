@@ -42,6 +42,20 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # GET /users/:id/student_dashboard
+  def student_dashboard
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    result = @progressService.get_student_dashboard(url_params)
+
+    render status: result.status,
+      json: Oj.dump({
+        info: result.info,
+        organization: result.object
+      }, mode: :compat)
+  end
+
   # GET /users/:id/progress_2?time_unit_id=XX&module=XX&recalculate=XX
   # Returns User's info and progress, filterable by time_unit and module.
   # Optional "recalculate" parameter to perform milestone recalculation.

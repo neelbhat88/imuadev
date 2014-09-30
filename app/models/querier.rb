@@ -78,7 +78,7 @@ class Querier
   end
 
   def pluck(key)
-    return self.domain.map { |d| d[key].to_s }
+    return (self.domain.map { |d| d[key].to_s }).uniq
   end
 
 
