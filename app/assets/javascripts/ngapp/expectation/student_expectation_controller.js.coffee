@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentExpectationController', ['$route', '$scope', '$location', 'student', 'current_user', 'ExpectationService', 'ProgressService',
-  ($route, $scope, $location, student, current_user, ExpectationService, ProgressService) ->
+.controller 'StudentExpectationController', ['$route', '$scope', '$location', 'student', 'current_user', 'ExpectationService', 'ProgressService', 'OrganizationService',
+  ($route, $scope, $location, student, current_user, ExpectationService, ProgressService, OrganizationService) ->
 
     $scope.current_user = current_user
     $scope.student = student
@@ -10,25 +10,19 @@ angular.module('myApp')
 
     $scope.expectations = []
 
-    ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
-      $scope.modules_progress = student_with_modules_progress.modules_progress
-      $scope.selected_module = $scope.modules_progress[0]
-      $scope.student_with_modules_progress = student_with_modules_progress
-
-    ExpectationService.getExpectations($scope.orgId)
+    ProgressService.getStudentExpectations($scope.student.id)
       .success (data) ->
-        $scope.expectations = data.expectations
-        ExpectationService.getUserExpectations($scope.student)
-          .success (data) ->
-            for e in $scope.expectations
-              for ue in data.user_expectations
-                if e.id == ue.expectation_id
-                  e.user_expectation = ue
-                  # TODO splice ue out of data.user_expectations
-                  break
+        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.student = $scope.organization.students[0]
+        $scope.student_with_modules_progress = $scope.student
 
-            $scope.recalculateMeetingExpectations()
-            $scope.loaded_expectations = true
+        $scope.expectations = $scope.organization.expectations
+        for expectation in $scope.expectations
+          user_expectation = _.find($scope.student.user_expectations, (ue) -> ue.expectation_id == expectation.id)
+          if user_expectation != undefined
+            expectation.user_expectation = user_expectation
+        $scope.recalculateMeetingExpectations()
+        $scope.loaded_data = true
 
     $scope.setUserExpectationStatus = (expectation, status) ->
       if expectation.user_expectation.status != status

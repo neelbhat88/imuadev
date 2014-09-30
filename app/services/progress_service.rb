@@ -1,5 +1,55 @@
 class ProgressService
 
+  def get_student_expectations(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :first_name, :last_name], [:organization_id]).where(conditions.slice(:user_id))
+    conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
+
+    conditions[:organization_id] = userQ.pluck(:organization_id)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Student expectations for user_id: #{params[:user_id]}.", view)
+  end
+
+  def get_student_dashboard(params)
+    conditions = params
+
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id], [:user_id]).where(conditions)
+    relationshipQ = Querier.new(Relationship).select([:user_id, :assigned_to_id]).where(conditions)
+    userAssignmentQ = Querier.new(UserAssignment).select([:status, :id, :assignment_id], [:user_id]).where(conditions)
+
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.new(Assignment).select([:title, :due_datetime, :description, :id, :user_id]).where(conditions.except(:user_id))
+
+    conditions[:user_id] = (assignmentQ.pluck(:user_id) + relationshipQ.pluck(:assigned_to_id) << conditions[:user_id].to_s).uniq
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ, relationshipQ, userAssignmentQ, assignmentQ])
+
+    conditions[:organization_id] = userQ.pluck(:organization_id)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Student dasboard for user_id: #{params[:user_id]}.", view)
+  end
+
   # TODO: Fix front-end so that org_milestones and user_milestones can be
   #       filtered by module_title and still have the semester progress circle
   #       calculated accurately
@@ -16,7 +66,7 @@ class ProgressService
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
 
-    organizationQ = Querier.new(Organization).where(conditions.slice(:organization_id))
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).where(conditions.slice(:organization_id, :time_unit_id))
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
