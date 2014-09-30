@@ -1,5 +1,27 @@
 class ProgressService
 
+  def get_student_expectations(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :first_name, :last_name], [:organization_id]).where(conditions.slice(:user_id))
+    conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
+    userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
+
+    conditions[:organization_id] = userQ.pluck(:organization_id)
+    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+
+    view = organizationQ.view.first
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+
+    return ReturnObject.new(:ok, "Student expectations for user_id: #{params[:user_id]}.", view)
+  end
+
   def get_student_dashboard(params)
     conditions = params
 

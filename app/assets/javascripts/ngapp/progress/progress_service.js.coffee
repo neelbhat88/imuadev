@@ -57,5 +57,8 @@ angular.module('myApp')
   @getStudentDashboard = (user_id) ->
     $http.get "/api/v1/users/#{user_id}/student_dashboard"
 
+  @getStudentExpectations = (user_id) ->
+    $http.get "/api/v1/users/#{user_id}/student_expectations"
+
   @
 ]
