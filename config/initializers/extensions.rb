@@ -1,1 +1,0 @@
-require "imua_active_record_extension"
