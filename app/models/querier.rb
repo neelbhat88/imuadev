@@ -61,8 +61,8 @@ class Querier
     return (@view.nil?) ? self.generate_view : @view
   end
 
-  def domain
-    return (@domain.nil?) ? self.generate_domain : @domain
+  def domain(sortBy = [])
+    return (@domain.nil?) ? self.generate_domain(sortBy) : @domain
   end
 
   def query
@@ -101,22 +101,22 @@ class Querier
     if conditions.empty?
       applicable_domains = self.domain
     else
-      applicable_domains = self.domain.select {|d| conditions.keys.all? {|key| d[key] == conditions[key]}}
+      applicable_domains = self.domain(conditions.keys).select {|d| conditions.keys.all? {|key| d[key] == conditions[key]}}
     end
 
     applicable_domains.each do |d|
       view = d.select { |k,v| self.attributes.view.include?(k)}
       # Include any subQuerier views
       unless @subQueriers.nil?
-        conditions = {}
-        conditions[@foreignKey] = d[:id]
+        sqConditions = {}
+        sqConditions[@foreignKey] = d[:id]
         @subQuerierMatchingAttributes.each do |key|
           if d.include?(key) and !d[key].nil?
-            conditions[key] = d[key]
+            sqConditions[key] = d[key]
           end
         end
         @subQueriers.each do |subQuerier|
-          view[subQuerier.subViewName] = subQuerier.generate_view(conditions)
+          view[subQuerier.subViewName] = subQuerier.generate_view(sqConditions)
         end
       end
       # Add all the viewAttributes from domain object
@@ -126,7 +126,7 @@ class Querier
     return @view
   end
 
-  def generate_domain
+  def generate_domain(sortBy = [])
     @domain = []
     ActiveRecord::Base.connection.select_all(self.query).each do |obj|
       obj_domain = {}
@@ -135,6 +135,8 @@ class Querier
       end
       @domain << obj_domain
     end
+    # sortBy << :id
+    # return @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
     return @domain
   end
 

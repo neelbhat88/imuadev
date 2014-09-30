@@ -98,8 +98,8 @@ class UserQuerier < Querier
     return super(attributes)
   end
 
-  def generate_domain
-    super
+  def generate_domain(sortBy = [])
+    super(sortBy)
     # Domain object manicuring
     @domain.each do |d|
       if d.keys.include?(:avatar_file_name)
