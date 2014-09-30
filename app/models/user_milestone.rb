@@ -12,6 +12,12 @@ class UserMilestone < ActiveRecord::Base
   validates :user_id, presence: true
 end
 
+class UserMilestoneQuerier < Querier
+  def initialize
+    return super(UserMilestone)
+  end
+end
+
 class ViewUserMilestone
 
   def initialize(um)

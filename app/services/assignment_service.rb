@@ -1,51 +1,43 @@
 class AssignmentService
 
-  def collect_assignment_2(assignmentId, filters = {})
-    filters[:assignment_id] = assignmentId
+  # Called via :assignment_id
+  def collect_assignment_2(params)
+    conditions = params
+    query = {}
 
-    domainAssignments = AssignmentService.new.get_assignments_2(filters)
-    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+    query[:assignments] = Querier.new(Assignment).where(conditions)
 
-    filters[:user_id] = []
-    filters[:user_id] << domainAssignments.pluck(:user_id)
-    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+    query[:user_assignments] = Querier.new(UserAssignment).where(conditions)
 
-    domainUsers = UserService.new.get_users(filters)
-    domainUsers.each do |u|
-      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
-      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
-    end
+    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
+    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
+    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
-    orgOptions = {}
-    orgOptions[:users] = domainUsers
+    view = {organization: {users: query[:users].view}}
 
-    return DomainOrganization.new(nil, orgOptions)
+    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", view)
   end
 
-  def collect_assignments_2(userId, filters = {})
-    filters[:user_id] = userId
+  # Called via :user_id
+  def collect_assignments_2(params)
+    conditions = params
+    query = {}
 
-    domainAssignments = AssignmentService.new.get_assignments_2(filters)
+    query[:assignments] = Querier.new(Assignment).where(params)
 
-    filters = filters.except(:user_id)
-    filters[:assignment_id] = domainAssignments.pluck(:id)
-    domainUserAssignments = AssignmentService.new.get_user_assignments_2(filters)
+    conditions[:assignment_id] = query[:assignments].pluck(:id)
+    query[:user_assignments] = Querier.new(UserAssignment).where(conditions.slice(:assignment_id))
 
-    filters[:user_id] = []
-    filters[:user_id] << domainAssignments.pluck(:user_id)
-    filters[:user_id] << domainUserAssignments.pluck(:user_id)
+    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
+    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
+    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
 
-    domainUsers = UserService.new.get_users(filters)
-    domainUsers.each do |u|
-      u.assignments = domainAssignments.select{|a| a.user_id == u.id}
-      u.user_assignments = domainUserAssignments.select{|ua| ua.user_id == u.id}
-    end
+    view = {organization: {users: query[:users].view}}
 
-    orgOptions = {}
-    orgOptions[:users] = domainUsers
-
-    return DomainOrganization.new(nil, orgOptions)
+    return ReturnObject.new(:ok, "Assignment collections for user_id: #{params[:user_id]}.", view)
   end
+
+
 
   def collect_assignment(assignmentId)
     return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)
