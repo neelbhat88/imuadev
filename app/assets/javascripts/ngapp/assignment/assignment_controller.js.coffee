@@ -40,7 +40,11 @@ angular.module('myApp')
       $scope.assignment.new_due_datetime = $scope.assignment.due_datetime
 
     $scope.cancelEditAssignment = () ->
-      $scope.assignment.editing = false
+      # Go back to assignments page if cancelled creating a new task
+      if !$scope.assignment.id
+        window.location.href = "#/assignments/" + $scope.user.id
+      else
+        $scope.assignment.editing = false
 
     $scope.saveAssignment = (index) ->
       new_assignment = AssignmentService.newAssignment($scope.user.id)
