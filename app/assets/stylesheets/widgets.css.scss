@@ -46,12 +46,25 @@ $border-color: black(0.2);
 
   .widget--content {
 
+    .widget--pane {
+      background: black(0.2);
+      width: 100%;
+
+      .pane--padding {
+        padding: 20px;
+      }
+
+      h4, h2 { margin-top: 0; }
+
+    }
+
     .widget--content--table {
       display: table;
       width: 100%;
 
       .widget--content--cell {
         display: table-cell;
+        vertical-align: top;
         border-left: 2px solid $border-color;
 
         &:first-child {
@@ -64,14 +77,6 @@ $border-color: black(0.2);
 
           .widget--buttons {
             padding: 20px 5px;
-          }
-
-          .border-bottom {
-            border-bottom: 2px solid $border-color;
-          }
-
-          .border-top {
-            border-top: 2px solid $border-color;
           }
 
         }
@@ -134,6 +139,11 @@ $border-color: black(0.2);
       }
 
     }
+
+    .border-top { border-top: 2px solid $border-color; }
+    .border-bottom { border-bottom: 2px solid $border-color; }
+    .border-right { border-right: 2px solid $border-color; }
+    .border-left { border-left: 2px solid $border-color; }
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
@@ -254,6 +264,7 @@ $border-color: black(0.2);
 
 .table--fixed {
   table-layout: fixed; /* For equal horizontal spacing */
+  vertical-align: top;
 }
 
 .cursor-fix {

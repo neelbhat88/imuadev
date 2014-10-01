@@ -18,16 +18,58 @@
   </div>
 
   <div class="widget--content">
-    <div class="class_pane" ng-repeat="user_class in user_classes | filter:selected_class:true" ng-if="selected_class.id != null">
-      {{user_class.name}}
+    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:selected_class:true" ng-if="selected_class.id != null">
+      <div class="widget--content--table table--fixed">
+        <div class="widget--content--cell break600">
+          <div class="cell--padding">
+            <h4 class="bold">{{user_class.name}}</h3>
+            <h2 class="bold">{{user_class.grade}}</h2>
+            <div class="subtext">
+              Last updated {{user_class.updated_at | fromNow}}
+            </div>
+          </div>
+        </div>
+        <div class="widget--content--cell break600">
+          <div class="widget--content--table table--fixed">
+            <div class="widget--content--cell breakalways" ng-if="user_class.period != null">
+              <div class="cell--padding">
+                <p>Period</p>
+                <h5 class="bold">{{user_class.period}}</h5>
+              </div>
+            </div>
+            <div class="widget--content--cell breakalways" ng-if="user_class.room != null">
+              <div class="cell--padding">
+                <p>Room</p>
+                <h5 class="bold">{{user_class.room}}</h5>
+              </div>
+            </div>
+            <div class="widget--content--cell breakalways" ng-if="user_class.credit_hours != 1">
+              <div class="cell--padding">
+                <p>Credit Hours</p>
+                <h5 class="bold">{{user_class.credit_hours}}</h5>
+              </div>
+            </div>
+            <div class="widget--content--cell breakalways" ng-if="user_class.level != 'Regular'">
+              <div class="cell--padding">
+                <p>Level</p>
+                <h5 class="bold">{{user_class.level}}</h5>
+              </div>
+            </div>
+            <div class="widget--content--cell breakalways" ng-if="user_class.subject != null">
+              <div class="cell--padding">
+                <p>Subject</p>
+                <h5 class="bold">{{user_class.subject}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="btn btn-default" ng-click="selectedClass(1)">click me</button>
-    <button class="btn btn-default" ng-click="selectedClass(null)">Null</button>
     <div class="widget--content--table table--fixed">
       <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
         <div ng-hide="user_class.editing">
-          <div class="cell--padding" ng-click="" ng-hide="showMoreInfo">
+          <div class="cell--padding" ng-click="selectedClass(user_class.id)" ng-hide="showMoreInfo">
             <div class="clear">
               <div class="class-name">
                 <h6>{{user_class.name}}</h6>
