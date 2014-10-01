@@ -145,6 +145,10 @@ $border-color: black(0.2);
 
     }
 
+    .input-group {
+      padding: 20px;
+    }
+
     .border-top { border-top: 2px solid $border-color; }
     .border-bottom { border-bottom: 2px solid $border-color; }
     .border-right { border-right: 2px solid $border-color; }
