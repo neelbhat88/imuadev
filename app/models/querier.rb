@@ -113,6 +113,8 @@ class Querier
       while !self.domain(filterBy).empty?
         if conditions.keys.all? {|key| self.domain[0][key] == conditions[key]}
           applicable_domains << self.domain.shift
+          # TODO - This only works because data generally isn't entered for
+          #        a time_unit beyond what a user is currently in.
         elsif conditions.keys.all? {|key| self.domain[0][key] <= conditions[key]}
           self.domain.shift
         else
