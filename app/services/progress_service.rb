@@ -86,7 +86,6 @@ class ProgressService
 
   def get_organization_progress(params)
     conditions = params
-    query = {}
 
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
 
@@ -101,7 +100,7 @@ class ProgressService
     userTestQ = Querier.new(UserTest).select([:time_unit_id], [:user_id]).where(conditions)
     userQ.set_subQueriers([userMilestoneQ, relationshipQ, userExpectationQ, userGpaQ, userExtracurricularActivityDetailQ, userServiceHourQ, userTestQ], :time_unit_id)
 
-    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
+    organizationQ = Querier.new(Organization).select([:name, :id]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).select([:id, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
