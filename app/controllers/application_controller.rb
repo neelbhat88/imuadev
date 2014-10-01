@@ -13,6 +13,16 @@ class ApplicationController < ActionController::Base
 
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
+    # ToDo: Move this into a Keen Provider class
+    Background.process do
+      Keen.publish("user_engagement", {
+                                        :user => current_user,
+                                        :day => DateTime.now.utc.beginning_of_day.iso8601,
+                                        :hour => DateTime.now.utc.beginning_of_hour.iso8601
+                                      }
+                  )
+    end
+
     return root_path
   end
 
