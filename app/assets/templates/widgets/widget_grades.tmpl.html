@@ -33,31 +33,31 @@
         </div>
         <div class="widget--content--cell break900">
           <div class="widget--content--table table--fixed">
-            <div class="widget--content--cell breakalways" ng-if="user_class.period != null">
+            <div class="widget--content--cell breakalways" ng-if="selected_class.period != null">
               <div class="cell--padding">
                 <p>Period</p>
                 <h5 class="bold">{{selected_class.period}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.room != null">
+            <div class="widget--content--cell breakalways" ng-if="selected_class.room != null">
               <div class="cell--padding">
                 <p>Room</p>
                 <h5 class="bold">{{selected_class.room}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.credit_hours != 1">
+            <div class="widget--content--cell breakalways" ng-if="selected_class.credit_hours != 1">
               <div class="cell--padding">
                 <p>Credit Hours</p>
                 <h5 class="bold">{{selected_class.credit_hours}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.level != 'Regular'">
+            <div class="widget--content--cell breakalways" ng-if="selected_class.level != 'Regular'">
               <div class="cell--padding">
                 <p>Level</p>
                 <h5 class="bold">{{selected_class.level}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.subject != null">
+            <div class="widget--content--cell breakalways" ng-if="selected_class.subject != null">
               <div class="cell--padding">
                 <p>Subject</p>
                 <h5 class="bold">{{selected_class.subject}}</h5>
