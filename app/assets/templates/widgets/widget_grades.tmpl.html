@@ -7,58 +7,60 @@
       <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Grades</h6>
     </div>
 
-    <div class="widget--header--right" ng-hide="classes.editing">
-      <div class="widget--options ng-clickable" ng-hide="classEditor" ng-click="classEditor = !classEditor">
+    <div class="widget--header--right">
+      <div class="widget--options ng-clickable" ng-if="selected_class == null">
         <span class="options--text">Edit</span>
         <span class="glyphicon glyphicon-edit"></span>
       </div>
-      <button ng-show="classEditor" class="btn btn-primary" ng-click="classEditor = !classEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
+      <div class="widget--options ng-clickable" ng-if="selected_class != null" ng-click="selectedClass(null)">
+        <span class="showing--text">Collapse {{selected_class.name}}</span>
+        <span class="glyphicon glyphicon-collapse-up"></span>
+      </div>
     </div>
-
   </div>
 
   <div class="widget--content">
-    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ id: selected_class.id }:true" ng-if="selected_class.id != null">
+    <div class="widget--pane class-pane" ng-if="selected_class.id != null">
       <div class="widget--content--table table--fixed">
-        <div class="widget--content--cell break600">
+        <div class="widget--content--cell break900">
           <div class="cell--padding">
-            <h4 class="bold">{{user_class.name}}</h3>
-            <h2 class="bold">{{user_class.grade}}</h2>
+            <h4 class="bold">{{selected_class.name}}</h3>
+            <h2 class="bold">{{selected_class.grade}}</h2>
             <div class="subtext">
-              Last updated {{user_class.updated_at | fromNow}}
+              Last updated {{selected_class.updated_at | fromNow}}
             </div>
           </div>
         </div>
-        <div class="widget--content--cell break600">
+        <div class="widget--content--cell break900">
           <div class="widget--content--table table--fixed">
             <div class="widget--content--cell breakalways" ng-if="user_class.period != null">
               <div class="cell--padding">
                 <p>Period</p>
-                <h5 class="bold">{{user_class.period}}</h5>
+                <h5 class="bold">{{selected_class.period}}</h5>
               </div>
             </div>
             <div class="widget--content--cell breakalways" ng-if="user_class.room != null">
               <div class="cell--padding">
                 <p>Room</p>
-                <h5 class="bold">{{user_class.room}}</h5>
+                <h5 class="bold">{{selected_class.room}}</h5>
               </div>
             </div>
             <div class="widget--content--cell breakalways" ng-if="user_class.credit_hours != 1">
               <div class="cell--padding">
                 <p>Credit Hours</p>
-                <h5 class="bold">{{user_class.credit_hours}}</h5>
+                <h5 class="bold">{{selected_class.credit_hours}}</h5>
               </div>
             </div>
             <div class="widget--content--cell breakalways" ng-if="user_class.level != 'Regular'">
               <div class="cell--padding">
                 <p>Level</p>
-                <h5 class="bold">{{user_class.level}}</h5>
+                <h5 class="bold">{{selected_class.level}}</h5>
               </div>
             </div>
             <div class="widget--content--cell breakalways" ng-if="user_class.subject != null">
               <div class="cell--padding">
                 <p>Subject</p>
-                <h5 class="bold">{{user_class.subject}}</h5>
+                <h5 class="bold">{{selected_class.subject}}</h5>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ angular.module('myApp')
     $scope.classes.editing = false
     $scope.gpa_history = {}
     $scope.selected_class = null
+    $scope.class_is_empty = false
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
