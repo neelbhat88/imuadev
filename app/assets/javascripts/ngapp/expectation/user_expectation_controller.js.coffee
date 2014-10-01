@@ -31,7 +31,8 @@ angular.module('myApp')
       ExpectationService.updateUserExpectation($scope.user_expectation)
         .success (data) ->
           $scope.user_expectation = data.user_expectation
-          $scope.user_expectation_history.unshift($scope.original_expectation_status)
+          if !!$scope.original_expectation_status
+            $scope.user_expectation_history.unshift($scope.original_expectation_status)
           $scope.editing = false
           $scope.user_expectation.new_comment = null
 
