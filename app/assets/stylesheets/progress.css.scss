@@ -2,6 +2,10 @@
   background: image-url("bg_bluegreen1.jpg") no-repeat center center fixed;
   @include bgcover();
 
+  .temp-buttons {
+    margin-top: 20px;
+  }
+
   .progress-header {
 
     width: 100%;
