@@ -20,6 +20,7 @@ class ViewUserExtracurricularActivityDetail
     @time_unit_id = ad.time_unit_id
     @leadership = ad.leadership
     @name = ad.name
+    @updated_at = ad.updated_at
   end
 
 end
@@ -34,6 +35,7 @@ class DomainUserExtracurricularActivityDetail
     @time_unit_id = ad.time_unit_id
     @leadership = ad.leadership
     @name = ad.name
+    @updated_at = ad.updated_at
   end
 
 end

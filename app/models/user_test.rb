@@ -22,6 +22,7 @@ class ViewUserTest
     @date = ut.date
     @score = ut.score
     @description = ut.description
+    @updated_at = ut.updated_at
   end
 
 end
@@ -36,6 +37,7 @@ class DomainUserTest
     @date = ut.date
     @score = ut.score
     @description = ut.description
+    @updated_at = ut.updated_at
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140916140233) do
+ActiveRecord::Schema.define(:version => 20140925173722) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -70,7 +70,6 @@ ActiveRecord::Schema.define(:version => 20140916140233) do
 
   add_index "milestones", ["organization_id"], :name => "index_milestones_on_organization_id"
   add_index "milestones", ["time_unit_id", "submodule", "module", "value"], :name => "index_milestones_on_time_submod_mod_and_val", :unique => true
-  add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
 
   create_table "org_tests", :force => true do |t|
     t.integer  "organization_id"
@@ -123,6 +122,16 @@ ActiveRecord::Schema.define(:version => 20140916140233) do
 
   add_index "roadmaps", ["organization_id"], :name => "index_roadmaps_on_organization_id"
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "time_units", :force => true do |t|
     t.string   "name"
     t.integer  "roadmap_id"
@@ -132,7 +141,6 @@ ActiveRecord::Schema.define(:version => 20140916140233) do
   end
 
   add_index "time_units", ["organization_id"], :name => "index_time_units_on_organization_id"
-  add_index "time_units", ["roadmap_id"], :name => "IDX_TimeUnit_RoadmapId"
 
   create_table "user_assignments", :force => true do |t|
     t.integer  "assignment_id"

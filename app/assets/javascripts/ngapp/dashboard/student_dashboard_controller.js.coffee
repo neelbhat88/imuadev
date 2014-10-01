@@ -1,15 +1,6 @@
 angular.module('myApp')
 .controller "StudentDashboardController", ["$scope", "ProgressService", "OrganizationService", "UsersService", "ExpectationService", "AssignmentService",
 ($scope, ProgressService, OrganizationService, UsersService, ExpectationService, AssignmentService) ->
-  $scope.student_with_modules_progress = null
-  $scope.student = $scope.user
-  $scope.overall_points = {user: 0, total: 0, percent: 0}
-  $scope.student_mentors = []
-  $scope.milestones = []
-  $scope.needs_attention = false
-  $scope.expectations = []
-  $scope.meetingExpectations = true
-  $scope.user_assignments = []
 
   setMiddleDimensions = () ->
     windowWidth = $(window).outerWidth()
@@ -25,52 +16,30 @@ angular.module('myApp')
 
   $(window).resize (event) -> setMiddleDimensions()
 
-  ProgressService.getAllModulesProgress($scope.student, $scope.student.time_unit_id).then (student_with_modules_progress) ->
-    $scope.student_with_modules_progress = student_with_modules_progress
-    setMiddleDimensions()
-
-  $scope.loaded_overall_points = false
-  OrganizationService.getTimeUnits($scope.student.organization_id)
+  ProgressService.getStudentDashboard($scope.user.id)
     .success (data) ->
-      $scope.semesters = data.org_time_units
-      for sem in $scope.semesters
-        ProgressService.getModules($scope.student, sem.id)
-          .success (data) ->
-            for m in data.modules_progress
-              $scope.overall_points.user += m.points.user
-              $scope.overall_points.total += m.points.total
-              $scope.overall_points.percent = Math.round(($scope.overall_points.user / $scope.overall_points.total) * 100)
-            $scope.loaded_overall_points = true
+      $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+      $scope.student = $scope.organization.students[0]
+      $scope.student_with_modules_progress = $scope.student
+      $scope.student_mentors = $scope.student.mentors
 
-  $scope.loaded_student_mentors = false
-  UsersService.getAssignedMentors($scope.student.id)
-    .success (data) ->
-      $scope.student_mentors = data.mentors
-      $scope.loaded_student_mentors = true
+      current_org_milestones = _.filter($scope.organization.milestones, (m) -> m.time_unit_id == $scope.student.time_unit_id)
+      current_user_milestones = _.filter($scope.student_with_modules_progress.user_milestones, (m) -> m.time_unit_id == $scope.student.time_unit_id)
+      $scope.milestones = UsersService.determineEarnedMilestones(current_org_milestones, current_user_milestones)
 
-  ProgressService.getRecalculatedMilestones($scope.student, $scope.student.time_unit_id)
-    .success (data) ->
-      $scope.milestones = data.recalculated_milestones
-      $scope.loaded_milestones = true
+      $scope.expectations = $scope.organization.expectations
+      for expectation in $scope.expectations
+        user_expectation = _.find($scope.student.user_expectations, (ue) -> ue.expectation_id == expectation.id)
+        if user_expectation != undefined
+          expectation.user_expectation = user_expectation
 
-  ExpectationService.getExpectations($scope.student.organization_id)
-    .success (data) ->
-      $scope.expectations = data.expectations
-      ExpectationService.getUserExpectations($scope.student)
-        .success (data) ->
-          for e in $scope.expectations
-            for ue in data.user_expectations
-              if e.id == ue.expectation_id
-                e.user_expectation = ue
-                if ue.status > 0
-                  $scope.meetingExpectations = false
-                  if ue.status >= 2
-                    $scope.needs_attention = true
-                break
-            
-          $scope.loaded_expectations = true
+      $scope.meetingExpectations = $scope.student.meeting_expectations
+      $scope.user_assignments = $scope.student.user_assignments
+      $scope.needs_attention = $scope.student.needs_attention
 
-  AssignmentService.collectUserAssignments($scope.student.id)
-    .success (data) ->
-      $scope.user_assignments = data.user_assignments
+      $scope.loaded_data = true
+
+      setMiddleDimensions()
+
+
 ]
