@@ -5,7 +5,7 @@ angular.module('myApp')
     $scope.classes = {}
     $scope.classes.editing = false
     $scope.gpa_history = {}
-    $scope.selected_class = { id: null }
+    $scope.selected_class = null
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -107,8 +107,8 @@ angular.module('myApp')
         $scope.selected_year = null
         $scope.selected_semester = null
 
-    $scope.selectedClass = (cid) ->
-      if $scope.selected_class.id != cid
-        $scope.selected_class.id = cid
+    $scope.selectedClass = (user_class) ->
+      if $scope.selected_class != user_class
+        $scope.selected_class = user_class
 
 ]

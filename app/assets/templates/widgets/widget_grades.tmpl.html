@@ -18,7 +18,7 @@
   </div>
 
   <div class="widget--content">
-    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:selected_class:true" ng-if="selected_class.id != null">
+    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ id: selected_class.id }:true" ng-if="selected_class.id != null">
       <div class="widget--content--table table--fixed">
         <div class="widget--content--cell break600">
           <div class="cell--padding">
@@ -69,7 +69,7 @@
       <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
         <div ng-hide="user_class.editing">
-          <div class="cell--padding" ng-click="selectedClass(user_class.id)" ng-hide="showMoreInfo">
+          <div class="cell--padding" ng-click="selectedClass(user_class)" ng-hide="showMoreInfo">
             <div class="clear">
               <div class="class-name">
                 <h6>{{user_class.name}}</h6>
