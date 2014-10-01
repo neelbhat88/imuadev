@@ -117,6 +117,7 @@ Imua::Application.routes.draw do
       put  '/time_unit/:id' => 'roadmap#update_time_unit'
       delete '/time_unit/:id' => 'roadmap#delete_time_unit'
 
+      get  '/milestone/:id/status' => 'milestone#get_milestone_status'
       post '/milestone' => 'milestone#create_milestone'
       put  '/milestone/:id' => 'milestone#update_milestone'
       delete '/milestone/:id' => 'milestone#delete_milestone'
