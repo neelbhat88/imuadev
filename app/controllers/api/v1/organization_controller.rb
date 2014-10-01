@@ -107,6 +107,11 @@ class Api::V1::OrganizationController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:organization_id] = params[:id]
 
+    if !can?(current_user, :get_organization_progress, Organization.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @progressService.get_organization_progress(url_params)
 
     render status: result.status,
