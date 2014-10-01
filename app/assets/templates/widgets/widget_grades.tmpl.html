@@ -25,7 +25,7 @@
   </div>
 
   <div class="widget--content">
-    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ id: selected_class.id }:true" ng-if="selected_class.id != null">
+    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ name: selected_class.name }:true" ng-if="selected_class.name != null">
       <div class="widget--content--table table--fixed">
         <div class="widget--content--cell break900">
           <div class="cell--padding" ng-hide="user_class.editing">

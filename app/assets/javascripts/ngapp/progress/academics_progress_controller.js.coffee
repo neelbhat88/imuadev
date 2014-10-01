@@ -86,10 +86,14 @@ angular.module('myApp')
               $scope.gpa = 0.toFixed(2)
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Academics')
+            $scope.selected_class = null
 
     $scope.addClass = () ->
       $scope.classes.editing = true
-      $scope.user_classes.push(UserClassService.new($scope.student, $scope.selected_semester.id))
+      new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
+      $scope.user_classes.push(new_class)
+      $scope.selected_class = new_class
+      $scope.editClass(new_class)
 
     $scope.cancelEdit = (user_class) ->
       if user_class.id
