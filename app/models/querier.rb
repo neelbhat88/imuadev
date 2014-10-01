@@ -76,7 +76,8 @@ class Querier
   def attributes
     return (@attributes.nil?) ? self.set_attributes([]) : @attributes
   end
-
+  # Returns the values as an array of strings, so the result can be directly
+  # used as a "where" condition parameter.
   def pluck(key)
     return (self.domain.map { |d| d[key].to_s }).uniq
   end
@@ -152,6 +153,7 @@ class Querier
       obj.each_key do |a|
         obj_domain[a.to_sym] = @klass.type_cast_attribute(a, obj)
       end
+      # TODO - Insert sorted into the array
       @domain << obj_domain
     end
     sortBy << :id
