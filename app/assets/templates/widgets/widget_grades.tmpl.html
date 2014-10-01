@@ -8,12 +8,12 @@
     </div>
 
     <div class="widget--header--right">
-      <div class="widget--options ng-clickable" ng-show="selected_class == null" ng-click="classEditor = !classEditor">
-        <div ng-hide="classEditor">
+      <div class="widget--options ng-clickable" ng-show="selected_class == null" ng-click="class_editor = !class_editor">
+        <div ng-hide="class_editor">
           <span class="options--text">Add or Remove Classes</span>
           <span class="glyphicon glyphicon-edit"></span>
         </div>
-        <div ng-show="classEditor">
+        <div ng-show="class_editor">
           <button class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Done Editing</button>
         </div>
       </div>
@@ -161,17 +161,17 @@
               <h3 class="bold">{{user_class.grade}}</h3>
             </div>
           </div>
-          <div class="see-more" ng-hide="classEditor">
+          <div class="see-more" ng-hide="class_editor">
             Click to See More
           </div>
-          <div class="delete-button" ng-show="classEditor">
+          <div class="delete-button" ng-show="class_editor">
             <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete {{user_class.name}}</button>
           </div>
         </div>
 
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="classEditor && !classes.editing" >
+      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
         <div class="cell--padding clear">
           <div class="class-name">
             <h6 class="bold">Add a Class</h6>
@@ -182,7 +182,7 @@
         </div>
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="classEditor = !classEditor" ng-show="user_classes.length == 0 && !classEditor">
+      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="class_editor = !class_editor" ng-show="user_classes.length == 0 && !class_editor">
         <div class="cell--padding clear">
           <div class="class-name">
             <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
