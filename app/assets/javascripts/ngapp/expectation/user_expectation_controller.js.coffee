@@ -9,10 +9,12 @@ angular.module('myApp')
     $scope.editing = false
     $scope.old_status = null
     $scope.user_expectation.new_comment = null
+    $scope.original_expectaton_status = null
 
     ExpectationService.getUserExpectationHistory($scope.user_expectation.id)
       .success (data) ->
         $scope.user_expectation_history = data.user_expectation_history
+        $scope.original_expectation_status = $scope.user_expectation_history.shift()
 
     $scope.editExpectation = () ->
       $scope.editing = true
@@ -29,7 +31,7 @@ angular.module('myApp')
       ExpectationService.updateUserExpectation($scope.user_expectation)
         .success (data) ->
           $scope.user_expectation = data.user_expectation
-          $scope.user_expectation_history.unshift(angular.copy(data.user_expectation))
+          $scope.user_expectation_history.unshift($scope.original_expectation_status)
           $scope.editing = false
           $scope.user_expectation.new_comment = null
 
