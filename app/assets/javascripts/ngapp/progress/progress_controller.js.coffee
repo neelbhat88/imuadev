@@ -45,8 +45,11 @@ angular.module('myApp')
       $scope.student_with_modules_progress = $scope.organization.students[0]
       $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
       # $scope.selected_module = $scope.modules_progress[0]
-
+      user_points = 0
+      total_points = 0
       for module in $scope.modules_progress
+        user_points += module.points.user
+        total_points += module.points.total
         switch module.module_title
           when "Academics"
             if !_.isEmpty($scope.student.user_classes)
@@ -70,6 +73,9 @@ angular.module('myApp')
               sorted_module = _.sortBy($scope.student.user_tests, (u) ->
                 u.updated_at)
               module.last_updated = _.last(sorted_module).updated_at
+
+      $scope.points_earned = user_points
+      $scope.total_points = total_points
 
       $scope.semesters = []
       for tu in $scope.organization.time_units
