@@ -5,6 +5,7 @@ angular.module('myApp')
     $scope.classes = {}
     $scope.classes.editing = false
     $scope.gpa_history = {}
+    $scope.selected_class = { id: 1 }
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -99,4 +100,15 @@ angular.module('myApp')
 
     removeClass = (classes, class_to_remove) ->
       _.without(classes, _.findWhere(classes, {id: class_to_remove.id}))
+
+    $scope.selectWidget = (widget) ->
+      if $scope.selected_widget != widget
+        $scope.selected_widget = widget
+        $scope.selected_year = null
+        $scope.selected_semester = null
+
+    $scope.selectedClass = (cid) ->
+      if $scope.selected_class.id != cid
+        $scope.selected_class.id = cid
+
 ]

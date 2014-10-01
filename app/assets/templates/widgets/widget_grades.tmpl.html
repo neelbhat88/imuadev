@@ -18,11 +18,16 @@
   </div>
 
   <div class="widget--content">
+    <div class="class_pane" ng-repeat="user_class in user_classes | filter:selected_class:true" ng-if="selected_class.id != null">
+      {{user_class.name}}
+    </div>
+    <button class="btn btn-default" ng-click="selectedClass(1)">click me</button>
+    <button class="btn btn-default" ng-click="selectedClass(null)">Null</button>
     <div class="widget--content--table table--fixed">
       <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'expanded': showMoreInfo == true, 'editing': user_class.editing}">
 
         <div ng-hide="user_class.editing">
-          <div class="cell--padding" ng-click="showMoreInfo = !showMoreInfo" ng-hide="showMoreInfo">
+          <div class="cell--padding" ng-click="" ng-hide="showMoreInfo">
             <div class="clear">
               <div class="class-name">
                 <h6>{{user_class.name}}</h6>
