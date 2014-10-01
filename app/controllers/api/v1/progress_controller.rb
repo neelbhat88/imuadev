@@ -4,13 +4,11 @@ class Api::V1::ProgressController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
-  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, orgRepo=nil, userService=nil, organizationService=nil)
+  def load_services( progressService=nil, milestoneService=nil, userRepo=nil, orgRepo=nil, userService=nil)
     @progressService = progressService ? progressService : ProgressService.new
     @milestoneService = milestoneService ? milestoneService : MilestoneService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
     @organizationRepository = orgRepo ? orgRepo : OrganizationRepository.new
-    @userService = userService ? userService : UserService.new
-    @organizationService = organizationService ? organizationService : OrganizationService.new
   end
 
   # GET /user/:id/time_unit/:time_unit_id/progress
@@ -44,27 +42,63 @@ class Api::V1::ProgressController < ApplicationController
       }
   end
 
+  # GET /users/:id/student_dashboard
+  def student_expectations
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_student_expectations, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @progressService.get_student_expectations(url_params)
+
+    render status: result.status,
+      json: Oj.dump({
+        info: result.info,
+        organization: result.object
+      }, mode: :compat)
+  end
+
+  # GET /users/:id/student_dashboard
+  def student_dashboard
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_student_dashboard, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @progressService.get_student_dashboard(url_params)
+
+    render status: result.status,
+      json: Oj.dump({
+        info: result.info,
+        organization: result.object
+      }, mode: :compat)
+  end
+
   # GET /users/:id/progress_2?time_unit_id=XX&module=XX&recalculate=XX
   # Returns User's info and progress, filterable by time_unit and module.
   # Optional "recalculate" parameter to perform milestone recalculation.
   def user_progress
-    user_id      = params[:id]
-    time_unit_id = params[:time_unit_id]
-    module_title = params[:module]
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
 
-    filters = params.except(*[:id, :controller, :action]).symbolize_keys
-
-    if params[:recalculate]
-      @progressService.get_recalculated_milestones(user_id, time_unit_id, module_title)
+    if !can?(current_user, :get_user_progress, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
     end
 
-    result = @userService.get_user_progress(user_id, filters)
+    result = @progressService.get_user_progress(url_params)
 
     render status: result.status,
-      json: {
+      json: Oj.dump({
         info: result.info,
         organization: result.object
-      }
+      }, mode: :compat)
   end
 
   # get /user/:id/time_unit/:time_unit_id/progress/:module

@@ -39,7 +39,7 @@
     </div> <!-- progressCircle-big--container -->
 
     <div class="meetingExpectations">
-      <div class="expectations-message" wait-to-load="{{loaded_expectations}}">
+      <div class="expectations-message" wait-to-load="{{loaded_data}}">
         <div ng-if="current_user.is_student">
           <div class="expectations-met-message" ng-hide="!meetingExpectations">
             <h3 class="bold">Nice work {{student.first_name}}!</h3>
@@ -75,7 +75,7 @@
         </h4>
       </div>
 
-      <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
+      <div class="expectations-list" wait-to-load="{{loaded_data}}">
         <div class="expectations-list-item" ng-repeat="expectation in expectations" ng-click="viewExpectation(expectation.user_expectation.id)"
               ng-class="{'bad': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                          'warn': expectation.user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,

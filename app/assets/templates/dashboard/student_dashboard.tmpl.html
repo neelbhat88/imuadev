@@ -1,5 +1,5 @@
 <div ng-controller="StudentDashboardController" id="studentDashboard" class="studentDashboardContainer">
-  <div wait-to-load="{{student_with_modules_progress}}">
+  <div wait-to-load="{{loaded_data}}">
 
     <div class="dashboard-header dashboard-header--student">
 
@@ -70,7 +70,7 @@
             <div class="expectations-met-message" ng-if="meetingExpectations">
               <h5 class="bold">Nice work {{student.first_name}}!</h5> <h6>You're meeting all of the Expectations!</h6>
             </div>
-            <div class="dashboard-expectations--list clear" wait-to-load="{{loaded_expectations}}">
+            <div class="dashboard-expectations--list clear">
               <div class="expectations-met-message" ng-if="!meetingExpectations"><h6>You have expectations that need work<h6></div>
 
               <div class="dashboard-expectations--list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
