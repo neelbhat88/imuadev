@@ -15,7 +15,7 @@ class ProgressService
     expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
 
     if userExpectationQ.domain.length != expectationQ.domain.length
-      UserExpectationService.new.update_user_expectations(params.slice(:user_id))
+      UserExpectationService.new.update_user_expectations(params[:user_id])
       userExpectationQ = nil
       userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
     end
