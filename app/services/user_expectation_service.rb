@@ -9,6 +9,31 @@ class UserExpectationService
                                       })
   end
 
+  def update_user_expectations(userId)
+    user = UserRepository.new.get_user(userId)
+    user_expectations = UserExpectation.where(:user_id => userId)
+    expectations = ExpectationService.new.get_expectations(user.organization_id)
+
+    # Create user_expectations that have not been created
+    missing_user_expectations = []
+    expectations.each do |e|
+      if user_expectations.select{|ue| ue.expectation_id == e.id}.length == 0
+        missing_user_expectations << e
+      end
+    end
+
+    missing_user_expectations.each do |expectation|
+      user_expectation = UserExpectation.new do | ue |
+        ue.user_id = userId
+        ue.expectation_id = expectation.id
+        ue.status = Constants.ExpectationStatus[:MEETING]
+      end
+      if user_expectation.save
+        user_expectations << user_expectation
+      end
+    end
+  end
+
   def get_and_create_user_expectations(userId)
     user = UserRepository.new.get_user(userId)
     user_expectations = UserExpectation.where(:user_id => userId)
