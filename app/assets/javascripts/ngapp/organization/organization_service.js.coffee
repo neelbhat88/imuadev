@@ -34,6 +34,7 @@ angular.module('myApp')
     org.active_mentors = _.filter(org.mentors, (mentor) -> (new Date(mentor.last_login)).getTime() >= active_user_threshold).length
     org.attention_studentIds = []
 
+    _.each(org.milestones, (m) -> m.time_unit_name = _.find(org.time_units, (tu) -> tu.id == m.time_unit_id).name)
     org.org_milestones = {}
     # Sort org_milestones by time_unit_id and module_title, while tallying up total points
     for time_unit_id in _.pluck(org.time_units, "id")
