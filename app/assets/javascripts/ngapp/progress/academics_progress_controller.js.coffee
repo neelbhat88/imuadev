@@ -7,6 +7,7 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.selected_class = null
     $scope.class_editor = false
+    $scope.last_updated_gpa = null
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -17,6 +18,9 @@ angular.module('myApp')
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
               $scope.gpa = 0.toFixed(2)
+
+            $scope.last_updated_gpa = _.last(_.sortBy($scope.student.user_classes, (u) ->
+              u.updated_at)).updated_at
 
             date_format_gpa_history =
               _.each(data.user_gpa_history, (h) ->
@@ -74,6 +78,7 @@ angular.module('myApp')
 
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Academics')
+          $scope.last_updated_gpa = new Date()
 
     $scope.deleteClass = (user_class) ->
       if window.confirm "Are you sure you want to delete this class?"
@@ -86,6 +91,7 @@ angular.module('myApp')
               $scope.gpa = 0.toFixed(2)
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Academics')
+            $scope.last_updated_gpa = new Date()
             $scope.selected_class = null
 
     $scope.addClass = () ->
