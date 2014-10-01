@@ -40,6 +40,12 @@ angular.module('myApp')
               else
                 $scope.previous_organization_list.push(user_service_organization)
 
+            for user_service_organization in $scope.user_service_organizations
+              total_hours = 0.0
+              for service_hours in user_service_organization.hours
+                total_hours += service_hours.hours
+              user_service_organization.total_hours = parseFloat(total_hours)
+
             other_organization = {}
             other_organization = UserServiceOrganizationService
               .otherOrganization($scope.student, $scope.selected_semester.id, null)

@@ -46,6 +46,9 @@ angular.module('myApp')
         for org_milestone in org_milestones_by_module
           org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
 
+    # Collect all assignments
+    org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments"), true))
+
     org.total_gpa = org.semester_gpa = 0
     org.total_serviceHours = org.semester_serviceHours = 0
     org.total_ecActivities = org.semester_ecActivities = 0
@@ -95,6 +98,15 @@ angular.module('myApp')
                                                      total: new_module_progress.points.total } }
             mentor.modules_progress.push(new_mentor_module_progress)
 
+      # Match user_assignments to their assignment
+      if student.user_assignments != undefined
+        for user_assignment in student.user_assignments
+          assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.title = assignment.title
+          user_assignment.due_datetime = assignment.due_datetime
+          user_assignment.description = assignment.description
+          user_assignment.assigner = _.find(org.users, (u) -> assignment.user_id == u.id)
+
       # Add up student's gpa
       # TODO This isn't the correct way to calculate gpa
       student.total_gpa = 0.0
@@ -132,9 +144,11 @@ angular.module('myApp')
       org.semester_testsTaken += student.semester_tests
 
       # Determine if student needs attention
-      student.needs_attention = if _.findWhere(student.user_expectations, { status: 2 } ) then true else false
+      student.needs_attention = _.some(student.user_expectations, (ue) -> ue.status == 2)
       if student.needs_attention
         org.attention_studentIds.push(student.id)
+
+      student.meeting_expectations = _.every(student.user_expectations, (ue) -> ue.status == 0)
 
     # Perform averaging calculations
     # XXX: not correct for gpa (could include a student in count, but their gpa is 0)

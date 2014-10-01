@@ -19,7 +19,7 @@
 				</div>
 			</li>
 			<li>
-				<div class="stat-wrapper ng-clickable clear" ng-click="attentionList = !attentionList">
+				<div class="stat-wrapper ng-clickable temp-clickable clear" ng-click="attentionList = !attentionList">
 					<div class="count"><h4><span class="bold">{{_.where(organization.students, { needs_attention: true }).length}}</span></h4></div>
 					<div ng-if="_.where(organization.students, { needs_attention: true }).length !== 1" class="descript">Students Need <br>Mentor Attention</div>
 					<div ng-if="_.where(organization.students, { needs_attention: true }).length == 1" class="descript">Student Needs <br>Mentor Attention</div>

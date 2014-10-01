@@ -24,6 +24,7 @@
 //= require angulartics
 //= require angulartics-ga
 //= require moment
+//= require c3
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder

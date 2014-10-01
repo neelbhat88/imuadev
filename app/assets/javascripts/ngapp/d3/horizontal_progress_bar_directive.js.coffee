@@ -17,18 +17,20 @@ angular.module('myApp')
       w = scope.width
       h = scope.height
 
-    # Create SVG element
+      # Create SVG element
     svg = d3.select(element[0])
       .attr("id", scope.student.id + "_" + scope.identifier)
       .append("svg")
       .attr("width", w)
       .attr("height", h)
       .attr("viewBox", "0 0 " + w + " " + h)
-      .attr("preserveAspectRatio", "xMidYMid")
+      .attr("preserveAspectRatio", "xMidYMin")
       .attr("id", "bar_" + scope.student.id + "_" + scope.identifier)
       .append("g")
 
     scope.render = (student) ->
+      svg.selectAll("g").remove()
+
       progressData = []
 
       user_points = 0
@@ -62,8 +64,6 @@ angular.module('myApp')
 
       color = d3.scale.ordinal()
         .range(['#41e6b2', '#e8be28', '#ef6629', '#27aae1', '#9665aa', '#808080'])
-
-
 
       # Add a group for each row of data
       groups = svg.selectAll("g")
