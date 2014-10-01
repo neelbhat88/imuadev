@@ -13,6 +13,8 @@ angular.module('myApp')
   @responseError = (response) ->
     if response.status == 426
       $rootScope.$broadcast("update_required")
+    else if response.status == 401
+      $rootScope.$broadcast("session_timeout")
 
     response
   @

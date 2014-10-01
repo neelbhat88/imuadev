@@ -14,4 +14,8 @@ class UserGpaHistoryService
 
   end
 
+  def get_user_gpa_history(userId, time_unit_id)
+    return UserGpaHistory.where(:user_id => userId, :time_unit_id => time_unit_id)
+  end
+
 end

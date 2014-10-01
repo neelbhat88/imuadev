@@ -103,8 +103,26 @@ class Api::V1::OrganizationController < ApplicationController
       }
   end
 
-  # GET /organization/:id/info_with_users
   def organization_with_users
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:organization_id] = params[:id]
+
+    if !can?(current_user, :get_organization_progress, Organization.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @progressService.get_organization_progress(url_params)
+
+    render status: result.status,
+      json: Oj.dump({
+        info: result.info,
+        organization: result.object
+      }, mode: :compat)
+  end
+
+  # GET /organization/:id/info_with_users
+  def organization_with_users_old
     orgId = params[:id].to_i
 
     # TODO Change authorization to check this particular function

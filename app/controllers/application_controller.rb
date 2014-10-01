@@ -13,15 +13,21 @@ class ApplicationController < ActionController::Base
 
   # Overries Devise after sign in
   def after_sign_in_path_for(resource)
-    #return dashboard_path
-  #   if current_user.super_admin?
-  #     return super_admin_profile
-  #   end
+    # ToDo: Move this into a Keen Provider class
+    Background.process do
+      Keen.publish("user_engagement", {
+                                        :user => current_user,
+                                        :day => DateTime.now.utc.beginning_of_day.iso8601,
+                                        :hour => DateTime.now.utc.beginning_of_hour.iso8601
+                                      }
+                  )
+    end
+
     return root_path
   end
 
-  def authenticate_user
-    authenticate_user!
+  def after_sign_out_path_for(resource_or_scope)
+    login_path
   end
 
   def student_can_access?(userId)
@@ -47,7 +53,7 @@ class ApplicationController < ActionController::Base
     response.headers['AppVersion'] = @appVersion
 
     # Only check the AppVersion if the header exists
-    if request.headers['AppVersion'] && request.headers['AppVersion'] != @appVersion
+    if request.headers['AppVersion'] && current_user && request.headers['AppVersion'] != @appVersion
       Rails.logger.error("Error - AppVersion mismatch! - Current version: #{@appVersion}, Client's Version: #{request.headers['AppVersion']}. UserId: #{current_user.id}")
       render status: 426, json: {}
     end

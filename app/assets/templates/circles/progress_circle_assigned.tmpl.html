@@ -1,0 +1,18 @@
+<div class="progress-circle progress-circle--default" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
+  <a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
+    <div class="circle-size">
+      <progress-circle parentclass="circle-size" identifier="assigned" student="student"></progress-circle>
+    </div>
+  </a>
+  <h6 class="bold"><a ng-href="#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>
+  <ul class="circle-nav">
+    <li><a ng-href="#/profile/{{student.id}}" title="View {{student.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+    <li>
+      <a class="unassign" ng-click="unassign(student)">
+        Remove {{student.first_name}} from {{mentor.first_name}}'s students
+        <br>
+        <span class="glyphicon glyphicon-remove-circle" title="Unassign"></span>
+      </a>
+    </li>
+  </ul>
+</div>

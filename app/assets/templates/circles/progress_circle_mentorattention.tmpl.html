@@ -1,0 +1,14 @@
+<div class="progress-circle progress-circle--default">
+  <a ng-href="#/mentor/{{mentor.id}}" title="View {{mentor.first_name}}'s Students">
+    <div class="mentorattention-circle-size">
+      <progress-circle parentclass="circle-size" identifier="attention" student="mentor"></progress-circle>
+    </div>
+  </a>
+  <h6 class="bold"><a ng-href="#/mentor/{{mentor.id}}" title="View {{mentor.first_name}}'s Page">{{fullName(mentor)}}</a></h6>
+  <ul class="circle-nav">
+    <li>{{mentor.title}}</li>
+    <li><a ng-href="#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+    <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
+    <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
+  </ul>
+</div>

@@ -26,8 +26,8 @@ angular.module('myApp')
 
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
 
-    org.students = _.where(org.users, { role: 50 })
-    org.mentors = _.where(org.users, { role: 40 })
+    org.students = _.each(_.where(org.users, { role: 50 }), (s) -> s.modules_progress = [] )
+    org.mentors = _.each(_.where(org.users, { role: 40 }), (m) -> m.modules_progress = [] )
     org.orgAdmins = _.where(org.users, { role: 10 })
 
     org.active_students = _.filter(org.students, (student) -> (new Date(student.last_login)).getTime() >= active_user_threshold).length
@@ -45,6 +45,9 @@ angular.module('myApp')
         org.org_milestones[time_unit_id.toString()][module_title].totalPoints = 0
         for org_milestone in org_milestones_by_module
           org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
+
+    # Collect all assignments
+    org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments"), true))
 
     org.total_gpa = org.semester_gpa = 0
     org.total_serviceHours = org.semester_serviceHours = 0
@@ -70,7 +73,6 @@ angular.module('myApp')
           mentor.studentIds.push(student.id)
 
       # Calculate progress for each module
-      student.modules_progress = []
       for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
         new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
                                 points: { user: 0, total: org_milestones_by_module.totalPoints } }
@@ -88,12 +90,19 @@ angular.module('myApp')
             mentor_module_progress.points.user += new_module_progress.points.user
             mentor_module_progress.points.total += new_module_progress.points.total
           else
-            if mentor.modules_progress == undefined
-              mentor.modules_progress = []
             new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
                                            points: { user: new_module_progress.points.user,\
                                                      total: new_module_progress.points.total } }
             mentor.modules_progress.push(new_mentor_module_progress)
+
+      # Match user_assignments to their assignment
+      if student.user_assignments != undefined
+        for user_assignment in student.user_assignments
+          assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.title = assignment.title
+          user_assignment.due_datetime = assignment.due_datetime
+          user_assignment.description = assignment.description
+          user_assignment.assigner = _.find(org.users, (u) -> assignment.user_id == u.id)
 
       # Add up student's gpa
       # TODO This isn't the correct way to calculate gpa
@@ -132,9 +141,11 @@ angular.module('myApp')
       org.semester_testsTaken += student.semester_tests
 
       # Determine if student needs attention
-      student.needs_attention = if _.findWhere(student.user_expectations, { status: 2 } ) then true else false
+      student.needs_attention = _.some(student.user_expectations, (ue) -> ue.status == 2)
       if student.needs_attention
         org.attention_studentIds.push(student.id)
+
+      student.meeting_expectations = _.every(student.user_expectations, (ue) -> ue.status == 0)
 
     # Perform averaging calculations
     # XXX: not correct for gpa (could include a student in count, but their gpa is 0)

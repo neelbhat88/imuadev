@@ -11,10 +11,14 @@ end
 
 class DomainUserAssignment
 
-  def initialize(user_assignment, options = {})
-    @assignment_id = user_assignment.assignment_id
-    @user_id = user_assignment.user_id
-    @status = user_assignment.status
+  def initialize(options = {})
+
+    user_assignment = options[:user_assignment]
+    unless user_assignment.nil?
+      @assignment_id = user_assignment.assignment_id
+      @user_id = user_assignment.user_id
+      @status = user_assignment.status
+    end
 
     @assignment = options[:assignment] unless options[:assignment].nil?
   end

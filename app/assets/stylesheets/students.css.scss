@@ -59,15 +59,28 @@
           }
         }
 
+        .temp-clickable {
+          &:hover {
+            cursor: pointer;
+
+            .descript {
+              text-decoration: underline;
+            }
+
+          }
+        }
+
       }
     }
   }
 
   .students-mid {
-    padding: 60px $wrapper-width 0 $wrapper-width;
+    margin-top: 40px;
+    padding: 0 $wrapper-width;
   }
 
   .students-lower {
+    margin-top: 40px;
     padding: 0 $wrapper-width;
   }
 

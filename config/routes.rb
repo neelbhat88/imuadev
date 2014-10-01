@@ -52,6 +52,8 @@ Imua::Application.routes.draw do
 
           get  '/:id/progress' => 'progress#overall_progress'
           get  '/:id/progress_2' => 'progress#user_progress'
+          get  '/:id/student_dashboard' => 'progress#student_dashboard'
+          get  '/:id/student_expectations' => 'progress#student_expectations'
           get  '/:id/time_unit/:time_unit_id/progress' => 'progress#all_modules_progress'
           get  '/:id/time_unit/:time_unit_id/progress/:module' => 'progress#module_progress'
 
@@ -124,9 +126,6 @@ Imua::Application.routes.draw do
       put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
       delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
-      # TODO: SUPER HACKY! Are migrations better for this stuff??
-      get '/milestone/update_org_id' => 'milestone#update_org_id'
-
     end # end :v1
   end # end :api
 
@@ -136,7 +135,7 @@ Imua::Application.routes.draw do
   get '/login' => 'static#login'
   get '/marketing' => 'static#index'
 
-  get '/*path' => redirect("/?goto=%{path}")
+
   root :to => 'static#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
