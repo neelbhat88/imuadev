@@ -67,7 +67,7 @@ $border-color: black(0.2);
       display: table;
       width: 100%;
 
-      .widget--content--cell {
+      .table--cell {
         display: table-cell;
         vertical-align: top;
         border-left: 2px solid $border-color;
@@ -156,7 +156,7 @@ $border-color: black(0.2);
 
     @each $category, $color in $darkcolormap {
       &.color--#{$category} {
-        .widget--content--cell {}
+        .table--cell {}
       }
     }
 
@@ -165,7 +165,7 @@ $border-color: black(0.2);
         .widget--header {}
         .ng-clickable {
           &:hover {
-            .widget--content--cell {}
+            .table--cell {}
           }
         }
       }

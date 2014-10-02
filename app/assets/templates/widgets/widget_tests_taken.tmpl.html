@@ -18,20 +18,20 @@
 
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell break900" ng-repeat="userTest in userTests">
+      <div class="table--cell break900" ng-repeat="userTest in userTests">
         <div ng-hide="userTest.editing">
-          <div class="widget--content--cell breakalways">
+          <div class="table--cell breakalways">
             <div class="cell--padding">
               <h4 class="bold">{{userTest.orgTest.title}}</h4>
               <div class="subtext">Taken {{userTest.date | fromNow}}</div>
             </div>
           </div>
-          <div class="widget--content--cell breakalways">
+          <div class="table--cell breakalways">
             <div class="cell--padding">
               <h4>{{userTest.score}}</h4>
             </div>
           </div>
-          <div class="widget--content--cell breakalways" ng-show="testsEditor">
+          <div class="table--cell breakalways" ng-show="testsEditor">
             <div class="cell--padding">
               <button class="btn btn-default btn-sm" ng-click="editUserTest($index)">Edit this Test</button>
               <button class="btn btn-danger btn-sm" ng-click="deleteUserTest($index)">Delete This Test</button>
@@ -79,14 +79,14 @@
         </div>
       </div>
 
-      <div class="widget--content--cell break900 ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
+      <div class="table--cell break900 ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add A Test</h6>
         </div>
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-click="testsEditor = !testsEditor" ng-show="userTests.length == 0 && !testsEditor">
+      <div class="table--cell ng-clickable" ng-click="testsEditor = !testsEditor" ng-show="userTests.length == 0 && !testsEditor">
         <div class="cell--padding clear">
           <div class="class-name">
             <h5 ng-if="current_user.is_student">You haven't added any tests yet.</h5>

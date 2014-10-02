@@ -58,7 +58,7 @@
 
   } //.progressLower
 
-  .widget--content--cell {
+  .table--cell {
 
     .points {
       display: inline-block;
@@ -84,7 +84,7 @@
       color: white(0.5);
     }
 
-    .widget--content--cell {
+    .table--cell {
       .see-more {
         opacity: 0;
         @include transition(0.3);
@@ -194,7 +194,7 @@
       //EC Widget
 
       .widget--content--table {
-        .widget--content--cell {
+        .table--cell {
           .cell--padding {
             padding-left: 20px;
             padding-right: 20px;

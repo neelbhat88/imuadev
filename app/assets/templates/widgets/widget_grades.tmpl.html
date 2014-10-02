@@ -27,7 +27,7 @@
   <div class="widget--content">
     <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ name: selected_class.name }:true" ng-if="selected_class.name != null">
       <div class="widget--content--table table--fixed">
-        <div class="widget--content--cell break900">
+        <div class="table--cell break900">
           <div class="cell--padding" ng-hide="user_class.editing">
             <h4 class="bold">{{user_class.name}}</h3>
             <h2 class="bold">{{user_class.grade}}</h2>
@@ -69,33 +69,33 @@
 
           </div>
         </div>
-        <div class="widget--content--cell break900">
+        <div class="table--cell break900">
           <div class="widget--content--table table--fixed" ng-hide="user_class.editing">
-            <div class="widget--content--cell breakalways" ng-if="user_class.period != null">
+            <div class="table--cell breakalways" ng-if="user_class.period != null">
               <div class="cell--padding">
                 <p>Period</p>
                 <h5 class="bold">{{user_class.period}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.room != null">
+            <div class="table--cell breakalways" ng-if="user_class.room != null">
               <div class="cell--padding">
                 <p>Room</p>
                 <h5 class="bold">{{user_class.room}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.credit_hours != 1">
+            <div class="table--cell breakalways" ng-if="user_class.credit_hours != 1">
               <div class="cell--padding">
                 <p>Credit Hours</p>
                 <h5 class="bold">{{user_class.credit_hours}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.level != 'Regular'">
+            <div class="table--cell breakalways" ng-if="user_class.level != 'Regular'">
               <div class="cell--padding">
                 <p>Level</p>
                 <h5 class="bold">{{user_class.level}}</h5>
               </div>
             </div>
-            <div class="widget--content--cell breakalways" ng-if="user_class.subject != null">
+            <div class="table--cell breakalways" ng-if="user_class.subject != null">
               <div class="cell--padding">
                 <p>Subject</p>
                 <h5 class="bold">{{user_class.subject}}</h5>
@@ -104,13 +104,13 @@
           </div>
           <div class="widget--content--table table--fixed" ng-show="user_class.editing">
 
-            <div class="widget--content--cell breakalways">
+            <div class="table--cell breakalways">
               <span class="input-group">
                 <label>Credit Hours</label>
                 <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
               </span>
             </div>
-            <div class="widget--content--cell breakalways">
+            <div class="table--cell breakalways">
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Level</label>
@@ -118,7 +118,7 @@
                 </span>
               </div>
             </div>
-            <div class="widget--content--cell breakalways">
+            <div class="table--cell breakalways">
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Subject</label>
@@ -128,7 +128,7 @@
                 </span>
               </div>
             </div>
-            <div class="widget--content--cell breakalways">
+            <div class="table--cell breakalways">
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Period</label>
@@ -136,7 +136,7 @@
                 </span>
               </div>
             </div>
-            <div class="widget--content--cell breakalways">
+            <div class="table--cell breakalways">
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Room</label>
@@ -150,7 +150,7 @@
       </div>
     </div>
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'editing': user_class.editing}">
+      <div class="table--cell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{'break1400': user_classes.length >= 8, 'break1200': user_classes.length >= 6, 'break900': user_classes.length < 6, 'editing': user_class.editing}">
 
         <div class="cell--padding" ng-click="selectedClass(user_class)">
           <div class="clear">
@@ -171,7 +171,7 @@
 
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
+      <div class="table--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
         <div class="cell--padding clear">
           <div class="class-name">
             <h6 class="bold">Add a Class</h6>
@@ -182,7 +182,7 @@
         </div>
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="class_editor = !class_editor" ng-show="user_classes.length == 0 && !class_editor">
+      <div class="table--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="class_editor = !class_editor" ng-show="user_classes.length == 0 && !class_editor">
         <div class="cell--padding clear">
           <div class="class-name">
             <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>

@@ -6,7 +6,7 @@
 
   <div class="widget--content">
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
+      <div class="table--cell break900 ng-clickable" ng-repeat="mod in modules_progress" ng-class="{inactive: mod.points.total == 0, selectedCircle: mod == selected_module, notSelectedCircle: mod !== selected_module}" ng-click="selectModule(mod)">
 
         <div class=" module-circle cell--padding">
           <h6 class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</h6>
