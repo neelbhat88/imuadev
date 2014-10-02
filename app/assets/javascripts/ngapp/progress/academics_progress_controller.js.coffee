@@ -42,29 +42,29 @@ angular.module('myApp')
             $scope.$emit('loaded_module_milestones');
 
     $scope.refreshFlexcells = () ->
-      #This is probably the most inefficient way to do this, and I'm sure theres a fancy coffee/js way to do it. Feel free to replace! 
+      #This is probably the most inefficient way to do this, and I'm sure theres a fancy coffee/js way to do it. Feel free to replace!
       $scope.classes_length = $scope.user_classes.length
       if $scope.classes_length == 1
-        $scope.flexcell = "One"
+        $scope.flexcell = "by-one"
       else
         if $scope.classes_length % 2 == 0 #even
           if $scope.classes_length % 5 == 0
-            $scope.flexcell = "divisible by 10 (and 5)"
+            $scope.flexcell = "by-10 by-5"
           else if $scope.classes_length % 4 == 0
-            $scope.flexcell = "divisble by 4"
+            $scope.flexcell = "by-4"
           else if $scope.classes_length % 3 == 0
-            $scope.flexcell = "Six"
+            $scope.flexcell = "by-6 by-3"
           else
-            $scope.flexcell = "divisible by 2"
+            $scope.flexcell = "by-2"
         else #odd
           if $scope.classes_length % 7 == 0
-            $scope.flexcell = "divisible by 7"
+            $scope.flexcell = "by-7"
           else if $scope.classes_length % 5 == 0
-            $scope.flexcell = "divisible by 5"
+            $scope.flexcell = "by-5"
           else if $scope.classes_length % 3 == 0
-            $scope.flexcell = "divisible by 3"
+            $scope.flexcell = "by-3"
           else
-            $scope.flexcell = "Prime Number"
+            $scope.flexcell = "by-prime"
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true

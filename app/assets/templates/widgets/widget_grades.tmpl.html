@@ -3,7 +3,7 @@
   <div class="widget--header">
 
     <div class="widget--header--left">
-      <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades FlexCell: {{flexcell}}</h6>
+      <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades FlexCell Class: {{flexcell}}</h6>
       <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Grades</h6>
     </div>
 
@@ -152,7 +152,7 @@
 
     <div class="widget--content--flexcells">
 
-      <div class="flexcell ng-clickable" ng-repeat="user_class in user_classes" ng-class="{ 'cells2': flexcell == 2 , 'editing': user_class.editing}">
+      <div class="flexcell ng-clickable {{flexcell}}" ng-repeat="user_class in user_classes">
 
         <div class="cell--padding" ng-click="selectedClass(user_class)">
           <div class="clear">
