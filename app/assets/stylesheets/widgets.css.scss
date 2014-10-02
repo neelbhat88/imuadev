@@ -65,6 +65,21 @@ $border-color: black(0.2);
 
     .widget--content--flexcells {
 
+      .flexcell {
+        border-right: 2px solid $border-color;
+      }
+
+      .by-2, .by-3, .by-4, .by-5, .by-6, .by-7, .by-10 {
+        float: left;
+      }
+
+      .by-2 { width: 50%; }
+      .by-3 { width: 33.3333%; }
+      .by-4 { width: 25%; }
+      .by-5, by-10 { width: 20%; }
+      .by-6 { width: 16.6666% }
+      .by-7 { width: 14.2856% }
+
     }
 
     .widget--content--table {
