@@ -4,7 +4,7 @@ angular.module('myApp')
     $scope.user_classes = []
     $scope.classes = {}
     $scope.classes.editing = false
-    $scope.gpa_history = []
+    $scope.gpa_history = {}
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -20,12 +20,15 @@ angular.module('myApp')
               _.each(data.user_gpa_history, (h) ->
                 h.date_updated = moment(h.updated_at).format('MM/DD/YYYY'))
 
+            $scope.gpa_history.values = []
+            $scope.gpa_history.dates = []
             for gpa_history in data.user_gpa_history
               max_updated_at_for_day =
                 _.last(_.sortBy(_.where(date_format_gpa_history, {date_updated: moment(gpa_history.updated_at).format('MM/DD/YYYY')}), (h) -> h.updated_at)).updated_at
 
               if gpa_history.updated_at >= max_updated_at_for_day and gpa_history.regular_unweighted != 0
-                $scope.gpa_history.push(gpa_history)
+                $scope.gpa_history.values.push(gpa_history.regular_unweighted)
+                $scope.gpa_history.dates.push(gpa_history.date_updated)
 
             $scope.$emit('loaded_module_milestones');
 
