@@ -5,7 +5,7 @@ angular.module('myApp')
     $scope.classes = {}
     $scope.classes.editing = false
     $scope.gpa_history = {}
-    $scope.selected_class = null
+    $scope.selected_class = false
     $scope.class_editor = false
     $scope.last_updated_gpa = null
 
