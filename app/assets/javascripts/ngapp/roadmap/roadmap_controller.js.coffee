@@ -96,6 +96,7 @@ angular.module('myApp')
         timeUnit.milestones.push(data.milestone)
 
   $scope.viewMilestone = (timeUnit, milestone) ->
+    # window.location.href = "#/milestone/" + milestone.id
     modalInstance = $modal.open
       templateUrl: 'roadmap/edit_milestone_modal.html',
       controller: 'EditMilestoneModalController',
