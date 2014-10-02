@@ -33,7 +33,7 @@ class Api::V1::MilestoneController < ApplicationController
     is_default = params[:milestone][:is_default]
     value = params[:milestone][:value]
     icon = params[:milestone][:icon]
-    organizationId = TimeUnit.where(tuId).first.organization_id
+    organizationId = TimeUnit.where(id: tuId).first.organization_id
 
     milestone = { :module => mod, :submodule=> submod, :importance => importance, :points => points,
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
