@@ -112,6 +112,7 @@ class Querier
       applicable_domains = self.domain
     else
       # Remove from @domains as its read into the view
+      # TODO - SubQuerier view generation won't work if nested more than once
       # TODO - WRITE UNIT TESTS FOR THIS!!
       while !self.domain(filterBy).empty?
         primary_key = conditions.keys[0]

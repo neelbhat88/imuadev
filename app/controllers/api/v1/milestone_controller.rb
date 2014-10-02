@@ -33,10 +33,11 @@ class Api::V1::MilestoneController < ApplicationController
     is_default = params[:milestone][:is_default]
     value = params[:milestone][:value]
     icon = params[:milestone][:icon]
+    organizationId = TimeUnit.where(id: tuId).first.organization_id
 
     milestone = { :module => mod, :submodule=> submod, :importance => importance, :points => points,
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
-                  :is_default => is_default, :icon => icon, :organization_id => current_user.organization_id }
+                  :is_default => is_default, :icon => icon, :organization_id => organizationId }
 
     result = MilestoneService.new.create_milestone(milestone)
 
