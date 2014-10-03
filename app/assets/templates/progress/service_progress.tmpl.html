@@ -6,7 +6,7 @@
 
     	<div class="module--header">Your Service Records</div>
 
-    	<div class="module--content">
+    	<div class="module--content" wait-to-load="{{loaded_data}}">
 
   	    <div class="module--no-data" ng-show="user_service_organizations.length == 0">
           <div ng-if="current_user.is_student">
@@ -21,36 +21,36 @@
 
         <div class="module--data">
 
-          <div class="module--submodule" ng-repeat="(organizationIndex, user_service_organization) in user_service_organizations" ng-class="{'last':$last}">
+          <div class="module--submodule" ng-repeat="user_service_organization in user_service_organizations" ng-if="user_service_organization.hours.length > 0" ng-class="{'last':$last}">
 
             <div class="module--subhead text-left" ng-hide="user_service_organization.editing">
               {{user_service_organization.name}}
               <div class="glyphicon-container">
-                <span class="glyphicon glyphicon-pencil" title="Edit Service Organization" ng-click="editOrganization(organizationIndex)"></span>
-                <span class="glyphicon glyphicon-trash" title="Delete Organization" ng-click="deleteOrganization(organizationIndex)"></span>
+                <span class="glyphicon glyphicon-pencil" title="Edit Service Organization" ng-click="editOrganization(user_service_organization); edit_service_organization_focus_trigger=true"></span>
+                <span class="glyphicon glyphicon-trash" title="Delete Organization" ng-click="deleteOrganization(user_service_organization)"></span>
               </div>
             </div>
 
             <div class="editing" ng-show="user_service_organization.editing">
               <span class="input-group">
                 <label>Who was the service for?</label>
-                <input class="form-control" ng-model="user_service_organization.new_name" placeholder="Organization Name" name="serviceActivityName">
+                <input type="text" focus-me="edit_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter:$viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
               </span>
-              <div class="submit" title="Confirm" ng-click="saveOrganization(organizationIndex)">Confirm</div>
-              <div class="cancel" title="Cancel" ng-click="cancelOrganizationEdit(organizationIndex)">Cancel</div>
+              <div class="submit" title="Confirm" ng-click="saveOrganization(user_service_organization)">Confirm</div>
+              <div class="cancel" title="Cancel" ng-click="cancelEditOrganization(user_service_organization)">Cancel</div>
             </div>
 
             <table>
               <tbody>
-                <tr ng-repeat="(hourIndex, user_service_hour) in user_service_organization.hours" ng-class="{'last':$last}">
+                <tr ng-repeat="user_service_hour in user_service_organization.hours" ng-class="{'last':$last}">
 
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.date | formatMDY}}</td>
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.description}}</td>
                   <td ng-hide="user_service_hour.editing">{{user_service_hour.hours}}</td>
                   <td ng-hide="user_service_hour.editing" class="glyphicons">
                     <div class="glyphicon-container">
-                      <span class="glyphicon glyphicon-pencil" title="Edit Hour" ng-click="editHour(organizationIndex, hourIndex)"></span>
-                      <span class="glyphicon glyphicon-trash" title="Delete Hour" ng-click="deleteHour(organizationIndex, hourIndex)"></span>
+                      <span class="glyphicon glyphicon-pencil" title="Edit Hour" ng-click="editHour(user_service_hour)"></span>
+                      <span class="glyphicon glyphicon-trash" title="Delete Hour" ng-click="deleteHour(user_service_organization, user_service_hour)"></span>
                     </div>
                   </td>
 
@@ -70,34 +70,27 @@
                       <input class="form-control" ng-model="user_service_hour.new_hours" placeholder="Hours" name="serviceEventHours">
                     </span>
 
-                    <button class="submit" title="Confirm" ng-click="saveHour(organizationIndex, hourIndex, user_service_organization.id)">Confirm</button>
-                    <button class="cancel" title="Cancel" ng-click="cancelHourEdit(organizationIndex, hourIndex)">Cancel</button>
+                    <button class="submit" title="Confirm" ng-click="saveHour(user_service_hour)">Confirm</button>
+                    <button class="cancel" title="Cancel" ng-click="cancelEditHour(user_service_hour)">Cancel</button>
 
                   </td>
 
                 </tr>
               </tbody>
             </table>
-            <button ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addHour(organizationIndex, user_service_organization.id)" ng-hide="user_service_organizations[organizationIndex].hours.editing">Add Hours</button>
+            <!-- <button ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addHour(organizationIndex, user_service_organization.id)" ng-hide="user_service_organizations[organizationIndex].hours.editing">Add Hours</button> -->
 
           </div>
 
-          <button ng-hide="new_service_organization.editing" ng-if="editable(current_user, selected_semester)" class="btn btn-default" ng-click="addOrganization()">Add a Service Organization</button>
+          <button ng-hide="expand_service_entry" class="btn btn-default" ng-click="expandNewServiceEntry(); expand_service_entry_focus_trigger=true">Add New Service Hours</button>
 
-          <div class="module--submodule" ng-show="new_service_organization.editing">
+          <div class="module--submodule" ng-show="expand_service_entry">
+
             <div class="editing">
               <span class="input-group">
                 <label>Who was the service for?</label>
-                <input type="text" ng-model="new_service_organization.new_name" typeahead="orgName for orgName in org_previous_organization_list | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectAction(new_service_organization)">
-                <select class="form-control" ng-change="selectAction(new_service_organization)" ng-options="organization as organization.name for organization in previous_organization_list" ng-model="new_service_organization" name="serviceActivityName">
-                  <option value="">--- Select Previous Organization ---</option>
-                </select>
+                <input type="text" focus-me="expand_service_entry_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter:$viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
               </span>
-              <span class="input-group" ng-show="new_service_organization.newOrganization">
-                <label>Who was the service for?</label>
-                <input class="form-control" ng-model="new_service_organization.new_name" placeholder="Organization Name" name="serviceActivityName">
-              </span>
-
             </div>
 
             <table>
@@ -105,16 +98,16 @@
                 <tr ng-repeat="(hourIndex, user_service_hour) in new_service_organization.hours" ng-class="{'last':$last}">
                   <td class="editing" colspan="4">
 
-                    <span class="input-group" ng-show="new_service_organization.show">
+                    <span class="input-group">
                       <label>Date</label>
                       <imua-datepicker date="user_service_hour.date"></imua-datepicker>
                     </span>
-                    <span class="input-group" ng-show="new_service_organization.show">
+                    <span class="input-group">
                       <label ng-if="current_user.is_student">What type of service did you do?</label>
                       <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
                       <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
                     </span>
-                    <span class="input-group" ng-show="new_service_organization.show">
+                    <span class="input-group">
                       <label>How many hours?</label>
                       <input class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
                     </span>
@@ -125,10 +118,10 @@
               </tbody>
             </table>
 
-            <div class="submit" title="Confirm" ng-click="saveNewOrganization()">Confirm</div>
-            <div class="cancel" title="Cancel" ng-click="cancelNewOrganization()">Cancel</div>
-
+            <div class="submit" title="Confirm" ng-click="saveNewServiceEntry()">Confirm</div>
+            <div class="cancel" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</div>
           </div>
+
         </div>
       </div>
 
