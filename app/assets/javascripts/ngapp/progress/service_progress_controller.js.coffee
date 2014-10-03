@@ -22,6 +22,7 @@ angular.module('myApp')
       if $scope.selected_semester
         UserServiceOrganizationService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
+            $scope.org_previous_organization_list = data.org_service_organization_titles
             $scope.user_service_organizations = []
             $scope.previous_organization_list = []
             current_user_service_organizations = []

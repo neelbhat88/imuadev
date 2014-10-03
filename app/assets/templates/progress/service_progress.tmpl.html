@@ -88,6 +88,7 @@
             <div class="editing">
               <span class="input-group">
                 <label>Who was the service for?</label>
+                <input type="text" ng-model="new_service_organization.new_name" typeahead="orgName for orgName in org_previous_organization_list | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectAction(new_service_organization)">
                 <select class="form-control" ng-change="selectAction(new_service_organization)" ng-options="organization as organization.name for organization in previous_organization_list" ng-model="new_service_organization" name="serviceActivityName">
                   <option value="">--- Select Previous Organization ---</option>
                 </select>
