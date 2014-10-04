@@ -47,6 +47,11 @@ class Api::V1::ProgressController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
 
+    if !can?(current_user, :get_student_expectations, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @progressService.get_student_expectations(url_params)
 
     render status: result.status,
@@ -60,6 +65,11 @@ class Api::V1::ProgressController < ApplicationController
   def student_dashboard
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_student_dashboard, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @progressService.get_student_dashboard(url_params)
 
@@ -76,6 +86,11 @@ class Api::V1::ProgressController < ApplicationController
   def user_progress
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_user_progress, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @progressService.get_user_progress(url_params)
 

@@ -63,4 +63,11 @@ class Constants
     }
   end
 
+  def self.SessionTimeout
+    if ENV["SESSION_TIMEOUT_MINUTES"]
+      return (ENV["SESSION_TIMEOUT_MINUTES"].to_i).minutes
+    else
+      return 15.minutes
+    end
+  end
 end

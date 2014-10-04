@@ -176,3 +176,11 @@
   </div>
 
 </div><!-- /lower-content -->
+
+<script>
+  // Checks if a '#' exists in the URL and then redirects user to login page
+  // This is sort of hacky but the only way to "know" whether a user was in our app
+  // and then refreshed the page after their session timed out
+  if (window.location.hash)
+    window.location = "/login?expired=true"
+</script>
