@@ -49,11 +49,11 @@ angular.module('myApp')
       else
         if $scope.classes_length % 2 == 0 #even
           if $scope.classes_length % 5 == 0
-            $scope.flexcell = "by-10 by-5"
+            $scope.flexcell = "by-10"
           else if $scope.classes_length % 4 == 0
             $scope.flexcell = "by-4"
           else if $scope.classes_length % 3 == 0
-            $scope.flexcell = "by-6 by-3"
+            $scope.flexcell = "by-6"
           else
             $scope.flexcell = "by-2"
         else #odd

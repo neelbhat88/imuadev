@@ -67,18 +67,38 @@ $border-color: black(0.2);
 
       .flexcell {
         border-right: 2px solid $border-color;
+        border-bottom: 2px solid $border-color;
+        padding: 20px;
       }
 
-      .by-2, .by-3, .by-4, .by-5, .by-6, .by-7, .by-10 {
+      &:first-child {
+        border-left: none;
+      }
+
+      .by-2, .by-3, .by-4, .by-5, .by-6, .by-7, .by-10, .by-prime {
         float: left;
       }
 
       .by-2 { width: 50%; }
       .by-3 { width: 33.3333%; }
       .by-4 { width: 25%; }
-      .by-5, by-10 { width: 20%; }
-      .by-6 { width: 16.6666% }
-      .by-7 { width: 14.2856% }
+      .by-5, .by-10 { width: 20%; }
+      .by-6, .by-prime { width: 16.6666% }
+      .by-7 { width: 25% }
+
+
+      @include respond-to(1200) {
+        .by-prime, .by-10, .by-7, .by-6, .by-5 {
+          width: 33.3333%;
+        }
+      }
+
+      @include respond-to(900) {
+        .by-prime, .by-10, .by-7, .by-6, by-5, .by-4, .by-3 {
+          width: 50%;
+        }
+      }
+
 
     }
 
@@ -89,10 +109,10 @@ $border-color: black(0.2);
       .table--cell {
         display: table-cell;
         vertical-align: top;
-        border-left: 2px solid $border-color;
+        border-right: 2px solid $border-color;
 
-        &:first-child {
-          border-left: 0;
+        &:last-child {
+          border-right: 0;
         }
 
         .cell--padding {

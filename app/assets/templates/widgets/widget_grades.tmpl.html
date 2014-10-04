@@ -3,7 +3,7 @@
   <div class="widget--header">
 
     <div class="widget--header--left">
-      <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades FlexCell Class: {{flexcell}}</h6>
+      <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Grades</h6>
       <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Grades</h6>
     </div>
 
@@ -174,29 +174,24 @@
       </div>
     </div>
 
-    <div class="widget--content--table table--fixed">
-
-      <div class="table--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
-        <div class="cell--padding clear">
-          <div class="class-name">
-            <h6 class="bold">Add a Class</h6>
-          </div>
-          <div class="class-grade">
-            <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
-          </div>
-        </div>
+    <div class="flexcell ng-clickable" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
+      <div class="class-name">
+        <h6 class="bold">Add a Class</h6>
       </div>
-
-      <div class="table--cell ng-clickable" ng-class="{'break1200': user_classes.length >= 5, 'break900': user_classes.length < 5}" ng-click="class_editor = !class_editor" ng-show="user_classes.length == 0 && !class_editor">
-        <div class="cell--padding clear">
-          <div class="class-name">
-            <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
-            <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>
-            <h5 class="bold">Click here to begin</h5>
-          </div>
-        </div>
+      <div class="class-grade">
+        <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
       </div>
-
     </div>
+
+    <div class="flexcell ng-clickable" ng-click="class_editor = !class_editor" ng-show="user_classes.length == 0 && !class_editor">
+      <div class="cell--padding clear">
+        <div class="class-name">
+          <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
+          <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>
+          <h5 class="bold">Click here to begin</h5>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
