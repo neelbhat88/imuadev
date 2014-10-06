@@ -1,0 +1,80 @@
+<div class="milestoneContainer" wait-to-load="{{loaded_data}}">
+
+  <span class ="edit-milestone__title">
+    <img ng-src={{milestone.icon}}/>{{milestone.title}}
+  </span>
+
+  <div class="milestone ptl">
+    <div class="pbs">
+      <div class="milestone-description">{{milestone.description}}</div>
+    </div>
+
+    <div class="pbs">
+      <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
+    </div>
+
+    <div class="milestone_advanced">
+      <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+      <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+        <div class="pbs">
+          <span class="milestone-weight">Weight:</span>
+        </div>
+        <div class="pbs">
+          <input class="form-field" ng-model="milestone.points" placeholder="Weight">
+        </div>
+      </div>
+    </div>
+
+    <ul class="errorText ptm" ng-show="errors">
+      <li ng-repeat="error in errors">{{error}}</li>
+    </ul>
+
+    <div class="buttonGroup pvxl">
+      <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
+      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+      <button class="delete" ng-click="delete()">Delete</button>
+    </div>
+  </div>
+
+  <div>
+    <h5 class="bold">{{milestone.time_unit_name}}</h5>
+  </div>
+
+  <div>
+    {{percent_complete}}% ({{users_complete.length}}/{{users_incomplete.length}}) of students have completed this milestone
+  </div>
+
+  <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
+    <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
+    <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
+    <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
+      <a href="#/progress/{{user.id}}">
+        <div class="medium-circle-picture">
+          <img ng-src="{{user.square_avatar_url}}"/>
+        </div>
+        <span class="bold">{{user.first_last_initial}}</span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="users-completed" ng-if="users_complete.length != 0">
+    <h6 class="bold green" ng-if="users_complete.length == 1 && users_total.length != 1">
+      {{users_complete.length}} student has completed this milestone
+    </h6>
+    <h6 class="bold green" ng-if="users_complete.length != 1 && users_complete.length != users_total.length">
+      {{users_complete.length}} students have completed this milestone
+    </h6>
+    <h6 class="bold green" ng-if="users_complete.length == users_total.length">
+      Nice! All assigned students have completed this milestone.
+    </h6>
+    <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
+      <a href="#/progress/{{user.id}}">
+        <div class="medium-circle-picture">
+          <img ng-src="{{user.square_avatar_url}}"/>
+        </div>
+        <span class="bold">{{user.first_last_initial}}</span>
+      </a>
+    </li>
+  </ul>
+
+</div>
