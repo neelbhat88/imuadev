@@ -1,0 +1,43 @@
+<div class="widget-group">
+  <div class="widget-group--table table--fixed">
+    <div class="widget-group--cell break900">
+      <div class="widget gpa">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your GPA</h6>
+            <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s GPA</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="table--cell">
+              <div class="cell--padding">
+                <h1 class="bold">{{gpa}}</h1>
+                <h5>GPA</h5>
+                <div class="subtext">As of {{last_updated_gpa | fromNow}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="widget-group--cell break900">
+      <div class="widget gpa-ot">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold"><div class="color--dot"></div> GPA Over Time</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="table--cell">
+              <div class="cell--padding">
+                <history-line-chart data="gpa_history"></history-line-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
