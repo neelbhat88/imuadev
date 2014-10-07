@@ -6,18 +6,22 @@ describe Api::V1::MilestoneController do
     login_org_admin
 
     it "returns 200 and adds milestone to database" do
+      tu = create(:time_unit, organization_id: 1)
+      mod_milestone = attributes_for(:milestone, time_unit_id: tu.id)
+
       expect {
-        post :create_milestone, milestone: attributes_for(:milestone)
+        post :create_milestone, milestone: mod_milestone
       }.to change(Milestone, :count).by(1)
 
       expect(response.status).to eq(200)
       expect(json["milestone"]).to_not be_nil
     end
 
-    it "sets organization_id of milestone to current_user's organization_id" do
-      subject.current_user.organization_id = 12345
+    it "sets organization_id of milestone to organization_id from time_unit" do
+      tu = create(:time_unit, organization_id: 12345)
+      mod_milestone = attributes_for(:milestone, time_unit_id: tu.id)
 
-      post :create_milestone, milestone: attributes_for(:milestone)
+      post :create_milestone, milestone: mod_milestone
 
       id = json["milestone"]["id"].to_i
       milestone = Milestone.find(id)
@@ -26,7 +30,9 @@ describe Api::V1::MilestoneController do
     end
 
     it "sets all properties on return object correctly" do
-      milestone = build(:gpa_milestone, points: 20, value: "4.0")
+      tu = create(:time_unit, organization_id: 1)
+
+      milestone = build(:gpa_milestone, points: 20, value: "4.0", time_unit_id: tu.id)
 
       post :create_milestone, milestone: milestone.attributes
 
@@ -39,7 +45,8 @@ describe Api::V1::MilestoneController do
     end
 
     it "sets time_unit_id in database correctly" do
-      milestone = build(:gpa_milestone, points: 20, value: "4.0")
+      tu = create(:time_unit, organization_id: 1)
+      milestone = build(:gpa_milestone, points: 20, value: "4.0", time_unit_id: tu.id)
 
       post :create_milestone, milestone: milestone.attributes
 

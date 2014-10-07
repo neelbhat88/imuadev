@@ -11,6 +11,12 @@ angular.module('myApp')
       if ($scope.user.email == "")
         $scope.errors.push("You must provide an email.");
 
+      if ($scope.user.first_name == "")
+        $scope.errors.push("You must provide a first name.");
+
+      if ($scope.user.last_name == "")
+        $scope.errors.push("You must provide a last name.");
+
       if ($scope.user.is_student && $scope.user.class_of == "0")
         $scope.errors.push("You must set a graduating class.");
 
