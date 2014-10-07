@@ -45,6 +45,8 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users do
         collection do
+          get ':id/task_assignable_users' => 'assignment#get_task_assignable_users'
+
           put '/:id/update_password' => 'users#update_password'
 
           put '/:id/time_unit/next' => "users#move_to_next_semester"

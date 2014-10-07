@@ -27,7 +27,7 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
-    UsersService.getAssignedStudents($scope.user.id)
+    UsersService.getTaskAssignableUsers($scope.user.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.assignable_users = $scope.organization.students

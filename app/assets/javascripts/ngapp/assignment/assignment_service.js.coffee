@@ -9,6 +9,9 @@ angular.module('myApp')
 
   self = this
 
+  @getTaskAssignableUsers = (userId) ->
+    $http.get "/api/v1/users/#{userId}/task_assignable_users"
+
   @broadcastAssignment = (assignment, userIds) ->
     user_assignments = _.map(userIds, (userId) -> self.newUserAssignment(userId, assignment.id))
     if assignment.id

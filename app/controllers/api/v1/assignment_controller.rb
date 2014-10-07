@@ -183,4 +183,36 @@ class Api::V1::AssignmentController < ApplicationController
       }
   end
 
+  # GET /users/:id/task_assignable_users
+  def get_task_assignable_users
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.get_task_assignable_users(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /users/:id/task_assignable_users_tasks
+  def get_task_assignable_users_tasks
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.get_task_assignable_users_tasks(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
 end

@@ -38,6 +38,51 @@ class AssignmentService
   end
 
 
+  # Called via :user_id
+  def get_task_assignable_users(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([], [:role, :organization_id]).where(conditions.slice(:user_id))
+    conditions[:organization_id] = userQ.domain[0][:organization_id]
+
+    if userQ.domain[0][:role] == Constants.UserRole[:ORG_ADMIN]
+      userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions.slice(:organization_id))
+    else
+      conditions[:assigned_to_id] = conditions[:user_id]
+      relationshipQ = Querier.new(Relationship).select([], [:user_id]).where(conditions.slice(:assigned_to_id))
+      conditions[:user_id] = (relationshipQ.pluck[:user_id] << conditions[:user_id].to_s).uniq
+      userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
+    end
+
+    view = {organization: {users: userQ.view}}
+
+    return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
+  end
+
+  # Called via :user_id
+  # def get_task_assignable_users_tasks(params)
+  #   conditions = params
+  #
+  #   userQ = UserQuerier.new.select([], [:role, :organization_id]).where(conditions.slice(:user_id))
+  #   conditions[:organization_id] = userQ.domain[0][:organization_id]
+  #
+  #   if userQ.domain[0][:role] == Constants.UserRole[:ORG_ADMIN]
+  #     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions.slice(:organization_id))
+  #     conditions[:user_id] = userQ.pluck(:id)
+  #   else
+  #     conditions[:assigned_to_id] = conditions[:user_id]
+  #     relationshipQ = Querier.new(Relationship).select([], [:user_id, :assigned_to_id]).where(conditions.slice(:assigned_to_id))
+  #     conditions[:user_id] = (relationshipQ.pluck[:user_id] + relationshipQ.pluck[:assigned_to_id] << conditions[:user_id].to_s).uniq
+  #     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
+  #   end
+  #
+  #
+  #
+  #   view = {organization: {users: userQ.view}}
+  #
+  #   return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
+  # end
+
 
   def collect_assignment(assignmentId)
     return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)
