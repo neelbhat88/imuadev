@@ -1,0 +1,43 @@
+<div class="widget-group">
+  <div class="widget-group--table table--fixed">
+    <div class="widget-group--cell break900">
+      <div class="widget service--hours">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Hours</h6>
+            <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Hours</h6>
+          </div>
+        </div>
+        <div class="widget--content" wait-to-load="{{loaded_data}}">
+          <div class="widget--content--table">
+            <div class="table--cell">
+              <div class="cell--padding">
+                <h1 class="bold">{{semester_service_hours}}</h1>
+                <h5 ng-if="semester_service_hours != 1">Total Service Hours</h5>
+                <h5 ng-if="semester_service_hours == 1">Service Hour</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="widget-group--cell break900">
+      <div class="widget service--hours--ot">
+        <div class="widget--header">
+          <div class="widget--header--left">
+            <h6 class="bold"><div class="color--dot"></div> Service Hours Over Time</h6>
+          </div>
+        </div>
+        <div class="widget--content">
+          <div class="widget--content--table">
+            <div class="table--cell">
+              <div class="cell--padding">
+                <p>Placeholder for Service Hours Chart</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
