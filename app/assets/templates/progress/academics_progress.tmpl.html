@@ -1,8 +1,8 @@
 <div ng-controller="AcademicsProgressController" class="academicsProgressContainer" modulecolor="{{selected_module.module_title}}">
 
-  <widget-gpa></widget-gpa>
+  <div ng-include="'progress/widgets/gpa.html'"></div>
 
-  <widget-grades></widget-grades>
+  <div ng-include="'progress/widgets/grades.html'"></div>
 
   <div ng-include="'progress/widgets/milestones.html'"></div>
 
