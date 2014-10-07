@@ -11,6 +11,12 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
+    AssignmentService.getTaskAssignableUsersTasks($scope.user.id)
+      .success (data) ->
+        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.outgoing_assignments = $scope.organization.assignments
+        $scope.loaded_outgoing_assignments = true
+
     AssignmentService.collectAssignments($scope.user.id)
       .success (data) ->
         $scope.outgoing_assignments = data.assignment_collections

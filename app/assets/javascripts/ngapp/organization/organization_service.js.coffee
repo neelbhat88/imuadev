@@ -49,6 +49,8 @@ angular.module('myApp')
 
     # Collect all assignments
     org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments"), true))
+    if !org.assignments[0] then org.assignments = []
+    _.each(org.assignments, (a) -> a.user_assignments = [])
 
     org.total_gpa = org.semester_gpa = 0
     org.total_serviceHours = org.semester_serviceHours = 0
@@ -104,6 +106,8 @@ angular.module('myApp')
           user_assignment.due_datetime = assignment.due_datetime
           user_assignment.description = assignment.description
           user_assignment.assigner = _.find(org.users, (u) -> assignment.user_id == u.id)
+          user_assignment.user = student
+          assignment.user_assignments.push(user_assignment)
 
       # Add up student's gpa
       # TODO This isn't the correct way to calculate gpa
