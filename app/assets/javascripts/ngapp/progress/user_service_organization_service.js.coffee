@@ -23,7 +23,8 @@ angular.module("myApp")
     name: "",
     description: "",
     user_id: user.id,
-    editing: true
+    hours: []
+    non_current_hours: []
 
   @newServiceHour = (user, time_unit_id, service_organization_id) ->
     name: "",
@@ -32,8 +33,7 @@ angular.module("myApp")
     date: "",
     time_unit_id: time_unit_id,
     user_id: user.id,
-    description: "",
-    editing: true
+    description: ""
 
   @saveServiceOrganization = (user_service_organization) ->
     if user_service_organization.id
