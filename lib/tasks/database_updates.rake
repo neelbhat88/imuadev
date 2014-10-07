@@ -141,7 +141,7 @@ namespace :db_update do
       user_expectations = UserExpectation.where(:user_id => u.id)
       if user_expectations.any?
         user_expectations.each do |e|
-          histories = UserExpectationHistory.where(:user_expectation_id => e.id).order("created_at")
+          histories = UserExpectationHistory.where(:user_expectation_id => e.id).order("created_at DESC")
           if histories.any?
             removed_row = histories.shift
             if removed_row.destroy()

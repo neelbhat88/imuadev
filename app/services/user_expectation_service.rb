@@ -74,7 +74,7 @@ class UserExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with id: #{user_expectation_id} ")
     end
 
-    UserExpectationHistoryService.new.create_expectation_history(dbUserExpectation, current_user)
+    initialExpectation = Marshal.load(Marshal.dump(dbUserExpectation))
 
     previousStatus = dbUserExpectation.status
     if dbUserExpectation.update_attributes(:status => userExpectation[:status],
@@ -84,6 +84,8 @@ class UserExpectationService
 
 
       domainUserExpectation = get_user_expectation(dbUserExpectation.id)
+
+      UserExpectationHistoryService.new.create_expectation_history(initialExpectation, current_user)
 
       IntercomProvider.new.create_event(AnalyticsEventProvider.events[:updated_expectation], current_user.id,
                                                 {:user_expectation_id => user_expectation_id,
