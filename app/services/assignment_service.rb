@@ -50,7 +50,7 @@ class AssignmentService
     else
       conditions[:assigned_to_id] = conditions[:user_id]
       relationshipQ = Querier.new(Relationship).select([], [:user_id]).where(conditions.slice(:assigned_to_id))
-      conditions[:user_id] = (relationshipQ.pluck[:user_id] << conditions[:user_id].to_s).uniq
+      conditions[:user_id] = (relationshipQ.pluck(:user_id) << conditions[:user_id].to_s).uniq
       userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
     end
 

@@ -188,10 +188,10 @@ class Api::V1::AssignmentController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
 
-    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
+    # if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     result = @assignmentService.get_task_assignable_users(url_params)
 
@@ -204,10 +204,10 @@ class Api::V1::AssignmentController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
 
-    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
+    # if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     result = @assignmentService.get_task_assignable_users_tasks(url_params)
 
