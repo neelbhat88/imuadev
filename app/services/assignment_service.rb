@@ -54,7 +54,7 @@ class AssignmentService
       userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
     end
 
-    view = {organization: {users: userQ.view}}
+    view = {users: userQ.view}
 
     return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
   end
