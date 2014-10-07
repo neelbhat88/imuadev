@@ -1,8 +1,8 @@
 <div ng-controller="ServiceProgressController" class="serviceProgressContainer" modulecolor="{{selected_module.module_title}}">
 
-  <widget-service-hours></widget-service-hours>
+  <div ng-include="'progress/widgets/service_hours.html'"></div>
 
-  <widget-service-log></widget-service-log>
+  <div ng-include="'progress/widgets/service_log.html'"></div>
 
   <div ng-include="'progress/widgets/milestones.html'"></div>
 
