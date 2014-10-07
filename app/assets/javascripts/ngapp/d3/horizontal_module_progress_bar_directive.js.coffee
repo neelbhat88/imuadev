@@ -16,7 +16,19 @@ angular.module('myApp')
       w = scope.width
       h = scope.height
 
+    # Create SVG element
+    svg = d3.select(element[0])
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("viewBox", "0 0 " + w + " " + h)
+      .attr("preserveAspectRatio", "xMidYMin")
+      .attr("id", 'bar_' + scope.module.module_title)
+      .append("g")
+
     scope.render = (module) ->
+      svg.selectAll("g").remove()
+
       switch (module.module_title)
         when 'Academics'
           moduleColor = '#41e6b2'
@@ -66,15 +78,6 @@ angular.module('myApp')
       color = d3.scale.ordinal()
         .range([moduleColor, moduleColorBg])
 
-      # Create SVG element
-      svg = d3.select("body")
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h)
-        .append("g")
-        .attr("id", scope.module.module_title)
-
-
       # Add a group for each row of data
       groups = svg.selectAll("g")
         .data(progressData)
@@ -94,8 +97,7 @@ angular.module('myApp')
           .attr("x", (d) ->
             xScale(d.y0)
           )
-          .attr("y", (h/2))
-          .attr("height", (h/2))
+          .attr("height", h)
           .attr("width", (d) ->
             xScale(d.y)
           )
@@ -104,7 +106,7 @@ angular.module('myApp')
       scope.render(scope.module)
     , true)
 
-    chartSelect = $("#"+ scope.module.module_title)
+    chartSelect = $("#bar_"+ scope.module.module_title)
 
     resizeParent = () ->
       if scope.parentclass
@@ -112,6 +114,7 @@ angular.module('myApp')
 
         chartSelect.attr("width", onChangeWidth)
         chartSelect.attr("height", onChangeWidth)
+
 
     $(window).resize (event) -> resizeParent()
 ]

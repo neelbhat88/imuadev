@@ -3,18 +3,16 @@ angular.module('myApp')
   ($scope, UserServiceOrganizationService, ProgressService) ->
     $scope.user_service_organizations = []
     $scope.semester_service_hours = 0
-    $scope.expand_service_entry = false
     $scope.loaded_data = false
-
 
     $scope.resetNewServiceEntry = () ->
       if $scope.selected_semester
-        $scope.expand_service_entry = false
         $scope.new_service_organization = UserServiceOrganizationService.newServiceOrganization($scope.student)
         $scope.new_service_organization.hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, null))
+        $scope.new_service_organization.editing = false
 
-    $scope.expandNewServiceEntry = () ->
-      $scope.expand_service_entry = true
+    $scope.editNewServiceEntry = () ->
+      $scope.new_service_organization.editing = true
 
     $scope.resetNewServiceEntry()
 
@@ -67,6 +65,9 @@ angular.module('myApp')
     $scope.newServiceEntryIsSavable = () ->
       return $scope.serviceOrganizationIsSavable($scope.new_service_organization) &&
              $scope.serviceHourIsSavable($scope.new_service_organization.hours[0])
+
+    $scope.applicableServiceOrganizations = () ->
+      return _.filter($scope.user_service_organizations, (o) -> o.hours.length > 0)
 
 
     $scope.saveNewServiceEntry = () ->

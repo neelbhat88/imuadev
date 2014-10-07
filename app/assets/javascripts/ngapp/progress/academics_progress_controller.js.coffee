@@ -5,6 +5,10 @@ angular.module('myApp')
     $scope.classes = {}
     $scope.classes.editing = false
     $scope.gpa_history = {}
+    $scope.selected_class = null
+    $scope.class_editor = false
+    $scope.last_updated_gpa = null
+    $scope.flexcell = 1
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -15,6 +19,9 @@ angular.module('myApp')
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
               $scope.gpa = 0.toFixed(2)
+
+            $scope.last_updated_gpa = _.last(_.sortBy($scope.student.user_classes, (u) ->
+              u.updated_at)).updated_at
 
             date_format_gpa_history =
               _.each(data.user_gpa_history, (h) ->
@@ -30,7 +37,34 @@ angular.module('myApp')
                 $scope.gpa_history.values.push(gpa_history.regular_unweighted)
                 $scope.gpa_history.dates.push(gpa_history.date_updated)
 
+            $scope.refreshFlexcells()
+
             $scope.$emit('loaded_module_milestones');
+
+    $scope.refreshFlexcells = () ->
+      #This is probably the most inefficient way to do this, and I'm sure theres a fancy coffee/js way to do it. Feel free to replace!
+      $scope.classes_length = $scope.user_classes.length
+      if $scope.classes_length == 1
+        $scope.flexcell = "by-one"
+      else
+        if $scope.classes_length % 2 == 0 #even
+          if $scope.classes_length % 5 == 0
+            $scope.flexcell = "by-10"
+          else if $scope.classes_length % 4 == 0
+            $scope.flexcell = "by-4"
+          else if $scope.classes_length % 3 == 0
+            $scope.flexcell = "by-6"
+          else
+            $scope.flexcell = "by-2"
+        else #odd
+          if $scope.classes_length % 7 == 0
+            $scope.flexcell = "by-7"
+          else if $scope.classes_length % 5 == 0
+            $scope.flexcell = "by-5"
+          else if $scope.classes_length % 3 == 0
+            $scope.flexcell = "by-3"
+          else
+            $scope.flexcell = "by-prime"
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
@@ -43,6 +77,7 @@ angular.module('myApp')
       user_class.new_level = user_class.level
       user_class.new_subject = user_class.subject
       user_class.new_credit_hours = user_class.credit_hours
+      $scope.refreshFlexcells()
 
     $scope.saveClass = (user_class) ->
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
@@ -72,6 +107,7 @@ angular.module('myApp')
 
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Academics')
+          $scope.last_updated_gpa = new Date()
 
     $scope.deleteClass = (user_class) ->
       if window.confirm "Are you sure you want to delete this class?"
@@ -84,10 +120,17 @@ angular.module('myApp')
               $scope.gpa = 0.toFixed(2)
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Academics')
+            $scope.last_updated_gpa = new Date()
+            $scope.selected_class = null
+            $scope.refreshFlexcells()
 
     $scope.addClass = () ->
       $scope.classes.editing = true
-      $scope.user_classes.push(UserClassService.new($scope.student, $scope.selected_semester.id))
+      new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
+      $scope.user_classes.push(new_class)
+      $scope.selected_class = new_class
+      $scope.editClass(new_class)
+      $scope.refreshFlexcells()
 
     $scope.cancelEdit = (user_class) ->
       if user_class.id
@@ -96,7 +139,20 @@ angular.module('myApp')
         $scope.user_classes = removeClass($scope.user_classes, user_class)
 
       $scope.classes.editing = false
+      $scope.refreshFlexcells()
 
     removeClass = (classes, class_to_remove) ->
       _.without(classes, _.findWhere(classes, {id: class_to_remove.id}))
+
+    $scope.selectWidget = (widget) ->
+      if $scope.selected_widget != widget
+        $scope.selected_widget = widget
+        $scope.selected_year = null
+        $scope.selected_semester = null
+
+    $scope.selectedClass = (user_class) ->
+      if $scope.selected_class != user_class
+        $scope.selected_class = user_class
+        $scope.class_editor = false
+
 ]
