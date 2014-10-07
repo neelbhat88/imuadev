@@ -132,20 +132,17 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
 
-    # $scope.addHour= (service_hour) ->
-    #   if !!$scope.user_service_organizations[index].hours
-    #     $scope.user_service_organizations[index].hours.editing = true
-    #     $scope.user_service_organizations[index].hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, user_service_organization_id))
-    #   else
-    #     $scope.user_service_organizations[index].hours = []
-    #     $scope.user_service_organizations[index].hours.push(UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, user_service_organization_id))
+    $scope.addHour= (service_organization) ->
+      service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
+      service_hour.editing = true
+      service_organization.hours.push(service_hour)
 
     $scope.saveHour = (service_hour) ->
       new_service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_hour.user_service_organization_id)
       new_service_hour.id = service_hour.id
-      new_service_hour.description = service_hour.description
-      new_service_hour.hours = service_hour.hours
-      new_service_hour.date = service_hour.date
+      new_service_hour.description = service_hour.new_description
+      new_service_hour.hours = service_hour.new_hours
+      new_service_hour.date = service_hour.new_date
 
       if !$scope.serviceHourIsSavable(new_service_hour)
         return
@@ -159,28 +156,32 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
-
     $scope.editHour = (service_hour) ->
       service_hour.editing = true
       service_hour.new_description = service_hour.description
       service_hour.new_hours = service_hour.hours
       service_hour.new_date = service_hour.date
 
-    $scope.cancelEditHour= (service_hour) ->
-      service_hour.editing = false
+    $scope.cancelEditHour= (service_organization, service_hour) ->
+      if !service_hour.id
+        service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
+      else
+        service_hour.editing = false
 
     $scope.deleteHour = (service_organization, service_hour) ->
       if window.confirm "Are you sure you want to delete this hour?"
         UserServiceOrganizationService.deleteServiceHour(service_hour)
           .success (data) ->
             service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
-            if service_organization.non_current_hours.length == 0
+            if service_organization.hours.length == 0 && service_organization.non_current_hours.length == 0
               $scope.user_service_organizations.splice(_.indexOf($scope.user_service_organizations, service_organization), 1)
 
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
 
-
+    $scope.editingServiceOrganization = (service_organization) ->
+      return _.some(service_organization.hours, (h) -> h.editing == true) ||
+             service_organization.editing == true
 
 
 ]
