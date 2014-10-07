@@ -2,7 +2,7 @@
 
   <div class="progress-header" ng-if="selected_module.module_title != null">
 
-    <widget-module-circles-nav></widget-module-circles-nav>
+    <div ng-include="'progress/widgets/module_circles_nav.html'"></div>
 
   </div>
 
@@ -60,7 +60,7 @@
 
         </div>
 
-        <widget-module-circles></widget-module-circles>
+        <div ng-include="'progress/widgets/module_circles.html'"></div>
 
       </div>
 

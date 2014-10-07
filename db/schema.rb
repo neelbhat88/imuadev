@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
 
   add_index "milestones", ["organization_id"], :name => "index_milestones_on_organization_id"
   add_index "milestones", ["time_unit_id", "submodule", "module", "value"], :name => "index_milestones_on_time_submod_mod_and_val", :unique => true
+  add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
 
   create_table "org_tests", :force => true do |t|
     t.integer  "organization_id"
@@ -141,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
   end
 
   add_index "time_units", ["organization_id"], :name => "index_time_units_on_organization_id"
+  add_index "time_units", ["roadmap_id"], :name => "IDX_TimeUnit_RoadmapId"
 
   create_table "user_assignments", :force => true do |t|
     t.integer  "assignment_id"
