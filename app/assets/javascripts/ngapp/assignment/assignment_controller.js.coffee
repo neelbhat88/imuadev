@@ -33,8 +33,8 @@ angular.module('myApp')
         $scope.assignable_users = $scope.organization.users
 
         $scope.assignable_user_groups = []
-        $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
-        $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
+        # $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
+        # $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
         $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
 
         $scope.loaded_assignable_users = true
