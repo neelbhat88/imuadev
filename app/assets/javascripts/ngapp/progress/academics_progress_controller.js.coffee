@@ -41,9 +41,9 @@ angular.module('myApp')
 
             $scope.$emit('loaded_module_milestones');
 
-    $scope.refreshFlexcells = () ->
+    $scope.refreshFlexcells = (new_class_adder = 0) ->
       #This is probably the most inefficient way to do this, and I'm sure theres a fancy coffee/js way to do it. Feel free to replace!
-      $scope.classes_length = $scope.user_classes.length
+      $scope.classes_length = $scope.user_classes.length + new_class_adder
       if $scope.classes_length == 1
         $scope.flexcell = "by-one"
       else
@@ -99,6 +99,8 @@ angular.module('myApp')
               break
 
           $scope.user_classes = data.user_classes
+          last_array_item = data.user_classes.length - 1
+          $scope.selected_class = data.user_classes[last_array_item]
           if data.user_gpa
             $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
           else
@@ -127,16 +129,17 @@ angular.module('myApp')
     $scope.addClass = () ->
       $scope.classes.editing = true
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
-      $scope.user_classes.push(new_class)
       $scope.selected_class = new_class
       $scope.editClass(new_class)
-      $scope.refreshFlexcells()
+      $scope.refreshFlexcells(1)
 
     $scope.cancelEdit = (user_class) ->
       if user_class.id
         user_class.editing = false
       else
         $scope.user_classes = removeClass($scope.user_classes, user_class)
+        if !$scope.selected_class.id
+          $scope.selectedClass(null)
 
       $scope.classes.editing = false
       $scope.refreshFlexcells()
