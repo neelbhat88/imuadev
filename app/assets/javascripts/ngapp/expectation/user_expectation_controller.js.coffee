@@ -18,6 +18,8 @@ angular.module('myApp')
     $scope.editExpectation = () ->
       $scope.editing = true
       $scope.old_status = angular.copy($scope.user_expectation)
+      if $scope.old_status.modified_by_name == null
+        $scope.old_status.modified_by_name = $scope.current_user.full_name
 
     $scope.cancelEditing = () ->
       $scope.editing = false
@@ -33,6 +35,8 @@ angular.module('myApp')
 
     $scope.updateComment = () ->
       $scope.user_expectation.comment = $scope.user_expectation.edit_comment
+      if $scope.user_expectation.modified_by_name == null
+
       ExpectationService.updateUserExpectationComment($scope.user_expectation)
         .success (data) ->
           $scope.user_expectation = data.user_expectation
