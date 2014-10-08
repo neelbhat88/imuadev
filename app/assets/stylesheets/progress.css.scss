@@ -187,6 +187,19 @@
         }
       }
     }
+
+    #cell--hours {
+      width: 30%;
+
+      @include respond-to(900) { display: none; }
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    .service--pane { width: 65%; }
   }
 
   .extracurricularProgressContainer {

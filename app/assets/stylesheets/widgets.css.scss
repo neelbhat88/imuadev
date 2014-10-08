@@ -130,6 +130,10 @@ $border-color: black(0.2);
           padding-bottom: 0;
         }
 
+        .no-border-right {
+          border-right: 0;
+        }
+
         .module-circle--meta {
 
           .click-to-view {
