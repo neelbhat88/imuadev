@@ -13,13 +13,13 @@
 
   <div class="dashboard-content" wait-to-load="{{loaded_users}}">
 
-    <widget-org-activity></widget-org-activity>
+    <div ng-include="'dashboard/widgets/org_activity.html'"></div>
 
-    <widget-org-gpa modulecolor="academics"></widget-org-gpa>
+    <div ng-include="'dashboard/widgets/org_gpa.html'" modulecolor="academics"></div>
 
-    <widget-org-service-hours modulecolor="service"></widget-org-service-hours>
+    <div ng-include="'dashboard/widgets/org_service_hours.html'" modulecolor="service"></div>
 
-    <widget-org-extracurricular></widget-org-extracurricular>
+    <div ng-include="'dashboard/widgets/org_extracurricular.html'"></div>
 
   </div>
 
