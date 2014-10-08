@@ -56,4 +56,18 @@ class Api::V1::UserExpectationController < ApplicationController
         user_expectation_history: history
       }
   end
+
+  # PUT /user_expectation/:id/comment
+  def comment
+    user_expectation_id = params[:id].to_i
+    comment = params[:userExpectation][:comment]
+
+    result = UserExpectationService.new.update_user_expectation_comment(user_expectation_id, comment)
+
+    render status: result.status,
+      json: {
+        info: result.info,
+        user_expectation: result.object
+      }
+  end
 end
