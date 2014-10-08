@@ -17,13 +17,6 @@ angular.module('myApp')
         $scope.outgoing_assignments = $scope.organization.assignments
         $scope.loaded_outgoing_assignments = true
 
-    AssignmentService.collectAssignments($scope.user.id)
-      .success (data) ->
-        $scope.outgoing_assignments = data.assignment_collections
-        for assignment in $scope.outgoing_assignments
-          assignment.assignees = []
-        $scope.loaded_outgoing_assignments = true
-
     $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)
 
