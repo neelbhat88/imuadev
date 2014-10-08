@@ -16,15 +16,18 @@ angular.module('myApp')
             GPA: scope.data.values
           },
           types: {
-            GPA: 'area'
+            GPA: 'area-spline'
           }
         },
-        axis: {
-          x: {
-            type: 'category',
-            categories: scope.data.dates
-          }
-        }
+        legend: {
+          show: false
+        },
+        # axis: {
+        #   x: {
+        #     type: 'category',
+        #     categories: scope.data.dates
+        #   }
+        # }
       })
     , 500)
 ]
