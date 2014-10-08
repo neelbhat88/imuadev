@@ -2,7 +2,7 @@
 
   <div class="progress-header" ng-if="selected_module.module_title != null">
 
-    <widget-module-circles-nav></widget-module-circles-nav>
+    <div ng-include="'progress/widgets/module_circles_nav.html'"></div>
 
   </div>
 
@@ -27,10 +27,10 @@
 
           <div class="widget--content">
             <div class="widget--content--table">
-              <div class="widget--content--cell">
+              <div class="table--cell">
                 <div class="cell--padding">
                   <div class="points points-earned">
-                    <h3 class="bold">560</h3>
+                    <h3 class="bold">{{points_earned}}</h3>
                     <h6>Points Earned</h6>
                   </div>
 
@@ -45,12 +45,12 @@
                   </div>
 
                   <div class="points points-available">
-                    <h5>1020</h5>
+                    <h5>{{total_points}}</h5>
                     <h6>Points Available</h6>
                   </div>
 
                   <div class="temp-buttons">
-                    <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-lg">See Dresha's Expectations</button></a>
+                    <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-lg">See {{student.first_name}}'s Expectations</button></a>
                   </div>
 
                 </div>
@@ -60,7 +60,7 @@
 
         </div>
 
-        <widget-module-circles></widget-module-circles>
+        <div ng-include="'progress/widgets/module_circles.html'"></div>
 
       </div>
 

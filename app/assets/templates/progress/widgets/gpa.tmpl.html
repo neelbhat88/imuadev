@@ -10,10 +10,11 @@
         </div>
         <div class="widget--content">
           <div class="widget--content--table">
-            <div class="widget--content--cell">
+            <div class="table--cell">
               <div class="cell--padding">
                 <h1 class="bold">{{gpa}}</h1>
                 <h5>GPA</h5>
+                <div class="subtext">As of {{last_updated_gpa | fromNow}}</div>
               </div>
             </div>
           </div>
@@ -29,7 +30,7 @@
         </div>
         <div class="widget--content">
           <div class="widget--content--table">
-            <div class="widget--content--cell">
+            <div class="table--cell">
               <div class="cell--padding">
                 <history-line-chart data="gpa_history"></history-line-chart>
               </div>

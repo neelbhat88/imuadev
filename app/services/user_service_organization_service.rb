@@ -1,5 +1,17 @@
 class UserServiceOrganizationService
 
+  # Accessed by organization_id
+  def get_org_organization_titles(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+    userServiceOrganizationQ = Querier.new(UserServiceOrganization).select([], [:name]).where(conditions)
+
+    return userServiceOrganizationQ.pluck(:name)
+  end
+
   def get_user_service_organizations(userId)
     return UserServiceOrganization.where(:user_id => userId).order(:id)
   end

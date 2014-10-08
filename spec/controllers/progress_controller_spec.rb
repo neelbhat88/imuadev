@@ -5,7 +5,7 @@ describe Api::V1::ProgressController do
     login_student
     let(:userId) { subject.current_user.id }
 
-    it "returns 200 with correct progress object" do
+    xit "returns 200 with correct progress object" do
       orgId = subject.current_user.organization_id
 
       m1 = create(:milestone, organization_id: orgId, time_unit_id: 1, points: 10)

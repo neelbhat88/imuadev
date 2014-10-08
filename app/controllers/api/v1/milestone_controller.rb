@@ -4,6 +4,23 @@ class Api::V1::MilestoneController < ApplicationController
   skip_before_filter :verify_authenticity_token
   respond_to :json
 
+  # GET /milestone/:id/status
+  def get_milestone_status
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:milestone_id] = params[:id]
+
+    # TODO - Abilities for Milestone subjectObj?
+    # if !can?(current_user, :get_milestone_status, Milestone.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = MilestoneService.new.get_milestone_status(url_params)
+
+    render status: result.status,
+      json: Oj.dump({ info: result.info, organization: result.object }, mode: :compat)
+  end
+
   # POST /milestone
   def create_milestone
     tuId = params[:milestone][:time_unit_id]
@@ -16,10 +33,11 @@ class Api::V1::MilestoneController < ApplicationController
     is_default = params[:milestone][:is_default]
     value = params[:milestone][:value]
     icon = params[:milestone][:icon]
+    organizationId = TimeUnit.where(id: tuId).first.organization_id
 
     milestone = { :module => mod, :submodule=> submod, :importance => importance, :points => points,
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
-                  :is_default => is_default, :icon => icon, :organization_id => current_user.organization_id }
+                  :is_default => is_default, :icon => icon, :organization_id => organizationId }
 
     result = MilestoneService.new.create_milestone(milestone)
 

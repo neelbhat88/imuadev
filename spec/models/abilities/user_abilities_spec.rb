@@ -23,7 +23,10 @@ describe Ability do
                                           :manage_user_tests,
                                           :manage_user_extracurricular_and_service,
                                           :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_parent_guardian_contacts,
+                                          :get_student_expectations,
+                                          :get_student_dashboard,
+                                          :get_user_progress
                                         )
   end
 
@@ -40,7 +43,10 @@ describe Ability do
                                           :manage_user_tests,
                                           :manage_user_extracurricular_and_service,
                                           :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_parent_guardian_contacts,
+                                          :get_student_expectations,
+                                          :get_student_dashboard,
+                                          :get_user_progress
                                         )
   end
 
@@ -58,7 +64,10 @@ describe Ability do
                                           :manage_user_tests,
                                           :manage_user_extracurricular_and_service,
                                           :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_parent_guardian_contacts,
+                                          :get_student_expectations,
+                                          :get_student_dashboard,
+                                          :get_user_progress
                                         )
   end
 
@@ -76,7 +85,10 @@ describe Ability do
                                           :manage_user_tests,
                                           :manage_user_extracurricular_and_service,
                                           :read_parent_guardian_contacts,
-                                          :manage_parent_guardian_contacts
+                                          :manage_parent_guardian_contacts,
+                                          :get_student_expectations,
+                                          :get_student_dashboard,
+                                          :get_user_progress
                                         )
   end
 
@@ -113,7 +125,10 @@ describe Ability do
                                             :manage_user_tests,
                                             :manage_user_extracurricular_and_service,
                                             :read_parent_guardian_contacts,
-                                            :manage_parent_guardian_contacts
+                                            :manage_parent_guardian_contacts,
+                                            :get_student_expectations,
+                                            :get_student_dashboard,
+                                            :get_user_progress
                                           )
     end
 

@@ -76,7 +76,8 @@ class Querier
   def attributes
     return (@attributes.nil?) ? self.set_attributes([]) : @attributes
   end
-
+  # Returns the values as an array of strings, so the result can be directly
+  # used as a "where" condition parameter.
   def pluck(key)
     return (self.domain.map { |d| d[key].to_s }).uniq
   end
@@ -105,15 +106,19 @@ class Querier
     new_conds = {}
     conditions.each{|c| c.map{|k,v| new_conds[k] = v}}
     conditions = new_conds.select {|k,v| filterBy.include?(k)}
+
     applicable_domains = []
     if filterBy.empty?
       applicable_domains = self.domain
     else
       # Remove from @domains as its read into the view
+      # TODO - SubQuerier view generation won't work if nested more than once
+      # TODO - WRITE UNIT TESTS FOR THIS!!
       while !self.domain(filterBy).empty?
+        primary_key = conditions.keys[0]
         if conditions.keys.all? {|key| self.domain[0][key] == conditions[key]}
           applicable_domains << self.domain.shift
-        elsif conditions.keys.all? {|key| self.domain[0][key] <= conditions[key]}
+        elsif self.domain[0][primary_key] <= conditions[primary_key]
           self.domain.shift
         else
           break
@@ -149,6 +154,7 @@ class Querier
       obj.each_key do |a|
         obj_domain[a.to_sym] = @klass.type_cast_attribute(a, obj)
       end
+      # TODO - Insert sorted into the array
       @domain << obj_domain
     end
     sortBy << :id

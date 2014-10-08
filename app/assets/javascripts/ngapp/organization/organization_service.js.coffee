@@ -26,14 +26,15 @@ angular.module('myApp')
 
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
 
-    org.students = _.where(org.users, { role: 50 })
-    org.mentors = _.where(org.users, { role: 40 })
+    org.students = _.each(_.where(org.users, { role: 50 }), (s) -> s.modules_progress = [] )
+    org.mentors = _.each(_.where(org.users, { role: 40 }), (m) -> m.modules_progress = [] )
     org.orgAdmins = _.where(org.users, { role: 10 })
 
     org.active_students = _.filter(org.students, (student) -> (new Date(student.last_login)).getTime() >= active_user_threshold).length
     org.active_mentors = _.filter(org.mentors, (mentor) -> (new Date(mentor.last_login)).getTime() >= active_user_threshold).length
     org.attention_studentIds = []
 
+    _.each(org.milestones, (m) -> m.time_unit_name = _.find(org.time_units, (tu) -> tu.id == m.time_unit_id).name)
     org.org_milestones = {}
     # Sort org_milestones by time_unit_id and module_title, while tallying up total points
     for time_unit_id in _.pluck(org.time_units, "id")
@@ -73,7 +74,6 @@ angular.module('myApp')
           mentor.studentIds.push(student.id)
 
       # Calculate progress for each module
-      student.modules_progress = []
       for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
         new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
                                 points: { user: 0, total: org_milestones_by_module.totalPoints } }
@@ -91,8 +91,6 @@ angular.module('myApp')
             mentor_module_progress.points.user += new_module_progress.points.user
             mentor_module_progress.points.total += new_module_progress.points.total
           else
-            if mentor.modules_progress == undefined
-              mentor.modules_progress = []
             new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
                                            points: { user: new_module_progress.points.user,\
                                                      total: new_module_progress.points.total } }

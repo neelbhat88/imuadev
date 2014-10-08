@@ -26,7 +26,10 @@ class Ability
           :manage_user_tests,
           :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_parent_guardian_contacts,
+          :get_student_expectations,
+          :get_student_dashboard,
+          :get_user_progress
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -42,7 +45,10 @@ class Ability
           :manage_user_tests,
           :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_parent_guardian_contacts,
+          :get_student_expectations,
+          :get_student_dashboard,
+          :get_user_progress
         ]
 
       elsif user.org_admin?
@@ -55,7 +61,10 @@ class Ability
           :manage_user_tests,
           :manage_user_extracurricular_and_service,
           :read_parent_guardian_contacts,
-          :manage_parent_guardian_contacts
+          :manage_parent_guardian_contacts,
+          :get_student_expectations,
+          :get_student_dashboard,
+          :get_user_progress
         ]
 
       elsif user.mentor?
@@ -70,7 +79,10 @@ class Ability
               :manage_user_tests,
               :manage_user_extracurricular_and_service,
               :read_parent_guardian_contacts,
-              :manage_parent_guardian_contacts
+              :manage_parent_guardian_contacts,
+              :get_student_expectations,
+              :get_student_dashboard,
+              :get_user_progress
             ]
           end
         else # other users in their organization (other mentors, admins)
@@ -98,7 +110,8 @@ class Ability
       if user.super_admin?
         return [:create_user,
                 :read_org_tests,
-                :manage_org_tests]
+                :manage_org_tests,
+                :get_organization_progress]
       else
         return [] if user.organization_id != subjectOrg.id
       end
@@ -106,7 +119,8 @@ class Ability
       if user.org_admin?
         rules += [:create_user,
                   :read_org_tests,
-                  :manage_org_tests]
+                  :manage_org_tests,
+                  :get_organization_progress]
       end
 
       if user.mentor?
