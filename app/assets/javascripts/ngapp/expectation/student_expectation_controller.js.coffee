@@ -24,21 +24,6 @@ angular.module('myApp')
         $scope.recalculateMeetingExpectations()
         $scope.loaded_data = true
 
-    $scope.setUserExpectationStatus = (expectation, status) ->
-      if expectation.user_expectation.status != status
-        expectation.user_expectation.status = status
-        ExpectationService.updateUserExpectation(expectation.user_expectation)
-          .success (data) ->
-            expectation.user_expectation = data.user_expectation
-            $scope.recalculateMeetingExpectations()
-
-    $scope.viewExpectationHistory = (expectation) ->
-      ExpectationService.getUserExpectationHistory($scope.studentId, expectation.id)
-        .success (data) ->
-          expectation.user_expectation.history = []
-          expectation.user_expectation.history = data.expectation_history
-          expectation.user_expectation.showHistory = true
-
     $scope.hideExpectationHistory = (expectation) ->
       expectation.user_expectation.showHistory = false
 

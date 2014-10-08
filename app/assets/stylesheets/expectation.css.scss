@@ -191,7 +191,6 @@
     width: 100%;
     padding: 20px 0;
     background: $grey;
-    border-bottom: 1px solid $darkborder;
   }
 
   .expectation-content {
@@ -209,6 +208,19 @@
       .status-buttons {
         margin-top: 10px;
       }
+    // added by Jake
+    .comment-edit {
+      color: black;
+    }
+    .glyphicon-edit {
+      font-size: 12px;
+    }
+    .glyphicon-ok {
+      color: green;
+    }
+    .glyphicon-remove {
+      color: red;
+    }
 
     }
 

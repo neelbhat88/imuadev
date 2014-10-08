@@ -16,6 +16,7 @@
 //= require angular-mocks
 //= require angular-ui-bootstrap-tpls
 //= require angular-rails-templates
+//= require salvattore
 //= require spin
 //= require ladda
 //= require d3

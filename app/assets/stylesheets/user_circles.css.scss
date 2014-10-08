@@ -236,6 +236,36 @@
 
 }
 
+.progress-bar-nav {
+
+  .progress-bar--left {
+    width: 30%;
+    float: left;
+    text-align: right;
+    h6 {
+      margin: 0;
+    }
+  }
+
+  .progress-bar--right {
+    width: 70%;
+    float: left;
+
+    .progress-bar-size {
+      width: 300px;
+      height: 15px;
+      margin: 0 auto;
+      margin-top: 3px;
+
+      @include respond-to(600) {
+        width: 240px;
+      }
+
+    }
+
+  }
+
+}
 
 
 /* ===============================================

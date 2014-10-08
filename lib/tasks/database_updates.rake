@@ -26,11 +26,6 @@ namespace :db_update do
     else
       puts 'ERROR: Failed to updated AppVersion.'
     end
-
-    # Cleaning up old database sessions greter than 2 minutes past the session timeout time
-    # The 2 minutes is just to add a buffer in case of slight differences in client and server time
-    puts "Deleting expired sessions from the DB..."
-    Session.where("updated_at < '#{DateTime.now.utc - (Constants.SessionTimeout + 2.minutes) }'").delete_all
   end
 
   ########################################
@@ -136,6 +131,25 @@ namespace :db_update do
       puts "AppVersion row created"
     else
       puts "AppVersion row already exists"
+    end
+  end
+
+  desc "Remove first user expectation history item for new saving process"
+  task :remove_first_user_expectation_history => :environment do
+    all_users = User.where(:role => 50)
+    all_users.each do |u|
+      user_expectations = UserExpectation.where(:user_id => u.id)
+      if user_expectations.any?
+        user_expectations.each do |e|
+          histories = UserExpectationHistory.where(:user_expectation_id => e.id).order("created_at DESC")
+          if histories.any?
+            removed_row = histories.shift
+            if removed_row.destroy()
+              puts "Removed first history item for user_expectation_id = " + removed_row.user_expectation_id.to_yaml
+            end
+          end
+        end
+      end
     end
   end
 

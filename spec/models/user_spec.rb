@@ -1,24 +1,46 @@
 require 'rails_helper'
 
 describe User do
-  it "is valid with a email and password" do
-    user = User.new(email: 'email@gmail.com', password: "password")
+  it "is valid" do
+    user = build(:student)
 
     expect(user).to be_valid
   end
 
   it "is invalid without a email" do
-    expect(User.new(email: nil, password: "password")).to have(1).errors_on(:email)
+    user = build(:student, email: nil)
+    expect(user).to have(1).errors_on(:email)
   end
 
   it "is invalid without a password" do
-    expect(User.new(password: nil, email: "email@email.com")).to have(1).errors_on(:password)
+    user = build(:student, password: nil)
+    expect(user).to have(1).errors_on(:password)
+  end
+
+  it "is invalid without a first name" do
+    user = build(:student, first_name: nil)
+    expect(user).to have(1).errors_on(:first_name)
+  end
+
+  it "is invalid without a last name" do
+    user = build(:student, last_name: nil)
+    expect(user).to have(1).errors_on(:last_name)
+  end
+
+  it "is invalid without a role" do
+    user = build(:student, role: nil)
+    expect(user).to have(1).errors_on(:role)
+  end
+
+  it "is invalid without a organization id" do
+    user = build(:student, organization_id: nil)
+    expect(user).to have(1).errors_on(:organization_id)
   end
 
   it "is invalid with a duplicate email address" do
     user = create(:user)
 
-    newuser = User.new(email: user.email, password: "password")
+    newuser = build(:user, email: user.email)
 
     expect(newuser).to have(1).errors_on(:email)
   end

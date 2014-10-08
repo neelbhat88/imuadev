@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
   belongs_to :organization
   belongs_to :time_unit
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :role, presence: true
+  validates :organization_id, presence: true
+
   has_many :user_classes, dependent: :destroy
   has_many :user_expectations, dependent: :destroy
   has_many :relationships, dependent: :destroy
