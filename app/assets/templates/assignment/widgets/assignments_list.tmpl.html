@@ -1,0 +1,16 @@
+<div class="widget">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Tasks</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="table--cell breakalways" ng-repeat="task in outgoing_assignments | orderBy:sortIncompleteAssignments">
+        <div class="cell--padding">
+            <h6 class="bold"><a no-click-propagation href="#/user_assignment/{{task.id}}">{{task.title}}</a></h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

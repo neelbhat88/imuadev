@@ -74,15 +74,18 @@ class UserExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with id: #{user_expectation_id} ")
     end
 
+    initialExpectation = Marshal.load(Marshal.dump(dbUserExpectation))
+
     previousStatus = dbUserExpectation.status
     if dbUserExpectation.update_attributes(:status => userExpectation[:status],
                                            :comment => userExpectation[:comment],
                                            :modified_by_id => current_user.id,
                                            :modified_by_name => current_user.full_name)
 
-      UserExpectationHistoryService.new.create_expectation_history(dbUserExpectation, current_user)
 
       domainUserExpectation = get_user_expectation(dbUserExpectation.id)
+
+      UserExpectationHistoryService.new.create_expectation_history(initialExpectation, current_user)
 
       IntercomProvider.new.create_event(AnalyticsEventProvider.events[:updated_expectation], current_user.id,
                                                 {:user_expectation_id => user_expectation_id,
@@ -98,4 +101,19 @@ class UserExpectationService
     end
   end
 
+  def update_user_expectation_comment(user_expectation_id, comment)
+    dbUserExpectation = UserExpectation.find(user_expectation_id)
+
+    if dbUserExpectation.nil?
+      return ReturnObject.new(:internal_server_error, "Failed to find UserExpectation with id: #{user_expectation_id} ")
+    end
+
+    if dbUserExpectation.update_attributes(:comment => comment)
+      domainUserExpectation = get_user_expectation(dbUserExpectation.id)
+
+      return ReturnObject.new(:ok, "Successfully updated UserExpectation Comment, id: #{dbUserExpectation.id}.", domainUserExpectation)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation Comment, id: #{dbUserExpectation.id}", nil)
+    end
+  end
 end

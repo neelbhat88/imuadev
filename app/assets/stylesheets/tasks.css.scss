@@ -1,3 +1,58 @@
+.assignmentsContainer {
+
+  .assignments-header {
+    width: 100%;
+    background: $grey;
+    text-align: center;
+    padding: 60px $wrapper-width;
+    margin: 0;
+  }
+
+  .assignments-content {
+    text-align: center;
+    padding: 40px $wrapper-width;
+
+    .assignments-nav {
+      width: 20%;
+      margin-right: 2%;
+      float: left;
+
+      .selected {
+        background: white(0.1);
+      }
+
+      .selected-year {
+        background: white(0.05);
+        .selected-semester {
+          background: white(0.1);
+        }
+      }
+
+    }
+
+    .assignments-pane {
+      width: 78%;
+      float: left;
+
+      .year-name {
+        margin-right: 6px;
+      }
+
+      .input-forms {
+        width: 100%;
+        max-width: 800px;
+        text-align: left;
+        margin: 0 auto;
+        margin-bottom: 10px;
+      }
+
+    }
+
+  }
+
+}
+
+
 .tasksListContainer {
 
   padding: 40px 0;

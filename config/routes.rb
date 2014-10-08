@@ -31,7 +31,11 @@ Imua::Application.routes.draw do
           resources :user_service_hour, except: [:new, :edit]
 
           resources :user_expectation, except: [:new, :edit, :create, :destroy] do
-            get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+            # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
+            member do
+              get 'history'
+              put 'comment'
+            end
           end
         end
 
