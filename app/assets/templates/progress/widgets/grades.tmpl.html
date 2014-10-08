@@ -25,28 +25,28 @@
   </div>
 
   <div class="widget--content">
-    <div class="widget--pane class-pane" ng-repeat="user_class in user_classes | filter:{ name: selected_class.name }:true" ng-if="selected_class.name != null">
+    <div class="widget--pane class-pane" ng-if="selected_class.name != null">
       <div class="widget--content--table table--fixed">
         <div class="table--cell break900">
-          <div class="cell--padding" ng-hide="user_class.editing">
-            <h4 class="bold">{{user_class.name}}</h3>
-            <h2 class="bold">{{user_class.grade}}</h2>
+          <div class="cell--padding" ng-hide="selected_class.editing">
+            <h4 class="bold">{{selected_class.name}}</h3>
+            <h2 class="bold">{{selected_class.grade}}</h2>
             <div class="subtext">
-              Last updated {{user_class.updated_at | fromNow}}
+              Last updated {{selected_class.updated_at | fromNow}}
             </div>
             <div class="edit-buttons">
-              <button class="btn btn-default btn-sm" ng-click="editClass(user_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{user_class.name}}</button>
+              <button class="btn btn-default btn-sm" ng-click="editClass(selected_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{selected_class.name}}</button>
             </div>
           </div>
-          <div class="cell--padding" ng-show="user_class.editing">
+          <div class="cell--padding" ng-show="selected_class.editing">
             <span class="input-group">
               <label>Class</label>
-              <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
+              <input class="form-control" ng-model="selected_class.new_name" placeholder="Class Name" name="classname">
             </span>
 
             <span class="input-group">
                 <label>Grade</label>
-                <select class="form-control" ng-model="user_class.new_grade">
+                <select class="form-control" ng-model="selected_class.new_grade">
                   <option value="A">A</option>
                   <option value="A-">A-</option>
                   <option value="B+">B+</option>
@@ -63,58 +63,58 @@
             </span>
 
             <div class="edit-buttons">
-              <button class="submit" title="Confirm" ng-click="saveClass(user_class)">Confirm</button>
-              <button class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</button>
+              <button class="submit" title="Confirm" ng-click="saveClass(selected_class)">Confirm</button>
+              <button class="cancel" title="Cancel" ng-click="cancelEdit(selected_class)">Cancel</button>
             </div>
 
           </div>
         </div>
         <div class="table--cell break900">
-          <div class="widget--content--table table--fixed" ng-hide="user_class.editing">
-            <div class="table--cell breakalways" ng-if="user_class.period != null">
+          <div class="widget--content--table table--fixed" ng-hide="selected_class.editing">
+            <div class="table--cell breakalways" ng-if="selected_class.period != null">
               <div class="cell--padding">
                 <p>Period</p>
-                <h5 class="bold">{{user_class.period}}</h5>
+                <h5 class="bold">{{selected_class.period}}</h5>
               </div>
             </div>
-            <div class="table--cell breakalways" ng-if="user_class.room != null">
+            <div class="table--cell breakalways" ng-if="selected_class.room != null">
               <div class="cell--padding">
                 <p>Room</p>
-                <h5 class="bold">{{user_class.room}}</h5>
+                <h5 class="bold">{{selected_class.room}}</h5>
               </div>
             </div>
-            <div class="table--cell breakalways" ng-if="user_class.credit_hours != 1">
+            <div class="table--cell breakalways" ng-if="selected_class.credit_hours != 1">
               <div class="cell--padding">
                 <p>Credit Hours</p>
-                <h5 class="bold">{{user_class.credit_hours}}</h5>
+                <h5 class="bold">{{selected_class.credit_hours}}</h5>
               </div>
             </div>
-            <div class="table--cell breakalways" ng-if="user_class.level != 'Regular'">
+            <div class="table--cell breakalways" ng-if="selected_class.level != 'Regular'">
               <div class="cell--padding">
                 <p>Level</p>
-                <h5 class="bold">{{user_class.level}}</h5>
+                <h5 class="bold">{{selected_class.level}}</h5>
               </div>
             </div>
-            <div class="table--cell breakalways" ng-if="user_class.subject != null">
+            <div class="table--cell breakalways" ng-if="selected_class.subject != null">
               <div class="cell--padding">
                 <p>Subject</p>
-                <h5 class="bold">{{user_class.subject}}</h5>
+                <h5 class="bold">{{selected_class.subject}}</h5>
               </div>
             </div>
           </div>
-          <div class="widget--content--table table--fixed" ng-show="user_class.editing">
+          <div class="widget--content--table table--fixed" ng-show="selected_class.editing">
 
             <div class="table--cell breakalways">
               <span class="input-group">
                 <label>Credit Hours</label>
-                <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+                <input class="form-control" ng-model="selected_class.new_credit_hours" ng-init="selected_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
               </span>
             </div>
             <div class="table--cell breakalways">
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Level</label>
-                    <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                    <select class="form-control" ng-model="selected_class.new_level" ng-init="selected_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
                 </span>
               </div>
             </div>
@@ -122,7 +122,7 @@
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Subject</label>
-                    <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                    <select class="form-control" ng-model="selected_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
                         <option value="">--Select Subject--</option>
                     </select>
                 </span>
@@ -132,7 +132,7 @@
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Period</label>
-                    <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+                    <input class="form-control" ng-model="selected_class.new_period" placeholder="Period (optional)" name="period">
                 </span>
               </div>
             </div>
@@ -140,7 +140,7 @@
               <div class="cell-padding">
                 <span class="input-group">
                     <label>Room</label>
-                    <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
+                    <input class="form-control" ng-model="selected_class.new_room" placeholder="Room (optional)" name="room">
                 </span>
               </div>
             </div>
