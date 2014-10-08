@@ -1,80 +1,144 @@
-<div class="milestoneContainer" wait-to-load="{{loaded_data}}">
+<div class="taskContainer" wait-to-load="{{loaded_data}}">
 
-  <span class ="edit-milestone__title">
-    <img ng-src={{milestone.icon}}/>{{milestone.title}}
-  </span>
-
-  <div class="milestone ptl">
-    <div class="pbs">
-      <div class="milestone-description">{{milestone.description}}</div>
+  <div class="task-header clear">
+    <div class="single-col-wrapper">
+      <div class="back-link">
+        <h6>
+          <a href="#/roadmap/{{milestone.organization_id}}">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to Roadmap
+          </a>
+        </h6>
+      </div>
+      <div class="edit-buttons-top" ng-hide="milestone.editing">
+        <button class="btn btn-default" ng-click="editMilestone()"><span class="glyphicon glyphicon-edit"></span> Edit This Milestone</button>
+      </div>
+      <div class="edit-buttons-top" ng-show="milestone.editing">
+        <button class="btn btn-success" ng-click="saveMilestone()"><span class="glyphicon glyphicon-ok"></span> Save Milestone</button>
+        <button class="btn btn-danger btn-sm" ng-click="cancelEditMilestone()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      </div>
     </div>
+  </div>
 
-    <div class="pbs">
-      <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
-    </div>
+  <div class="single-col-wrapper clear">
+    <div class="assignment--left">
 
-    <div class="milestone_advanced">
-      <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
-      <div class="milestone_advanced__hidden" ng-show="showAdvanced">
-        <div class="pbs">
-          <span class="milestone-weight">Weight:</span>
+      <div class="task-content" ng-hide="milestone.editing">
+        <h4>{{milestone | printMilestone}}</h4>
+      </div>
+
+      <div class="task-content" ng-show="milestone.editing">
+        <div class="form-wrapper">
+          {{milestone.description}}<input class="form-control" ng-model="milestone.new_value" placeholder="Value" autofocus="true">
         </div>
-        <div class="pbs">
-          <input class="form-field" ng-model="milestone.points" placeholder="Weight">
+        <div class="milestone_advanced">
+          <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+          <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+            <div class="pbs">
+              <span class="milestone-weight">Weight:</span>
+            </div>
+            <div class="pbs">
+              <input class="form-field" ng-model="milestone.new_points" placeholder="Weight">
+            </div>
+          </div>
         </div>
+      </div>
+
+      <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
+        <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
+        <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
+          <a href="#/progress/{{user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav" ng-hide="milestone.editing">
+            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+              <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="users-completed" ng-if="users_complete.length != 0">
+        <h6 class="bold green" ng-if="users_complete.length == 1 && users_total.length != 1">{{users_complete.length}} student has completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 1 && users_complete.length != users_total.length">{{users_complete.length}} students have completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length == users_total.length">Nice! All students have completed this milestone.</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
+          <a href="#/progress/{{user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav" ng-hide="milestone.editing">
+            <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
+            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+              <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="edit-buttons-top" ng-show="milestone.editing">
+        <button class="btn btn-success" ng-click="saveMilestone()"><span class="glyphicon glyphicon-ok"></span> Save Milestone</button>
+        <button class="btn btn-danger btn-sm" ng-click="cancelEditMilestone()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      </div>
+
+      <div class="edit-buttons" ng-hide="milestone.editing">
+        <button class="btn btn-default" ng-click="editMilestone()"><span class="glyphicon glyphicon-edit"></span> Edit This Milestone</button>
+        <button class="btn btn-danger" ng-click="deleteMilestone()"><span class="glyphicon glyphicon-trash"></span> Delete this Milestone</button>
       </div>
     </div>
 
-    <ul class="errorText ptm" ng-show="errors">
-      <li ng-repeat="error in errors">{{error}}</li>
-    </ul>
-
-    <div class="buttonGroup pvxl">
-      <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
-      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-      <button class="delete" ng-click="delete()">Delete</button>
+    <div class="assignment--right">
+      <ul>
+        <li>
+          <span class="edit-milestone__title"><img ng-src={{milestone.icon}}/></span>
+          <h6 class="bold">{{milestone.title}}</h6>
+        </li>
+        <li>
+          <h5>
+            <span class="label label-warning" ng-if="users_incomplete.length != 0">
+              <span class="glyphicon glyphicon-exclamation-sign"></span> Incomplete
+            </span>
+            <span class="label label-success" ng-if="users_incomplete.length == 0">
+              <span class="glyphicon glyphicon-ok-circle"></span> Complete
+            </span>
+          </h5>
+        </li>
+        <!-- <li ng-if="milestone.due_datetime != null" ng-hide="milestone.editing">
+          <h6>Due by</h6>
+          <h5 class="bold">{{milestone.due_datetime | formatMDY}}</h5>
+        </li> -->
+        <!-- <li class="form-wrapper" ng-show="milestone.editing">
+          <label><h6>Due Date:</h6></label>
+          <imua-datepicker date="milestone.new_due_datetime"></imua-datepicker>
+        </li> -->
+        <li>
+          <h5 class="bold">{{milestone.time_unit_name}}</h5>
+        </li>
+        <li>
+          <h6>Students Assigned</h6>
+          <h5 class="bold">{{users_total.length}}</h5>
+          <h6>
+            ({{percent_complete}}% Complete)
+          </h6>
+        </li>
+        <li>
+          <!-- <h6>Created by</h6>
+          <a href="#/profile/{{user.id}}">
+            <div class="tiny-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}} {{user.last_name}}" />
+            </div>
+            <h6 class="bold">{{user.first_name}} {{user.last_name}}</h6>
+          </a> -->
+          <p>Created on</p>
+          <p>{{assignment.created_at | formatMDY}}</p>
+        </li>
+      </ul>
     </div>
   </div>
-
-  <div>
-    <h5 class="bold">{{milestone.time_unit_name}}</h5>
-  </div>
-
-  <div>
-    {{percent_complete}}% ({{users_complete.length}}/{{users_incomplete.length}}) of students have completed this milestone
-  </div>
-
-  <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
-    <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
-    <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
-    <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
-      <a href="#/progress/{{user.id}}">
-        <div class="medium-circle-picture">
-          <img ng-src="{{user.square_avatar_url}}"/>
-        </div>
-        <span class="bold">{{user.first_last_initial}}</span>
-      </a>
-    </li>
-  </ul>
-
-  <ul class="users-completed" ng-if="users_complete.length != 0">
-    <h6 class="bold green" ng-if="users_complete.length == 1 && users_total.length != 1">
-      {{users_complete.length}} student has completed this milestone
-    </h6>
-    <h6 class="bold green" ng-if="users_complete.length != 1 && users_complete.length != users_total.length">
-      {{users_complete.length}} students have completed this milestone
-    </h6>
-    <h6 class="bold green" ng-if="users_complete.length == users_total.length">
-      Nice! All assigned students have completed this milestone.
-    </h6>
-    <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
-      <a href="#/progress/{{user.id}}">
-        <div class="medium-circle-picture">
-          <img ng-src="{{user.square_avatar_url}}"/>
-        </div>
-        <span class="bold">{{user.first_last_initial}}</span>
-      </a>
-    </li>
-  </ul>
 
 </div>
