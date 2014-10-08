@@ -51,7 +51,7 @@ angular.module('myApp')
 
     $scope.getServiceOrganizationTotalHours = (service_organization) ->
       total_hours = 0
-      _.each(service_organization.hours, (h) -> total_hours += h.hours)
+      _.each(service_organization.hours, (h) -> total_hours += parseFloat h.hours)
       return total_hours
 
     $scope.serviceOrganizationIsSavable = (service_organization) ->
