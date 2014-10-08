@@ -21,7 +21,7 @@ angular.module('myApp')
         },
         legend: {
           show: false
-        },
+        }
         # axis: {
         #   x: {
         #     type: 'category',
