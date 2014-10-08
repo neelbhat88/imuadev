@@ -1,7 +1,7 @@
 <div ng-controller="TestingProgressController" class="testingProgressContainer" modulecolor="{{selected_module.module_title}}">
 
-  <widget-teststaken></widget-teststaken>
+  <div ng-include="'progress/widgets/tests_taken.html'"></div>
 
-  <widget-milestones></widget-milestones>
+  <div ng-include="'progress/widgets/milestones.html'"></div>
 
 </div>
