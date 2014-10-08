@@ -10,7 +10,7 @@ angular.module('myApp')
     $scope.old_status = null
     $scope.user_expectation.new_comment = null
     $scope.original_expectaton_status = null
-
+    console.log($scope.current_user)
     ExpectationService.getUserExpectationHistory($scope.user_expectation.id)
       .success (data) ->
         $scope.user_expectation_history = data.user_expectation_history
