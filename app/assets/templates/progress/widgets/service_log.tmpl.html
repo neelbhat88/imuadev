@@ -8,7 +8,7 @@
       </div>
       <div class="widget--header--right" ng-hide="classes.editing">
         <div class="widget--options ng-clickable" ng-hide="serviceEditor" ng-click="serviceEditor = !serviceEditor">
-          <span class="options--text">Edit</span>
+          <span class="showing--text">Add or Remove Organizations</span>
           <span class="glyphicon glyphicon-edit"></span>
         </div>
         <button ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
@@ -17,6 +17,10 @@
   </div>
 
   <div class="widget--content">
+
+    <div class="widget--pane">
+      Temp
+    </div>
 
     <div class="widget--content--table table--fixed">
 
