@@ -35,7 +35,6 @@ angular.module('myApp')
 
     $scope.updateComment = () ->
       $scope.user_expectation.comment = $scope.user_expectation.edit_comment
-      if $scope.user_expectation.modified_by_name == null
 
       ExpectationService.updateUserExpectationComment($scope.user_expectation)
         .success (data) ->
