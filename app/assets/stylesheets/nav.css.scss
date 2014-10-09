@@ -4,7 +4,32 @@
 
 header {
 
-  
+  .navbar {
+    min-height: $nav-height;
+    border: 0;
+    background: black(0.85);
+    color: inherit;
+
+    li {
+      a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+    }
+
+  }
+
+  .navbar-brand {
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+    }
+
+  }
 
   /* width: 100%;
   background: \$darkgrey;
