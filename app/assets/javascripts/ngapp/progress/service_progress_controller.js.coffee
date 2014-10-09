@@ -3,6 +3,7 @@ angular.module('myApp')
   ($scope, UserServiceOrganizationService, ProgressService) ->
     $scope.user_service_organizations = []
     $scope.semester_service_hours = 0
+    $scope.selected_org = null
     $scope.loaded_data = false
 
     $scope.resetNewServiceEntry = () ->
@@ -184,5 +185,8 @@ angular.module('myApp')
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
-
+    $scope.selectOrg = (user_service_organization) ->
+      if $scope.selected_org != user_service_organization
+        $scope.selected_org = user_service_organization
+        $scope.service_editor = false
 ]
