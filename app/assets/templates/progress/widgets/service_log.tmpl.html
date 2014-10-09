@@ -45,7 +45,7 @@
           <div class="cell--padding">
             <div class="clear" ng-hide="user_service_hour.editing">
               <div class="service-hours--meta">
-                <h4>{{user_service_hour.hours}}</h4>
+                <h4>{{user_service_hour.hours | parseFloat}}</h4>
                 <p ng-if="user_service_hour.hours != 1">Hours</p>
                 <p ng-if="user_service_hour.hours == 1">Hour</p>
               </div>
