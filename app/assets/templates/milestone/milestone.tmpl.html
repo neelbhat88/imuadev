@@ -9,38 +9,14 @@
           </a>
         </h6>
       </div>
-      <div class="edit-buttons-top" ng-hide="milestone.editing">
-        <button class="btn btn-default" ng-click="editMilestone()"><span class="glyphicon glyphicon-edit"></span> Edit This Milestone</button>
-      </div>
-      <div class="edit-buttons-top" ng-show="milestone.editing">
-        <button class="btn btn-success" ng-click="saveMilestone()"><span class="glyphicon glyphicon-ok"></span> Save Milestone</button>
-        <button class="btn btn-danger btn-sm" ng-click="cancelEditMilestone()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-      </div>
     </div>
   </div>
 
   <div class="single-col-wrapper clear">
     <div class="assignment--left">
 
-      <div class="task-content" ng-hide="milestone.editing">
+      <div class="task-content">
         <h4>{{milestone | printMilestone}}</h4>
-      </div>
-
-      <div class="task-content" ng-show="milestone.editing">
-        <div class="form-wrapper">
-          {{milestone.description}}<input class="form-control" ng-model="milestone.new_value" placeholder="Value" autofocus="true">
-        </div>
-        <div class="milestone_advanced">
-          <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
-          <div class="milestone_advanced__hidden" ng-show="showAdvanced">
-            <div class="pbs">
-              <span class="milestone-weight">Weight:</span>
-            </div>
-            <div class="pbs">
-              <input class="form-field" ng-model="milestone.new_points" placeholder="Weight">
-            </div>
-          </div>
-        </div>
       </div>
 
       <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
@@ -53,7 +29,7 @@
             </div>
             <span class="bold">{{user.first_last_initial}}</span>
           </a>
-          <ul class="circle-subnav" ng-hide="milestone.editing">
+          <ul class="circle-subnav">
             <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
               <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
             </li>
@@ -72,7 +48,7 @@
             </div>
             <span class="bold">{{user.first_last_initial}}</span>
           </a>
-          <ul class="circle-subnav" ng-hide="milestone.editing">
+          <ul class="circle-subnav">
             <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
             <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
               <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
@@ -80,16 +56,6 @@
           </ul>
         </li>
       </ul>
-
-      <div class="edit-buttons-top" ng-show="milestone.editing">
-        <button class="btn btn-success" ng-click="saveMilestone()"><span class="glyphicon glyphicon-ok"></span> Save Milestone</button>
-        <button class="btn btn-danger btn-sm" ng-click="cancelEditMilestone()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-      </div>
-
-      <div class="edit-buttons" ng-hide="milestone.editing">
-        <button class="btn btn-default" ng-click="editMilestone()"><span class="glyphicon glyphicon-edit"></span> Edit This Milestone</button>
-        <button class="btn btn-danger" ng-click="deleteMilestone()"><span class="glyphicon glyphicon-trash"></span> Delete this Milestone</button>
-      </div>
     </div>
 
     <div class="assignment--right">
@@ -108,13 +74,9 @@
             </span>
           </h5>
         </li>
-        <!-- <li ng-if="milestone.due_datetime != null" ng-hide="milestone.editing">
+        <!-- <li ng-if="milestone.due_datetime != null>
           <h6>Due by</h6>
           <h5 class="bold">{{milestone.due_datetime | formatMDY}}</h5>
-        </li> -->
-        <!-- <li class="form-wrapper" ng-show="milestone.editing">
-          <label><h6>Due Date:</h6></label>
-          <imua-datepicker date="milestone.new_due_datetime"></imua-datepicker>
         </li> -->
         <li>
           <h5 class="bold">{{milestone.time_unit_name}}</h5>

@@ -85,6 +85,12 @@
     display: inline-block;
     text-align: justify;
 
+    &:hover {
+      border-top: 3px;
+      border: 3px solid $ink;
+      padding: 4px 24px 5px 24px;
+    }
+
     .milestone__title {
       @extend .milestone-title;
       width: 50%;
