@@ -51,9 +51,8 @@ $border-color: black(0.2);
 
   .widget--content {
 
-    .widget--pane {
+    .widget--pane, .widget--side--pane {
       background: black(0.2);
-      width: 100%;
 
       .pane--padding {
         padding: 20px;
@@ -62,6 +61,8 @@ $border-color: black(0.2);
       h4, h2 { margin-top: 0; }
 
     }
+
+    .widget--pane { width: 100%; }
 
     .widget--content--flexcells {
 
@@ -129,6 +130,10 @@ $border-color: black(0.2);
           padding-bottom: 0;
         }
 
+        .no-border-right {
+          border-right: 0;
+        }
+
         .module-circle--meta {
 
           .click-to-view {
@@ -186,6 +191,10 @@ $border-color: black(0.2);
 
     .input-group {
       padding: 20px;
+    }
+
+    .datepicker-label {
+      padding: 0 20px;
     }
 
     .border-top { border-top: 2px solid $border-color; }

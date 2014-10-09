@@ -3,6 +3,7 @@ angular.module('myApp')
   ($scope, UserServiceOrganizationService, ProgressService) ->
     $scope.user_service_organizations = []
     $scope.semester_service_hours = 0
+    $scope.selected_org = null
     $scope.loaded_data = false
 
     $scope.resetNewServiceEntry = () ->
@@ -51,7 +52,8 @@ angular.module('myApp')
 
     $scope.getServiceOrganizationTotalHours = (service_organization) ->
       total_hours = 0
-      _.each(service_organization.hours, (h) -> total_hours += parseFloat h.hours)
+      _.each(service_organization.hours, (h) -> if h.hours != null
+        total_hours += parseFloat h.hours)
       return total_hours
 
     $scope.serviceOrganizationIsSavable = (service_organization) ->
@@ -184,5 +186,8 @@ angular.module('myApp')
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
-
+    $scope.selectOrg = (user_service_organization) ->
+      if $scope.selected_org != user_service_organization
+        $scope.selected_org = user_service_organization
+        $scope.service_editor = false
 ]

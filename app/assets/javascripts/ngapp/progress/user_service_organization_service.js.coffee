@@ -29,7 +29,7 @@ angular.module("myApp")
   @newServiceHour = (user, time_unit_id, service_organization_id) ->
     name: "",
     user_service_organization_id: service_organization_id,
-    hours: "",
+    hours: null,
     date: "",
     time_unit_id: time_unit_id,
     user_id: user.id,
