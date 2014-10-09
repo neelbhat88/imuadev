@@ -193,6 +193,10 @@ $border-color: black(0.2);
       padding: 20px;
     }
 
+    .datepicker-label {
+      padding: 0 20px;
+    }
+
     .border-top { border-top: 2px solid $border-color; }
     .border-bottom { border-bottom: 2px solid $border-color; }
     .border-right { border-right: 2px solid $border-color; }
