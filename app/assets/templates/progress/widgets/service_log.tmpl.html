@@ -32,7 +32,7 @@
 
             <div class="widget--content--table" ng-click="selectOrg(user_service_organization)">
               <div class="table--cell">
-                <div class="service-org-header" ng-hide="user_service_organization.editing">
+                <div class="service-org-header">
                   <h4 class="bold">{{user_service_organization.name}}</h4>
                   <div>
                   </div>
@@ -122,16 +122,16 @@
                   <h3 class="bold">{{selected_org.name}}</h3>
                   <h4>Service Hours Log</h4>
                   <div class="small-edit-button">
-                    <button class="btn btn-default btn-xs" ng-click="editOrganization(selected_org);"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button class="btn btn-default btn-xs" ng-click="editOrganization(selected_org)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                   </div>
                 </div>
                 <div class="service-org-header" ng-show="selected_org.editing">
                   <span class="input-group">
                     <label>Who was the service for?</label>
-                    <input type="text" focus-me="edit_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter:\\\\\$viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                    <input type="text" focus-me="edit_service_organization_focus_trigger" ng-model="selected_org.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
                   </span>
-                  <div class="btn btn-primary" title="Confirm" ng-click="saveOrganization(user_service_organization)">Save Name</div>
-                  <div class="btn btn-default" title="Cancel" ng-click="cancelEditOrganization(user_service_organization)">Cancel</div>
+                  <div class="btn btn-primary" title="Confirm" ng-click="saveOrganization(selected_org)">Save Name</div>
+                  <div class="btn btn-default" title="Cancel" ng-click="cancelEditOrganization(selected_org)">Cancel</div>
                 </div>
               </div>
             </div>
@@ -178,7 +178,7 @@
               </div>
             </div>
 
-            <div class="table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(selected_org)" ng-hide="serviceEditor || editingServiceOrganization(user_service_organization)">
+            <div class="table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(selected_org)" ng-hide="serviceEditor || editingServiceOrganization(selected_org)">
               <div class="cell--padding">
                 <h6 class="bold"><span class="glyphicon glyphicon-plus-sign"></span> Add more hours for {{selected_org.name}}</h6>
               </div>
@@ -196,7 +196,7 @@
               <div class="cell--padding">
                 <span class="input-group">
                   <label><h4>Who was the service for?</h4></label>
-                  <input type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter:\\\\\\$viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                  <input type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
                 </span>
               </div>
             </div>
