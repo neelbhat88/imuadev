@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many :user_assignments, dependent: :destroy
   has_many :user_gpas, dependent: :destroy
 
-  has_attached_file :avatar, styles: {
+  has_attached_file :avatar, :s3_protocol => :https, styles: {
     square: '140x140#',
     medium: '300x300>'
   }

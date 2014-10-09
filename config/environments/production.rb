@@ -85,8 +85,7 @@ Imua::Application.configure do
       :bucket => ENV['AWS_BUCKET'],
       :access_key_id => ENV['AWS_ACCESS_KEY'],
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    },
-    :s3_protocol => :https
+    }
   }
 
   # Log the query plan for queries taking more than this (works
