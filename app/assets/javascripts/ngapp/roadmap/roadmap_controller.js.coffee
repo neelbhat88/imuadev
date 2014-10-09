@@ -96,7 +96,6 @@ angular.module('myApp')
         timeUnit.milestones.push(data.milestone)
 
   $scope.viewMilestone = (timeUnit, milestone) ->
-    # window.location.href = "#/milestone/" + milestone.id
     modalInstance = $modal.open
       templateUrl: 'roadmap/edit_milestone_modal.html',
       controller: 'EditMilestoneModalController',
@@ -104,8 +103,10 @@ angular.module('myApp')
       resolve:
         selectedMilestone: () -> milestone
         timeUnit: () -> timeUnit
-
     modalInstance.result.then () ->
+
+  $scope.viewMilestoneStatus = (milestone) ->
+    window.location.href = "#/milestone/" + milestone.id
 
   $scope.deleteMilestone = (tu, milestone) ->
     if window.confirm "Are you sure you want to delete this milestone?"

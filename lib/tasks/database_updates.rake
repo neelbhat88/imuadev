@@ -134,4 +134,23 @@ namespace :db_update do
     end
   end
 
+  desc "Remove first user expectation history item for new saving process"
+  task :remove_first_user_expectation_history => :environment do
+    all_users = User.where(:role => 50)
+    all_users.each do |u|
+      user_expectations = UserExpectation.where(:user_id => u.id)
+      if user_expectations.any?
+        user_expectations.each do |e|
+          histories = UserExpectationHistory.where(:user_expectation_id => e.id).order("created_at DESC")
+          if histories.any?
+            removed_row = histories.shift
+            if removed_row.destroy()
+              puts "Removed first history item for user_expectation_id = " + removed_row.user_expectation_id.to_yaml
+            end
+          end
+        end
+      end
+    end
+  end
+
 end

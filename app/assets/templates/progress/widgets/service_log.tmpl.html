@@ -1,0 +1,233 @@
+<div class="widget service-log">
+
+  <div class="widget--header">
+    <div class="widget--header-container clear">
+      <div class="widget--header--title widget--header--noleft">
+        <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Log</h6>
+        <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Log</h6>
+      </div>
+      <div class="widget--header--right">
+        <div class="widget--options ng-clickable" ng-show="selected_org == null" ng-click="serviceEditor = !serviceEditor">
+          <div ng-if="!serviceEditor">
+            <span class="showing--text">Add or Remove Organizations</span>
+            <span class="glyphicon glyphicon-edit"></span>
+          </div>
+        </div>
+        <button ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
+        <div class="widget--options ng-clickable" ng-if="selected_org != null" ng-hide="serviceEditor" ng-click="selectOrg(null)">
+          <span class="showing--text">Collapse {{selected_org.name}}</span>
+          <span class="glyphicon glyphicon-minus"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget--content">
+
+    <div class="widget--content--table table--fixed">
+      <div class="table--cell break900">
+        <div class="widget--content--table table--fixed">
+
+          <div class="table--cell no-border-right breakalways ng-clickable" ng-repeat="user_service_organization in applicableServiceOrganizations()" wait-to-load="{{loaded_data}}">
+
+            <div class="widget--content--table" ng-click="selectOrg(user_service_organization)">
+              <div class="table--cell">
+                <div class="service-org-header">
+                  <h4 class="bold">{{user_service_organization.name}}</h4>
+                  <div>
+                  </div>
+                  <div class="edit-buttons" ng-show="serviceEditor">
+                    <!-- <button class="btn btn-default" ng-click="editOrganization(user_service_organization); edit_service_organization_focus_trigger=true"><span class="glyphicon glyphicon-edit"></span> Edit Name</button> -->
+                    <button class="btn btn-danger" ng-click="deleteOrganization(user_service_organization)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                  </div>
+                </div>
+              </div>
+              <div id="cell--hours" class="table--cell">
+                <h5 class="bold">{{getServiceOrganizationTotalHours(user_service_organization)}}</h5>
+                <p>Hours</p>
+              </div>
+            </div>
+
+            <!--<div class="table--cell cell--service-hours breakalways" ng-repeat="user_service_hour in user_service_organization.hours" ng-hide="serviceEditor">
+              <div class="cell--padding">
+                <div class="clear" ng-hide="user_service_hour.editing">
+                  <div class="service-hours--meta">
+                    <h4>{{user_service_hour.hours | parseFloat}}</h4>
+                    <p ng-if="user_service_hour.hours != 1">Hours</p>
+                    <p ng-if="user_service_hour.hours == 1">Hour</p>
+                  </div>
+                  <div class="service-hours--description">
+                    <h6>{{user_service_hour.description}}</h6>
+                    <p>Completed on {{user_service_hour.date | formatMDY}}</p>
+                    <div class="small-edit-button">
+                      <button class="btn btn-default btn-xs" ng-click="editHour(user_service_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    </div>
+                  </div>
+                </div>
+                <div ng-show="user_service_hour.editing">
+                  <imua-datepicker class="full-width" date="user_service_hour.new_date"></imua-datepicker>
+                  <span class="input-group">
+                    <label ng-if="current_user.is_student">What type of service did you do?</label>
+                    <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                    <textarea class="form-control" ng-model="user_service_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                  </span>
+                  <span class="input-group">
+                    <label>How many hours?</label>
+                    <input class="form-control" ng-model="user_service_hour.new_hours" placeholder="Hours" name="serviceEventHours">
+                  </span>
+
+                  <button class="btn btn-primary" title="Confirm" ng-click="saveHour(user_service_hour)">Save</button>
+                  <button class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, user_service_hour)">Cancel</button>
+                  <button class="btn btn-danger btn-sm" ng-click="deleteHour(user_service_organization, user_service_hour)">Delete</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(user_service_organization)" ng-hide="serviceEditor || editingServiceOrganization(user_service_organization)">
+              <div class="cell--padding">
+                <h6 class="bold"><span class="glyphicon glyphicon-plus-sign"></span> Add more hours for {{user_service_organization.name}}</h6>
+              </div>
+            </div>-->
+
+          </div>
+
+          <div class="table--cell no-border-right breakalways ng-clickable" ng-show="serviceEditor && !new_service_organization.editing" ng-click="editNewServiceEntry(); edit_new_service_organization_focus_trigger=true">
+            <div class="cell--padding">
+              <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
+              <h6 class="bold">Add a Service Organization</h6>
+            </div>
+          </div>
+
+          <!--
+          <div class="table--cell ng-clickable" ng-click="serviceEditor = !serviceEditor" ng-show="semester_service_hours == 0 && !serviceEditor">
+            <div class="cell--padding clear">
+              <div class="class-name">
+                <h5 ng-if="current_user.is_student">You haven't added any service hours yet.</h5>
+                <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any service hours yet.</h5>
+                <h5 class="bold">Click here to begin</h5>
+              </div>
+            </div>
+          </div>-->
+
+        </div>
+      </div>
+
+      <div class="table--cell service--pane break900" ng-if="selected_org != null" ng-hide="serviceEditor">
+        <div class="widget--pane">
+          <div class="widget--content--table table--fixed">
+
+            <div class="table--cell breakalways">
+              <div class="cell--padding">
+                <div ng-hide="selected_org.editing">
+                  <h3 class="bold">{{selected_org.name}}</h3>
+                  <h4>Service Hours Log</h4>
+                  <div class="small-edit-button">
+                    <button class="btn btn-default btn-xs" ng-click="editOrganization(selected_org)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                  </div>
+                </div>
+                <div class="service-org-header" ng-show="selected_org.editing">
+                  <span class="input-group">
+                    <label>Who was the service for?</label>
+                    <input type="text" focus-me="edit_service_organization_focus_trigger" ng-model="selected_org.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                  </span>
+                  <div class="btn btn-primary" title="Confirm" ng-click="saveOrganization(selected_org)">Save Name</div>
+                  <div class="btn btn-default" title="Cancel" ng-click="cancelEditOrganization(selected_org)">Cancel</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table--cell cell--service-hours breakalways" ng-repeat="selected_org_hour in selected_org.hours">
+              <div class="cell--padding">
+                <div class="clear" ng-hide="selected_org_hour.editing">
+                  <div class="service-hours--meta">
+                    <h4>{{selected_org_hour.hours | parseFloat}}</h4>
+                    <p ng-if="selected_org_hour.hours != 1">Hours</p>
+                    <p ng-if="selected_org_hour.hours == 1">Hour</p>
+                  </div>
+                  <div class="service-hours--description">
+                    <h6>{{selected_org_hour.description}}</h6>
+                    <p>Completed on {{selected_org_hour.date | formatMDY}}</p>
+                    <div class="small-edit-button">
+                      <button class="btn btn-default btn-xs" ng-click="editHour(selected_org_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    </div>
+                  </div>
+                </div>
+                <div ng-show="selected_org_hour.editing">
+                  <imua-datepicker class="full-width" date="selected_org_hour.new_date"></imua-datepicker>
+                  <span class="input-group">
+                    <label ng-if="current_user.is_student">What type of service did you do?</label>
+                    <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                    <textarea class="form-control" ng-model="selected_org_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                  </span>
+                  <span class="input-group">
+                    <label>How many hours?</label>
+                    <input class="form-control" ng-model="selected_org_hour.new_hours" placeholder="Hours" name="serviceEventHours">
+                  </span>
+
+                  <button class="btn btn-primary" title="Confirm" ng-click="saveHour(selected_org_hour)">Save</button>
+                  <button class="btn btn-default" title="Cancel" ng-click="cancelEditHour(selected_org, selected_org_hour)">Cancel</button>
+                  <button class="btn btn-danger btn-sm" ng-click="deleteHour(selected_org, selected_org_hour)">Delete</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table--cell cell--service-hours breakalways">
+              <div class="cell--padding">
+                <h4><span class="bold">{{getServiceOrganizationTotalHours(selected_org)}}</span> Hours Completed</h4>
+                <h6>for {{selected_org.name}}</h6>
+              </div>
+            </div>
+
+            <div class="table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(selected_org)" ng-hide="serviceEditor || editingServiceOrganization(selected_org)">
+              <div class="cell--padding">
+                <h6 class="bold"><span class="glyphicon glyphicon-plus-sign"></span> Add more hours for {{selected_org.name}}</h6>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="table--cell service--pane break900" ng-show="new_service_organization.editing">
+        <div class="widget--pane">
+          <div class="widget--content--table table--fixed">
+
+            <div class="table--cell breakalways">
+              <div class="cell--padding">
+                <span class="input-group">
+                  <label><h4>Who was the service for?</h4></label>
+                  <input type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                </span>
+              </div>
+            </div>
+
+            <div class="table--cell breakalways">
+              <div class="cell--padding">
+                <span class="input-group">
+                  <h4>Let's add your first hours:</h4>
+                </span>
+                <div ng-repeat="user_service_hour in new_service_organization.hours">
+                  <span class="input-group">
+                    <label ng-if="current_user.is_student">What type of service did you do?</label>
+                    <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                    <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
+                  </span>
+                  <span class="input-group datepicker-label"><label>When did you do it?</label></span>
+                  <imua-datepicker date="user_service_hour.date"></imua-datepicker>
+                  <span class="input-group">
+                    <label>How many hours?</label>
+                    <input class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
+                  </span>
+                  <button class="btn btn-primary" title="Confirm" ng-click="saveNewServiceEntry()">Add Organization</button>
+                  <button class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

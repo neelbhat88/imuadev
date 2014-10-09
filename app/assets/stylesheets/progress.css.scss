@@ -187,6 +187,17 @@
         }
       }
     }
+
+    #cell--hours {
+      width: 30%;
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    .service--pane { width: 65%; }
   }
 
   .extracurricularProgressContainer {
@@ -215,6 +226,7 @@
     .full-width {
       width: 100%;
     }
+
   }
 
   .datepicker-label {
