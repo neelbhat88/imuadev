@@ -1,0 +1,136 @@
+/* ===============================================
+   Header
+   =============================================== */
+
+header {
+
+  
+
+  /* width: 100%;
+  background: \$darkgrey;
+  color: white();
+  position: relative;
+  z-index: 1000;
+
+  a {
+
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: \$blue;
+    }
+  }
+
+  .wrapper {
+
+    margin: \$wrapper;
+    @include respond-to(600) { margin: 0 \$small-wrapper-width; }
+
+    .imua-logo {
+
+      margin: 22px 0;
+
+      img {
+
+        margin-right: 5px;
+
+      }
+
+    }
+
+    .nav-expanded {
+      @include respond-to(800) {
+        display: none;
+      }
+    }
+
+    .nav-collapsed {
+      @include respond-to-min(800) {
+        display: none;
+      }
+    }
+
+
+    nav {
+
+      margin: 32px 0;
+
+      li {
+
+        float: left;
+        margin-left: 90px;
+        @include respond-to(1000) { margin-left: 40px; }
+        @include respond-to(660) { margin-left: 20px; }
+
+        &:first-of-type {
+          margin-left: 20px;
+        }
+
+        a { cursor: pointer; }
+
+      }
+
+      .cog {
+
+        .current-name {
+          display: inline-block;
+          padding-right: 6px;
+        }
+
+        .glyphicon {
+          display: inline-block;
+          font-size: 22px;
+          vertical-align: middle;
+          margin-top: -6px;
+        }
+
+      }
+
+      .dropdown {
+        cursor: pointer;
+
+        .submenu {
+          position: absolute;
+          right: 0px;
+          top: 35px;
+
+          padding: 5px 20px;
+          background-color: \$darkgrey;
+          border: 1px solid white;
+          @include border-radius(5px);
+          box-shadow: 0px 3px 5px #666;
+
+          .submenu__link {
+            padding: 10px;
+            border-bottom: 1px solid;
+
+            &:last-of-type {
+              border-bottom: none;
+            }
+          }
+        }
+
+      }
+
+    }
+
+  } */
+
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999; // Just below the header
+}
+
+.alerts-section {
+  position: absolute;
+  width: 400px;
+  top: 110px;
+  left: 50%;
+  margin-left: -200px;
+}
