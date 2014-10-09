@@ -6,12 +6,18 @@
         <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Log</h6>
         <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Log</h6>
       </div>
-      <div class="widget--header--right" ng-hide="classes.editing">
-        <div class="widget--options ng-clickable" ng-hide="serviceEditor" ng-click="serviceEditor = !serviceEditor">
-          <span class="showing--text">Add or Remove Organizations</span>
-          <span class="glyphicon glyphicon-edit"></span>
+      <div class="widget--header--right">
+        <div class="widget--options ng-clickable" ng-show="selected_org == null" ng-click="serviceEditor = !serviceEditor">
+          <div ng-if="!serviceEditor">
+            <span class="showing--text">Add or Remove Organizations</span>
+            <span class="glyphicon glyphicon-edit"></span>
+          </div>
         </div>
         <button ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
+        <div class="widget--options ng-clickable" ng-if="selected_org != null" ng-hide="serviceEditor" ng-click="selectOrg(null)">
+          <span class="showing--text">Collapse {{selected_org.name}}</span>
+          <span class="glyphicon glyphicon-minus"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -19,7 +25,7 @@
   <div class="widget--content">
 
     <div class="widget--content--table table--fixed">
-      <div class="table--cell">
+      <div class="table--cell break900">
         <div class="widget--content--table table--fixed">
 
           <div class="table--cell no-border-right breakalways ng-clickable" ng-repeat="user_service_organization in applicableServiceOrganizations()" wait-to-load="{{loaded_data}}">
@@ -31,7 +37,7 @@
                   <div>
                   </div>
                   <div class="edit-buttons" ng-show="serviceEditor">
-                    <button class="btn btn-default" ng-click="editOrganization(user_service_organization); edit_service_organization_focus_trigger=true"><span class="glyphicon glyphicon-edit"></span> Edit Name</button>
+                    <!-- <button class="btn btn-default" ng-click="editOrganization(user_service_organization); edit_service_organization_focus_trigger=true"><span class="glyphicon glyphicon-edit"></span> Edit Name</button> -->
                     <button class="btn btn-danger" ng-click="deleteOrganization(user_service_organization)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                   </div>
                 </div>
@@ -139,7 +145,7 @@
         </div>
       </div>
 
-      <div class="table--cell service--pane" ng-if="selected_org != null">
+      <div class="table--cell service--pane break900" ng-if="selected_org != null" ng-hide="serviceEditor">
         <div class="widget--pane">
           <div class="widget--content--table table--fixed">
 
