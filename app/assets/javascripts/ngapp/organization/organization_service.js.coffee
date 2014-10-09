@@ -62,6 +62,30 @@ angular.module('myApp')
     org.average_ecActivities = 0
     org.average_testsTaken = 0
 
+    for orgAdmin in org.orgAdmins
+      # Match orgAdmins' user_assignments to their assignment
+      if orgAdmin.user_assignments != undefined
+        for user_assignment in orgAdmin.user_assignments
+          assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.title = assignment.title
+          user_assignment.due_datetime = assignment.due_datetime
+          user_assignment.description = assignment.description
+          user_assignment.assigner = assignment.user
+          user_assignment.user = orgAdmin
+          assignment.user_assignments.push(user_assignment)
+
+    for mentor in org.mentors
+      # Match mentors' user_assignments to their assignment
+      if mentor.user_assignments != undefined
+        for user_assignment in mentor.user_assignments
+          assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.title = assignment.title
+          user_assignment.due_datetime = assignment.due_datetime
+          user_assignment.description = assignment.description
+          user_assignment.assigner = assignment.user
+          user_assignment.user = mentor
+          assignment.user_assignments.push(user_assignment)
+
     for student in org.students
       time_unit_id = if timeUnitId? then timeUnitId else student.time_unit_id
 

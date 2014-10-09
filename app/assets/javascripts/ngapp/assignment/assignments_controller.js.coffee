@@ -2,21 +2,41 @@ angular.module('myApp')
 .controller 'AssignmentsController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, user, AssignmentService, UsersService, OrganizationService) ->
 
+    # $scope.$on 'assignments_nav_selected', (event, assignments_filter) ->
+    #   $scope.list_assignments = assignments_filter
+
+    # $scope.$on 'assignments_list_selected', (event, assignment) ->
+    #   window.location.href = "#/assignment/" + assignment.id
+
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
     $scope.current_user = current_user
     $scope.user = user
-    $scope.outgoing_assignments = []
 
     $('input, textarea').placeholder()
 
-    AssignmentService.collectAssignments($scope.user.id)
+    AssignmentService.getTaskAssignableUsersTasks($scope.user.id)
       .success (data) ->
-        $scope.outgoing_assignments = data.assignment_collections
-        for assignment in $scope.outgoing_assignments
-          assignment.assignees = []
-        $scope.loaded_outgoing_assignments = true
+        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.assignments = $scope.organization.assignments
+
+        $scope.user = _.find($scope.organization.users, (u) -> u.id == $scope.user.id)
+        $scope.users_assignments = $scope.user.assignments
+        $scope.users_user_assignments = $scope.user.user_assignments
+
+        $scope.list_assignments = $scope.users_user_assignments
+
+        $scope.loaded_data = true
+
+    $scope.selectNav = (assignments_filter) ->
+      switch assignments_filter
+        when 'Tasks Assigned to Me'
+          $scope.list_assignments = $scope.users_user_assignments
+        when 'Tasks Ive Assigned to Others'
+          $scope.list_assignments = $scope.users_assignments
+        when 'Tasks Assigned to My Students'
+          $scope.list_assignments = $scope.assignments
 
     $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)

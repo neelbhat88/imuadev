@@ -6,9 +6,9 @@
   </div>
   <div class="widget--content">
     <div class="widget--content--table">
-      <div class="table--cell breakalways" ng-repeat="task in outgoing_assignments | orderBy:sortIncompleteAssignments">
+      <div class="table--cell breakalways" ng-repeat="assignment in list_assignments | orderBy:sortIncompleteAssignments">
         <div class="cell--padding">
-            <h6 class="bold"><a no-click-propagation href="#/user_assignment/{{task.id}}">{{task.title}}</a></h6>
+            <h6 class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
         </div>
       </div>
     </div>
