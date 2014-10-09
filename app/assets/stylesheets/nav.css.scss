@@ -2,19 +2,63 @@
    Header
    =============================================== */
 
+$nav-bgcolor: black(0.85);
+
 header {
+
+  .container-fluid { padding: 0 $wrapper-width; }
 
   .navbar {
     min-height: $nav-height;
     border: 0;
-    background: black(0.85);
+    background: $nav-bgcolor;
     color: inherit;
 
     li {
       a {
-        padding-top: 25px;
-        padding-bottom: 25px;
+        padding: 25px;
+
+        &:hover {
+          background: $boxgrey;
+        }
+
+        &:focus {
+          background: $boxgrey;
+        }
+
       }
+    }
+
+    .nav .open {
+
+      > a {
+        color: inherit;
+        &:hover { background: $boxgrey; }
+        &:focus { background: $boxgrey; }
+        &:active { background: $boxgrey; }
+        &:visited { background: $boxgrey; }
+      }
+
+    }
+
+    .dropdown-menu {
+
+      background: $nav-bgcolor;
+      padding: 0;
+
+      > li {
+
+        > a { color: inherit; }
+
+        &:hover { background: $boxgrey; }
+
+      }
+
+      .divider {
+        margin: 0;
+        background: $boxgrey;
+      }
+
     }
 
   }
@@ -23,10 +67,12 @@ header {
 
     padding-top: 15px;
     padding-bottom: 15px;
+    @include font-size();
 
     .nav-logo {
       width: 40px;
       height: 40px;
+      margin-right: 6px;
     }
 
   }
