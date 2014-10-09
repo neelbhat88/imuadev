@@ -11,22 +11,27 @@
       <a class="navbar-brand" href="#">
         <img ng-src="assets/logo-blue-small.png" class="nav-logo" alt="IMUA">
         <span ng-if="current_user.is_super_admin">Collective Progress</span>
-        <span ng-if="!current_user.is_super_admin">{{current_user.organization.name}}</span>
+        <span ng-if="!current_user.is_super_admin">{{current_user.organization_name}}</span>
       </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-if="current_user.is_mentor">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a href="#/dashboard/{{current_user.id}}">My Students</a></li>
+        <li><a href="#/assignments/{{current_user.id}}">Tasks</a></li>
+        <li><a href="#/roadmap/{{current_user.organization_id}}">Roadmap</a></li>
+
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span ng-if="current_user.is_super_admin">Administrator</span>
+            <span ng-if="!current_user.is_super_admin">{{current_user.first_last_initial}}</span>
+            <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#/profile/{{current_user.id}}">Profile</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -42,68 +47,6 @@
         <span ng-if="!current_user.is_super_admin">{{ current_user.organization.name }}</span>
     </a>
   </div>
-
-  <nav class="nav-collapsed right" role="navigation">
-    <div class="dropdown js-cog">
-      <div class="current-name">
-        Menu <span class="caret"></span>
-      </div>
-      <div class="submenu js-submenu">
-        <div ng-if="current_user.is_super_admin" class="submenu__link">
-          <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
-        </div>
-
-        <div ng-if="current_user.is_org_admin">
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">Dashboard</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/organization/{{ current_user.organization_id }}">Mentors</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/students/{{ current_user.organization_id }}">Students</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/roadmap/{{ current_user.organization_id }}">Organization Setup</a>
-          </div>
-        </div>
-
-        <div ng-if="current_user.is_mentor">
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">My Students</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/assignments/{{ current_user.id }}">Tasks</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/roadmap/{{ current_user.organization_id }}">Roadmap</a>
-          </div>
-        </div>
-
-        <div ng-if="current_user.is_student">
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">Dashboard</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/progress/{{ current_user.id }}">My Progress</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/expectations/{{ current_user.id }}">Expectations</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/user_assignments/{{ current_user.id }}">Tasks</a>
-          </div>
-        </div>
-
-        <div class="submenu__link">
-          <a class="js-nav-link" href="#/profile/{{ current_user.id }}">Profile</a>
-        </div>
-        <div class="submenu__link">
-          <a class="js-nav-link" href="#">Logout</a>
-        </div>
-      </div>
-    </div>
-  </nav>
 
   <nav class="nav-expanded right" role="navigation">
     <ul>
