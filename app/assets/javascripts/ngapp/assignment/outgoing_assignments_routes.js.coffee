@@ -1,6 +1,6 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/assignments/:user_id',
+  $routeProvider.when '/old_assignments/:user_id',
     templateUrl: 'assignment/outgoing_assignments.html',
     controller: 'OutgoingAssignmentsController',
     resolve:
