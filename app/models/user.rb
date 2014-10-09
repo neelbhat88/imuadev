@@ -112,7 +112,7 @@ class UserQuerier < Querier
           d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
         else
           # Hack to generate the s3 user avatar url outside of Paperclip
-          base = "http://s3.amazonaws.com"
+          base = "https://s3.amazonaws.com"
           bucket = Paperclip::Attachment.default_options[:s3_credentials][:bucket]
           klass = "users"
           attachment = "avatars"
