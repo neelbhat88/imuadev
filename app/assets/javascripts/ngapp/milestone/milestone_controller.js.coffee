@@ -10,6 +10,9 @@ angular.module('myApp')
         $scope.users_complete = partition[0]
         $scope.users_incomplete = partition[1]
         $scope.percent_complete = (($scope.users_complete.length / $scope.users_total.length) * 100).toFixed(0)
+        if current_user.is_mentor
+          $scope.users_complete = _.filter($scope.users_complete, (u) -> _.contains(current_user.assigned_users, u.id))
+          $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
 
     MilestoneService.getMilestoneStatus(milestone_id)
       .success (data) ->

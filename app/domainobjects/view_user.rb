@@ -31,6 +31,10 @@ class ViewUser
 
 		@organization_name = org.name unless org.nil?
 
+		if user.mentor?
+			@assigned_users = Relationship.select(:user_id).where(assigned_to_id: @id).map{|u| u[:user_id]}
+		end
+
 		if user.student?
 			@relationships = user.relationships.map{|e| ViewRelationship.new(e)}
 			@user_expectations = user.user_expectations.map{|e| ViewUserExpectation.new(e)}
