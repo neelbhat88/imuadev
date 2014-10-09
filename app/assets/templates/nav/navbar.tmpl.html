@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed-data">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -17,7 +17,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_super_admin">
+    <div class="collapse navbar-collapse" ng-if="current_user.is_super_admin" id="navbar-collapsed-data">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/sa/organizations">Organizations</a></li>
 
@@ -35,7 +35,7 @@
       </ul>
     </div><!-- /.navbar-collapse if super admin -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_org_admin">
+    <div class="collapse navbar-collapse" ng-if="current_user.is_org_admin" id="navbar-collapsed-data">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/dashboard/{{current_user.id}}">My Students</a></li>
         <li><a href="#/assignments/{{current_user.id}}">Tasks</a></li>
@@ -55,7 +55,7 @@
       </ul>
     </div><!-- /.navbar-collapse if org admin -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_mentor">
+    <div class="collapse navbar-collapse" ng-if="current_user.is_mentor" id="navbar-collapsed-data">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/dashboard/{{current_user.id}}">My Students</a></li>
         <li><a href="#/assignments/{{current_user.id}}">Tasks</a></li>
@@ -75,7 +75,7 @@
       </ul>
     </div><!-- /.navbar-collapse if mentor -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_student">
+    <div class="collapse navbar-collapse" ng-if="current_user.is_student" id="navbar-collapsed-data">
       <ul class="nav navbar-nav navbar-right">
         <li><a class="js-nav-link" href="#/progress/{{ current_user.id }}">My Progress</a></li>
         <li><a class="js-nav-link" href="#/expectations/{{ current_user.id }}">Expectations</a></li>
