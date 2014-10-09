@@ -80,6 +80,9 @@ angular.module('myApp')
       $scope.refreshFlexcells()
 
     $scope.saveClass = (user_class) ->
+      if !user_class.new_name || !user_class.new_grade
+        return
+
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = user_class.id
       new_class.name = user_class.new_name
