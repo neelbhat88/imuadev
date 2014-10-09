@@ -19,11 +19,12 @@ angular.module('myApp')
     AssignmentService.getTaskAssignableUsersTasks($scope.user.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.user = _.find($scope.organization.users, (u) -> u.id == $scope.user.id)
         $scope.assignments = $scope.organization.assignments
 
-        $scope.user = _.find($scope.organization.users, (u) -> u.id == $scope.user.id)
         $scope.users_assignments = $scope.user.assignments
-        $scope.users_user_assignments = $scope.user.user_assignments
+        $scope.users_user_assignments = _.filter($scope.assignments, (a) -> _.contains(_.pluck($scope.user.user_assignments, 'assignment_id'), a.id))
+        $scope.student_assignments = $scope.assignments
 
         $scope.list_assignments = $scope.users_user_assignments
 
@@ -36,7 +37,7 @@ angular.module('myApp')
         when 'Tasks Ive Assigned to Others'
           $scope.list_assignments = $scope.users_assignments
         when 'Tasks Assigned to My Students'
-          $scope.list_assignments = $scope.assignments
+          $scope.list_assignments = $scope.student_assignments
 
     $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)
