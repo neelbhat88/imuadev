@@ -19,6 +19,9 @@
 
 *.DS_store
 
+# Ignore certs folder
+/certs
+
 tags
 
 newrelic.yml
