@@ -49,11 +49,11 @@
         <span class="glyphicon glyphicon-exclamation-sign"></span> {{student.first_name}}, you are not meeting this expectation.
       </h5>
 
-      <h6 ng-hide="edit_comment" class="ng-clickable" ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)">{{user_expectation.comment}}
-        <span class="glyphicon glyphicon-edit"></span>
+      <h6 ng-hide="edit_comment">{{user_expectation.comment}}
+        <span class="glyphicon glyphicon-edit ng-clickable" ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)"></span>
       </h6>
 
-      <textarea class="comment-edit form-field" ng-model="user_expectation.edit_comment" ng-show="edit_comment">{{user_expectation.comment}}</textarea>
+      <textarea rows="4" cols="40" class="comment-edit form-field" ng-model="user_expectation.edit_comment" ng-show="edit_comment">{{user_expectation.comment}}</textarea>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-ok" ng-click="updateComment()"></span>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-remove" ng-click="cancelCommentEdit()"></span>
 
