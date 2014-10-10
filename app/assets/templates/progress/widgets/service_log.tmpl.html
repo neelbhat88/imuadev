@@ -166,7 +166,7 @@
 
                   <button class="btn btn-primary" title="Confirm" ng-click="saveHour(selected_org_hour)">Save</button>
                   <button class="btn btn-default" title="Cancel" ng-click="cancelEditHour(selected_org, selected_org_hour)">Cancel</button>
-                  <button class="btn btn-danger btn-sm" ng-click="deleteHour(selected_org, selected_org_hour)">Delete</button>
+                  <button ng-hide="selected_org_hour.remove_delete" class="btn btn-danger btn-sm" ng-click="deleteHour(selected_org, selected_org_hour)">Delete</button>
                 </div>
               </div>
             </div>
