@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="table--cell break900" ng-show="ecEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity(); new_ec_activity_focus_trigger=true">
+      <div class="table--cell break900" ng-show="ecEditor && !new_extracurricular_activity.editing" ng-click="addActivity(); new_ec_activity_focus_trigger=true">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add An Activity</h6>
