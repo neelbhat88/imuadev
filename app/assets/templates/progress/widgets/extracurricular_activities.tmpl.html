@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="table--cell break900" ng-show="ecEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity()">
+      <div class="table--cell break900" ng-show="ecEditor" ng-if="!new_extracurricular_activity.editing" ng-click="addActivity(); new_ec_activity_focus_trigger=true">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add An Activity</h6>
@@ -75,9 +75,10 @@
           <span class="input-group">
             <label ng-if="current_user.is_student">What Activity did you participate in?</label>
             <label ng-if="!current_user.is_student">What Activity did {{student.first_name}} participate in?</label>
-            <select class="form-control" ng-change="selectedActivity(new_extracurricular_activity)" ng-options="activity as activity.name for activity in previous_activity_list" ng-model="new_extracurricular_activity" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
+            <input type="text" focus-me="new_ec_activity_focus_trigger" ng-model="new_extracurricular_activity.name" typeahead="activityName for activityName in org_current_activity_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Extracurricular Activity Name">
+            <!-- <select class="form-control" ng-change="selectedActivity(new_extracurricular_activity)" ng-options="activity as activity.name for activity in previous_activity_list" ng-model="new_extracurricular_activity" placeholder="Extracurricular Activity Name" name="extracurricularActivityName">
               <option value="">--- Select Previous Activity ---</option>
-            </select>
+            </select> -->
           </span>
           <span class="input-group" ng-show="new_extracurricular_activity.newActivity">
             <label ng-if="current_user.is_student">What Activity did you participate in?</label>

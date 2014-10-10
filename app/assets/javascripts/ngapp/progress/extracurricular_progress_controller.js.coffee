@@ -16,6 +16,8 @@ angular.module('myApp')
             current_activities = []
             current_activities = data.user_extracurricular_activities
 
+            $scope.org_current_activity_list = data.org_extracurricular_activity_titles
+
             for activity in current_activities
               activity.details = []
               for detail in data.user_extracurricular_details
