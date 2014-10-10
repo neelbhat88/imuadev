@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed-data">
+      <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -17,9 +17,9 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_super_admin" id="navbar-collapsed-data">
+    <div class="collapse navbar-collapse navbar-responsive-collapse" ng-if="current_user.is_super_admin" collapse="navCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/sa/organizations">Organizations</a></li>
+        <li><a href="#/sa/organizations" ng-click="navCollapsed = !navCollapsed">Organizations</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -35,11 +35,11 @@
       </ul>
     </div><!-- /.navbar-collapse if super admin -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_org_admin" id="navbar-collapsed-data">
+    <div class="collapse navbar-collapse navbar-responsive-collapse" ng-if="current_user.is_org_admin" collapse="navCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/dashboard/{{current_user.id}}">My Students</a></li>
-        <li><a href="#/assignments/{{current_user.id}}">Tasks</a></li>
-        <li><a href="#/roadmap/{{current_user.organization_id}}">Roadmap</a></li>
+        <li><a href="#/dashboard/{{current_user.id}}" ng-click="navCollapsed = !navCollapsed">My Students</a></li>
+        <li><a href="#/assignments/{{current_user.id}}" ng-click="navCollapsed = !navCollapsed">Tasks</a></li>
+        <li><a href="#/roadmap/{{current_user.organization_id}}" ng-click="navCollapsed = !navCollapsed">Roadmap</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -55,11 +55,11 @@
       </ul>
     </div><!-- /.navbar-collapse if org admin -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_mentor" id="navbar-collapsed-data">
+    <div class="collapse navbar-collapse navbar-responsive-collapse" ng-if="current_user.is_mentor" collapse="navCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/dashboard/{{current_user.id}}">My Students</a></li>
-        <li><a href="#/assignments/{{current_user.id}}">Tasks</a></li>
-        <li><a href="#/roadmap/{{current_user.organization_id}}">Roadmap</a></li>
+        <li><a href="#/dashboard/{{current_user.id}}" ng-click="navCollapsed = !navCollapsed">My Students</a></li>
+        <li><a href="#/assignments/{{current_user.id}}" ng-click="navCollapsed = !navCollapsed">Tasks</a></li>
+        <li><a href="#/roadmap/{{current_user.organization_id}}" ng-click="navCollapsed = !navCollapsed">Roadmap</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -75,11 +75,11 @@
       </ul>
     </div><!-- /.navbar-collapse if mentor -->
 
-    <div class="collapse navbar-collapse" ng-if="current_user.is_student" id="navbar-collapsed-data">
+    <div class="collapse navbar-collapse navbar-responsive-collapse" ng-if="current_user.is_student" id="navbar-collapsed-data">
       <ul class="nav navbar-nav navbar-right">
-        <li><a class="js-nav-link" href="#/progress/{{ current_user.id }}">My Progress</a></li>
-        <li><a class="js-nav-link" href="#/expectations/{{ current_user.id }}">Expectations</a></li>
-        <li><a class="js-nav-link" href="#/user_assignments/{{ current_user.id }}">Tasks</a></li>
+        <li><a class="js-nav-link" href="#/progress/{{ current_user.id }}" ng-click="navCollapsed = !navCollapsed">My Progress</a></li>
+        <li><a class="js-nav-link" href="#/expectations/{{ current_user.id }}" ng-click="navCollapsed = !navCollapsed">Expectations</a></li>
+        <li><a class="js-nav-link" href="#/user_assignments/{{ current_user.id }}" ng-click="navCollapsed = !navCollapsed">Tasks</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -97,81 +97,3 @@
 
   </div><!-- /.container-fluid -->
 </nav>
-
-<!-- <div class="wrapper clear" ng-controller="HeaderController">
-  <div class="imua-logo left">
-    <a href="/">
-      <img ng-src="assets/logo-blue-small.png" alt="IMUA" height="46px" width="46px">
-        <span ng-if="current_user.is_super_admin">Collective Progress</span>
-        <span ng-if="!current_user.is_super_admin">{{ current_user.organization.name }}</span>
-    </a>
-  </div>
-
-  <nav class="nav-expanded right" role="navigation">
-    <ul>
-        <li ng-if="current_user.is_super_admin">
-          <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
-        </li>
-
-      <div ng-if="current_user.is_org_admin">
-        <li>
-          <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">Dashboard</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/organization/{{ current_user.organization_id }}">Mentors</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/students/{{ current_user.organization_id }}">Students</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/roadmap/{{ current_user.organization_id }}">Organization Setup</a>
-        </li>
-      </div>
-
-      <div ng-if="current_user.is_mentor">
-        <li>
-          <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">My Students</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/assignments/{{ current_user.id }}">Tasks</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/roadmap/{{ current_user.organization_id }}">Roadmap</a>
-        </li>
-      </div>
-
-      <div ng-if="current_user.is_student">
-        <li>
-          <a class="js-nav-link" href="#/dashboard/{{ current_user.id }}">Dashboard</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/progress/{{ current_user.id }}">My Progress</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/expectations/{{ current_user.id }}">Expectations</a>
-        </li>
-        <li>
-          <a class="js-nav-link" href="#/user_assignments/{{ current_user.id }}">Tasks</a>
-        </li>
-      </div>
-
-      <li class="dropdown cog js-cog">
-        <div class="current-name">
-          <span ng-if="current_user.is_super_admin">Administrator</span>
-          <span ng-if="current_user.is_super_admin">{{ current_user.first_last_initial }}</span>
-        </div>
-        <span class="glyphicon glyphicon-cog"></span>
-        <div class="submenu js-submenu">
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#/profile/{{ current_user.id }}">Profile</a>
-          </div>
-          <div class="submenu__link">
-            <a class="js-nav-link" href="#">Logout</a>
-          </div>
-        </div>
-      </li>
-
-    </ul>
-  </nav>
-</div>
- -->
