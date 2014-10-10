@@ -51,8 +51,11 @@ $border-color: black(0.2);
 
   .widget--content {
 
-    .widget--pane, .widget--side--pane {
+    .widget--pane--cell {
       background: black(0.2);
+    }
+
+    .widget--pane, .widget--side--pane {
 
       .pane--padding {
         padding: 20px;
