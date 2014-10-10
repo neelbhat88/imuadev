@@ -24,6 +24,7 @@ angular.module('myApp')
                 $scope.$emit('loaded_module_milestones');
 
     $scope.editUserTest = (index) ->
+      $scope.userTests.editing = true
       $scope.userTests[index].editing = true
       $scope.userTests[index].new_orgTest = $scope.userTests[index].orgTest;
       $scope.userTests[index].new_date = $scope.userTests[index].date;
@@ -67,6 +68,7 @@ angular.module('myApp')
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true
+      $scope.testsEditor = false
       blank_userTest = TestService.newUserTest($scope.student.id, $scope.selected_semester.id)
       blank_userTest.new_orgTest = null
       blank_userTest.editing = true
