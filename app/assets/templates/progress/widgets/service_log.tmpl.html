@@ -48,47 +48,6 @@
               </div>
             </div>
 
-            <!--<div class="table--cell cell--service-hours breakalways" ng-repeat="user_service_hour in user_service_organization.hours" ng-hide="serviceEditor">
-              <div class="cell--padding">
-                <div class="clear" ng-hide="user_service_hour.editing">
-                  <div class="service-hours--meta">
-                    <h4>{{user_service_hour.hours | parseFloat}}</h4>
-                    <p ng-if="user_service_hour.hours != 1">Hours</p>
-                    <p ng-if="user_service_hour.hours == 1">Hour</p>
-                  </div>
-                  <div class="service-hours--description">
-                    <h6>{{user_service_hour.description}}</h6>
-                    <p>Completed on {{user_service_hour.date | formatMDY}}</p>
-                    <div class="small-edit-button">
-                      <button class="btn btn-default btn-xs" ng-click="editHour(user_service_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    </div>
-                  </div>
-                </div>
-                <div ng-show="user_service_hour.editing">
-                  <imua-datepicker class="full-width" date="user_service_hour.new_date"></imua-datepicker>
-                  <span class="input-group">
-                    <label ng-if="current_user.is_student">What type of service did you do?</label>
-                    <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                    <textarea class="form-control" ng-model="user_service_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
-                  </span>
-                  <span class="input-group">
-                    <label>How many hours?</label>
-                    <input class="form-control" ng-model="user_service_hour.new_hours" placeholder="Hours" name="serviceEventHours">
-                  </span>
-
-                  <button class="btn btn-primary" title="Confirm" ng-click="saveHour(user_service_hour)">Save</button>
-                  <button class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, user_service_hour)">Cancel</button>
-                  <button class="btn btn-danger btn-sm" ng-click="deleteHour(user_service_organization, user_service_hour)">Delete</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(user_service_organization)" ng-hide="serviceEditor || editingServiceOrganization(user_service_organization)">
-              <div class="cell--padding">
-                <h6 class="bold"><span class="glyphicon glyphicon-plus-sign"></span> Add more hours for {{user_service_organization.name}}</h6>
-              </div>
-            </div>-->
-
           </div>
 
           <div class="table--cell no-border-right breakalways ng-clickable" ng-show="serviceEditor && !new_service_organization.editing" ng-click="editNewServiceEntry(); edit_new_service_organization_focus_trigger=true">
@@ -98,21 +57,10 @@
             </div>
           </div>
 
-          <!--
-          <div class="table--cell ng-clickable" ng-click="serviceEditor = !serviceEditor" ng-show="semester_service_hours == 0 && !serviceEditor">
-            <div class="cell--padding clear">
-              <div class="class-name">
-                <h5 ng-if="current_user.is_student">You haven't added any service hours yet.</h5>
-                <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any service hours yet.</h5>
-                <h5 class="bold">Click here to begin</h5>
-              </div>
-            </div>
-          </div>-->
-
         </div>
       </div>
 
-      <div class="table--cell service--pane break900" ng-if="selected_org != null" ng-hide="serviceEditor">
+      <div id="service--pane" class="table--cell widget--pane--cell break900" ng-if="selected_org != null" ng-hide="serviceEditor">
         <div class="widget--pane">
           <div class="widget--content--table table--fixed">
 
@@ -188,7 +136,7 @@
         </div>
       </div>
 
-      <div class="table--cell service--pane break900" ng-show="new_service_organization.editing">
+      <div id="service--pane" class="table--cell widget--pane--cell break900" ng-show="new_service_organization.editing">
         <div class="widget--pane">
           <div class="widget--content--table table--fixed">
 
