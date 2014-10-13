@@ -8,7 +8,8 @@
     </div>
 
     <div class="widget--header--right">
-      <div class="widget--options ng-clickable" ng-click="class_editor = !class_editor">
+      <div class="widget--options ng-clickable" collapse-accordion="classAccordion"
+          ng-click="class_editor = !class_editor">
         <div ng-hide="class_editor">
           <span class="showing--text">Add or Remove Classes</span>
           <span class="glyphicon glyphicon-edit"></span>
@@ -24,11 +25,12 @@
 
     <div class="widget--content--table table--fixed">
       <div class="table--cell break900">
-        <div class="widget--content--table table--fixed">
+        <div id="classAccordion" imua-accordion
+              class="widget--content--table table--fixed">
 
           <div class="table--cell no-border-right breakalways" ng-repeat="user_class in user_classes">
 
-            <div class="widget--content--table ng-clickable" ng-hide="user_class.editing">
+            <div accordion-header class="widget--content--table ng-clickable" ng-hide="user_class.editing">
 
               <div class="table--cell">
                 <div class="cell--padding">
@@ -81,7 +83,7 @@
               </div>
             </div>
 
-            <div class="widget--content--table widget--pane--cell" ng-hide="user_class.editing">
+            <div accordion-body class="widget--content--table widget--pane--cell" ng-hide="user_class.editing">
               <div class="table--cell breakalways">
                 <div class="cell--padding">
                   <div class="subtext">
