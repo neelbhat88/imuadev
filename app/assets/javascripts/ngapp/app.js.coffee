@@ -13,12 +13,17 @@ angular.module('myApp')
     $scope.alerts.splice(index, 1)
 
   $scope.addSuccessMessage = (msg) ->
+    $scope.clearAlerts()
     message = { type: 'success', msg: msg}
     $scope.alerts.unshift(message)
 
   $scope.addErrorMessage = (msg) ->
+    $scope.clearAlerts()
     message = { type: 'danger', msg: msg}
     $scope.alerts.unshift(message)
+
+  $scope.clearAlerts = () ->
+    $scope.alerts = []
 
   $scope.$on "update_required", () ->
     $scope.reload_required = true

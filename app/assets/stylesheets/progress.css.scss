@@ -105,57 +105,8 @@
 
     }
 
-    .break900 {
-
-      .class-name {
-        @include respond-to(900) {
-          width: 70%;
-          float: left;
-          text-align: left;
-          padding-left: 10%;
-        }
-
-        h6 {
-          font-weight: $bold;
-          @include respond-to(900) { @include font-size(3.8); }
-          @include respond-to(600) { @include font-size(3); }
-        }
-      }
-
-      .class-grade {
-        @include respond-to(900) {
-          width: 30%;
-          float: left;
-          h3 { margin: 0; }
-        }
-      }
-
-    }
-
-    .break1200 {
-      .class-name {
-        @include respond-to(1200) {
-          width: 70%;
-          float: left;
-          text-align: left;
-          padding-left: 10%;
-        }
-
-        h6 {
-          font-weight: $bold;
-          @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
-          @include respond-to(900) { @include font-size(3.8); }
-          @include respond-to(600) { @include font-size(3); }
-        }
-      }
-
-      .class-grade {
-        @include respond-to(1200) {
-          width: 30%;
-          float: left;
-          h3 { margin: 0; }
-        }
-      }
+    #cell--grades {
+      width: 30%;
     }
 
   }
@@ -197,7 +148,7 @@
       }
     }
 
-    .service--pane { width: 65%; }
+    #service--pane { width: 65%; }
   }
 
   .extracurricularProgressContainer {
