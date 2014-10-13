@@ -72,8 +72,10 @@
                 <option value="F">F</option>
               </select>
             </span>
-
-            <button class="submit" title="Confirm" ng-hide="!userTest.new_orgTest || !userTest.new_date" ng-click="saveUserTest($index)">Confirm</button>
+            <ul class="errorText ptm">
+              <li ng-repeat="error in testErrors">{{error}}</li>
+            </ul>
+            <button class="submit" title="Confirm" ng-click="saveUserTest($index)">Confirm</button>
             <button class="cancel" title="Cancel" ng-click="cancelEditUserTest($index)">Cancel</button>
           </div>
         </div>
