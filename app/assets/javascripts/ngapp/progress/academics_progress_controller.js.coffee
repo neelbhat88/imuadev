@@ -7,6 +7,7 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.classErrors = []
 
     $scope.$watch 'selected_semester', () ->
       if $scope.selected_semester
@@ -50,32 +51,37 @@ angular.module('myApp')
       user_class.new_credit_hours = user_class.credit_hours
 
     $scope.saveClass = (user_class) ->
-      if !user_class.new_name || !user_class.new_grade
-        return
+      $scope.classErrors = []
+      if !user_class.new_name
+        $scope.classErrors.push("Please enter the class name")
 
-      new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
-      new_class.id = user_class.id
-      new_class.name = user_class.new_name
-      new_class.grade = user_class.new_grade
-      new_class.room = user_class.new_room
-      new_class.period = user_class.new_period
-      new_class.level = user_class.new_level
-      new_class.subject = user_class.new_subject
-      new_class.credit_hours = user_class.new_credit_hours
+      if !user_class.new_grade
+        $scope.classErrors.push("Please select the grade in the class")
 
-      UserClassService.save(new_class)
-        .success (data) ->
-          $scope.user_classes = data.user_classes
+      if $scope.classErrors.length == 0
+        new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
+        new_class.id = user_class.id
+        new_class.name = user_class.new_name
+        new_class.grade = user_class.new_grade
+        new_class.room = user_class.new_room
+        new_class.period = user_class.new_period
+        new_class.level = user_class.new_level
+        new_class.subject = user_class.new_subject
+        new_class.credit_hours = user_class.new_credit_hours
 
-          if data.user_gpa
-            $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
-          else
-            $scope.gpa = 0.toFixed(2)
-          $scope.classes.editing = false
+        UserClassService.save(new_class)
+          .success (data) ->
+            $scope.user_classes = data.user_classes
 
-          $scope.refreshPoints()
-          $scope.$emit('just_updated', 'Academics')
-          $scope.last_updated_gpa = new Date()
+            if data.user_gpa
+              $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+            else
+              $scope.gpa = 0.toFixed(2)
+            $scope.classes.editing = false
+
+            $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Academics')
+            $scope.last_updated_gpa = new Date()
 
     $scope.deleteClass = (user_class, $event) ->
       if window.confirm "Are you sure you want to delete this class?"
