@@ -9,7 +9,7 @@
 
     <div class="widget--header--right">
       <div class="widget--options ng-clickable" collapse-accordion="classAccordion"
-          ng-click="class_editor = !class_editor">
+          ng-hide="classes.editing" ng-click="class_editor = !class_editor">
         <div ng-hide="class_editor">
           <span class="showing--text">Add or Remove Classes</span>
           <span class="glyphicon glyphicon-edit"></span>
@@ -41,7 +41,7 @@
                     </div>
                   </div>
                   <div class="delete-button" ng-show="class_editor">
-                    <button class="btn btn-danger" ng-click="deleteClass(user_class)"><span class="glyphicon glyphicon-trash"></span> Delete {{user_class.name}}</button>
+                    <button class="btn btn-danger" ng-click="deleteClass(user_class, $event)"><span class="glyphicon glyphicon-trash"></span> Delete </button>
                   </div>
                 </div>
               </div>
@@ -140,14 +140,14 @@
               <div class="table--cell breakalways">
                 <span class="input-group">
                   <label>Credit Hours</label>
-                  <input class="form-control" ng-model="selected_class.new_credit_hours" ng-init="selected_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+                  <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
                 </span>
               </div>
               <div class="table--cell breakalways">
                 <div class="cell-padding">
                   <span class="input-group">
                       <label>Level</label>
-                      <select class="form-control" ng-model="selected_class.new_level" ng-init="selected_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                      <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
                   </span>
                 </div>
               </div>
@@ -155,7 +155,7 @@
                 <div class="cell-padding">
                   <span class="input-group">
                       <label>Subject</label>
-                      <select class="form-control" ng-model="selected_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                      <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
                           <option value="">--Select Subject--</option>
                       </select>
                   </span>
@@ -165,7 +165,7 @@
                 <div class="cell-padding">
                   <span class="input-group">
                       <label>Period</label>
-                      <input class="form-control" ng-model="selected_class.new_period" placeholder="Period (optional)" name="period">
+                      <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
                   </span>
                 </div>
               </div>
@@ -173,7 +173,7 @@
                 <div class="cell-padding">
                   <span class="input-group">
                       <label>Room</label>
-                      <input class="form-control" ng-model="selected_class.new_room" placeholder="Room (optional)" name="room">
+                      <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
                   </span>
                 </div>
               </div>
