@@ -74,6 +74,8 @@ angular.module('myApp')
           $scope.$emit('just_updated', 'Academics')
           $scope.last_updated_gpa = new Date()
 
+          $scope.addSuccessMessage("Class saved successfully")
+
     $scope.deleteClass = (user_class, $event) ->
       if window.confirm "Are you sure you want to delete this class?"
         UserClassService.delete(user_class)
@@ -86,6 +88,8 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Academics')
             $scope.last_updated_gpa = new Date()
+
+            $scope.addSuccessMessage("Class deleted successfully")
 
       $event.stopPropagation()
 
