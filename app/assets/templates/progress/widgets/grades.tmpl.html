@@ -11,8 +11,8 @@
       <div class="widget--options ng-clickable" collapse-accordion="classAccordion"
           ng-hide="classes.editing" ng-click="class_editor = !class_editor">
         <div ng-hide="class_editor">
-          <span class="showing--text">Add or Remove Classes</span>
-          <span class="glyphicon glyphicon-edit"></span>
+          <div class="showing--text">Add or Remove Classes</div>
+          <div class="showing--icon glyphicon glyphicon-edit"></div>
         </div>
         <div ng-show="class_editor">
           <button class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Done Editing</button>
@@ -25,6 +25,17 @@
 
     <div class="widget--content--table table--fixed">
       <div class="table--cell break900">
+        <div class="table--cell ng-clickable breakalways" ng-click="class_editor = !class_editor"
+            ng-show="user_classes.length == 0 && !class_editor">
+          <div class="cell--padding clear">
+            <div class="class-name">
+              <h5 ng-if="current_user.is_student">You haven't added any classes yet.</h5>
+              <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any classes yet.</h5>
+              <h5 class="bold">Click here to begin</h5>
+            </div>
+          </div>
+        </div>
+
         <div id="classAccordion" imua-accordion
               class="widget--content--table table--fixed">
 
@@ -191,7 +202,7 @@
 
           </div>
 
-          <div class="table--cell breakalways ng-clickable" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
+          <div class="cell--padding breakalways ng-clickable" ng-click="addClass()" ng-if="class_editor && !classes.editing" >
             <div class="class-name">
               <h6 class="bold">Add a Class</h6>
             </div>
