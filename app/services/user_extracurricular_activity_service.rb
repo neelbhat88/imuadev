@@ -1,5 +1,17 @@
 class UserExtracurricularActivityService
 
+  # Accessed by organization_id
+  def get_org_activity_titles(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    userQ = UserQuerier.new.select([]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+    userExtracurricularActivityQ = Querier.new(UserExtracurricularActivity).select([], [:name]).where(conditions)
+
+    return userExtracurricularActivityQ.pluck(:name)
+  end
+
   # time_unit_id will be used for now, discuss later
   def get_user_extracurricular_activities(userId)
     return UserExtracurricularActivity.where(:user_id => userId).order(:id)
