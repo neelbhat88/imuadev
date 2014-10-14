@@ -138,6 +138,7 @@ angular.module('myApp')
     $scope.addHour= (service_organization) ->
       service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
       service_hour.editing = true
+      service_hour.remove_delete = true
       service_organization.hours.push(service_hour)
 
     $scope.saveHour = (service_hour) ->
@@ -170,6 +171,7 @@ angular.module('myApp')
         service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
       else
         service_hour.editing = false
+        service_hour.remove_delete = false
 
     $scope.deleteHour = (service_organization, service_hour) ->
       if window.confirm "Are you sure you want to delete this hour?"

@@ -3,6 +3,7 @@ angular.module('myApp')
   ($scope, TestService, ProgressService) ->
     $scope.userTests = []
     $scope.orgTests = []
+    $scope.testErrors = []
 
 
     # Note: orgTests are reloaded on semester switch
@@ -24,6 +25,7 @@ angular.module('myApp')
                 $scope.$emit('loaded_module_milestones');
 
     $scope.editUserTest = (index) ->
+      $scope.userTests.editing = true
       $scope.userTests[index].editing = true
       $scope.userTests[index].new_orgTest = $scope.userTests[index].orgTest;
       $scope.userTests[index].new_date = $scope.userTests[index].date;
@@ -34,27 +36,37 @@ angular.module('myApp')
         $scope.userTests[index].editing = false
       else
         $scope.userTests.splice(index, 1)
+
+      $scope.testErrors = []
       $scope.userTests.editing = false;
 
     $scope.saveUserTest = (index) ->
-      new_userTest = TestService.newUserTest($scope.userTests[index].user_id, $scope.userTests[index].time_unit_id)
-      new_userTest.id = $scope.userTests[index].id
-      new_userTest.org_test_id = $scope.userTests[index].new_orgTest.id
-      new_userTest.date = $scope.userTests[index].new_date
-      new_userTest.score = $scope.userTests[index].new_score
+      $scope.testErrors = []
+      if $scope.userTests[index].new_orgTest == null
+        $scope.testErrors.push("Please select a test")
 
-      TestService.saveUserTest(new_userTest)
-        .success (data) ->
-          $scope.userTests[index] = data.userTest
-          $scope.numUserTests = $scope.userTests.length
-          for ot in $scope.orgTests
-            if ot.id == $scope.userTests[index].org_test_id
-              $scope.userTests[index].orgTest = ot
-              break
-          $scope.userTests[index].editing = false
-          $scope.userTests.editing = false
-          $scope.refreshPoints()
-          $scope.$emit('just_updated', 'Testing')
+      if $scope.userTests[index].new_date == ""
+        $scope.testErrors.push("Please select a date")
+
+      if $scope.testErrors.length == 0
+        new_userTest = TestService.newUserTest($scope.userTests[index].user_id, $scope.userTests[index].time_unit_id)
+        new_userTest.id = $scope.userTests[index].id
+        new_userTest.org_test_id = $scope.userTests[index].new_orgTest.id
+        new_userTest.date = $scope.userTests[index].new_date
+        new_userTest.score = $scope.userTests[index].new_score
+
+        TestService.saveUserTest(new_userTest)
+          .success (data) ->
+            $scope.userTests[index] = data.userTest
+            $scope.numUserTests = $scope.userTests.length
+            for ot in $scope.orgTests
+              if ot.id == $scope.userTests[index].org_test_id
+                $scope.userTests[index].orgTest = ot
+                break
+            $scope.userTests[index].editing = false
+            $scope.userTests.editing = false
+            $scope.refreshPoints()
+            $scope.$emit('just_updated', 'Testing')
 
     $scope.deleteUserTest = (index) ->
       if window.confirm "Are you sure you want to delete this test?"
@@ -67,6 +79,7 @@ angular.module('myApp')
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true
+      $scope.testsEditor = false
       blank_userTest = TestService.newUserTest($scope.student.id, $scope.selected_semester.id)
       blank_userTest.new_orgTest = null
       blank_userTest.editing = true
