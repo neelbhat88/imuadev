@@ -48,11 +48,11 @@ angular.module('myApp')
             $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones')
 
-    $scope.activiyIsSavable = (activity) ->
+    $scope.activityIsSavable = (activity) ->
       return activity.name
 
     $scope.activityDetailIsSavable = (detail) ->
-      return detail.description
+      return true
 
     $scope.newActivityEntryIsSavable = () ->
       return $scope.activityIsSavable($scope.new_activity) &&
@@ -129,6 +129,10 @@ angular.module('myApp')
             $scope.$emit('just_updated', 'Extracurricular')
             $scope.addSuccessMessage("Extracurricular activity deleted successfully")
       return false
+
+    $scope.editingActivities = () ->
+      return _.some($scope.user_extracurricular_activities, (a) -> a.editing == true) ||
+             $scope.new_activity.editing == true
 
 
     # $scope.addActivity = () ->
