@@ -25,6 +25,17 @@
 
     <div class="widget--content--table table--fixed">
       <div class="table--cell break900">
+        <div class="table--cell ng-clickable breakalways" ng-click="ecEditor = !ecEditor"
+            ng-show="applicableActivities().length == 0 && !ecEditor">
+          <div class="cell--padding clear">
+            <div class="class-name">
+              <h5 ng-if="current_user.is_student">You haven't added any extracurricular activities yet.</h5>
+              <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any extracurricular activities yet.</h5>
+              <h5 class="bold">Click here to begin</h5>
+            </div>
+          </div>
+        </div>
+
         <div id="extracurricularAccordion" imua-accordion
               class="widget--content--table table--fixed">
 
