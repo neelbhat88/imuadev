@@ -52,7 +52,7 @@
               <div class="table--cell breakalways">
                 <div class="cell--padding">
                   <div class="subtext">
-                    Last updated {{user_extracurricular_activity.updated_at | fromNow}}
+                    Last updated {{lastUpdated(user_extracurricular_activity) | fromNow}}
                   </div>
                 </div>
               </div>
@@ -81,14 +81,14 @@
               <div class="table--cell breakalways">
                 <span class="input-group">
                   <label>What Activity did you participate in?</label>
-                  <input type="text" focus-me="edit_ec_activity_focus_trigger" ng-model="user_extracurricular_activity.name" typeahead="activityName for activityName in org_current_activity_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Extracurricular Activity Name">
+                  <input type="text" focus-me="edit_ec_activity_focus_trigger" ng-model="user_extracurricular_activity.new_name" typeahead="activityName for activityName in org_current_activity_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Extracurricular Activity Name">
                 </span>
               </div>
               <div class="table--cell breakalways">
                 <div class="cell-padding">
                   <span class="input-group">
                     <label>Leadership Role (Optional)</label>
-                    <input class="form-control" ng-model="user_extracurricular_activity.details[0].leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
+                    <input class="form-control" ng-model="user_extracurricular_activity.details[0].new_leadership" placeholder="Leadership (optional)" name="extracurricularEventLeadership">
                   </span>
                 </div>
               </div>
@@ -96,7 +96,7 @@
                 <div class="cell-padding">
                   <span class="input-group">
                     <label>Description (Optional)</label>
-                    <textarea class="form-control" ng-model="user_extracurricular_activity.details[0].description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
+                    <textarea class="form-control" ng-model="user_extracurricular_activity.details[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
                   </span>
                 </div>
               </div>
