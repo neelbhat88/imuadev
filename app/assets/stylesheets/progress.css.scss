@@ -139,7 +139,22 @@
       }
     }
 
-    #cell--hours {
+    .log--details {
+      width: 70%;
+      float: left;
+    }
+
+    .log--hours {
+      width: 30%;
+      float: left;
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    .cell--hours {
       width: 30%;
 
       h5 {

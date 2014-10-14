@@ -103,9 +103,11 @@ angular.module('myApp')
     $scope.editOrganization= (service_organization) ->
       service_organization.editing = true
       service_organization.new_name = service_organization.name
+      return false
 
     $scope.cancelEditOrganization = (service_organization) ->
       service_organization.editing = false
+      return false
 
     $scope.saveOrganization = (service_organization) ->
       if !$scope.serviceOrganizationIsSavable(service_organization)
@@ -125,6 +127,8 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+      return false
+
     $scope.deleteOrganization = (service_organization) ->
       if window.confirm "Are you sure you want to delete this organization?"
         UserServiceOrganizationService.deleteServiceOrganization(service_organization, $scope.selected_semester.id)
@@ -134,6 +138,8 @@ angular.module('myApp')
               $scope.user_service_organizations.splice(_.indexOf($scope.user_service_organizations, service_organization), 1)
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+
+      return false
 
     $scope.addHour= (service_organization) ->
       service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
@@ -188,8 +194,4 @@ angular.module('myApp')
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
-    $scope.selectOrg = (user_service_organization) ->
-      if $scope.selected_org != user_service_organization
-        $scope.selected_org = user_service_organization
-        $scope.service_editor = false
 ]
