@@ -103,9 +103,11 @@ angular.module('myApp')
     $scope.editOrganization= (service_organization) ->
       service_organization.editing = true
       service_organization.new_name = service_organization.name
+      return false
 
     $scope.cancelEditOrganization = (service_organization) ->
       service_organization.editing = false
+      return false
 
     $scope.saveOrganization = (service_organization) ->
       if !$scope.serviceOrganizationIsSavable(service_organization)
@@ -125,6 +127,8 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+      return false
+
     $scope.deleteOrganization = (service_organization) ->
       if window.confirm "Are you sure you want to delete this organization?"
         UserServiceOrganizationService.deleteServiceOrganization(service_organization, $scope.selected_semester.id)
@@ -135,9 +139,12 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
 
+      return false
+
     $scope.addHour= (service_organization) ->
       service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
       service_hour.editing = true
+      service_hour.remove_delete = true
       service_organization.hours.push(service_hour)
 
     $scope.saveHour = (service_hour) ->
@@ -170,6 +177,7 @@ angular.module('myApp')
         service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
       else
         service_hour.editing = false
+        service_hour.remove_delete = false
 
     $scope.deleteHour = (service_organization, service_hour) ->
       if window.confirm "Are you sure you want to delete this hour?"
@@ -186,8 +194,4 @@ angular.module('myApp')
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
-    $scope.selectOrg = (user_service_organization) ->
-      if $scope.selected_org != user_service_organization
-        $scope.selected_org = user_service_organization
-        $scope.service_editor = false
 ]
