@@ -201,11 +201,17 @@ header {
 }
 
 .alerts-section {
-  position: absolute;
+  position: fixed;
+  z-index: 10000;
   width: 400px;
-  top: 110px;
+  top: 20px;
   left: 50%;
   margin-left: -200px;
+
+  @include respond-to(660) {
+    width: 200px;
+    margin-left: -100px;
+  }
 }
 /* ===============================================
    Milestone Classes
