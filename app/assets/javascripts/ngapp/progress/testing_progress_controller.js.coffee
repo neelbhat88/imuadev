@@ -31,58 +31,68 @@ angular.module('myApp')
     $scope.editorClick = () ->
       $scope.testsEditor = !$scope.testsEditor
 
-    $scope.editUserTest = (index) ->
+    $scope.editUserTest = (user_test) ->
       $scope.userTests.editing = true
-      $scope.userTests[index].editing = true
-      $scope.userTests[index].new_orgTest = $scope.userTests[index].orgTest;
-      $scope.userTests[index].new_date = $scope.userTests[index].date;
-      $scope.userTests[index].new_score = $scope.userTests[index].score;
+      user_test.editing = true
+      user_test.new_orgTest = user_test.orgTest;
+      user_test.new_date = user_test.date;
+      user_test.new_score = user_test.score;
 
-    $scope.cancelEditUserTest = (index) ->
-      if $scope.userTests[index].id
-        $scope.userTests[index].editing = false
+    $scope.cancelEditUserTest = (user_test) ->
+      if user_test.id
+        user_test.editing = false
       else
-        $scope.userTests.splice(index, 1)
+        $scope.userTests = removeTest($scope.userTests, user_test)
 
       $scope.testErrors = []
       $scope.userTests.editing = false;
 
-    $scope.saveUserTest = (index) ->
+    removeTest = (tests, test_to_remove) ->
+      _.without(tests, _.findWhere(tests, {id: test_to_remove.id}))
+
+    $scope.saveUserTest = (user_test) ->
       $scope.testErrors = []
-      if $scope.userTests[index].new_orgTest == null
+      if user_test.new_orgTest == null
         $scope.testErrors.push("Please select a test")
 
-      if $scope.userTests[index].new_date == ""
+      if user_test.new_date == ""
         $scope.testErrors.push("Please select a date")
 
       if $scope.testErrors.length == 0
-        new_userTest = TestService.newUserTest($scope.userTests[index].user_id, $scope.userTests[index].time_unit_id)
-        new_userTest.id = $scope.userTests[index].id
-        new_userTest.org_test_id = $scope.userTests[index].new_orgTest.id
-        new_userTest.date = $scope.userTests[index].new_date
-        new_userTest.score = $scope.userTests[index].new_score
+        new_userTest = TestService.newUserTest(user_test.user_id, user_test.time_unit_id)
+        new_userTest.id = user_test.id
+        new_userTest.org_test_id = user_test.new_orgTest.id
+        new_userTest.date = user_test.new_date
+        new_userTest.score = user_test.new_score
 
         TestService.saveUserTest(new_userTest)
           .success (data) ->
-            $scope.userTests[index] = data.userTest
+            user_test.editing = false
+            $scope.userTests.editing = false
+            user_test.id = data.userTest.id
+            user_test.user_id = data.userTest.user_id
+            user_test.org_test_id = data.userTest.org_test_id
+            user_test.time_unit_id = data.userTest.time_unit_id
+            user_test.date = data.userTest.date
+            user_test.score = data.userTest.score
             $scope.numUserTests = $scope.userTests.length
             for ot in $scope.orgTests
-              if ot.id == $scope.userTests[index].org_test_id
-                $scope.userTests[index].orgTest = ot
+              if ot.id == user_test.org_test_id
+                user_test.orgTest = ot
                 break
-            $scope.userTests[index].editing = false
-            $scope.userTests.editing = false
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Testing')
+            $scope.addSuccessMessage("Test saved successfully")
 
-    $scope.deleteUserTest = (index) ->
+    $scope.deleteUserTest = (user_test) ->
       if window.confirm "Are you sure you want to delete this test?"
-        TestService.deleteUserTest($scope.userTests[index])
+        TestService.deleteUserTest(user_test)
           .success (data) ->
-            $scope.userTests.splice(index, 1)
+            $scope.userTests = removeTest($scope.userTests, user_test)
             $scope.numUserTests = $scope.userTests.length
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Testing')
+            $scope.addSuccessMessage("Test deleted successfully")
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true

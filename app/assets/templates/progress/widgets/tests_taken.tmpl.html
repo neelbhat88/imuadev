@@ -33,25 +33,20 @@
 
           <div class="table--cell no-border-right breakalways" ng-repeat="userTest in userTests">
             <div class="widget--content--table">
-
-              <div class="table--cell cell-padding pal" ng-hide="userTest.editing">
+              <div class="table--cell test-taken-header" ng-hide="userTest.editing">
                 <h4 class="bold">{{userTest.orgTest.title}}</h4>
-                <div class="subtext">Taken {{userTest.date | fromNow}}</div>
-                <br>
                 <div progress-editor class="edit-buttons" ng-show="testsEditor">
-                  <button class="btn btn-default btn-sm" ng-click="editUserTest($index)">Edit this Test</button>
-                  <button class="btn btn-danger btn-sm" ng-click="deleteUserTest($index)">Delete This Test</button>
+                  <button class="btn btn-default btn-sm" ng-click="editUserTest(userTest)">Edit this Test</button>
+                  <button class="btn btn-danger btn-sm" ng-click="deleteUserTest(userTest)">Delete This Test</button>
                 </div>
-                <br>
               </div>
               <div class="table--cell cell--test--score cell--padding"  ng-hide="userTest.editing">
-                <h5 class="bold">{{userTest.score}}</h5>
                 <p>Score</p>
+                <h5 class="bold">{{userTest.score}}</h5>
               </div>
-
             </div>
 
-            <div progress-editor class="widet--content--cell" ng-show="userTest.editing">
+            <div progress-editor class="widget--content--cell" ng-show="userTest.editing">
               <div class="cell--padding">
                 <span class="input-group">
                   <label>Test Taken:</label>
@@ -88,8 +83,8 @@
                 <ul class="errorText ptm">
                   <li ng-repeat="error in testErrors">{{error}}</li>
                 </ul>
-                <button progress-editor class="submit" title="Confirm" ng-click="saveUserTest($index)">Confirm</button>
-                <button progress-editor class="cancel" title="Cancel" ng-click="cancelEditUserTest($index)">Cancel</button>
+                <button progress-editor class="submit" title="Confirm" ng-click="saveUserTest(userTest)">Confirm</button>
+                <button progress-editor class="cancel" title="Cancel" ng-click="cancelEditUserTest(userTest)">Cancel</button>
               </div>
             </div>
 
