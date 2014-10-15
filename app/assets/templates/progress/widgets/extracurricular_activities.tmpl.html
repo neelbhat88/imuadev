@@ -8,8 +8,8 @@
     </div>
 
     <div class="widget--header--right">
-      <div class="widget--options ng-clickable" collapse-accordion="extracurricularAccordion"
-          ng-hide="editingActivities()" ng-click="ecEditor = !ecEditor">
+      <div progress-editor class="widget--options ng-clickable" collapse-accordion="extracurricularAccordion"
+          ng-hide="editingActivities()" ng-click="editorClick()">
         <div ng-hide="ecEditor">
           <div class="showing--text">Add or Remove Activities</div>
           <div class="showing--icon glyphicon glyphicon-edit"></div>
@@ -24,8 +24,8 @@
   <div class="widget--content">
 
     <div class="widget--content--table table--fixed">
-      <div class="table--cell break900">
-        <div class="table--cell ng-clickable breakalways" ng-click="ecEditor = !ecEditor"
+      <div class="table--cell break900" wait-to-load="{{loaded_data}}">
+        <div progress-editor class="table--cell ng-clickable breakalways" ng-click="editorClick()"
             ng-show="applicableActivities().length == 0 && !ecEditor">
           <div class="cell--padding clear">
             <div class="class-name">
@@ -36,12 +36,10 @@
           </div>
         </div>
 
-        <div id="extracurricularAccordion" imua-accordion
-              class="widget--content--table table--fixed">
+        <div id="extracurricularAccordion" imua-accordion class="widget--content--table table--fixed">
 
           <div class="table--cell no-border-right breakalways"
-                ng-repeat="user_extracurricular_activity in applicableActivities()"
-                wait-to-load="{{loaded_data}}">
+                ng-repeat="user_extracurricular_activity in applicableActivities()">
 
             <div accordion-header class="widget--content--table ng-clickable" ng-hide="user_extracurricular_activity.editing">
 
@@ -53,7 +51,7 @@
                       <h4 class="bold">{{user_extracurricular_activity.name}}</h4>
                     </div>
                   </div>
-                  <div class="delete-button" ng-show="ecEditor">
+                  <div progress-editor class="delete-button" ng-show="ecEditor">
                     <button no-click-propagation class="btn btn-danger" ng-click="deleteActivity(user_extracurricular_activity)"><span class="glyphicon glyphicon-trash"></span> Delete </button>
                   </div>
                 </div>
@@ -82,14 +80,14 @@
                 </div>
               </div>
 
-              <div class="table--cell breakalways">
+              <div progress-editor class="table--cell breakalways">
                 <div class="cell--padding">
                   <button class="btn btn-default btn-sm" ng-click="editActivity(user_extracurricular_activity); edit_ec_activity_focus_trigger=true"><span class="glyphicon glyphicon-edit"></span> Edit {{user_extracurricular_activity.name}}</button>
                 </div>
               </div>
             </div>
 
-            <div class="widget--content--table widget--pane--cell" ng-show="user_extracurricular_activity.editing">
+            <div progress-editor class="widget--content--table widget--pane--cell" ng-show="user_extracurricular_activity.editing">
 
               <div class="table--cell breakalways">
                 <span class="input-group">
@@ -114,7 +112,7 @@
                 </div>
               </div>
 
-              <div class="table--cell breakalways">
+              <div progress-editor class="table--cell breakalways">
                 <div class="cell--padding">
                   <div class="edit-buttons">
                     <button class="submit" title="Confirm" ng-click="saveActivity(user_extracurricular_activity)">Confirm</button>
@@ -127,7 +125,7 @@
 
           </div>
 
-          <div class="cell--padding breakalways ng-clickable" ng-click="editNewActivityEntry(); edit_new_activity_focus_trigger=true" ng-show="ecEditor && !new_activity.editing" >
+          <div progress-editor class="cell--padding breakalways ng-clickable" ng-click="editNewActivityEntry(); edit_new_activity_focus_trigger=true" ng-show="ecEditor && !new_activity.editing" >
             <div class="class-name">
               <h6 class="bold">Add an Activity</h6>
             </div>
@@ -138,7 +136,7 @@
 
         </div>
 
-        <div id="service--pane" class="table--cell widget--pane--cell break900" ng-show="ecEditor && new_activity.editing">
+        <div progress-editor id="service--pane" class="table--cell widget--pane--cell break900" ng-show="ecEditor && new_activity.editing">
           <div class="widget--pane">
             <div class="widget--content--table table--fixed">
 
@@ -165,7 +163,7 @@
                 </div>
               </div>
 
-              <div class="table--cell breakalways">
+              <div progress-editor class="table--cell breakalways">
                 <div class="cell--padding">
                   <div class="edit-buttons">
                     <button class="submit" title="Confirm" ng-click="saveNewActivity()">Confirm</button>
