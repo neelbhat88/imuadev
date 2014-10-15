@@ -3,13 +3,13 @@
   <div class="widget--header">
     <div class="widget--header-container clear">
       <div class="widget--header--title widget--header--noleft">
-        <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Tests Taken</h6>
-        <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Tests Taken</h6>
+        <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Tests</h6>
+        <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Tests</h6>
       </div>
       <div class="widget--header--right" ng-hide="userTests.editing">
         <div class="widget--options ng-clickable" ng-hide="testsEditor" ng-click="testsEditor = !testsEditor">
-          <span class="options--text">Edit</span>
-          <span class="glyphicon glyphicon-edit"></span>
+          <div class="showing--text">Add or Remove Tests</div>
+          <div class="showing--icon glyphicon glyphicon-edit"></div>
         </div>
         <button ng-show="testsEditor" class="btn btn-primary" ng-click="testsEditor = !testsEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
       </div>
@@ -34,7 +34,7 @@
           <div class="table--cell no-border-right breakalways" ng-repeat="userTest in userTests">
             <div class="widget--content--table">
 
-              <div class="table--cell cell-padding"  ng-hide="userTest.editing">
+              <div class="table--cell cell-padding pal"  ng-hide="userTest.editing">
                 <h4 class="bold">{{userTest.orgTest.title}}</h4>
                 <div class="subtext">Taken {{userTest.date | fromNow}}</div>
                 <br>
