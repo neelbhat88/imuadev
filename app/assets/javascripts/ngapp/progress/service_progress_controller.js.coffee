@@ -206,4 +206,16 @@ angular.module('myApp')
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
+    # Returns true if anything in service is being edited
+    # (the org name, hours, adding org, adding hours)
+    $scope.editing = () ->
+      all_orgs = $scope.applicableServiceOrganizations()
+
+      editing_org = false
+      for org in all_orgs
+        editing_org = $scope.editingServiceOrganization(org)
+        if editing_org then break
+
+      return $scope.new_service_organization.editing || editing_org
+
 ]
