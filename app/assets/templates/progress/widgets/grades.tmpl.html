@@ -122,21 +122,14 @@
             <div class="widget--content--table widget--pane--cell" ng-show="user_class.editing">
               <form name="form" imua-form="saveClass(user_class)" novalidate>
 
-                <div class="table--cell breakalways form-group" ng-class="{
-                  'has-error': form.$submitted && form.classname.$invalid,
-                  'has-success': form$submitted && form.classname.$valid
-                }">
+                <div class="table--cell breakalways form-group">
                   <span class="input-group">
                     <label>Class</label>
-                    <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
+                    <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required-input>
                   </span>
-                  <div class="alert alert-danger" ng-show="form.$submitted && form.classname.$error.required">Class name is required</div>
                 </div>
 
-                <div class="table--cell breakalways" ng-class="{
-                  'has-error': form.$submitted && form.grade.$invalid,
-                  'has-success': form$submitted && form.grade.$valid
-                }">
+                <div class="table--cell breakalways">
                   <span class="input-group">
                       <label>Grade</label>
                       <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
@@ -154,7 +147,6 @@
                         <option value="F">F</option>
                       </select>
                   </span>
-                  <div class="alert alert-danger" ng-show="form.$submitted && form.grade.$error.required">Grade is required</div>
                 </div>
 
                 <div class="table--cell breakalways">
