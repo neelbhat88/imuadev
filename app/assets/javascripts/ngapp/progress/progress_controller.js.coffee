@@ -166,7 +166,8 @@ angular.module('myApp')
         $scope.selected_semester = sem
         # Keep the selected module consistent with the previous
         for mod in $scope.modules_progress
-          if mod.module_title == $scope.selected_module.module_title
+          if $scope.selected_module &&
+             mod.module_title == $scope.selected_module.module_title
             $scope.selected_module = mod
 
   $scope.getModuleTemplate = (modTitle) ->

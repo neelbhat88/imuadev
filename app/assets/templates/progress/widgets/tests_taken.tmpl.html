@@ -6,18 +6,18 @@
         <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Tests Taken</h6>
         <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Tests Taken</h6>
       </div>
-      <div class="widget--header--right" ng-hide="userTests.editing">
-        <div class="widget--options ng-clickable" ng-hide="testsEditor" ng-click="testsEditor = !testsEditor">
+      <div progress-editor class="widget--header--right" ng-hide="userTests.editing">
+        <div class="widget--options ng-clickable" ng-hide="testsEditor" ng-click="editorClick()">
           <span class="options--text">Edit</span>
           <span class="glyphicon glyphicon-edit"></span>
         </div>
-        <button ng-show="testsEditor" class="btn btn-primary" ng-click="testsEditor = !testsEditor"><span class="glyphicon glyphicon-ok"></span> Done</button>
+        <button ng-show="testsEditor" class="btn btn-primary" ng-click="editorClick()"><span class="glyphicon glyphicon-ok"></span> Done</button>
       </div>
     </div>
   </div>
 
   <div class="widget--content">
-    <div class="widget--content--table table--fixed">
+    <div class="widget--content--table table--fixed" wait-to-load="{{loaded_data}}">
       <div class="table--cell break900" ng-repeat="userTest in userTests">
         <div ng-hide="userTest.editing">
           <div class="table--cell breakalways">
@@ -31,14 +31,14 @@
               <h4>{{userTest.score}}</h4>
             </div>
           </div>
-          <div class="table--cell breakalways" ng-show="testsEditor">
+          <div progress-editor class="table--cell breakalways" ng-show="testsEditor">
             <div class="cell--padding">
               <button class="btn btn-default btn-sm" ng-click="editUserTest($index)">Edit this Test</button>
               <button class="btn btn-danger btn-sm" ng-click="deleteUserTest($index)">Delete This Test</button>
             </div>
           </div>
         </div>
-        <div class="widet--content--cell" ng-show="userTest.editing">
+        <div progress-editor class="widet--content--cell" ng-show="userTest.editing">
           <div class="cell--padding">
             <span class="input-group">
               <label>Test Taken:</label>
@@ -75,20 +75,20 @@
             <ul class="errorText ptm">
               <li ng-repeat="error in testErrors">{{error}}</li>
             </ul>
-            <button class="submit" title="Confirm" ng-click="saveUserTest($index)">Confirm</button>
-            <button class="cancel" title="Cancel" ng-click="cancelEditUserTest($index)">Cancel</button>
+            <button progress-editor class="submit" title="Confirm" ng-click="saveUserTest($index)">Confirm</button>
+            <button progress-editor class="cancel" title="Cancel" ng-click="cancelEditUserTest($index)">Cancel</button>
           </div>
         </div>
       </div>
 
-      <div class="table--cell break900 ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
+      <div progress-editor class="table--cell break900 ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add A Test</h6>
         </div>
       </div>
 
-      <div class="table--cell ng-clickable" ng-click="testsEditor = !testsEditor" ng-show="userTests.length == 0 && !testsEditor">
+      <div progress-editor class="table--cell ng-clickable" ng-click="editorClick()" ng-show="userTests.length == 0 && !testsEditor">
         <div class="cell--padding clear">
           <div class="class-name">
             <h5 ng-if="current_user.is_student">You haven't added any tests yet.</h5>

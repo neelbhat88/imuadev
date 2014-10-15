@@ -4,12 +4,15 @@ angular.module('myApp')
     $scope.userTests = []
     $scope.orgTests = []
     $scope.testErrors = []
+    $scope.testsEditor = false
 
 
     # Note: orgTests are reloaded on semester switch
     $scope.$watch 'selected_semester', () ->
       $scope.numUserTests = 0
+      $scope.testsEditor = false
       if $scope.selected_semester
+        $scope.loaded_data = false
         TestService.getOrgTests($scope.student.organization_id)
           .success (data) ->
             $scope.orgTests = data.orgTests
@@ -22,7 +25,11 @@ angular.module('myApp')
                     if ot.id == ut.org_test_id
                       ut.orgTest = ot
                       break
+                $scope.loaded_data = true
                 $scope.$emit('loaded_module_milestones');
+
+    $scope.editorClick = () ->
+      $scope.testsEditor = !$scope.testsEditor
 
     $scope.editUserTest = (index) ->
       $scope.userTests.editing = true
