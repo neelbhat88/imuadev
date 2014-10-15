@@ -6,7 +6,7 @@
         <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Log</h6>
         <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Log</h6>
       </div>
-      <div class="widget--header--right">
+      <div class="widget--header--right" ng-hide="editing()">
         <div collapse-accordion="serviceAccordion" class="widget--options ng-clickable"
             ng-click="serviceEditor = !serviceEditor">
           <div ng-if="!serviceEditor">
@@ -14,7 +14,7 @@
             <div class="showing--icon glyphicon glyphicon-edit"></div>
           </div>
         </div>
-        <button ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
+        <button collapse-accordion="serviceAccordion" ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
       </div>
     </div>
   </div>

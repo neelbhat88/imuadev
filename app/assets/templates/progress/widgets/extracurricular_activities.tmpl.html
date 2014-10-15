@@ -25,10 +25,23 @@
 
     <div class="widget--content--table table--fixed">
       <div class="table--cell break900">
+        <div class="table--cell ng-clickable breakalways" ng-click="ecEditor = !ecEditor"
+            ng-show="applicableActivities().length == 0 && !ecEditor">
+          <div class="cell--padding clear">
+            <div class="class-name">
+              <h5 ng-if="current_user.is_student">You haven't added any extracurricular activities yet.</h5>
+              <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any extracurricular activities yet.</h5>
+              <h5 class="bold">Click here to begin</h5>
+            </div>
+          </div>
+        </div>
+
         <div id="extracurricularAccordion" imua-accordion
               class="widget--content--table table--fixed">
 
-          <div class="table--cell no-border-right breakalways" ng-repeat="user_extracurricular_activity in user_extracurricular_activities">
+          <div class="table--cell no-border-right breakalways"
+                ng-repeat="user_extracurricular_activity in applicableActivities()"
+                wait-to-load="{{loaded_data}}">
 
             <div accordion-header class="widget--content--table ng-clickable" ng-hide="user_extracurricular_activity.editing">
 
@@ -57,13 +70,13 @@
                 </div>
               </div>
 
-              <div class="table--cell breakalways" ng-if="user_extracurricular_activity.details[0].leadership != null">
+              <div class="table--cell breakalways" ng-if="user_extracurricular_activity.details[0].leadership != ''">
                 <div class="cell--padding">
                   <h6 class="bold"><span class="glyphicon glyphicon-star"></span> {{user_extracurricular_activity.details[0].leadership}} <span class="glyphicon glyphicon-star"></span></h6>
                 </div>
               </div>
 
-              <div class="table--cell breakalways" ng-if="user_extracurricular_activity.details[0].description != null">
+              <div class="table--cell breakalways" ng-if="user_extracurricular_activity.details[0].description != ''">
                 <div class="cell--padding">
                   {{user_extracurricular_activity.details[0].description}}
                 </div>
@@ -114,7 +127,7 @@
 
           </div>
 
-          <div class="table--cell breakalways ng-clickable" ng-click="editNewActivityEntry(); edit_new_activity_focus_trigger=true" ng-show="ecEditor && !new_activity.editing" >
+          <div class="cell--padding breakalways ng-clickable" ng-click="editNewActivityEntry(); edit_new_activity_focus_trigger=true" ng-show="ecEditor && !new_activity.editing" >
             <div class="class-name">
               <h6 class="bold">Add an Activity</h6>
             </div>
