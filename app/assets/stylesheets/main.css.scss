@@ -207,6 +207,11 @@ header {
   top: 20px;
   left: 50%;
   margin-left: -200px;
+
+  @include respond-to(660) {
+    width: 200px;
+    margin-left: -100px;
+  }
 }
 /* ===============================================
    Milestone Classes
