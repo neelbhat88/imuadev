@@ -58,12 +58,12 @@
                   <label>Date Taken:</label>
                   <imua-datepicker date="userTest.new_date"></imua-datepicker>
                 </span>
-                <span ng-show="userTest.editing && userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
+                <span ng-show="userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
                   <label>Score:</label>
                   <input class="form-control" ng-model="userTest.new_score" placeholder="Score"></input>
                 </span>
 
-                <span ng-show="userTest.editing && userTest.new_orgTest.score_type == 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
+                <span ng-show="userTest.new_orgTest.score_type == 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
                   <label>Grade:</label>
                   <select class="form-control" ng-model="userTest.new_score">
                     <option value="A">A</option>

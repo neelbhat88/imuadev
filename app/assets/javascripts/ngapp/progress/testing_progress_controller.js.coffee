@@ -96,7 +96,6 @@ angular.module('myApp')
 
     $scope.addUserTest = () ->
       $scope.userTests.editing = true
-      $scope.testsEditor = false
       blank_userTest = TestService.newUserTest($scope.student.id, $scope.selected_semester.id)
       blank_userTest.new_orgTest = null
       blank_userTest.editing = true
