@@ -75,6 +75,11 @@
 
   }
 
+  // adhoc for test cell style
+  .cell--test--score {
+    width: 30%;
+  }
+
   .academicsProgressContainer {
     .expanded, .editing {
       width: 30%;
@@ -165,6 +170,7 @@
 
     #service--pane { width: 65%; }
   }
+
 
   .extracurricularProgressContainer {
     .extracurricular-activities {

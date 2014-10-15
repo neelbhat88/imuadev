@@ -91,6 +91,8 @@ angular.module('myApp')
             $scope.resetNewServiceEntry()
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+
+            $scope.addSuccessMessage("Successfully added new hours to #{existing_organization.name}")
       else
         UserServiceOrganizationService.saveNewServiceOrganization($scope.new_service_organization)
           .success (data) ->
@@ -103,6 +105,8 @@ angular.module('myApp')
             $scope.resetNewServiceEntry()
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+
+            $scope.addSuccessMessage("Successfully added #{data.user_service_organization.name}")
 
 
     $scope.editOrganization= (service_organization) ->
@@ -132,6 +136,8 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+          $scope.addSuccessMessage("Successfully updated #{service_organization.name}")
+
       return false
 
     $scope.deleteOrganization = (service_organization) ->
@@ -143,6 +149,8 @@ angular.module('myApp')
               $scope.user_service_organizations.splice(_.indexOf($scope.user_service_organizations, service_organization), 1)
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+
+            $scope.addSuccessMessage("Successfully deleted organization and all associated hours")
 
       return false
 
@@ -171,6 +179,8 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+          $scope.addSuccessMessage("Successfully added/updated service hour entry")
+
     $scope.editHour = (service_hour) ->
       service_hour.editing = true
       service_hour.new_description = service_hour.description
@@ -194,6 +204,7 @@ angular.module('myApp')
 
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+            $scope.addSuccessMessage("Successfully deleted service hour entry")
 
     $scope.editingServices = () ->
       return _.some($scope.user_service_organizations, (o) -> o.editing == true) ||
@@ -202,5 +213,17 @@ angular.module('myApp')
     $scope.editingServiceOrganization = (service_organization) ->
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
+
+    # Returns true if anything in service is being edited
+    # (the org name, hours, adding org, adding hours)
+    $scope.editing = () ->
+      all_orgs = $scope.applicableServiceOrganizations()
+
+      editing_org = false
+      for org in all_orgs
+        editing_org = $scope.editingServiceOrganization(org)
+        if editing_org then break
+
+      return $scope.new_service_organization.editing || editing_org
 
 ]
