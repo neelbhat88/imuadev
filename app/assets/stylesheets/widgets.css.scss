@@ -37,6 +37,19 @@ $border-color: black(0.2);
         .showing--text {
           @extend .options--text;
           opacity: 0.3;
+
+          display: inline-block;
+          vertical-align: middle;
+
+          @include respond-to(900) {
+            width: 100px;
+          }
+
+        }
+
+        .showing--icon {
+          display: inline-block;
+          vertical-align: text-top;
         }
 
         &:hover {

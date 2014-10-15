@@ -75,6 +75,11 @@
 
   }
 
+  // adhoc for test cell style
+  .cell--test--score {
+    width: 30%;
+  }
+
   .academicsProgressContainer {
     .expanded, .editing {
       width: 30%;
@@ -139,7 +144,22 @@
       }
     }
 
-    #cell--hours {
+    .log--details {
+      width: 70%;
+      float: left;
+    }
+
+    .log--hours {
+      width: 30%;
+      float: left;
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    .cell--hours {
       width: 30%;
 
       h5 {
@@ -150,6 +170,7 @@
 
     #service--pane { width: 65%; }
   }
+
 
   .extracurricularProgressContainer {
     .extracurricular-activities {
