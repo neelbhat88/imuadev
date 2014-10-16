@@ -4,7 +4,7 @@
 
 .circle-subnav {
   @include font-size(1.2);
-  visibility: hidden;
+  
   li {
     margin-bottom: 2px;
     &:last-of-type {
