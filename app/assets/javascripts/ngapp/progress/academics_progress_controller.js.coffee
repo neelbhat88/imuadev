@@ -9,7 +9,9 @@ angular.module('myApp')
     $scope.last_updated_gpa = null
 
     $scope.$watch 'selected_semester', () ->
+      $scope.class_editor = false
       if $scope.selected_semester
+        $scope.loaded_data = false
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
@@ -35,7 +37,11 @@ angular.module('myApp')
                 $scope.gpa_history.values.push(gpa_history.regular_unweighted)
                 $scope.gpa_history.dates.push(gpa_history.date_updated)
 
+            $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones');
+
+    $scope.editorClick = () ->
+      $scope.class_editor = !$scope.class_editor
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
@@ -52,7 +58,7 @@ angular.module('myApp')
     $scope.saveClass = (user_class) ->
       if !user_class.new_name || !user_class.new_grade
         return
-        
+
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = user_class.id
       new_class.name = user_class.new_name

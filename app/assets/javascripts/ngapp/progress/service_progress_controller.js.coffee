@@ -4,6 +4,7 @@ angular.module('myApp')
     $scope.user_service_organizations = []
     $scope.semester_service_hours = 0
     $scope.selected_org = null
+    $scope.serviceEditor = false
     $scope.loaded_data = false
 
     $scope.resetNewServiceEntry = () ->
@@ -29,6 +30,7 @@ angular.module('myApp')
     , true
 
     $scope.$watch 'selected_semester', () ->
+      $scope.serviceEditor = false
       if $scope.selected_semester
         $scope.resetNewServiceEntry()
         $scope.loaded_data = false
@@ -49,6 +51,9 @@ angular.module('myApp')
 
             $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones')
+
+    $scope.editorClick = () ->
+      $scope.serviceEditor = !$scope.serviceEditor
 
     $scope.getServiceOrganizationTotalHours = (service_organization) ->
       total_hours = 0
@@ -199,8 +204,11 @@ angular.module('myApp')
 
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
-
             $scope.addSuccessMessage("Successfully deleted service hour entry")
+
+    $scope.editingServices = () ->
+      return _.some($scope.user_service_organizations, (o) -> o.editing == true) ||
+             $scope.new_service_organization.editing == true
 
     $scope.editingServiceOrganization = (service_organization) ->
       return _.some(service_organization.hours, (h) -> h.editing == true) ||

@@ -6,15 +6,17 @@
         <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Service Log</h6>
         <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Service Log</h6>
       </div>
-      <div class="widget--header--right" ng-hide="editing()">
-        <div collapse-accordion="serviceAccordion" class="widget--options ng-clickable"
-            ng-click="serviceEditor = !serviceEditor">
-          <div ng-if="!serviceEditor">
+      <div class="widget--header--right">
+        <div progress-editor class="widget--options ng-clickable" collapse-accordion="serviceAccordion"
+            ng-hide="editingServices()" ng-click="editorClick()">
+          <div ng-hide="serviceEditor">
             <div class="showing--text">Add or Remove Organizations</div>
             <div class="showing--icon glyphicon glyphicon-edit"></div>
           </div>
+          <div ng-show="serviceEditor">
+            <button ng-show="serviceEditor" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Done Editing</button>
+          </div>
         </div>
-        <button collapse-accordion="serviceAccordion" ng-show="serviceEditor" class="btn btn-primary" ng-click="serviceEditor = !serviceEditor; resetNewServiceEntry()"><span class="glyphicon glyphicon-ok"></span> Done</button>
       </div>
     </div>
   </div>
@@ -23,8 +25,8 @@
 
     <div class="widget--content--table table--fixed">
 
-      <div class="table--cell break900">
-        <div class="table--cell ng-clickable breakalways" ng-click="serviceEditor = !serviceEditor"
+      <div class="table--cell break900" wait-to-load="{{loaded_data}}">
+        <div progress-editor class="table--cell ng-clickable breakalways" ng-click="editorClick()"
             ng-show="applicableServiceOrganizations().length == 0 && !serviceEditor">
           <div class="cell--padding clear">
             <div class="class-name">
@@ -38,23 +40,20 @@
         <div id="serviceAccordion" imua-accordion class="widget--content--table table--fixed">
 
           <div class="table--cell no-border-right breakalways"
-                ng-repeat="user_service_organization in applicableServiceOrganizations()"
-                wait-to-load="{{loaded_data}}">
+                ng-repeat="user_service_organization in applicableServiceOrganizations()">
 
             <!-- Org Name -->
             <div accordion-header class="widget--content--table ng-clickable">
               <div class="table--cell">
                 <div class="service-org-header" ng-hide="user_service_organization.editing">
                   <h4 class="bold">{{user_service_organization.name}}</h4>
-                  <div>
-                  </div>
-                  <div class="edit-buttons" ng-show="serviceEditor">
+                  <div progress-editor class="edit-buttons" ng-show="serviceEditor">
                     <button no-click-propagation class="btn btn-default" ng-click="editOrganization(user_service_organization)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     <button no-click-propagation class="btn btn-danger" ng-click="deleteOrganization(user_service_organization)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                   </div>
                 </div>
 
-                <div class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing">
+                <div progress-editor class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing">
                   <span class="input-group">
                     <label><h4>Who was the service for?</h4></label>
                     <input type="text" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
@@ -78,24 +77,24 @@
                     <div class="cell--padding log--details">
                       <h6>{{service_org_hour.description}}</h6>
                       <p>Completed on {{service_org_hour.date | formatMDY}}</p>
-                      <div class="small-edit-button">
+                      <div progress-editor class="small-edit-button">
                         <button class="btn btn-default btn-xs" ng-click="editHour(service_org_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                       </div>
                     </div>
 
                     <div class="log--hours">
                       <h5>{{service_org_hour.hours | parseFloat}}</h5>
-                      <p ng-if="service_org_hour.hours != 1">Hours</p>
-                      <p ng-if="service_org_hour.hours == 1">Hour</p>
+                      <p ng-show="service_org_hour.hours != 1">Hours</p>
+                      <p ng-show="service_org_hour.hours == 1">Hour</p>
                     </div>
                   </div>
 
                   <!-- Editing -->
-                  <div class="cell--padding" ng-show="service_org_hour.editing">
+                  <div progress-editor class="cell--padding" ng-show="service_org_hour.editing">
                     <imua-datepicker class="full-width" date="service_org_hour.new_date"></imua-datepicker>
                     <span class="input-group">
-                      <label ng-if="current_user.is_student">What type of service did you do?</label>
-                      <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                      <label ng-show="current_user.is_student">What type of service did you do?</label>
+                      <label ng-show="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
                       <textarea class="form-control" ng-model="service_org_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
                     </span>
                     <span class="input-group">
@@ -103,14 +102,14 @@
                       <input class="form-control" ng-model="service_org_hour.new_hours" placeholder="Hours" name="serviceEventHours">
                     </span>
 
-                    <button class="btn btn-primary" title="Confirm" ng-click="saveHour(service_org_hour)">Save</button>
-                    <button class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, service_org_hour)">Cancel</button>
-                    <button class="btn btn-danger btn-sm" ng-hide="service_org_hour.id == null" ng-click="deleteHour(user_service_organization, service_org_hour)">Delete</button>
+                    <button progress-editor class="btn btn-primary" title="Confirm" ng-click="saveHour(service_org_hour)">Save</button>
+                    <button progress-editor class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, service_org_hour)">Cancel</button>
+                    <button progress-editor class="btn btn-danger btn-sm" ng-hide="service_org_hour.id == null" ng-click="deleteHour(user_service_organization, service_org_hour)">Delete</button>
                   </div>
                 </div>
               </div>
 
-              <div class="widget--pane--cell table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(user_service_organization)" ng-hide="editingServiceOrganization(user_service_organization)">
+              <div progress-editor class="widget--pane--cell table--cell cell--service--hours breakalways ng-clickable" ng-click="addHour(user_service_organization)" ng-hide="editingServiceOrganization(user_service_organization)">
                 <div class="cell--padding">
                   <h6 class="bold"><span class="glyphicon glyphicon-plus-sign"></span> Add more hours for {{user_service_organization.name}}</h6>
                 </div>
@@ -118,14 +117,14 @@
             </div>
           </div>
 
-          <div class="table--cell no-border-right breakalways ng-clickable" ng-show="serviceEditor && !new_service_organization.editing" ng-click="editNewServiceEntry(); edit_new_service_organization_focus_trigger=true">
+          <div progress-editor class="table--cell no-border-right breakalways ng-clickable" ng-show="serviceEditor && !new_service_organization.editing" ng-click="editNewServiceEntry(); edit_new_service_organization_focus_trigger=true">
             <div class="cell--padding">
               <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
               <h6 class="bold">Add a Service Organization</h6>
             </div>
           </div>
 
-          <div class="table--cell breakalways" ng-show="new_service_organization.editing">
+          <div progress-editor class="table--cell breakalways" ng-show="new_service_organization.editing">
             <div class="widget--pane">
               <div class="widget--content--table table--fixed">
 
@@ -155,8 +154,8 @@
                         <label>How many hours?</label>
                         <input class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
                       </span>
-                      <button class="btn btn-primary" title="Confirm" ng-click="saveNewServiceEntry()">Add Organization</button>
-                      <button class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</button>
+                      <button progress-editor class="btn btn-primary" title="Confirm" ng-click="saveNewServiceEntry()">Add Organization</button>
+                      <button progress-editor class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</button>
                     </div>
                   </div>
                 </div>
