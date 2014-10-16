@@ -87,8 +87,8 @@
 
     &:hover {
       border-top: 3px;
-      border: 3px solid $ink;
-      padding: 4px 24px 5px 24px;
+      box-shadow: 0px 0px 10px;
+      cursor: pointer;
     }
 
     .milestone__title {
