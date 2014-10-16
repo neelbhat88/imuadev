@@ -19,6 +19,11 @@
         <h4>{{milestone | printMilestone}}</h4>
       </div>
 
+      <div ng-if="num_students_in_semester == 0">
+        <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
+        <h5 ng-if="current_user.is_mentor" class="italic">None of your students are currently in {{milestone.time_unit_name}}</h5>
+      </div>
+
       <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
         <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
         <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
