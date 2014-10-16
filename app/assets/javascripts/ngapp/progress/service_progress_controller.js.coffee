@@ -3,6 +3,8 @@ angular.module('myApp')
   ($scope, UserServiceOrganizationService, ProgressService) ->
     $scope.user_service_organizations = []
     $scope.semester_service_hours = 0
+    $scope.selected_org = null
+    $scope.serviceEditor = false
     $scope.loaded_data = false
 
     $scope.resetNewServiceEntry = () ->
@@ -28,6 +30,7 @@ angular.module('myApp')
     , true
 
     $scope.$watch 'selected_semester', () ->
+      $scope.serviceEditor = false
       if $scope.selected_semester
         $scope.resetNewServiceEntry()
         $scope.loaded_data = false
@@ -49,9 +52,13 @@ angular.module('myApp')
             $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones')
 
+    $scope.editorClick = () ->
+      $scope.serviceEditor = !$scope.serviceEditor
+
     $scope.getServiceOrganizationTotalHours = (service_organization) ->
       total_hours = 0
-      _.each(service_organization.hours, (h) -> total_hours += parseFloat h.hours)
+      _.each(service_organization.hours, (h) -> if h.hours != null
+        total_hours += parseFloat h.hours)
       return total_hours
 
     $scope.serviceOrganizationIsSavable = (service_organization) ->
@@ -84,6 +91,8 @@ angular.module('myApp')
             $scope.resetNewServiceEntry()
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+
+            $scope.addSuccessMessage("Successfully added new hours to #{existing_organization.name}")
       else
         UserServiceOrganizationService.saveNewServiceOrganization($scope.new_service_organization)
           .success (data) ->
@@ -97,13 +106,17 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
 
+            $scope.addSuccessMessage("Successfully added #{data.user_service_organization.name}")
+
 
     $scope.editOrganization= (service_organization) ->
       service_organization.editing = true
       service_organization.new_name = service_organization.name
+      return false
 
     $scope.cancelEditOrganization = (service_organization) ->
       service_organization.editing = false
+      return false
 
     $scope.saveOrganization = (service_organization) ->
       if !$scope.serviceOrganizationIsSavable(service_organization)
@@ -123,6 +136,10 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+          $scope.addSuccessMessage("Successfully updated #{service_organization.name}")
+
+      return false
+
     $scope.deleteOrganization = (service_organization) ->
       if window.confirm "Are you sure you want to delete this organization?"
         UserServiceOrganizationService.deleteServiceOrganization(service_organization, $scope.selected_semester.id)
@@ -133,9 +150,14 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
 
+            $scope.addSuccessMessage("Successfully deleted organization and all associated hours")
+
+      return false
+
     $scope.addHour= (service_organization) ->
       service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
       service_hour.editing = true
+      service_hour.remove_delete = true
       service_organization.hours.push(service_hour)
 
     $scope.saveHour = (service_hour) ->
@@ -157,6 +179,8 @@ angular.module('myApp')
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
+          $scope.addSuccessMessage("Successfully added/updated service hour entry")
+
     $scope.editHour = (service_hour) ->
       service_hour.editing = true
       service_hour.new_description = service_hour.description
@@ -168,6 +192,7 @@ angular.module('myApp')
         service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
       else
         service_hour.editing = false
+        service_hour.remove_delete = false
 
     $scope.deleteHour = (service_organization, service_hour) ->
       if window.confirm "Are you sure you want to delete this hour?"
@@ -179,10 +204,26 @@ angular.module('myApp')
 
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
+            $scope.addSuccessMessage("Successfully deleted service hour entry")
+
+    $scope.editingServices = () ->
+      return _.some($scope.user_service_organizations, (o) -> o.editing == true) ||
+             $scope.new_service_organization.editing == true
 
     $scope.editingServiceOrganization = (service_organization) ->
       return _.some(service_organization.hours, (h) -> h.editing == true) ||
              service_organization.editing == true
 
+    # Returns true if anything in service is being edited
+    # (the org name, hours, adding org, adding hours)
+    $scope.editing = () ->
+      all_orgs = $scope.applicableServiceOrganizations()
+
+      editing_org = false
+      for org in all_orgs
+        editing_org = $scope.editingServiceOrganization(org)
+        if editing_org then break
+
+      return $scope.new_service_organization.editing || editing_org
 
 ]

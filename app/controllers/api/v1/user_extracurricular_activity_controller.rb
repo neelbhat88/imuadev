@@ -23,6 +23,8 @@ class Api::V1::UserExtracurricularActivityController < ApplicationController
       return
     end
 
+    all_organization_titles_result = @userExtracurricularActivityService.get_org_activity_titles({organization_id: user.organization_id})
+
     user_extracurricular_activities = @userExtracurricularActivityService.get_user_extracurricular_activities(userId)
 
     user_extracurricular_details = @userExtracurricularActivityService.get_user_extracurricular_activity_details(userId, time_unit_id)
@@ -31,7 +33,8 @@ class Api::V1::UserExtracurricularActivityController < ApplicationController
       json: {
         info: "User's Extracurricular Activities and Details",
         user_extracurricular_activities: user_extracurricular_activities,
-        user_extracurricular_details: user_extracurricular_details
+        user_extracurricular_details: user_extracurricular_details,
+        org_extracurricular_activity_titles: all_organization_titles_result
       }
   end
 

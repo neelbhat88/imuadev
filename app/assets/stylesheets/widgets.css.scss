@@ -37,6 +37,19 @@ $border-color: black(0.2);
         .showing--text {
           @extend .options--text;
           opacity: 0.3;
+
+          display: inline-block;
+          vertical-align: middle;
+
+          @include respond-to(900) {
+            width: 100px;
+          }
+
+        }
+
+        .showing--icon {
+          display: inline-block;
+          vertical-align: text-top;
         }
 
         &:hover {
@@ -51,9 +64,11 @@ $border-color: black(0.2);
 
   .widget--content {
 
-    .widget--pane {
+    .widget--pane--cell {
       background: black(0.2);
-      width: 100%;
+    }
+
+    .widget--pane, .widget--side--pane {
 
       .pane--padding {
         padding: 20px;
@@ -62,6 +77,8 @@ $border-color: black(0.2);
       h4, h2 { margin-top: 0; }
 
     }
+
+    .widget--pane { width: 100%; }
 
     .widget--content--flexcells {
 
@@ -129,6 +146,10 @@ $border-color: black(0.2);
           padding-bottom: 0;
         }
 
+        .no-border-right {
+          border-right: 0;
+        }
+
         .module-circle--meta {
 
           .click-to-view {
@@ -186,6 +207,10 @@ $border-color: black(0.2);
 
     .input-group {
       padding: 20px;
+    }
+
+    .datepicker-label {
+      padding: 0 20px;
     }
 
     .border-top { border-top: 2px solid $border-color; }

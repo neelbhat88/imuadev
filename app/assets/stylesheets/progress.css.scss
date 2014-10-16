@@ -75,6 +75,11 @@
 
   }
 
+  // adhoc for test cell style
+  .cell--test--score {
+    width: 30%;
+  }
+
   .academicsProgressContainer {
     .expanded, .editing {
       width: 30%;
@@ -105,57 +110,8 @@
 
     }
 
-    .break900 {
-
-      .class-name {
-        @include respond-to(900) {
-          width: 70%;
-          float: left;
-          text-align: left;
-          padding-left: 10%;
-        }
-
-        h6 {
-          font-weight: $bold;
-          @include respond-to(900) { @include font-size(3.8); }
-          @include respond-to(600) { @include font-size(3); }
-        }
-      }
-
-      .class-grade {
-        @include respond-to(900) {
-          width: 30%;
-          float: left;
-          h3 { margin: 0; }
-        }
-      }
-
-    }
-
-    .break1200 {
-      .class-name {
-        @include respond-to(1200) {
-          width: 70%;
-          float: left;
-          text-align: left;
-          padding-left: 10%;
-        }
-
-        h6 {
-          font-weight: $bold;
-          @include respond-to(1200) { @include font-size(5); margin: 0; font-weight: $thin; }
-          @include respond-to(900) { @include font-size(3.8); }
-          @include respond-to(600) { @include font-size(3); }
-        }
-      }
-
-      .class-grade {
-        @include respond-to(1200) {
-          width: 30%;
-          float: left;
-          h3 { margin: 0; }
-        }
-      }
+    #cell--grades {
+      width: 30%;
     }
 
   }
@@ -187,7 +143,34 @@
         }
       }
     }
+
+    .log--details {
+      width: 70%;
+      float: left;
+    }
+
+    .log--hours {
+      width: 30%;
+      float: left;
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    .cell--hours {
+      width: 30%;
+
+      h5 {
+        margin: 0;
+        padding-top: 25px;
+      }
+    }
+
+    #service--pane { width: 65%; }
   }
+
 
   .extracurricularProgressContainer {
     .extracurricular-activities {
@@ -205,6 +188,12 @@
     }
   }
 
+  .testingProgressContainer {
+    .test-taken-header {
+      padding: 20px;
+    }
+  }
+
   /* Editing */
 
   .input-group {
@@ -215,6 +204,7 @@
     .full-width {
       width: 100%;
     }
+
   }
 
   .datepicker-label {
