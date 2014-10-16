@@ -3,27 +3,36 @@ angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'angulartics', 'angulartics.google.analytics']
 
 angular.module('myApp')
-.controller 'AppController', ['$rootScope','$scope', 'CONSTANTS', "SessionService",
-($rootScope, $scope, CONSTANTS, SessionService) ->
+.controller 'AppController', ['$rootScope','$scope', '$timeout', 'CONSTANTS',
+($rootScope, $scope, $timeout, CONSTANTS) ->
   $scope.CONSTANTS = CONSTANTS
   $scope._ = _
 
   $scope.alerts = []
 
+  timeout = null
+
   $scope.closeAlert = (index) ->
     $scope.alerts.splice(index, 1)
+    $timeout.cancel(timeout)
 
   $scope.addSuccessMessage = (msg) ->
+    $scope.clearAlerts()
     message = { type: 'success', msg: msg}
     $scope.alerts.unshift(message)
 
+    timeout = $timeout () ->
+      $scope.clearAlerts()
+    , 5000
+
   $scope.addErrorMessage = (msg) ->
+    $scope.clearAlerts()
     message = { type: 'danger', msg: msg}
     $scope.alerts.unshift(message)
 
-  $scope.$on "session_timeout", () ->
-    $scope.session_timeout = true
-    SessionService.logout(true)
+  $scope.clearAlerts = () ->
+    $timeout.cancel(timeout)
+    $scope.alerts = []
 
   $scope.$on "update_required", () ->
     $scope.reload_required = true

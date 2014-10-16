@@ -1,0 +1,386 @@
+$border-color: black(0.2);
+
+@mixin breaker() {
+  display: block;
+  width: 100%;
+  border-left: 0;
+  border-bottom: 2px solid $border-color;
+}
+
+.widget {
+
+  background: grey(0.7);
+  margin-bottom: 10px;
+  width: 100%;
+
+  .widget--header {
+    padding: 15px 30px;
+    margin: 0;
+    background: black(0.1);
+    border-bottom: 2px solid $border-color;
+    text-align: left;
+    position: relative;
+
+    .widget--header--right {
+      position: absolute;
+      right: 30px;
+      top: 25px;
+      text-align: right;
+
+      .widget--options {
+        .options--text {
+          margin-right: 10px;
+          opacity: 0;
+          @include transition(0.3);
+        }
+
+        .showing--text {
+          @extend .options--text;
+          opacity: 0.3;
+
+          display: inline-block;
+          vertical-align: middle;
+
+          @include respond-to(900) {
+            width: 100px;
+          }
+
+        }
+
+        .showing--icon {
+          display: inline-block;
+          vertical-align: text-top;
+        }
+
+        &:hover {
+          .options--text, .showing--text {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+  }
+
+  .widget--content {
+
+    .widget--pane--cell {
+      background: black(0.2);
+    }
+
+    .widget--pane, .widget--side--pane {
+
+      .pane--padding {
+        padding: 20px;
+      }
+
+      h4, h2 { margin-top: 0; }
+
+    }
+
+    .widget--pane { width: 100%; }
+
+    .widget--content--flexcells {
+
+      .flexcell {
+        border-right: 2px solid $border-color;
+        border-bottom: 2px solid $border-color;
+        padding: 20px;
+      }
+
+      &:first-child {
+        border-left: none;
+      }
+
+      .by-2, .by-3, .by-4, .by-5, .by-6, .by-7, .by-10, .by-prime {
+        float: left;
+      }
+
+      .by-2 { width: 50%; }
+      .by-3 { width: 33.3333%; }
+      .by-4 { width: 25%; }
+      .by-5, .by-10 { width: 20%; }
+      .by-6, .by-prime { width: 16.6666% }
+      .by-7 { width: 25% }
+
+
+      @include respond-to(1200) {
+        .by-prime, .by-10, .by-7, .by-6, .by-5 {
+          width: 33.3333%;
+        }
+      }
+
+      @include respond-to(900) {
+        .by-prime, .by-10, .by-7, .by-6, by-5, .by-4, .by-3 {
+          width: 50%;
+        }
+      }
+
+
+    }
+
+    .widget--content--table {
+      display: table;
+      width: 100%;
+
+      .table--cell {
+        display: table-cell;
+        vertical-align: top;
+        border-right: 2px solid $border-color;
+
+        &:last-child {
+          border-right: 0;
+        }
+
+        .cell--padding {
+          height: 100%;
+          padding: 20px 0;
+
+          .widget--buttons {
+            padding: 20px 5px;
+          }
+
+        }
+
+        .no-bottom {
+          padding-bottom: 0;
+        }
+
+        .no-border-right {
+          border-right: 0;
+        }
+
+        .module-circle--meta {
+
+          .click-to-view {
+            opacity: 0;
+            @include transition(0.3);
+          }
+
+        }
+
+        &:hover {
+          .module-circle--meta{
+
+            .click-to-view {
+              opacity: 1;
+            }
+
+          }
+        }
+
+      }
+
+      .break600 {
+        @include respond-to(600) {
+          @include breaker();
+        }
+      }
+
+      .break900 {
+        @include respond-to(900) {
+          @include breaker();
+        }
+      }
+
+      .break1200 {
+        @include respond-to(1200) {
+          @include breaker();
+        }
+      }
+
+      .break1400 {
+        @include respond-to(1200) {
+          @include breaker();
+        }
+      }
+
+      .breakalways {
+        @include breaker();
+      }
+
+      .widget--content--row {
+        display: table-row;
+      }
+
+    }
+
+    .input-group {
+      padding: 20px;
+    }
+
+    .datepicker-label {
+      padding: 0 20px;
+    }
+
+    .border-top { border-top: 2px solid $border-color; }
+    .border-bottom { border-bottom: 2px solid $border-color; }
+    .border-right { border-right: 2px solid $border-color; }
+    .border-left { border-left: 2px solid $border-color; }
+
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        .table--cell {}
+      }
+    }
+
+    @each $category, $color in $colormap {
+      &.color--#{$category} {
+        .widget--header {}
+        .ng-clickable {
+          &:hover {
+            .table--cell {}
+          }
+        }
+      }
+    }
+
+    .ng-clickable {
+      @include transition(0.3);
+      &:hover {
+        background: white(0.05);
+      }
+    }
+
+  }
+
+}
+
+/* Widget Groups */
+
+.widget-group {
+  width: 100%;
+  margin-bottom: 10px;
+  background: grey(0.7);
+
+  .widget {
+    background: transparent;
+  }
+
+  .widget-group--table {
+    display: table;
+    width: 100%;
+
+    .widget-group--cell {
+      display: table-cell;
+      border-left: 2px solid $border-color;
+      @include transition(0.3);
+      &:first-child {
+        border-left: 0;
+      }
+
+      .widget {
+        margin-bottom: 0;
+      }
+
+    }
+
+    .break600 {
+      @include respond-to(600) {
+        @include breaker();
+      }
+    }
+
+    .break900 {
+      @include respond-to(900) {
+        @include breaker();
+      }
+    }
+
+    .break1200 {
+      @include respond-to(1200) {
+        @include breaker();
+      }
+    }
+
+    .breakalways {
+      @include breaker();
+    }
+
+  }
+
+  @each $category, $color in $darkcolormap {
+    .color--#{$category} {
+      .widget-group--cell {}
+      .point-circle--inside {}
+    }
+  }
+
+  @each $category, $color in $colormap {
+    .color--#{$category} {
+      .widget--header {}
+      .ng-clickable {
+        &:hover {}
+      }
+    }
+  }
+
+}
+
+/* Nav Type Widgets */
+
+.widget--nav {
+  .widget--content {
+    .widget--content--table {
+      .widget--content--cell {
+        text-align: left;
+        .cell--padding {
+          padding: 20px 30px;
+
+          .setting-icon, .setting-text {
+            display: inline-block;
+          }
+
+          .setting-icon {
+            width: 12px;
+            margin-right: 15px;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+/* Global Widget Helpers */
+.color--dot {
+  display: inline-block;
+  background: $lightgrey;
+  width: 12px;
+  height: 12px;
+  margin-right: 15px;
+  @include circle(14);
+}
+
+@each $category, $color in $colormap {
+  .color--#{$category} {
+    .color--dot {
+      background: $color;
+    }
+  }
+}
+
+.table--fixed {
+  table-layout: fixed; /* For equal horizontal spacing */
+  vertical-align: top;
+}
+
+.cursor-fix {
+  cursor: initial;
+}
+
+.module-circle-breakdown {
+  .module-bar, .progress-bar-nav {
+    display: none;
+  }
+
+  @include respond-to(900) {
+    .module-circle, .progress-circle-nav {
+      display: none;
+    }
+    .module-bar, .progress-bar-nav {
+      display: block;
+    }
+  }
+
+}

@@ -2,11 +2,11 @@
   <div class="tuContainer ptl">
     <!-- Roadmap Name -->
     <div ng-if="user.role >= CONSTANTS.USER_ROLES.mentor">
-      <h1 class="roadmapContainer__title">{{roadmap.name}}</h1>
+      <h1 class="bold roadmapContainer__title">{{roadmap.name}}</h1>
     </div>
 
     <div ng-if="user.role <= CONSTANTS.USER_ROLES.org_admin">
-      <h1 class="roadmapContainer__title--editable" ng-hide="roadmap.editing" ng-click="roadmap.editing=true; roadmap.newname=roadmap.name">{{roadmap.name}}</h1>
+      <h1 class="bold roadmapContainer__title--editable" ng-hide="roadmap.editing" ng-click="roadmap.editing=true; roadmap.newname=roadmap.name">{{roadmap.name}}</h1>
 
       <div ng-show="roadmap.editing" class="pvxl">
         <form>

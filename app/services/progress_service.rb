@@ -69,7 +69,12 @@ class ProgressService
 
     userQ = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(conditions.slice(:user_id))
     userMilestoneQ = Querier.new(UserMilestone).where(conditions.except(:module))
-    userQ.set_subQueriers([userMilestoneQ])
+    userClassQ = Querier.new(UserClass).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userExtracurricularActivityDetailQ = Querier.new(UserExtracurricularActivityDetail).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userServiceHourQ = Querier.new(UserServiceHour).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userTestQ = Querier.new(UserTest).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, userClassQ, userExtracurricularActivityDetailQ,
+      userServiceHourQ, userTestQ])
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
 

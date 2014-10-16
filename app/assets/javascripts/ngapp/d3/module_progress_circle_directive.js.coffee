@@ -18,8 +18,11 @@ angular.module('myApp')
       .append('svg')
       .attr("width", width)
       .attr("height", height)
-      .append("g")
+      .attr("viewBox", "0 0 " + width + " " + height)
+      .attr("preserveAspectRatio", "xMidYMid")
       .attr("id", scope.module.module_title)
+      .append("g")
+      .attr("id", "g_" + scope.module.module_title)
       .attr("class", "module-circle__points")
       .attr("transform", "translate(" + ((width/2)) + "," + ((height/2)) + ")")
 
@@ -91,7 +94,7 @@ angular.module('myApp')
           .attrTween("d", tweenPie)
       #  .each( (d) -> this._current = d ) # stores current angles
 
-      d3.select("#" + module.module_title).append("text")
+      d3.select("#g_" + module.module_title).append("text")
         .attr("dy", (.035 * width) + "px")
         .attr("class", "value")
         .attr("fill", "white")
@@ -101,7 +104,7 @@ angular.module('myApp')
           modulePoints + "/" + totalPoints
         )
 
-      d3.select("#" + module.module_title).append("text")
+      d3.select("#g_" + module.module_title).append("text")
         .attr("dy", (.145 * width) + "px")
         .attr("class", "text")
         .attr("fill", "white")
@@ -123,6 +126,7 @@ angular.module('myApp')
 
         chartSelect.attr("width", onChangeWidth)
         chartSelect.attr("height", onChangeWidth)
+
 
     $(window).resize (event) -> resizeParent()
 
