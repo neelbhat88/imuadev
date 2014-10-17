@@ -62,6 +62,15 @@ class Querier
   end
 
   def domain(sortBy = [])
+    if !sortBy.empty? && @sortedBy != sortBy
+      if @domain.nil?
+        self.generate_domain(sortBy)
+      else
+        @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
+      end
+      @sortedBy = sortBy
+    end
+
     return (@domain.nil?) ? self.generate_domain(sortBy) : @domain
   end
 
