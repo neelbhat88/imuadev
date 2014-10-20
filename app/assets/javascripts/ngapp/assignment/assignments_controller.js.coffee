@@ -1,6 +1,7 @@
 angular.module('myApp')
-.controller 'AssignmentsController', ['$scope', '$route', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, user, AssignmentService, UsersService, OrganizationService) ->
+.controller 'AssignmentsController',
+['$scope', '$route', '$location', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, $location, current_user, user, AssignmentService, UsersService, OrganizationService) ->
 
     # $scope.$on 'assignments_nav_selected', (event, assignments_filter) ->
     #   $scope.list_assignments = assignments_filter
@@ -26,18 +27,64 @@ angular.module('myApp')
         $scope.users_user_assignments = _.filter($scope.assignments, (a) -> _.contains(_.pluck($scope.user.user_assignments, 'assignment_id'), a.id))
         $scope.student_assignments = $scope.assignments
 
-        $scope.list_assignments = $scope.users_user_assignments
+        $scope.selectNav($scope.CONSTANTS.TASK_NAV.assigned_to_me)
 
         $scope.loaded_data = true
 
-    $scope.selectNav = (assignments_filter) ->
-      switch assignments_filter
-        when 'Tasks Assigned to Me'
+    $scope.viewTask  = (assignment) ->
+      # TODO
+      # if $scope.selected_task_list == $scope.CONSTANTS.TASK_NAV.assigned_to_me
+      #   # Go To user_assignment view - need user_assignment.id for this
+      #   user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.current_user.id})
+      #   $location.path("/user_assignment/#{user_assignment.id}")
+      # else
+        $location.path("/assignment/#{assignment.id}")
+
+    $scope.markComplete = (assignment) ->
+      # Need to do the same as in assignment_controller setUserAssignmentStatus
+      # probably should move all that code into the assignment service and call it
+      # from there and from here
+      console.log(assignment)
+      return false
+
+    $scope.markIncomplete = (assignment) ->
+      console.log(assignment)
+      return false
+
+    $scope.incompleteAssignments = () ->
+      if !$scope.list_assignments then return
+
+      incomplete_list = []
+      for assignment in $scope.list_assignments
+        if !$scope.isComplete(assignment) then incomplete_list.push(assignment)
+
+      return incomplete_list
+
+    $scope.completedAssignments = () ->
+      if !$scope.list_assignments then return
+
+      complete_list = []
+      for assignment in $scope.list_assignments
+        if $scope.isComplete(assignment) then complete_list.push(assignment)
+
+      return complete_list
+
+    $scope.selectNav = (task_list) ->
+      $scope.selected_task_list = task_list
+
+      switch task_list
+        when $scope.CONSTANTS.TASK_NAV.assigned_to_me
           $scope.list_assignments = $scope.users_user_assignments
-        when 'Tasks Ive Assigned to Others'
+          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_me
+        when $scope.CONSTANTS.TASK_NAV.assigned_by_me
           $scope.list_assignments = $scope.users_assignments
-        when 'Tasks Assigned to My Students'
+          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_by_me
+        when $scope.CONSTANTS.TASK_NAV.assigned_to_others
           $scope.list_assignments = $scope.student_assignments
+          if $scope.current_user.is_org_admin
+            $scope.selected_task_list_title = "All Tasks"
+          else
+            $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_others
 
     $scope.isComplete = (assignment) ->
       return _.every(assignment.user_assignments, (a) -> a.status == 1)

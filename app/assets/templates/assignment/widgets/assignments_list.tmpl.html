@@ -1,67 +1,89 @@
 <div class="widget">
   <div class="widget--header">
     <div class="widget--header--left">
-      <h6 class="bold"><div class="color--dot"></div> Tasks</h6>
+      <h6 class="bold"><div class="color--dot"></div> {{selected_task_list_title}}</h6>
     </div>
   </div>
   <div class="widget--content">
     <div class="widget--content--table">
-
-      <!-- <div class="table--cell breakalways" ng-repeat="assignment in list_assignments | orderBy:sortIncompleteAssignments">
-        <div class="cell--padding">
-            <h6 class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
-        </div>
-      </div> -->
-
-      <h5 class="bold">Incomplete:</h5>
-      <div class="table--cell breakalways" ng-repeat="assignment in list_assignments | orderBy:sortIncompleteAssignments" ng-if="!isComplete(assignment)">
-        <div class="clear">
-          <div class="tasks--list--item--left">
-            <h6 class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
-            <span class="subtext">
-              <span ng-if="!isComplete(assignment)">
-                <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
-                <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
-                <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
-              </span>
-              <a no-click-propagation href="#/profile/{{assignment.user.id}}">
-                <span ng-if="current_user.id == assignment.user_id">You </span>
-                <span ng-if="current_user.id != assignment.user_id">{{assignment.user.first_last_initial}} </span>
-              </a>
-              created this task on {{assignment.created_at | formatMDY}}
+      <div class="table--cell breakalways pas">
+        <span class="bold">Incomplete</span>
+      </div>
+      <div ng-if="incompleteAssignments().length == 0" class="table--cell breakalways">
+        <div class="cell--padding">No incomplete tasks</div>
+      </div>
+      <div class="task-item task-item--incomplete table--cell no-border-right breakalways"
+        ng-repeat="assignment in incompleteAssignments() | orderBy:sortIncompleteAssignments"
+        ng-click="viewTask(assignment)">
+        <div class="widget--content--table ng-clickable">
+          <div class="task-item-info table--cell">
+            <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
+              <input type="checkbox" no-click-propagation ng-click="markComplete(assignment)" />
+            </div>
+            <div class="task-item__title">
+              <div class="title__main"> {{assignment.title}}</div>
+              <div class="title__info">
+                Created {{assignment.created_at | fromNow}} by
+                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}**</span>
+                <span ng-if="assignment.user.id == current_user.id">Me</span>
+              </div>
+            </div>
+          </div>
+          <div ng-if="task_list_title != CONSTANTS.TASK_NAV.assigned_to_me"
+              class="task-item__completed table--cell">
+            <div class="title__main">
+              <span class="bold">{{_.where(assignment.user_assignments, {status: 1}).length}}</span>
+              out of {{assignment.user_assignments.length}}
+            </div>
+            <div class="title__info">completed</div>
+          </div>
+          <div class="task-item__date table--cell"
+            ng-class="{'task-item__date--pastdue': isPastDue(assignment)}">
+            <span ng-if="assignment.due_datetime" class="title__main mrm">
+              Due {{assignment.due_datetime | fromNow}}
             </span>
-          </div>
-          <div class="tasks--list--item--middle">
-            <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
-          </div>
-          <div class="tasks--list--item--right">
-            <h6 ng-if="assignment.due_datetime != null">{{assignment.due_datetime | formatMDY}}</h6>
+            <span ng-if="!assignment.due_datetime" class="title__main mrm">No Due Date</span>
           </div>
         </div>
       </div>
 
-      <h5 class="bold">Completed:</h5>
-      <div class="table--cell breakalways" ng-repeat="assignment in list_assignments | orderBy:sortCompletedAssignments" ng-if="isComplete(assignment)">
-        <div class="clear">
-          <div class="tasks--list--item--left">
-            <h6><span class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h6>
-            <span class="subtext">
-              <span class="label label-success">
-                <span class="glyphicon glyphicon-ok-circle"></span> Complete
-              </span>
-              <a no-click-propagation href="#/profile/{{user.id}}">
-                <span ng-if="current_user.id == assignment.user_id">You </span>
-                <span ng-if="current_user.id != assignment.user_id">{{assignment.user.first_last_initial}} </span>
-              </a>
-              created this task on {{assignment.created_at | formatMDY}}
-            </span>
+      <div class="table--cell breakalways pas">
+        <span class="bold">Completed</span>
+      </div>
+      <div ng-if="completedAssignments().length == 0" class="table--cell breakalways task-item--incomplete">
+        <div class="cell--padding">No completed tasks</div>
+      </div>
+      <div class="task-item task-item--completed table--cell no-border-right breakalways"
+        ng-repeat="assignment in completedAssignments() | orderBy:sortCompletedAssignments"
+        ng-click="viewTask(assignment)">
+        <div class="widget--content--table ng-clickable">
+          <div class="task-item-info table--cell">
+            <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
+              <input type="checkbox" no-click-propagation ng-click="markIncomplete(assignment)" />
+            </div>
+            <div class="task-item__title">
+              <div class="title__main"> {{assignment.title}}</div>
+              <div class="title__info">
+                Created {{assignment.created_at | fromNow}} by
+                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}**</span>
+                <span ng-if="assignment.user.id == current_user.id">Me</span>
+              </div>
+            </div>
           </div>
-          <div class="tasks--list--item--middle">
-            <h6>{{_.where(assignment.user_assignments, {status: 1}).length}}/{{assignment.user_assignments.length}}</h6>
+          <div ng-if="task_list_title != CONSTANTS.TASK_NAV.assigned_to_me"
+              class="task-item__completed table--cell">
+            <div class="title__main">
+              <span class="bold">{{_.where(assignment.user_assignments, {status: 1}).length}}</span>
+              out of {{assignment.user_assignments.length}}
+            </div>
+            <div class="title__info">completed</div>
           </div>
-          <div class="tasks--list--item--right">
-            <span ng-if="assignment.due_datetime != null"><h6>{{assignment.due_datetime | formatMDY}}</h6>
+          <div class="task-item__date table--cell"
+            ng-class="{'task-item__date--pastdue': isPastDue(assignment)}">
+            <span ng-if="assignment.due_datetime" class="title__main mrm">
+              Due {{assignment.due_datetime | fromNow}}
             </span>
+            <span ng-if="!assignment.due_datetime" class="title__main mrm">No Due Date</span>
           </div>
         </div>
       </div>

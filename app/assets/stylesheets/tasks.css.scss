@@ -11,11 +11,19 @@
   .assignments-content {
     text-align: center;
     padding: 40px $wrapper-width;
+    @include respond-to(1320) {
+      padding: 40px $small-wrapper-width;
+    }
 
     .assignments-nav {
       width: 20%;
       margin-right: 2%;
       float: left;
+
+      @include respond-to(900) {
+        width: 100%;
+        float: none;
+      }
 
       .selected {
         background: white(0.1);
@@ -33,6 +41,11 @@
     .assignments-pane {
       width: 78%;
       float: left;
+
+      @include respond-to(900) {
+        width: 100%;
+        float: none;
+      }
 
       .year-name {
         margin-right: 6px;
@@ -233,4 +246,61 @@
     }
   }
 
+}
+
+.task-item
+{
+  .task-item__check-box {
+    float: left;
+    padding: 10px 0 10px 10px;
+  }
+
+  .task-item__title {
+    text-align: left;
+    padding: 0px 30px 10px;
+  }
+
+  .task-item__completed {
+    padding: 0 10px 10px 10px;
+    width: 20%;
+  }
+
+  .task-item__date {
+    padding: 10px;
+    width: 20%;
+  }
+
+  .task-item__date--pastdue {
+    color: $red;
+  }
+
+  .title__main {
+    @extend h6;
+    margin-bottom: 5px;
+  }
+
+  .title__info {
+    @include font-size(1.0);
+    color: white(0.3);
+  }
+
+}
+
+.task-item--incomplete
+{
+  background-color: $grey;
+
+  .task-item__date { opacity: 0.6; }
+  .task-item__date--pastdue { opacity: 1 }
+
+  &:hover {
+    .task-item__date { opacity: 1 }
+  }
+}
+
+.task-item--completed
+{
+  opacity: 0.2;
+
+  &:hover {opacity: 1;}
 }
