@@ -70,6 +70,7 @@ class Querier
       end
       @sortedBy = sortBy
     end
+
     return (@domain.nil?) ? self.generate_domain(sortBy) : @domain
   end
 
