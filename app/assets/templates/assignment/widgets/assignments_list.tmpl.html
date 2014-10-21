@@ -29,7 +29,7 @@
               </div>
             </div>
           </div>
-          <div ng-if="task_list_title != CONSTANTS.TASK_NAV.assigned_to_me"
+          <div ng-if="selected_task_list != CONSTANTS.TASK_NAV.assigned_to_me"
               class="task-item__completed table--cell">
             <div class="title__main">
               <span class="bold">{{_.where(assignment.user_assignments, {status: 1}).length}}</span>
@@ -70,7 +70,7 @@
               </div>
             </div>
           </div>
-          <div ng-if="task_list_title != CONSTANTS.TASK_NAV.assigned_to_me"
+          <div ng-if="selected_task_list != CONSTANTS.TASK_NAV.assigned_to_me"
               class="task-item__completed table--cell">
             <div class="title__main">
               <span class="bold">{{_.where(assignment.user_assignments, {status: 1}).length}}</span>

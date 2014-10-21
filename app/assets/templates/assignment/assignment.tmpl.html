@@ -38,8 +38,8 @@
       </div>
 
       <ul class="users-not-completed" ng-if="_.where(assignment.user_assignments, {status: 0}).length != 0">
-        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length == 1">{{_.where(assignment.user_assignments, {status: 0}).length}} student has not completed this task</h6>
-        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length != 1">{{_.where(assignment.user_assignments, {status: 0}).length}} students have not completed this task</h6>
+        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length == 1">{{_.where(assignment.user_assignments, {status: 0}).length}} user has not completed this task</h6>
+        <h6 class="bold red" ng-if="_.where(assignment.user_assignments, {status: 0}).length != 1">{{_.where(assignment.user_assignments, {status: 0}).length}} users have not completed this task</h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'user.last_name'" ng-if="user_assignment.status == 0">
           <a href="#/user_assignment/{{user_assignment.id}}">
             <div class="medium-circle-picture">
@@ -60,13 +60,13 @@
 
       <ul class="users-completed" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 0">
         <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 1 && assignment.user_assignments.length != 1">
-          {{_.where(assignment.user_assignments, {status: 1}).length}} student has completed this task
+          {{_.where(assignment.user_assignments, {status: 1}).length}} user has completed this task
         </h6>
         <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length != 1 && _.where(assignment.user_assignments, {status: 1}).length != assignment.user_assignments.length">
-          {{_.where(assignment.user_assignments, {status: 1}).length}} students have completed this task
+          {{_.where(assignment.user_assignments, {status: 1}).length}} users have completed this task
         </h6>
         <h6 class="bold green" ng-if="_.where(assignment.user_assignments, {status: 1}).length == assignment.user_assignments.length">
-          Nice! All assigned students have completed this task.
+          Nice! All assigned users have completed this task.
         </h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in assignment.user_assignments | orderBy: 'updated_at'" ng-if="user_assignment.status == 1">
           <a href="#/user_assignment/{{user_assignment.id}}">
@@ -111,7 +111,7 @@
                   <h6 class="bold">{{user.first_last_initial}}</h6>
                   <div class="assigning-buttons">
                     <button class="btn btn-default btn-xs showing-button">Not Assigned</button>
-                    <button class="btn btn-success btn-xs hidden-button" ng-click="assignAssignee(user, assignment)"><span class="glyphicon glyphicon-plus"></span> Assign Student</button>
+                    <button class="btn btn-success btn-xs hidden-button" ng-click="assignAssignee(user, assignment)"><span class="glyphicon glyphicon-plus"></span> Assign User</button>
                   </div>
                 </div>
 
@@ -184,7 +184,7 @@
           <imua-datepicker date="assignment.new_due_datetime"></imua-datepicker>
         </li>
         <li>
-          <h6>Students Assigned</h6>
+          <h6>Users Assigned</h6>
           <h5 class="bold">{{assignment.user_assignments.length}}</h5>
         </li>
         <li>
