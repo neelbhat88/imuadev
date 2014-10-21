@@ -32,12 +32,11 @@ angular.module('myApp')
         $scope.loaded_data = true
 
     $scope.viewTask  = (assignment) ->
-      # TODO
-      # if $scope.selected_task_list == $scope.CONSTANTS.TASK_NAV.assigned_to_me
-      #   # Go To user_assignment view - need user_assignment.id for this
-      #   user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.current_user.id})
-      #   $location.path("/user_assignment/#{user_assignment.id}")
-      # else
+      if $scope.selected_task_list == $scope.CONSTANTS.TASK_NAV.assigned_to_me
+        # Go To user_assignment view
+        user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.current_user.id})
+        $location.path("/user_assignment/#{user_assignment.id}")
+      else
         $location.path("/assignment/#{assignment.id}")
 
     $scope.markComplete = (assignment) ->
