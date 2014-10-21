@@ -24,7 +24,7 @@
               <div class="title__main"> {{assignment.title}}</div>
               <div class="title__info">
                 Created {{assignment.created_at | fromNow}} by
-                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}**</span>
+                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}</span>
                 <span ng-if="assignment.user.id == current_user.id">Me</span>
               </div>
             </div>
@@ -65,7 +65,7 @@
               <div class="title__main"> {{assignment.title}}</div>
               <div class="title__info">
                 Created {{assignment.created_at | fromNow}} by
-                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}**</span>
+                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}</span>
                 <span ng-if="assignment.user.id == current_user.id">Me</span>
               </div>
             </div>

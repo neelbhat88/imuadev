@@ -77,7 +77,7 @@ class AssignmentService
 
     userAssignmentQ = Querier.new(UserAssignment).select([:assignment_id, :status, :user_id]).where(conditions)
     conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
-    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
+    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime, :created_at]).where(conditions.slice(:assignment_id))
     conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id) << params[:user_id].to_s).uniq
 
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
