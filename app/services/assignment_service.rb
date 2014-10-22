@@ -17,6 +17,53 @@ class AssignmentService
   end
 
   # Called via :user_id
+  # Contains "assignment" and "user_assignments" parameter objects
+  def broadcast(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    conditions[:assignment][:user_id] = conditions[:user_id].to_i
+
+    assignmentResult = create_assignment(conditions[:assignment])
+    return assignmentResult unless assignmentResult.status == :ok
+
+    conditions[:assignment_id] = assignmentResult.object.id
+
+    userAssignmentResults = []
+    conditions[:user_assignments].each do |ua|
+      ua[:assignment_id] = conditions[:assignment_id]
+      userAssignmentResults << create_user_assignment(ua)
+    end
+
+    # TODO What if a userAssignment operation fails?
+    return get_assignment_collection(conditions.slice(:assignment_id))
+  end
+
+  # Called via :assignment_id
+  # Contains "assignment" and "user_assignments" parameter objects
+  def broadcast_update(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    conditions[:assignment][:id] = conditions[:assignment_id].to_i
+    assignmentResult = update_assignment(conditions[:assignment])
+    return assignmentResult unless assignmentResult.status == :ok
+
+    conditions[:assignment_id] = assignmentResult.object.id
+
+    userAssignmentResults = []
+    conditions[:user_assignments].each do |ua|
+      ua[:assignment_id] = conditions[:assignment_id]
+      if ua[:id].nil?
+        userAssignmentResults << create_user_assignment(ua)
+      else
+        userAssignmentResults << update_user_assignment(ua)
+      end
+    end
+
+    # TODO What if a userAssignment operation fails?
+    return get_assignment_collection(conditions.slice(:assignment_id))
+  end
+
+  # Called via :user_id
   def get_task_assignable_users(params)
     conditions = Marshal.load(Marshal.dump(params))
 
@@ -65,7 +112,6 @@ class AssignmentService
 
     return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
   end
-
 
   def collect_assignment(assignmentId)
     return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)

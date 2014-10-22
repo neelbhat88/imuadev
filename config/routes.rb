@@ -78,9 +78,9 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  'assignment/:id/collection'           => 'assignment#get_assignment_collection'
-      post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
-      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
+      get  'assignment/:id/collection'      => 'assignment#get_assignment_collection'
+      post 'users/:id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'       => 'assignment#broadcast_update'
 
       get 'user_assignment/:id/collect'       => 'user_assignment#collect'
       get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'

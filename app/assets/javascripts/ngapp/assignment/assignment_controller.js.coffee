@@ -5,7 +5,6 @@ angular.module('myApp')
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
-
     $scope.current_user = current_user
 
     if !assignment
@@ -63,7 +62,8 @@ angular.module('myApp')
 
       AssignmentService.broadcastAssignment(new_assignment, _.map(new_assignment.assignees, (assignee) -> assignee.id))
         .success (data) ->
-          saved_assignment = data.assignment_collection
+          organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+          saved_assignment =  organization.assignments[0]
           saved_assignment.assignees = []
           $scope.assignment = saved_assignment
           $scope.assignment.editing = false
