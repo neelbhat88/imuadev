@@ -113,14 +113,6 @@ class AssignmentService
     return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
   end
 
-  def collect_assignment(assignmentId)
-    return Assignment.includes([{:user_assignments => :user}, :user]).find(assignmentId)
-  end
-
-  def collect_assignments(userId)
-    return Assignment.includes(:user_assignments => :user).where(:user_id => userId)
-  end
-
   ###################################
   ########### ASSIGNMENT ############
   ###################################
