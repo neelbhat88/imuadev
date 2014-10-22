@@ -27,11 +27,17 @@ class AssignmentService
 
     conditions[:assignment_id] = assignmentResult.object.id
 
-    userAssignmentResults = []
+    userAssignments = []
     conditions[:user_assignments].each do |ua|
       ua[:assignment_id] = conditions[:assignment_id]
-      userAssignmentResults << create_user_assignment(ua)
+      userAssignmentResult = create_user_assignment(ua)
+      if userAssignmentResult.status == :ok
+        userAssignments << userAssignmentResult.object
+      end
     end
+
+    # Send out emails to all assignees
+    send_assignment_emails(assignmentResult.object, userAssignments)
 
     # TODO What if a userAssignment operation fails?
     return get_assignment_collection(conditions.slice(:assignment_id))
@@ -48,15 +54,28 @@ class AssignmentService
 
     conditions[:assignment_id] = assignmentResult.object.id
 
-    userAssignmentResults = []
+    userAssignments = []
+    newUserAssignments = []
     conditions[:user_assignments].each do |ua|
       ua[:assignment_id] = conditions[:assignment_id]
       if ua[:id].nil?
-        userAssignmentResults << create_user_assignment(ua)
+        user_assignment_result = create_user_assignment(ua)
+        if user_assignment_result.status == :ok
+          userAssignments << user_assignment_result.object
+          newUserAssignments << user_assignment_result.object
+        end
       else
-        userAssignmentResults << update_user_assignment(ua)
+        user_assignment_result = update_user_assignment(ua)
+
+        if user_assignment_result.status == :ok
+          userAssignments << user_assignment_result.object
+          newUserAssignments << user_assignment_result.object
+        end
       end
     end
+
+    # Send out emails to all assignees
+    send_assignment_emails(assignmentResult.object, newUserAssignments)
 
     # TODO What if a userAssignment operation fails?
     return get_assignment_collection(conditions.slice(:assignment_id))
@@ -250,6 +269,13 @@ class AssignmentService
     end
   end
 
+  # Send out emails to all assigned users
+  # Doing this here for now since it'll be better to send out all emails
+  # in one background process instead of a separate background process per
+  # email. We might have a task being sent out to many users so we don't want to
+  # tie up multiple threads while the emails are being sent.
+  # Ideally this will be done by adding the email to a DB table or some
+  # sort of queue which a background worker picks up to process and send
   def send_assignment_emails(assignment, user_assignments)
     Background.process do
       assignor = UserRepository.new.get_user(assignment.user_id)
