@@ -250,4 +250,16 @@ class AssignmentService
     end
   end
 
+  def send_assignment_emails(assignment, user_assignments)
+    Background.process do
+      assignor = UserRepository.new.get_user(assignment.user_id)
+
+      user_assignments.each do |ua|
+        assignee = UserRepository.new.get_user(ua.user_id)
+
+        TaskMailer.task_assigned(assignee, assignor, assignment).deliver
+      end
+    end
+  end
+
 end

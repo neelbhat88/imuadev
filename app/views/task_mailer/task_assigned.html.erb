@@ -1,0 +1,16 @@
+<p>Hey <%= @assignee.first_name %>,</p>
+
+<p>You have been assigned a task by <%= @assignor.full_name %>.</p>
+
+<p>
+  <ul style="list-style-type: none">
+    <li><b>Task Title:</b> <%= @task.title %></li>
+    <li><b>Task Description:</b> <%= @task.description %></li>
+  </ul>
+</p>
+
+<p><%= link_to "Log in", login_url %> and go to Tasks to see more details and complete the task. </p>
+
+<p>Mahalo,<p>
+
+Imua
