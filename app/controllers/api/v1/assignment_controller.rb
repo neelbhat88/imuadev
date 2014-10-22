@@ -22,10 +22,7 @@ class Api::V1::AssignmentController < ApplicationController
     result = @assignmentService.get_assignments(userId)
 
     render status: :ok,
-      json: {
-        info: "assignments",
-        assignments: result
-      }
+      json: { info: "assignments", assignments: result }
   end
 
   # GET /assignment/:id
@@ -41,10 +38,7 @@ class Api::V1::AssignmentController < ApplicationController
     result = @assignmentService.get_assignment(assignmentId)
 
     render status: :ok,
-      json: {
-        info: "assignment",
-        assignments: result
-      }
+      json: { info: "assignment", assignments: result }
   end
 
   # POST /users/:user_id/assignment
@@ -63,10 +57,7 @@ class Api::V1::AssignmentController < ApplicationController
     result = @assignmentService.create_assignment(assignment)
 
     render status: result.status,
-      json: {
-        info: result.info,
-        assignment: result.object
-      }
+      json: { info: result.info, assignment: result.object }
   end
 
   # PUT /assignment/:id
@@ -85,10 +76,7 @@ class Api::V1::AssignmentController < ApplicationController
     result = @assignmentService.update_assignment(assignment)
 
     render status: result.status,
-      json: {
-        info: result.info,
-        assignment: result.object
-      }
+      json: { info: result.info, assignment: result.object }
   end
 
   # DELETE /assignment/:id
@@ -104,9 +92,7 @@ class Api::V1::AssignmentController < ApplicationController
     result = @assignmentService.delete_assignment(assignmentId)
 
     render status: result.status,
-      json: {
-        info: result.info
-      }
+      json: { info: result.info }
   end
 
   # GET /assignment/:id/collection
