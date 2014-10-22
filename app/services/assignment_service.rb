@@ -149,6 +149,7 @@ class AssignmentService
       e.title = assignment[:title]
       e.description = assignment[:description]
       e.due_datetime = assignment[:due_datetime]
+      e.organization_id = User.where(id: assignment[:user_id]).first.organization_id
     end
 
     if !newAssignment.valid?
@@ -186,7 +187,7 @@ class AssignmentService
     end
   end
 
-  def delete_assignment(assignmentId)
+  def destroy_assignment(assignmentId)
 
     dbAssignment = get_assignment(assignmentId)
 

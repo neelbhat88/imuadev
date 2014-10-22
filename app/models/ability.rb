@@ -8,6 +8,7 @@ class Ability
       case subject.class.name
       when "User" then user_abilities(user, subject)
       when "Organization" then organization_abilities(user, subject)
+      when "Assignment" then assignment_abilities(user, subject)
       else []
       end
 
@@ -133,6 +134,44 @@ class Ability
 
       rules.uniq
     end
+
+    def assignment_abilities(user, subjectAssignment)
+      rules = []
+
+      if user.super_admin?
+        return[:get_assignment,
+               :update_assignment,
+               :destroy_assignment,
+               :get_assignment_collection,
+               :update_assignment_broadcast]
+      else
+        return [] if user.organization_id != subjectAssignment.organization_id
+      end
+
+      if user.org_admin?
+        rules += [:get_assignment,
+                  :update_assignment,
+                  :destroy_assignment,
+                  :get_assignment_collection,
+                  :update_assignment_broadcast]
+      end
+
+      if user.mentor?
+        rules += [:get_assignment,
+                  :get_assignment_collection]
+      end
+
+      if user.id == subjectAssignment.user_id
+        rules += [:get_assignment,
+                  :update_assignment,
+                  :destroy_assignment,
+                  :get_assignment_collection,
+                  :update_assignment_broadcast]
+      end
+
+      rules.uniq
+    end
+
   end
 
 end
