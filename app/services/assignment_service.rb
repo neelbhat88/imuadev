@@ -1,42 +1,20 @@
 class AssignmentService
 
   # Called via :assignment_id
-  def collect_assignment_2(params)
-    conditions = params
-    query = {}
+  def get_assignment_collection(params)
+    conditions = Marshal.load(Marshal.dump(params))
 
-    query[:assignments] = Querier.new(Assignment).where(conditions)
+    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime, :created_at]).where(conditions)
+    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id]).where(conditions)
 
-    query[:user_assignments] = Querier.new(UserAssignment).where(conditions)
+    conditions[:user_id] = (assignmentQ.pluck(:user_id) + userAssignmentQ.pluck(:user_id)).uniq
+    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([assignmentQ, userAssignmentQ])
 
-    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
-    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
-    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
-
-    view = {organization: {users: query[:users].view}}
+    view = {users: userQ.view}
 
     return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", view)
   end
-
-  # Called via :user_id
-  def collect_assignments_2(params)
-    conditions = params
-    query = {}
-
-    query[:assignments] = Querier.new(Assignment).where(params)
-
-    conditions[:assignment_id] = query[:assignments].pluck(:id)
-    query[:user_assignments] = Querier.new(UserAssignment).where(conditions.slice(:assignment_id))
-
-    conditions[:user_id] = query[:assignments].pluck(:user_id) + query[:user_assignments].pluck(:user_id)
-    query[:users] = UserQuerier.new.select([:avatar]).where(conditions.slice[:user_id])
-    query[:users].set_subQueriers(query[:assinments], query[:user_assignments])
-
-    view = {organization: {users: query[:users].view}}
-
-    return ReturnObject.new(:ok, "Assignment collections for user_id: #{params[:user_id]}.", view)
-  end
-
 
   # Called via :user_id
   def get_task_assignable_users(params)
@@ -50,7 +28,7 @@ class AssignmentService
     else
       conditions[:assigned_to_id] = conditions[:user_id]
       relationshipQ = Querier.new(Relationship).select([], [:user_id]).where(conditions.slice(:assigned_to_id))
-      conditions[:user_id] = (relationshipQ.pluck(:user_id) << conditions[:user_id].to_s).uniq
+      conditions[:user_id] = (relationshipQ.pluck(:user_id) << params[:user_id].to_s).uniq
       userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
     end
 
@@ -82,6 +60,7 @@ class AssignmentService
 
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
     userQ.set_subQueriers([userAssignmentQ, assignmentQ])
+
     view = {users: userQ.view}
 
     return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)

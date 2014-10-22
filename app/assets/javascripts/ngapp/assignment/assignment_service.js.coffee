@@ -22,6 +22,9 @@ angular.module('myApp')
         defer.resolve(user_assignment)
     defer.promise
 
+  @getAssignmentCollection = (assignmentId) ->
+    $http.get "api/v1/assignment/#{assignmentId}/collection"
+
   @getTaskAssignableUsers = (userId) ->
     $http.get "/api/v1/users/#{userId}/task_assignable_users"
 
@@ -36,12 +39,6 @@ angular.module('myApp')
     else
       $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast",
         { assignment: assignment, user_assignments: user_assignments }
-
-  @collectAssignment = (assignmentId) ->
-    $http.get "api/v1/assignment/#{assignmentId}/collect"
-
-  @collectAssignments = (userId) ->
-    $http.get "api/v1/users/#{userId}/assignment/collect"
 
   @collectUserAssignment = (userAssignmentId) ->
     $http.get "api/v1/user_assignment/#{userAssignmentId}/collect"

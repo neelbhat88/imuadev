@@ -197,13 +197,14 @@ class Querier
   end
 
   def set_conditions(conditions)
+    ret_conditions = Marshal.load(Marshal.dump(conditions))
+
     # Always set :[class_name]_id to :id
     this_class_condition = conditions[@foreignKey]
-    conditions[:id] = this_class_condition unless this_class_condition.nil?
+    ret_conditions[:id] = this_class_condition unless this_class_condition.nil?
 
-    conditions = filter_conditions(conditions)
-
-    return @conditions = conditions
+    ret_conditions = filter_conditions(ret_conditions)
+    return @conditions = ret_conditions
   end
 
 end

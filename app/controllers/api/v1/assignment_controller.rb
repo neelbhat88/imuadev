@@ -84,36 +84,21 @@ class Api::V1::AssignmentController < ApplicationController
       }
   end
 
-  # GET /assignment/:id/collect
+  # GET /assignment/:id/collection
   # Returns the Assignment with its collection of UserAssignments
-  def collect
-    assignmentId = params[:id].to_i
+  def get_assignment_collection
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:assignment_id] = params[:id]
 
-    result = @assignmentService.collect_assignment(assignmentId)
-    viewAssignmentCollection = ViewAssignmentCollection.new(result, {user: true})
+    # if !can?(current_user, :get_assignment_collection, Assignment.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
-    render status: :ok,
-      json: {
-        info: "Assignment id: #{assignmentId} collection.",
-        assignment_collection: viewAssignmentCollection
-      }
+    result = @assignmentService.get_assignment_collection(url_params)
 
-  end
-
-  # GET /users/:user_id/assignment/collect
-  # Returns all of a User's Assignments with their collections of UserAssignments
-  def collect_all
-    userId = params[:user_id].to_i
-
-    results = @assignmentService.collect_assignments(userId)
-    viewAssignmentCollections = results.map{|r| ViewAssignmentCollection.new(r)}
-
-    render status: :ok,
-      json: {
-        info: "Assignment collection, user id: #{userId}.",
-        assignment_collections: viewAssignmentCollections
-      }
-
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
   # POST /users/:user_id/assignment/broadcast
