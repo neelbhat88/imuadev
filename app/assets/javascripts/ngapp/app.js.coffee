@@ -1,6 +1,6 @@
 angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'myApp.directives', 'ui.bootstrap', 'templates',
-                          'angulartics', 'angulartics.google.analytics']
+                          'angulartics', 'angulartics.google.analytics', 'ngMessages']
 
 angular.module('myApp')
 .controller 'AppController', ['$rootScope','$scope', '$timeout', 'CONSTANTS',

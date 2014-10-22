@@ -119,12 +119,15 @@
 
 
             <div progress-editor class="widget--content--table widget--pane--cell" ng-show="user_class.editing">
-              <form name="form" imua-form="saveClass(user_class)" novalidate>
+              <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
 
                 <div class="table--cell breakalways form-group">
                   <span class="input-group">
                     <label>Class</label>
-                    <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required-input>
+                    <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
+                    <div ng-messages="gradesForm.classname.$error" ng-if="gradesForm.$submitted">
+                      <div ng-message="required" class="alert alert-danger">Class Name is Required</div>
+                    </div>
                   </span>
                 </div>
 
@@ -145,6 +148,9 @@
                         <option value="D-">D-</option>
                         <option value="F">F</option>
                       </select>
+                      <div ng-messages="gradesForm.grade.$error" ng-if="gradesForm.$submitted">
+                        <div ng-message="required" class="alert alert-danger">Grade is Required</div>
+                      </div>
                   </span>
                 </div>
 
@@ -197,7 +203,7 @@
                     </div>
                   </div>
                 </div>
-                
+
               </form>
             </div>
 

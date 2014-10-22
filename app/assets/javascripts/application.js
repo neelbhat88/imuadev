@@ -23,6 +23,7 @@
 //= require underscore
 //= require angulartics
 //= require angulartics-ga
+//= require angular-messages
 //= require moment
 //= require c3
 //= require jquery
