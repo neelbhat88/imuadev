@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'AssignmentService', ['$http', ($http) ->
+.service 'AssignmentService', ['$http', '$q', ($http, $q) ->
 
 # "Assignment" is owned by the assigner.
 # "UserAssignment" is owned by the assignee(s).
@@ -8,6 +8,19 @@ angular.module('myApp')
 # UserAssignments with the parent Assignment object.
 
   self = this
+
+  @setUserAssignmentStatus = (user_assignment, status) ->
+    new_user_assignment = @newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
+    new_user_assignment.id = user_assignment.id
+    new_user_assignment.status = status
+
+    defer = $q.defer()
+    @saveUserAssignment(new_user_assignment)
+      .success (data) ->
+        user_assignment.status = data.user_assignment.status
+        user_assignment.updated_at = data.user_assignment.updated_at
+        defer.resolve(user_assignment)
+    defer.promise
 
   @getTaskAssignableUsers = (userId) ->
     $http.get "/api/v1/users/#{userId}/task_assignable_users"

@@ -40,15 +40,16 @@ angular.module('myApp')
         $location.path("/assignment/#{assignment.id}")
 
     $scope.markComplete = (assignment) ->
-      # Need to do the same as in assignment_controller setUserAssignmentStatus
-      # probably should move all that code into the assignment service and call it
-      # from there and from here
-      console.log(assignment)
-      return false
+      user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.user.id})
+      AssignmentService.setUserAssignmentStatus(user_assignment, 1)
+        .then () ->
+          console.log(user_assignment)
 
     $scope.markIncomplete = (assignment) ->
-      console.log(assignment)
-      return false
+      user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.user.id})
+      AssignmentService.setUserAssignmentStatus(user_assignment, 0)
+        .then () ->
+          console.log(user_assignment)
 
     $scope.incompleteAssignments = () ->
       if !$scope.list_assignments then return

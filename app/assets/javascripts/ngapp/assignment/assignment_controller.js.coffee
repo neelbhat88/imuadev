@@ -87,14 +87,7 @@ angular.module('myApp')
       assignment.assignees = _.without(assignment.assignees, user)
 
     $scope.setUserAssignmentStatus = (user_assignment, status) ->
-      new_user_assignment = AssignmentService.newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
-      new_user_assignment.id = user_assignment.id
-      new_user_assignment.status = status
-
-      AssignmentService.saveUserAssignment(new_user_assignment)
-        .success (data) ->
-          user_assignment.status = data.user_assignment.status
-          user_assignment.updated_at = data.user_assignment.updated_at
+      AssignmentService.setUserAssignmentStatus(user_assignment, status)
 
     $scope.deleteUserAssignment = (assignment, user_assignment) ->
       if window.confirm "Are you sure you want to delete this user's assignment?"
