@@ -22,7 +22,6 @@ class AssignmentService
     conditions = Marshal.load(Marshal.dump(params))
 
     conditions[:assignment][:user_id] = conditions[:user_id].to_i
-
     assignmentResult = create_assignment(conditions[:assignment])
     return assignmentResult unless assignmentResult.status == :ok
 

@@ -108,7 +108,7 @@ class Api::V1::AssignmentController < ApplicationController
     url_params[:user_id] = params[:id]
 
     # TODO Fix to incorporate authorizations for creating all the user_assignments
-    # if !can?(current_user, :create_assignment, User.where(id: params[:id]).first)
+    # if !can?(current_user, :broadcast_assignment, User.where(id: params[:id]).first)
     #   render status: :forbidden, json: {}
     #   return
     # end
@@ -119,7 +119,6 @@ class Api::V1::AssignmentController < ApplicationController
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
-
   # PUT /assignment/:id/broadcast
   # Updates an Assignment and its collection of UserAssignments
   def broadcast_update
@@ -127,7 +126,7 @@ class Api::V1::AssignmentController < ApplicationController
     url_params[:assignment_id] = params[:id]
 
     # TODO Fix to incorporate authorizations for updating all the user_assignments
-    # if !can?(current_user, :update_assignment, Assignment.where(id: params[:id]).first)
+    # if !can?(current_user, :broadcast_update, Assignment.where(id: params[:id]).first)
     #   render status: :forbidden, json: {}
     #   return
     # end
