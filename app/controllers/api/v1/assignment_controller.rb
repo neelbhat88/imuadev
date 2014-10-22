@@ -14,6 +14,11 @@ class Api::V1::AssignmentController < ApplicationController
   def index
     userId = params[:user_id]
 
+    # if !can?(current_user, :get_assignments, User.where(id: params[:user_id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
     result = @assignmentService.get_assignments(userId)
 
     render status: :ok,
@@ -27,6 +32,11 @@ class Api::V1::AssignmentController < ApplicationController
   # Returns the Assignment
   def show
     assignmentId = params[:id]
+
+    # if !can?(current_user, :get_assignment, Assignment.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     result = @assignmentService.get_assignment(assignmentId)
 
@@ -45,6 +55,11 @@ class Api::V1::AssignmentController < ApplicationController
 
     assignment["user_id"] = userId
 
+    # if !can?(current_user, :create_assignment, User.where(id: params[:user_id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
     result = @assignmentService.create_assignment(assignment)
 
     render status: result.status,
@@ -62,6 +77,11 @@ class Api::V1::AssignmentController < ApplicationController
 
     assignment["id"] = assignmentId
 
+    # if !can?(current_user, :update_assignment, Assignment.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
     result = @assignmentService.update_assignment(assignment)
 
     render status: result.status,
@@ -75,6 +95,11 @@ class Api::V1::AssignmentController < ApplicationController
   # Deletes an Assignment
   def destroy
     assignmentId = params[:id].to_i
+
+    # if !can?(current_user, :delete_assignment, Assignment.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     result = @assignmentService.delete_assignment(assignmentId)
 
@@ -108,7 +133,7 @@ class Api::V1::AssignmentController < ApplicationController
     url_params[:user_id] = params[:id]
 
     # TODO Fix to incorporate authorizations for creating all the user_assignments
-    # if !can?(current_user, :broadcast_assignment, User.where(id: params[:id]).first)
+    # if !can?(current_user, :create_assignment_broadcast, User.where(id: params[:id]).first)
     #   render status: :forbidden, json: {}
     #   return
     # end
@@ -126,7 +151,7 @@ class Api::V1::AssignmentController < ApplicationController
     url_params[:assignment_id] = params[:id]
 
     # TODO Fix to incorporate authorizations for updating all the user_assignments
-    # if !can?(current_user, :broadcast_update, Assignment.where(id: params[:id]).first)
+    # if !can?(current_user, :update_assignment_broadcast, Assignment.where(id: params[:id]).first)
     #   render status: :forbidden, json: {}
     #   return
     # end
