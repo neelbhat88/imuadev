@@ -47,7 +47,7 @@ class Api::V1::UserAssignmentController < ApplicationController
 
     userAssignment["id"] = userAssignmentId
 
-    result = @assignmentService.update_user_assignment(userAssignment)
+    result = @assignmentService.update_user_assignment(current_user, userAssignment)
 
     render status: result.status,
       json: {

@@ -49,6 +49,9 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users do
         collection do
+          get ':id/task_assignable_users' => 'assignment#get_task_assignable_users'
+          get ':id/task_assignable_users_tasks' => 'assignment#get_task_assignable_users_tasks'
+
           put '/:id/update_password' => 'users#update_password'
 
           put '/:id/time_unit/next' => "users#move_to_next_semester"
@@ -75,10 +78,9 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  'assignment/:id/collect'              => 'assignment#collect'
-      get  'users/:user_id/assignment/collect'   => 'assignment#collect_all'
-      post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
-      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
+      get  'assignment/:id/collection'      => 'assignment#get_assignment_collection'
+      post 'users/:id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'       => 'assignment#broadcast_update'
 
       get 'user_assignment/:id/collect'       => 'user_assignment#collect'
       get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'

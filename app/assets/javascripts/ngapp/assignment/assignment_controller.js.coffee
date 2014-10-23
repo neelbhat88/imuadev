@@ -5,7 +5,6 @@ angular.module('myApp')
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
-
     $scope.current_user = current_user
 
     if !assignment
@@ -27,10 +26,16 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
-    UsersService.getAssignedStudents($scope.user.id)
+    AssignmentService.getTaskAssignableUsers($scope.user.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-        $scope.assignable_users = $scope.organization.students
+        $scope.assignable_users = $scope.organization.users
+
+        $scope.assignable_user_groups = []
+        $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
+        $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
+        $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
+
         $scope.loaded_assignable_users = true
 
     $scope.editAssignment = () ->
@@ -57,7 +62,8 @@ angular.module('myApp')
 
       AssignmentService.broadcastAssignment(new_assignment, _.map(new_assignment.assignees, (assignee) -> assignee.id))
         .success (data) ->
-          saved_assignment = data.assignment_collection
+          organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+          saved_assignment =  organization.assignments[0]
           saved_assignment.assignees = []
           $scope.assignment = saved_assignment
           $scope.assignment.editing = false
@@ -81,14 +87,7 @@ angular.module('myApp')
       assignment.assignees = _.without(assignment.assignees, user)
 
     $scope.setUserAssignmentStatus = (user_assignment, status) ->
-      new_user_assignment = AssignmentService.newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
-      new_user_assignment.id = user_assignment.id
-      new_user_assignment.status = status
-
-      AssignmentService.saveUserAssignment(new_user_assignment)
-        .success (data) ->
-          user_assignment.status = data.user_assignment.status
-          user_assignment.updated_at = data.user_assignment.updated_at
+      AssignmentService.setUserAssignmentStatus(user_assignment, status)
 
     $scope.deleteUserAssignment = (assignment, user_assignment) ->
       if window.confirm "Are you sure you want to delete this user's assignment?"

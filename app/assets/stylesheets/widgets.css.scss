@@ -327,13 +327,21 @@ $border-color: black(0.2);
         .cell--padding {
           padding: 20px 30px;
 
-          .setting-icon, .setting-text {
+          .setting-text {
             display: inline-block;
+            vertical-align: top;
+
+            @include respond-to(1280) { width: 100px; }
+            @include respond-to(1024) { width: 70px; }
+            @include respond-to(900) { width: inherit; }
           }
 
           .setting-icon {
             width: 12px;
             margin-right: 15px;
+
+            display: inline-block;
+            vertical-align: top;
           }
 
         }

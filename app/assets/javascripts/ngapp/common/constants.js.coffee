@@ -37,3 +37,8 @@ angular.module('myApp')
     meeting:     0
     needs_work:  1
     not_meeting: 2
+
+  'TASK_NAV':
+    assigned_to_me: "Tasks Assigned to Me"
+    assigned_by_me: "Tasks I've Assigned to Others"
+    assigned_to_others: "Tasks Assigned to My Students"
