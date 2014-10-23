@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141022223706) do
+ActiveRecord::Schema.define(:version => 20141023200347) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20141022223706) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title"
-    t.string   "description"
+    t.text     "title"
+    t.text     "description"
     t.datetime "due_datetime"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -222,11 +222,11 @@ ActiveRecord::Schema.define(:version => 20141022223706) do
   add_index "user_expectations", ["user_id"], :name => "index_user_expectations_on_user_id"
 
   create_table "user_extracurricular_activities", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "description"
+    t.text     "description"
   end
 
   add_index "user_extracurricular_activities", ["user_id"], :name => "index_user_extracurricular_activities_on_user_id"
@@ -288,8 +288,8 @@ ActiveRecord::Schema.define(:version => 20141022223706) do
     t.integer  "time_unit_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
-    t.string   "name"
-    t.string   "description"
+    t.text     "name"
+    t.text     "description"
   end
 
   add_index "user_service_hours", ["user_id"], :name => "index_user_service_hours_on_user_id"
