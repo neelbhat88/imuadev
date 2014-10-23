@@ -240,7 +240,7 @@ class AssignmentService
     end
   end
 
-  def update_user_assignment(userAssignment)
+  def update_user_assignment(current_user, userAssignment)
     userAssignmentId = userAssignment[:id]
 
     dbUserAssignment = get_user_assignment(userAssignmentId)
@@ -250,6 +250,8 @@ class AssignmentService
     end
 
     if dbUserAssignment.update_attributes(:status => userAssignment[:status])
+      dbAssignment = get_assignment(dbUserAssignment.assignment_id)
+      send_task_complete_email(current_user, dbAssignment, dbUserAssignment)
       return ReturnObject.new(:ok, "Successfully updated UserAssignment, id: #{dbUserAssignment.id}.", dbUserAssignment)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserAssignment, id: #{dbUserAssignment.id}.  Errors: #{dbUserAssignment.errors.inspect}.", nil)
@@ -285,6 +287,42 @@ class AssignmentService
         assignee = UserRepository.new.get_user(ua.user_id)
 
         TaskMailer.task_assigned(assignee, assignor, assignment).deliver
+      end
+    end
+  end
+
+  def send_task_complete_email(current_user, assignment, user_assignment)
+    Background.process do
+      assignor = UserRepository.new.get_user(assignment.user_id)
+      assignee = UserRepository.new.get_user(user_assignment.user_id)
+
+      # Don't send an email for updates to tasks assigned to yourself
+      return if current_user.id == assignor.id && current_user.id == assignee.id
+
+      case current_user.id
+      when assignor.id # The assignor completed the task
+        if user_assignment.status == 0
+          TaskMailer.task_incompleted_by_assignor(assignee, assignor, assignment).deliver
+        elsif user_assignment.status == 1
+          TaskMailer.task_completed_by_assignor(assignee, assignor, assignment).deliver
+        end
+      when assignee.id # The assignee completed the task
+        if user_assignment.status == 0
+          TaskMailer.task_incompleted_by_assignee(assignee, assignor, assignment).deliver
+        elsif user_assignment.status == 1
+          TaskMailer.task_completed_by_assignee(assignee, assignor, assignment).deliver
+        end
+      else
+        # In this case neither the assignee or the assignor changed the task status
+        # so an email needs to be sent to the assignor as well as the assignee notifiying
+        # them who updated the task
+        if user_assignment.status == 0
+          TaskMailer.task_incompleted_by_assignor(assignee, current_user, assignment).deliver
+          TaskMailer.task_incompleted_by_other(current_user, assignee, assignor, assignment).deliver
+        elsif user_assignment.status == 1
+          TaskMailer.task_completed_by_assignor(assignee, current_user, assignment).deliver
+          TaskMailer.task_completed_by_other(current_user, assignee, assignor, assignment).deliver
+        end
       end
     end
   end
