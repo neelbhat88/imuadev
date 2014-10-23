@@ -18,7 +18,7 @@ class AssignmentService
 
   # Called via :user_id
   # Contains "assignment" and "user_assignments" parameter objects
-  def broadcast(params)
+  def broadcast(current_user, params)
     conditions = Marshal.load(Marshal.dump(params))
 
     conditions[:assignment][:user_id] = conditions[:user_id].to_i
@@ -37,7 +37,7 @@ class AssignmentService
     end
 
     # Send out emails to all assignees
-    send_assignment_emails(assignmentResult.object, userAssignments)
+    send_assignment_emails(current_user, assignmentResult.object, userAssignments)
 
     # TODO What if a userAssignment operation fails?
     return get_assignment_collection(conditions.slice(:assignment_id))
@@ -45,7 +45,7 @@ class AssignmentService
 
   # Called via :assignment_id
   # Contains "assignment" and "user_assignments" parameter objects
-  def broadcast_update(params)
+  def broadcast_update(current_user, params)
     conditions = Marshal.load(Marshal.dump(params))
 
     conditions[:assignment][:id] = conditions[:assignment_id].to_i
@@ -75,7 +75,7 @@ class AssignmentService
     end
 
     # Send out emails to all assignees
-    send_assignment_emails(assignmentResult.object, newUserAssignments)
+    send_assignment_emails(current_user, assignmentResult.object, newUserAssignments)
 
     # TODO What if a userAssignment operation fails?
     return get_assignment_collection(conditions.slice(:assignment_id))
@@ -279,14 +279,17 @@ class AssignmentService
   # tie up multiple threads while the emails are being sent.
   # Ideally this will be done by adding the email to a DB table or some
   # sort of queue which a background worker picks up to process and send
-  def send_assignment_emails(assignment, user_assignments)
+  def send_assignment_emails(current_user, assignment, user_assignments)
     Background.process do
       assignor = UserRepository.new.get_user(assignment.user_id)
 
       user_assignments.each do |ua|
         assignee = UserRepository.new.get_user(ua.user_id)
 
-        TaskMailer.task_assigned(assignee, assignor, assignment).deliver
+        # Don't send an email to tasks assigned to yourself
+        if current_user.id != assignee.id
+          TaskMailer.task_assigned(assignee, assignor, assignment).deliver
+        end
       end
     end
   end

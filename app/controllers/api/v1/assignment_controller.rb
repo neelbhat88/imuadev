@@ -124,7 +124,7 @@ class Api::V1::AssignmentController < ApplicationController
     #   return
     # end
 
-    result = @assignmentService.broadcast(url_params)
+    result = @assignmentService.broadcast(current_user, url_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
@@ -142,7 +142,7 @@ class Api::V1::AssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.broadcast_update(url_params)
+    result = @assignmentService.broadcast_update(current_user, url_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
