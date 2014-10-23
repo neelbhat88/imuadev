@@ -4,8 +4,23 @@
     width: 100%;
     background: $grey;
     text-align: center;
-    padding: 60px $wrapper-width;
+    padding: 20px;
     margin: 0;
+
+    @include respond-to(900) {
+      padding: 20px 70px;
+    }
+
+    .greeting {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .task-button-container {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0 60px;
+    }
   }
 
   .assignments-content {

@@ -3,12 +3,6 @@ angular.module('myApp')
 ['$scope', '$route', '$location', 'current_user', 'user', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, $location, current_user, user, AssignmentService, UsersService, OrganizationService) ->
 
-    # $scope.$on 'assignments_nav_selected', (event, assignments_filter) ->
-    #   $scope.list_assignments = assignments_filter
-
-    # $scope.$on 'assignments_list_selected', (event, assignment) ->
-    #   window.location.href = "#/assignment/" + assignment.id
-
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
@@ -27,7 +21,11 @@ angular.module('myApp')
         $scope.users_user_assignments = _.filter($scope.assignments, (a) -> _.contains(_.pluck($scope.user.user_assignments, 'assignment_id'), a.id))
         $scope.student_assignments = $scope.assignments
 
-        $scope.selectNav($scope.CONSTANTS.TASK_NAV.assigned_to_me)
+        selected_nav = $location.search().selected_nav # Reads query string param
+        if selected_nav
+          $scope.selectNav(selected_nav)
+        else
+          $scope.selectNav($scope.CONSTANTS.TASK_NAV.assigned_to_me)
 
         $scope.loaded_data = true
 
@@ -36,8 +34,10 @@ angular.module('myApp')
         # Go To user_assignment view
         user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.current_user.id})
         $location.path("/user_assignment/#{user_assignment.id}")
+        $location.url($location.path()) #Do this to remove query string params
       else
         $location.path("/assignment/#{assignment.id}")
+        $location.url($location.path()) #Do this to remove query string params
 
     $scope.markComplete = (assignment) ->
       user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.user.id})
@@ -71,6 +71,7 @@ angular.module('myApp')
 
     $scope.selectNav = (task_list) ->
       $scope.selected_task_list = task_list
+      $location.search("selected_nav", task_list) #Sets query string param
 
       switch task_list
         when $scope.CONSTANTS.TASK_NAV.assigned_to_me

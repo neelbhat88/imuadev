@@ -3,6 +3,7 @@ angular.module('myApp')
   $routeProvider.when '/assignments/:user_id',
     templateUrl: 'assignment/assignments.html',
     controller: 'AssignmentsController',
+    reloadOnSearch: false,
     resolve:
       current_user: ['SessionService', (SessionService) ->
         SessionService.getCurrentUser()
