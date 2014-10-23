@@ -28,11 +28,13 @@ class AssignmentService
     conditions[:assignment_id] = assignmentResult.object.id
 
     userAssignments = []
-    conditions[:user_assignments].each do |ua|
-      ua[:assignment_id] = conditions[:assignment_id]
-      userAssignmentResult = create_user_assignment(ua)
-      if userAssignmentResult.status == :ok
-        userAssignments << userAssignmentResult.object
+    unless conditions[:user_assignments].nil?
+      conditions[:user_assignments].each do |ua|
+        ua[:assignment_id] = conditions[:assignment_id]
+        userAssignmentResult = create_user_assignment(ua)
+        if userAssignmentResult.status == :ok
+          userAssignments << userAssignmentResult.object
+        end
       end
     end
 
@@ -56,28 +58,30 @@ class AssignmentService
 
     userAssignments = []
     newUserAssignments = []
-    conditions[:user_assignments].each do |ua|
-      ua[:assignment_id] = conditions[:assignment_id]
-      if ua[:id].nil?
-        user_assignment_result = create_user_assignment(ua)
-        if user_assignment_result.status == :ok
-          userAssignments << user_assignment_result.object
-          newUserAssignments << user_assignment_result.object
+    unless conditions[:user_assignments].nil?
+      conditions[:user_assignments].each do |ua|
+        ua[:assignment_id] = conditions[:assignment_id]
+        if ua[:id].nil?
+          user_assignment_result = create_user_assignment(ua)
+          if user_assignment_result.status == :ok
+            userAssignments << user_assignment_result.object
+            newUserAssignments << user_assignment_result.object
+          end
+        # ToDo: Commenting out for now since we currently don't allow for broadcast
+        # updates of the user_assignment status (e.g. Complete All). When we do, we can
+        # bring this back but we need to figure out a better way to send the emails since
+        # update_user_assignment will send an email but we don't want to do that in this loop.
+        # If its a broadcast and there are multiple assignments being updates, better to
+        # send out all the emails at once after its done just like the send_assignment_emails()
+        # is doing it.
+        # else
+        #   user_assignment_result = update_user_assignment(current_user, ua)
+        #
+        #   if user_assignment_result.status == :ok
+        #     userAssignments << user_assignment_result.object
+        #     newUserAssignments << user_assignment_result.object
+        #   end
         end
-      # ToDo: Commenting out for now since we currently don't allow for broadcast
-      # updates of the user_assignment status (e.g. Complete All). When we do, we can
-      # bring this back but we need to figure out a better way to send the emails since
-      # update_user_assignment will send an email but we don't want to do that in this loop.
-      # If its a broadcast and there are multiple assignments being updates, better to
-      # send out all the emails at once after its done just like the send_assignment_emails()
-      # is doing it.
-      # else
-      #   user_assignment_result = update_user_assignment(current_user, ua)
-      #
-      #   if user_assignment_result.status == :ok
-      #     userAssignments << user_assignment_result.object
-      #     newUserAssignments << user_assignment_result.object
-      #   end
       end
     end
 
