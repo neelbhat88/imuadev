@@ -5,19 +5,19 @@ angular.module('myApp')
     $scope.current_user = current_user
 
     $scope.recalculateCompletion = () =>
-        partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
-        $scope.users_complete = partition[0]
-        $scope.users_incomplete = partition[1]
-        $scope.percent_complete = 0
-        $scope.num_students_in_semester = $scope.users_total.length
+      partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
+      $scope.users_complete = partition[0]
+      $scope.users_incomplete = partition[1]
+      $scope.percent_complete = 0
+      $scope.num_students_in_semester = $scope.users_total.length
 
-        if $scope.users_total.length > 0
-          $scope.percent_complete = (($scope.users_complete.length / $scope.users_total.length) * 100).toFixed(0)
+      if $scope.users_total.length > 0
+        $scope.percent_complete = (($scope.users_complete.length / $scope.users_total.length) * 100).toFixed(0)
 
-        if current_user.is_mentor
-          $scope.users_complete = _.filter($scope.users_complete, (u) -> _.contains(current_user.assigned_users, u.id))
-          $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
-          $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
+      if current_user.is_mentor
+        $scope.users_complete = _.filter($scope.users_complete, (u) -> _.contains(current_user.assigned_users, u.id))
+        $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
+        $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
 
     MilestoneService.getMilestoneStatus(milestone_id)
       .success (data) ->
