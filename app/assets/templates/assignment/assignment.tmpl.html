@@ -3,11 +3,12 @@
   <div class="task-header clear">
     <div class="single-col-wrapper">
       <div class="back-link">
-        <h6>
-          <a href="#/assignments/{{current_user.id}}">
-            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to All Tasks
-          </a>
-        </h6>
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
       </div>
       <div task-editor class="edit-buttons-top" ng-hide="assignment.editing">
         <button class="btn btn-default" ng-click="editAssignment($index)"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>

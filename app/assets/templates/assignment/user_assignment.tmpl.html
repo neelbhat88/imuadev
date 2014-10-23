@@ -3,14 +3,14 @@
   <div class="task-header clear">
     <div class="single-col-wrapper">
       <div class="back-link">
-        <h6>
-          <a href="#/assignment/{{user_assignment.assignment_id}}" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
-            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to Task
-          </a>
-          <a href="#/user_assignments/{{current_user.id}}" ng-if="current_user.role >= CONSTANTS.USER_ROLES.student">
-            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to My Tasks
-          </a>
-        </h6>
+
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
+
       </div>
     </div>
   </div>
