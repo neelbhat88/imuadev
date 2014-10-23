@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140925173722) do
+ActiveRecord::Schema.define(:version => 20141022223706) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -24,8 +24,9 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.string   "title"
     t.string   "description"
     t.datetime "due_datetime"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "organization_id"
   end
 
   add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"

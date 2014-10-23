@@ -1,5 +1,5 @@
 class Assignment < ActiveRecord::Base
-  attr_accessible :user_id, :title, :description, :due_datetime
+  attr_accessible :user_id, :title, :description, :due_datetime, :organization_id
 
   belongs_to :user
 
@@ -7,6 +7,7 @@ class Assignment < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :title, presence: true
+  validates :organization_id, presence: true
 end
 
 class DomainAssignment

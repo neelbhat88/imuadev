@@ -60,6 +60,9 @@
                   <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
                 </div>
                 <div class="submenu__link">
+                  <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">Tasks</a>
+                </div>
+                <div class="submenu__link">
                   <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
                 </div>
               <% end %>
@@ -117,6 +120,9 @@
               </li>
               <li>
                 <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
+              </li>
+              <li>
+                  <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">Tasks</a>
               </li>
               <li>
                 <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>

@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-	default :from => "imua@hokuscholars.org"
+	default :from => "imua-notification@myimua.org"
 
   def welcome(user, password)
   	@user = user

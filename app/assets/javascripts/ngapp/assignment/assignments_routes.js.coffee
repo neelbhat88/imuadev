@@ -1,8 +1,9 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.when '/all_assignments/:user_id',
+  $routeProvider.when '/assignments/:user_id',
     templateUrl: 'assignment/assignments.html',
     controller: 'AssignmentsController',
+    reloadOnSearch: false,
     resolve:
       current_user: ['SessionService', (SessionService) ->
         SessionService.getCurrentUser()

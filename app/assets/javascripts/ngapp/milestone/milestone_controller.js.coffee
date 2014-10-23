@@ -3,9 +3,6 @@ angular.module('myApp')
   ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
 
     $scope.current_user = current_user
-    $scope.showAdvanced = false
-    $scope.advancedPrefix = "Show"
-    $scope.students_in_semester = 0
 
     $scope.recalculateCompletion = () =>
         partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
