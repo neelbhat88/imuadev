@@ -9,10 +9,10 @@
           </a>
         </h6>
       </div>
-      <div class="edit-buttons-top" ng-hide="assignment.editing">
+      <div task-editor class="edit-buttons-top" ng-hide="assignment.editing">
         <button class="btn btn-default" ng-click="editAssignment($index)"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
       </div>
-      <div class="edit-buttons-top" ng-show="assignment.editing">
+      <div task-editor class="edit-buttons-top" ng-show="assignment.editing">
         <button class="btn btn-success" ng-click="saveAssignment($index)"><span class="glyphicon glyphicon-ok"></span> Save Task</button>
         <button class="btn btn-danger btn-sm" ng-click="cancelEditAssignment($index)"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
@@ -155,7 +155,7 @@
         <button class="btn btn-danger btn-sm" ng-click="cancelEditAssignment()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
 
-      <div class="edit-buttons" ng-hide="assignment.editing">
+      <div task-editor class="edit-buttons" ng-hide="assignment.editing">
         <button class="btn btn-default" ng-click="editAssignment()"><span class="glyphicon glyphicon-edit"></span> Edit This Task</button>
         <button class="btn btn-danger" ng-click="deleteAssignment()"><span class="glyphicon glyphicon-trash"></span> Delete this Task</button>
       </div>

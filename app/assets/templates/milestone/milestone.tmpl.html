@@ -43,9 +43,9 @@
       </ul>
 
       <ul class="users-completed" ng-if="users_complete.length != 0">
-        <h6 class="bold green" ng-if="users_complete.length == 1 && users_total.length != 1">{{users_complete.length}} student has completed this milestone</h6>
-        <h6 class="bold green" ng-if="users_complete.length != 1 && users_complete.length != users_total.length">{{users_complete.length}} students have completed this milestone</h6>
-        <h6 class="bold green" ng-if="users_complete.length == users_total.length">Nice! All students have completed this milestone.</h6>
+        <h6 class="bold green" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
           <a href="#/progress/{{user.id}}">
             <div class="medium-circle-picture">
