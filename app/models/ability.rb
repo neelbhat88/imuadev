@@ -198,7 +198,7 @@ class Ability
           rules += [:update_user_assignment,
                     :destroy_user_assignment,
                     :get_user_assignment_collection]
-        else # other users in their organization (other mentors, admins)
+        elsif subjectUser.student?
           rules += [:get_user_assignment_collection]
         end
       end
