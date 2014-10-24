@@ -7,6 +7,10 @@ angular.module('myApp')
 
     $scope.current_user = current_user
 
+    $scope.user_assignments_total = []
+    $scope.user_assignments_completed = []
+    $scope.user_assignments_incomplete = []
+
     $scope.recalculateCompletion = () =>
       $scope.user_assignments_total = $scope.assignment.user_assignments
       $scope.user_assignments_completed = _.where($scope.user_assignments_total, {status: 1})
