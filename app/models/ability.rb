@@ -31,7 +31,15 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :create_assignment,
+          :create_assignment_broadcast,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -50,7 +58,15 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :create_assignment,
+          :create_assignment_broadcast,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
 
       elsif user.org_admin?
@@ -66,7 +82,13 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
 
       elsif user.mentor?
@@ -84,7 +106,27 @@ class Ability
               :manage_parent_guardian_contacts,
               :get_student_expectations,
               :get_student_dashboard,
-              :get_user_progress
+              :get_user_progress,
+              :get_user_assignments,
+              :create_user_assignment,
+              :get_user_assignment_collections,
+              :get_assignments,
+              :get_task_assignable_users,
+              :get_task_assignable_users_tasks
+            ]
+          else # students not assigned to this mentor (read-only)
+            rules += [
+              :view_profile,
+              :read_user_tests,
+              :read_parent_guardian_contacts,
+              :get_student_expectations,
+              :get_student_dashboard,
+              :get_user_progress,
+              :get_user_assignments,
+              :get_user_assignment_collections,
+              :get_assignments,
+              :get_task_assignable_users,
+              :get_task_assignable_users_tasks
             ]
           end
         else # other users in their organization (other mentors, admins)
