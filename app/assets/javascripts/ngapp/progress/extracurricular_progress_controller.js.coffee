@@ -118,6 +118,7 @@ angular.module('myApp')
       new_activity.details[0].description = activity.details[0].new_description
       UserExtracurricularActivityService.saveExtracurricularActivity(new_activity)
         .success (data) ->
+          activity.id = data.user_extracurricular_activity.id
           activity.name = data.user_extracurricular_activity.name
           activity.details[0] = data.user_extracurricular_detail
           activity.editing = false
