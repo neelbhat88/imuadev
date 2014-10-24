@@ -306,12 +306,12 @@ class AssignmentService
   end
 
   def send_task_complete_email(current_user, assignment, user_assignment)
+    # Don't send an email for updates to tasks assigned to yourself
+    return if current_user.id == assignment.user_id && current_user.id == user_assignment.user_id
+
     Background.process do
       assignor = UserRepository.new.get_user(assignment.user_id)
       assignee = UserRepository.new.get_user(user_assignment.user_id)
-
-      # Don't send an email for updates to tasks assigned to yourself
-      return if current_user.id == assignor.id && current_user.id == assignee.id
 
       case current_user.id
       when assignor.id # The assignor completed the task

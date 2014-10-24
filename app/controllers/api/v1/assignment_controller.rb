@@ -14,10 +14,10 @@ class Api::V1::AssignmentController < ApplicationController
   def index
     userId = params[:user_id]
 
-    # if !can?(current_user, :get_assignments, User.where(id: params[:user_id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :get_assignments, User.where(id: params[:user_id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.get_assignments(userId)
 
@@ -49,10 +49,10 @@ class Api::V1::AssignmentController < ApplicationController
 
     assignment["user_id"] = userId
 
-    # if !can?(current_user, :create_assignment, User.where(id: params[:user_id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :create_assignment, User.where(id: params[:user_id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.create_assignment(assignment)
 
@@ -119,10 +119,10 @@ class Api::V1::AssignmentController < ApplicationController
     url_params[:user_id] = params[:id]
 
     # TODO Fix to incorporate authorizations for creating all the user_assignments
-    # if !can?(current_user, :create_assignment_broadcast, User.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :create_assignment_broadcast, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.broadcast(current_user, url_params)
 
@@ -153,10 +153,10 @@ class Api::V1::AssignmentController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
 
-    # if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.get_task_assignable_users(url_params)
 
@@ -169,10 +169,10 @@ class Api::V1::AssignmentController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:user_id] = params[:id]
 
-    # if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.get_task_assignable_users_tasks(url_params)
 
