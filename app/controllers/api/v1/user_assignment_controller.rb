@@ -13,6 +13,11 @@ class Api::V1::UserAssignmentController < ApplicationController
   def index
     userId = params[:user_id]
 
+    # if !can?(current_user, :get_user_assignments, User.where(id: params[:user_id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
     result = @assignmentService.get_user_assignments(userId)
 
     render status: :ok,
@@ -29,6 +34,11 @@ class Api::V1::UserAssignmentController < ApplicationController
     userAssignment = params[:user_assignment]
 
     userAssignment["user_id"] = userId
+
+    # if !can?(current_user, :create_user_assignment, User.where(id: params[:user_id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     result = @assignmentService.create_user_assignment(userAssignment)
 
@@ -47,6 +57,11 @@ class Api::V1::UserAssignmentController < ApplicationController
 
     userAssignment["id"] = userAssignmentId
 
+    if !can?(current_user, :update_user_assignment, UserAssignment.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @assignmentService.update_user_assignment(current_user, userAssignment)
 
     render status: result.status,
@@ -61,6 +76,11 @@ class Api::V1::UserAssignmentController < ApplicationController
   def destroy
     userAssignmentId = params[:id].to_i
 
+    if !can?(current_user, :destroy_user_assignment, UserAssignment.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @assignmentService.delete_user_assignment(userAssignmentId)
 
     render status: result.status,
@@ -73,6 +93,11 @@ class Api::V1::UserAssignmentController < ApplicationController
   # Returns the UserAssignment with associated Assignment data
   def collect
     userAssignmentId = params[:id].to_i
+
+    if !can?(current_user, :get_user_assignment_collection, UserAssignment.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @assignmentService.collect_user_assignment(userAssignmentId)
     viewUserAssignment = ViewUserAssignment.new(result, {assignment: true, user: true})
@@ -88,6 +113,11 @@ class Api::V1::UserAssignmentController < ApplicationController
   # Returns all of a User's UserAssignments with their associated Assignment data
   def collect_all
     userId = params[:user_id].to_i
+
+    # if !can?(current_user, :get_user_assignment_collections, User.where(id: params[:user_id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
 
     results = @assignmentService.collect_user_assignments(userId)
     viewUserAssignments = results.map{|r| ViewUserAssignment.new(r, {assignment: true})}

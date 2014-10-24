@@ -121,7 +121,7 @@ describe Api::V1::UserAssignmentController do
                                              assignment_id: other_assignment.id,
                                              user_id: other_student.id) }
 
-      xit "returns 403 if an admin tries to update a UserAssignment not in their Organization" do
+      it "returns 403 if an admin tries to update a UserAssignment not in their Organization" do
         mod_user_assignment = attributes_for(:user_assignment,
                                              assignment_id: assignment.id,
                                              user_id:       student.id)
@@ -157,7 +157,7 @@ describe Api::V1::UserAssignmentController do
                                        assignment_id: assignment.id,
                                        user_id: studentId) }
 
-      xit "returns 403 if a student tries to delete their own UserAssignment" do
+      it "returns 403 if a student tries to delete their own UserAssignment" do
         delete :destroy, {:id => user_assignment.id}
         expect(response.status).to eq(403)
       end

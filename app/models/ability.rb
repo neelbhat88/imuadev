@@ -9,6 +9,7 @@ class Ability
       when "User" then user_abilities(user, subject)
       when "Organization" then organization_abilities(user, subject)
       when "Assignment" then assignment_abilities(user, subject)
+      when "UserAssignment" then user_assignment_abilities(user, subject)
       else []
       end
 
@@ -167,6 +168,44 @@ class Ability
                   :destroy_assignment,
                   :get_assignment_collection,
                   :update_assignment_broadcast]
+      end
+
+      rules.uniq
+    end
+
+    def user_assignment_abilities(user, subjectUserAssignment)
+      rules = []
+      subjectUser = nil
+
+      if user.super_admin?
+        return[:update_user_assignment,
+               :destroy_user_assignment,
+               :get_user_assignment_collection]
+      else
+        subjectUser = User.where(id: subjectUserAssignment.user_id).first
+        return [] if user.organization_id != subjectUser.organization_id
+      end
+
+      if user.org_admin?
+        rules += [:update_user_assignment,
+                  :destroy_user_assignment,
+                  :get_user_assignment_collection]
+      end
+
+      if user.mentor?
+        related = UserRepository.new.are_related?(subjectUser.id, user.id)
+        if related
+          rules += [:update_user_assignment,
+                    :destroy_user_assignment,
+                    :get_user_assignment_collection]
+        else # other users in their organization (other mentors, admins)
+          rules += [:get_user_assignment_collection]
+        end
+      end
+
+      if user.id == subjectUser.id
+        rules += [:update_user_assignment,
+                  :get_user_assignment_collection]
       end
 
       rules.uniq
