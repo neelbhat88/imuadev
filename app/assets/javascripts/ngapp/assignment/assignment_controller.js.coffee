@@ -17,8 +17,9 @@ angular.module('myApp')
         $scope.percent_complete = (($scope.user_assignments_completed.length / $scope.user_assignments_total.length) * 100).toFixed(0)
 
       if current_user.is_mentor
-        $scope.user_assignments_completed = _.filter($scope.user_assignments_completed, (ua) -> _.contains(current_user.assigned_users, ua.user.id))
-        $scope.user_assignments_incomplete = _.filter($scope.user_assignments_incomplete, (ua) -> _.contains(current_user.assigned_users, ua.user.id))
+        assignable_user_ids = $scope.current_user.assigned_users.concat([$scope.current_user.id])
+        $scope.user_assignments_completed = _.filter($scope.user_assignments_completed, (ua) -> _.contains(assignable_user_ids, ua.user.id))
+        $scope.user_assignments_incomplete = _.filter($scope.user_assignments_incomplete, (ua) -> _.contains(assignable_user_ids, ua.user.id))
 
     if !assignment
       $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
