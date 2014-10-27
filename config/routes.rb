@@ -15,8 +15,13 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :organization, shallow: true do
+        member do
+          post 'reset_users_password'
+          post 'reset_all_students_password'
+        end
 
         resources :users, shallow: true do
+
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
@@ -138,9 +143,6 @@ Imua::Application.routes.draw do
 
   get '/forgot_password' => 'static#forgot_password'
   post '/reset_password' => 'static#reset_password'
-  post '/reset_all_students_password' => 'static#reset_all_students_password'
-  post '/reset_users_password' => 'static#reset_users_password'
-
 
   get '/login' => 'static#login'
   get '/marketing' => 'static#index'
