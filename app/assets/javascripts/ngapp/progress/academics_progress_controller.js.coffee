@@ -21,7 +21,7 @@ angular.module('myApp')
               $scope.gpa = 0.toFixed(2)
 
             $scope.last_updated_gpa = _.last(_.sortBy($scope.student.user_classes, (u) ->
-              u.updated_at)).updated_at
+              u.updated_at)).updated_at if $scope.student.user_classes.length > 0
 
             date_format_gpa_history =
               _.each(data.user_gpa_history, (h) ->
