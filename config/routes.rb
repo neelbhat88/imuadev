@@ -15,9 +15,10 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :organization, shallow: true do
+
         member do
-          post 'reset_users_password'
-          post 'reset_all_students_password'
+          put 'users/reset_users_password' => 'users#reset_users_password'
+          put 'users/reset_all_students_password' => 'users#reset_all_students_password'
         end
 
         resources :users, shallow: true do

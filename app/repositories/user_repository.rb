@@ -130,13 +130,15 @@ class UserRepository
   end
 
   # will require authentication when put into UI
-  def reset_users_password(user_ids)
+  def reset_users_password(user_ids, organization_id)
     Background.process do
       user_ids.each do |id|
         user = User.find(id)
-        new_password = generate_password()
-        user.update_attributes(:password => new_password)
-        UserMailer.reset_password(user, new_password).deliver
+        if organization_id == user.organization_id
+          new_password = generate_password()
+          user.update_attributes(:password => new_password)
+          UserMailer.reset_password(user, new_password).deliver
+        end
       end
     end
 
