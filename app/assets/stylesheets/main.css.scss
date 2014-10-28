@@ -37,6 +37,11 @@ a {
 .left { float: left; }
 .right { float: right; }
 .ng-clickable { cursor: pointer; }
+.ng-clickable-text {
+  cursor: pointer;
+
+  &:hover {text-decoration: underline;}
+}
 
 /* ===============================================
    Global Classes

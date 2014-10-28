@@ -3,12 +3,12 @@
   <div class="expectation-header">
     <div class="single-col-wrapper">
       <div class="back-link">
-        <h6>
-          <a href="#/expectations/{{student.id}}" >
-            <span ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor"><span class="glyphicon glyphicon-circle-arrow-left"></span> {{student.first_name}}'s Expectations</span>
-            <span ng-if="current_user.role >= CONSTANTS.USER_ROLES.student"><span class="glyphicon glyphicon-circle-arrow-left"></span> My Expectations</span>
-          </a>
-        </h6>
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
       </div>
     </div>
   </div>

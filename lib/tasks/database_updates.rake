@@ -5,7 +5,7 @@ namespace :db_update do
   ########################################
   ########################################
   desc "All db_updates"
-  task :all => [:create_app_version]
+  task :all => [:create_app_version, :organization_id_to_assignments]
 
   ########################################
   ########################################
@@ -150,6 +150,20 @@ namespace :db_update do
           end
         end
       end
+    end
+  end
+
+  desc "Apply organization_id to Assignments"
+  task :organization_id_to_assignments => :environment do
+    assignments = Assignment.where(organization_id: nil)
+    if assignments.any?
+      assignments.each do |a|
+        orgId = a.user.organization_id
+        a.update_attributes(organization_id: orgId)
+        puts "Applied orgId: " + orgId.to_s + " to assignment " + a.id.to_s
+      end
+    else
+      puts "All Assignments have non-nil organization_id"
     end
   end
 
