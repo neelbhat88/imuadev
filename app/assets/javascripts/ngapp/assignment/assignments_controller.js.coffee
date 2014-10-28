@@ -118,8 +118,6 @@ angular.module('myApp')
       switch task_list
         when $scope.CONSTANTS.TASK_NAV.assigned_to_me
           # Use only the user's user_assignments
-        #  assignments = angular.copy(_.omit($scope.users_user_assignments, ['user_assignments']))
-
           assignments = _.map($scope.users_user_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id == $scope.user.id); a)
           $scope.list_assignments = assignments
           $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_me
@@ -128,7 +126,6 @@ angular.module('myApp')
           $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_by_me
         when $scope.CONSTANTS.TASK_NAV.assigned_to_others
           # Don't use any of the user's user_assignments
-          #assignments = []
           assignments = _.map($scope.student_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id != $scope.user.id); a)
           $scope.list_assignments = _.filter(assignments, (a) -> a.user_assignments.length > 0)
           if $scope.current_user.is_org_admin
