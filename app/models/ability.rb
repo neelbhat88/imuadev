@@ -155,7 +155,8 @@ class Ability
         return [:create_user,
                 :read_org_tests,
                 :manage_org_tests,
-                :get_organization_progress]
+                :get_organization_progress,
+                :reset_passwords]
       else
         return [] if user.organization_id != subjectOrg.id
       end
@@ -164,7 +165,8 @@ class Ability
         rules += [:create_user,
                   :read_org_tests,
                   :manage_org_tests,
-                  :get_organization_progress]
+                  :get_organization_progress,
+                  :reset_passwords]
       end
 
       if user.mentor?

@@ -16,7 +16,13 @@ Imua::Application.routes.draw do
       # **************************************
       resources :organization, shallow: true do
 
+        member do
+          put 'users/reset_users_password' => 'users#reset_users_password'
+          put 'users/reset_all_students_password' => 'users#reset_all_students_password'
+        end
+
         resources :users, shallow: true do
+
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
