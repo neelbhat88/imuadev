@@ -24,7 +24,7 @@ angular.module('myApp')
 
   $scope.editUserInfo = () ->
     $scope.editingInfo = true
-``
+
   $scope.cancelUpdateUserInfo = () ->
     $scope.files = null
     $('.js-upload')[0].value = "" # sort of hacky but it'll do for now

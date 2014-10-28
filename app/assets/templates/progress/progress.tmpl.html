@@ -71,10 +71,12 @@
         <h4 class="progressLower-title" ng-if="!current_user.is_student">
           <span class="bold">{{student.first_name}}'s</span> {{selected_module.module_title | underscoresToSpaces}}
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
+          <span class="bold">   {{selected_module.points.user}}/{{selected_module.points.total}}</span><span> points</span>
         </h4>
         <h4 class="progressLower-title" ng-if="current_user.is_student">
           <span class="bold">Your {{selected_module.module_title | underscoresToSpaces}}</span>
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
+          <span class="bold">   {{selected_module.points.user}}/{{selected_module.points.total}}</span><span> points</span>
         </h4>
       </div>
 
