@@ -265,6 +265,45 @@ class Api::V1::UsersController < ApplicationController
       }
   end
 
+  # PUT organization/:id/users/reset_all_students_password
+  def reset_all_students_password
+    organization_id = params[:id].to_i
+    organization = OrganizationRepository.new.get_organization(organization_id)
+
+    if can?(current_user, :reset_passwords, organization)
+      result = UserRepository.new.reset_all_students_password(organization_id)
+    else
+      result = { :status => :forbidden,
+                 :info => "You are not permitted to reset students' passwords"
+               }
+    end
+
+    render status: result[:status],
+    json: {
+      info: result[:info]
+    }
+  end
+
+  # PUT organization/:id/users/reset_users_password
+  def reset_users_password
+    organization_id = params[:id].to_i
+    organization = OrganizationRepository.new.get_organization(organization_id)
+    user_ids = params[:user_ids]
+
+    if can?(current_user, :reset_passwords, organization)
+      result = UserRepository.new.reset_users_password(user_ids, organization_id)
+    else
+      result = { :status => :forbidden,
+                 :info => "You are not permitted to reset students' passwords"
+               }
+    end
+
+    render status: result[:status],
+    json: {
+      info: result[:info]
+    }
+  end
+
 end
 
 

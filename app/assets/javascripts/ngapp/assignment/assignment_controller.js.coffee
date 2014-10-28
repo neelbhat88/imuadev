@@ -7,6 +7,24 @@ angular.module('myApp')
 
     $scope.current_user = current_user
 
+    $scope.user_assignments_total = []
+    $scope.user_assignments_completed = []
+    $scope.user_assignments_incomplete = []
+
+    $scope.recalculateCompletion = () =>
+      $scope.user_assignments_total = $scope.assignment.user_assignments
+      $scope.user_assignments_completed = _.where($scope.user_assignments_total, {status: 1})
+      $scope.user_assignments_incomplete = _.where($scope.user_assignments_total, {status: 0})
+
+      $scope.percent_complete = 0
+      if $scope.user_assignments_total.length > 0
+        $scope.percent_complete = (($scope.user_assignments_completed.length / $scope.user_assignments_total.length) * 100).toFixed(0)
+
+      if current_user.is_mentor
+        assignable_user_ids = $scope.current_user.assigned_users.concat([$scope.current_user.id])
+        $scope.user_assignments_completed = _.filter($scope.user_assignments_completed, (ua) -> _.contains(assignable_user_ids, ua.user.id))
+        $scope.user_assignments_incomplete = _.filter($scope.user_assignments_incomplete, (ua) -> _.contains(assignable_user_ids, ua.user.id))
+
     if !assignment
       $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
       $scope.assignment.editing = true
@@ -15,6 +33,7 @@ angular.module('myApp')
       $scope.assignment = assignment
       $scope.assignment.editing = edit
       $scope.user = $scope.assignment.user
+      $scope.recalculateCompletion()
 
     if $scope.assignment.editing
       $scope.assignment.new_title = $scope.assignment.title
@@ -26,17 +45,20 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
-    AssignmentService.getTaskAssignableUsers($scope.user.id)
-      .success (data) ->
-        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-        $scope.assignable_users = $scope.organization.users
+    if $scope.current_user.id == $scope.user.id
+      AssignmentService.getTaskAssignableUsers($scope.user.id)
+        .success (data) ->
+          $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+          $scope.assignable_users = $scope.organization.users
 
-        $scope.assignable_user_groups = []
-        $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
-        $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
-        $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
+          $scope.assignable_user_groups = []
+          $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
+          $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
+          $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
 
-        $scope.loaded_assignable_users = true
+          $scope.loaded_assignable_users = true
+    else
+      $scope.loaded_assignable_users = true
 
     $scope.editAssignment = () ->
       $scope.assignment.editing = true
@@ -67,6 +89,7 @@ angular.module('myApp')
           saved_assignment.assignees = []
           $scope.assignment = saved_assignment
           $scope.assignment.editing = false
+          $scope.recalculateCompletion()
 
     $scope.deleteAssignment = () ->
       if window.confirm "Are you sure you want to delete this task?"
@@ -88,17 +111,19 @@ angular.module('myApp')
 
     $scope.setUserAssignmentStatus = (user_assignment, status) ->
       AssignmentService.setUserAssignmentStatus(user_assignment, status)
+        .then () ->
+          $scope.recalculateCompletion()
 
     $scope.deleteUserAssignment = (assignment, user_assignment) ->
       if window.confirm "Are you sure you want to delete this user's assignment?"
         AssignmentService.deleteUserAssignment(user_assignment.id)
           .success (data) ->
             assignment.user_assignments = _.without(assignment.user_assignments, user_assignment)
+            $scope.recalculateCompletion()
 
     $scope.deleteUserFromAssignment = (assignment, user) ->
-      if window.confirm "Are you sure you want to delete this user's assignment?"
-        user_assignment = _.filter(assignment.user_assignments, (ua) -> ua.user_id == user.id)
-        this.deleteUserAssignment(assignment, user_assignment)
+      user_assignment = _.find(assignment.user_assignments, (ua) -> ua.user_id == user.id)
+      this.deleteUserAssignment(assignment, user_assignment)
 
     $scope.isPendingAssignment = (assignment, user) ->
       _.contains(_.pluck(assignment.assignees, 'id'), user.id)
@@ -124,7 +149,7 @@ angular.module('myApp')
       return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
 
     $scope.isComplete = (assignment) ->
-      return _.every(assignment.user_assignments, (a) -> a.status == 1)
+      return $scope.user_assignments_incomplete.length == 0
 
 
 ]

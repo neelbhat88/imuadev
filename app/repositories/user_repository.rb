@@ -113,6 +113,40 @@ class UserRepository
     end
   end
 
+  # will require authentication when put into UI
+  def reset_all_students_password(organization_id)
+    Background.process do
+      users = User.where(:role => 50, :organization_id => organization_id)
+      users.each do |u|
+        new_password = generate_password()
+        u.update_attributes(:password => new_password)
+        UserMailer.reset_password(u, new_password).deliver
+      end
+    end
+
+    return { :status => :ok,
+             :info => "Successfully reset all students' passwords"
+           }
+  end
+
+  # will require authentication when put into UI
+  def reset_users_password(user_ids, organization_id)
+    Background.process do
+      user_ids.each do |id|
+        user = User.find(id)
+        if organization_id == user.organization_id
+          new_password = generate_password()
+          user.update_attributes(:password => new_password)
+          UserMailer.reset_password(user, new_password).deliver
+        end
+      end
+    end
+
+    return { :status => :ok,
+             :info => "Successfully reset passwords"
+           }
+  end
+
   def delete_user(userId)
     if User.find(userId).destroy
       return { :status => :ok, :info => "User deleted successfully" }

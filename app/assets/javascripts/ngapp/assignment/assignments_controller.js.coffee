@@ -11,15 +11,57 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
+    $scope.clone = (obj, blacklist = []) ->
+      copy = null
+
+      # Handle the 3 simple types, and null or undefined
+      if obj == null || typeof obj != "object"
+        return obj
+
+      # Handle Date
+      if obj instanceof Date
+        copy = new Date();
+        copy.setTime(obj.getTime())
+      # Handle Array
+      else if obj instanceof Array
+        copy = []
+        add_blacklist = []
+        for i in obj
+          given_blacklist = angular.copy(blacklist)
+          copy.push($scope.clone(i, given_blacklist))
+          add_blacklist += _.difference(given_blacklist, blacklist, add_blacklist)
+        blacklist += add_blacklist
+      # Handle Object
+      else if obj instanceof Object
+        copy = {}
+        postObjs = []
+        for i in Object.keys(obj)
+          if obj[i] instanceof Array or obj[i] instanceof Object
+            if !_.contains(blacklist, i)
+              blacklist.push(i)
+              postObjs.push(i)
+          else
+            copy[i] = obj[i]
+        add_blacklist = []
+        for i in postObjs
+          given_blacklist = angular.copy(blacklist)
+          copy[i] = $scope.clone(obj[i], given_blacklist)
+          add_blacklist += _.difference(given_blacklist, blacklist, add_blacklist)
+        blacklist += add_blacklist
+      else
+        throw new Error("Unable to copy - obj type isn't supported.")
+
+      return copy
+
     AssignmentService.getTaskAssignableUsersTasks($scope.user.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.user = _.find($scope.organization.users, (u) -> u.id == $scope.user.id)
         $scope.assignments = $scope.organization.assignments
 
-        $scope.users_assignments = $scope.user.assignments
-        $scope.users_user_assignments = _.filter($scope.assignments, (a) -> _.contains(_.pluck($scope.user.user_assignments, 'assignment_id'), a.id))
-        $scope.student_assignments = $scope.assignments
+        $scope.users_assignments = $scope.clone($scope.user.assignments)
+        $scope.users_user_assignments = $scope.clone(_.filter($scope.assignments, (a) -> _.contains(_.pluck($scope.user.user_assignments, 'assignment_id'), a.id)))
+        $scope.student_assignments = $scope.clone($scope.assignments)
 
         selected_nav = $location.search().selected_nav # Reads query string param
         if selected_nav
@@ -75,13 +117,17 @@ angular.module('myApp')
 
       switch task_list
         when $scope.CONSTANTS.TASK_NAV.assigned_to_me
-          $scope.list_assignments = $scope.users_user_assignments
+          # Use only the user's user_assignments
+          assignments = _.map($scope.users_user_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id == $scope.user.id); a)
+          $scope.list_assignments = assignments
           $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_me
         when $scope.CONSTANTS.TASK_NAV.assigned_by_me
           $scope.list_assignments = $scope.users_assignments
           $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_by_me
         when $scope.CONSTANTS.TASK_NAV.assigned_to_others
-          $scope.list_assignments = $scope.student_assignments
+          # Don't use any of the user's user_assignments
+          assignments = _.map($scope.student_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id != $scope.user.id); a)
+          $scope.list_assignments = _.filter(assignments, (a) -> a.user_assignments.length > 0)
           if $scope.current_user.is_org_admin
             $scope.selected_task_list_title = "All Tasks"
           else
