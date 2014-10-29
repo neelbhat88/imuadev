@@ -127,39 +127,51 @@
           <div progress-editor class="table--cell breakalways" ng-show="new_service_organization.editing">
             <div class="widget--pane">
               <div class="widget--content--table table--fixed">
+                <form imua-form="saveNewServiceEntry()" name="serviceForm" novalidate>
 
-                <div class="table--cell breakalways">
-                  <div class="cell--padding">
-                    <span class="input-group">
-                      <label><h4>Who was the service for?</h4></label>
-                      <input type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
-                    </span>
-                  </div>
-                </div>
-
-                <div class="table--cell breakalways">
-                  <div class="cell--padding">
-                    <span class="input-group">
-                      <h4>Let's add your first hours:</h4>
-                    </span>
-                    <div ng-repeat="user_service_hour in new_service_organization.hours">
+                  <div class="table--cell breakalways">
+                    <div class="cell--padding">
                       <span class="input-group">
-                        <label ng-if="current_user.is_student">What type of service did you do?</label>
-                        <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                        <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
+                        <label><h4>Who was the service for?</h4></label>
+                        <input required name="orgName" type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                        <div ng-messages="serviceForm.orgName.$error" ng-if="serviceForm.$submitted">
+                          <div ng-message="required" class="alert alert-danger">Organization Name is Required</div>
+                        </div>
                       </span>
-                      <span class="input-group datepicker-label"><label>When did you do it?</label></span>
-                      <imua-datepicker date="user_service_hour.date"></imua-datepicker>
-                      <span class="input-group">
-                        <label>How many hours?</label>
-                        <input class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
-                      </span>
-                      <button progress-editor class="btn btn-primary" title="Confirm" ng-click="saveNewServiceEntry()">Add Organization</button>
-                      <button progress-editor class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</button>
                     </div>
                   </div>
-                </div>
 
+                  <div class="table--cell breakalways">
+                    <div class="cell--padding">
+                      <span class="input-group">
+                        <h4>Let's add your first hours:</h4>
+                      </span>
+                      <div ng-repeat="user_service_hour in new_service_organization.hours">
+                        <span class="input-group">
+                          <label ng-if="current_user.is_student">What type of service did you do?</label>
+                          <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                          <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
+                        </span>
+                        <span class="input-group datepicker-label"><label>When did you do it?</label></span>
+                        <imua-datepicker date="user_service_hour.date"></imua-datepicker>
+                        <span class="input-group">
+                          <div ng-messages="serviceForm.datepicker.$error" ng-if="serviceForm.$submitted">
+                            <div ng-message="required" class="alert alert-danger">Date is Required</div>
+                          </div>
+                        </span>
+                        <span class="input-group">
+                          <label>How many hours?</label>
+                          <input required class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
+                          <div ng-messages="serviceForm.serviceEventHours.$error" ng-if="serviceForm.$submitted">
+                            <div ng-message="required" class="alert alert-danger">Hours are Required</div>
+                          </div>
+                        </span>
+                        <button progress-editor type="submit" class="btn btn-primary" title="Confirm">Add Organization</button>
+                        <span progress-editor class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

@@ -46,7 +46,7 @@ gem 'newrelic_rpm'
 
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
-gem 'angularjs-rails'
+gem 'angularjs-rails', "~> 1.3.0"
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
 # Lots of cool JS programming helpers (e.g. _groupBy)
