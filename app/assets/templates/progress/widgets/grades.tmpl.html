@@ -121,19 +121,22 @@
             <div progress-editor class="widget--content--table widget--pane--cell" ng-show="user_class.editing">
               <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
 
-                <div class="table--cell breakalways form-group">
+                <div class="table--cell breakalways form-group" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
                   <span class="input-group">
                     <label>Class</label>
+                    <span ng-messages="gradesForm.classname.$error" ng-if="gradesForm.$submitted"
+                     ng-messages-include="forms/error_messages.html">
+                    </span>
                     <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
-                    <div ng-messages="gradesForm.classname.$error" ng-if="gradesForm.$submitted">
-                      <div ng-message="required" class="alert alert-danger">Class Name is Required</div>
-                    </div>
                   </span>
                 </div>
 
-                <div class="table--cell breakalways">
+                <div class="table--cell breakalways"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                   <span class="input-group">
                       <label>Grade</label>
+                      <span ng-messages="gradesForm.grade.$error" ng-if="gradesForm.$submitted"
+                       ng-messages-include="forms/error_messages.html">
+                      </span>
                       <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
                         <option value="A">A</option>
                         <option value="A-">A-</option>
@@ -148,10 +151,8 @@
                         <option value="D-">D-</option>
                         <option value="F">F</option>
                       </select>
-                      <div ng-messages="gradesForm.grade.$error" ng-if="gradesForm.$submitted">
-                        <div ng-message="required" class="alert alert-danger">Grade is Required</div>
-                      </div>
                   </span>
+
                 </div>
 
                 <div class="table--cell breakalways">
@@ -197,6 +198,8 @@
 
                 <div progress-editor class="table--cell breakalways">
                   <div class="cell--padding">
+                    <span class="text-danger" ng-if="gradesForm.$submitted && gradesForm.$invalid">
+                    **Please fix the errors above**</span>
                     <div class="edit-buttons">
                       <button type="submit" class="submit" title="Confirm">Confirm</button>
                       <a class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</a>
