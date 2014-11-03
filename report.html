@@ -165,11 +165,11 @@ p {
   </tr>
   <tr>
     <td>/Users/neel/railsapps/imua</td>
-    <td>3.2.11</td>
+    <td>3.2.19</td>
     <td>2.6.3
     <td>
-      2014-11-03 11:44:53 -0600<br><br>
-      0.818025 seconds
+      2014-11-03 13:11:55 -0600<br><br>
+      0.850823 seconds
     </td>
     <td>BasicAuth, ContentTag, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, EscapeFunction, Evaluation, Execute, FileAccess, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NumberToCurrency, QuoteTableName, Redirect, RegexDoS, Render, RenderDoS, ResponseSplitting, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, StripTags, SymbolDoS, TranslateBug, UnsafeReflection, ValidationRegex, WithoutProtection, YAMLParsing</td>
   </tr>
@@ -199,7 +199,7 @@ p {
   </tr>
   <tr>
     <td>Security Warnings</td>
-    <td>69 <span class='high-confidence'>(14)</span></td>
+    <td>62 <span class='high-confidence'>(11)</span></td>
   </tr>
   
   <tr>
@@ -216,28 +216,13 @@ p {
   </tr>
   
   <tr>
-    <td>Cross Site Scripting</td>
-    <td>1</td>
-  </tr>
-  
-  <tr>
     <td>Denial of Service</td>
-    <td>12</td>
+    <td>10</td>
   </tr>
   
   <tr>
     <td>Mass Assignment</td>
     <td>51</td>
-  </tr>
-  
-  <tr>
-    <td>Remote Code Execution</td>
-    <td>1</td>
-  </tr>
-  
-  <tr>
-    <td>SQL Injection</td>
-    <td>3</td>
   </tr>
   
   <tr>
@@ -262,7 +247,7 @@ p {
     <td>Api::V1::AssignmentController</td>
     <td>get_assignment_collection</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context3');toggle('message3');toggle('full_message3')" ><span id='message3' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 101: params.except(*[:id, :controlle...</span><span id='full_message3' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 101: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context3' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context2');toggle('message2');toggle('full_message2')" ><span id='message2' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 101: params.except(*[:id, :controlle...</span><span id='full_message2' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 101: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context2' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>96</pre>
           </td>
@@ -342,7 +327,7 @@ p {
     <td>Api::V1::AssignmentController</td>
     <td>broadcast</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context4');toggle('message4');toggle('full_message4')" ><span id='message4' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 118: params.except(*[:id, :controlle...</span><span id='full_message4' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 118: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context4' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context3');toggle('message3');toggle('full_message3')" ><span id='message3' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 118: params.except(*[:id, :controlle...</span><span id='full_message3' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 118: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context3' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>113</pre>
           </td>
@@ -422,7 +407,7 @@ p {
     <td>Api::V1::AssignmentController</td>
     <td>broadcast_update</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context5');toggle('message5');toggle('full_message5')" ><span id='message5' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 136: params.except(*[:id, :controlle...</span><span id='full_message5' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 136: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context5' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context4');toggle('message4');toggle('full_message4')" ><span id='message4' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 136: params.except(*[:id, :controlle...</span><span id='full_message4' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 136: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context4' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>131</pre>
           </td>
@@ -502,7 +487,7 @@ p {
     <td>Api::V1::AssignmentController</td>
     <td>get_task_assignable_users</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context6');toggle('message6');toggle('full_message6')" ><span id='message6' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 153: params.except(*[:id, :controlle...</span><span id='full_message6' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 153: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context6' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context5');toggle('message5');toggle('full_message5')" ><span id='message5' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 153: params.except(*[:id, :controlle...</span><span id='full_message5' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 153: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context5' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>148</pre>
           </td>
@@ -582,7 +567,7 @@ p {
     <td>Api::V1::AssignmentController</td>
     <td>get_task_assignable_users_tasks</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context7');toggle('message7');toggle('full_message7')" ><span id='message7' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 169: params.except(*[:id, :controlle...</span><span id='full_message7' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 169: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context7' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context6');toggle('message6');toggle('full_message6')" ><span id='message6' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 169: params.except(*[:id, :controlle...</span><span id='full_message6' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 169: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context6' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>164</pre>
           </td>
@@ -662,7 +647,7 @@ p {
     <td>Api::V1::MilestoneController</td>
     <td>get_milestone_status</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context8');toggle('message8');toggle('full_message8')" ><span id='message8' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 9: params.except(*[:id, :controller,...</span><span id='full_message8' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 9: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context8' class='context' style='display:none'><caption>app/controllers/api/v1/milestone_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context7');toggle('message7');toggle('full_message7')" ><span id='message7' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 9: params.except(*[:id, :controller,...</span><span id='full_message7' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 9: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context7' class='context' style='display:none'><caption>app/controllers/api/v1/milestone_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>4</pre>
           </td>
@@ -742,7 +727,7 @@ p {
     <td>Api::V1::OrganizationController</td>
     <td>organization_with_users</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context9');toggle('message9');toggle('full_message9')" ><span id='message9' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 107: params.except(*[:id, :controlle...</span><span id='full_message9' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 107: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context9' class='context' style='display:none'><caption>app/controllers/api/v1/organization_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context8');toggle('message8');toggle('full_message8')" ><span id='message8' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 107: params.except(*[:id, :controlle...</span><span id='full_message8' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 107: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context8' class='context' style='display:none'><caption>app/controllers/api/v1/organization_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>102</pre>
           </td>
@@ -822,7 +807,7 @@ p {
     <td>Api::V1::ProgressController</td>
     <td>student_expectations</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context10');toggle('message10');toggle('full_message10')" ><span id='message10' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 47: params.except(*[:id, :controller...</span><span id='full_message10' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 47: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context10' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context9');toggle('message9');toggle('full_message9')" ><span id='message9' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 47: params.except(*[:id, :controller...</span><span id='full_message9' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 47: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context9' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>42</pre>
           </td>
@@ -902,7 +887,7 @@ p {
     <td>Api::V1::ProgressController</td>
     <td>student_dashboard</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context11');toggle('message11');toggle('full_message11')" ><span id='message11' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 66: params.except(*[:id, :controller...</span><span id='full_message11' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 66: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context11' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context10');toggle('message10');toggle('full_message10')" ><span id='message10' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 66: params.except(*[:id, :controller...</span><span id='full_message10' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 66: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context10' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>61</pre>
           </td>
@@ -982,7 +967,7 @@ p {
     <td>Api::V1::ProgressController</td>
     <td>user_progress</td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td><div class='warning_message' onClick="toggle('context12');toggle('message12');toggle('full_message12')" ><span id='message12' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 84: params.except(*[:id, :controller...</span><span id='full_message12' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 84: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context12' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context11');toggle('message11');toggle('full_message11')" ><span id='message11' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 84: params.except(*[:id, :controller...</span><span id='full_message11' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 84: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context11' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>80</pre>
           </td>
@@ -1062,7 +1047,7 @@ p {
     <td></td>
     <td></td>
     <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/session_setting/">Session Setting</a></td>
-    <td><div class='warning_message' onClick="toggle('context2');toggle('message2');toggle('full_message2')" >Session secret should not be included in version control near line 7<table id='context2' class='context' style='display:none'><caption>config/initializers/secret_token.rb</caption>        <tr class='context first'>
+    <td><div class='warning_message' onClick="toggle('context1');toggle('message1');toggle('full_message1')" >Session secret should not be included in version control near line 7<table id='context1' class='context' style='display:none'><caption>config/initializers/secret_token.rb</caption>        <tr class='context first'>
           <td class='context_line'>
             <pre class='context'>3</pre>
           </td>
@@ -1103,62 +1088,6 @@ p {
             </td>
           </tr>
 </table></div></td>
-  </tr>
-  
-  <tr>
-    <td><span class='high-confidence'>High</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/niK4drpSHT4/g8JW8ZsayRkJ">SQL Injection</a></td>
-    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2013-6417). Upgrade to 3.2.16</td>
-  </tr>
-  
-  <tr>
-    <td><span class='high-confidence'>High</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/rubyonrails-security/wDxePLJGZdI/WP7EasCJTA4J">SQL Injection</a></td>
-    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2014-3482). Upgrade to 3.2.19</td>
-  </tr>
-  
-  <tr>
-    <td><span class='high-confidence'>High</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/rubyonrails-security/wDxePLJGZdI/WP7EasCJTA4J">SQL Injection</a></td>
-    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2014-3483). Upgrade to 3.2.19</td>
-  </tr>
-  
-  <tr>
-    <td><span class='med-confidence'>Medium</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
-    <td>Rails 3.2.11 has a denial of service vulnerability in ActiveRecord: upgrade to 3.2.13 or patch</td>
-  </tr>
-  
-  <tr>
-    <td><span class='med-confidence'>Medium</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/remote_code_execution/">Remote Code Execution</a></td>
-    <td><div class='warning_message' onClick="toggle('context1');toggle('message1');toggle('full_message1')" ><span id='message1' style='display:block' >Rails 3.2.11 with globbing routes is vulnerable to directory traversal and remote code execution. Pat...</span><span id='full_message1' style='display:none'>Rails 3.2.11 with globbing routes is vulnerable to directory traversal and remote code execution. Patch or upgrade to 3.2.18</span><table id='context1' class='context' style='display:none'><caption>config/routes.rb</caption></table></div></td>
-  </tr>
-  
-  <tr>
-    <td><span class='med-confidence'>Medium</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/9WiRn2nhfq0/2K2KRB4LwCMJ">Cross Site Scripting</a></td>
-    <td>Rails 3.2.11 has a vulnerability in number helpers (CVE-2014-0081). Upgrade to Rails version 3.2.17</td>
-  </tr>
-  
-  <tr>
-    <td><span class='med-confidence'>Medium</span></td>
-    <td></td>
-    <td></td>
-    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/A-ebV4WxzKg/KNPTbX8XAQUJ">Denial of Service</a></td>
-    <td>Rails 3.2.11 has a denial of service vulnerability (CVE-2013-6414). Upgrade to Rails version 3.2.16</td>
   </tr>
   
 </table>
