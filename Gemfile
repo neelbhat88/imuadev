@@ -77,6 +77,9 @@ gem 'keen'
 gem 'oj'
 gem 'valium'
 
+# Security checks
+gem "brakeman", :require => false
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
