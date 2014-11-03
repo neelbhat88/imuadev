@@ -1,0 +1,1531 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Brakeman Report</title>
+  <script>
+    function toggle(context) {
+      var elem = document.getElementById(context);
+
+      if (elem.style.display != "block")
+        elem.style.display = "block";
+      else
+        elem.style.display = "none";
+
+      elem.parentNode.scrollIntoView();
+    }
+  </script>
+  <style>
+    /* CSS style used for HTML reports */
+
+body {
+  font-family: sans-serif;
+  color: #161616;
+}
+
+a {
+  color: #161616;
+}
+
+p {
+  font-weight: bold;
+  font-size: 11pt;
+  color: #2D0200;
+ }
+
+ th {
+   background-color: #980905;
+   border-bottom: 5px solid #530200;
+   color: white;
+   font-size: 11pt;
+   padding: 1px 8px 1px 8px;
+ }
+
+ td {
+   border-bottom: 2px solid white;
+   font-family: monospace;
+   padding: 5px 8px 1px 8px;
+ }
+
+ table {
+   background-color: #FCF4D4;
+   border-collapse: collapse;
+ }
+
+ h1 {
+   color: #2D0200;
+   font-size: 14pt;
+ }
+
+ h2 {
+   color: #2D0200;
+   font-size: 12pt;
+ }
+
+ span.high-confidence {
+   font-weight:bold;
+   color: red;
+ }
+
+ span.med-confidence {
+ }
+
+ span.weak-confidence {
+   color:gray;
+ }
+
+ div.warning_message {
+   cursor: pointer;
+ }
+
+ div.warning_message:hover {
+   background-color: white;
+ }
+
+ table caption {
+   background-color: #FFE;
+   padding: 2px;
+ }
+
+ table.context {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   border-left: 1px solid #90e960;
+   color: #212121;
+ }
+
+ tr.context {
+   background-color: white;
+ }
+
+ tr.first {
+   border-top: 1px solid #7ecc54;
+   padding-top: 2px;
+ }
+
+ tr.error {
+  background-color: #f4c1c1 !important
+ }
+
+ tr.near_error {
+  background-color: #f4d4d4 !important
+ }
+
+ tr.alt {
+   background-color: #e8f4d4;
+ }
+
+ td.context {
+   padding: 2px 10px 0px 6px;
+   border-bottom: none;
+ }
+
+ td.context_line {
+   padding: 2px 8px 0px 7px;
+   border-right: 1px solid #b3bda4;
+   border-bottom: none;
+   color: #6e7465;
+ }
+
+ pre.context {
+   margin-bottom: 1px;
+ }
+
+ .user_input {
+   background-color: #fcecab;
+ }
+
+ div.render_path {
+   display: none;
+   background-color: #ffe;
+   padding: 5px;
+   margin: 2px 0px 2px 0px;
+ }
+
+ div.template_name {
+   cursor: pointer;
+ }
+
+ div.template_name:hover {
+   background-color: white;
+ }
+
+  </style>
+</head>
+<body>
+
+<h1>Brakeman Report</h1>
+<table>
+  <tr>
+    <th>Application Path</th>
+    <th>Rails Version</th>
+    <th>Brakeman Version</th>
+    <th>Report Time</th>
+    <th>Checks Performed</th>
+  </tr>
+  <tr>
+    <td>/Users/neel/railsapps/imua</td>
+    <td>3.2.11</td>
+    <td>2.6.3
+    <td>
+      2014-11-03 11:44:53 -0600<br><br>
+      0.818025 seconds
+    </td>
+    <td>BasicAuth, ContentTag, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, EscapeFunction, Evaluation, Execute, FileAccess, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NumberToCurrency, QuoteTableName, Redirect, RegexDoS, Render, RenderDoS, ResponseSplitting, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, StripTags, SymbolDoS, TranslateBug, UnsafeReflection, ValidationRegex, WithoutProtection, YAMLParsing</td>
+  </tr>
+</table>
+<br>
+<h2 id='summary'>Summary</h2>
+<table>
+  <tr>
+    <th>Scanned/Reported</th>
+    <th>Total</th>
+  </tr>
+  <tr>
+    <td>Controllers</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <td>Models</td>
+    <td>58</td>
+  </tr>
+  <tr>
+    <td>Templates</td>
+    <td>27</td>
+  </tr>
+  <tr>
+    <td>Errors</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>Security Warnings</td>
+    <td>69 <span class='high-confidence'>(14)</span></td>
+  </tr>
+  
+  <tr>
+    <td>Ignored Warnings</td>
+    <td>0</td>
+  </tr>
+  
+</table>
+<br>
+<table>
+  <tr>
+    <th>Warning Type</th>
+    <th>Total</th>
+  </tr>
+  
+  <tr>
+    <td>Cross Site Scripting</td>
+    <td>1</td>
+  </tr>
+  
+  <tr>
+    <td>Denial of Service</td>
+    <td>12</td>
+  </tr>
+  
+  <tr>
+    <td>Mass Assignment</td>
+    <td>51</td>
+  </tr>
+  
+  <tr>
+    <td>Remote Code Execution</td>
+    <td>1</td>
+  </tr>
+  
+  <tr>
+    <td>SQL Injection</td>
+    <td>3</td>
+  </tr>
+  
+  <tr>
+    <td>Session Setting</td>
+    <td>1</td>
+  </tr>
+  
+</table>
+<br>
+<h2>Security Warnings</h2>  
+<table>
+  <tr>
+    <th>Confidence</th>
+    <th>Class</th>
+    <th>Method</th>
+    <th>Warning Type</th>
+    <th>Message</th>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::AssignmentController</td>
+    <td>get_assignment_collection</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context3');toggle('message3');toggle('full_message3')" ><span id='message3' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 101: params.except(*[:id, :controlle...</span><span id='full_message3' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 101: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context3' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>96</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>98</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /assignment/:id/collection</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>99</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # Returns the Assignment with its collection of UserAssignments</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>100</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def get_assignment_collection</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>101</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>102</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:assignment_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>104</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_assignment_collection, Assignment.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>105</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>106</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::AssignmentController</td>
+    <td>broadcast</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context4');toggle('message4');toggle('full_message4')" ><span id='message4' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 118: params.except(*[:id, :controlle...</span><span id='full_message4' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 118: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context4' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>113</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>115</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # POST /users/:id/assignment/broadcast</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>116</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # Creates an Assignment and its collection of User Assignments</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>117</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def broadcast</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>118</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>119</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>121</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # TODO Fix to incorporate authorizations for creating all the user_assignments</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>122</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :create_assignment_broadcast, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>123</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::AssignmentController</td>
+    <td>broadcast_update</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context5');toggle('message5');toggle('full_message5')" ><span id='message5' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 136: params.except(*[:id, :controlle...</span><span id='full_message5' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 136: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context5' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>131</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>133</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # PUT /assignment/:id/broadcast</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>134</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # Updates an Assignment and its collection of UserAssignments</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>135</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def broadcast_update</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>136</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>137</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:assignment_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>139</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # TODO Fix to incorporate authorizations for updating all the user_assignments</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>140</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :update_assignment_broadcast, Assignment.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>141</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::AssignmentController</td>
+    <td>get_task_assignable_users</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context6');toggle('message6');toggle('full_message6')" ><span id='message6' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 153: params.except(*[:id, :controlle...</span><span id='full_message6' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 153: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context6' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>148</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>149</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>151</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /users/:id/task_assignable_users</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>152</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def get_task_assignable_users</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>153</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>154</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>156</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>157</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>158</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::AssignmentController</td>
+    <td>get_task_assignable_users_tasks</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context7');toggle('message7');toggle('full_message7')" ><span id='message7' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 169: params.except(*[:id, :controlle...</span><span id='full_message7' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 169: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context7' class='context' style='display:none'><caption>app/controllers/api/v1/assignment_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>164</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>165</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>167</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /users/:id/task_assignable_users_tasks</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>168</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def get_task_assignable_users_tasks</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>169</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>170</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>172</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>173</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>174</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::MilestoneController</td>
+    <td>get_milestone_status</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context8');toggle('message8');toggle('full_message8')" ><span id='message8' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 9: params.except(*[:id, :controller,...</span><span id='full_message8' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 9: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context8' class='context' style='display:none'><caption>app/controllers/api/v1/milestone_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>4</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  skip_before_filter :verify_authenticity_token</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>5</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  respond_to :json</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>7</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /milestone/:id/status</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>8</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def get_milestone_status</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>9</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>10</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:milestone_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>12</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # TODO - Abilities for Milestone subjectObj?</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>13</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # if !can?(current_user, :get_milestone_status, Milestone.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>14</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    #   render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::OrganizationController</td>
+    <td>organization_with_users</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context9');toggle('message9');toggle('full_message9')" ><span id='message9' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 107: params.except(*[:id, :controlle...</span><span id='full_message9' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 107: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context9' class='context' style='display:none'><caption>app/controllers/api/v1/organization_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>102</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        roadmap: viewRoadmap</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>103</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      }</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>104</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>106</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def organization_with_users</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>107</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>108</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:organization_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>110</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_organization_progress, Organization.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>111</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>112</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::ProgressController</td>
+    <td>student_expectations</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context10');toggle('message10');toggle('full_message10')" ><span id='message10' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 47: params.except(*[:id, :controller...</span><span id='full_message10' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 47: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context10' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>42</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      }</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>43</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>45</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /users/:id/student_dashboard</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>46</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def student_expectations</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>47</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>48</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>50</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_student_expectations, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>51</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>52</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::ProgressController</td>
+    <td>student_dashboard</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context11');toggle('message11');toggle('full_message11')" ><span id='message11' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 66: params.except(*[:id, :controller...</span><span id='full_message11' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 66: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context11' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>61</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      }, mode: :compat)</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>62</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>64</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # GET /users/:id/student_dashboard</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>65</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def student_dashboard</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>66</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>67</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>69</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_student_dashboard, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>70</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>71</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td>Api::V1::ProgressController</td>
+    <td>user_progress</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td><div class='warning_message' onClick="toggle('context12');toggle('message12');toggle('full_message12')" ><span id='message12' style='display:block' >Symbol conversion from unsafe string (parameter value) near line 84: params.except(*[:id, :controller...</span><span id='full_message12' style='display:none'>Symbol conversion from unsafe string (parameter value) near line 84: <span class="user_input">params.except(*[:id, :controller, :action])</span>.symbolize_keys</span><table id='context12' class='context' style='display:none'><caption>app/controllers/api/v1/progress_controller.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>80</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  # GET /users/:id/progress_2?time_unit_id=XX&amp;module=XX&amp;recalculate=XX</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>81</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # Returns User&#39;s info and progress, filterable by time_unit and module.</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>82</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # Optional &quot;recalculate&quot; parameter to perform milestone recalculation.</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>83</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def user_progress</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>84</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params = params.except(*[:id, :controller, :action]).symbolize_keys</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>85</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    url_params[:user_id] = params[:id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>87</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if !can?(current_user, :get_user_progress, User.where(id: params[:id]).first)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>88</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      render status: :forbidden, json: {}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>89</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      return</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/session_setting/">Session Setting</a></td>
+    <td><div class='warning_message' onClick="toggle('context2');toggle('message2');toggle('full_message2')" >Session secret should not be included in version control near line 7<table id='context2' class='context' style='display:none'><caption>config/initializers/secret_token.rb</caption>        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>3</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'># Your secret key for verifying the integrity of signed cookies.</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>4</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'># If you change this key, all old signed cookies will become invalid!</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>5</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'># Make sure the secret is at least 30 characters and all random,</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>6</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'># no regular words or you&#39;ll be exposed to dictionary attacks.</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>7</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>Imua::Application.config.secret_token = &#39;1cfade8a523e162f8ca29bb7959c4e7498fcb07fc83458ca2a08d3cb2e72a3e0939e187da81701dfbb182a449b0bbeeaa2af549b1bc61658a71d1b05654f4ff1&#39;</pre>
+            </td>
+          </tr>
+</table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/niK4drpSHT4/g8JW8ZsayRkJ">SQL Injection</a></td>
+    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2013-6417). Upgrade to 3.2.16</td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/rubyonrails-security/wDxePLJGZdI/WP7EasCJTA4J">SQL Injection</a></td>
+    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2014-3482). Upgrade to 3.2.19</td>
+  </tr>
+  
+  <tr>
+    <td><span class='high-confidence'>High</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/rubyonrails-security/wDxePLJGZdI/WP7EasCJTA4J">SQL Injection</a></td>
+    <td>Rails 3.2.11 contains a SQL injection vulnerability (CVE-2014-3483). Upgrade to 3.2.19</td>
+  </tr>
+  
+  <tr>
+    <td><span class='med-confidence'>Medium</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/denial_of_service/">Denial of Service</a></td>
+    <td>Rails 3.2.11 has a denial of service vulnerability in ActiveRecord: upgrade to 3.2.13 or patch</td>
+  </tr>
+  
+  <tr>
+    <td><span class='med-confidence'>Medium</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/remote_code_execution/">Remote Code Execution</a></td>
+    <td><div class='warning_message' onClick="toggle('context1');toggle('message1');toggle('full_message1')" ><span id='message1' style='display:block' >Rails 3.2.11 with globbing routes is vulnerable to directory traversal and remote code execution. Pat...</span><span id='full_message1' style='display:none'>Rails 3.2.11 with globbing routes is vulnerable to directory traversal and remote code execution. Patch or upgrade to 3.2.18</span><table id='context1' class='context' style='display:none'><caption>config/routes.rb</caption></table></div></td>
+  </tr>
+  
+  <tr>
+    <td><span class='med-confidence'>Medium</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/9WiRn2nhfq0/2K2KRB4LwCMJ">Cross Site Scripting</a></td>
+    <td>Rails 3.2.11 has a vulnerability in number helpers (CVE-2014-0081). Upgrade to Rails version 3.2.17</td>
+  </tr>
+  
+  <tr>
+    <td><span class='med-confidence'>Medium</span></td>
+    <td></td>
+    <td></td>
+    <td><a rel="no-referrer" href="https://groups.google.com/d/msg/ruby-security-ann/A-ebV4WxzKg/KNPTbX8XAQUJ">Denial of Service</a></td>
+    <td>Rails 3.2.11 has a denial of service vulnerability (CVE-2013-6414). Upgrade to Rails version 3.2.16</td>
+  </tr>
+  
+</table>
+<p>Model Warnings</p>
+<table>
+  <tr>
+    <th>Confidence</th>
+    <th>Model</th>
+    <th>Warning Type</th>
+    <th>Message</th>
+  </tr>
+
+  <tr>
+    <td><span class='med-confidence'>Medium</span></td>
+    <td>User</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :role</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Assignment</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Assignment</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Expectation</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Milestone</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Milestone</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>MilestoneLevel</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :milestone_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>OrgTest</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>ParentGuardianContact</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Relationship</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :assigned_to_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Relationship</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>Roadmap</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>TimeUnit</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>TimeUnit</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :roadmap_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>User</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>User</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserAssignment</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :assignment_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserAssignment</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClass</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClass</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClass</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :modified_by_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClassHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClassHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_class_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClassHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserClassHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :modified_by_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectation</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :expectation_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectation</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectation</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :modified_by_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectationHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :expectation_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectationHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :modified_by_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectationHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_expectation_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExpectationHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExtracurricularActivity</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExtracurricularActivityDetail</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_extracurricular_activity_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExtracurricularActivityDetail</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserExtracurricularActivityDetail</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserGpa</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserGpa</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserGpaHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserGpaHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_gpa_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserGpaHistory</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserMilestone</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :milestone_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserMilestone</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserMilestone</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserServiceHour</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_service_organization_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserServiceHour</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserServiceHour</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserServiceOrganization</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserTest</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :org_test_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserTest</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :user_id</td>
+  </tr>
+
+  <tr>
+    <td><span class='weak-confidence'>Weak</span></td>
+    <td>UserTest</td>
+    <td><a rel="no-referrer" href="http://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+    <td>Potentially dangerous attribute available for mass assignment: :time_unit_id</td>
+  </tr>
+
+</table></body></html>
