@@ -127,7 +127,7 @@
                     <span ng-messages="gradesForm.classname.$error" ng-if="gradesForm.$submitted"
                      ng-messages-include="forms/error_messages.html">
                     </span>
-                    <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
+                    <input type="text" minlength="5" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
                   </span>
                 </div>
 
@@ -198,8 +198,8 @@
 
                 <div progress-editor class="table--cell breakalways">
                   <div class="cell--padding">
-                    <span class="text-danger" ng-if="gradesForm.$submitted && gradesForm.$invalid">
-                    **Please fix the errors above**</span>
+                    <div class="errorText errorListing" ng-if="gradesForm.$submitted && gradesForm.$invalid">
+                    **Please fix the errors above**</div>
                     <div class="edit-buttons">
                       <button type="submit" class="submit" title="Confirm">Confirm</button>
                       <a class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</a>
