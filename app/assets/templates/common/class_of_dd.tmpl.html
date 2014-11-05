@@ -1,11 +1,8 @@
-<div class="pbs">Class of</div>
-<select name="classOf" required ng-model="model.class_of">
-  <option value="0">-- Graduating Class --</option>
-  <option value="2014">Class of 2014</option>
-  <option value="2015">Class of 2015</option>
-  <option value="2016">Class of 2016</option>
-  <option value="2017">Class of 2017</option>
-  <option value="2018">Class of 2018</option>
-  <option value="2019">Class of 2019</option>
-  <option value="2020">Class of 2020</option>
+<span ng-messages="form.classOf.$error" ng-if="form.$submitted"
+ ng-messages-include="forms/error_messages.html">
+ </span>
+
+<select ng-init="model.class_of = model.class_of || class_of[0].value"
+  name="classOf" required ng-model="model.class_of"
+  ng-options="classOf.value as classOf.name for classOf in class_of">
 </select>

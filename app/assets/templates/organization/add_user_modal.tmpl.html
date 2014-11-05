@@ -5,36 +5,25 @@
 
     <div class="pbl">
       <div class="pbs">Email</div>
-      <span ng-messages="newUserForm.email.$error" ng-if="newUserForm.$submitted"
-       ng-messages-include="forms/error_messages.html">
-      </span>
+      <field-errors form="newUserForm" formfield="newUserForm.email"></field-errors>
       <input name="email" required type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
     </div>
 
     <div class="pbl">
       <div class="pbs">First Name</div>
-      <span ng-messages="newUserForm.firstName.$error" ng-if="newUserForm.$submitted"
-       ng-messages-include="forms/error_messages.html">
-      </span>
+      <field-errors form="newUserForm" formfield="newUserForm.firstName"></field-errors>
       <input name="firstName" required class="form-field" ng-model="user.first_name" placeholder="First Name">
     </div>
 
     <div class="pbs">
       <div class="pbs">Last Name</div>
-      <span ng-messages="newUserForm.lastName.$error" ng-if="newUserForm.$submitted"
-       ng-messages-include="forms/error_messages.html">
-      </span>
+      <field-errors form="newUserForm" formfield="newUserForm.lastName"></field-errors>
       <input name="lastName" required class="form-field" ng-model="user.last_name" placeholder="Last Name">
     </div>
 
     <div ng-if="user.is_student" class="ptm pbs">
       <div class="pbs">Class of</div>
-      <span ng-messages="newUserForm.classOf.$error" ng-if="newUserForm.$submitted"
-       ng-messages-include="forms/error_messages.html">
-      </span>
-        <select ng-init="user.class_of = class_of[0].value" name="classOf" required ng-model="user.class_of"
-        ng-options="classOf.value as classOf.name for classOf in class_of">
-        </select>
+      <class-of-dropdown form="newUserForm" model="user"></class-of-dropdown>
     </div>
 
     <div class="buttonGroup ptl">
