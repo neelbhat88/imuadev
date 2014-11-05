@@ -24,7 +24,7 @@
         <h6 class="bold red" ng-if="users_not_meeting.length == 1">{{users_not_meeting.length}} student is not meeting this expectation</h6>
         <h6 class="bold red" ng-if="users_not_meeting.length != 1">{{users_not_meeting.length}} students are not meeting this expectation</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_not_meeting | orderBy: 'last_name'">
-          <a href="#/progress/{{user.id}}">
+          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -42,7 +42,7 @@
         <h6 class="bold orange" ng-if="users_need_work.length == 1">{{users_need_work.length}} student needs to work on this expectation</h6>
         <h6 class="bold orange" ng-if="users_need_work.length != 1">{{users_need_work.length}} students need to work on this expectation</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_need_work | orderBy: 'last_name'">
-          <a href="#/progress/{{user.id}}">
+          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -61,7 +61,7 @@
         <h6 class="bold green" ng-if="users_meeting.length != 1 && users_meeting.length != 0">{{users_meeting.length}} students are meeting this expectation</h6>
         <h6 class="bold green" ng-if="users_meeting.length != 0 && users_meeting.length == 0">Nice! All students are meeting this expectation.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_meeting | orderBy: 'last_name'">
-          <a href="#/progress/{{user.id}}">
+          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
