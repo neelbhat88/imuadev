@@ -1,6 +1,10 @@
 angular.module('myApp')
 .service 'ExpectationService', ['$http', ($http) ->
 
+
+  @getExpectationStatus = (expectationId) ->
+    $http.get "api/v1/expectation/#{expectationId}/status"
+
   #####################################
   ########### ORGANIZATION ############
   #####################################

@@ -11,6 +11,23 @@ class Api::V1::ExpectationController < ApplicationController
       userExpectationHistoryService : UserExpectationHistoryService.new
   end
 
+  # GET /expectation/:id/status
+  # Returns the status for all students for this expectation
+  def get_expectation_status
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:expectation_id] = params[:id]
+
+    # if !can?(current_user, :get_expectation_status, Expectation.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = @expectationService.get_expectation_status(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
   #####################################
   ########### ORGANIZATION ############
   #####################################

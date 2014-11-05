@@ -1,5 +1,22 @@
 class ExpectationService
 
+  # Called via :expectation_id
+  def get_expectation_status(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    expectationQ = Querier.new(Expectation).select([:id, :title, :description]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:id, :expectation_id, :status, :user_id]).where(conditions)
+
+    conditions[:user_id] = userExpectationQ.pluck(:user_id)
+    userQ = UserQuerier.new.select([:id, :role, :avatar, :class_of, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userExpectationQ])
+
+    view = {expectations: expectationQ.view,
+            users: userQ.view}
+
+    return ReturnObject.new(:ok, "Expectation status for expectation_id: #{params[:expectation_id]}.", view)
+  end
+
   #####################################
   ########### ORGANIZATION ############
   #####################################
