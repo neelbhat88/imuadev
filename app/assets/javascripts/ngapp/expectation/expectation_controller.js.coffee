@@ -3,6 +3,7 @@ angular.module('myApp')
   ($scope, $route, current_user, expectation_id, ExpectationService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
 
     $scope.current_user = current_user
+    $scope.new_status_comment = ""
 
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> !u.user_expectations or u.user_expectations[0].status == $scope.CONSTANTS.EXPECTATION_STATUS.meeting)
