@@ -205,6 +205,9 @@
     .subnav-button {
       margin-top: 5px;
       opacity: 0.3;
+      &.selected {
+        opacity: 1;
+      }
       &:hover { opacity: 1; }
     }
 
