@@ -127,6 +127,7 @@ angular.module('myApp')
       new_service_organization.name = service_organization.new_name
       UserServiceOrganizationService.saveServiceOrganization(new_service_organization)
         .success (data) ->
+          service_organization.id = data.user_service_organization.id
           service_organization.name = data.user_service_organization.name
           service_organization.editing = false
 
@@ -172,6 +173,7 @@ angular.module('myApp')
 
       UserServiceOrganizationService.saveServiceHour(new_service_hour)
         .success (data) ->
+          service_hour.id = data.user_service_hour.id
           service_hour.description = data.user_service_hour.description
           service_hour.hours = data.user_service_hour.hours
           service_hour.date = data.user_service_hour.date

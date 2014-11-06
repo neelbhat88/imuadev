@@ -33,6 +33,9 @@ angular.module('myApp')
     $scope.errors = {}
 
   $scope.updateUserInfo = ($event) ->
+    if $scope.user.title == null # hack for title
+      $scope.user.title = ''
+
     fd = new FormData()
     angular.forEach $scope.files, (file) ->
       fd.append('user[avatar]', file)
@@ -42,6 +45,7 @@ angular.module('myApp')
       .success (data) ->
         # ToDo: Success message here
         $scope.user = data.user
+
 
         $scope.files = null
         $('.js-upload')[0].value = "" #sort of hacky but it'll do for now
