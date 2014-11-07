@@ -23,8 +23,8 @@ Imua::Application.routes.draw do
 
         resources :expectation, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
           member do
-            get 'status', to: 'expectation#get_expectation_status'
-            put 'status', to: 'expectation#put_expectation_status'
+            get 'status', to: 'expectation#get_expectation_status' # Show expectation view
+            put 'status', to: 'expectation#put_expectation_status' # Update expectation view
           end
         end
 
