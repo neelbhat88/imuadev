@@ -3,7 +3,6 @@ angular.module('myApp')
   ($scope, $route, current_user, expectation_id, ExpectationService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
 
     $scope.current_user = current_user
-    $scope.new_status_comment = ""
 
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> !u.user_expectations or u.user_expectations[0].status == $scope.CONSTANTS.EXPECTATION_STATUS.meeting)
@@ -31,23 +30,27 @@ angular.module('myApp')
         $scope.users_total = $scope.organization.students
         $scope.expectation = $scope.organization.expectations[0]
         $scope.recalculateCompletion()
+        $scope.expectation.new_comment = ""
+        $scope.expectation.assignees = []
         $scope.loaded_data = true
 
     $scope.setExpectationStatus = () ->
-      $scope.new_status_comment = ""
-      $scope.expectation.assignees = []
       $scope.expectation.assigning = true
 
     $scope.cancelSetExpectationStatus = () ->
+      $scope.expectation.new_comment = ""
+      $scope.expectation.assignees = []
       $scope.expectation.assigning = false
 
     $scope.saveExpectationStatus = () ->
-      ExpectationService.saveExpectationStatus(expectation_id, $scope.expectation.assignees, $scope.new_status_comment)
+      ExpectationService.saveExpectationStatus(expectation_id, $scope.expectation.assignees, $scope.expectation.new_comment)
         .success (data) ->
           $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
           $scope.users_total = $scope.organization.students
           $scope.expectation = $scope.organization.expectations[0]
           $scope.recalculateCompletion()
+          $scope.expectation.new_comment = ""
+          $scope.expectation.assignees = []
           $scope.expectation.assigning = false
 
     $scope.assignUserExpectationStatus = (user, status) ->
