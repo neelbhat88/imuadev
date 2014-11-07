@@ -4,25 +4,21 @@
   <form name="newUserForm" imua-form="add($event)" class="form form--user" ng-hide="editingPassword" novalidate>
 
     <div class="pbl">
-      <div class="pbs">Email</div>
-      <field-errors form="newUserForm" formfield="newUserForm.email"></field-errors>
+      <label-with-errors label="Email" form="newUserForm" formfield="newUserForm.email"></label-with-errors>
       <input name="email" required type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
     </div>
 
     <div class="pbl">
-      <div class="pbs">First Name</div>
-      <field-errors form="newUserForm" formfield="newUserForm.firstName"></field-errors>
+      <label-with-errors label="First Name" form="newUserForm" formfield="newUserForm.firstName"></label-with-errors>
       <input name="firstName" required class="form-field" ng-model="user.first_name" placeholder="First Name">
     </div>
 
     <div class="pbs">
-      <div class="pbs">Last Name</div>
-      <field-errors form="newUserForm" formfield="newUserForm.lastName"></field-errors>
+      <label-with-errors label="Last Name" form="newUserForm" formfield="newUserForm.lastName"></label-with-errors>
       <input name="lastName" required class="form-field" ng-model="user.last_name" placeholder="Last Name">
     </div>
 
     <div ng-if="user.is_student" class="ptm pbs">
-      <div class="pbs">Class of</div>
       <class-of-dropdown form="newUserForm" model="user"></class-of-dropdown>
     </div>
 
