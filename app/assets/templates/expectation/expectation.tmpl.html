@@ -78,6 +78,15 @@
           </ul>
         </li>
       </ul>
+
+      <br>
+      <div task-editor class="edit-buttons-top" ng-hide="expectation.assigning">
+        <button class="btn btn-default" ng-click="setExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Set Expectation Status</button>
+      </div>
+      <div task-editor class="edit-buttons-top" ng-show="expectation.assigning">
+        <button class="btn btn-default" ng-click="cancelSetExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
+        <button class="btn btn-success" ng-click="saveExpectationStatus()"><span class="glyphicon glyphicon-ok"></span> Save</button>
+      </div>
     </div>
 
     <div class="assignment--right">
