@@ -22,7 +22,7 @@ angular.module('myApp')
       if current_user.is_mentor
         $scope.users_meeting = _.filter($scope.users_meeting, (u) -> _.contains(current_user.assigned_users, u.id))
         $scope.users_need_work = _.filter($scope.users_need_work, (u) -> _.contains(current_user.assigned_users, u.id))
-        $scope.users_not_meeting = _.filter($scope.not_meeting, (u) -> _.contains(current_user.assigned_users, u.id))
+        $scope.users_not_meeting = _.filter($scope.users_not_meeting, (u) -> _.contains(current_user.assigned_users, u.id))
 
     ExpectationService.getExpectationStatus(expectation_id)
       .success (data) ->

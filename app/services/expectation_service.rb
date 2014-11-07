@@ -64,6 +64,12 @@ class ExpectationService
     end
 
     if newExpectation.save
+      userExpectationService = UserExpectationService.new
+      userQ = UserQuerier.new.select([], [:id]).where({organization_id: newExpectation[:organization_id], role: Constants.UserRole[:STUDENT]})
+      userQ.pluck(:id).each do |user_id|
+        # This is pretty gross/inefficient, but it shouldn't be called very often
+        userExpectationService.update_user_expectations(user_id)
+      end
       return ReturnObject.new(:ok, "Successfully created Expectation, id: #{newExpectation.id}.", newExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create expectation. Errors: #{newExpectation.errors}", nil)
