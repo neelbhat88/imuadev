@@ -15,7 +15,8 @@ class ExpectationService
                              comment: comment }
         userExpectationService.update_user_expectation(user_expectation[:id],
                                                        user_expectation,
-                                                       current_user)
+                                                       current_user,
+                                                       "bulk")
       end
     end
 
