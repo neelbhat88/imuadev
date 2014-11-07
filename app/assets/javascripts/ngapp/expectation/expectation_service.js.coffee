@@ -1,6 +1,14 @@
 angular.module('myApp')
 .service 'ExpectationService', ['$http', ($http) ->
 
+  # Bulk set multiple user_expectations.
+  # 'assignees' is as an array of {user: user, status: status} hashes, which gets mapped
+  # into an array of {user_expectation_id: user_expectation.id, status: status} hashes.
+  # 'comment' is the comment to be applied to each user's user_expectation update.
+  @saveExpectationStatus = (expectationId, assignees, comment) ->
+    refined_assignees = _.map(assignees, (a) -> { user_expectation_id: a.user.user_expectations[0].id, status: a.status })
+    $http.put "api/v1/expectation/#{expectationId}/status",
+      { assignees: refined_assignees, comment: comment }
 
   @getExpectationStatus = (expectationId) ->
     $http.get "api/v1/expectation/#{expectationId}/status"

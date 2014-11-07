@@ -3,6 +3,7 @@ angular.module('myApp')
   ($scope, $route, current_user, expectation_id, ExpectationService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
 
     $scope.current_user = current_user
+    $scope.new_status_comment = ""
 
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> !u.user_expectations or u.user_expectations[0].status == $scope.CONSTANTS.EXPECTATION_STATUS.meeting)
@@ -41,19 +42,19 @@ angular.module('myApp')
       $scope.expectation.assigning = false
 
     $scope.saveExpectationStatus = () ->
-      # ExpectationService.setUserExpectation(user, status, expectation_id)
-      #   .success (data) ->
-      #     if !user.user_expectations
-      #       user.user_expectations = []
-      #     user.user_expectations.push({})
-      #     $scope.recalculateCompletion()
-      #     $scope.expectation.assigning = false
-      $scope.expectation.assigning = false
+      ExpectationService.saveExpectationStatus(expectation_id, $scope.expectation.assignees, $scope.new_status_comment)
+        .success (data) ->
+          $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+          $scope.users_total = $scope.organization.students
+          $scope.expectation = $scope.organization.expectations[0]
+          $scope.recalculateCompletion()
+          $scope.expectation.assigning = false
 
     $scope.assignUserExpectationStatus = (user, status) ->
       assignment = _.find($scope.expectation.assignees, (a) -> a.user.id == user.id)
       $scope.expectation.assignees = _.reject($scope.expectation.assignees, (a) -> a.user.id == user.id)
-      if !(assignment != undefined && assignment.status == status)
+      # Handle the "unclicked" case
+      if assignment == undefined || assignment.status != status
         $scope.expectation.assignees.push({user: user, status: status})
 
     $scope.isAssignedMeeting = (user) ->

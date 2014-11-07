@@ -11,6 +11,27 @@ class Api::V1::ExpectationController < ApplicationController
       userExpectationHistoryService : UserExpectationHistoryService.new
   end
 
+  # PUT /expectation/:id/status
+  # Sets the user_expectation status for all the users in the 'assignees' array
+  # for the given expectation/:id.
+  # The 'assignees' param is an array of
+  # {user_expectation_id: user_expectation.id, status: status} hashes.
+  # The 'comment' param is applied across all user_expectation updates.
+  def put_expectation_status
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:expectation_id] = params[:id]
+
+    # if !can?(current_user, :put_expectation_status, Expectation.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = @expectationService.put_expectation_status(url_params, current_user)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
   # GET /expectation/:id/status
   # Returns the status for all students for this expectation
   def get_expectation_status

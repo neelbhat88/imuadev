@@ -85,6 +85,8 @@ class UserExpectationService
 
       domainUserExpectation = get_user_expectation(dbUserExpectation.id)
 
+      Rails.logger.debug("************ initialExpectation: #{initialExpectation.inspect} **************")
+
       UserExpectationHistoryService.new.create_expectation_history(initialExpectation, current_user)
 
       IntercomProvider.new.create_event(AnalyticsEventProvider.events[:updated_expectation], current_user.id,

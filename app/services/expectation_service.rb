@@ -1,5 +1,27 @@
 class ExpectationService
 
+  # Called via :expectation_id, with an :assignees array of
+  # {user_expectation_id: user_expectation.id, status: status} hashes, and a
+  # :comment to be applied across all user_expectation updates
+  def put_expectation_status(params, current_user)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    unless conditions[:assignees].nil?
+      userExpectationService = UserExpectationService.new
+      comment = ( conditions[:comment].nil? ) ? "" : conditions[:comment]
+      conditions[:assignees].each do |a|
+        user_expectation = { id: a[:user_expectation_id],
+                             status: a[:status],
+                             comment: comment }
+        userExpectationService.update_user_expectation(user_expectation[:id],
+                                                       user_expectation,
+                                                       current_user)
+      end
+    end
+
+    return get_expectation_status(params.except(:comment))
+  end
+
   # Called via :expectation_id
   def get_expectation_status(params)
     conditions = Marshal.load(Marshal.dump(params))
