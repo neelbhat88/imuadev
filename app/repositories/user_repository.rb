@@ -93,6 +93,12 @@ class UserRepository
         UserMailer.new_user(user, current_user).deliver
       end
 
+      # Considered making this a background process, but what if background processing
+      # was behind like 5min for whatever reason?
+      if user.role == Constants.UserRole[:STUDENT]
+        UserExpectationService.new.update_user_expectations(user.id)
+      end
+
       return { :status => :ok, :info => "User created successfully. Email has been sent.", :user => user }
     end
 
