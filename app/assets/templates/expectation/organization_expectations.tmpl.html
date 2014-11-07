@@ -5,7 +5,9 @@
 
     <div class="expectations-list__item" ng-repeat="expectation in expectations">
       <div class="expectations-list__item__title">
-        <h5 ng-hide="expectation.editing">{{expectation.title}}</h5>
+        <h5 ng-hide="expectation.editing">
+          <a href="#/expectation/{{expectation.id}}">{{expectation.title}}</a>
+        </h5>
         <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_title" placeholder="Expectation Title" name="expectation_title">
       </div>
       <div class="expectations-list__item__icons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">

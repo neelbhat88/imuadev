@@ -1,7 +1,7 @@
 angular.module('myApp')
 .config ['$routeProvider', ($routeProvider) ->
   $routeProvider.when '/expectations/:user_id',
-    templateUrl: 'expectation/student_expectation.html',
+    templateUrl: 'expectation/student_expectations.html',
     controller: 'StudentExpectationController',
     resolve:
       current_user: ['SessionService', (SessionService) ->

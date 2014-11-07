@@ -21,6 +21,13 @@ Imua::Application.routes.draw do
           put 'users/reset_all_students_password' => 'users#reset_all_students_password'
         end
 
+        resources :expectation, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
+          member do
+            get 'status', to: 'expectation#get_expectation_status' # Show expectation view
+            put 'status', to: 'expectation#put_expectation_status' # Update expectation view
+          end
+        end
+
         resources :users, shallow: true do
 
           resources :user_class, except: [:new, :edit] do
