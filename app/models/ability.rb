@@ -10,6 +10,7 @@ class Ability
       when "Organization" then organization_abilities(user, subject)
       when "Assignment" then assignment_abilities(user, subject)
       when "UserAssignment" then user_assignment_abilities(user, subject)
+      when "Expectation" then expectation_abilities(user, subject)
       else []
       end
 
@@ -250,6 +251,31 @@ class Ability
       if user.id == subjectUser.id
         rules += [:update_user_assignment,
                   :get_user_assignment_collection]
+      end
+
+      rules.uniq
+    end
+
+    def expectation_abilities(user, subjectExpectation)
+      rules = []
+      subjectOrg = nil
+
+      if user.super_admin?
+        return [:get_expectation_status,
+                :put_expectation_status]
+      else
+        subjectOrg = Organization.where(id: subjectExpectation.organization_id).first
+        return [] if user.organization_id != subjectOrg.id
+      end
+
+      if user.org_admin?
+        rules += [:get_expectation_status,
+                  :put_expectation_status]
+      end
+
+      if user.mentor?
+        rules += [:get_expectation_status,
+                  :put_expectation_status]
       end
 
       rules.uniq
