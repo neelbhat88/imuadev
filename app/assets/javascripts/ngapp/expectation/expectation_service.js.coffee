@@ -20,7 +20,7 @@ angular.module('myApp')
   @newExpectation = (orgId) ->
     organization_id: orgId,
     title:           "",
-    description:     "temp description",
+    description:     "",
     rank:            0
 
   @getExpectations = (orgId) ->
