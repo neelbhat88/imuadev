@@ -7,6 +7,8 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.formErrors = [ '**Please fix the errors above**' ];
+
 
     $scope.$watch 'selected_semester', () ->
       $scope.class_editor = false
@@ -45,6 +47,7 @@ angular.module('myApp')
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
+      $scope.form_is_editing = true
       user_class.editing = true
       # Is there a better way to do this??
       user_class.new_name = user_class.name
@@ -78,6 +81,7 @@ angular.module('myApp')
           else
             $scope.gpa = 0.toFixed(2)
           $scope.classes.editing = false
+          $scope.form_is_editing = false
 
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Academics')
@@ -104,6 +108,7 @@ angular.module('myApp')
 
     $scope.addClass = () ->
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
+      $scope.form_is_editing = true
       $scope.editClass(new_class)
       $scope.user_classes.push(new_class)
 
@@ -113,6 +118,7 @@ angular.module('myApp')
       else
         $scope.user_classes = removeClass($scope.user_classes, user_class)
 
+      $scope.form_is_editing = false
       $scope.classes.editing = false
 
     removeClass = (classes, class_to_remove) ->
