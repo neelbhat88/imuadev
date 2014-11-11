@@ -53,13 +53,17 @@
                   </div>
                 </div>
 
-                <div progress-editor class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing">
-                  <span class="input-group">
-                    <label><h4>Who was the service for?</h4></label>
-                    <input type="text" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
-                  </span>
-                  <div class="btn btn-primary" no-click-propagation title="Confirm" ng-click="saveOrganization(user_service_organization)">Save</div>
-                  <div class="btn btn-default" no-click-propagation title="Cancel" ng-click="cancelEditOrganization(user_service_organization)">Cancel</div>
+                <div progress-editor class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing && form_is_editing">
+                  <form imua-form="saveOrganization(user_service_organization)" name="editOrganizationForm" novalidate>
+                    <span class="input-group">
+                      <h4>Who was the service for?</h4>
+                      <label-with-errors label="Organization Name" form="editOrganizationForm" formfield="editOrganizationForm.orgName"></label-with-errors>
+                      <input type="text" required name="orgName" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                    </span>
+                    <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="editOrganizationForm.$submitted && editOrganizationForm.$invalid">
+                    {{error}}</div>
+                    <button type="submit" class="btn btn-primary" no-click-propagation title="Confirm">Save</button>
+                    <span class="btn btn-default" no-click-propagation title="Cancel" ng-click="cancelEditOrganization(user_service_organization)">Cancel</span>
                 </div>
               </div>
               <div class="table--cell cell--hours">
@@ -77,7 +81,7 @@
                     <div class="cell--padding log--details">
                       <h6>{{service_org_hour.description}}</h6>
                       <p>Completed on {{service_org_hour.date | formatMDY}}</p>
-                      <div progress-editor class="small-edit-button">
+                      <div ng-hide="form_is_editing" progress-editor class="small-edit-button">
                         <button class="btn btn-default btn-xs" ng-click="editHour(service_org_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                       </div>
                     </div>
@@ -90,21 +94,24 @@
                   </div>
 
                   <!-- Editing -->
-                  <div progress-editor class="cell--padding" ng-show="service_org_hour.editing">
-                    <imua-datepicker class="full-width" date="service_org_hour.new_date"></imua-datepicker>
-                    <span class="input-group">
-                      <label ng-show="current_user.is_student">What type of service did you do?</label>
-                      <label ng-show="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                      <textarea class="form-control" ng-model="service_org_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
-                    </span>
-                    <span class="input-group">
-                      <label>How many hours?</label>
-                      <input class="form-control" ng-model="service_org_hour.new_hours" placeholder="Hours" name="serviceEventHours">
-                    </span>
-
-                    <button progress-editor class="btn btn-primary" title="Confirm" ng-click="saveHour(service_org_hour)">Save</button>
-                    <button progress-editor class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, service_org_hour)">Cancel</button>
-                    <button progress-editor class="btn btn-danger btn-sm" ng-hide="service_org_hour.id == null" ng-click="deleteHour(user_service_organization, service_org_hour)">Delete</button>
+                  <div progress-editor class="cell--padding" ng-show="service_org_hour.editing && form_is_editing">
+                    <form imua-form="saveHour(service_org_hour)" name="editHourForm" novalidate>
+                      <span class="input-group">
+                        <label ng-show="current_user.is_student">What type of service did you do?</label>
+                        <label ng-show="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
+                        <textarea class="form-control" ng-model="service_org_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                      </span>
+                      <form-datepicker class="full-width" form="editHourForm" label="When did you do it?" date="service_org_hour.new_date"></form-datepicker>
+                      <span class="input-group">
+                        <label-with-errors label="How many hours?" form="editHourForm" formfield="editHourForm.serviceEventHours"></label-with-errors>
+                        <input required class="form-control" ng-model="service_org_hour.new_hours" placeholder="Hours" name="serviceEventHours">
+                      </span>
+                      <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="editHourForm.$submitted && editHourForm.$invalid">
+                      {{error}}</div>
+                      <button progress-editor type="submit" class="btn btn-primary" title="Confirm">Save</button>
+                      <span progress-editor class="btn btn-default" title="Cancel" ng-click="cancelEditHour(user_service_organization, service_org_hour)">Cancel</span>
+                      <span progress-editor class="btn btn-danger btn-sm" ng-hide="service_org_hour.id == null" ng-click="deleteHour(user_service_organization, service_org_hour)">Delete</span>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -132,11 +139,9 @@
                   <div class="table--cell breakalways">
                     <div class="cell--padding">
                       <span class="input-group">
-                        <label><h4>Who was the service for?</h4></label>
+                        <h4>Who was the service for?</h4>
+                        <label-with-errors label="Organization Name" form="serviceForm" formfield="serviceForm.orgName"></label-with-errors>
                         <input required name="orgName" type="text" focus-me="edit_new_service_organization_focus_trigger" ng-model="new_service_organization.name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
-                        <div ng-messages="serviceForm.orgName.$error" ng-if="serviceForm.$submitted">
-                          <div ng-message="required" class="alert alert-danger">Organization Name is Required</div>
-                        </div>
                       </span>
                     </div>
                   </div>
@@ -147,25 +152,18 @@
                         <h4>Let's add your first hours:</h4>
                       </span>
                       <div ng-repeat="user_service_hour in new_service_organization.hours">
-                        <span class="input-group">
+                        <span class="input-group pbs">
                           <label ng-if="current_user.is_student">What type of service did you do?</label>
                           <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
                           <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
                         </span>
-                        <span class="input-group datepicker-label"><label>When did you do it?</label></span>
-                        <imua-datepicker date="user_service_hour.date"></imua-datepicker>
+                        <form-datepicker form="serviceForm" label="When did you do it?" date="user_service_hour.date"></form-datepicker>
                         <span class="input-group">
-                          <div ng-messages="serviceForm.datepicker.$error" ng-if="serviceForm.$submitted">
-                            <div ng-message="required" class="alert alert-danger">Date is Required</div>
-                          </div>
-                        </span>
-                        <span class="input-group">
-                          <label>How many hours?</label>
+                          <label-with-errors label="How many hours?" form="serviceForm" formfield="serviceForm.serviceEventHours"></label-with-errors>
                           <input required class="form-control" ng-model="user_service_hour.hours" placeholder="Hours" name="serviceEventHours">
-                          <div ng-messages="serviceForm.serviceEventHours.$error" ng-if="serviceForm.$submitted">
-                            <div ng-message="required" class="alert alert-danger">Hours are Required</div>
-                          </div>
                         </span>
+                        <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="serviceForm.$submitted && serviceForm.$invalid">
+                        {{error}}</div>
                         <button progress-editor type="submit" class="btn btn-primary" title="Confirm">Add Organization</button>
                         <span progress-editor class="btn btn-default" title="Cancel" ng-click="resetNewServiceEntry()">Cancel</span>
                       </div>

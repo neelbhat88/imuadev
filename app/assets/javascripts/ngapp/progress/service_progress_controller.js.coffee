@@ -6,6 +6,7 @@ angular.module('myApp')
     $scope.selected_org = null
     $scope.serviceEditor = false
     $scope.loaded_data = false
+    $scope.formErrors = [ '**Please fix the errors above**' ];
 
     $scope.resetNewServiceEntry = () ->
       if $scope.selected_semester
@@ -109,13 +110,15 @@ angular.module('myApp')
             $scope.addSuccessMessage("Successfully added #{data.user_service_organization.name}")
 
 
-    $scope.editOrganization= (service_organization) ->
+    $scope.editOrganization = (service_organization) ->
       service_organization.editing = true
+      $scope.form_is_editing = true
       service_organization.new_name = service_organization.name
       return false
 
     $scope.cancelEditOrganization = (service_organization) ->
       service_organization.editing = false
+      $scope.form_is_editing = false
       return false
 
     $scope.saveOrganization = (service_organization) ->
@@ -130,6 +133,7 @@ angular.module('myApp')
           service_organization.id = data.user_service_organization.id
           service_organization.name = data.user_service_organization.name
           service_organization.editing = false
+          $scope.form_is_editing = false
 
           if !_.contains($scope.org_current_organization_list, service_organization.name)
             $scope.org_current_organization_list.push(service_organization.name)
@@ -152,12 +156,14 @@ angular.module('myApp')
             $scope.$emit('just_updated', 'Service')
 
             $scope.addSuccessMessage("Successfully deleted organization and all associated hours")
+            $scope.form_is_editing = false
 
       return false
 
     $scope.addHour= (service_organization) ->
       service_hour = UserServiceOrganizationService.newServiceHour($scope.student, $scope.selected_semester.id, service_organization.id)
       service_hour.editing = true
+      $scope.form_is_editing = true
       service_hour.remove_delete = true
       service_organization.hours.push(service_hour)
 
@@ -178,12 +184,15 @@ angular.module('myApp')
           service_hour.hours = data.user_service_hour.hours
           service_hour.date = data.user_service_hour.date
           service_hour.editing = false
+          $scope.form_is_editing = false
+
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 
           $scope.addSuccessMessage("Successfully added/updated service hour entry")
 
     $scope.editHour = (service_hour) ->
+      $scope.form_is_editing = true
       service_hour.editing = true
       service_hour.new_description = service_hour.description
       service_hour.new_hours = service_hour.hours
@@ -192,8 +201,10 @@ angular.module('myApp')
     $scope.cancelEditHour= (service_organization, service_hour) ->
       if !service_hour.id
         service_organization.hours.splice(_.indexOf(service_organization.hours, service_hour), 1)
+        $scope.form_is_editing = false
       else
         service_hour.editing = false
+        $scope.form_is_editing = false
         service_hour.remove_delete = false
 
     $scope.deleteHour = (service_organization, service_hour) ->
@@ -207,6 +218,7 @@ angular.module('myApp')
             $scope.refreshPoints()
             $scope.$emit('just_updated', 'Service')
             $scope.addSuccessMessage("Successfully deleted service hour entry")
+            $scope.form_is_editing = false
 
     $scope.editingServices = () ->
       return _.some($scope.user_service_organizations, (o) -> o.editing == true) ||
