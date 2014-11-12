@@ -30,6 +30,12 @@ Imua::Application.routes.draw do
 
         resources :users, shallow: true do
 
+          resources :user_assignment, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
+            member do
+              post 'comment', to: 'user_assignment#post_comment'
+            end
+          end
+
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end

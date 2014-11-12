@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
-  ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService) ->
+.controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService', 'CommentService',
+  ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService, CommentService) ->
 
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
@@ -8,6 +8,7 @@ angular.module('myApp')
     $scope.current_user = current_user
     $scope.user_assignment = user_assignment
     $scope.assigner = $scope.user_assignment.assigner
+    $scope.loaded = true
 
     $('input, textarea').placeholder()
 
@@ -35,5 +36,22 @@ angular.module('myApp')
         return false
       due_date = new Date(user_assignment.due_datetime).getTime()
       return !this.isPastDue(user_assignment) && due_date <= $scope.two_days_from_now
+
+
+    $scope.addNewComment = (commentable_object) ->
+      commentable_object.editing_new_comment = true
+      commentable_object.new_comment = ""
+
+    $scope.cancelAddNewComment = (commentable_object) ->
+      commentable_object.editing_new_comment = false
+
+    $scope.saveNewComment = (commentable_object) ->
+      CommentService.saveNewComment(commentable_object, commentable_object.new_comment)
+        .success (data) ->
+          if commentable_object.comments == undefined || commentable_object.comments == null
+            commentable_object.comments = []
+          data.comment.user = current_user
+          commentable_object.comments.push(data.comment)
+          commentable_object.editing_new_comment = false
 
 ]

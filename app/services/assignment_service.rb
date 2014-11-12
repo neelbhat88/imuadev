@@ -221,6 +221,40 @@ class AssignmentService
     return UserAssignment.includes(:assignment => :user).find(userAssignmentId)
   end
 
+    def collect_user_assignment_2(userAssignmentId)
+    conditions = {}
+    conditions[:user_assignment_id] = userAssignmentId
+
+    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id, :created_at, :updated_at]).where(conditions)
+
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
+
+    conditions[:commentable_type] = "UserAssignment"
+    conditions[:commentable_id] = userAssignmentQ.pluck(:id)
+    commentQ = Querier.new(Comment).select([:id, :title, :comment, :user_id, :created_at, :updated_at]).where(conditions.slice(:commentable_type, :commentable_id))
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id) + commentQ.pluck(:user_id)).uniq
+    userQ = UserQuerier.new.select([:id, :role, :avatar, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+
+    user_assignment_view = userAssignmentQ.view
+    user_assignment_view[0][:comments] = commentQ.view
+
+    user_view = userQ.view
+    user_view.each do |u|
+      if u[:id] == assignmentQ.domain[0][:user_id]
+        u[:assignments] = assignmentQ.view
+      end
+      if u[:id] == user_assignment_view[0][:user_id]
+        u[:user_assignments] = user_assignment_view
+      end
+    end
+
+    view = { users: user_view }
+
+    return ReturnObject.new(:ok, "User Assignment collection for user_assignment_id: #{userAssignmentId}", view)
+  end
+
   def collect_user_assignments(userId)
     return UserAssignment.includes(:assignment => :user).where(:user_id => userId)
   end
@@ -280,6 +314,19 @@ class AssignmentService
       return ReturnObject.new(:ok, "Successfully deleted UserAssignment, id: #{dbUserAssignment.id}.", nil)
     else
       return ReturnObject.new(:internal_server_error, "Failed to delete UserAssignment, id: #{dbUserAssignment.id}. Errors: #{dbUserAssignment.errors.inspect}.", nil)
+    end
+  end
+
+  def post_user_assignment_comment(params, current_user)
+    commentable = UserAssignment.where(id: params[:user_assignment_id]).first
+    comment = commentable.comments.create
+    comment.comment = params[:comment]
+    comment.user_id = current_user.id
+    if comment.save
+      comment.user
+      return ReturnObject.new(:ok, "Successfully added comment #{comment.id} to user_assignment #{commentable.id}.", comment)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to add comment to user_assignment #{commentable.id}.", nil)
     end
   end
 

@@ -54,6 +54,8 @@ gem 'underscore-rails'
 
 gem 'mail'
 
+gem 'acts_as_commentable', '3.0.1'
+
 # Images
 gem 'rmagick', '2.13.2'
 gem 'paperclip'

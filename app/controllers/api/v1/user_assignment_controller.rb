@@ -99,6 +99,22 @@ class Api::V1::UserAssignmentController < ApplicationController
       return
     end
 
+    result = @assignmentService.collect_user_assignment_2(userAssignmentId)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+    # GET /user_assignment/:id/collect
+  # Returns the UserAssignment with associated Assignment data
+  def collect_old
+    userAssignmentId = params[:id].to_i
+
+    if !can?(current_user, :get_user_assignment_collection, UserAssignment.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @assignmentService.collect_user_assignment(userAssignmentId)
     viewUserAssignment = ViewUserAssignment.new(result, {assignment: true, user: true})
 
@@ -127,6 +143,22 @@ class Api::V1::UserAssignmentController < ApplicationController
         info: "UserAssignments for use id: #{userId}.",
         user_assignments: viewUserAssignments
       }
+  end
+
+  # POST /user_assignment/:id/comment
+  def post_comment
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_assignment_id] = params[:id]
+
+    # if !can?(current_user, :post_comment, UserAssignment.where(id: params[:id]).first)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = @assignmentService.post_user_assignment_comment(url_params, current_user)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, comment: result.object }, mode: :compat)
   end
 
 end

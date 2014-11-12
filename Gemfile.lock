@@ -41,6 +41,7 @@ GEM
     activesupport (3.2.19)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts_as_commentable (3.0.1)
     addressable (2.3.6)
     angular-rails-templates (0.1.2)
       railties (>= 3.1)
@@ -237,6 +238,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_commentable (= 3.0.1)
   angular-rails-templates
   angular-ui-bootstrap-rails
   angular_rails_csrf!
