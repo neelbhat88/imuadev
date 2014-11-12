@@ -55,7 +55,6 @@ angular.module('myApp')
     org.user_assignments = _.union(_.flatten(_.pluck(org.users, "user_assignments"), true))
     org.user_assignments = _.without(org.user_assignments, undefined)
     # Match all user_assignment comments to their users
-    console.log(org)
     _.each(org.user_assignments, (a) -> _.each(a.comments, (c) -> c.user = _.find(org.users, (u) -> c.user_id == u.id)))
 
     org.total_gpa = org.semester_gpa = 0
