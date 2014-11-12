@@ -21,10 +21,10 @@ class Api::V1::ExpectationController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:expectation_id] = params[:id]
 
-    # if !can?(current_user, :put_expectation_status, Expectation.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :put_expectation_status, Expectation.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @expectationService.put_expectation_status(url_params, current_user)
 
@@ -38,10 +38,10 @@ class Api::V1::ExpectationController < ApplicationController
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:expectation_id] = params[:id]
 
-    # if !can?(current_user, :get_expectation_status, Expectation.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    if !can?(current_user, :get_expectation_status, Expectation.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @expectationService.get_expectation_status(url_params)
 

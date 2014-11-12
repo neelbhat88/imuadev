@@ -67,7 +67,7 @@ class UserExpectationService
     return user_expectations.map{|ue| DomainUserExpectation.new({:user_expectation => ue})}
   end
 
-  def update_user_expectation(user_expectation_id, userExpectation, current_user)
+  def update_user_expectation(user_expectation_id, userExpectation, current_user, caller_type = "default")
     dbUserExpectation = UserExpectation.find(user_expectation_id)
 
     if dbUserExpectation.nil?
@@ -85,11 +85,14 @@ class UserExpectationService
 
       domainUserExpectation = get_user_expectation(dbUserExpectation.id)
 
-      Rails.logger.debug("************ initialExpectation: #{initialExpectation.inspect} **************")
-
       UserExpectationHistoryService.new.create_expectation_history(initialExpectation, current_user)
 
-      IntercomProvider.new.create_event(AnalyticsEventProvider.events[:updated_expectation], current_user.id,
+      event_name = case caller_type
+        when "bulk" then :updated_expectation_bulk
+        when "default" then :updated_expectation
+        else :updated_expectation_other
+      end
+      IntercomProvider.new.create_event(AnalyticsEventProvider.events[event_name], current_user.id,
                                                 {:user_expectation_id => user_expectation_id,
                                                  :previous_status => previousStatus,
                                                  :new_status => dbUserExpectation.status,
