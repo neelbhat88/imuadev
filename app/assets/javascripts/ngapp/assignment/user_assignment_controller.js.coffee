@@ -46,12 +46,12 @@ angular.module('myApp')
       commentable_object.editing_new_comment = false
 
     $scope.saveNewComment = (commentable_object) ->
-      CommentService.saveNewComment(commentable_object, commentable_object.new_comment)
-        .success (data) ->
+      CommentService.saveNewComment("user_assignment", commentable_object.id, commentable_object.new_comment)
+        .then (saved_comment) ->
           if commentable_object.comments == undefined || commentable_object.comments == null
             commentable_object.comments = []
-          data.comment.user = current_user
-          commentable_object.comments.push(data.comment)
+          saved_comment.user = current_user
+          commentable_object.comments.push(saved_comment)
           commentable_object.editing_new_comment = false
 
 ]

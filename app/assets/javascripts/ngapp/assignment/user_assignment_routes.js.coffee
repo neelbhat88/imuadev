@@ -13,7 +13,6 @@ angular.module('myApp')
         AssignmentService.collectUserAssignment($route.current.params.user_assignment_id)
           .success (data) ->
             organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-            console.log(organization)
             defer.resolve(organization.user_assignments[0])
           .error (data) ->
             defer.reject()
