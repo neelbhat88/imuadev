@@ -3,6 +3,23 @@ Imua::Application.routes.draw do
 
   devise_for :users, :skip => [:registrations]
 
+  # For handling comment creation logic within routes.rb
+  # def commentable(target_table)
+  #   Proc.new do
+  #     member do
+  #       post :comment, to: 'comment#create_on_target_table', target_table: target_table
+  #     end
+  #   end
+  # end
+
+  # Rails 3 strategy for drying out routes
+  # http://ruby-journal.com/how-to-dry-your-rails-routes/
+  commentable = Proc.new do
+    member do
+      post :comment
+    end
+  end
+
   namespace :api do
     namespace :v1 do
 
@@ -14,6 +31,8 @@ Imua::Application.routes.draw do
       #       *NEW WAY OF DOING ROUTES*
       # run foreman run rake routes to see what the routes look like
       # **************************************
+      resources :comment, except: [:index, :new, :create, :edit]
+
       resources :organization, shallow: true do
 
         member do
@@ -31,9 +50,9 @@ Imua::Application.routes.draw do
         resources :users, shallow: true do
 
           resources :user_assignment, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
-            member do
-              post 'comment', to: 'user_assignment#create_comment'
-            end
+            # For handling comment creation logic within routes.rb
+            # commentable(UserAssignment).call
+            commentable.call
           end
 
           resources :user_class, except: [:new, :edit] do

@@ -147,17 +147,9 @@ class Api::V1::UserAssignmentController < ApplicationController
   end
 
   # POST /user_assignment/:id/comment
-  def create_comment
-    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    service_params[:target_object] = UserAssignment.where(id: params[:id]).first
-
-    # if !can?(current_user, :create_comment, service_params[:target_object])
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
-
-    result = @commentService.create(service_params)
-
+  def comment
+    params[:target_table] = UserAssignment
+    result = @commentService.create(params)
     render status: result.status,
       json: Oj.dump( { info: result.info, comment: result.object }, mode: :compat)
   end
