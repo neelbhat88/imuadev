@@ -5,8 +5,9 @@ class Api::V1::UserAssignmentController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( assignmentService = nil )
+  def load_services( assignmentService = nil, commentService = nil )
     @assignmentService = assignmentService ? assignmentService : AssignmentService.new
+    @commentService = commentService ? commentService : CommentService.new(current_user)
   end
   # GET /users/:user_id/user_assignment
   # Returns all UserAssignments for the given User
@@ -146,16 +147,16 @@ class Api::V1::UserAssignmentController < ApplicationController
   end
 
   # POST /user_assignment/:id/comment
-  def post_comment
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_assignment_id] = params[:id]
+  def create_comment
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:target_object] = UserAssignment.where(id: params[:id]).first
 
-    # if !can?(current_user, :post_comment, UserAssignment.where(id: params[:id]).first)
+    # if !can?(current_user, :create_comment, service_params[:target_object])
     #   render status: :forbidden, json: {}
     #   return
     # end
 
-    result = @assignmentService.post_user_assignment_comment(url_params, current_user)
+    result = @commentService.create(service_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, comment: result.object }, mode: :compat)

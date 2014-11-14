@@ -317,19 +317,6 @@ class AssignmentService
     end
   end
 
-  def post_user_assignment_comment(params, current_user)
-    commentable = UserAssignment.where(id: params[:user_assignment_id]).first
-    comment = commentable.comments.create
-    comment.comment = params[:comment]
-    comment.user_id = current_user.id
-    if comment.save
-      comment.user
-      return ReturnObject.new(:ok, "Successfully added comment #{comment.id} to user_assignment #{commentable.id}.", comment)
-    else
-      return ReturnObject.new(:internal_server_error, "Failed to add comment to user_assignment #{commentable.id}.", nil)
-    end
-  end
-
   # Send out emails to all assigned users
   # Doing this here for now since it'll be better to send out all emails
   # in one background process instead of a separate background process per

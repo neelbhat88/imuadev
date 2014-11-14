@@ -32,7 +32,7 @@ Imua::Application.routes.draw do
 
           resources :user_assignment, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
             member do
-              post 'comment', to: 'user_assignment#post_comment'
+              post 'comment', to: 'user_assignment#create_comment'
             end
           end
 
