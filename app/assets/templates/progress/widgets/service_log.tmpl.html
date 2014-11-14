@@ -53,7 +53,7 @@
                   </div>
                 </div>
 
-                <div progress-editor class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing && form_is_editing">
+                <div progress-editor class="service-org-header--editing cell--padding" ng-show="user_service_organization.editing">
                   <form imua-form="saveOrganization(user_service_organization)" name="editOrganizationForm" novalidate>
                     <span class="input-group">
                       <h4>Who was the service for?</h4>
@@ -82,7 +82,7 @@
                     <div class="cell--padding log--details">
                       <h6>{{service_org_hour.description}}</h6>
                       <p>Completed on {{service_org_hour.date | formatMDY}}</p>
-                      <div ng-hide="form_is_editing" progress-editor class="small-edit-button">
+                      <div progress-editor class="small-edit-button">
                         <button class="btn btn-default btn-xs" ng-click="editHour(service_org_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                       </div>
                     </div>
@@ -95,7 +95,7 @@
                   </div>
 
                   <!-- Editing -->
-                  <div progress-editor class="cell--padding" ng-show="service_org_hour.editing && form_is_editing">
+                  <div progress-editor class="cell--padding" ng-show="service_org_hour.editing">
                     <form imua-form="saveHour(service_org_hour)" name="editHourForm" novalidate>
                       <span class="input-group">
                         <label ng-show="current_user.is_student">What type of service did you do?</label>
