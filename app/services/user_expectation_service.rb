@@ -85,6 +85,8 @@ class UserExpectationService
 
       domainUserExpectation = get_user_expectation(dbUserExpectation.id)
 
+      send_expectation_update(domainUserExpectation, current_user)
+
       UserExpectationHistoryService.new.create_expectation_history(initialExpectation, current_user)
 
       event_name = case caller_type
@@ -121,4 +123,23 @@ class UserExpectationService
       return ReturnObject.new(:internal_server_error, "Failed to update UserExpectation Comment, id: #{dbUserExpectation.id}", nil)
     end
   end
+
+  def send_expectation_update(user_expectation, modifier)
+    Background.process do
+      student = UserRepository.new.get_user(user_expectation.user_id)
+      relationships = Relationship.where(:user_id => student.id)
+      mentors = []
+
+      relationships.each do | r |
+        mentor = UserRepository.new.get_user(r.assigned_to_id)
+        mentors << mentor
+      end
+
+      expectation = Expectation.find(user_expectation.expectation_id)
+
+      ExpectationMailer.changed_user_expectation(student, mentors, modifier, user_expectation, expectation).deliver
+    end
+
+  end
+
 end
