@@ -148,10 +148,26 @@ class Api::V1::UserAssignmentController < ApplicationController
 
   # POST /user_assignment/:id/comment
   def comment
-    params[:target_table] = UserAssignment
-    result = @commentService.create(params)
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:commentable_id] = params[:id]
+    service_params[:target_table] = UserAssignment
+
+    result = @commentService.create(service_params)
+
     render status: result.status,
       json: Oj.dump( { info: result.info, comment: result.object }, mode: :compat)
+  end
+
+  # GET /user_assignment/:id/comments
+  def comments
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:commentable_id] = params[:id]
+    service_params[:target_table] = UserAssignment
+
+    result = @commentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
 end

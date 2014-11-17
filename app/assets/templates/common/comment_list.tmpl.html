@@ -1,0 +1,20 @@
+<div class="comments--content" wait-to-load="{{loaded_comments}}">
+  <br>
+  <div class="comments--list" ng-repeat="comment in comments">
+    <br>
+    <div class="comment--header">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
+    <h6 class="comment--body">&nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}</h6>
+    <br>
+  </div>
+
+  <div class="edit-buttons-top" ng-hide="editing_new_comment">
+    <br>
+    <button class="btn btn-default" ng-click="addNewComment()">Add a Comment</button>
+  </div>
+  <textarea class="form-control" ng-model="new_comment" ng-show="editing_new_comment" placeholder="Add a Comment"></textarea>
+  <div class="edit-buttons-top" ng-show="editing_new_comment">
+    <br>
+    <button class="btn btn-default" ng-click="cancelAddNewComment()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
+    <button class="btn btn-success" ng-click="saveNewComment()"><span class="glyphicon glyphicon-ok"></span> Save</button>
+  </div>
+</div>

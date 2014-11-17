@@ -7,6 +7,7 @@ angular.module('myApp')
 
     $scope.current_user = current_user
     $scope.user_assignment = user_assignment
+    $scope.commentable_object = {type: "user_assignment", id: $scope.user_assignment.id}
     $scope.assigner = $scope.user_assignment.assigner
     $scope.loaded = true
 
@@ -36,22 +37,5 @@ angular.module('myApp')
         return false
       due_date = new Date(user_assignment.due_datetime).getTime()
       return !this.isPastDue(user_assignment) && due_date <= $scope.two_days_from_now
-
-
-    $scope.addNewComment = (commentable_object) ->
-      commentable_object.editing_new_comment = true
-      commentable_object.new_comment = ""
-
-    $scope.cancelAddNewComment = (commentable_object) ->
-      commentable_object.editing_new_comment = false
-
-    $scope.saveNewComment = (commentable_object) ->
-      CommentService.saveNewComment("user_assignment", commentable_object.id, commentable_object.new_comment)
-        .then (saved_comment) ->
-          if commentable_object.comments == undefined || commentable_object.comments == null
-            commentable_object.comments = []
-          saved_comment.user = current_user
-          commentable_object.comments.push(saved_comment)
-          commentable_object.editing_new_comment = false
 
 ]

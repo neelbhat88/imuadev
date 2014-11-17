@@ -117,26 +117,7 @@
         <button class="btn btn-danger btn-lg" ng-if="user_assignment.status == 1" ng-click="setUserAssignmentStatus(user_assignment, 0)"><span class="glyphicon glyphicon-remove-circle"></span> I Didn't Do This Yet</button>
       </div>
 
-      <div class="comments--content">
-        <br>
-        <div class="comments--list" ng-repeat="comment in user_assignment.comments">
-          <br>
-          <div class="comment--header">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
-          <h6 class="comment--body">&nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}</h6>
-          <br>
-        </div>
-
-        <div class="edit-buttons-top" ng-hide="user_assignment.editing_new_comment">
-          <br>
-          <button class="btn btn-default" ng-click="addNewComment(user_assignment)">Add a Comment</button>
-        </div>
-        <textarea class="form-control" ng-model="user_assignment.new_comment" ng-show="user_assignment.editing_new_comment" placeholder="Add a Comment"></textarea>
-        <div class="edit-buttons-top" ng-show="user_assignment.editing_new_comment">
-          <br>
-          <button class="btn btn-default" ng-click="cancelAddNewComment(user_assignment)"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
-          <button class="btn btn-success" ng-click="saveNewComment(user_assignment)"><span class="glyphicon glyphicon-ok"></span> Save</button>
-        </div>
-      </div>
+      <comments></comments>
 
     </div>
 

@@ -8,6 +8,7 @@ Imua::Application.routes.draw do
   commentable = Proc.new do
     member do
       post :comment
+      get :comments
     end
   end
 
