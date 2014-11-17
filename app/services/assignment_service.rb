@@ -218,10 +218,6 @@ class AssignmentService
   ############################################
 
   def collect_user_assignment(userAssignmentId)
-    return UserAssignment.includes(:assignment => :user).find(userAssignmentId)
-  end
-
-    def collect_user_assignment_2(userAssignmentId)
     conditions = {}
     conditions[:user_assignment_id] = userAssignmentId
 
@@ -230,27 +226,11 @@ class AssignmentService
     conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
     assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
 
-    conditions[:commentable_type] = "UserAssignment"
-    conditions[:commentable_id] = userAssignmentQ.pluck(:id)
-    commentQ = Querier.new(Comment).select([:id, :title, :comment, :user_id, :created_at, :updated_at]).where(conditions.slice(:commentable_type, :commentable_id))
-
-    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id) + commentQ.pluck(:user_id)).uniq
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id)).uniq
     userQ = UserQuerier.new.select([:id, :role, :avatar, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userAssignmentQ, assignmentQ])
 
-    user_assignment_view = userAssignmentQ.view
-    user_assignment_view[0][:comments] = commentQ.view
-
-    user_view = userQ.view
-    user_view.each do |u|
-      if u[:id] == assignmentQ.domain[0][:user_id]
-        u[:assignments] = assignmentQ.view
-      end
-      if u[:id] == user_assignment_view[0][:user_id]
-        u[:user_assignments] = user_assignment_view
-      end
-    end
-
-    view = { users: user_view }
+    view = {users: userQ.view}
 
     return ReturnObject.new(:ok, "User Assignment collection for user_assignment_id: #{userAssignmentId}", view)
   end

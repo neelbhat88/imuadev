@@ -100,7 +100,7 @@ class Api::V1::UserAssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.collect_user_assignment_2(userAssignmentId)
+    result = @assignmentService.collect_user_assignment(userAssignmentId)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
