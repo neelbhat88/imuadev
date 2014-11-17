@@ -18,6 +18,7 @@
 
       <div class="task-content">
         <h4 class="bold">{{expectation.title}}</h4>
+        <h6>{{expectation.description}}</h6>
         <div class="expectation--comment-box" ng-show="expectation.assigning">
           <h6 class="bold">Why are you changing these students' statuses?</h6>
           <textarea ng-model="expectation.new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>

@@ -8,9 +8,7 @@ class Expectation < ActiveRecord::Base
   has_many :user_expectation_histories, dependent: :destroy
 
   validates :organization_id, presence: true
-  validates :title, :uniqueness => {:scope => [ :organization_id] },presence: true
-  validates :description, presence: true
-  validates :rank, presence: true
+  validates :title, :uniqueness => {:scope => [ :organization_id] }, presence: true
 end
 
 class ViewExpectation

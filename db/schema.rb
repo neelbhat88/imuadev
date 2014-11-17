@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20141111160234) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
-    t.string   "title"
-    t.string   "description"
+    t.text     "title"
+    t.text     "description"
     t.integer  "rank"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

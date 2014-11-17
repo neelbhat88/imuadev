@@ -14,9 +14,10 @@
   </div>
 
   <div class="single-col-wrapper expectation-content">
-    <h4 class="bold">
-      {{user_expectation.title}}
-    </h4>
+    <a href="#/expectation/{{user_expectation.expectation_id}}">
+      <h4 class="bold">{{user_expectation.title}}</h4>
+    </a>
+    <h6>{{user_expectation.description}}</h6>
     <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">

@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'AppVersionInterceptor', ['$rootScope', ($rootScope) ->
+.service 'AppVersionInterceptor', ['$rootScope', '$q', ($rootScope, $q) ->
   _appVersion = $('meta[name=version]').attr("content");
 
   @request = (config) ->
@@ -11,9 +11,12 @@ angular.module('myApp')
     response
 
   @responseError = (response) ->
+    defer = $q.defer()
     if response.status == 426
       $rootScope.$broadcast("update_required")
+      return defer.promise
 
     response
+    return $q.reject(response)
   @
 ]

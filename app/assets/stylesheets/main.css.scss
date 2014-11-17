@@ -436,7 +436,8 @@ button:focus {
 }
 
 .errorText { color: $red; }
-
+.errorMessage { padding-left: 10px; }
+.errorListing { padding-bottom: 10px; }
 /* ===============================================
    Misc
    =============================================== */
