@@ -124,7 +124,7 @@
         <td class="status-message">
           <h6>{{history.modified_by_name}} changed the status of {{student.first_name}}'s expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
           <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
-          <div>{{history.updated_at | fromNow}}</div>
+          <div>{{history.created_on | fromNow }}</div>
         </td>
       </tr>
     </table>

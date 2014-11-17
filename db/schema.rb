@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141023200347) do
+ActiveRecord::Schema.define(:version => 20141111160234) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(:version => 20141023200347) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.text     "comment"
+    t.datetime "created_on"
   end
 
   create_table "user_expectations", :force => true do |t|

@@ -96,7 +96,9 @@ class UserRepository
       # Considered making this a background process, but what if background processing
       # was behind like 5min for whatever reason?
       if user.role == Constants.UserRole[:STUDENT]
-        UserExpectationService.new.update_user_expectations(user.id)
+        # Change this to passing in @current_user when user_repository is updated to
+        # be initialized with current_user
+        UserExpectationService.new(User.SystemUser).create_user_expectations(user.id)
       end
 
       return { :status => :ok, :info => "User created successfully. Email has been sent.", :user => user }

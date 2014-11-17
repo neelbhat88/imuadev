@@ -6,9 +6,9 @@ class Api::V1::ExpectationController < ApplicationController
   before_filter :load_services
 
   def load_services( expectationService = nil, userExpectationHistoryService = nil )
-    @expectationService = expectationService ? expectationService : ExpectationService.new
+    @expectationService = expectationService ? expectationService : ExpectationService.new(current_user)
     @userExpectationHistoryService = userExpectationHistoryService ?
-      userExpectationHistoryService : UserExpectationHistoryService.new
+      userExpectationHistoryService : UserExpectationHistoryService.new(current_user)
   end
 
   # PUT /expectation/:id/status
@@ -26,7 +26,7 @@ class Api::V1::ExpectationController < ApplicationController
       return
     end
 
-    result = @expectationService.put_expectation_status(url_params, current_user)
+    result = @expectationService.put_expectation_status(url_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)

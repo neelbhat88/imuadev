@@ -134,25 +134,6 @@ namespace :db_update do
     end
   end
 
-  desc "Remove first user expectation history item for new saving process"
-  task :remove_first_user_expectation_history => :environment do
-    all_users = User.where(:role => 50)
-    all_users.each do |u|
-      user_expectations = UserExpectation.where(:user_id => u.id)
-      if user_expectations.any?
-        user_expectations.each do |e|
-          histories = UserExpectationHistory.where(:user_expectation_id => e.id).order("created_at DESC")
-          if histories.any?
-            removed_row = histories.shift
-            if removed_row.destroy()
-              puts "Removed first history item for user_expectation_id = " + removed_row.user_expectation_id.to_yaml
-            end
-          end
-        end
-      end
-    end
-  end
-
   desc "Apply organization_id to Assignments"
   task :organization_id_to_assignments => :environment do
     assignments = Assignment.where(organization_id: nil)
@@ -164,6 +145,85 @@ namespace :db_update do
       end
     else
       puts "All Assignments have non-nil organization_id"
+    end
+  end
+
+  desc "Create UserExpectations for all Users"
+  task :create_user_expectations => :environment do
+    User.where(:role => Constants.UserRole[:STUDENT]).each do |u|
+      UserExpectationService.new(User.SystemUser).create_user_expectations(u.id)
+    end
+  end
+
+  desc "Add UserExpectationHistory record"
+  # Doing this because at the time of this writing the UserExpectationHistory
+  # was always 1 entry behind the current UserEpectation - meaning to build up
+  # a full history, including current state, you have to get the history AND
+  # get the current UserExpectation. See #615 on github for more explanation
+  task :add_user_expectation_history_record => :environment do
+    recordsCreated = 0
+    UserExpectation.all.each do |ue|
+      puts "Adding History Record for UserExpectation id: #{ue.id}"
+      existingHistory = UserExpectationHistory.where(
+                          :expectation_id => ue.expectation_id,
+                          :user_expectation_id => ue.id,
+                          :status => ue.status,
+                          :comment => ue.comment,
+                          :created_on => ue.updated_at
+                          )
+
+      puts "Existing history length #{existingHistory.length}"
+
+      if existingHistory.length == 0
+        puts "UserExpectation last updated_at: #{ue.updated_at}"
+
+        history = UserExpectationHistoryService.new(User.SystemUser).create_expectation_history(ue)
+
+        if history.valid?
+          recordsCreated += 1
+          puts "History record created. Setting created_on: #{history.created_on}"
+        else
+          puts "Failed to create history record for UserExpectation id: #{ue.id}. Errors: #{history.errors.inspect}"
+        end
+      else
+        puts "Latest history record already exists for UserExpectation id: #{ue.id}"
+      end
+    end
+
+    puts "Creating history records finished. Created #{recordsCreated} records"
+  end
+
+  desc "Update UserExpectationHistory Dates to be TO instead of FROM"
+  # See #615 on github for more info
+  task :update_user_expectation_history_dates => :environment do
+    # For all UserExpectations
+      # Get all History ordered by created_at DESC
+      # 1 - Remove the latest history since it was just added by the rake task above and so is correct
+      # 2 - Set created_on date of the LAST one to created_at date of the expectation
+      #   and set modified_by_id to SystemUser
+      # 3 - Loop through rest and set created_on date of current to created_at of next
+    UserExpectation.where(:id => 74).each do |ue|
+      expectation = Expectation.find(ue.expectation_id)
+
+      all_history = UserExpectationHistory.where(:user_expectation_id => ue.id).order("created_at DESC")
+      puts "History length for User Expectation id #{ue.id}: #{all_history.length}"
+
+      # 1
+      all_history.shift
+
+      # 2
+      if all_history.length != 0
+        all_history.last.update_attributes(:created_on => expectation.created_at, :modified_by_id => -1, :modified_by_name => "System")
+      end
+
+      # 3
+      all_history.each_with_index do |elem, i|
+        next_elem = all_history[i+1]
+
+        if !next_elem.nil?
+          elem.update_attributes(:created_on => next_elem.created_at)
+        end
+      end
     end
   end
 
