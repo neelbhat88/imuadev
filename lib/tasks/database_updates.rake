@@ -182,4 +182,44 @@ namespace :db_update do
     end
   end
 
+  desc "Convert grades from string to number"
+  task :convert_grades_from_string_to_float => :environment do
+    all_students = User.where(:role => 50)
+    all_students.each do | s |
+      student_classes = UserClass.where(:user_id => s.id)
+      student_classes.each do | c |
+        case c.grade
+          when 'A'
+            new_grade = 98.0
+          when 'A-'
+            new_grade = 92.0
+          when 'B+'
+            new_grade = 89.0
+          when 'B'
+            new_grade = 85.0
+          when 'B-'
+            new_grade = 82.0
+          when 'C+'
+            new_grade = 79.0
+          when 'C'
+            new_grade = 75.0
+          when 'C-'
+            new_grade = 72.0
+          when 'D+'
+            new_grade = 69.0
+          when 'D'
+            new_grade = 65.0
+          when 'D-'
+            new_grade = 62.0
+          when 'F'
+            new_grade = 50.0
+        end
+
+        c.update_attributes(:grade => new_grade)
+        puts "Updated " + c.name + "grade to " + new_grade.to_s + " for " + s.first_name + " " + s.last_name
+
+      end
+    end
+  end
+
 end

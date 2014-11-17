@@ -98,18 +98,35 @@ class UserClassService
   end
 
   private
-
+  # TODO I'm thinking we can eventually pass in a scale object that will have
+  # an upper and lower bounds for each grade, then set the ranges using that
   def get_gpa(grade)
-    gpaHash = Hash.new()
-    gpaHash = {
-      'A' =>  4.0,  'A-' => 3.67,
-      'B+' => 3.33, 'B' =>  3.00, 'B-' => 2.67,
-      'C+' => 2.33, 'C' =>  2.00, 'C-' => 1.67,
-      'D+' => 1.33, 'D' =>  1.00, 'D-' => 0.67,
-      'F' =>  0.0
-    }
-
-    gpa = gpaHash[grade]
+    case grade
+      when 92.5..100
+        gpa = 4.0
+      when 89.5..92.4
+        gpa = 3.67
+      when 86.5..89.4
+        gpa = 3.33
+      when 82.5..86.4
+        gpa = 3.00
+      when 79.5..82.4
+        gpa = 2.67
+      when 76.5..79.4
+        gpa = 2.33
+      when 72.5..76.4
+        gpa = 2.00
+      when 69.5..72.4
+        gpa = 1.67
+      when 66.5..69.4
+        gpa = 1.33
+      when 62.5..66.4
+        gpa = 1.00
+      when 59.5..62.4
+        gpa = 0.67
+      when 0..59.4
+        gpa = 0.0
+    end
 
     return gpa
   end
