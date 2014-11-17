@@ -1,27 +1,34 @@
 angular.module('myApp')
 .controller('AddUserModalController', ['$scope', '$modalInstance', 'organization', 'new_user', 'UsersService', 'LoadingService',
   function($scope, $modalInstance, organization, new_user, UsersService, LoadingService) {
-    $scope.formErrors = [ '**Please fix the errors above**' ];
+    $scope.errors = [];
     $scope.user = new_user;
 
-    $scope.add = function()
+    $scope.add = function($event)
     {
-      $scope.formErrors = [];
-      var laddaElement = $(".ladda-button").get(0);
-      console.log(laddaElement);
+      $scope.errors = [];
 
-      if ($scope.formErrors.length == 0)
+      if ($scope.user.email == "")
+        $scope.errors.push("You must provide an email.");
+
+      if ($scope.user.first_name == "")
+        $scope.errors.push("You must provide a first name.");
+
+      if ($scope.user.last_name == "")
+        $scope.errors.push("You must provide a last name.");
+
+      if ($scope.user.is_student && $scope.user.class_of == "0")
+        $scope.errors.push("You must set a graduating class.");
+
+      if ($scope.errors.length == 0)
       {
-        LoadingService.buttonStart(laddaElement);
+        LoadingService.buttonStart($event.currentTarget);
         UsersService.addUser($scope.user)
           .success(function(data) {
             $modalInstance.close(data.user);
           })
           .error(function(data) {
-            $scope.formErrors.push(data.info);
-            $scope.newUserForm.$invalid = true;
-            $scope.newUserForm.$submitted = true;
-
+            $scope.errors = [data.info]
           })
           .finally(function(){
             LoadingService.buttonStop();

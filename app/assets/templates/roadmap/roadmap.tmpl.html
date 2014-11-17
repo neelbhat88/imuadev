@@ -95,7 +95,7 @@
 
     </div>
 
-    <div class="rightContainer">
+    <div class="rightContainer" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
 
       <div class="expectations" ng-include="'expectation/organization_expectations.html'"></div>
 
@@ -115,7 +115,7 @@
           </a>
         </div>
 
-        <div class="user-list__add" org-setup-editor ng-click="addOrgAdmin()">
+        <div class="user-list__add" ng-click="addOrgAdmin()">
           <div class="glyphicon glyphicon-plus-sign"></div>
           <div>Add Organization Admin</div>
         </div>

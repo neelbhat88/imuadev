@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141111220443) do
+ActiveRecord::Schema.define(:version => 20141111160234) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20141111220443) do
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
-    t.text     "title"
-    t.text     "description"
+    t.string   "title"
+    t.string   "description"
     t.integer  "rank"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

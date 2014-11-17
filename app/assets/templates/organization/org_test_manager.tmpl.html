@@ -16,7 +16,7 @@
           <option value="">--- Score Type ---</option>
         </select>
       </div>
-      <div class="orgTests-list__item__icons" org-setup-editor>
+      <div class="orgTests-list__item__icons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
         <div ng-hide="orgTest.editing">
           <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editOrgTest($index)"></span>
           <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteOrgTest($index)"></span>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="add-orgTest" org-setup-editor>
+    <div class="add-orgTest">
       <div class="add-orgTest__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.mentor && !orgTests.editing"></div>
       <button type="submit" class="submit add-orgTest__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.mentor && !orgTests.editing" ng-click="addOrgTest()">Add a Test</button>
     </div>
