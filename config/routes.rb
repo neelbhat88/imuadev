@@ -41,10 +41,6 @@ Imua::Application.routes.draw do
 
         resources :users, shallow: true do
 
-          resources :user_assignment, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
-            commentable.call
-          end
-
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
@@ -53,7 +49,9 @@ Imua::Application.routes.draw do
           resources :user_extracurricular_activity_detail, except: [:new, :edit]
 
           resources :assignment, except: [:new, :edit]
-          resources :user_assignment, except: [:new, :edit, :show]
+          resources :user_assignment, except: [:new, :edit, :show] do
+            commentable.call
+          end
 
           resources :user_service_organization, except: [:new, :edit]
           resources :user_service_hour, except: [:new, :edit]
