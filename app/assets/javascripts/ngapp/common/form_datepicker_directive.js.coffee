@@ -1,8 +1,11 @@
 angular.module('myApp')
-.directive 'imuaDatepicker', [() ->
+.directive 'formDatepicker', [() ->
   restrict: 'E',
+  replace: true,
   scope: {
-    date: '='
+    date: '=',
+    label: '@',
+    form: '='
   }
   link: (scope, elem, attrs) ->
 
@@ -11,5 +14,5 @@ angular.module('myApp')
       event.stopPropagation()
       scope.opened = !scope.opened
 
-  templateUrl: 'common/imua_datepicker.html'
+  templateUrl: 'common/form_datepicker.html'
 ]

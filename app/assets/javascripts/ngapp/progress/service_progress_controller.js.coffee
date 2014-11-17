@@ -6,6 +6,7 @@ angular.module('myApp')
     $scope.selected_org = null
     $scope.serviceEditor = false
     $scope.loaded_data = false
+    $scope.formErrors = [ '**Please fix the errors above**' ];
 
     $scope.resetNewServiceEntry = () ->
       if $scope.selected_semester
@@ -109,7 +110,7 @@ angular.module('myApp')
             $scope.addSuccessMessage("Successfully added #{data.user_service_organization.name}")
 
 
-    $scope.editOrganization= (service_organization) ->
+    $scope.editOrganization = (service_organization) ->
       service_organization.editing = true
       service_organization.new_name = service_organization.name
       return false
@@ -178,6 +179,7 @@ angular.module('myApp')
           service_hour.hours = data.user_service_hour.hours
           service_hour.date = data.user_service_hour.date
           service_hour.editing = false
+
           $scope.refreshPoints()
           $scope.$emit('just_updated', 'Service')
 

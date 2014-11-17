@@ -5,7 +5,7 @@ namespace :db_update do
   ########################################
   ########################################
   desc "All db_updates"
-  task :all => [:create_app_version, :organization_id_to_assignments]
+  task :all => [:reset_default_expectation_descriptions]
 
   ########################################
   ########################################
@@ -224,6 +224,19 @@ namespace :db_update do
           elem.update_attributes(:created_on => next_elem.created_at)
         end
       end
+    end
+  end
+
+  desc "Reset default Expectation description field"
+  task :reset_default_expectation_descriptions => :environment do
+    expectations = Expectation.where(description: "temp description")
+    if expectations.any?
+      expectations.each do |e|
+        e.update_attributes(description: "")
+        puts "Changed description from 'temp description' to '', for expectation " + e.id.to_s
+      end
+    else
+      puts "No Expectations have description field of: 'temp description'"
     end
   end
 

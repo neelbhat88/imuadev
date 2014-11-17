@@ -7,6 +7,8 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.formErrors = [ '**Please fix the errors above**' ];
+
 
     $scope.$watch 'selected_semester', () ->
       $scope.class_editor = false
