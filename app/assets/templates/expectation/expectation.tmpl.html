@@ -92,22 +92,12 @@
 
     <div class="assignment--right">
       <ul>
-        <li>
-          <br>
-          <div task-editor class="edit-buttons-top" ng-hide="expectation.assigning">
-            <button class="btn btn-default" ng-click="setExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Set Expectation Status</button>
-          </div>
-          <div task-editor class="edit-buttons-top" ng-show="expectation.assigning">
-            <button class="btn btn-default" ng-click="cancelSetExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
-            <button class="btn btn-success" ng-click="saveExpectationStatus()"><span class="glyphicon glyphicon-ok"></span> Save</button>
-          </div>
-
-          <br><br>
-          <h6>Total Students Assigned:</h6>
-          <h5 class="bold">{{users_total.length}}</h5>
+        <li class="column-title">
+          <h5 class="bold">Expectation Info</h5>
         </li>
-
-        <li><h5><span class="label label-danger">
+        <li>
+          <h6> Across your organization </h6>
+          <h5><span class="label label-danger">
           <span class="glyphicon glyphicon-exclamation-sign"></span> {{percent_not_meeting}}% Not Meeting
         </span></h5></li>
         <li><h5><span class="label label-warning">
