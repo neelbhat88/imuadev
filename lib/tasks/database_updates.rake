@@ -204,7 +204,7 @@ namespace :db_update do
       # 2 - Set created_on date of the LAST one to created_at date of the expectation
       #   and set modified_by_id to SystemUser
       # 3 - Loop through rest and set created_on date of current to created_at of next
-    UserExpectation.where(:id => 74).each do |ue|
+    UserExpectation.all.each do |ue|
       expectation = Expectation.find(ue.expectation_id)
 
       all_history = UserExpectationHistory.where(:user_expectation_id => ue.id).order("created_at DESC")

@@ -5,7 +5,7 @@ class UserExpectationHistoryService
   end
 
   def get_user_expectation_history(user_expectation_id)
-    history = UserExpectationHistory.where(:user_expectation_id => user_expectation_id).order("created_at DESC")
+    history = UserExpectationHistory.where(:user_expectation_id => user_expectation_id).order("created_on DESC")
 
     return history.map{ |h|
         {
