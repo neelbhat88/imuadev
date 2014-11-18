@@ -37,6 +37,8 @@
 
 .milestone-title {
   display: inline-block;
+
+
   text-align: left;
   vertical-align: middle;
   font-weight: bold;
@@ -93,12 +95,15 @@
 
     .milestone__title {
       @extend .milestone-title;
+      @include respond-to(500) { display: inherit; width: 100%; }
       width: 50%;
     }
 
     .milestone__info {
       width: 49%;
       display: inline-block;
+      @include respond-to(500) { display: inherit; width: 100%; }
+      
       text-align: right;
       vertical-align: middle;
       color: $grey;
