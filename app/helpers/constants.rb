@@ -1,6 +1,7 @@
 class Constants
   def self.UserRole
     return {
+      SYSTEM: -10,
       SUPER_ADMIN: 0,
       ORG_ADMIN: 10,
       SCHOOL_ADMIN: 20,

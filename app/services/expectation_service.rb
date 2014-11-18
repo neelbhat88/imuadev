@@ -1,21 +1,23 @@
 class ExpectationService
 
+  def initialize(current_user)
+    @current_user = current_user
+  end
+
   # Called via :expectation_id, with an :assignees array of
   # {user_expectation_id: user_expectation.id, status: status} hashes, and a
   # :comment to be applied across all user_expectation updates
-  def put_expectation_status(params, current_user)
+  def put_expectation_status(params)
     conditions = Marshal.load(Marshal.dump(params))
 
     unless conditions[:assignees].nil?
-      userExpectationService = UserExpectationService.new
       comment = ( conditions[:comment].nil? ) ? "" : conditions[:comment]
       conditions[:assignees].each do |a|
         user_expectation = { id: a[:user_expectation_id],
                              status: a[:status],
                              comment: comment }
-        userExpectationService.update_user_expectation(user_expectation[:id],
+        UserExpectationService.new(@current_user).update_user_expectation(user_expectation[:id],
                                                        user_expectation,
-                                                       current_user,
                                                        "bulk")
       end
     end
@@ -65,11 +67,10 @@ class ExpectationService
     end
 
     if newExpectation.save
-      userExpectationService = UserExpectationService.new
       userQ = UserQuerier.new.select([], [:id]).where({organization_id: newExpectation[:organization_id], role: Constants.UserRole[:STUDENT]})
       userQ.pluck(:id).each do |user_id|
         # This is pretty gross/inefficient, but it shouldn't be called very often
-        userExpectationService.update_user_expectations(user_id)
+        UserExpectationService.new(@current_user).create_user_expectations(user_id)
       end
       return ReturnObject.new(:ok, "Successfully created Expectation, id: #{newExpectation.id}.", newExpectation)
     else
