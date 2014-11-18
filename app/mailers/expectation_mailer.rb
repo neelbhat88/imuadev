@@ -2,7 +2,7 @@ class ExpectationMailer < ActionMailer::Base
   default from: "imua-notification@myimua.org"
 
   def changed_user_expectation(student, mentors, modifier, user_expectation, expectation)
-    expectationStatus = ['Meeting', 'Needs Work', 'Not Meeting']
+    expectationStatus = Constants.ExpectationMailerStatus
 
     @student = student
     @modifier = modifier

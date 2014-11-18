@@ -1,5 +1,5 @@
 class RelationshipMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "imua-notification@myimua.org"
 
   def assigned_student_to_mentor(mentor, student)
     @mentor = mentor

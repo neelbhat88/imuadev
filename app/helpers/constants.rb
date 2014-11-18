@@ -63,6 +63,10 @@ class Constants
     }
   end
 
+  def self.ExpectationMailerStatus
+    return ['Meeting', 'Needs Work', 'Not Meeting']
+  end
+
   def self.SessionTimeout
     if ENV["SESSION_TIMEOUT_MINUTES"]
       return (ENV["SESSION_TIMEOUT_MINUTES"].to_i).minutes
