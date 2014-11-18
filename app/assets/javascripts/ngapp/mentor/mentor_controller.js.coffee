@@ -16,19 +16,20 @@ angular.module('myApp')
       if user_mentor
         $scope.assigned_students = _.filter($scope.organization.students, (student) -> _.contains(user_mentor.studentIds, student.id))
         $scope.attention_students = _.where($scope.assigned_students, { needs_attention: true })
+        console.log($scope.assigned_students)
+
       $scope.all_students = $scope.organization.students
       $scope.loaded_users = true
 
   load_users()
 
   $scope.assign = (student) ->
-    # TODO Return object from "assign" should be a ViewUser with all the data
-    #      so that a new load_users call doesn't have to be made afterwards.
-    #      Question is, how to efficiently re-parse needs_attention for the
-    #      single ViewUser.
     UsersService.assign($scope.mentor.id, student.id)
       .success (data) ->
-        load_users()
+        $scope.assigned_students.push(data.student)
+        data.student.needs_attention = _.some(student.user_expectations, (ue) -> ue.status == 2)
+        if data.student.needs_attention
+          $scope.attention_students.push(data.student)
 
   $scope.unassign = (student) ->
     UsersService.unassign($scope.mentor.id, student.id)
