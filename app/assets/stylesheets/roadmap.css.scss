@@ -268,13 +268,10 @@
       margin-bottom: 15px;
 
       .expectations-list__item__title {
-        width: 80%;
-        display: inline-block;
       }
 
       .expectations-list__item__icons {
-        width: 15%;
-        display: inline-block;
+        float: right;
       }
 
       .form-field {

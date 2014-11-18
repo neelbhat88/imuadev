@@ -3,26 +3,38 @@
   <div class="expectations-title"><h4 class="bold">Student Expectations</h4></div>
   <div class="expectations-list" wait-to-load="{{loaded_expectations}}">
 
-    <div class="expectations-list__item" ng-repeat="expectation in expectations">
-      <div class="expectations-list__item__title">
-        <h5 ng-hide="expectation.editing">
-          <a href="#/expectation/{{expectation.id}}">{{expectation.title}}</a>
-        </h5>
-        <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_title" placeholder="Expectation Title" name="expectation_title">
-      </div>
-      <div class="expectations-list__item__description">
-        <h6 ng-hide="expectation.editing">{{expectation.description}}</h6>
-        <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation" name="expectation_description">
-      </div>
-      <div class="expectations-list__item__icons" org-setup-editor>
-        <div ng-hide="expectation.editing">
+    <div class="expectations-list__item clear" ng-repeat="expectation in expectations">
+      <div class="expectatons-list__item-container" ng-hide="expectation.editing">
+        <div class="expectations-list__item__title">
+          <h4><a href="#/expectation/{{expectation.id}}">{{expectation.title}}</a></h4>
+        </div>
+        <div class="expectations-list__item__description">
+          <h6>{{expectation.description}}</h6>
+        </div>
+        <div class="expectations-list__item__icons" org-setup-editor>
           <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editExpectation($index)"></span>
           <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteExpectation($index)"></span>
         </div>
-        <div ng-show="expectation.editing">
-          <span class="editing_icon glyphicon glyphicon-ok prs green" title="Save" ng-click="saveExpectation($index)"></span>
-          <span class="editing_icon glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditExpectation($index)"></span>
-        </div>
+      </div>
+      <div class="expectations-list__item--editing" ng-show="expectation.editing">
+        <form name="expectationsForm" imua-form="saveExpectation($index)" novalidate>
+          <div class="pbm">
+            <label-with-errors label="Title" form="expectationsForm" formfield="expectationsForm.title"> </label-with-errors>
+            <input type="text" class="form-control" ng-model="expectation.new_title" placeholder="Expectation Title" name="title" required />
+          </div>
+
+          <div class="pbm">
+            <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>
+            <textarea rows="4" cols="40"  type="text" class="form-control" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation" name="description">{{expectation.new_description}}</textarea>
+          </div>
+
+          <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>
+
+          <div>
+            <button class="submit" type="submit">Submit</button>
+            <span class="cancel" ng-click="cancelEditExpectation($index)">Cancel</span>
+          </div>
+        </form>
       </div>
     </div>
 
