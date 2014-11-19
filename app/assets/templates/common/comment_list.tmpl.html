@@ -2,19 +2,33 @@
   <br>
   <div class="comments--list" ng-repeat="comment in comments">
     <br>
-    <div class="comment--header">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
-    <h6 class="comment--body">&nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}</h6>
+    <div class="comment--header" ng-hide="isNewComment(comment)">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
+    <h6 class="comment--body" ng-hide="comment.editing">&nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}</h6>
+    <div class="comments-list__item__icons" ng-hide="comment.editing">
+      <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editComment(comment)" ng-if="canEditComment(comment)"></span>
+      <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteComment(comment)" ng-if="canDeleteComment(comment)"></span>
+    </div>
+
+    <div class="comments-list__item--editing" ng-show="comment.editing">
+      <form name="commentsForm" imua-form="saveComment(comment)" novalidate>
+        <div class="pbm">
+          <label-with-errors form="commentsForm" formfield="commentsForm.comment"></label-with-errors>
+          <textarea class="form-control" ng-model="comment.new_comment" placeholder="Comment" name="comment" required></textarea>
+        </div>
+
+        <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="commentsForm.$submitted && commentsForm.$invalid">{{error}}</div>
+
+        <div>
+          <button class="submit" type="submit">Submit</button>
+          <span class="cancel" ng-click="cancelEditComment(comment)">Cancel</span>
+        </div>
+      </form>
+    </div>
     <br>
   </div>
 
-  <div class="edit-buttons-top" ng-hide="new_comment.editing">
+  <div class="edit-buttons-top" ng-hide="editingNewComment()">
     <br>
     <button class="btn btn-default" ng-click="addNewComment()">Add a Comment</button>
-  </div>
-  <textarea class="form-control" ng-model="new_comment.text" ng-show="new_comment.editing" placeholder="Add a Comment"></textarea>
-  <div class="edit-buttons-top" ng-show="new_comment.editing">
-    <br>
-    <button class="btn btn-default" ng-click="cancelAddNewComment()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
-    <button class="btn btn-success" ng-click="saveNewComment()"><span class="glyphicon glyphicon-ok"></span> Save</button>
   </div>
 </div>

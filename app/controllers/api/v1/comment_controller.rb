@@ -9,4 +9,24 @@ class Api::V1::CommentController < ApplicationController
     @commentService = commentService ? commentService : CommentService.new(current_user)
   end
 
+  def update
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:comment_id] = params[:id]
+
+    result = @commentService.update(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  def destroy
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:comment_id] = params[:id]
+
+    result = @commentService.destroy(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
 end

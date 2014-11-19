@@ -23,7 +23,7 @@ Imua::Application.routes.draw do
       #       *NEW WAY OF DOING ROUTES*
       # run foreman run rake routes to see what the routes look like
       # **************************************
-      resources :comment, except: [:index, :new, :create, :edit]
+      resources :comment, except: [:index, :new, :create, :edit, :show]
 
       resources :organization, shallow: true do
 
