@@ -8,7 +8,7 @@ class Api::V1::UserExpectationController < ApplicationController
   def index
     userId = params[:user_id]
 
-    result = UserExpectationService.new.get_and_create_user_expectations(userId)
+    result = UserExpectationService.new(current_user).get_and_create_user_expectations(userId)
 
     render status: :ok,
       json: {
@@ -21,7 +21,7 @@ class Api::V1::UserExpectationController < ApplicationController
   def show
     user_expectation_id = params[:id]
 
-    user_expectation = UserExpectationService.new.get_user_expectation(user_expectation_id)
+    user_expectation = UserExpectationService.new(current_user).get_user_expectation(user_expectation_id)
 
     render status: :ok,
       json:  {
@@ -35,7 +35,7 @@ class Api::V1::UserExpectationController < ApplicationController
     user_expectation_id   = params[:id].to_i
     userExpectation = params[:userExpectation]
 
-    result = UserExpectationService.new.update_user_expectation(user_expectation_id, userExpectation, current_user)
+    result = UserExpectationService.new(current_user).update_user_expectation(user_expectation_id, userExpectation)
 
     render status: result.status,
       json: {
@@ -48,7 +48,7 @@ class Api::V1::UserExpectationController < ApplicationController
   def history
     user_expectation_id = params[:id].to_i
 
-    history = UserExpectationHistoryService.new.get_user_expectation_history(user_expectation_id)
+    history = UserExpectationHistoryService.new(current_user).get_user_expectation_history(user_expectation_id)
 
     render status: :ok,
       json: {
@@ -62,7 +62,7 @@ class Api::V1::UserExpectationController < ApplicationController
     user_expectation_id = params[:id].to_i
     comment = params[:userExpectation][:comment]
 
-    result = UserExpectationService.new.update_user_expectation_comment(user_expectation_id, comment)
+    result = UserExpectationService.new(current_user).update_user_expectation_comment(user_expectation_id, comment)
 
     render status: result.status,
       json: {

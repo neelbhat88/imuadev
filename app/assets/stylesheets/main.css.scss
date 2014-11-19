@@ -388,6 +388,7 @@ button:focus {
 
 .submit {
 
+  text-align: center;
   display: inline-block;
   vertical-align: middle;
   border: 1px solid $button-blue;
@@ -405,6 +406,7 @@ button:focus {
 
 .cancel {
 
+  text-align: center;
   display: inline-block;
   vertical-align: middle;
   border: 1px solid $grey;

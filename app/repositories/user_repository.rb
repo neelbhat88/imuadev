@@ -96,7 +96,9 @@ class UserRepository
       # Considered making this a background process, but what if background processing
       # was behind like 5min for whatever reason?
       if user.role == Constants.UserRole[:STUDENT]
-        UserExpectationService.new.update_user_expectations(user.id)
+        # Change this to passing in @current_user when user_repository is updated to
+        # be initialized with current_user
+        UserExpectationService.new(User.SystemUser).create_user_expectations(user.id)
       end
 
       return { :status => :ok, :info => "User created successfully. Email has been sent.", :user => user }
@@ -215,6 +217,7 @@ class UserRepository
     end
 
     if relationship.save
+      send_assigned_notification(mentor_id, student_id)
       return ReturnObject.new(:ok, "User #{student_id} successfully assigned to #{mentor_id}", student)
     else
       return ReturnObject.new(:internal_server_error, relationship.errors, nil)
@@ -223,6 +226,7 @@ class UserRepository
 
   def unassign(mentor_id, student_id)
     if Relationship.where(:user_id => student_id, :assigned_to_id => mentor_id).destroy_all()
+      send_unassigned_notification(mentor_id, student_id)
       return ReturnObject.new(:ok, "User #{student_id} successfully unassigned from #{mentor_id}", nil)
     else
       return ReturnObject.new(:internal_server_error, "User #{student_id} could not be unassigned from #{mentor_id}", nil)
@@ -273,5 +277,23 @@ class UserRepository
 
   def are_related?(studentId, mentorId)
     return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
+  end
+
+  def send_assigned_notification(mentorId, studentId)
+    Background.process do
+      mentor = get_user(mentorId)
+      student = get_user(studentId)
+
+      RelationshipMailer.assigned_student_to_mentor(mentor, student).deliver
+    end
+  end
+
+  def send_unassigned_notification(mentorId, studentId)
+    Background.process do
+      mentor = get_user(mentorId)
+      student = get_user(studentId)
+
+      RelationshipMailer.unassigned_student_from_mentor(mentor, student).deliver
+    end
   end
 end
