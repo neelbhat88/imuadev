@@ -18,7 +18,7 @@ angular.module('myApp')
     defer = $q.defer()
     @doSaveNewComment(commentable_object_type, commentable_object_id, comment)
       .success (data) ->
-        defer.resolve(data.comment)
+        defer.resolve(data.organization)
     defer.promise
 
   @getComments = (commentable_object_type, commentable_object_id) ->

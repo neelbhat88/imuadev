@@ -1,13 +1,12 @@
 angular.module('myApp')
-.controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService', 'CommentService',
-  ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService, CommentService) ->
+.controller 'UserAssignmentController', ['$scope', '$route', 'current_user', 'user_assignment', 'AssignmentService', 'UsersService', 'OrganizationService',
+  ($scope, $route, current_user, user_assignment, AssignmentService, UsersService, OrganizationService) ->
 
     $scope.today = new Date().getTime()
     $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
 
     $scope.current_user = current_user
     $scope.user_assignment = user_assignment
-    $scope.commentable_object = {type: "user_assignment", id: $scope.user_assignment.id}
     $scope.assigner = $scope.user_assignment.assigner
     $scope.loaded = true
 

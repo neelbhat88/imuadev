@@ -155,7 +155,7 @@ class Api::V1::UserAssignmentController < ApplicationController
     result = @commentService.create(service_params)
 
     render status: result.status,
-      json: Oj.dump( { info: result.info, comment: result.object }, mode: :compat)
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
   # GET /user_assignment/:id/comments

@@ -7,12 +7,12 @@
     <br>
   </div>
 
-  <div class="edit-buttons-top" ng-hide="editing_new_comment">
+  <div class="edit-buttons-top" ng-hide="new_comment.editing">
     <br>
     <button class="btn btn-default" ng-click="addNewComment()">Add a Comment</button>
   </div>
-  <textarea class="form-control" ng-model="new_comment" ng-show="editing_new_comment" placeholder="Add a Comment"></textarea>
-  <div class="edit-buttons-top" ng-show="editing_new_comment">
+  <textarea class="form-control" ng-model="new_comment.text" ng-show="new_comment.editing" placeholder="Add a Comment"></textarea>
+  <div class="edit-buttons-top" ng-show="new_comment.editing">
     <br>
     <button class="btn btn-default" ng-click="cancelAddNewComment()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
     <button class="btn btn-success" ng-click="saveNewComment()"><span class="glyphicon glyphicon-ok"></span> Save</button>
