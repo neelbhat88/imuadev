@@ -215,9 +215,41 @@ namespace :db_update do
             new_grade = 50.0
         end
 
-        c.update_attributes(:grade => new_grade)
+        c.update_attributes(:grade_value => new_grade)
         puts "Updated " + c.name + "grade to " + new_grade.to_s + " for " + s.first_name + " " + s.last_name
+      end
 
+      student_class_histories = UserClassHistory.where(:user_id => s.id)
+      student_class_histories.each do | h |
+        case h.grade
+          when 'A'
+            new_grade = 98.0
+          when 'A-'
+            new_grade = 92.0
+          when 'B+'
+            new_grade = 89.0
+          when 'B'
+            new_grade = 85.0
+          when 'B-'
+            new_grade = 82.0
+          when 'C+'
+            new_grade = 79.0
+          when 'C'
+            new_grade = 75.0
+          when 'C-'
+            new_grade = 72.0
+          when 'D+'
+            new_grade = 69.0
+          when 'D'
+            new_grade = 65.0
+          when 'D-'
+            new_grade = 62.0
+          when 'F'
+            new_grade = 50.0
+        end
+
+        h.update_attributes(:grade_value => new_grade)
+        puts "Updated " + h.name + "history grade to " + new_grade.to_s + " for " + s.first_name + " " + s.last_name
       end
     end
   end

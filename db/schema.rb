@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141117230409) do
+ActiveRecord::Schema.define(:version => 20141119240409) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -171,11 +171,12 @@ ActiveRecord::Schema.define(:version => 20141117230409) do
     t.string   "modified_by_name"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.float    "grade_value"
   end
 
   create_table "user_classes", :force => true do |t|
     t.string   "name"
-    t.float    "grade"
+    t.text     "grade"
     t.float    "gpa"
     t.integer  "user_id"
     t.integer  "time_unit_id"
@@ -188,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20141117230409) do
     t.string   "subject"
     t.integer  "modified_by_id"
     t.string   "modified_by_name"
+    t.float    "grade_value"
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"

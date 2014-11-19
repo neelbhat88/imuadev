@@ -8,6 +8,7 @@ class UserClassHistoryService
     UserClassHistory.create(:credit_hours => user_class.credit_hours,
                             :gpa => user_class.gpa,
                             :grade => user_class.grade,
+                            :grade_value => user_class.grade_value,
                             :level => user_class.level,
                             :name => user_class.name,
                             :period => user_class.period,

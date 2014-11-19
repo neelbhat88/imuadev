@@ -58,7 +58,7 @@
 
               <div id="cell--grades" class="table--cell">
                 <div class="cell--padding">
-                  <h4 class="bold">{{user_class.grade}}</h4>
+                  <h4 class="bold">{{user_class.grade_value}}</h4>
                 </div>
               </div>
 
@@ -130,7 +130,7 @@
                 <div class="table--cell breakalways"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                   <span class="input-group">
                       <label-with-errors label="Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
-                      <input type="number" class="form-control" ng-model="user_class.new_grade" name="grade" required>
+                      <input type="number" class="form-control" ng-model="user_class.new_grade_value" name="grade" required>
                   </span>
                 </div>
 
