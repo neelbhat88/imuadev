@@ -13,6 +13,12 @@ class Api::V1::CommentController < ApplicationController
     service_params = params.except(*[:id, :controller, :action]).symbolize_keys
     service_params[:comment_id] = params[:id]
 
+    comment = Comment.where(id: service_params[:comment_id]).first
+    if !can?(@current_user, :update_comment, comment)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @commentService.update(service_params)
 
     render status: result.status,
@@ -22,6 +28,12 @@ class Api::V1::CommentController < ApplicationController
   def destroy
     service_params = params.except(*[:id, :controller, :action]).symbolize_keys
     service_params[:comment_id] = params[:id]
+
+    comment = Comment.where(id: service_params[:comment_id]).first
+    if !can?(@current_user, :destroy_comment, comment)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @commentService.destroy(service_params)
 

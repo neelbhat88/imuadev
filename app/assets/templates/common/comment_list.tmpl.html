@@ -1,6 +1,6 @@
 <div class="comments--content" wait-to-load="{{loaded_comments}}">
   <br>
-  <div class="comments--list" ng-repeat="comment in comments">
+  <div class="comments--list" ng-repeat="comment in comments | orderBy: 'created_at'">
     <br>
     <div class="comment--header" ng-hide="isNewComment(comment)">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
     <h6 class="comment--body" ng-hide="comment.editing">&nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}</h6>

@@ -152,6 +152,12 @@ class Api::V1::UserAssignmentController < ApplicationController
     service_params[:commentable_id] = params[:id]
     service_params[:target_table] = UserAssignment
 
+    commentable_object = service_params[:target_table].where(id: service_params[:commentable_id]).first
+    if !can?(@current_user, :create_comment, commentable_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @commentService.create(service_params)
 
     render status: result.status,
@@ -163,6 +169,12 @@ class Api::V1::UserAssignmentController < ApplicationController
     service_params = params.except(*[:id, :controller, :action]).symbolize_keys
     service_params[:commentable_id] = params[:id]
     service_params[:target_table] = UserAssignment
+
+    commentable_object = service_params[:target_table].where(id: service_params[:commentable_id]).first
+    if !can?(@current_user, :index_comments, commentable_object)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @commentService.index(service_params)
 

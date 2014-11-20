@@ -7,12 +7,7 @@ class CommentService
   # Adds the :comment to the given :target_table/:commentable_id, on behalf of current_user
   def create(params)
     conditions = Marshal.load(Marshal.dump(params))
-    commentable_object = params[:target_table].where(id: conditions[:commentable_id]).first
-
-    # if !can?(@current_user, :create_comment, commentable_object)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    commentable_object = conditions[:target_table].where(id: conditions[:commentable_id]).first
 
     comment = commentable_object.comments.create
     comment.comment = params[:comment]
@@ -31,25 +26,15 @@ class CommentService
     conditions = Marshal.load(Marshal.dump(params))
     commentable_object = conditions[:target_table].where(id: conditions[:commentable_id]).first
 
-    # if !can?(@current_user, :index_comments, commentable_object)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
-
     ret = get_comments_view({ commentable_type: conditions[:target_table],
                               commentable_id: conditions[:commentable_id] })
+
     return ReturnObject.new(:ok, "Comments for #{commentable_object.class.name} id #{commentable_object.id}.", ret)
   end
 
   def update(params)
     conditions = Marshal.load(Marshal.dump(params))
-
     dbComment = Comment.where(id: conditions[:comment_id]).first
-
-    # if !can?(@current_user, :update_comment, dbComment)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
 
     if dbComment.nil?
       return ReturnObject.new(:internal_server_error, "Failed to find Comment with id: #{conditions[:comment_id]}.", nil)
@@ -66,13 +51,7 @@ class CommentService
 
   def destroy(params)
     conditions = Marshal.load(Marshal.dump(params))
-
     dbComment = Comment.where(id: conditions[:comment_id]).first
-
-    # if !can?(@current_user, :destroy_comment, dbComment)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
 
     if dbComment.nil?
       return ReturnObject.new(:internal_server_error, "Failed to find Comment with id: #{conditions[:comment_id]}.", nil)
