@@ -36,8 +36,7 @@
           </div>
         </div>
 
-        <div id="classAccordion" imua-accordion
-              class="widget--content--table table--fixed">
+        <div id="classAccordion" imua-accordion class="widget--content--table table--fixed">
 
           <div class="table--cell no-border-right breakalways" ng-repeat="user_class in user_classes">
 
@@ -63,35 +62,6 @@
                 </div>
               </div>
 
-            </div>
-
-            <div progress-editor class="widget--content--table" ng-show="user_class.editing">
-              <div class="table--cell">
-
-                <span class="input-group">
-                  <label>Class</label>
-                  <input class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname">
-                </span>
-
-                <span class="input-group">
-                    <label>Grade</label>
-                    <select class="form-control" ng-model="user_class.new_grade">
-                      <option value="A">A</option>
-                      <option value="A-">A-</option>
-                      <option value="B+">B+</option>
-                      <option value="B">B</option>
-                      <option value="B-">B-</option>
-                      <option value="C+">C+</option>
-                      <option value="C">C</option>
-                      <option value="C-">C-</option>
-                      <option value="D+">D+</option>
-                      <option value="D">D</option>
-                      <option value="D-">D-</option>
-                      <option value="F">F</option>
-                    </select>
-                </span>
-
-              </div>
             </div>
 
             <div accordion-body class="widget--content--table widget--pane--cell" ng-hide="user_class.editing">
@@ -146,63 +116,96 @@
 
             </div>
 
-            <div progress-editor class="widget--content--table widget--pane--cell" ng-show="user_class.editing">
 
-              <div class="table--cell breakalways">
-                <span class="input-group">
-                  <label>Credit Hours</label>
-                  <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
-                </span>
-              </div>
-              <div class="table--cell breakalways">
-                <div class="cell-padding">
+            <div progress-editor class="widget--content--table widget--pane--cell" ng-show="user_class.editing">
+              <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
+
+                <div class="table--cell breakalways form-group" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
                   <span class="input-group">
-                      <label>Level</label>
-                      <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                    <label-with-errors label="Class" form="gradesForm" formfield="gradesForm.classname"></label-with-errors>
+                    <input type="text" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" required>
                   </span>
                 </div>
-              </div>
-              <div class="table--cell breakalways">
-                <div class="cell-padding">
+
+                <div class="table--cell breakalways"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                   <span class="input-group">
-                      <label>Subject</label>
-                      <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
-                          <option value="">--Select Subject--</option>
+                      <label-with-errors label="Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
+                      <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
+                        <option value="A">A</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="C-">C-</option>
+                        <option value="D+">D+</option>
+                        <option value="D">D</option>
+                        <option value="D-">D-</option>
+                        <option value="F">F</option>
                       </select>
                   </span>
-                </div>
-              </div>
-              <div class="table--cell breakalways">
-                <div class="cell-padding">
-                  <span class="input-group">
-                      <label>Period</label>
-                      <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
-                  </span>
-                </div>
-              </div>
-              <div class="table--cell breakalways">
-                <div class="cell-padding">
-                  <span class="input-group">
-                      <label>Room</label>
-                      <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
-                  </span>
-                </div>
-              </div>
 
-              <div progress-editor class="table--cell breakalways">
-                <div class="cell--padding">
-                  <div class="edit-buttons">
-                    <button class="submit" title="Confirm" ng-click="saveClass(user_class)">Confirm</button>
-                    <button class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</button>
+                </div>
+
+                <div class="table--cell breakalways">
+                  <span class="input-group">
+                    <label>Credit Hours</label>
+                    <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+                  </span>
+                </div>
+                <div class="table--cell breakalways">
+                  <div class="cell-padding">
+                    <span class="input-group">
+                        <label>Level</label>
+                        <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                    </span>
                   </div>
                 </div>
-              </div>
+                <div class="table--cell breakalways">
+                  <div class="cell-padding">
+                    <span class="input-group">
+                        <label>Subject</label>
+                        <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
+                            <option value="">--Select Subject--</option>
+                        </select>
+                    </span>
+                  </div>
+                </div>
+                <div class="table--cell breakalways">
+                  <div class="cell-padding">
+                    <span class="input-group">
+                        <label>Period</label>
+                        <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
+                    </span>
+                  </div>
+                </div>
+                <div class="table--cell breakalways">
+                  <div class="cell-padding">
+                    <span class="input-group">
+                        <label>Room</label>
+                        <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">
+                    </span>
+                  </div>
+                </div>
 
+                <div progress-editor class="table--cell breakalways">
+                  <div class="cell--padding">
+                    <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="gradesForm.$submitted && gradesForm.$invalid">
+                    {{error}}</div>
+                    <div class="edit-buttons">
+                      <button type="submit" class="submit" title="Confirm">Confirm</button>
+                      <a class="cancel" title="Cancel" ng-click="cancelEdit(user_class)">Cancel</a>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
             </div>
 
           </div>
 
-          <div progress-editor class="cell--padding breakalways ng-clickable" ng-click="addClass()" ng-show="class_editor && !classes.editing" >
+          <div progress-editor class="cell--padding breakalways ng-clickable" ng-click="addClass()" ng-show="class_editor" >
             <div class="class-name">
               <h6 class="bold">Add a Class</h6>
             </div>

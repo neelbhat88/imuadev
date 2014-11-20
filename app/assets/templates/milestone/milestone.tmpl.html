@@ -66,29 +66,18 @@
 
     <div class="assignment--right">
       <ul>
+        <li class="column-title">
+          <h5 class="bold">Milestone Info</h5>
+        </li>
         <li>
           <span class="edit-milestone__title"><img ng-src={{milestone.icon}}/></span>
           <h6 class="bold">{{milestone.title}}</h6>
         </li>
         <li>
-          <h5>
-            <span class="label label-warning" ng-if="users_incomplete.length != 0">
-              <span class="glyphicon glyphicon-exclamation-sign"></span> Incomplete
-            </span>
-            <span class="label label-success" ng-if="users_incomplete.length == 0">
-              <span class="glyphicon glyphicon-ok-circle"></span> Complete
-            </span>
-          </h5>
-        </li>
-        <!-- <li ng-if="milestone.due_datetime != null>
-          <h6>Due by</h6>
-          <h5 class="bold">{{milestone.due_datetime | formatMDY}}</h5>
-        </li> -->
-        <li>
-          <h5 class="bold">{{milestone.time_unit_name}}</h5>
+          <h6>{{milestone.time_unit_name}}</h6>
         </li>
         <li>
-          <h6>Total Students Assigned</h6>
+          <h6>Students currently in {{milestone.time_unit_name}}</h6>
           <h5 class="bold">{{users_total.length}}</h5>
           <h6>
             ({{percent_complete}}% Complete)

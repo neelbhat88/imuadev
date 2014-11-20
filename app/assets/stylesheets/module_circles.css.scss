@@ -47,7 +47,10 @@
       @include respond-to(600) {
         width: 240px;
       }
-      
+
+    }
+    .bar-points {
+      padding-top: 5px;
     }
 
   }

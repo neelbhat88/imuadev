@@ -14,9 +14,10 @@
   </div>
 
   <div class="single-col-wrapper expectation-content">
-    <h4 class="bold">
-      {{user_expectation.title}}
-    </h4>
+    <a href="#/expectation/{{user_expectation.expectation_id}}">
+      <h4 class="bold">{{user_expectation.title}}</h4>
+    </a>
+    <h6>{{user_expectation.description}}</h6>
     <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
@@ -57,7 +58,11 @@
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-ok" ng-click="updateComment()"></span>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-remove" ng-click="cancelCommentEdit()"></span>
 
-      <div ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</div>
+      <div ng-if="user_expectation_history.length != 1 && user_expectation.modified_by_name">
+        Updated
+        <span title="{{user_expectation.updated_at | formatMDY }}">{{user_expectation.updated_at | fromNow}} </span>
+        by {{user_expectation.modified_by_name}}
+      </div>
       <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
         <button class="btn btn-default" ng-click="editExpectation()"><span class="glyphicon glyphicon-edit"></span> Change {{student.first_name}}'s Status</button>
       </div>
@@ -112,19 +117,27 @@
     </table>
   </div>
 
-  <div class="single-col-wrapper expectation-history" ng-if="user_expectation_history.length != 0">
+  <div class="single-col-wrapper expectation-history" ng-if="user_expectation_history.length != 1">
 
     <h6 class="bold list-header">Previous Updates</h6>
 
-    <table class="status-block history-block" ng-repeat="history in user_expectation_history">
-      <tr>
+    <table class="status-block history-block" ng-repeat="history in user_expectation_history" ng-show="!$first">
+      <tr ng-if="!$last">
         <td class="status-picture expectation-dot">
           <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
         </td>
         <td class="status-message">
           <h6>{{history.modified_by_name}} changed the status of {{student.first_name}}'s expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
           <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
-          <div>{{history.updated_at | fromNow}}</div>
+          <div title="{{history.created_on | formatMDY }}">{{history.created_on | fromNow }}</div>
+        </td>
+      </tr>
+      <tr ng-if="$last">
+        <td class="status-picture expectation-dot">
+          <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
+        </td>
+        <td class="status-message">
+          <h6>Initial state: <span class="bold">{{getStatusText(history.status)}}</span></h6>
         </td>
       </tr>
     </table>

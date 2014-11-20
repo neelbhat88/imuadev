@@ -1,36 +1,35 @@
 <div class="modal-body paxl user-modal">
   <!--<h3 class="pbl">Add User</h3>
   <h5>Organization Admin</h5> -->
-  <form class="form form--user" ng-hide="editingPassword">
+  <form name="newUserForm" imua-form="add($event)" class="form form--user" ng-hide="editingPassword" novalidate>
 
     <div class="pbl">
-      <div class="pbs">Email</div>
-      <input type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
+      <label-with-errors label="Email" form="newUserForm" formfield="newUserForm.email"></label-with-errors>
+      <input name="email" required type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
     </div>
 
     <div class="pbl">
-      <div class="pbs">First Name</div>
-      <input class="form-field" ng-model="user.first_name" placeholder="First Name">
+      <label-with-errors label="First Name" form="newUserForm" formfield="newUserForm.firstName"></label-with-errors>
+      <input name="firstName" required class="form-field" ng-model="user.first_name" placeholder="First Name">
     </div>
 
     <div class="pbs">
-      <div class="pbs">Last Name</div>
-      <input class="form-field" ng-model="user.last_name" placeholder="Last Name">
+      <label-with-errors label="Last Name" form="newUserForm" formfield="newUserForm.lastName"></label-with-errors>
+      <input name="lastName" required class="form-field" ng-model="user.last_name" placeholder="Last Name">
     </div>
 
     <div ng-if="user.is_student" class="ptm pbs">
-      <class-of-dropdown model="user"></class-of-dropdown>
+      <class-of-dropdown form="newUserForm" model="user"></class-of-dropdown>
     </div>
-
-    <ul class="errorText ptm" ng-show="errors">
-      <li ng-repeat="error in errors">{{error}}</li>
-    </ul>
 
     <div class="buttonGroup ptl">
 
-      <button ng-click="add($event)" class="ladda-button submit" type="submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Add</span></button>
+      <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="newUserForm.$submitted && newUserForm.$invalid">
+      {{error}}</div>
 
-      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+      <button class="ladda-button submit" type="submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Add</span></button>
+
+      <span class="cancel" ng-click="cancel()"><span>Cancel</span></span>
 
     </div>
 

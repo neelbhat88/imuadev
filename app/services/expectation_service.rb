@@ -1,5 +1,47 @@
 class ExpectationService
 
+  def initialize(current_user)
+    @current_user = current_user
+  end
+
+  # Called via :expectation_id, with an :assignees array of
+  # {user_expectation_id: user_expectation.id, status: status} hashes, and a
+  # :comment to be applied across all user_expectation updates
+  def put_expectation_status(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    unless conditions[:assignees].nil?
+      comment = ( conditions[:comment].nil? ) ? "" : conditions[:comment]
+      conditions[:assignees].each do |a|
+        user_expectation = { id: a[:user_expectation_id],
+                             status: a[:status],
+                             comment: comment }
+        UserExpectationService.new(@current_user).update_user_expectation(user_expectation[:id],
+                                                       user_expectation,
+                                                       "bulk")
+      end
+    end
+
+    return get_expectation_status(params.except(:comment))
+  end
+
+  # Called via :expectation_id
+  def get_expectation_status(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    expectationQ = Querier.new(Expectation).select([:id, :title, :description]).where(conditions)
+    userExpectationQ = Querier.new(UserExpectation).select([:id, :expectation_id, :status, :user_id]).where(conditions)
+
+    conditions[:user_id] = userExpectationQ.pluck(:user_id)
+    userQ = UserQuerier.new.select([:id, :role, :avatar, :class_of, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userExpectationQ])
+
+    view = {expectations: expectationQ.view,
+            users: userQ.view}
+
+    return ReturnObject.new(:ok, "Expectation status for expectation_id: #{params[:expectation_id]}.", view)
+  end
+
   #####################################
   ########### ORGANIZATION ############
   #####################################
@@ -25,6 +67,11 @@ class ExpectationService
     end
 
     if newExpectation.save
+      userQ = UserQuerier.new.select([], [:id]).where({organization_id: newExpectation[:organization_id], role: Constants.UserRole[:STUDENT]})
+      userQ.pluck(:id).each do |user_id|
+        # This is pretty gross/inefficient, but it shouldn't be called very often
+        UserExpectationService.new(@current_user).create_user_expectations(user_id)
+      end
       return ReturnObject.new(:ok, "Successfully created Expectation, id: #{newExpectation.id}.", newExpectation)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create expectation. Errors: #{newExpectation.errors}", nil)
