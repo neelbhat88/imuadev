@@ -9,7 +9,7 @@ class ExpectationMailer < ActionMailer::Base
     @status = expectationStatus[user_expectation.status]
     @expectation = expectation
     @comment = user_expectation.comment
-    recipients = [student.email]
+    recipients = []
 
     mentors.each do |m|
       if m.id != modifier.id
@@ -18,6 +18,18 @@ class ExpectationMailer < ActionMailer::Base
     end
 
     mail(:to => recipients, :subject=>"Expectation: '#{expectation.title}' has been updated for #{student.full_name}")
+  end
+
+  def changed_user_expectation_to_student(student, modifier, user_expectation, expectation)
+    expectationStatus = Constants.ExpectationMailerStatus
+
+    @student = student
+    @modifier = modifier
+    @status = expectationStatus[user_expectation.status]
+    @expectation = expectation
+    @comment = user_expectation.comment
+
+    mail(:to => student.email, :subject=>"Expectation: '#{expectation.title}' has been updated")
   end
 
 end

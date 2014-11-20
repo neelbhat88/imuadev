@@ -147,6 +147,7 @@ class UserExpectationService
       expectation = Expectation.find(user_expectation.expectation_id)
 
       ExpectationMailer.changed_user_expectation(student, mentors, modifier, user_expectation, expectation).deliver
+      ExpectationMailer.changed_user_expectation_to_student(student, modifier, user_expectation, expectation).deliver
     end
 
   end
