@@ -6,7 +6,7 @@ angular.module("myApp")
 
   @new = (user, time_unit_id) ->
     name: "",
-    grade: null,
+    grade_value: null,
     gpa: 0,
     period: null,
     room: null,
