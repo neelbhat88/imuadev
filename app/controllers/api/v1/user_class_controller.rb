@@ -7,13 +7,14 @@ class Api::V1::UserClassController < ApplicationController
   before_filter :load_services
 
   def load_services( userClassService=nil, userRepo=nil, userClassHistoryService=nil,
-                     userGpaService=nil, userGpaHistoryService=nil )
+                     userGpaService=nil, userGpaHistoryService=nil, activityService=nil )
     @userClassService = userClassService ? userClassService : UserClassService.new
     @userRepository = userRepo ? userRepo : UserRepository.new
     @userClassHistoryService = userClassHistoryService ? userClassHistoryService : UserClassHistoryService.new
     @userGpaService = userGpaService ? userGpaService : UserGpaService.new
     @userGpaHistoryService = userGpaHistoryService ? userGpaHistoryService :
       UserGpaHistoryService.new
+    @activityService = activityService ? activityService : ActivityService.new(current_user)
   end
 
   # GET /users/:user_id/user_class?time_unit=#
@@ -124,5 +125,23 @@ class Api::V1::UserClassController < ApplicationController
         info: "History for class",
         class_history: class_history
       }
+  end
+
+  # GET /user_class/:id/activity
+  def activity
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:trackable_id] = params[:id]
+    service_params[:trackable_type] = UserClass
+
+    # trackable_object = service_params[:trackable_type].where(id: service_params[:trackable_id]).first
+    # if !can?(@current_user, :index_activity, trackable_object)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = @activityService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 end

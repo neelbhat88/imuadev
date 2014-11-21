@@ -1,0 +1,10 @@
+<div class="activityContainer">
+
+  <div class="activity--list" ng-repeat="activity_item in activity | orderBy: 'created_at'">
+    <br>
+    <div class="activity--list--item">
+      {{activity_item.owner.first_last_initial}} did a {{activity_item.key}} {{activity_item.created_at | fromNow}}
+    </div>
+  </div>
+
+</div>

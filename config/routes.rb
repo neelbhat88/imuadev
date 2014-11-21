@@ -12,6 +12,12 @@ Imua::Application.routes.draw do
     end
   end
 
+  trackable = Proc.new do
+    member do
+      get :activity
+    end
+  end
+
   namespace :api do
     namespace :v1 do
 
@@ -42,6 +48,7 @@ Imua::Application.routes.draw do
         resources :users, shallow: true do
 
           resources :user_class, except: [:new, :edit] do
+            trackable.call
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
 
