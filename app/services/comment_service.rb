@@ -14,6 +14,7 @@ class CommentService
     comment.user_id = @current_user.id
 
     if comment.save
+      commentable_object.create_activity :comment_added
       ret = get_comments_view({ commentable_type: comment.commentable_type,
                                 commentable_id: comment.commentable_id })
       return ReturnObject.new(:ok, "Successfully added comment id #{comment.id} to #{commentable_object.class.name} id #{commentable_object.id}.", ret)

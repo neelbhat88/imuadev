@@ -18,7 +18,7 @@
   <div class="single-col-wrapper clear" wait-to-load="{{loaded}}">
     <div class="assignment--left">
       <div class="task-content">
-        <h4><span class="bold">{{user_assignment.title}}</span></h4>
+        <a no-click-propagation href="#/user_assignment/{{user_assignment.id}}/activity"><h4><span class="bold">{{user_assignment.title}}</span></h4></a>
         <h6>{{user_assignment.description}}</h6>
       </div>
       <!-- Open Task Status Block -->

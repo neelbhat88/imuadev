@@ -58,6 +58,7 @@ Imua::Application.routes.draw do
           resources :assignment, except: [:new, :edit]
           resources :user_assignment, except: [:new, :edit, :show] do
             commentable.call
+            trackable.call
           end
 
           resources :user_service_organization, except: [:new, :edit]

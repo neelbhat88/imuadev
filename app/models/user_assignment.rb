@@ -1,4 +1,7 @@
 class UserAssignment < ActiveRecord::Base
+  include PublicActivity::Model
+  # Set Activity's owner to current_user by default
+  tracked owner: Proc.new{ |controller, model| controller.current_user }, recipient: :user
   acts_as_commentable
 
   attr_accessible :assignment_id, :user_id, :status

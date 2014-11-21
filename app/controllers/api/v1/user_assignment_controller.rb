@@ -5,9 +5,10 @@ class Api::V1::UserAssignmentController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( assignmentService = nil, commentService = nil )
+  def load_services( assignmentService = nil, commentService = nil, activityService = nil)
     @assignmentService = assignmentService ? assignmentService : AssignmentService.new
     @commentService = commentService ? commentService : CommentService.new(current_user)
+    @activityService = activityService ? activityService : ActivityService.new(current_user)
   end
   # GET /users/:user_id/user_assignment
   # Returns all UserAssignments for the given User
@@ -177,6 +178,24 @@ class Api::V1::UserAssignmentController < ApplicationController
     end
 
     result = @commentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+    # GET /user_assignment/:id/activity
+  def activity
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:trackable_id] = params[:id]
+    service_params[:trackable_type] = UserAssignment
+
+    # trackable_object = service_params[:trackable_type].where(id: service_params[:trackable_id]).first
+    # if !can?(@current_user, :index_activity, trackable_object)
+    #   render status: :forbidden, json: {}
+    #   return
+    # end
+
+    result = @activityService.index(service_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
