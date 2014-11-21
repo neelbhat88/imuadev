@@ -142,6 +142,11 @@ GEM
     pg (0.17.1)
     phantomjs (1.9.7.1)
     polyglot (0.3.5)
+    public_activity (1.4.2)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -262,6 +267,7 @@ DEPENDENCIES
   oj
   paperclip
   pg
+  public_activity
   rack-timeout
   rails (= 3.2.19)
   rmagick (= 2.13.2)

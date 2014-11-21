@@ -1,4 +1,8 @@
 class UserClass < ActiveRecord::Base
+  include PublicActivity::Model
+  # Set Activity's owner to current_user by default
+  tracked owner: Proc.new{ |controller, model| controller.current_user }, recipient: :user
+
   attr_accessible :gpa, :grade, :name, :time_unit_id, :user_id,
                   :period, :room, :credit_hours, :level, :subject,
                   :modified_by_id, :modified_by_name

@@ -55,6 +55,7 @@ gem 'underscore-rails'
 gem 'mail'
 
 gem 'acts_as_commentable', '3.0.1'
+gem 'public_activity'
 
 # Images
 gem 'rmagick', '2.13.2'
