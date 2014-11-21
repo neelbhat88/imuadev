@@ -58,7 +58,7 @@
                     <span class="input-group">
                       <h4>Who was the service for?</h4>
                       <label-with-errors label="Organization Name" form="editOrganizationForm" formfield="editOrganizationForm.orgName"></label-with-errors>
-                      <input type="text" required name="orgName" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                      <input autocomplete="off" type="text" required name="orgName" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
                     </span>
                     <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="editOrganizationForm.$submitted && editOrganizationForm.$invalid">
                     {{error}}</div>

@@ -92,7 +92,7 @@
               <div class="table--cell breakalways">
                 <span class="input-group">
                   <label>What Activity did you participate in?</label>
-                  <input type="text" focus-me="edit_ec_activity_focus_trigger" ng-model="user_extracurricular_activity.new_name" typeahead="activityName for activityName in org_current_activity_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Extracurricular Activity Name">
+                  <input type="text" autocomplete="off" focus-me="edit_ec_activity_focus_trigger" ng-model="user_extracurricular_activity.new_name" typeahead="activityName for activityName in org_current_activity_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Extracurricular Activity Name">
                 </span>
               </div>
               <div class="table--cell breakalways">

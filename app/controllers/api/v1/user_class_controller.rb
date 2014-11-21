@@ -21,6 +21,7 @@ class Api::V1::UserClassController < ApplicationController
     userId = params[:user_id].to_i
     time_unit_id = params[:time_unit].to_i
 
+    user = @userRepository.get_user(userId)
     if !student_can_access?(userId)
       render status: :forbidden,
         json: {}
@@ -39,13 +40,15 @@ class Api::V1::UserClassController < ApplicationController
     classes = @userClassService.get_user_classes(userId, time_unit_id)
     user_gpa = @userGpaService.get_user_gpa(userId, time_unit_id)
     user_gpa_history = @userGpaHistoryService.get_user_gpa_history(userId, time_unit_id)
+    org_class_titles = @userClassService.get_org_class_titles(organization_id: user.organization_id)
 
     render status: :ok,
       json: {
         info: "User's academics data",
         user_classes: classes.map{|uc| ViewUserClass.new(uc)},
         user_gpa: user_gpa,
-        user_gpa_history: user_gpa_history
+        user_gpa_history: user_gpa_history,
+        org_class_titles: org_class_titles
       }
   end
 

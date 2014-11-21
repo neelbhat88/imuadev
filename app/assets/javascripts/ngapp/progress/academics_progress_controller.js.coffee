@@ -7,6 +7,7 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.org_class_titles = {}
     $scope.formErrors = [ '**Please fix the errors above**' ];
 
 
@@ -17,6 +18,7 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
+            $scope.org_class_titles = data.org_class_titles
             if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else

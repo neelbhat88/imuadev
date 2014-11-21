@@ -1,5 +1,16 @@
 class UserClassService
 
+  def get_org_class_titles(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+    userClassQ = Querier.new(UserClass).select([], [:name]).where(conditions)
+
+    return userClassQ.pluck(:name)
+  end
+
   def get_user_classes(userId, time_unit_id)
     if time_unit_id == 0
       return UserClass.where(:user_id => userId).order(:id)
