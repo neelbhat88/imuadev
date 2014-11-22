@@ -13,6 +13,7 @@ class YesNoMilestoneCollegePrep < ImuaMilestone
       @icon = "/assets/PDU.jpg"
     end
 
+    @milestone_description = "A generic milestone where you can type a custom college prep goal. This milestone is manually completed by the user by clicking a checkbox."
   end
 
   def has_earned?(user, time_unit_id)

@@ -17,6 +17,11 @@ class GpaMilestone < ImuaMilestone
     else
       @target_gpa = milestone.value.to_f
     end
+
+    @milestone_description = "A milestone to set a minimum GPA requirement.
+                              This milestone is automatically triggered
+                              by the system when a user's GPA
+                              equals or exceeds the GPA specified."
   end
 
   def has_earned?(user, time_unit_id)

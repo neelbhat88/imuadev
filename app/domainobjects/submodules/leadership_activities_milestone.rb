@@ -17,6 +17,8 @@ class LeadershipActivitiesMilestone < ImuaMilestone
     else
       @target_leadership_activities = milestone.value.to_i
     end
+
+    @milestone_description = "A milestone to set a requirement to hold a leadership position in an Extracurricular for a specified number of semesters. This milestone is automatically triggered by the system when a user's leadership roles across all of their Extracurricular Activities in the past equals or exceeds the number specified."
   end
 
   def has_earned?(user, time_unit_id)

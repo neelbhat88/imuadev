@@ -17,6 +17,11 @@ class ActivitiesMilestone < ImuaMilestone
     else
       @target_activities = milestone.value.to_i
     end
+
+    @milestone_description = "A milestone to set a Extracurricular involvement
+                              requirement. This milestone is automatically triggered
+                              by the system when a user is involved in the number of
+                              activities specified."
   end
 
   def has_earned?(user, time_unit_id)

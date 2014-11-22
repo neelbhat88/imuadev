@@ -13,6 +13,10 @@ class YesNoMilestoneAcademics < ImuaMilestone
       @icon = "/assets/Academics.jpg"
     end
 
+    @milestone_description = "A generic milestone where you can type a custom
+                              academic goal. This milestone is manually completed
+                              by the user by clicking a checkbox."
+
   end
 
   def has_earned?(user, time_unit_id)

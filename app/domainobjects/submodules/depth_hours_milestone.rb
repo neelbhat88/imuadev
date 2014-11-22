@@ -17,6 +17,8 @@ class DepthHoursMilestone < ImuaMilestone
     else
       @target_depth_hours = milestone.value.to_i
     end
+
+    @milestone_description = "A milestone to set a service hour requirement for a single organization to promote commitment. This milestone is automatically triggered by the system when a user's total service hours for any one of their service organizations equals or exceeds the specified amount."
   end
 
   def has_earned?(user, time_unit_id)

@@ -17,6 +17,8 @@ class DepthActivitiesMilestone < ImuaMilestone
     else
       @target_depth_activities = milestone.value.to_i
     end
+
+    @milestone_description = "A milestone to set a requirement to be involved in a single Extracurricular activity for a certain number of semester to demonstrate commitment. This milestone is automatically triggered by the system when a user is involved in the same activity for the number of semesters specified."
   end
 
   def has_earned?(user, time_unit_id)

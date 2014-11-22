@@ -17,6 +17,8 @@ class TakeTestMilestone < ImuaMilestone
     else
       @target_org_test_title = milestone.value
     end
+
+    @milestone_description = "A milestone to set a requirement to take a specific Test set up in your Organization Setup. This milestone is automatically triggered when a user completes the test. This does not check the score of the test (only completion)."
   end
 
   def has_earned?(user, time_unit_id)

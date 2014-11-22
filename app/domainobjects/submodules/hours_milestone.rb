@@ -17,6 +17,8 @@ class HoursMilestone < ImuaMilestone
     else
       @target_hours = milestone.value.to_i
     end
+
+    @milestone_description = "A milestone to set a minimum service hour requirement. This milestone is automatically triggered by the system when a user's total service hours equal or exceed the required amount."
   end
 
   def has_earned?(user, time_unit_id)

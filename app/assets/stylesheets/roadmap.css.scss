@@ -103,7 +103,7 @@
       width: 49%;
       display: inline-block;
       @include respond-to(500) { display: inherit; width: 100%; }
-      
+
       text-align: right;
       vertical-align: middle;
       color: $grey;
@@ -189,6 +189,26 @@
 {
   margin-top: -2px;
 }
+
+.milestone_modules {
+  border-bottom: 1px solid;
+  padding: 10px;
+
+  .milestone_module {
+    margin-left: 20px;
+  }
+}
+
+.milestone_submodule {
+  width: 250px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
 
 .selectable_modules
 {
