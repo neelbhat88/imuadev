@@ -191,11 +191,32 @@
 }
 
 .milestone_modules {
-  border-bottom: 1px solid;
-  padding: 10px;
+  border-bottom: 2px solid;
+  text-align: center;
+  @each $category, $color in $darkcolormap {
+    &.color--#{$category} {
+      border-bottom-color: $color;
+    }
+  }
 
   .milestone_module {
+    @extend .bold;
+
     margin-left: 20px;
+    &:first-of-type { margin-left: 0px; }
+
+    cursor:pointer;
+
+    &:hover {text-decoration: underline;}
+
+    padding: 10px 5px;
+    display: inline-block;
+
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        &.selected { color: $color; }
+      }
+    }
   }
 }
 
@@ -207,6 +228,21 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+  cursor: pointer;
+
+  &:hover { box-shadow: 0 0 10px; }
+
+  &.selected { box-shadow: 0 0 10px; }
+}
+
+.milestone_edit {
+  .milestone_submodule {
+    width: 100%;
+  }
+}
+
+.milestone_submodule__form {
+  padding: 10px;
 }
 
 
@@ -252,7 +288,7 @@
 
 .milestone_advanced
 {
-  padding-left: 5px;
+  padding-top: 10px;
 
   .milestone_advanced__toggle
   {
@@ -261,8 +297,7 @@
 
   .milestone_advanced__hidden
   {
-    padding-top: 5px;
-    padding-left: 20px;
+    padding-top: 10px;
   }
 }
 

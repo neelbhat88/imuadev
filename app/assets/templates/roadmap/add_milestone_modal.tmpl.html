@@ -1,50 +1,63 @@
 <div class="modal-body">
 
-  <div class="milestone_modules">
-    <span class="milestone_module" ng-repeat="module in modules" ng-click="selectModule(module)">
+  <div class="milestone_modules" modulecolor="{{selected.module.title}}">
+    <div class="milestone_module" ng-repeat="module in modules"
+          ng-class="{selected: selected.module.title == module.title}"
+          ng-click="selectModule(module)"
+          modulecolor="{{module.title}}">
       <span class="module_title">{{module.title}}</span>
-    </span>
+    </div>
   </div>
 
-  <div class="milestone_submodules" ng-show="selected.module">
+  <div class="milestone_submodules" ng-hide="selected.submodule">
     <div class="milestone_submodule" ng-repeat="submodule in selected.module.submodules"
-        ng-click="selectSubmodule(submodule)">
+        ng-click="selectSubmodule(submodule)"
+        ng-class="{selected: selected.submodule.title == submodule.title}">
       <div class="milestone_submodule__title bold pbs">{{submodule.title}}</div>
       <div class="milestone_submodule__description">{{submodule.milestone_description}}</div>
     </div>
   </div>
 
-
-  <div ng-show="selected.sub_module" class="milestone_edit">
-
+  <div ng-show="selected.submodule" class="milestone_edit phm ptm">
     <div class="pbs">
-      <div class="milestone-description">{{selected.sub_module.description}}</div>
+      <span class="glyphicon glyphicon-circle-arrow-left"></span>
+      <a ng-click="clearSubmoduleSelection()">Back to milestones</a>
+    </div>
+    <div class="milestone_submodule selected">
+      <div class="milestone_submodule__title bold pbs">{{selected.submodule.title}}</div>
+      <div class="milestone_submodule__description">{{selected.submodule.milestone_description}}</div>
     </div>
 
-    <div class="pbs">
-      <input class="form-field" ng-model="selected.sub_module.value" placeholder="Value">
+    <div class="milestone_submodule__form">
+      <div class="pbs">
+        <div class="milestone-description">{{selected.submodule.description}}</div>
+      </div>
 
-    </div>
+      <div class="pbs">
+        <input class="form-field" ng-model="selected.submodule.value" placeholder="Value">
 
-    <div class="milestone_advanced">
-      <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
-      <div class="milestone_advanced__hidden" ng-show="showAdvanced">
-        <div class="pbs">
-          <span class="milestone-weight">Weight:</span>
-        </div>
-        <div class="pbs">
-          <input class="form-field" ng-model="selected.sub_module.points" placeholder="Weight">
+      </div>
+
+      <div class="milestone_advanced">
+        <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+        <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+          <div class="pbs">
+            <span class="milestone-weight">Weight:</span>
+          </div>
+          <div class="pbs">
+            <input class="form-field" ng-model="selected.submodule.points" placeholder="Weight">
+          </div>
         </div>
       </div>
-    </div>
 
-    <ul class="errorText ptm" ng-show="errors">
-      <li ng-repeat="error in errors">{{error}}</li>
-    </ul>
+      <ul class="errorText ptm" ng-show="errors">
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="buttonGroup pvxl">
-    <button type="submit" class="submit" ng-show="selected.sub_module" ng-click="add()"><span>Add</span></button>
+  <div class="buttonGroup pvm">
+    <button type="submit" class="submit" ng-show="selected.submodule" ng-click="add()"><span>Add</span></button>
     <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
   </div>
 </div>
