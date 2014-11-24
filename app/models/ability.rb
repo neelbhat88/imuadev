@@ -8,6 +8,9 @@ class Ability
       case subject.class.name
       when "User" then user_abilities(user, subject)
       when "Organization" then organization_abilities(user, subject)
+      when "Assignment" then assignment_abilities(user, subject)
+      when "UserAssignment" then user_assignment_abilities(user, subject)
+      when "Expectation" then expectation_abilities(user, subject)
       else []
       end
 
@@ -29,7 +32,15 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :create_assignment,
+          :create_assignment_broadcast,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -48,7 +59,15 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :create_assignment,
+          :create_assignment_broadcast,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
 
       elsif user.org_admin?
@@ -64,7 +83,13 @@ class Ability
           :manage_parent_guardian_contacts,
           :get_student_expectations,
           :get_student_dashboard,
-          :get_user_progress
+          :get_user_progress,
+          :get_user_assignments,
+          :create_user_assignment,
+          :get_user_assignment_collections,
+          :get_assignments,
+          :get_task_assignable_users,
+          :get_task_assignable_users_tasks
         ]
 
       elsif user.mentor?
@@ -82,7 +107,27 @@ class Ability
               :manage_parent_guardian_contacts,
               :get_student_expectations,
               :get_student_dashboard,
-              :get_user_progress
+              :get_user_progress,
+              :get_user_assignments,
+              :create_user_assignment,
+              :get_user_assignment_collections,
+              :get_assignments,
+              :get_task_assignable_users,
+              :get_task_assignable_users_tasks
+            ]
+          else # students not assigned to this mentor (read-only)
+            rules += [
+              :view_profile,
+              :read_user_tests,
+              :read_parent_guardian_contacts,
+              :get_student_expectations,
+              :get_student_dashboard,
+              :get_user_progress,
+              :get_user_assignments,
+              :get_user_assignment_collections,
+              :get_assignments,
+              :get_task_assignable_users,
+              :get_task_assignable_users_tasks
             ]
           end
         else # other users in their organization (other mentors, admins)
@@ -111,7 +156,8 @@ class Ability
         return [:create_user,
                 :read_org_tests,
                 :manage_org_tests,
-                :get_organization_progress]
+                :get_organization_progress,
+                :reset_passwords]
       else
         return [] if user.organization_id != subjectOrg.id
       end
@@ -120,7 +166,8 @@ class Ability
         rules += [:create_user,
                   :read_org_tests,
                   :manage_org_tests,
-                  :get_organization_progress]
+                  :get_organization_progress,
+                  :reset_passwords]
       end
 
       if user.mentor?
@@ -133,6 +180,107 @@ class Ability
 
       rules.uniq
     end
+
+    def assignment_abilities(user, subjectAssignment)
+      rules = []
+
+      if user.super_admin?
+        return[:get_assignment,
+               :update_assignment,
+               :destroy_assignment,
+               :get_assignment_collection,
+               :update_assignment_broadcast]
+      else
+        return [] if user.organization_id != subjectAssignment.organization_id
+      end
+
+      if user.org_admin?
+        rules += [:get_assignment,
+                  :update_assignment,
+                  :destroy_assignment,
+                  :get_assignment_collection,
+                  :update_assignment_broadcast]
+      end
+
+      if user.mentor?
+        rules += [:get_assignment,
+                  :get_assignment_collection]
+      end
+
+      if user.id == subjectAssignment.user_id
+        rules += [:get_assignment,
+                  :update_assignment,
+                  :destroy_assignment,
+                  :get_assignment_collection,
+                  :update_assignment_broadcast]
+      end
+
+      rules.uniq
+    end
+
+    def user_assignment_abilities(user, subjectUserAssignment)
+      rules = []
+      subjectUser = nil
+
+      if user.super_admin?
+        return[:update_user_assignment,
+               :destroy_user_assignment,
+               :get_user_assignment_collection]
+      else
+        subjectUser = User.where(id: subjectUserAssignment.user_id).first
+        return [] if user.organization_id != subjectUser.organization_id
+      end
+
+      if user.org_admin?
+        rules += [:update_user_assignment,
+                  :destroy_user_assignment,
+                  :get_user_assignment_collection]
+      end
+
+      if user.mentor?
+        related = UserRepository.new.are_related?(subjectUser.id, user.id)
+        if related
+          rules += [:update_user_assignment,
+                    :destroy_user_assignment,
+                    :get_user_assignment_collection]
+        elsif subjectUser.student?
+          rules += [:get_user_assignment_collection]
+        end
+      end
+
+      if user.id == subjectUser.id
+        rules += [:update_user_assignment,
+                  :get_user_assignment_collection]
+      end
+
+      rules.uniq
+    end
+
+    def expectation_abilities(user, subjectExpectation)
+      rules = []
+      subjectOrg = nil
+
+      if user.super_admin?
+        return [:get_expectation_status,
+                :put_expectation_status]
+      else
+        subjectOrg = Organization.where(id: subjectExpectation.organization_id).first
+        return [] if user.organization_id != subjectOrg.id
+      end
+
+      if user.org_admin?
+        rules += [:get_expectation_status,
+                  :put_expectation_status]
+      end
+
+      if user.mentor?
+        rules += [:get_expectation_status,
+                  :put_expectation_status]
+      end
+
+      rules.uniq
+    end
+
   end
 
 end

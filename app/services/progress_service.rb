@@ -1,7 +1,7 @@
 class ProgressService
 
   def get_student_expectations(params)
-    conditions = params
+    conditions = Marshal.load(Marshal.dump(params))
 
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :first_name, :last_name], [:organization_id]).where(conditions.slice(:user_id))
     conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
@@ -15,7 +15,9 @@ class ProgressService
     expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
 
     if userExpectationQ.domain.length != expectationQ.domain.length
-      UserExpectationService.new.update_user_expectations(params[:user_id])
+      # Update this to pass in @current_user when ProgressService is updated to
+      # be initialized with current_user
+      UserExpectationService.new(User.SystemUser).create_user_expectations(params[:user_id])
       userExpectationQ = nil
       userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
     end
@@ -30,7 +32,7 @@ class ProgressService
   end
 
   def get_student_dashboard(params)
-    conditions = params
+    conditions = Marshal.load(Marshal.dump(params))
 
     userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
     userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id], [:user_id]).where(conditions)
@@ -40,7 +42,7 @@ class ProgressService
     conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
     assignmentQ = Querier.new(Assignment).select([:title, :due_datetime, :description, :id, :user_id]).where(conditions.except(:user_id))
 
-    conditions[:user_id] = (assignmentQ.pluck(:user_id) + relationshipQ.pluck(:assigned_to_id) << conditions[:user_id].to_s).uniq
+    conditions[:user_id] = (assignmentQ.pluck(:user_id) + relationshipQ.pluck(:assigned_to_id) << params[:user_id].to_s).uniq
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions.slice(:user_id))
     userQ.set_subQueriers([userMilestoneQ, userExpectationQ, relationshipQ, userAssignmentQ, assignmentQ])
 
@@ -61,7 +63,7 @@ class ProgressService
   #       filtered by module_title and still have the semester progress circle
   #       calculated accurately
   def get_user_progress(params)
-    conditions = params
+    conditions = Marshal.load(Marshal.dump(params))
 
     if params[:recalculate]
       get_recalculated_milestones(params[:user_id], params[:time_unit_id], params[:module])
@@ -69,7 +71,12 @@ class ProgressService
 
     userQ = UserQuerier.new.select([:role, :time_unit_id, :avatar], [:organization_id]).where(conditions.slice(:user_id))
     userMilestoneQ = Querier.new(UserMilestone).where(conditions.except(:module))
-    userQ.set_subQueriers([userMilestoneQ])
+    userClassQ = Querier.new(UserClass).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userExtracurricularActivityDetailQ = Querier.new(UserExtracurricularActivityDetail).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userServiceHourQ = Querier.new(UserServiceHour).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userTestQ = Querier.new(UserTest).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
+    userQ.set_subQueriers([userMilestoneQ, userClassQ, userExtracurricularActivityDetailQ,
+      userServiceHourQ, userTestQ])
 
     conditions[:organization_id] = userQ.pluck(:organization_id)
 
@@ -85,7 +92,7 @@ class ProgressService
   end
 
   def get_organization_progress(params)
-    conditions = params
+    conditions = Marshal.load(Marshal.dump(params))
 
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
 

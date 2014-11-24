@@ -3,11 +3,12 @@
   <div class="task-header clear">
     <div class="single-col-wrapper">
       <div class="back-link">
-        <h6>
-          <a href="#/roadmap/{{milestone.organization_id}}">
-            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back to Roadmap
-          </a>
-        </h6>
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
       </div>
     </div>
   </div>
@@ -17,6 +18,11 @@
 
       <div class="task-content">
         <h4>{{milestone | printMilestone}}</h4>
+      </div>
+
+      <div ng-if="num_students_in_semester == 0">
+        <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
+        <h5 ng-if="current_user.is_mentor" class="italic">None of your students are currently in {{milestone.time_unit_name}}</h5>
       </div>
 
       <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
@@ -38,9 +44,9 @@
       </ul>
 
       <ul class="users-completed" ng-if="users_complete.length != 0">
-        <h6 class="bold green" ng-if="users_complete.length == 1 && users_total.length != 1">{{users_complete.length}} student has completed this milestone</h6>
-        <h6 class="bold green" ng-if="users_complete.length != 1 && users_complete.length != users_total.length">{{users_complete.length}} students have completed this milestone</h6>
-        <h6 class="bold green" ng-if="users_complete.length == users_total.length">Nice! All students have completed this milestone.</h6>
+        <h6 class="bold green" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
           <a href="#/progress/{{user.id}}">
             <div class="medium-circle-picture">
@@ -60,29 +66,18 @@
 
     <div class="assignment--right">
       <ul>
+        <li class="column-title">
+          <h5 class="bold">Milestone Info</h5>
+        </li>
         <li>
           <span class="edit-milestone__title"><img ng-src={{milestone.icon}}/></span>
           <h6 class="bold">{{milestone.title}}</h6>
         </li>
         <li>
-          <h5>
-            <span class="label label-warning" ng-if="users_incomplete.length != 0">
-              <span class="glyphicon glyphicon-exclamation-sign"></span> Incomplete
-            </span>
-            <span class="label label-success" ng-if="users_incomplete.length == 0">
-              <span class="glyphicon glyphicon-ok-circle"></span> Complete
-            </span>
-          </h5>
-        </li>
-        <!-- <li ng-if="milestone.due_datetime != null>
-          <h6>Due by</h6>
-          <h5 class="bold">{{milestone.due_datetime | formatMDY}}</h5>
-        </li> -->
-        <li>
-          <h5 class="bold">{{milestone.time_unit_name}}</h5>
+          <h6>{{milestone.time_unit_name}}</h6>
         </li>
         <li>
-          <h6>Total Students Assigned</h6>
+          <h6>Students currently in {{milestone.time_unit_name}}</h6>
           <h5 class="bold">{{users_total.length}}</h5>
           <h6>
             ({{percent_complete}}% Complete)

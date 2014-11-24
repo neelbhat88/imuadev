@@ -74,10 +74,7 @@ class Api::V1::ProgressController < ApplicationController
     result = @progressService.get_student_dashboard(url_params)
 
     render status: result.status,
-      json: Oj.dump({
-        info: result.info,
-        organization: result.object
-      }, mode: :compat)
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
   # GET /users/:id/progress_2?time_unit_id=XX&module=XX&recalculate=XX

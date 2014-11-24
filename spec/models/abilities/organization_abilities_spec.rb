@@ -10,7 +10,8 @@ describe Ability do
     expect(abilities).to contain_exactly(:create_user,
                                          :read_org_tests,
                                          :manage_org_tests,
-                                         :get_organization_progress)
+                                         :get_organization_progress,
+                                         :reset_passwords)
   end
 
   it "doesn't allow any action if not in same organization" do
@@ -31,7 +32,8 @@ describe Ability do
     expect(abilities).to contain_exactly(:create_user,
                                          :read_org_tests,
                                          :manage_org_tests,
-                                         :get_organization_progress)
+                                         :get_organization_progress,
+                                         :reset_passwords)
   end
 
   it "allows mentor actions" do

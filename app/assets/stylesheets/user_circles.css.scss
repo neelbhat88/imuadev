@@ -4,7 +4,7 @@
 
 .circle-subnav {
   @include font-size(1.2);
-  visibility: hidden;
+
   li {
     margin-bottom: 2px;
     &:last-of-type {
@@ -48,12 +48,9 @@
 
 .add-button {
   @extend .progress-circles;
-  padding-top: 40px;
-  opacity: 0.3;
+  cursor: pointer;
 
-  &:hover {
-    opacity: 1;
-  }
+  &:hover { text-decoration: underline;}
 
   .glyphicon {
     @include font-size(8);

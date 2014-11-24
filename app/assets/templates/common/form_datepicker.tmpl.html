@@ -1,0 +1,14 @@
+<span>
+<span class="input-group datepicker-label">
+    <label>{{label}}</label>
+    <span ng-messages="form.datepicker.$error" ng-if="form.$submitted"
+    ng-messages-include="forms/error_messages.html">
+    </span>
+</span>
+<span class="input-group">
+  <input name="datepicker" required class="imua-form-editor form-control ng-pristine ng-valid " type="text" ng-model="date" placeholder="Date" datepicker-popup='MM/dd/yyyy' datepicker-append-to-body="true" is-open="opened" show-button-bar="false" ng-click="opened=false">
+  <span class="input-group-btn">
+    <button type="button" class="imua-datepicker-btn btn btn-default" ng-click="open($event)" tabindex="-1"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+</span>
+</span>

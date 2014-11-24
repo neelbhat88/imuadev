@@ -20,7 +20,7 @@ angular.module('myApp')
     .success (data) ->
       $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
       $scope.student = $scope.organization.students[0]
-      $scope.student_with_modules_progress = $scope.student
+      $scope.student_with_modules_progress = _.omit($scope.student, ['user_assignments', 'mentors'])
       $scope.student_mentors = $scope.student.mentors
 
       current_org_milestones = _.filter($scope.organization.milestones, (m) -> m.time_unit_id == $scope.student.time_unit_id)

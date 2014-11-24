@@ -188,6 +188,12 @@
     }
   }
 
+  .testingProgressContainer {
+    .test-taken-header {
+      padding: 20px;
+    }
+  }
+
   /* Editing */
 
   .input-group {
@@ -202,7 +208,7 @@
   }
 
   .datepicker-label {
-    margin-bottom: 0;
+    margin-bottom: -15px;
   }
 
   .half-width {

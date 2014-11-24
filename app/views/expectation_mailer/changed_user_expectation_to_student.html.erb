@@ -1,0 +1,15 @@
+<p>Hey <%= @student.first_name %>,</p>
+
+<p><%= @modifier.full_name %> just changed your expectation '<%= @expectation.title %>'
+  to '<%= @status %>'.</p>
+
+<% if @comment %>
+<p> <%= @modifier.full_name %> left the following comment: </p>
+<p>"<%= @comment %>"</p>
+<% end %>
+
+<p><%= link_to "Log in", login_url %> to view this update. </p>
+
+<p>Mahalo,<p>
+
+Imua

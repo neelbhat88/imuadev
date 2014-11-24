@@ -1,6 +1,6 @@
 angular.module('myApp')
 .directive 'imuaDatepicker', [() ->
-  restrict: 'E'
+  restrict: 'E',
   scope: {
     date: '='
   }

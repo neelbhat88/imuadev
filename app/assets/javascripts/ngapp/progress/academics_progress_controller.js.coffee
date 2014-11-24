@@ -7,9 +7,13 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.formErrors = [ '**Please fix the errors above**' ];
+
 
     $scope.$watch 'selected_semester', () ->
+      $scope.class_editor = false
       if $scope.selected_semester
+        $scope.loaded_data = false
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
@@ -19,7 +23,7 @@ angular.module('myApp')
               $scope.gpa = 0.toFixed(2)
 
             $scope.last_updated_gpa = _.last(_.sortBy($scope.student.user_classes, (u) ->
-              u.updated_at)).updated_at
+              u.updated_at)).updated_at if $scope.student.user_classes.length > 0
 
             date_format_gpa_history =
               _.each(data.user_gpa_history, (h) ->
@@ -35,14 +39,18 @@ angular.module('myApp')
                 $scope.gpa_history.values.push(gpa_history.regular_unweighted)
                 $scope.gpa_history.dates.push(gpa_history.date_updated)
 
+            $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones');
+
+    $scope.editorClick = () ->
+      $scope.class_editor = !$scope.class_editor
 
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
       user_class.editing = true
       # Is there a better way to do this??
       user_class.new_name = user_class.name
-      user_class.new_grade = user_class.grade
+      user_class.new_grade_value = user_class.grade_value
       user_class.new_room = user_class.room
       user_class.new_period = user_class.period
       user_class.new_level = user_class.level
@@ -50,13 +58,13 @@ angular.module('myApp')
       user_class.new_credit_hours = user_class.credit_hours
 
     $scope.saveClass = (user_class) ->
-      if !user_class.new_name || !user_class.new_grade
+      if !user_class.new_name || !user_class.new_grade_value
         return
-        
+
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = user_class.id
       new_class.name = user_class.new_name
-      new_class.grade = user_class.new_grade
+      new_class.grade_value = user_class.new_grade_value
       new_class.room = user_class.new_room
       new_class.period = user_class.new_period
       new_class.level = user_class.new_level

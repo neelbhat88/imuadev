@@ -56,5 +56,7 @@ angular.module('myApp')
 
       modalInstance.result.then (user) ->
         $scope.organization.mentors.push(user)
+        $scope.addSuccessMessage("Email with password has been sent to " + user.email)
+
 
 ]

@@ -4,6 +4,7 @@ angular.module('myApp')
     $scope.semester_activities = 0
     $scope.user_extracurricular_activities = []
     $scope.activities = {}
+    $scope.ecEditor = false
     $scope.activities.editing = false
     $scope.previous_activity_list = []
     current_activities = []
@@ -27,6 +28,7 @@ angular.module('myApp')
     , true
 
     $scope.$watch 'selected_semester', () ->
+      $scope.ecEditor = false
       if $scope.selected_semester
         $scope.resetNewActivityEntry()
         $scope.loaded_data = false
@@ -47,6 +49,9 @@ angular.module('myApp')
 
             $scope.loaded_data = true
             $scope.$emit('loaded_module_milestones')
+
+    $scope.editorClick = () ->
+      $scope.ecEditor = !$scope.ecEditor
 
     $scope.activityIsSavable = (activity) ->
       return activity.name
@@ -113,6 +118,7 @@ angular.module('myApp')
       new_activity.details[0].description = activity.details[0].new_description
       UserExtracurricularActivityService.saveExtracurricularActivity(new_activity)
         .success (data) ->
+          activity.id = data.user_extracurricular_activity.id
           activity.name = data.user_extracurricular_activity.name
           activity.details[0] = data.user_extracurricular_detail
           activity.editing = false

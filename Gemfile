@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.19'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -46,7 +46,7 @@ gem 'newrelic_rpm'
 
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
-gem 'angularjs-rails'
+gem 'angularjs-rails', "~> 1.3.0"
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
 # Lots of cool JS programming helpers (e.g. _groupBy)
@@ -76,6 +76,9 @@ gem 'keen'
 # Optimizations
 gem 'oj'
 gem 'valium'
+
+# Security checks
+gem "brakeman", :require => false
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
