@@ -2,6 +2,7 @@ angular.module('myApp')
 .controller 'OrganizationExpectationController', ['$route', '$scope', 'ExpectationService',
   ($route, $scope, ExpectationService) ->
 
+    $scope.formErrors = [ '** Please fix the errors above **']
     $scope.user = $scope.current_user
     $scope.orgId = $route.current.params.id
     $scope.expectations = []

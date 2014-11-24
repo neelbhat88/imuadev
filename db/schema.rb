@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.text     "comment"
+    t.datetime "created_on"
   end
 
   create_table "user_expectations", :force => true do |t|

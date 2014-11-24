@@ -46,6 +46,17 @@ class User < ActiveRecord::Base
     :content_type => { :content_type => /\Aimage\/.*\Z/, :message => "You must choose an image file" },
     :size => { :in => 0..2.megabytes, :message => "The file must be less than 2 megabytes in size" }
 
+  def self.SystemUser
+    systemuser = User.new do |u|
+      u.id = -1
+      u.email = "imua+system@myimua.org"
+      u.first_name = "System"
+      u.last_name = "System"
+      u.role = Constants.UserRole[:SYSTEM]
+      u.organization_id = -1
+    end
+  end
+
   def full_name
     return self.first_name + " " + self.last_name
   end
