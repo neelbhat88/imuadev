@@ -105,13 +105,17 @@
       }
 
       .delete-button {
-        margin-bottom: 10px;
+        margin-bottom: 0px;
       }
 
     }
 
     #cell--grades {
       width: 15%;
+    }
+
+    #cell--form {
+      width: 20%;
     }
 
   }
