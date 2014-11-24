@@ -48,13 +48,17 @@
                     <h4 class="bold">{{user_class.name}}</h4>
                   </div>
                 </div>
-                <div progress-editor class="delete-button" ng-show="class_editor">
+                <div progress-editor class="delete-button pbm" ng-show="class_editor">
                   <button class="btn btn-danger" ng-click="deleteClass(user_class, $event)"><span class="glyphicon glyphicon-trash"></span> Delete </button>
                 </div>
               </div>
 
               <div id="cell--grades" class="table--cell">
                 <h4 class="bold">{{user_class.grade_value}}</h4>
+              </div>
+
+              <div id="cell--grades" class="table--cell">
+                <h4 class="bold">{{user_class.grade}}</h4>
               </div>
 
             </div>
@@ -125,7 +129,7 @@
                 <div class="table--cell breakalways"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                   <span class="input-group grade">
                       <label-with-errors label="Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
-                      <input type="number" class="form-control" ng-model="user_class.new_grade_value" name="grade" required>
+                      <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="grade" required>
                   </span>
                 </div>
 

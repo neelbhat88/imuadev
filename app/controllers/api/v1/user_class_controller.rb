@@ -56,6 +56,8 @@ class Api::V1::UserClassController < ApplicationController
   def create
     userId = params[:user_id]
     new_class = params[:user_class]
+    new_class[:grade_value] = new_class[:grade_value].to_f
+
 
     result = @userClassService.save_user_class(current_user, userId, new_class)
     classes = @userClassService.get_user_classes(new_class[:user_id], new_class[:time_unit_id])
@@ -73,6 +75,7 @@ class Api::V1::UserClassController < ApplicationController
   def update
     classId = params[:id]
     updated_class = params[:user_class]
+    updated_class[:grade_value] = updated_class[:grade_value].to_f
 
     user_class = @userClassService.update_user_class(current_user, classId, updated_class)
 
