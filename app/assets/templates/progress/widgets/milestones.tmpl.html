@@ -11,7 +11,7 @@
               <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
                 <div class="milestone-item-unstatisfied">
 
-                  <a title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
+                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
                     <div class="milestone--point-circle">
                       <div class="point-circle--inside">
                         <h5 class="bold">{{milestone.points}}</h5>
@@ -19,6 +19,13 @@
                       </div>
                     </div>
                   </a>
+
+                  <div ng-if="current_user.is_student" class="milestone--point-circle">
+                    <div class="point-circle--inside">
+                      <h5 class="bold">{{milestone.points}}</h5>
+                      <p>Points</p>
+                    </div>
+                  </div>
 
                   <input type="checkbox" ng-if="milestone.submodule === 'YesNo' && !current_user.is_student"
                     ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
@@ -42,13 +49,19 @@
               <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
                 <div class="milestone-item-statisfied">
 
-                  <a title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
+                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
                     <div class="milestone--point-circle">
                       <div class="point-circle--inside">
                         <h4 class="bold">✓</h4>
                       </div>
                     </div>
                   </a>
+
+                  <div ng-if="current_user.is_student" class="milestone--point-circle">
+                    <div class="point-circle--inside">
+                      <h4 class="bold">✓</h4>
+                    </div>
+                  </div>
 
                   <input type="checkbox" ng-if="milestone.submodule === 'YesNo' && !current_user.is_student"
                     ng-model="milestone.earned" ng-change="toggleYesNoMilestone(milestone)"
