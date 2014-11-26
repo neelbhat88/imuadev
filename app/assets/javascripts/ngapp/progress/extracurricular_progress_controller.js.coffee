@@ -9,6 +9,7 @@ angular.module('myApp')
     $scope.previous_activity_list = []
     current_activities = []
     other_activity = {}
+    $scope.formErrors = [ '**Please fix the errors above**' ]
 
     $scope.resetNewActivityEntry = () ->
       if $scope.selected_semester

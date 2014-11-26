@@ -6,7 +6,7 @@ angular.module('myApp')
     $scope.selected_org = null
     $scope.serviceEditor = false
     $scope.loaded_data = false
-    $scope.formErrors = [ '**Please fix the errors above**' ];
+    $scope.formErrors = [ '**Please fix the errors above**' ]
 
     $scope.resetNewServiceEntry = () ->
       if $scope.selected_semester

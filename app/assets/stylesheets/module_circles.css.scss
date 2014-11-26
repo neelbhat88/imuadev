@@ -49,10 +49,33 @@
       }
 
     }
+
     .bar-points {
       padding-top: 5px;
     }
 
   }
+
+  .module-bar--full {
+    width: 100%;
+
+    .bar-size {
+      width: 450px;
+      height: 13px;
+      margin: 0 auto;
+      margin-top: 3px;
+
+      @include respond-to(600) {
+        width: 240px;
+      }
+
+    }
+
+    .bar-points {
+      padding-top: 10px;
+    }
+
+  }
+
 
 }
