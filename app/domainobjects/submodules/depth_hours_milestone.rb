@@ -6,9 +6,8 @@ class DepthHoursMilestone < ImuaMilestone
 
     @module = Constants.Modules[:SERVICE]
     @submodule = Constants.SubModules[:SERVICE_DEPTH_HOURS]
-  
+
     @title = "Be Committed"
-    @value = ""
     @icon = "/assets/Service.jpg"
     @description = "Minimum number of hours in a single organization for this semester:"
     @milestone_description = "A milestone to set a service hour requirement for a single organization to promote commitment. This milestone is automatically triggered by the system when a user's total service hours for any one of their service organizations equals or exceeds the specified amount."

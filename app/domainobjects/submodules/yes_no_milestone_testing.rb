@@ -6,7 +6,6 @@ class YesNoMilestoneTesting < CustomMilestone
     @module = Constants.Modules[:TESTING]
     @submodule = Constants.SubModules[:YES_NO]
 
-    @value = ""
     @icon = "/assets/Testing.jpg"
 
     @milestone_description = "A generic milestone where you can type a custom testing goal. This milestone is manually completed by the user by clicking a checkbox."

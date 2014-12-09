@@ -9,7 +9,6 @@ class GpaMilestone < ImuaMilestone
 
     @title = "Good Grades"
     @description = "Minimum GPA:"
-    @value = ""
     @icon = "/assets/Academics.jpg"
     @milestone_description = "A milestone to set a minimum GPA requirement.
                               This milestone is automatically triggered

@@ -6,7 +6,6 @@ class YesNoMilestoneService < CustomMilestone
     @module = Constants.Modules[:SERVICE]
     @submodule = Constants.SubModules[:YES_NO]
 
-    @value = ""
     @icon = "/assets/Service.jpg"
 
     @milestone_description = "A generic milestone where you can type a custom service goal. This milestone is manually completed by the user by clicking a checkbox."

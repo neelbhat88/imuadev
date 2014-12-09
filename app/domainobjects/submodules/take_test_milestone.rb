@@ -9,7 +9,6 @@ class TakeTestMilestone < ImuaMilestone
 
     @title = "Rock the Exam"
     @description = "Take the following exam:"
-    @value = ""
     @icon = "/assets/Testing.jpg"
 
     @milestone_description = "A milestone to set a requirement to take a specific Test set up in your Organization Setup. This milestone is automatically triggered when a user completes the test. This does not check the score of the test (only completion)."

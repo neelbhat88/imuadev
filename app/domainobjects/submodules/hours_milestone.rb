@@ -9,9 +9,8 @@ class HoursMilestone < ImuaMilestone
     @title = "Give Back"
     @description = "Minimum number of hours for this semester:"
     @milestone_description = "A milestone to set a minimum service hour requirement. This milestone is automatically triggered by the system when a user's total service hours equal or exceed the required amount."
-    @value = ""
     @icon = "/assets/Service.jpg"
-    
+
     if milestone.nil?
       @target_hours = @value.to_i
     else

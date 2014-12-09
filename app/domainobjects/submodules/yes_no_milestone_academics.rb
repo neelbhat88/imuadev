@@ -6,7 +6,6 @@ class YesNoMilestoneAcademics < CustomMilestone
     @module = Constants.Modules[:ACADEMICS]
     @submodule = Constants.SubModules[:YES_NO]
 
-    @value = ""
     @icon = "/assets/Academics.jpg"
     @milestone_description = "A generic milestone where you can type a custom
                               academic goal. This milestone is manually completed
