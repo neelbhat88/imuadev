@@ -16,7 +16,8 @@ class ImuaMilestone
       IMPORTANCE:       1,
       POINTS:           10,
       ICON:             "n/a",
-      EARNED:           false
+      EARNED:           false,
+      VALUE:            ""
     }
   end
 

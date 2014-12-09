@@ -4,24 +4,22 @@ class ActivitiesMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:EXTRACURRICULAR]
-      @submodule = Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES]
+    @module = Constants.Modules[:EXTRACURRICULAR]
+    @submodule = Constants.SubModules[:EXTRACURRICULAR_ACTIVITIES]
 
-      @title = "Get Involved"
-      @description = "Minimum activities:"
-      @value = "1"
-      @icon = "/assets/Extracurricular.jpg"
-
-      @target_activities = @value.to_i
-    else
-      @target_activities = milestone.value.to_i
-    end
-
+    @title = "Get Involved"
+    @description = "Minimum number of activities this semester:"
+    @icon = "/assets/Extracurricular.jpg"
     @milestone_description = "A milestone to set a Extracurricular involvement
                               requirement. This milestone is automatically triggered
                               by the system when a user is involved in the number of
                               activities specified."
+
+    if milestone.nil?
+      @target_activities = @value.to_i
+    else
+      @target_activities = milestone.value.to_i
+    end
   end
 
   def has_earned?(user, time_unit_id)

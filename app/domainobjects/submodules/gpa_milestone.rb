@@ -4,24 +4,23 @@ class GpaMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:ACADEMICS]
-      @submodule = Constants.SubModules[:ACADEMICS_GPA]
+    @module = Constants.Modules[:ACADEMICS]
+    @submodule = Constants.SubModules[:ACADEMICS_GPA]
 
-      @title = "Good Grades"
-      @description = "Minimum GPA:"
-      @value = "3.5"
-      @icon = "/assets/Academics.jpg"
-
-      @target_gpa = @value.to_f
-    else
-      @target_gpa = milestone.value.to_f
-    end
-
+    @title = "Good Grades"
+    @description = "Minimum GPA:"
+    @value = ""
+    @icon = "/assets/Academics.jpg"
     @milestone_description = "A milestone to set a minimum GPA requirement.
                               This milestone is automatically triggered
                               by the system when a user's GPA
                               equals or exceeds the GPA specified."
+
+    if milestone.nil?
+      @target_gpa = @value.to_f
+    else
+      @target_gpa = milestone.value.to_f
+    end
   end
 
   def has_earned?(user, time_unit_id)

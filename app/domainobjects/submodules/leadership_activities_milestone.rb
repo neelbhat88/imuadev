@@ -4,21 +4,20 @@ class LeadershipActivitiesMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
+    @module = Constants.Modules[:EXTRACURRICULAR]
+    @submodule = Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
+
+    @title = "Be a Leader"
+    @description = "Minimum number of past leadership roles:"
+    @icon = "/assets/Extracurricular.jpg"
+
+    @milestone_description = "A milestone to set a requirement to hold a leadership position in an Extracurricular for a specified number of semesters. This milestone is automatically triggered by the system when a user's leadership roles across all of their Extracurricular Activities in the past equals or exceeds the number specified."
+
     if milestone.nil?
-      @module = Constants.Modules[:EXTRACURRICULAR]
-      @submodule = Constants.SubModules[:EXTRACURRICULAR_LEADERSHIP_ACTIVITIES]
-
-      @title = "Be a Leader"
-      @description = "Minimum number of past leadership roles:"
-      @value = "1"
-      @icon = "/assets/Extracurricular.jpg"
-
       @target_leadership_activities = @value.to_i
     else
       @target_leadership_activities = milestone.value.to_i
     end
-
-    @milestone_description = "A milestone to set a requirement to hold a leadership position in an Extracurricular for a specified number of semesters. This milestone is automatically triggered by the system when a user's leadership roles across all of their Extracurricular Activities in the past equals or exceeds the number specified."
   end
 
   def has_earned?(user, time_unit_id)

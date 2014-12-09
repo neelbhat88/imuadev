@@ -1,15 +1,16 @@
 <div class="modal-body">
-
+  <div class="modal-body__title"><h5>Add New Milestone</h5></div>
   <div class="milestone_modules" modulecolor="{{selected.module.title}}">
     <div class="milestone_module" ng-repeat="module in modules"
           ng-class="{selected: selected.module.title == module.title}"
           ng-click="selectModule(module)"
           modulecolor="{{module.title}}">
-      <span class="module_title">{{module.title}}</span>
+      <span class="module_title">{{module.title | underscoresToSpaces}}</span>
     </div>
   </div>
 
   <div class="milestone_submodules" ng-hide="selected.submodule">
+    <h6>Select a {{selected.module.title | underscoresToSpaces}} milestone:</h6>
     <div class="milestone_submodule" ng-repeat="submodule in selected.module.submodules"
         ng-click="selectSubmodule(submodule)"
         ng-class="{selected: selected.submodule.title == submodule.title}">
