@@ -63,6 +63,10 @@
     font-size: 22px;
     border: 1px solid $lightgrey;
     border-top: none;
+    &:hover {
+      box-shadow: 0px 0px 10px;
+      cursor: pointer;
+    }
   }
 
   .semester__header-title--editable {
