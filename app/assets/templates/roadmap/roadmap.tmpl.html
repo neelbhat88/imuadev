@@ -43,7 +43,7 @@
               <div class="semester__header-title">{{sem.name}}</div>
             </div>
             <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
-              <div class="semester__header-title--editable" ng-hide="sem.editing">
+              <div class="semester__header-title--editable" ng-hide="sem.editing" ng-click="sem.expanded=!sem.expanded">
                 <span class="name" ng-click="addTimeUnit(sem)">{{sem.name}}</span>
               </div>
 
