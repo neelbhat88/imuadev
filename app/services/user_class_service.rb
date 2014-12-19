@@ -1,5 +1,16 @@
 class UserClassService
 
+  def get_org_class_titles(params)
+    conditions = params
+
+    userQ = UserQuerier.new.select([]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+    userClassQ = Querier.new(UserClass).select([], [:name]).where(conditions)
+
+    return userClassQ.pluck(:name)
+  end
+
   def get_user_classes(userId, time_unit_id)
     if time_unit_id == 0
       return UserClass.where(:user_id => userId).order(:id)
@@ -36,8 +47,9 @@ class UserClassService
     new_class = UserClass.new do | u |
       u.user_id = userId
       u.name = user_class[:name]
-      u.grade = user_class[:grade]
-      u.gpa = get_gpa(user_class[:grade])
+      u.grade = get_grade(user_class[:grade_value])
+      u.grade_value = user_class[:grade_value]
+      u.gpa = get_gpa(u.grade)
       u.time_unit_id = user_class[:time_unit_id]
       u.period = user_class[:period]
       u.room = user_class[:room]
@@ -62,8 +74,9 @@ class UserClassService
     db_class = UserClass.find(class_id)
 
     if db_class.update_attributes(:name => user_class[:name],
-                                  :grade => user_class[:grade],
-                                  :gpa => get_gpa(user_class[:grade]),
+                                  :grade => get_grade(user_class[:grade_value]),
+                                  :grade_value => user_class[:grade_value],
+                                  :gpa => get_gpa(get_grade(user_class[:grade_value])),
                                   :period => user_class[:period],
                                   :room => user_class[:room],
                                   :credit_hours => user_class[:credit_hours],
@@ -98,20 +111,69 @@ class UserClassService
   end
 
   private
-
   def get_gpa(grade)
-    gpaHash = Hash.new()
-    gpaHash = {
-      'A' =>  4.0,  'A-' => 3.67,
-      'B+' => 3.33, 'B' =>  3.00, 'B-' => 2.67,
-      'C+' => 2.33, 'C' =>  2.00, 'C-' => 1.67,
-      'D+' => 1.33, 'D' =>  1.00, 'D-' => 0.67,
-      'F' =>  0.0
-    }
-
-    gpa = gpaHash[grade]
+    case grade
+      when 'A'
+        gpa = 4.0
+      when 'A-'
+        gpa = 3.67
+      when 'B+'
+        gpa = 3.33
+      when 'B'
+        gpa = 3.00
+      when 'B-'
+        gpa = 2.67
+      when 'C+'
+        gpa = 2.33
+      when 'C'
+        gpa = 2.00
+      when 'C-'
+        gpa = 1.67
+      when 'D+'
+        gpa = 1.33
+      when 'D'
+        gpa = 1.00
+      when 'D-'
+        gpa = 0.67
+      when 'F'
+        gpa = 0.0
+    end
 
     return gpa
+  end
+
+  # TODO I'm thinking we can eventually pass in a scale object that will have
+  # an upper and lower bounds for each grade, then set the ranges using that
+  private
+  def get_grade(grade_value)
+    case grade_value
+      when 92.5..100
+        grade = 'A'
+      when 89.5..92.4
+        grade = 'A-'
+      when 86.5..89.4
+        grade = 'B+'
+      when 82.5..86.4
+        grade = 'B'
+      when 79.5..82.4
+        grade = 'B-'
+      when 76.5..79.4
+        grade = 'C+'
+      when 72.5..76.4
+        grade = 'C'
+      when 69.5..72.4
+        grade = 'C-'
+      when 66.5..69.4
+        grade = 'D+'
+      when 62.5..66.4
+        grade = 'D'
+      when 59.5..62.4
+        grade = 'D-'
+      when 0..59.4
+        grade = 'F'
+    end
+
+    return grade
   end
 
 end
