@@ -56,7 +56,7 @@
 .year__semester {
 
   .semester__header-title {
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
     background-color: #f0f0f0;
     color: $ink;
     text-align: center;
@@ -67,6 +67,11 @@
       box-shadow: 0px 0px 10px;
       cursor: pointer;
     }
+  }
+
+  .semester__header-click_text {
+    @include font-size(1.1);
+    padding-top: 5px;
   }
 
   .semester__header-title--editable {
