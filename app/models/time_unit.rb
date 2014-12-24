@@ -21,11 +21,7 @@ class ViewTimeUnit
     @id = time_unit.id
     @name = time_unit.name
 
-    @milestones = []
-    milestone_objects = MilestoneFactory.get_milestone_objects(time_unit.milestones)
-    milestone_objects.each do | m |
-      @milestones << ViewMilestone.new(m)
-    end
+    @milestones = MilestoneFactory.get_milestone_objects(time_unit.milestones)
   end
 end
 
