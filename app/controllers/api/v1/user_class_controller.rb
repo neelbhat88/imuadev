@@ -21,6 +21,7 @@ class Api::V1::UserClassController < ApplicationController
     userId = params[:user_id].to_i
     time_unit_id = params[:time_unit].to_i
 
+    user = @userRepository.get_user(userId)
     if !student_can_access?(userId)
       render status: :forbidden,
         json: {}
@@ -39,13 +40,15 @@ class Api::V1::UserClassController < ApplicationController
     classes = @userClassService.get_user_classes(userId, time_unit_id)
     user_gpa = @userGpaService.get_user_gpa(userId, time_unit_id)
     user_gpa_history = @userGpaHistoryService.get_user_gpa_history(userId, time_unit_id)
+    org_class_titles = @userClassService.get_org_class_titles(organization_id: user.organization_id)
 
     render status: :ok,
       json: {
         info: "User's academics data",
         user_classes: classes.map{|uc| ViewUserClass.new(uc)},
         user_gpa: user_gpa,
-        user_gpa_history: user_gpa_history
+        user_gpa_history: user_gpa_history,
+        org_class_titles: org_class_titles
       }
   end
 
@@ -53,6 +56,8 @@ class Api::V1::UserClassController < ApplicationController
   def create
     userId = params[:user_id]
     new_class = params[:user_class]
+    new_class[:grade_value] = new_class[:grade_value].to_f
+
 
     result = @userClassService.save_user_class(current_user, userId, new_class)
     classes = @userClassService.get_user_classes(new_class[:user_id], new_class[:time_unit_id])
@@ -70,6 +75,7 @@ class Api::V1::UserClassController < ApplicationController
   def update
     classId = params[:id]
     updated_class = params[:user_class]
+    updated_class[:grade_value] = updated_class[:grade_value].to_f
 
     user_class = @userClassService.update_user_class(current_user, classId, updated_class)
 

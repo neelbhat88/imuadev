@@ -105,13 +105,17 @@
       }
 
       .delete-button {
-        margin-bottom: 20px;
+        margin-bottom: 0px;
       }
 
     }
 
     #cell--grades {
-      width: 30%;
+      width: 15%;
+    }
+
+    #cell--form {
+      width: 20%;
     }
 
   }
@@ -208,7 +212,7 @@
   }
 
   .datepicker-label {
-    margin-bottom: -15px;
+    margin-bottom: -10px;
   }
 
   .half-width {

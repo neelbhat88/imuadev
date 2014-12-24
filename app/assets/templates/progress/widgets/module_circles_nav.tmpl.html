@@ -10,14 +10,15 @@
             <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
           </div>
           <div class="progress-bar-nav clear">
-            <div class="progress-bar--left">
+
+            <div class="progress-bar--full">
               <h6 class="bold">{{student.first_name}}'s Total Progress</h6>
-            </div>
-            <div class="progress-bar--right">
               <div class="progress-bar-size">
                 <horizontal-progress-bar student="student_with_modules_progress" identifier="big" parentclass="progress-bar-size"></progress-circle>
               </div>
-               <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
+              <div class="bar-expectation">
+               <a class="pts" href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
+             </div>
             </div>
           </div>
         </div>
@@ -37,10 +38,8 @@
         </div>
 
         <div class="module-bar cell--padding clear">
-          <div class="module-bar--left">
+          <div class="module-bar--full">
             <h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6>
-          </div>
-          <div class="module-bar--right">
             <div class="bar-size">
               <horizontal-module-progress-bar module="mod" parentclass="bar-size"></horizontal-module-progress-bar>
             </div>
