@@ -43,4 +43,15 @@ class MilestoneFactory
 
     return milestone_objects
   end
+
+  # ToDo: Remove this when code from progress_service.rb is removed
+  # Keeping this around as an example for now
+  def self.get_milestone_objects_TEMPORARY(milestones)
+    milestone_objects = []
+    milestones.each do | m |
+      milestone_objects << MilestoneFactory.get_milestone(m[:module], m[:submodule], m)
+    end
+
+    return milestone_objects
+  end
 end

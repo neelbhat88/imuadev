@@ -39,12 +39,21 @@
           <div class="year__semester" ng-repeat="sem in year.semesters">
 
             <!-- Semester Header -->
-            <div ng-if="current_user.role >= CONSTANTS.USER_ROLES.mentor" ng-click="sem.expanded=!sem.expanded">
-              <div class="semester__header-title">{{sem.name}}</div>
+            <div ng-click="sem.expanded=!sem.expanded">
+              <div class="semester__header-title">
+                {{sem.name}}
+                <div class="semester__header-click_text">Click to
+                  <span ng-show="!sem.expanded">expand</span>
+                  <span ng-show="sem.expanded">collapse</span>
+                </div>
+              </div>
             </div>
-            <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
+            <!-- Removing this for now. This should be done better by using the gear icon
+                 or something but right now nobody changes the name anyways -->
+            <!-- <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
               <div class="semester__header-title--editable" ng-hide="sem.editing" ng-click="sem.expanded=!sem.expanded">
-                <span class="name" ng-click="addTimeUnit(sem)">{{sem.name}}</span>
+                <span class="name">{{sem.name}}</span>
+                <div class="">Click to expand</div>
               </div>
 
               <div ng-show="sem.editing" class="semester__header-title--editing">
@@ -55,7 +64,7 @@
                   <button class="cancel" ng-click="cancelAddTimeUnit(sem)"><span>Cancel</span></button>
                 </form>
               </div>
-            </div>
+            </div> -->
             <!-- Semester Header -->
             <div class="semester__expanded" ng-show="sem.expanded">
               <!-- TimeUnit Milestones -->
