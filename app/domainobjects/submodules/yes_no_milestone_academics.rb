@@ -1,17 +1,15 @@
-class YesNoMilestoneAcademics < ImuaMilestone
+class YesNoMilestoneAcademics < CustomMilestone
 
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:ACADEMICS]
-      @submodule = Constants.SubModules[:YES_NO]
+    @module = Constants.Modules[:ACADEMICS]
+    @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Academic Goal"
-      @description = "Description:"
-      @value = "Good Grades"
-      @icon = "/assets/Academics.jpg"
-    end
+    @icon = "/assets/Academics.jpg"
+    @milestone_description = "A generic milestone where you can type a custom
+                              academic goal. This milestone is manually completed
+                              by the user by clicking a checkbox."
 
   end
 

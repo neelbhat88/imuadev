@@ -4,15 +4,14 @@ class HoursMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
+    @module = Constants.Modules[:SERVICE]
+    @submodule = Constants.SubModules[:SERVICE_HOURS]
+    @title = "Give Back"
+    @description = "Minimum number of hours for this semester:"
+    @milestone_description = "A milestone to set a minimum service hour requirement. This milestone is automatically triggered by the system when a user's total service hours equal or exceed the required amount."
+    @icon = "/assets/Service.jpg"
+
     if milestone.nil?
-      @module = Constants.Modules[:SERVICE]
-      @submodule = Constants.SubModules[:SERVICE_HOURS]
-
-      @title = "Give Back"
-      @description = "Community service hours:"
-      @value = "10"
-      @icon = "/assets/Service.jpg"
-
       @target_hours = @value.to_i
     else
       @target_hours = milestone.value.to_i

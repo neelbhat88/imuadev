@@ -4,15 +4,16 @@ class TakeTestMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
+    @module = Constants.Modules[:TESTING]
+    @submodule = Constants.SubModules[:TESTING_TAKE]
+
+    @title = "Rock the Exam"
+    @description = "Take the following exam:"
+    @icon = "/assets/Testing.jpg"
+
+    @milestone_description = "A milestone to set a requirement to take a specific Test set up in your Organization Setup. This milestone is automatically triggered when a user completes the test. This does not check the score of the test (only completion)."
+
     if milestone.nil?
-      @module = Constants.Modules[:TESTING]
-      @submodule = Constants.SubModules[:TESTING_TAKE]
-
-      @title = "Rock the Exam"
-      @description = "Take test:"
-      @value = ""
-      @icon = "/assets/Testing.jpg"
-
       @target_org_test_title = @value
     else
       @target_org_test_title = milestone.value
