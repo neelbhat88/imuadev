@@ -7,6 +7,7 @@ angular.module('myApp')
     $scope.gpa_history = {}
     $scope.class_editor = false
     $scope.last_updated_gpa = null
+    $scope.org_class_titles = {}
     $scope.formErrors = [ '**Please fix the errors above**' ];
 
 
@@ -17,6 +18,7 @@ angular.module('myApp')
         UserClassService.all($scope.student.id, $scope.selected_semester.id)
           .success (data) ->
             $scope.user_classes = data.user_classes
+            $scope.org_class_titles = data.org_class_titles
             if data.user_gpa
               $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
             else
@@ -50,7 +52,7 @@ angular.module('myApp')
       user_class.editing = true
       # Is there a better way to do this??
       user_class.new_name = user_class.name
-      user_class.new_grade = user_class.grade
+      user_class.new_grade_value = user_class.grade_value
       user_class.new_room = user_class.room
       user_class.new_period = user_class.period
       user_class.new_level = user_class.level
@@ -58,13 +60,13 @@ angular.module('myApp')
       user_class.new_credit_hours = user_class.credit_hours
 
     $scope.saveClass = (user_class) ->
-      if !user_class.new_name || !user_class.new_grade
+      if !user_class.new_name || !user_class.new_grade_value
         return
 
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = user_class.id
       new_class.name = user_class.new_name
-      new_class.grade = user_class.new_grade
+      new_class.grade_value = user_class.new_grade_value
       new_class.room = user_class.new_room
       new_class.period = user_class.new_period
       new_class.level = user_class.new_level

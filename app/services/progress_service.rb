@@ -88,6 +88,13 @@ class ProgressService
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
 
+    #ToDo: Super hacky but the Querier doesn't allow me to get the objects I need
+    # ** This needs to be changed **
+    # ** UPDATE: This won't work - the milestone object is not a DOT object but all the
+    # **  milestone classes assume a DOT object
+    #Rails.logger.debug("*********** Milestones: #{view[:milestones]}")
+    #view[:milestones] = MilestoneFactory.get_milestone_objects_TEMPORARY(view[:milestones])
+
     return ReturnObject.new(:ok, "Progress for user_id: #{params[:user_id]}, time_unit_id: #{params[:time_unit_id]}, module_title: #{params[:module]}.", view)
   end
 

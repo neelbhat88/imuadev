@@ -1,12 +1,13 @@
 class UserClass < ActiveRecord::Base
   attr_accessible :gpa, :grade, :name, :time_unit_id, :user_id,
                   :period, :room, :credit_hours, :level, :subject,
-                  :modified_by_id, :modified_by_name
+                  :modified_by_id, :modified_by_name, :grade_value
 
   belongs_to :user
 
   validates :name, presence: true
   validates :grade, presence: true
+  validates :grade_value, presence: true
   validates :gpa, presence: true
   validates :time_unit_id, presence: true
   validates :user_id, presence: true
@@ -18,6 +19,7 @@ class ViewUserClass
     @id = uc.id
     @gpa = uc.gpa
     @grade = uc.grade
+    @grade_value = uc.grade_value
     @name = uc.name
     @time_unit_id = uc.time_unit_id
     @user_id = uc.user_id
@@ -39,6 +41,7 @@ class DomainUserClass
     @id = uc.id
     @gpa = uc.gpa
     @grade = uc.grade
+    @grade_value = uc.grade_value
     @name = uc.name
     @time_unit_id = uc.time_unit_id
     @user_id = uc.user_id

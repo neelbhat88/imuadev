@@ -12,6 +12,8 @@ angular.module('myApp')
     $scope.organization = data.data.organization
     $scope.roadmap = data.data.roadmap
 
+    _.each($scope.roadmap.time_units, (tu) -> tu.expanded = false)
+
     $scope.roadmap.years = [
       {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
       {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },

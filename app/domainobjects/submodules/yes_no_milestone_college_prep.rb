@@ -1,18 +1,14 @@
-class YesNoMilestoneCollegePrep < ImuaMilestone
+class YesNoMilestoneCollegePrep < CustomMilestone
 
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:COLLEGE_PREP]
-      @submodule = Constants.SubModules[:YES_NO]
+    @module = Constants.Modules[:COLLEGE_PREP]
+    @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "College Prep Goal"
-      @description = "Description:"
-      @value = "Learn New Skills"
-      @icon = "/assets/PDU.jpg"
-    end
+    @icon = "/assets/PDU.jpg"
 
+    @milestone_description = "A generic milestone where you can type a custom college prep goal. This milestone is manually completed by the user by clicking a checkbox."
   end
 
   def has_earned?(user, time_unit_id)

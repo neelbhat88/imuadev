@@ -4,15 +4,16 @@ class DepthActivitiesMilestone < ImuaMilestone
   def initialize(milestone=nil)
     super
 
+    @module = Constants.Modules[:EXTRACURRICULAR]
+    @submodule = Constants.SubModules[:EXTRACURRICULAR_DEPTH_ACTIVITIES]
+
+    @title = "Be Committed"
+    @description = "Number of semesters to be previously involved in a single activity:"
+    @icon = "/assets/Extracurricular.jpg"
+
+    @milestone_description = "A milestone to set a requirement to be involved in a single Extracurricular activity for a certain number of semesters to demonstrate commitment. This milestone is automatically triggered by the system when a user is involved in the same activity for the number of semesters specified."
+
     if milestone.nil?
-      @module = Constants.Modules[:EXTRACURRICULAR]
-      @submodule = Constants.SubModules[:EXTRACURRICULAR_DEPTH_ACTIVITIES]
-
-      @title = "Be Committed"
-      @description = "Minimum participation in a single activity:"
-      @value = "2"
-      @icon = "/assets/Extracurricular.jpg"
-
       @target_depth_activities = @value.to_i
     else
       @target_depth_activities = milestone.value.to_i

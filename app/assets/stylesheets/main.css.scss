@@ -43,6 +43,13 @@ a {
   &:hover {text-decoration: underline;}
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
 /* ===============================================
    Global Classes
    =============================================== */
@@ -502,4 +509,13 @@ button:focus {
   border-bottom: 10px solid transparent;
 
   border-right:10px solid blue;
+}
+
+/* ===============================================
+   Modals
+=============================================== */
+.modal-body {
+  .modal-body__title {
+    text-align: center;
+  }
 }

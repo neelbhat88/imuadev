@@ -39,12 +39,21 @@
           <div class="year__semester" ng-repeat="sem in year.semesters">
 
             <!-- Semester Header -->
-            <div ng-if="current_user.role >= CONSTANTS.USER_ROLES.mentor">
-              <div class="semester__header-title">{{sem.name}}</div>
+            <div ng-click="sem.expanded=!sem.expanded">
+              <div class="semester__header-title">
+                {{sem.name}}
+                <div class="semester__header-click_text">Click to
+                  <span ng-show="!sem.expanded">expand</span>
+                  <span ng-show="sem.expanded">collapse</span>
+                </div>
+              </div>
             </div>
-            <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
-              <div class="semester__header-title--editable" ng-hide="sem.editing">
-                <span class="name" ng-click="addTimeUnit(sem)">{{sem.name}}</span>
+            <!-- Removing this for now. This should be done better by using the gear icon
+                 or something but right now nobody changes the name anyways -->
+            <!-- <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
+              <div class="semester__header-title--editable" ng-hide="sem.editing" ng-click="sem.expanded=!sem.expanded">
+                <span class="name">{{sem.name}}</span>
+                <div class="">Click to expand</div>
               </div>
 
               <div ng-show="sem.editing" class="semester__header-title--editing">
@@ -55,35 +64,35 @@
                   <button class="cancel" ng-click="cancelAddTimeUnit(sem)"><span>Cancel</span></button>
                 </form>
               </div>
-            </div>
+            </div> -->
             <!-- Semester Header -->
+            <div class="semester__expanded" ng-show="sem.expanded">
+              <!-- TimeUnit Milestones -->
+              <div class="milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-points'" ng-click="viewMilestoneStatus(milestone)">
+                <div class ="milestone__title">
+                  <img ng-src={{milestone.icon}}/>{{milestone.title}}
+                </div>
+                <div class = "milestone__info">
+                  <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
+                  <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
+                  <!--<span class="milestone__info__weight">Points Value: {{milestone.points * milestone.importance}}</span>-->
+                  <span ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="milestone__info__icons">
+                    <span no-click-propagation class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
+                    <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
+                  </span>
+                </div>
+              </div>
+              <!-- TimeUnit Milestones -->
 
-            <!-- TimeUnit Milestones -->
-            <div class="milestone" modulecolor="{{milestone.module}}" ng-repeat="milestone in sem.milestones | orderBy: '-points'" ng-click="viewMilestoneStatus(milestone)">
-              <div class ="milestone__title">
-                <img ng-src={{milestone.icon}}/>{{milestone.title}}
+              <!-- Semester Footer -->
+              <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer" ng-click="addMilestone(sem)">
+                <div class="semester__footer__title">
+                  <span class="glyphicon glyphicon-plus-sign"></span>
+                  <span class="text">Add Another Milestone</span>
+                </div>
               </div>
-              <div class = "milestone__info">
-                <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
-                <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
-                <!--<span class="milestone__info__weight">Points Value: {{milestone.points * milestone.importance}}</span>-->
-                <span ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="milestone__info__icons">
-                  <span no-click-propagation class="glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem, milestone)"></span>
-                  <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem, milestone)"></span>
-                </span>
-              </div>
+              <!-- Semester Footer -->
             </div>
-            <!-- TimeUnit Milestones -->
-
-            <!-- Semester Footer -->
-            <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="semester__footer" ng-click="addMilestone(sem)">
-              <div class="semester__footer__title">
-                <span class="glyphicon glyphicon-plus-sign"></span>
-                <span class="text">Add Another Milestone</span>
-              </div>
-            </div>
-            <!-- Semester Footer -->
-
           </div>
           <!-- Semester -->
 
