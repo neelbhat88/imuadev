@@ -9,6 +9,7 @@ angular.module('myApp')
 
   link: (scope, elem, attrs) ->
     scope.comments = []
+    scope.new_comment = {}
 
     CommentService.getComments(scope.commentableObjectRoute, scope.commentableObjectId)
       .then (org) ->
@@ -27,10 +28,11 @@ angular.module('myApp')
       comment.editing = true
 
     scope.saveComment = (comment) ->
-      if comment.id == null
-        CommentService.saveNewComment(scope.commentableObjectRoute, scope.commentableObjectId, comment.new_comment)
+      if !comment
+        CommentService.saveNewComment(scope.commentableObjectRoute, scope.commentableObjectId, scope.new_comment.comment)
           .then (org) ->
             scope.comments = CommentService.parseComments(org)
+            scope.new_comment.comment = ""
       else
         CommentService.saveComment(comment.id, comment.new_comment)
           .then (org) ->
@@ -48,6 +50,12 @@ angular.module('myApp')
         CommentService.deleteComment(comment.id)
           .then (org) ->
             scope.comments = CommentService.parseComments(org)
+            # ToDo: Think about putting all of this in a comment_controller that is instantianted
+            # in the comment_list.html with a ng-controller if possible.
+            # This will allow us to access parent scope stuff like addSuccessMessage.
+            # Currently because of the isolate scope we can't. I think the main difficulty will be
+            # figuring out how to pass in the commentableObjectRoute and ID into the controller.
+            #scope.addSuccessMessage("Comment deleted")
 
 
     scope.canEditComment = (comment) ->
