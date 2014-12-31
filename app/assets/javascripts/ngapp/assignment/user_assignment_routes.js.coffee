@@ -8,11 +8,12 @@ angular.module('myApp')
         SessionService.getCurrentUser()
       ]
 
-      user_assignment: ['$q', '$route', 'AssignmentService', ($q, $route, AssignmentService) ->
+      user_assignment: ['$q', '$route', 'AssignmentService', 'OrganizationService', ($q, $route, AssignmentService, OrganizationService) ->
         defer = $q.defer()
         AssignmentService.collectUserAssignment($route.current.params.user_assignment_id)
           .success (data) ->
-            defer.resolve(data.user_assignment)
+            organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+            defer.resolve(organization.user_assignments[0])
           .error (data) ->
             defer.reject()
         defer.promise

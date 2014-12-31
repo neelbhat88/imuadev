@@ -11,6 +11,7 @@ class Ability
       when "Assignment" then assignment_abilities(user, subject)
       when "UserAssignment" then user_assignment_abilities(user, subject)
       when "Expectation" then expectation_abilities(user, subject)
+      when "Comment" then comment_abilities(user, subject)
       else []
       end
 
@@ -225,7 +226,9 @@ class Ability
       if user.super_admin?
         return[:update_user_assignment,
                :destroy_user_assignment,
-               :get_user_assignment_collection]
+               :get_user_assignment_collection,
+               :index_comments,
+               :create_comment]
       else
         subjectUser = User.where(id: subjectUserAssignment.user_id).first
         return [] if user.organization_id != subjectUser.organization_id
@@ -234,7 +237,9 @@ class Ability
       if user.org_admin?
         rules += [:update_user_assignment,
                   :destroy_user_assignment,
-                  :get_user_assignment_collection]
+                  :get_user_assignment_collection,
+                  :index_comments,
+                  :create_comment]
       end
 
       if user.mentor?
@@ -242,7 +247,9 @@ class Ability
         if related
           rules += [:update_user_assignment,
                     :destroy_user_assignment,
-                    :get_user_assignment_collection]
+                    :get_user_assignment_collection,
+                    :index_comments,
+                    :create_comment]
         elsif subjectUser.student?
           rules += [:get_user_assignment_collection]
         end
@@ -250,7 +257,9 @@ class Ability
 
       if user.id == subjectUser.id
         rules += [:update_user_assignment,
-                  :get_user_assignment_collection]
+                  :get_user_assignment_collection,
+                  :index_comments,
+                  :create_comment]
       end
 
       rules.uniq
@@ -276,6 +285,26 @@ class Ability
       if user.mentor?
         rules += [:get_expectation_status,
                   :put_expectation_status]
+      end
+
+      rules.uniq
+    end
+
+    def comment_abilities(user, subjectComment)
+      rules = []
+      subjectUser = nil
+
+      if user.super_admin?
+        return [:update_comment,
+                :destroy_comment]
+      else
+        subjectUser = User.where(id: subjectComment.user_id).first
+        return [] if user.organization_id != subjectUser.organization_id
+      end
+
+      if user.id == subjectUser.id
+        rules += [:update_comment,
+                  :destroy_comment]
       end
 
       rules.uniq

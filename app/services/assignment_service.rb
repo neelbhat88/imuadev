@@ -218,7 +218,21 @@ class AssignmentService
   ############################################
 
   def collect_user_assignment(userAssignmentId)
-    return UserAssignment.includes(:assignment => :user).find(userAssignmentId)
+    conditions = {}
+    conditions[:user_assignment_id] = userAssignmentId
+
+    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id, :created_at, :updated_at]).where(conditions)
+
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id)).uniq
+    userQ = UserQuerier.new.select([:id, :role, :avatar, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userAssignmentQ, assignmentQ])
+
+    view = {users: userQ.view}
+
+    return ReturnObject.new(:ok, "User Assignment collection for user_assignment_id: #{userAssignmentId}", view)
   end
 
   def collect_user_assignments(userId)

@@ -5,8 +5,9 @@ class Api::V1::UserAssignmentController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
-  def load_services( assignmentService = nil )
+  def load_services( assignmentService = nil, commentService = nil )
     @assignmentService = assignmentService ? assignmentService : AssignmentService.new
+    @commentService = commentService ? commentService : CommentService.new(current_user)
   end
   # GET /users/:user_id/user_assignment
   # Returns all UserAssignments for the given User
@@ -100,6 +101,22 @@ class Api::V1::UserAssignmentController < ApplicationController
     end
 
     result = @assignmentService.collect_user_assignment(userAssignmentId)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+    # GET /user_assignment/:id/collect
+  # Returns the UserAssignment with associated Assignment data
+  def collect_old
+    userAssignmentId = params[:id].to_i
+
+    if !can?(current_user, :get_user_assignment_collection, UserAssignment.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.collect_user_assignment(userAssignmentId)
     viewUserAssignment = ViewUserAssignment.new(result, {assignment: true, user: true})
 
     render status: :ok,
@@ -127,6 +144,42 @@ class Api::V1::UserAssignmentController < ApplicationController
         info: "UserAssignments for use id: #{userId}.",
         user_assignments: viewUserAssignments
       }
+  end
+
+  # POST /user_assignment/:id/comment
+  def comment
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:commentable_id] = params[:id]
+    service_params[:target_table] = UserAssignment
+
+    commentable_object = service_params[:target_table].where(id: service_params[:commentable_id]).first
+    if !can?(@current_user, :create_comment, commentable_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @commentService.create(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /user_assignment/:id/comments
+  def comments
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:commentable_id] = params[:id]
+    service_params[:target_table] = UserAssignment
+
+    commentable_object = service_params[:target_table].where(id: service_params[:commentable_id]).first
+    if !can?(@current_user, :index_comments, commentable_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @commentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
 end

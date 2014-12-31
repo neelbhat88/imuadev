@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="single-col-wrapper clear" wait-to-load="{{user_assignment}}">
+  <div class="single-col-wrapper clear" wait-to-load="{{loaded}}">
     <div class="assignment--left">
       <div class="task-content">
         <h4><span class="bold">{{user_assignment.title}}</span></h4>
@@ -116,6 +116,9 @@
         <button class="btn btn-success btn-lg" ng-if="user_assignment.status == 0" ng-click="setUserAssignmentStatus(user_assignment, 1)"><span class="glyphicon glyphicon-ok-circle"></span> Mark this task Complete</button>
         <button class="btn btn-danger btn-lg" ng-if="user_assignment.status == 1" ng-click="setUserAssignmentStatus(user_assignment, 0)"><span class="glyphicon glyphicon-remove-circle"></span> I Didn't Do This Yet</button>
       </div>
+
+      <comments current-user="current_user" commentable-object-route="user_assignment" commentable-object-id="user_assignment.id"></comments>
+
     </div>
 
     <div class="assignment--right">

@@ -3,6 +3,15 @@ Imua::Application.routes.draw do
 
   devise_for :users, :skip => [:registrations]
 
+  # Rails 3 strategy for drying out routes
+  # http://ruby-journal.com/how-to-dry-your-rails-routes/
+  commentable = Proc.new do
+    member do
+      post :comment
+      get :comments
+    end
+  end
+
   namespace :api do
     namespace :v1 do
 
@@ -14,6 +23,8 @@ Imua::Application.routes.draw do
       #       *NEW WAY OF DOING ROUTES*
       # run foreman run rake routes to see what the routes look like
       # **************************************
+      resources :comment, except: [:index, :new, :create, :edit, :show]
+
       resources :organization, shallow: true do
 
         member do
@@ -38,7 +49,9 @@ Imua::Application.routes.draw do
           resources :user_extracurricular_activity_detail, except: [:new, :edit]
 
           resources :assignment, except: [:new, :edit]
-          resources :user_assignment, except: [:new, :edit, :show]
+          resources :user_assignment, except: [:new, :edit, :show] do
+            commentable.call
+          end
 
           resources :user_service_organization, except: [:new, :edit]
           resources :user_service_hour, except: [:new, :edit]
