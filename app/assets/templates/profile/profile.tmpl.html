@@ -136,7 +136,7 @@
             <div ng-show="editingInfo">
               <span class="form-wrapper">
                 <label>Imua Semester</label>
-                <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
+                <select class="form-control" ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
               </span>
               <span class="form-wrapper">
                 <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
