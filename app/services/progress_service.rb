@@ -11,7 +11,7 @@ class ProgressService
     conditions[:organization_id] = userQ.pluck(:organization_id)
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
     expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
 
     if userExpectationQ.domain.length != expectationQ.domain.length
@@ -49,7 +49,7 @@ class ProgressService
     conditions[:organization_id] = userQ.pluck(:organization_id)
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
     expectationQ = Querier.new(Expectation).select([:id, :title], [:organization_id]).where(conditions)
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
 
@@ -116,7 +116,7 @@ class ProgressService
 
     organizationQ = Querier.new(Organization).select([:name, :id]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.new(Milestone).select([:id, :module, :points, :time_unit_id], [:organization_id]).where(conditions)
+    milestoneQ = Querier.new(Milestone).select([:id, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
