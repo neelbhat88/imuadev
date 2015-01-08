@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
 
   create_table "user_classes", :force => true do |t|
     t.string   "name"
-    t.text     "grade"
+    t.string   "grade"
     t.float    "gpa"
     t.integer  "user_id"
     t.integer  "time_unit_id"
