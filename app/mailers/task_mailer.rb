@@ -58,4 +58,18 @@ class TaskMailer < ActionMailer::Base
 
     mail(:to => assignor.email, :subject=>"A Task you assigned has been marked incomplete")
   end
+
+  def task_comment_added(args)
+    @recipients = args[:recipients]
+    @current_user = args[:current_user]
+    @task = args[:task]
+    @comment = args[:comment]
+
+    emails = []
+    @recipients.each do |r|
+      emails << r.email
+    end
+
+    mail(:to => emails, :subject => "#{@current_user.full_name} commented on a Task you are involved with")
+  end
 end
