@@ -52,6 +52,9 @@
             <li class="subnav-button">
               <button type="button" class="btn btn-success btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 1)">Mark Complete</button>
             </li>
+            <li class="subnav-button">
+              <button class="btn btn-info btn-xs" ng-click="go('/user_assignment/' + user_assignment.id)">View Comments</button>
+            </li>
           </ul>
           <div class="edit-buttons subnav-button" ng-show="assignment.editing">
             <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
@@ -74,6 +77,9 @@
             <li>Completed: {{user_assignment.updated_at | formatMDY}}</li>
             <li class="subnav-button">
               <button type="button" class="btn btn-danger btn-xs" ng-click="setUserAssignmentStatus(user_assignment, 0)">Mark<br>Incomplete</button>
+            </li>
+            <li class="subnav-button">
+              <button class="btn btn-info btn-xs" ng-click="go('/user_assignment/' + user_assignment.id)">View Comments</button>
             </li>
           </ul>
           <div class="edit-buttons subnav-button" ng-show="assignment.editing">
