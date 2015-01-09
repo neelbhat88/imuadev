@@ -23,6 +23,7 @@ class Api::V1::UsersController < ApplicationController
     role = params[:user][:role].to_i
     orgId = params[:user][:organization_id].to_i
     class_of = params[:user][:class_of].to_i
+    time_unit_id = params[:user][:time_unit_id]
 
     # Temporary security check - need to find a better way to do this
     if !current_user.super_admin? && role == Constants.UserRole[:SUPER_ADMIN]
@@ -47,7 +48,8 @@ class Api::V1::UsersController < ApplicationController
              :phone => phone,
              :role => role,
              :organization_id => orgId,
-             :class_of => class_of}
+             :class_of => class_of,
+             :time_unit_id => time_unit_id}
 
     result = UserRepository.new.create_user(user, current_user)
 

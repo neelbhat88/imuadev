@@ -77,11 +77,11 @@ class UserRepository
       u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
+      u.time_unit_id = user_obj[:time_unit_id]
       u.password = password
     end
 
     if user.role == Constants.UserRole[:STUDENT]
-      user.time_unit_id = RoadmapRepository.new.get_time_units(user.organization_id)[0].id
       user.class_of = user_obj[:class_of]
     end
 
