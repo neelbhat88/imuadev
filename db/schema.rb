@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141119240409) do
+ActiveRecord::Schema.define(:version => 20150108211028) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -30,6 +30,20 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
   end
 
   add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"
+
+  create_table "comments", :force => true do |t|
+    t.string   "title",            :limit => 50, :default => ""
+    t.text     "comment"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -67,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
     t.string   "value"
     t.string   "icon"
     t.integer  "organization_id"
+    t.datetime "due_datetime"
   end
 
   add_index "milestones", ["organization_id"], :name => "index_milestones_on_organization_id"
@@ -176,7 +191,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
 
   create_table "user_classes", :force => true do |t|
     t.string   "name"
-    t.text     "grade"
+    t.string   "grade"
     t.float    "gpa"
     t.integer  "user_id"
     t.integer  "time_unit_id"

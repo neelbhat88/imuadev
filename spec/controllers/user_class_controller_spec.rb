@@ -59,7 +59,6 @@ describe Api::V1::UserClassController do
           @user_class = UserClass.find(@user_class.id)
         }
 
-        expectation.to change{@user_class.grade}.from('A').to('B')
         expectation.to change(UserClassHistory, :count).by(1)
         expectation.to change(UserGpaHistory, :count).by(1)
 

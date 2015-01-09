@@ -8,7 +8,7 @@ angular.module('myApp')
     $scope.class_editor = false
     $scope.last_updated_gpa = null
     $scope.org_class_titles = {}
-    $scope.formErrors = [ '**Please fix the errors above**' ];
+    $scope.formErrors = [ '**Please fix the errors above**' ]
 
 
     $scope.$watch 'selected_semester', () ->
@@ -52,6 +52,7 @@ angular.module('myApp')
       user_class.editing = true
       # Is there a better way to do this??
       user_class.new_name = user_class.name
+      user_class.new_grade = user_class.grade
       user_class.new_grade_value = user_class.grade_value
       user_class.new_room = user_class.room
       user_class.new_period = user_class.period
@@ -60,12 +61,13 @@ angular.module('myApp')
       user_class.new_credit_hours = user_class.credit_hours
 
     $scope.saveClass = (user_class) ->
-      if !user_class.new_name || !user_class.new_grade_value
+      if !user_class.new_name || !user_class.new_grade
         return
 
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       new_class.id = user_class.id
       new_class.name = user_class.new_name
+      new_class.grade = user_class.new_grade
       new_class.grade_value = user_class.new_grade_value
       new_class.room = user_class.new_room
       new_class.period = user_class.new_period

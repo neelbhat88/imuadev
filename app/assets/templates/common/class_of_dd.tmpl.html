@@ -4,7 +4,7 @@
    ng-messages-include="forms/error_messages.html">
    </span>
 </div>
-<select ng-init="model.class_of = model.class_of || class_of[0].value"
+<select class="form-control" ng-init="model.class_of = model.class_of || class_of[0].value"
   name="classOf" required ng-model="model.class_of"
   ng-options="classOf.value as classOf.name for classOf in class_of">
 </select>

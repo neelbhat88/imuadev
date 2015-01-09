@@ -1,6 +1,7 @@
 class Milestone < ActiveRecord::Base
   attr_accessible :title, :description, :value, :module, :submodule,
-                  :importance, :points, :time_unit_id, :icon, :organization_id
+                  :importance, :points, :time_unit_id, :icon, :organization_id,
+                  :due_datetime
 
 
   belongs_to :time_unit

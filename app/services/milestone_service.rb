@@ -3,7 +3,7 @@ class MilestoneService
   def get_milestone_status(params)
     conditions = params
 
-    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :submodule, :points, :time_unit_id, :icon, :organization_id]).where(conditions.slice(:milestone_id))
+    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :submodule, :points, :time_unit_id, :icon, :organization_id, :due_datetime]).where(conditions.slice(:milestone_id))
     conditions[:organization_id] = milestoneQ.pluck(:organization_id)
     conditions[:time_unit_id] = milestoneQ.pluck(:time_unit_id)
 

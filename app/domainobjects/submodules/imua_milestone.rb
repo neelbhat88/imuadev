@@ -17,7 +17,8 @@ class ImuaMilestone
       POINTS:           10,
       ICON:             "n/a",
       EARNED:           false,
-      VALUE:            ""
+      VALUE:            "",
+      DUE_DATETIME:     nil
     }
   end
 
@@ -35,6 +36,7 @@ class ImuaMilestone
       @icon             = ImuaMilestone.Defaults[:ICON]
       @earned           = ImuaMilestone.Defaults[:EARNED]
       @organization_id  = ImuaMilestone.Defaults[:ORGANIZATION_ID]
+      @due_datetime     = ImuaMilestone.Defaults[:DUE_DATETIME]
     else
       @id               = milestone.id
       @module           = milestone.module
@@ -48,6 +50,7 @@ class ImuaMilestone
       @icon             = milestone.icon
       @earned           = false
       @organization_id  = milestone.organization_id
+      @due_datetime     = milestone.due_datetime
     end
   end
 

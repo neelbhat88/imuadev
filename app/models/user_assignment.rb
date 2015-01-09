@@ -1,4 +1,6 @@
 class UserAssignment < ActiveRecord::Base
+  acts_as_commentable
+
   attr_accessible :assignment_id, :user_id, :status
 
   belongs_to :assignment

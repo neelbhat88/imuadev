@@ -10,7 +10,9 @@ describe Ability do
 
     expect(abilities).to contain_exactly(:update_user_assignment,
                                          :destroy_user_assignment,
-                                         :get_user_assignment_collection)
+                                         :get_user_assignment_collection,
+                                         :index_comments,
+                                         :create_comment)
   end
 
   it "doesn't allow any action if not in same organization" do
@@ -32,7 +34,9 @@ describe Ability do
 
     expect(abilities).to contain_exactly(:update_user_assignment,
                                          :destroy_user_assignment,
-                                         :get_user_assignment_collection)
+                                         :get_user_assignment_collection,
+                                         :index_comments,
+                                         :create_comment)
   end
 
   it "allows mentors all actions if related" do
@@ -46,7 +50,9 @@ describe Ability do
 
     expect(abilities).to contain_exactly(:update_user_assignment,
                                          :destroy_user_assignment,
-                                         :get_user_assignment_collection)
+                                         :get_user_assignment_collection,
+                                         :index_comments,
+                                         :create_comment)
   end
 
   it "allows mentors to only view if not related" do
@@ -67,7 +73,9 @@ describe Ability do
     abilities = Ability.user_assignment_abilities(subjectUser, user_assignment)
 
     expect(abilities).to contain_exactly(:update_user_assignment,
-                                         :get_user_assignment_collection)
+                                         :get_user_assignment_collection,
+                                         :index_comments,
+                                         :create_comment)
   end
 
   it "doesn't allow any action if student is not same user" do
