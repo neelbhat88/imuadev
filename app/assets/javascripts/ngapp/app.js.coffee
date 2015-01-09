@@ -3,8 +3,8 @@ angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'angulartics', 'angulartics.google.analytics', 'ngMessages']
 
 angular.module('myApp')
-.controller 'AppController', ['$rootScope','$scope', '$timeout', 'CONSTANTS',
-($rootScope, $scope, $timeout, CONSTANTS) ->
+.controller 'AppController', ['$rootScope','$scope', '$timeout', '$location', 'CONSTANTS',
+($rootScope, $scope, $timeout, $location, CONSTANTS) ->
   $scope.CONSTANTS = CONSTANTS
   $scope._ = _
 
@@ -33,6 +33,9 @@ angular.module('myApp')
   $scope.clearAlerts = () ->
     $timeout.cancel(timeout)
     $scope.alerts = []
+
+  $scope.go = (path) ->
+    $location.path(path)
 
   $scope.$on "update_required", () ->
     $scope.reload_required = true

@@ -5,21 +5,28 @@
 
     <div class="pbl">
       <label-with-errors label="Email" form="newUserForm" formfield="newUserForm.email"></label-with-errors>
-      <input name="email" required type="email" class="form-field" ng-model="user.email" placeholder="Email" autofocus="true">
+      <input name="email" required type="email" class="form-control" ng-model="user.email" placeholder="Email" autofocus="true">
     </div>
 
     <div class="pbl">
       <label-with-errors label="First Name" form="newUserForm" formfield="newUserForm.firstName"></label-with-errors>
-      <input name="firstName" required class="form-field" ng-model="user.first_name" placeholder="First Name">
+      <input name="firstName" required class="form-control" ng-model="user.first_name" placeholder="First Name">
     </div>
 
     <div class="pbs">
       <label-with-errors label="Last Name" form="newUserForm" formfield="newUserForm.lastName"></label-with-errors>
-      <input name="lastName" required class="form-field" ng-model="user.last_name" placeholder="Last Name">
+      <input name="lastName" required class="form-control" ng-model="user.last_name" placeholder="Last Name">
     </div>
 
     <div ng-if="user.is_student" class="ptm pbs">
       <class-of-dropdown form="newUserForm" model="user"></class-of-dropdown>
+    </div>
+
+    <div ng-if="user.is_student" class="ptm pbs">
+      <label-with-errors label="Semester" form="newUserForm" formfield="newUserForm.semester"></label-with-errors>
+      <select name="semester" required class="form-control" ng-options="time_unit.id as time_unit.name for time_unit in organization.time_units" ng-model="user.time_unit_id">
+        <option value="">--Choose a Semester--</option>
+      </select>
     </div>
 
     <div class="buttonGroup ptl">
