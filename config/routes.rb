@@ -1,7 +1,7 @@
 Imua::Application.routes.draw do
   get "organization/roadmap"
 
-  devise_for :users, :skip => [:registrations]
+  devise_for :users, :skip => [:registrations], :controllers => {:sessions => "api/v1/sessions"}
 
   # Rails 3 strategy for drying out routes
   # http://ruby-journal.com/how-to-dry-your-rails-routes/
@@ -166,7 +166,7 @@ Imua::Application.routes.draw do
   post '/reset_password' => 'static#reset_password'
 
   get '/login' => 'static#login'
-  get '/marketing' => 'static#index'
+  get '/app' => 'static#app'
 
 
   root :to => 'static#index'

@@ -7,7 +7,7 @@
           <div class="progress-circle-nav">
             <h6 class="module-circle__title bold">All Progress</h6>
             <progress-circle width="150" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
-            <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
+            <a href="app#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
           </div>
           <div class="progress-bar-nav clear">
 
@@ -17,7 +17,7 @@
                 <horizontal-progress-bar student="student_with_modules_progress" identifier="big" parentclass="progress-bar-size"></progress-circle>
               </div>
               <div class="bar-expectation">
-               <a class="pts" href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
+               <a class="pts" href="app#/expectations/{{student.id}}"><button class="btn btn-primary btn-sm">See {{student.first_name}}'s Expectations</button></a>
              </div>
             </div>
           </div>

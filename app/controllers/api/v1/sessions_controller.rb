@@ -1,6 +1,18 @@
 class Api::V1::SessionsController < Devise::SessionsController
 	respond_to :json
 
+	# POST /resource/sign_in
+	def create
+		logger.debug("******** Before sign in session previous url: #{session[:previous_url]}")
+		self.resource = warden.authenticate!(auth_options)
+		sign_in(resource_name, resource)
+		yield resource if block_given?
+		logger.debug("******** After sign in: #{session[:previous_url]}")
+
+		cookies[:previous_url] = session[:previous_url]
+		redirect_to app_path
+	end
+
 	def show_current_user
 		reject_if_not_authorized_request!
 
