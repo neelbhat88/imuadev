@@ -12,6 +12,15 @@ class Api::V1::SessionsController < Devise::SessionsController
 			}
 	end
 
+	def destroy
+    warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
+    sign_out
+    render :status => 200,
+           :json => { :success => true,
+                      :info => "Logged out",
+           					}
+  end
+
 	def failure
 		render status: 401,
 			json: {
