@@ -3,13 +3,22 @@ class Api::V1::SessionsController < Devise::SessionsController
 
 	# POST /resource/sign_in
 	def create
-		logger.debug("******** Before sign in session previous url: #{session[:previous_url]}")
 		self.resource = warden.authenticate!(auth_options)
 		sign_in(resource_name, resource)
 		yield resource if block_given?
-		logger.debug("******** After sign in: #{session[:previous_url]}")
 
+		# Set cookie with previous URL
 		cookies[:previous_url] = session[:previous_url]
+
+		Background.process do
+	    Keen.publish("user_engagement", {
+	                                      :user => current_user,
+	                                      :day => DateTime.now.utc.beginning_of_day.iso8601,
+	                                      :hour => DateTime.now.utc.beginning_of_hour.iso8601
+	                                    }
+	                )
+	  end
+
 		redirect_to app_path
 	end
 
