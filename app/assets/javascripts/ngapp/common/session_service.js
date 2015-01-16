@@ -19,16 +19,16 @@ angular.module('myApp')
       },
 
       getCurrentUser: function(){
-        if (service.isAuthenticated()) {
-          return $q.when(service._currentUser);
-        }
-        else {
+        // if (service.isAuthenticated()) {
+        //   return $q.when(service._currentUser);
+        // }
+        // else {
           return $http.get('/api/v1/current_user').then(function(resp){
             service._currentUser = resp.data.user;
 
             return service._currentUser;
-          });
-        }
+          }, function(err) {console.log("Error")});
+        // }
 
       },
 

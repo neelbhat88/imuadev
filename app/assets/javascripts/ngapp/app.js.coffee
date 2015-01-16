@@ -43,6 +43,9 @@ angular.module('myApp')
 
   $scope.$on "clear_alerts", () ->
     $scope.alerts = []
+
+  $scope.$on "unauthorized", () ->
+    window.location.href = "login?pu=" + $location.path()
 ]
 
 angular.module('myApp')
@@ -50,6 +53,7 @@ angular.module('myApp')
 ($rootScope, $location, ipCookie, SessionService) ->
 
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
+
     # Clear messages
     $rootScope.$broadcast("clear_alerts")
 

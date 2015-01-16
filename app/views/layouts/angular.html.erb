@@ -25,6 +25,7 @@
     <base href="/">
   </head>
   <body ng-controller="AppController">
+    <% if user_signed_in? %>
     <header ng-controller="HeaderController">
       <div class="wrapper clear">
         <div class="imua-logo left">
@@ -179,6 +180,7 @@
         </nav>
       </div>
     </header>
+    <% end %>
     <div class="mask"></div>
     <div class="alerts-section">
       <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>

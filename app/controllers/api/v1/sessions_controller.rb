@@ -23,13 +23,18 @@ class Api::V1::SessionsController < Devise::SessionsController
 	end
 
 	def show_current_user
-		reject_if_not_authorized_request!
+		status = :unauthorized
+		user = nil
 
-		render status: 200,
+		if user_signed_in?
+			status = :ok
+			user = ViewUser.new(current_user, current_user.organization)
+		end
+
+		render status: status,
 			json: {
-				success: true,
 				info: "Current User",
-				user: ViewUser.new(current_user, current_user.organization)
+				user: user
 			}
 	end
 
