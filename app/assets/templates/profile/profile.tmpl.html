@@ -17,8 +17,8 @@
       </ul>
 
       <div class="edit-buttons">
-        <a href="/#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
-        <a href="/#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
+        <a href="/app#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
+        <a href="/app#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
         <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
       </div>
@@ -206,7 +206,7 @@
         <div class="module--header">{{user.first_name}}'s <span class="bold">Mentors</span></div>
         <div class="module--content">
           <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
-            <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+            <a ng-href="app#/profile/{{mentor.id}}" title="View mentor info">
               <div class="circle-picture">
                 <img ng-src="{{mentor.square_avatar_url}}">
               </div>

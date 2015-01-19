@@ -29,7 +29,7 @@
         <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
         <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
-          <a href="#/progress/{{user.id}}">
+          <a href="app#/progress/{{user.id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -48,7 +48,7 @@
         <h6 class="bold green" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
         <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
-          <a href="#/progress/{{user.id}}">
+          <a href="app#/progress/{{user.id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -85,7 +85,7 @@
         </li>
         <li>
           <!-- <h6>Created by</h6>
-          <a href="#/profile/{{user.id}}">
+          <a href="app#/profile/{{user.id}}">
             <div class="tiny-circle-picture">
               <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}} {{user.last_name}}" />
             </div>

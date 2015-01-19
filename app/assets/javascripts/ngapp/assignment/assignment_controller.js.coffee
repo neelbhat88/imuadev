@@ -69,7 +69,7 @@ angular.module('myApp')
     $scope.cancelEditAssignment = () ->
       # Go back to assignments page if cancelled creating a new task
       if !$scope.assignment.id
-        window.location.href = "#/assignments/" + $scope.user.id
+        window.location.href = "app#/assignments/" + $scope.user.id
       else
         $scope.assignment.editing = false
 
@@ -97,7 +97,7 @@ angular.module('myApp')
           .success (data) ->
             $scope.assignment.editing = false
             $scope.assignment = null
-            window.location.href = "#/assignments/" + $scope.user.id
+            window.location.href = "app#/assignments/" + $scope.user.id
 
     $scope.assignAllAssignableUsers = (assignment) ->
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
