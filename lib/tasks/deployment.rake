@@ -11,10 +11,12 @@ task :deploy_production => ['deploy:set_production_app',
                             'deploy:restart']
 
 task :post_deploy_staging    => ['deploy:set_staging_app',
-                                 'deploy:post_deploy']
+                                 'deploy:post_deploy',
+                                 'deploy:restart']
 
 task :post_deploy_production => ['deploy:set_production_app',
-                                 'deploy:post_deploy']
+                                 'deploy:post_deploy',
+                                 'deploy:restart']
 
 namespace :deploy do
   PRODUCTION_APP = 'imua'
