@@ -38,8 +38,8 @@ class ApplicationController < ActionController::Base
     @appVersion = AppVersionService.new.get_version_number.to_s
     response.headers['AppVersion'] = @appVersion
 
-    # Only check the AppVersion if the header exists
-    if request.headers['AppVersion'] && request.headers['AppVersion'] != @appVersion
+    # Only check the AppVersion if the header exists AND the user has a session
+    if request.headers['AppVersion'] && current_user && request.headers['AppVersion'] != @appVersion
       Rails.logger.error("Error - AppVersion mismatch! - Current version: #{@appVersion}, Client's Version: #{request.headers['AppVersion']}. UserId: #{current_user.id}")
       render status: 426, json: {}
     end
