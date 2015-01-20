@@ -5,7 +5,7 @@ class AssignmentService
     conditions = Marshal.load(Marshal.dump(params))
 
     assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime, :created_at]).where(conditions)
-    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id]).where(conditions)
+    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id, :updated_at]).where(conditions)
 
     conditions[:user_id] = (assignmentQ.pluck(:user_id) + userAssignmentQ.pluck(:user_id)).uniq
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
