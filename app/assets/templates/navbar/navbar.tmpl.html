@@ -1,70 +1,87 @@
-<!--
-  <nav class="nav-collapsed right" role="navigation">
-    <div class="dropdown js-cog">
-      <div class="current-name">
-        Menu <span class="caret"></span>
+<div ng-controller="HeaderController">
+  <div id="mobile-nav">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+           <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" ng-if="!user.is_super_admin" href="app#/">{{ user.organization_name }}</a>
+           <a class="navbar-brand" ng-if="user.is_super_admin" href="app#/">Collective Progress</a>
       </div>
-      <div class="submenu js-submenu">
-        <div ng-if="user.is_super_admin" class="submenu__link">
-          <a href="#/sa/organizations">Organizations</a>
-        </div>
+      <div class="collapse navbar-collapse" collapse="navCollapsed">
+        <ul class="nav navbar-nav">
 
-        <div ng-if="user.is_org_admin">
-          <div class="submenu__link">
-            <a href="#/dashboard/{{ user.id }}">Dashboard</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/organization/{{ user.organization_id }}">Mentors</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/students/{{ user.organization_id }}">Students</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/roadmap/{{ user.organization_id }}">Organization Setup</a>
-          </div>
-        </div>
+          <li ng-if="user.is_super_admin" ng-click="navCollapsed=true">
+            <a href="#/sa/organizations">Organizations</a>
+          </li>
 
-        <div ng-if="user.is_mentor">
-          <div class="submenu__link">
-            <a href="#/dashboard/{{ user.id }}">My Students</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/assignments/{{ user.id }}">Tasks</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/roadmap/{{ user.organization_id }}">Roadmap</a>
-          </div>
-        </div>
+          <li ng-if="user.is_org_admin" ng-click="navCollapsed=true">
+            <li>
+              <a href="#/dashboard/{{ user.id }}">Dashboard</a>
+            </li>
+            <li>
+              <a href="#/organization/{{ user.organization_id }}">Mentors</a>
+            </li>
+            <li>
+              <a href="#/students/{{ user.organization_id }}">Students</a>
+            </li>
+            <li>
+              <a href="#/roadmap/{{ user.organization_id }}">Organization Setup</a>
+            </li>
+          </li>
 
-        <div ng-if="user.is_student">
-          <div class="submenu__link">
-            <a href="#/dashboard/{{ user.id }}">Dashboard</a>
+          <div ng-if="user.is_mentor" ng-click="navCollapsed=true">
+            <li>
+              <a href="#/dashboard/{{ user.id }}">My Students</a>
+            </li>
+            <li>
+              <a href="#/assignments/{{ user.id }}">Tasks</a>
+            </li>
+            <li>
+              <a href="#/roadmap/{{ user.organization_id }}">Roadmap</a>
+            </li>
           </div>
-          <div class="submenu__link">
-            <a href="#/progress/{{ user.id }}">My Progress</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/expectations/{{ user.id }}">Expectations</a>
-          </div>
-          <div class="submenu__link">
-            <a href="#/user_assignments/{{ user.id }}">Tasks</a>
-          </div>
-        </div>
 
-        <div class="submenu__link">
-          <a href="#/profile/{{ user.id }}">Profile</a>
-        </div>
-        <div class="submenu__link">
-          <a href="#">Logout</a>
-        </div>
+          <div ng-if="user.is_student" ng-click="navCollapsed=true">
+            <li>
+              <a href="#/dashboard/{{ user.id }}">Dashboard</a>
+            </li>
+            <li>
+              <a href="#/progress/{{ user.id }}">My Progress</a>
+            </li>
+            <li>
+              <a href="#/expectations/{{ user.id }}">Expectations</a>
+            </li>
+            <li>
+              <a href="#/user_assignments/{{ user.id }}">Tasks</a>
+            </li>
+          </div>
+
+          <li class="dropdown cog js-cog">
+            <div class="profile-dropdown">
+              <span>{{ user.first_last_initial }}</span>
+              <span class="glyphicon glyphicon-cog"></span>
+            </div>
+            <div class="submenu js-submenu"  ng-click="navCollapsed=true">
+              <div class="submenu__link">
+                <a href="#/profile/{{ user.id }}">Profile</a>
+              </div>
+              <div class="submenu__link">
+                <a href="#">Logout</a>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
-    </div>
-  </nav>
--->
-  <nav id="sidebar-wrapper" role="navigation" ng-controller="HeaderController">
+    </nav>
+  </div>
+
+  <nav id="sidebar-wrapper" role="navigation">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-        <a href="/">
+        <a href="app#/">
           <img ng-src="assets/logo-blue-small.png" alt="IMUA" height="22px" width="22px">
             <span class="pls" ng-if="user.is_super_admin">Collective Progress</span>
             <span class="pls" ng-if="!user.is_super_admin">{{ user.organization_name }}</span>
@@ -117,11 +134,10 @@
       </div>
 
       <li class="dropdown cog js-cog">
-        <div class="current-name">
-          <span ng-if="user.is_super_admin">Administrator</span>
-          <span ng-if="user.is_super_admin">{{ user.first_last_initial }}</span>
+        <div class="profile-dropdown">
+          <span>{{ user.first_last_initial }}</span>
+          <span class="glyphicon glyphicon-cog"></span>
         </div>
-        <span class="glyphicon glyphicon-cog"></span>
         <div class="submenu js-submenu">
           <div class="submenu__link">
             <a href="#/profile/{{ user.id }}">Profile</a>
@@ -134,3 +150,4 @@
 
     </ul>
   </nav>
+</div>
