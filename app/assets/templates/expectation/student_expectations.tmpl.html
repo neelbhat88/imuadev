@@ -5,19 +5,19 @@
     <ul class="clear">
 
       <li class="studentProgress narrow addBorderright">
-        <a class="js-nav-link" ng-href="#/progress/{{student.id}}">{{student.first_name}}'s Progress</a>
+        <a class="js-nav-link" ng-href="app#/progress/{{student.id}}">{{student.first_name}}'s Progress</a>
       </li>
 
       <li class="studentExpectations wide">
         <div class="progressStudent-wrapper clear">
           <div class="progressSelector">
-            <h5><a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
+            <h5><a ng-href="app#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Expectations</h5>
           </div>
         </div>
       </li>
 
       <li class="studentProfile narrow addBorderleft">
-        <a class="js-nav-link" ng-href="#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
+        <a class="js-nav-link" ng-href="app#/profile/{{student.id}}">{{student.first_name}}'s Profile</a>
       </li>
 
     </ul>
@@ -29,7 +29,7 @@
     <div class="progressCircle-big--container">
 
       <div class="progressCircle-big">
-        <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+        <a ng-href="app#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
           <div class="big-progress-circle" ng-class="{'needsAttention': needs_attention}" ng-if="student_with_modules_progress">
             <progress-circle width="240" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
           </div>
