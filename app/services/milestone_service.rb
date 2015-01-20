@@ -52,6 +52,7 @@ class MilestoneService
     milestone.points = ms[:points]
     milestone.time_unit_id = ms[:time_unit_id]
     milestone.organization_id = ms[:organization_id]
+    milestone.due_datetime = ms[:due_datetime]
 
     if !milestone.valid?
     end
@@ -67,6 +68,7 @@ class MilestoneService
       m.points = milestone.points
       m.icon = milestone.icon
       m.organization_id = milestone.organization_id
+      m.due_datetime = milestone.due_datetime
     end
 
     if newmilestone.save
@@ -90,7 +92,8 @@ class MilestoneService
     if milestone.update_attributes(:title => ms[:title],
                                     :description=>ms[:description],
                                     :points => ms[:points],
-                                    :value => ms[:value])
+                                    :value => ms[:value],
+                                    :due_datetime => ms[:due_datetime])
       return ReturnObject.new(:ok, "Successfully updated Milestone id: #{milestone.id}.", milestone)
     end
 

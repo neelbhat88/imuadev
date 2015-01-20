@@ -28,6 +28,9 @@ angular.module('myApp')
         $scope.recalculateCompletion()
         $scope.loaded_data = true
 
+    $scope.milestoneHasDueDatetime = (milestone) ->
+      return milestone && milestone.due_datetime != null
+
     $scope.userMilestonesAreEditable = (milestone) ->
       return milestone.submodule == "YesNo"
 

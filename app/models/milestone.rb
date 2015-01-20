@@ -40,6 +40,7 @@ class ViewMilestone
     @value = milestone.value
     @icon = milestone.icon
     @time_unit_id = milestone.time_unit_id
+    @due_datetime = milestone.due_datetime
   end
 
 end

@@ -76,6 +76,9 @@
         <li>
           <h6>{{milestone.time_unit_name}}</h6>
         </li>
+        <li ng-if="milestoneHasDueDatetime(milestone)">
+          <h6>Due: {{milestone.due_datetime | formatMDY}}</h6>
+        </li>
         <li>
           <h6>Students currently in {{milestone.time_unit_name}}</h6>
           <h5 class="bold">{{users_total.length}}</h5>

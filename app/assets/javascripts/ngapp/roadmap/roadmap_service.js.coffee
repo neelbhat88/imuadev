@@ -95,7 +95,8 @@ angular.module('myApp')
       if m.id != milestone.id && # Skip if editing the milestone
          m.module == milestone.module &&
          m.submodule == milestone.submodule &&
-         m.value == milestone.value
+         m.value == milestone.value &&
+         m.due_datetime == milestone.due_datetime
 
         errors.push("A milestone of the same type and value already exists in " + timeUnit.name);
         break;
