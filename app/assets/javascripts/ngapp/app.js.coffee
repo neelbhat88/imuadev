@@ -1,10 +1,11 @@
 angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'myApp.directives', 'ui.bootstrap', 'templates',
-                          'angulartics', 'angulartics.google.analytics', 'ngMessages']
+                          'angulartics', 'angulartics.google.analytics', 'ngMessages',
+                          'ipCookie']
 
 angular.module('myApp')
-.controller 'AppController', ['$rootScope','$scope', '$timeout', 'CONSTANTS',
-($rootScope, $scope, $timeout, CONSTANTS) ->
+.controller 'AppController', ['$rootScope','$scope', '$timeout', '$location', 'CONSTANTS',
+($rootScope, $scope, $timeout, $location, CONSTANTS) ->
   $scope.CONSTANTS = CONSTANTS
   $scope._ = _
 
@@ -34,16 +35,25 @@ angular.module('myApp')
     $timeout.cancel(timeout)
     $scope.alerts = []
 
+  $scope.go = (path) ->
+    $location.path(path)
+
   $scope.$on "update_required", () ->
     $scope.reload_required = true
 
   $scope.$on "clear_alerts", () ->
     $scope.alerts = []
+
+  $scope.$on "unauthorized", () ->
+    window.location.href = "login?pu=" + $location.path()
 ]
 
 angular.module('myApp')
-.run ['$rootScope', '$location', 'SessionService', ($rootScope, $location, SessionService) ->
+.run ['$rootScope', '$location', 'ipCookie', 'SessionService',
+($rootScope, $location, ipCookie, SessionService) ->
+
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
+
     # Clear messages
     $rootScope.$broadcast("clear_alerts")
 
@@ -63,4 +73,14 @@ angular.module('myApp')
   $rootScope.$on '$routeChangeError', (event, current, previous, rejection) ->
     $location.path('/')
     return false
+
+  # Redirect to URL dance
+  previous_url = ipCookie('previous_url')
+
+  if previous_url
+    ipCookie.remove('previous_url')
+
+    $location.path(previous_url)
+    return false
+
 ]

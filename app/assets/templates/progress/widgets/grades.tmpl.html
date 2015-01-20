@@ -126,11 +126,30 @@
                       <input autocomplete="off" type="text" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" typeahead="className for className in org_class_titles | filter: $viewValue | limitTo:10" required>
                     </span>
                   </div>
-
                   <div id="cell--form" class="table--cell"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
+                   <span class="input-group">
+                       <label-with-errors label="Letter Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
+                       <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
+                        <option value="A">A</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="C-">C-</option>
+                        <option value="D+">D+</option>
+                        <option value="D">D</option>
+                        <option value="D-">D-</option>
+                        <option value="F">F</option>
+                      </select>
+                   </span>
+                  </div>
+
+                  <div id="cell--form" class="table--cell"  ng-class="{'has-error': gradesForm.gradeValue.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
-                        <label-with-errors label="Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
-                        <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="grade" required>
+                        <label-with-errors label="Grade (Value)" form="gradesForm" formfield="gradesForm.gradeValue"></label-with-errors>
+                        <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="gradeValue" required>
                     </span>
                   </div>
 

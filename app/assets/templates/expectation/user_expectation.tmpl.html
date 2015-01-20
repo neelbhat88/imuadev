@@ -14,7 +14,7 @@
   </div>
 
   <div class="single-col-wrapper expectation-content">
-    <a href="#/expectation/{{user_expectation.expectation_id}}">
+    <a href="app#/expectation/{{user_expectation.expectation_id}}">
       <h4 class="bold">{{user_expectation.title}}</h4>
     </a>
     <h6>{{user_expectation.description}}</h6>
@@ -22,7 +22,7 @@
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
       <div class="circle-pictures">
-        <a href="#/profile/{{student.id}}">
+        <a href="app#/profile/{{student.id}}">
           <div class="circle-picture">
             <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
           </div>
@@ -72,7 +72,7 @@
       <tr>
         <td class="status-picture large-pic">
           <div class="circle-pictures">
-            <a href="#/profile/{{student.id}}">
+            <a href="app#/profile/{{student.id}}">
               <div class="circle-picture">
                 <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
               </div>

@@ -11,7 +11,7 @@
               <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="!milestone.earned">
                 <div class="milestone-item-unstatisfied">
 
-                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
+                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="app#/milestone/{{milestone.id}}">
                     <div class="milestone--point-circle">
                       <div class="point-circle--inside">
                         <h5 class="bold">{{milestone.points}}</h5>
@@ -49,7 +49,7 @@
               <div class="milestone-item" ng-repeat="milestone in milestones" ng-if="milestone.earned">
                 <div class="milestone-item-statisfied">
 
-                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="#/milestone/{{milestone.id}}">
+                  <a ng-if="!current_user.is_student" title="Milestone View" ng-href="app#/milestone/{{milestone.id}}">
                     <div class="milestone--point-circle">
                       <div class="point-circle--inside">
                         <h4 class="bold">✓</h4>
