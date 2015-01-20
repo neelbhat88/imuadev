@@ -11,6 +11,10 @@ class StaticController < ApplicationController
   end
 
   def login
+    if user_signed_in?
+      sign_out current_user
+    end
+
     session[:previous_url] = params[:pu]
     render "login"
   end

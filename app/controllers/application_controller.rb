@@ -5,12 +5,11 @@ class ApplicationController < ActionController::Base
 
   before_filter :add_abilities
   before_filter :set_current_company
+  before_filter :check_and_set_version_header
 
   respond_to :html # Without this, POST /sign_in fails - spent hours figuring this out..
                    # after_sign_in_path_for needs to return HTML since its rendering the view
   respond_to :json, :only => [:check_and_set_version_header]
-  before_filter :check_and_set_version_header
-
 
   def after_sign_out_path_for(resource_or_scope)
     login_path
@@ -39,14 +38,16 @@ class ApplicationController < ActionController::Base
     response.headers['AppVersion'] = @appVersion
 
     # Only check the AppVersion if the header exists AND the user has a session
-    if request.headers['AppVersion'] && current_user && request.headers['AppVersion'] != @appVersion
+    if request.headers['AppVersion'] && user_signed_in? && request.headers['AppVersion'] != @appVersion
       Rails.logger.error("Error - AppVersion mismatch! - Current version: #{@appVersion}, Client's Version: #{request.headers['AppVersion']}. UserId: #{current_user.id}")
       render status: 426, json: {}
     end
   end
 
   def set_current_company
-    @current_company = current_user.organization unless current_user.nil?
+    if user_signed_in?
+      @current_company = current_user.organization unless current_user.nil?
+    end
   end
 
   def add_abilities
