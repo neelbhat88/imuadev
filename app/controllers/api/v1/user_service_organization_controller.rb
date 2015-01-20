@@ -21,6 +21,8 @@ class Api::V1::UserServiceOrganizationController < ApplicationController
       return
     end
 
+    all_organization_titles_result = @userServiceOrganizationService.get_org_organization_titles({organization_id: user.organization_id})
+
     organizations_result = @userServiceOrganizationService.get_user_service_organizations(userId)
 
     hours_result = @userServiceOrganizationService.get_user_service_hours(userId, time_unit_id)
@@ -29,7 +31,8 @@ class Api::V1::UserServiceOrganizationController < ApplicationController
       json: {
         info: "User's Service Organizations and hours",
         user_service_organizations: organizations_result,
-        user_service_hours: hours_result
+        user_service_hours: hours_result,
+        org_service_organization_titles: all_organization_titles_result
       }
   end
 

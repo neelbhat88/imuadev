@@ -1,0 +1,113 @@
+<div class="taskContainer" wait-to-load="{{loaded_data}}">
+
+  <div class="task-header clear">
+    <div class="single-col-wrapper">
+      <div class="back-link">
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-col-wrapper clear">
+    <div class="assignment--left">
+
+      <div class="task-content">
+        <h4 class="bold">{{expectation.title}}</h4>
+        <h6>{{expectation.description}}</h6>
+        <div class="expectation--comment-box" ng-show="expectation.assigning">
+          <h6 class="bold">Why are you changing these students' statuses?</h6>
+          <textarea ng-model="expectation.new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+        </div>
+      </div>
+
+      <ul class="users-not-completed" ng-if="users_not_meeting.length != 0">
+        <h6 class="bold red" ng-if="users_not_meeting.length == 1">{{users_not_meeting.length}} student is not meeting this expectation</h6>
+        <h6 class="bold red" ng-if="users_not_meeting.length != 1">{{users_not_meeting.length}} students are not meeting this expectation</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_not_meeting | orderBy: 'last_name'">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav" ng-show="expectation.assigning">
+            <li class="subnav-button" ng-class="{'selected': isAssignedMeeting(user)}"><button type="button" class="btn btn-success btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.meeting)">Meeting</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNeedsWork(user)}"><button type="button" class="btn btn-warning btn-xs selected" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.needs_work)">Needs Work</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNotMeeting(user)}"><button type="button" class="btn btn-danger btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.not_meeting)">Not Meeting</button></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="users-not-completed" ng-if="users_need_work.length != 0">
+        <h6 class="bold yellow" ng-if="users_need_work.length == 1">{{users_need_work.length}} student needs to work on this expectation</h6>
+        <h6 class="bold yellow" ng-if="users_need_work.length != 1">{{users_need_work.length}} students need to work on this expectation</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_need_work | orderBy: 'last_name'">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav" ng-show="expectation.assigning">
+            <li class="subnav-button" ng-class="{'selected': isAssignedMeeting(user)}"><button type="button" class="btn btn-success btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.meeting)">Meeting</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNeedsWork(user)}"><button type="button" class="btn btn-warning btn-xs selected" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.needs_work)">Needs Work</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNotMeeting(user)}"><button type="button" class="btn btn-danger btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.not_meeting)">Not Meeting</button></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="users-completed" ng-if="users_meeting.length != 0">
+        <h6 class="bold green" ng-if="users_meeting.length == 1 && users_meeting.length != 0">{{users_meeting.length}} student is meeting this expectation</h6>
+        <h6 class="bold green" ng-if="users_meeting.length != 1 && users_meeting.length != 0">{{users_meeting.length}} students are meeting this expectation</h6>
+        <h6 class="bold green" ng-if="users_meeting.length != 0 && users_meeting.length == 0">Nice! All students are meeting this expectation.</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_meeting | orderBy: 'last_name'">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav" ng-show="expectation.assigning">
+            <li class="subnav-button" ng-class="{'selected': isAssignedMeeting(user)}"><button type="button" class="btn btn-success btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.meeting)">Meeting</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNeedsWork(user)}"><button type="button" class="btn btn-warning btn-xs selected" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.needs_work)">Needs Work</button></li>
+            <li class="subnav-button" ng-class="{'selected': isAssignedNotMeeting(user)}"><button type="button" class="btn btn-danger btn-xs" ng-click="assignUserExpectationStatus(user, CONSTANTS.EXPECTATION_STATUS.not_meeting)">Not Meeting</button></li>
+          </ul>
+        </li>
+      </ul>
+
+      <br>
+      <div task-editor class="edit-buttons-top" ng-hide="expectation.assigning">
+        <button class="btn btn-default" ng-click="setExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Set Expectation Status</button>
+      </div>
+      <div task-editor class="edit-buttons-top" ng-show="expectation.assigning">
+        <button class="btn btn-default" ng-click="cancelSetExpectationStatus()"><span class="glyphicon glyphicon-edit"></span> Cancel</button>
+        <button class="btn btn-success" ng-click="saveExpectationStatus()"><span class="glyphicon glyphicon-ok"></span> Save</button>
+      </div>
+    </div>
+
+    <div class="assignment--right">
+      <ul>
+        <li class="column-title">
+          <h5 class="bold">Expectation Info</h5>
+        </li>
+        <li>
+          <h6> Across your organization </h6>
+          <h5><span class="label label-danger">
+          <span class="glyphicon glyphicon-exclamation-sign"></span> {{percent_not_meeting}}% Not Meeting
+        </span></h5></li>
+        <li><h5><span class="label label-warning">
+          <span class="glyphicon glyphicon-exclamation-sign"></span> {{percent_need_work}}% Need Work
+        </span></h5></li>
+        <li><h5><span class="label label-success">
+          <span class="glyphicon glyphicon-ok-circle"></span> {{percent_meeting}}% Meeting
+        </span></h5></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

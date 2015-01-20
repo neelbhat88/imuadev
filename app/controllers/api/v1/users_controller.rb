@@ -23,6 +23,7 @@ class Api::V1::UsersController < ApplicationController
     role = params[:user][:role].to_i
     orgId = params[:user][:organization_id].to_i
     class_of = params[:user][:class_of].to_i
+    time_unit_id = params[:user][:time_unit_id]
 
     # Temporary security check - need to find a better way to do this
     if !current_user.super_admin? && role == Constants.UserRole[:SUPER_ADMIN]
@@ -47,7 +48,8 @@ class Api::V1::UsersController < ApplicationController
              :phone => phone,
              :role => role,
              :organization_id => orgId,
-             :class_of => class_of}
+             :class_of => class_of,
+             :time_unit_id => time_unit_id}
 
     result = UserRepository.new.create_user(user, current_user)
 
@@ -263,6 +265,45 @@ class Api::V1::UsersController < ApplicationController
         info: "Assigned mentors",
         mentors: viewMentors
       }
+  end
+
+  # PUT organization/:id/users/reset_all_students_password
+  def reset_all_students_password
+    organization_id = params[:id].to_i
+    organization = OrganizationRepository.new.get_organization(organization_id)
+
+    if can?(current_user, :reset_passwords, organization)
+      result = UserRepository.new.reset_all_students_password(organization_id)
+    else
+      result = { :status => :forbidden,
+                 :info => "You are not permitted to reset students' passwords"
+               }
+    end
+
+    render status: result[:status],
+    json: {
+      info: result[:info]
+    }
+  end
+
+  # PUT organization/:id/users/reset_users_password
+  def reset_users_password
+    organization_id = params[:id].to_i
+    organization = OrganizationRepository.new.get_organization(organization_id)
+    user_ids = params[:user_ids]
+
+    if can?(current_user, :reset_passwords, organization)
+      result = UserRepository.new.reset_users_password(user_ids, organization_id)
+    else
+      result = { :status => :forbidden,
+                 :info => "You are not permitted to reset students' passwords"
+               }
+    end
+
+    render status: result[:status],
+    json: {
+      info: result[:info]
+    }
   end
 
 end

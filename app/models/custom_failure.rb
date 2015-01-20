@@ -1,16 +1,11 @@
 class CustomFailure < Devise::FailureApp
   def redirect_url
-    login_path
+    login_path(:pu => params[:pu])
   end
 
   def respond
-    # Had to do it this way because request.format for all requests
-    # even AJAX requests were coming up as html for some reason
-    json_request = request.accept.include? "application/json"
-
-    if json_request
-      self.status = 401
-      self.content_type = 'json'
+    if http_auth?
+      http_auth
     else
       redirect
     end

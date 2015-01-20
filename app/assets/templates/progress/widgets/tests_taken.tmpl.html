@@ -1,0 +1,106 @@
+<div class="widget tests-taken">
+
+  <div class="widget--header">
+    <div class="widget--header-container clear">
+      <div class="widget--header--title widget--header--noleft">
+        <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s Tests</h6>
+        <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your Tests</h6>
+      </div>
+      <div progress-editor class="widget--header--right" ng-hide="userTests.editing">
+        <div class="widget--options ng-clickable" ng-hide="testsEditor" ng-click="editorClick()">
+          <div class="showing--text">Add or Remove Tests</div>
+          <div class="showing--icon glyphicon glyphicon-edit"></div>
+        </div>
+        <button ng-show="testsEditor" class="btn btn-primary" ng-click="editorClick()"><span class="glyphicon glyphicon-ok"></span> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget--content">
+    <div class="widget--content--table table--fixed">
+
+      <div class="table--cell break900" wait-to-load="{{loaded_data}}">
+
+        <div progress-editor class="table--cell breakalways cell--padding clear  ng-clickable" ng-click="editorClick()" ng-show="userTests.length == 0 && !testsEditor">
+          <div class="class-name">
+            <h5 ng-if="current_user.is_student">You haven't added any tests yet.</h5>
+            <h5 ng-if="!current_user.is_student">{{student.first_name}} hasn't added any tests yet.</h5>
+            <h5 class="bold">Click here to begin</h5>
+          </div>
+        </div>
+
+        <div class="widget--content--table table--fixed">
+
+          <div class="table--cell no-border-right breakalways" ng-repeat="userTest in userTests">
+            <div class="widget--content--table">
+              <div class="table--cell test-taken-header" ng-hide="userTest.editing">
+                <h4 class="bold">{{userTest.orgTest.title}}</h4>
+                <div progress-editor class="edit-buttons" ng-show="testsEditor">
+                  <button class="btn btn-default btn-sm" ng-click="editUserTest(userTest)">Edit this Test</button>
+                  <button class="btn btn-danger btn-sm" ng-click="deleteUserTest(userTest)">Delete This Test</button>
+                </div>
+              </div>
+              <div class="table--cell cell--test--score cell--padding"  ng-hide="userTest.editing">
+                <p>Score</p>
+                <h5 class="bold">{{userTest.score}}</h5>
+              </div>
+            </div>
+
+            <div progress-editor class="widget--content--cell" ng-show="userTest.editing">
+              <form imua-form="saveUserTest(userTest)" name="newTestForm" novalidate>
+                <div class="cell--padding">
+                  <span class="input-group">
+                    <label-with-errors label="Test Taken: " form="newTestForm" formfield="newTestForm.testName"></label-with-errors>
+                    <select required name="testName" class="form-control" ng-options="orgTest as orgTest.title for orgTest in orgTests" ng-model="userTest.new_orgTest">
+                      <option value="">--- Select Test ---</option>
+                    </select>
+                  </span>
+
+                  <form-datepicker class="full-width" form="newTestForm" label="Date Taken:" date="userTest.new_date"></form-datepicker>
+
+                  <span ng-show="userTest.new_orgTest.score_type != 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
+                    <label>Score:</label>
+                    <input class="form-control" ng-model="userTest.new_score" placeholder="Score"></input>
+                  </span>
+
+                  <span ng-show="userTest.new_orgTest.score_type == 'Letter Grade' && userTest.new_orgTest != null" class="input-group">
+                    <label>Grade:</label>
+                    <select class="form-control" ng-model="userTest.new_score">
+                      <option value="A">A</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B">B</option>
+                      <option value="B-">B-</option>
+                      <option value="C+">C+</option>
+                      <option value="C">C</option>
+                      <option value="C-">C-</option>
+                      <option value="D+">D+</option>
+                      <option value="D">D</option>
+                      <option value="D-">D-</option>
+                      <option value="F">F</option>
+                    </select>
+                  </span>
+                  <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="newTestForm.$submitted && newTestForm.$invalid">
+                  {{error}}</div>
+                  <button progress-editor type="submit" class="submit" title="Confirm">Confirm</button>
+                  <span progress-editor class="cancel" title="Cancel" ng-click="cancelEditUserTest(userTest)">Cancel</span>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <div progress-editor class="table--cell no-border-right breakalways ng-clickable" ng-show="testsEditor" ng-if="!userTests.editing" ng-click="addUserTest()">
+            <div class="cell--padding">
+              <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
+              <h6 class="bold">Add A Test</h6>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

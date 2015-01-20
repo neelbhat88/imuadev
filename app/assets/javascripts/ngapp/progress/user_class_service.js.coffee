@@ -6,10 +6,10 @@ angular.module("myApp")
 
   @new = (user, time_unit_id) ->
     name: "",
-    grade: "",
+    grade_value: null,
     gpa: 0,
-    period: "",
-    room: "",
+    period: null,
+    room: null,
     credit_hours: 1,
     level: CONSTANTS.CLASS_LEVELS.regular
     subject: ""

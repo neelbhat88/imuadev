@@ -9,10 +9,10 @@
 
           <div class="progressCircle-big--container">
 
-            <a class="js-nav-link" ng-href="#/progress/{{current_user.id}}">
+            <a class="js-nav-link" ng-href="app#/progress/{{current_user.id}}">
 
               <div class="progressCircle-big">
-              	<div class="big-progress-circle" ng-if="student_with_modules_progress">
+              	<div class="big-progress-circle">
               		<progress-circle width="240" student="student_with_modules_progress" ng-if="student_with_modules_progress"></progress-circle>
               	</div>
               </div>
@@ -47,7 +47,7 @@
               <div class="milestones-unsatisfied section--subsection clear">
                 <div class="milestone-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
                   <div class="milestone-item-unstatisfied">
-                    <a href="#/progress/{{student.id}}">
+                    <a href="app#/progress/{{student.id}}">
                       <div class="milestone--point-circle" modulecolor="{{milestone.module}}">
                         <div class="point-circle--inside">
                           <h5 class="bold">{{milestone.points}}</h5>
@@ -60,7 +60,7 @@
                 </div>
               </div>
             </div>
-            <a href="#/progress/{{student.id}}"><button class="btn btn-default">Check out your Progress</button></a>
+            <a href="app#/progress/{{student.id}}"><button class="btn btn-default">Check out your Progress</button></a>
           </div>
         </div>
 
@@ -74,7 +74,7 @@
               <div class="expectations-met-message" ng-if="!meetingExpectations"><h6>You have expectations that need work<h6></div>
 
               <div class="dashboard-expectations--list-item" ng-repeat="expectation in expectations" ng-if="expectation.user_expectation.status > 0">
-                <a href="#/user/{{student.id}}/user_expectation/{{expectation.user_expectation.id}}">
+                <a href="app#/user/{{student.id}}/user_expectation/{{expectation.user_expectation.id}}">
                   <div class="dashboard-expectation warn" ng-if="expectation.user_expectation.status == 1">
                     <h6 class="bold"><span class="glyphicon glyphicon-warning-sign"></span> {{expectation.title}}</h6>
                   </div>
@@ -84,7 +84,7 @@
                 </a>
               </div>
             </div>
-            <a href="#/expectations/{{student.id}}"><button class="btn btn-default">See All Expectations</button></a>
+            <a href="app#/expectations/{{student.id}}"><button class="btn btn-default">See All Expectations</button></a>
           </div>
         </div>
 
@@ -93,7 +93,7 @@
           <div class="module--content">
             <ul>
               <li class="tasks--list--item" ng-repeat="assignment in user_assignments | orderBy:sortIncompleteAssignments" ng-if="assignment.status == 0">
-                <a no-click-propagation href="#/user_assignment/{{assignment.id}}">
+                <a no-click-propagation href="app#/user_assignment/{{assignment.id}}">
                   <h6 class="bold">{{assignment.title}}</h6>
                   <div class="subtext" ng-if="assignment.due_datetime != null">
                     Due {{assignment.due_datetime | fromNow}}
@@ -101,7 +101,7 @@
                 </a>
               </li>
             </ul>
-            <a href="#/user_assignments/{{student.id}}"><button class="btn btn-default">See All Tasks</button></a>
+            <a href="app#/user_assignments/{{student.id}}"><button class="btn btn-default">See All Tasks</button></a>
           </div>
         </div>
 

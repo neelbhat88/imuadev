@@ -5,7 +5,9 @@ namespace :db_update do
   ########################################
   ########################################
   desc "All db_updates"
-  task :all => [:create_app_version]
+  task :all => [:create_app_version,
+                :organization_id_to_assignments,
+                :reset_default_expectation_descriptions]
 
   ########################################
   ########################################
@@ -26,11 +28,6 @@ namespace :db_update do
     else
       puts 'ERROR: Failed to updated AppVersion.'
     end
-
-    # Cleaning up old database sessions greter than 2 minutes past the session timeout time
-    # The 2 minutes is just to add a buffer in case of slight differences in client and server time
-    puts "Deleting expired sessions from the DB..."
-    Session.where("updated_at < '#{DateTime.now.utc - (Constants.SessionTimeout + 2.minutes) }'").delete_all
   end
 
   ########################################
@@ -136,6 +133,184 @@ namespace :db_update do
       puts "AppVersion row created"
     else
       puts "AppVersion row already exists"
+    end
+  end
+
+  desc "Apply organization_id to Assignments"
+  task :organization_id_to_assignments => :environment do
+    assignments = Assignment.where(organization_id: nil)
+    if assignments.any?
+      assignments.each do |a|
+        orgId = a.user.organization_id
+        a.update_attributes(organization_id: orgId)
+        puts "Applied orgId: " + orgId.to_s + " to assignment " + a.id.to_s
+      end
+    else
+      puts "All Assignments have non-nil organization_id"
+    end
+  end
+
+  desc "Create UserExpectations for all Users"
+  task :create_user_expectations => :environment do
+    User.where(:role => Constants.UserRole[:STUDENT]).each do |u|
+      UserExpectationService.new(User.SystemUser).create_user_expectations(u.id)
+    end
+  end
+
+  desc "Add UserExpectationHistory record"
+  # Doing this because at the time of this writing the UserExpectationHistory
+  # was always 1 entry behind the current UserEpectation - meaning to build up
+  # a full history, including current state, you have to get the history AND
+  # get the current UserExpectation. See #615 on github for more explanation
+  task :add_user_expectation_history_record => :environment do
+    recordsCreated = 0
+    UserExpectation.all.each do |ue|
+      puts "Adding History Record for UserExpectation id: #{ue.id}"
+      existingHistory = UserExpectationHistory.where(
+                          :expectation_id => ue.expectation_id,
+                          :user_expectation_id => ue.id,
+                          :status => ue.status,
+                          :comment => ue.comment,
+                          :created_on => ue.updated_at
+                          )
+
+      puts "Existing history length #{existingHistory.length}"
+
+      if existingHistory.length == 0
+        puts "UserExpectation last updated_at: #{ue.updated_at}"
+
+        history = UserExpectationHistoryService.new(User.SystemUser).create_expectation_history(ue)
+
+        if history.valid?
+          recordsCreated += 1
+          puts "History record created. Setting created_on: #{history.created_on}"
+        else
+          puts "Failed to create history record for UserExpectation id: #{ue.id}. Errors: #{history.errors.inspect}"
+        end
+      else
+        puts "Latest history record already exists for UserExpectation id: #{ue.id}"
+      end
+    end
+
+    puts "Creating history records finished. Created #{recordsCreated} records"
+  end
+
+  desc "Update UserExpectationHistory Dates to be TO instead of FROM"
+  # See #615 on github for more info
+  task :update_user_expectation_history_dates => :environment do
+    # For all UserExpectations
+      # Get all History ordered by created_at DESC
+      # 1 - Remove the latest history since it was just added by the rake task above and so is correct
+      # 2 - Set created_on date of the LAST one to created_at date of the expectation
+      #   and set modified_by_id to SystemUser
+      # 3 - Loop through rest and set created_on date of current to created_at of next
+    UserExpectation.all.each do |ue|
+      expectation = Expectation.find(ue.expectation_id)
+
+      all_history = UserExpectationHistory.where(:user_expectation_id => ue.id).order("created_at DESC")
+      puts "History length for User Expectation id #{ue.id}: #{all_history.length}"
+
+      # 1
+      all_history.shift
+
+      # 2
+      if all_history.length != 0
+        all_history.last.update_attributes(:created_on => expectation.created_at, :modified_by_id => -1, :modified_by_name => "System")
+      end
+
+      # 3
+      all_history.each_with_index do |elem, i|
+        next_elem = all_history[i+1]
+
+        if !next_elem.nil?
+          elem.update_attributes(:created_on => next_elem.created_at)
+        end
+      end
+    end
+  end
+
+  desc "Reset default Expectation description field"
+  task :reset_default_expectation_descriptions => :environment do
+    expectations = Expectation.where(description: "temp description")
+    if expectations.any?
+      expectations.each do |e|
+        e.update_attributes(description: "")
+        puts "Changed description from 'temp description' to '', for expectation " + e.id.to_s
+      end
+    else
+      puts "No Expectations have description field of: 'temp description'"
+    end
+  end
+
+  desc "Convert grades from string to number"
+  task :convert_grades_from_string_to_float => :environment do
+    all_students = User.where(:role => 50)
+    all_students.each do | s |
+      student_classes = UserClass.where(:user_id => s.id)
+      student_classes.each do | c |
+        case c.grade
+          when 'A'
+            new_grade = 98.0
+          when 'A-'
+            new_grade = 92.0
+          when 'B+'
+            new_grade = 89.0
+          when 'B'
+            new_grade = 85.0
+          when 'B-'
+            new_grade = 82.0
+          when 'C+'
+            new_grade = 79.0
+          when 'C'
+            new_grade = 75.0
+          when 'C-'
+            new_grade = 72.0
+          when 'D+'
+            new_grade = 69.0
+          when 'D'
+            new_grade = 65.0
+          when 'D-'
+            new_grade = 62.0
+          when 'F'
+            new_grade = 50.0
+        end
+
+        c.update_attributes(:grade_value => new_grade)
+        puts "Updated " + c.name + "grade to " + new_grade.to_s + " for " + s.first_name + " " + s.last_name
+      end
+
+      student_class_histories = UserClassHistory.where(:user_id => s.id)
+      student_class_histories.each do | h |
+        case h.grade
+          when 'A'
+            new_grade = 98.0
+          when 'A-'
+            new_grade = 92.0
+          when 'B+'
+            new_grade = 89.0
+          when 'B'
+            new_grade = 85.0
+          when 'B-'
+            new_grade = 82.0
+          when 'C+'
+            new_grade = 79.0
+          when 'C'
+            new_grade = 75.0
+          when 'C-'
+            new_grade = 72.0
+          when 'D+'
+            new_grade = 69.0
+          when 'D'
+            new_grade = 65.0
+          when 'D-'
+            new_grade = 62.0
+          when 'F'
+            new_grade = 50.0
+        end
+
+        h.update_attributes(:grade_value => new_grade)
+        puts "Updated " + h.name + "history grade to " + new_grade.to_s + " for " + s.first_name + " " + s.last_name
+      end
     end
   end
 

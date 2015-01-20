@@ -1,0 +1,15 @@
+<p>Aloha!</p>
+
+<p>The expectation "<%= @expectation.title %>" for <%= @student.full_name %>
+  has been updated to '<%= @status %>' by <%= @modifier.full_name %>. </p>
+
+<% if @comment %>
+<p> <%= @modifier.full_name %> stated: </p>
+<p>"<%= @comment %>"</p>
+<% end %>
+
+<p><%= link_to "Log in", login_url %> to view this update. </p>
+
+<p>Mahalo,<p>
+
+Imua

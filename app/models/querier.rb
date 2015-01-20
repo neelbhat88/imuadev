@@ -62,6 +62,15 @@ class Querier
   end
 
   def domain(sortBy = [])
+    if !sortBy.empty? && @sortedBy != sortBy
+      if @domain.nil?
+        self.generate_domain(sortBy)
+      else
+        @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
+      end
+      @sortedBy = sortBy
+    end
+
     return (@domain.nil?) ? self.generate_domain(sortBy) : @domain
   end
 
@@ -112,6 +121,7 @@ class Querier
       applicable_domains = self.domain
     else
       # Remove from @domains as its read into the view
+      # TODO - SubQuerier view generation won't work if nested more than once
       # TODO - WRITE UNIT TESTS FOR THIS!!
       while !self.domain(filterBy).empty?
         primary_key = conditions.keys[0]
@@ -157,7 +167,7 @@ class Querier
       @domain << obj_domain
     end
     sortBy << :id
-    return @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
+      return @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
   end
 
   def generate_query
@@ -187,13 +197,14 @@ class Querier
   end
 
   def set_conditions(conditions)
+    ret_conditions = Marshal.load(Marshal.dump(conditions))
+
     # Always set :[class_name]_id to :id
     this_class_condition = conditions[@foreignKey]
-    conditions[:id] = this_class_condition unless this_class_condition.nil?
+    ret_conditions[:id] = this_class_condition unless this_class_condition.nil?
 
-    conditions = filter_conditions(conditions)
-
-    return @conditions = conditions
+    ret_conditions = filter_conditions(ret_conditions)
+    return @conditions = ret_conditions
   end
 
 end

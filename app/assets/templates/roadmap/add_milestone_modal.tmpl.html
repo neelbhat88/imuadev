@@ -1,34 +1,41 @@
 <div class="modal-body">
+  <div class="modal-body__title"><h5>Add New Milestone</h5></div>
+  <div class="milestone_modules" modulecolor="{{selected.module.title}}">
+    <div class="milestone_module" ng-repeat="module in modules"
+          ng-class="{selected: selected.module.title == module.title}"
+          ng-click="selectModule(module)"
+          modulecolor="{{module.title}}">
+      <span class="module_title">{{module.title | underscoresToSpaces}}</span>
+    </div>
+  </div>
 
+  <div class="milestone_submodules" ng-hide="selected.submodule">
+    <h6>Select a {{selected.module.title | underscoresToSpaces}} milestone:</h6>
+    <div class="milestone_submodule" ng-repeat="submodule in selected.module.submodules"
+        ng-click="selectSubmodule(submodule)"
+        ng-class="{selected: selected.submodule.title == submodule.title}">
+      <div class="milestone_submodule__title bold pbs">{{submodule.title}}</div>
+      <div class="milestone_submodule__description">{{submodule.milestone_description}}</div>
+    </div>
+  </div>
 
+  <div ng-show="selected.submodule" class="milestone_edit phm ptm">
+    <div class="pbs">
+      <span class="glyphicon glyphicon-circle-arrow-left"></span>
+      <a ng-click="clearSubmoduleSelection()">Back to milestones</a>
+    </div>
+    <div class="milestone_submodule selected">
+      <div class="milestone_submodule__title bold pbs">{{selected.submodule.title}}</div>
+      <div class="milestone_submodule__description">{{selected.submodule.milestone_description}}</div>
+    </div>
 
-    <!--
-    <select ng-model="selected.module" ng-options="mod.submoduleTitle group by mod.module for mod in dd_modules">
-      <option value="">-- choose sub-module --</option>
-    </select>
-    -->
-
-    <!-- QUESTION -->
-    <!-- <div ng-show="selected.module" class="milestone ptl" ng-include="'/assets/roadmap/add_'+selected.module.submoduleType.toLowerCase()+'.tmpl.html'"> -->
-
-    <div class="selectable_modules">
-      <span class="selectable_module_group" ng-repeat="selectable_module_group in selectable_module_groups">
-        <span class="selectable_module" modulecolor="{{selectable_module.module}}" ng-repeat="selectable_module in selectable_module_group.group">
-          <button class ="selectable_module__title" ng-class="{selected: selected.module == selectable_module}" ng-click="selectModule(selectable_module)">
-            <img ng-src={{selectable_module.milestone.icon}}/>{{selectable_module.milestone.title}}
-          </button>
-        </span>
-      </span>
-
-
-    <div ng-show="selected.module" class="milestone_edit">
-
+    <div class="milestone_submodule__form">
       <div class="pbs">
-        <div class="milestone-description">{{selected.module.milestone.description}}</div>
+        <div class="milestone-description">{{selected.submodule.description}}</div>
       </div>
 
       <div class="pbs">
-        <input class="form-field" ng-model="selected.module.milestone.value" placeholder="Value">
+        <input class="form-control" ng-model="selected.submodule.value" placeholder="Value">
 
       </div>
 
@@ -39,7 +46,7 @@
             <span class="milestone-weight">Weight:</span>
           </div>
           <div class="pbs">
-            <input class="form-field" ng-model="selected.module.milestone.points" placeholder="Weight">
+            <input class="form-field" ng-model="selected.submodule.points" placeholder="Weight">
           </div>
         </div>
       </div>
@@ -48,10 +55,10 @@
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
     </div>
+  </div>
 
-    <div class="buttonGroup pvxl">
-      <button type="submit" class="submit" ng-show="selected.module" ng-click="add()"><span>Add</span></button>
-      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-    </div>
+  <div class="buttonGroup pvm">
+    <button type="submit" class="submit" ng-show="selected.submodule" ng-click="add()"><span>Add</span></button>
+    <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
   </div>
 </div>

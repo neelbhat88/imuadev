@@ -38,7 +38,6 @@
 
   select {
     width: 100%;
-    @include font-size(2.2);
   }
 
 
@@ -47,7 +46,6 @@
     padding: 80px $wrapper-width;
     background: $grey;
     @include bgcover();
-    border-bottom: 1px solid $darkborder;
     text-align: center;
 
     .profile--pic {

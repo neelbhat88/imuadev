@@ -11,20 +11,6 @@ class ApplicationController < ActionController::Base
   respond_to :json, :only => [:check_and_set_version_header]
   before_filter :check_and_set_version_header
 
-  # Overries Devise after sign in
-  def after_sign_in_path_for(resource)
-    # ToDo: Move this into a Keen Provider class
-    Background.process do
-      Keen.publish("user_engagement", {
-                                        :user => current_user,
-                                        :day => DateTime.now.utc.beginning_of_day.iso8601,
-                                        :hour => DateTime.now.utc.beginning_of_hour.iso8601
-                                      }
-                  )
-    end
-
-    return root_path
-  end
 
   def after_sign_out_path_for(resource_or_scope)
     login_path
@@ -52,7 +38,7 @@ class ApplicationController < ActionController::Base
     @appVersion = AppVersionService.new.get_version_number.to_s
     response.headers['AppVersion'] = @appVersion
 
-    # Only check the AppVersion if the header exists
+    # Only check the AppVersion if the header exists AND the user has a session
     if request.headers['AppVersion'] && current_user && request.headers['AppVersion'] != @appVersion
       Rails.logger.error("Error - AppVersion mismatch! - Current version: #{@appVersion}, Client's Version: #{request.headers['AppVersion']}. UserId: #{current_user.id}")
       render status: 426, json: {}

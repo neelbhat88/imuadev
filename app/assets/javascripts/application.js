@@ -16,13 +16,17 @@
 //= require angular-mocks
 //= require angular-ui-bootstrap-tpls
 //= require angular-rails-templates
+//= require angular-cookie
+//= require salvattore
 //= require spin
 //= require ladda
 //= require d3
 //= require underscore
 //= require angulartics
 //= require angulartics-ga
+//= require angular-messages
 //= require moment
+//= require c3
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder

@@ -1,0 +1,23 @@
+<div class="assignmentsContainer clear">
+
+  <div class="assignments-header">
+    <div class="assignments-header--wrapper">
+      <div class="greeting">
+        <h4 class="bold">{{user.first_last_initial}}'s Tasks</h4>
+      </div>
+      <div class="task-button-container">
+        <a no-click-propagation href="app#/assignment/-1"><button class="btn btn-default">New Task</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="assignments-content clear" wait-to-load="{{loaded_data}}">
+    <div class="assignments-nav">
+      <div ng-include="'assignment/widgets/assignments_nav.html'"></div>
+    </div>
+    <div class="assignments-pane">
+      <div ng-include="'assignment/widgets/assignments_list.html'"></div>
+    </div>
+  </div>
+
+</div>

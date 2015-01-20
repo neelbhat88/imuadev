@@ -26,7 +26,15 @@ describe Ability do
                                           :manage_parent_guardian_contacts,
                                           :get_student_expectations,
                                           :get_student_dashboard,
-                                          :get_user_progress
+                                          :get_user_progress,
+                                          :get_user_assignments,
+                                          :create_user_assignment,
+                                          :get_user_assignment_collections,
+                                          :get_assignments,
+                                          :create_assignment,
+                                          :create_assignment_broadcast,
+                                          :get_task_assignable_users,
+                                          :get_task_assignable_users_tasks
                                         )
   end
 
@@ -46,7 +54,15 @@ describe Ability do
                                           :manage_parent_guardian_contacts,
                                           :get_student_expectations,
                                           :get_student_dashboard,
-                                          :get_user_progress
+                                          :get_user_progress,
+                                          :get_user_assignments,
+                                          :create_user_assignment,
+                                          :get_user_assignment_collections,
+                                          :get_assignments,
+                                          :create_assignment,
+                                          :create_assignment_broadcast,
+                                          :get_task_assignable_users,
+                                          :get_task_assignable_users_tasks
                                         )
   end
 
@@ -67,7 +83,15 @@ describe Ability do
                                           :manage_parent_guardian_contacts,
                                           :get_student_expectations,
                                           :get_student_dashboard,
-                                          :get_user_progress
+                                          :get_user_progress,
+                                          :get_user_assignments,
+                                          :create_user_assignment,
+                                          :get_user_assignment_collections,
+                                          :get_assignments,
+                                          :create_assignment,
+                                          :create_assignment_broadcast,
+                                          :get_task_assignable_users,
+                                          :get_task_assignable_users_tasks
                                         )
   end
 
@@ -88,7 +112,13 @@ describe Ability do
                                           :manage_parent_guardian_contacts,
                                           :get_student_expectations,
                                           :get_student_dashboard,
-                                          :get_user_progress
+                                          :get_user_progress,
+                                          :get_user_assignments,
+                                          :create_user_assignment,
+                                          :get_user_assignment_collections,
+                                          :get_assignments,
+                                          :get_task_assignable_users,
+                                          :get_task_assignable_users_tasks
                                         )
   end
 
@@ -128,7 +158,13 @@ describe Ability do
                                             :manage_parent_guardian_contacts,
                                             :get_student_expectations,
                                             :get_student_dashboard,
-                                            :get_user_progress
+                                            :get_user_progress,
+                                            :get_user_assignments,
+                                            :create_user_assignment,
+                                            :get_user_assignment_collections,
+                                            :get_assignments,
+                                            :get_task_assignable_users,
+                                            :get_task_assignable_users_tasks
                                           )
     end
 
@@ -138,7 +174,18 @@ describe Ability do
 
       abilities = Ability.user_abilities(mentor, subject)
 
-      expect(abilities).to contain_exactly()
+      expect(abilities).to contain_exactly( :view_profile,
+                                            :read_user_tests,
+                                            :read_parent_guardian_contacts,
+                                            :get_student_expectations,
+                                            :get_student_dashboard,
+                                            :get_user_progress,
+                                            :get_user_assignments,
+                                            :get_user_assignment_collections,
+                                            :get_assignments,
+                                            :get_task_assignable_users,
+                                            :get_task_assignable_users_tasks
+                                          )
     end
 
   end

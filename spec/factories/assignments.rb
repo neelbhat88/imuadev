@@ -6,6 +6,7 @@ FactoryGirl.define do
     title        "default_title"
     description  "default_description"
     due_datetime DateTime.now
+    organization_id -10
   end
 
   factory :user_assignment do

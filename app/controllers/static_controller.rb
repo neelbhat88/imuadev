@@ -1,19 +1,17 @@
 class StaticController < ApplicationController
-  before_filter :authenticate_user, except: [:index, :forgot_password,
+  before_filter :authenticate_user, except: [:app, :index, :forgot_password,
                                              :reset_password, :login]
-
-  # Set the layout based on if the user is signed in or not
-  layout :choose_layout
 
   def index
     render "index"
   end
 
-  def login
-    if params[:expired] == "true"
-      flash.now[:alert] = "Your session has expired. Please log in again."
-    end
+  def app
+    render "app", layout: "angular"
+  end
 
+  def login
+    session[:previous_url] = params[:pu]
     render "login"
   end
 
@@ -41,7 +39,4 @@ class StaticController < ApplicationController
           :flash => { :success => "Check your email for your password reset instructions." }
   end
 
-  def choose_layout
-    user_signed_in? ? "angular" : "application"
-  end
 end

@@ -1,0 +1,36 @@
+<div class="widget widget--nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Tasks</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="widget--content--cell ng-clickable breakalways"
+        ng-class="{selected: selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me}"
+        ng-click="selectNav(CONSTANTS.TASK_NAV.assigned_to_me)">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
+          <div class="setting-text">Assigned to Me</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways"
+        ng-class="{selected: selected_task_list == CONSTANTS.TASK_NAV.assigned_by_me}"
+        ng-click="selectNav(CONSTANTS.TASK_NAV.assigned_by_me)">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
+          <div class="setting-text">I've Assigned</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways"
+        ng-class="{selected: selected_task_list == CONSTANTS.TASK_NAV.assigned_to_others}"
+        ng-click="selectNav(CONSTANTS.TASK_NAV.assigned_to_others)">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
+          <div ng-if="current_user.is_mentor" class="setting-text">Assigned to My Students</div>
+          <div ng-if="current_user.is_org_admin" class="setting-text">All Tasks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

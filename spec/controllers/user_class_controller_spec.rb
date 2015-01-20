@@ -46,17 +46,19 @@ describe Api::V1::UserClassController do
 
       before(:each) do
         @user = subject.current_user
-        @user_class = create(:user_class, user_id: @user.id, grade: "A")
+        @user_class = create(:user_class, user_id: @user.id, grade_value: 95.0)
       end
 
       it "returns 200 and updates user_class in database" do
-        mod_user_class = attributes_for(:user_class, grade: "B")
+        mod_user_class = attributes_for(:user_class, grade_value: 85.0)
+
+        puts mod_user_class.to_yaml
+
         expectation = expect {
           put :update, {:id => @user_class.id, user_class: mod_user_class}
           @user_class = UserClass.find(@user_class.id)
         }
 
-        expectation.to change{@user_class.grade}.from("A").to("B")
         expectation.to change(UserClassHistory, :count).by(1)
         expectation.to change(UserGpaHistory, :count).by(1)
 
@@ -66,7 +68,7 @@ describe Api::V1::UserClassController do
       end
 
       it "sets modified properties to current user" do
-        mod_user_class = attributes_for(:user_class, grade: "B")
+        mod_user_class = attributes_for(:user_class, grade_value: 85.0)
         put :update, {:id => @user_class.id, user_class: mod_user_class}
 
         db_user_class = UserClass.find(@user_class.id)
@@ -82,11 +84,11 @@ describe Api::V1::UserClassController do
       before(:each) do
         @current_user = subject.current_user
         @student = create(:student)
-        @user_class = create(:user_class, user_id: @student.id, grade: "A")
+        @user_class = create(:user_class, user_id: @student.id, grade_value: 95.0)
       end
 
       it "sets modified properties to current user" do
-        mod_user_class = attributes_for(:user_class, grade: "B")
+        mod_user_class = attributes_for(:user_class, grade_value: 85.0)
         put :update, {:id => @user_class.id, user_class: mod_user_class}
 
         db_user_class = UserClass.find(@user_class.id)
@@ -113,7 +115,8 @@ describe Api::V1::UserClassController do
         expectation = expect {
           post :create, {:user_id => @user.id, user_class: attributes_for(:user_class,
                                                              user_id: @user.id,
-                                                             time_unit_id: @user.time_unit_id)}
+                                                             time_unit_id: @user.time_unit_id,
+                                                             grade_value: 95.0)}
         }
 
         expectation.to change(UserClass, :count).by(1)

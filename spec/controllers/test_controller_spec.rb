@@ -421,14 +421,14 @@ describe Api::V1::TestController do
                                                  user_id: student2.id,
                                                  time_unit_id: timeUnitId + 1) }
 
-      it "returns 403 if try to view a student's tests (all) who is not assigned to them." do
+      it "returns 200 if try to view a student's tests (all) who is not assigned to them." do
         get :get_user_tests, {:id => student2.id}
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(200)
       end
 
-      it "returns 403 if try to view a student's tests (for a particular time unit) who is not assigned to them." do
+      it "returns 200 if try to view a student's tests (for a particular time unit) who is not assigned to them." do
         get :get_user_tests, {:id => student2.id, :time_unit_id => timeUnitId}
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(200)
       end
 
       it "returns 200 if try to view a student's tests (all) who is assigned to them." do

@@ -1,0 +1,101 @@
+<div class="taskContainer" wait-to-load="{{loaded_data}}">
+
+  <div class="task-header clear">
+    <div class="single-col-wrapper">
+      <div class="back-link">
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-col-wrapper clear">
+    <div class="assignment--left">
+
+      <div class="task-content">
+        <h4>{{milestone | printMilestone}}</h4>
+      </div>
+
+      <div ng-if="num_students_in_semester == 0">
+        <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
+        <h5 ng-if="current_user.is_mentor" class="italic">None of your students are currently in {{milestone.time_unit_name}}</h5>
+      </div>
+
+      <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
+        <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
+        <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
+          <a href="app#/progress/{{user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav">
+            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+              <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="users-completed" ng-if="users_complete.length != 0">
+        <h6 class="bold green" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
+        <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
+        <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
+          <a href="app#/progress/{{user.id}}">
+            <div class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+          </a>
+          <ul class="circle-subnav">
+            <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
+            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+              <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="assignment--right">
+      <ul>
+        <li class="column-title">
+          <h5 class="bold">Milestone Info</h5>
+        </li>
+        <li>
+          <span class="edit-milestone__title"><img ng-src={{milestone.icon}}/></span>
+          <h6 class="bold">{{milestone.title}}</h6>
+        </li>
+        <li>
+          <h6>{{milestone.time_unit_name}}</h6>
+        </li>
+        <li>
+          <h6>Students currently in {{milestone.time_unit_name}}</h6>
+          <h5 class="bold">{{users_total.length}}</h5>
+          <h6>
+            ({{percent_complete}}% Complete)
+          </h6>
+        </li>
+        <li>
+          <!-- <h6>Created by</h6>
+          <a href="app#/profile/{{user.id}}">
+            <div class="tiny-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}} {{user.last_name}}" />
+            </div>
+            <h6 class="bold">{{user.first_name}} {{user.last_name}}</h6>
+          </a> -->
+          <!-- <p>Created on</p>
+          <p>{{milestone.created_at | formatMDY}}</p> -->
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
