@@ -15,6 +15,9 @@ angular.module('myApp')
     if response.status == 426
       $rootScope.$broadcast("update_required")
       return defer.promise
+    else if response.status == 401
+      $rootScope.$broadcast("unauthorized")
+      return defer.promise
 
     response
     return $q.reject(response)
