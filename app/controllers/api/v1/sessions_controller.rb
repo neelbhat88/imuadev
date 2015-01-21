@@ -24,6 +24,8 @@ class Api::V1::SessionsController < Devise::SessionsController
 
 	def destroy
 		sign_out current_user
+
+		redirect_to login_path
 	end
 
 	def show_current_user

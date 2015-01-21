@@ -1,6 +1,4 @@
 class StaticController < ApplicationController
-  before_filter :authenticate_user, except: [:app, :index, :forgot_password,
-                                             :reset_password, :login]
 
   def index
     render "index"

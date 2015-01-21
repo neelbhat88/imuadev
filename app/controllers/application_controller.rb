@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
                    # after_sign_in_path_for needs to return HTML since its rendering the view
   respond_to :json, :only => [:check_and_set_version_header]
 
-  def after_sign_out_path_for(resource_or_scope)
-    login_path
-  end
-
   def student_can_access?(userId)
     if current_user.student? && current_user.id != userId
       return false
