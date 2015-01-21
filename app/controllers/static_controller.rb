@@ -1,6 +1,4 @@
 class StaticController < ApplicationController
-  before_filter :authenticate_user, except: [:app, :index, :forgot_password,
-                                             :reset_password, :login]
 
   def index
     render "index"
@@ -11,6 +9,10 @@ class StaticController < ApplicationController
   end
 
   def login
+    if user_signed_in?
+      sign_out current_user
+    end
+
     session[:previous_url] = params[:pu]
     render "login"
   end
