@@ -22,6 +22,12 @@ class Api::V1::SessionsController < Devise::SessionsController
 		redirect_to app_path
 	end
 
+	def destroy
+		sign_out current_user
+
+		redirect_to login_path
+	end
+
 	def show_current_user
 		status = :unauthorized
 		user = nil
