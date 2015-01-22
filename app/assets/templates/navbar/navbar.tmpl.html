@@ -9,7 +9,7 @@
            </button>
              <div class="navbar-brand">
                <a ng-if="!user.is_super_admin" href="app#/"><img ng-src="assets/logo-blue-small.png" alt="IMUA" height="22px" width="22px"><span class="pls">{{ user.organization_name }}</span></a>
-               <a ng-if="user.is_super_admin" href="app#/"><img ng-src="assets/logo-blue-small.png" alt="IMUA" height="22px" width="22px"> <span>Collective Progress</span></a>
+               <a ng-if="user.is_super_admin" href="app#/"><img ng-src="assets/logo-blue-small.png" alt="IMUA" height="22px" width="22px"> <span class="pls">Collective Progress</span></a>
             </div>
       </div>
       <div class="collapse navbar-collapse" collapse="navCollapsed" ng-click="navCollapsed=true">
@@ -102,9 +102,10 @@
             <span class="pls" ng-if="!user.is_super_admin">{{ user.organization_name }}</span>
         </a>
       </li>
-        <li ng-if="user.is_super_admin">
-          <a href="#/sa/organizations">Organizations</a>
-        </li>
+
+      <li ng-if="user.is_super_admin">
+        <a href="#/sa/organizations">Organizations</a>
+      </li>
 
       <div ng-if="user.is_org_admin">
         <li>

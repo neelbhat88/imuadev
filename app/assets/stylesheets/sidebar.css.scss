@@ -78,8 +78,12 @@
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;
-    font-size: 18px;
+    @include font-size(1.4);
     line-height: 60px;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sidebar-nav > .sidebar-brand a {
