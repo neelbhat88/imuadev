@@ -46,6 +46,9 @@ angular.module('myApp')
 
   $scope.$on "unauthorized", () ->
     window.location.href = "login?pu=" + $location.path()
+
+  $scope.$on "loggedout", () ->
+    window.location.href = "login"
 ]
 
 angular.module('myApp')
@@ -72,15 +75,6 @@ angular.module('myApp')
 
   $rootScope.$on '$routeChangeError', (event, current, previous, rejection) ->
     $location.path('/')
-    return false
-
-  # Redirect to URL dance
-  previous_url = ipCookie('previous_url')
-
-  if previous_url
-    ipCookie.remove('previous_url')
-
-    $location.path(previous_url)
     return false
 
 ]
