@@ -27,6 +27,7 @@
 
 
 #page-content-wrapper {
+    padding-top: 30px;
     width: 100%;
     position: absolute;
 }
@@ -114,6 +115,7 @@
 
     #page-content-wrapper {
         position: relative;
+        padding-top: 0px;
     }
 
     #nav-wrapper.toggled #page-content-wrapper {
