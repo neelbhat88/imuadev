@@ -74,13 +74,4 @@ angular.module('myApp')
     $location.path('/')
     return false
 
-  # Redirect to URL dance
-  previous_url = ipCookie('previous_url')
-
-  if previous_url
-    ipCookie.remove('previous_url')
-
-    $location.path(previous_url)
-    return false
-
 ]
