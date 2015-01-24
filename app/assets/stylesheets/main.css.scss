@@ -91,6 +91,10 @@ $panelwrapper: 0 80px;
 
 header {
 
+  .navbar-brand {
+    @include font-size(1.2)
+  }
+
   width: 100%;
   background: $darkgrey;
   color: white();
