@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="module module--avg-gpa" modulecolor="academics">
+      <div class="module module--avg-gpa" modulecolor="academics"  ng-if="current_organization != 'One Goal'">
         <div class="module--header">Grades</div>
         <div class="module--content">
           <p>Your students have a</p>
@@ -47,7 +47,7 @@
         </div> -->
       </div>
 
-      <div class="module module--avg-service" modulecolor="service">
+      <div class="module module--avg-service" modulecolor="service" ng-if="current_organization != 'One Goal'">
         <div class="module--header">Service Hours</div>
         <div class="module--content">
           <p>On average, your students have completed</p>
@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div class="module module--activities" modulecolor="extracurricular">
+      <div class="module module--activities" modulecolor="extracurricular" ng-if="current_organization != 'One Goal'">
         <div class="module--header">Extracurricular</div>
         <div class="module--content">
           <h2>{{percent_students_with_one_activity}}%</h2>
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div class="module module--activities" modulecolor="testing">
+      <div class="module module--activities" modulecolor="testing" ng-if="current_organization != 'One Goal'">
         <div class="module--header">Testing</div>
         <div class="module--content">
           <p>Your students average</p>
