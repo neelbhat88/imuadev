@@ -1,6 +1,6 @@
 angular.module('myApp')
-.factory('SessionService', ['$http', '$q', '$rootScope',
-  function($http, $q, $rootScope) {
+.factory('SessionService', ['$http', '$q',
+  function($http, $q) {
 
     var service = {
 
@@ -29,12 +29,6 @@ angular.module('myApp')
 
       isSuperAdmin: function() {
         return !!(service._currentUser && service._currentUser.is_super_admin)
-      },
-
-      destroy: function() {
-        return $http.delete('/users/sign_out').then(function(resp){
-          $rootScope.$broadcast("loggedout");
-        });
       }
 
     };
