@@ -34,10 +34,8 @@ class EnabledModules
       }
     ]
 
-    Rails.logger.debug("******** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}, #{orgId}")
     # ONEGOAL_HACK START
-    if ENV["ONEGOAL_ORG_ID"] and ENV["ONEGOAL_ORG_ID"].to_i === orgId.to_i
-      Rails.logger.debug("******** HERE ********")
+    if ENV["ONEGOAL_ORG_ID"] && ENV["ONEGOAL_ORG_ID"].to_i == orgId.to_i
       mod_array = [
         {
           :title => "2-year",
@@ -68,9 +66,7 @@ class EnabledModules
 
 
   def get_modules(orgId)
-    # Rails.logger.debug("********** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}")
     mod_array = populate_modules_array(orgId)
-
 
     mods = []
     mod_array.each do | m |
@@ -88,7 +84,6 @@ class EnabledModules
   end
 
   def get_enabled_module_titles(orgId)
-    # Rails.logger.debug("********** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}")
     mod_array = populate_modules_array(orgId)
 
     mods = []
