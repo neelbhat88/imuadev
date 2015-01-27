@@ -35,8 +35,21 @@ class MilestoneFactory
         custom = CustomMilestone.new(milestone)
         custom.module = mod
         custom.submodule = Constants.SubModules[:YES_NO]
-        custom.icon = "/assets/PDU.jpg"
-        custom.milestone_description = "A generic milestone where you can type a custom #{mod} goal. This milestone is manually completed by the user by clicking a checkbox."
+        name = mod
+        case mod
+        when "2-year"
+          custom.icon = "/assets/Academics.jpg"
+        when "4-year"
+          custom.icon = "/assets/Service.jpg"
+        when "Assignments"
+          custom.icon = "/assets/Extracurricular.jpg"
+        when "Financial"
+          custom.icon = "/assets/PDU.jpg"
+        when "Campus_Connections"
+          custom.icon = "/assets/Testing.jpg"
+          name = "Campus Connections"
+        end
+        custom.milestone_description = "A generic milestone where you can type a custom #{name} goal. This milestone is manually completed by the user by clicking a checkbox."
         return custom
       # ONEGOAL_HACK END
       end
