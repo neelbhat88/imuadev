@@ -30,6 +30,15 @@ class MilestoneFactory
         return YesNoMilestoneCollegePrep.new(milestone)
       elsif mod == Constants.Modules[:TESTING]
         return YesNoMilestoneTesting.new(milestone)
+      # ONEGOAL_HACK START
+      else
+        custom = CustomMilestone.new(milestone)
+        custom.module = mod
+        custom.submodule = Constants.SubModules[:YES_NO]
+        custom.icon = "/assets/PDU.jpg"
+        custom.milestone_description = "A generic milestone where you can type a custom #{mod} goal. This milestone is manually completed by the user by clicking a checkbox."
+        return custom
+      # ONEGOAL_HACK END
       end
     end
 

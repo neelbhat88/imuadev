@@ -33,12 +33,44 @@ class EnabledModules
                         Constants.SubModules[:YES_NO]]
       }
     ]
+
+    Rails.logger.debug("******** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}, #{orgId}")
+    # ONEGOAL_HACK START
+    if ENV["ONEGOAL_ORG_ID"] and ENV["ONEGOAL_ORG_ID"].to_i === orgId.to_i
+      Rails.logger.debug("******** HERE ********")
+      mod_array = [
+        {
+          :title => "2-year",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "4-year",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Assignments",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Financial",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Campus_Connections",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        }
+      ]
+    end
+    # ONEGOAL_HACK END
+
     return mod_array
   end
 
 
   def get_modules(orgId)
+    # Rails.logger.debug("********** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}")
     mod_array = populate_modules_array(orgId)
+
 
     mods = []
     mod_array.each do | m |
@@ -56,6 +88,7 @@ class EnabledModules
   end
 
   def get_enabled_module_titles(orgId)
+    # Rails.logger.debug("********** ONEGOAL_ORG_ID: #{ENV["ONEGOAL_ORG_ID"].to_i}")
     mod_array = populate_modules_array(orgId)
 
     mods = []
