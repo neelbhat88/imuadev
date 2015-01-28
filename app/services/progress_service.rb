@@ -26,7 +26,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     return ReturnObject.new(:ok, "Student expectations for user_id: #{params[:user_id]}.", view)
   end
@@ -54,7 +54,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     return ReturnObject.new(:ok, "Student dasboard for user_id: #{params[:user_id]}.", view)
   end
@@ -86,7 +86,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     #ToDo: Super hacky but the Querier doesn't allow me to get the objects I need
     # ** This needs to be changed **
@@ -120,7 +120,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     return ReturnObject.new(:ok, "Progress for organization_id: #{params[:organization_id]}.", view)
   end

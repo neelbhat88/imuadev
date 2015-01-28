@@ -22,3 +22,10 @@ angular.module('myApp')
 .filter 'parseFloat', () ->
   (num) ->
     return parseFloat num
+
+angular.module('myApp')
+.filter 'addUnderscoreIfFirstCharIsNum', () ->
+  (str) ->
+    if /^\d+/.test(str)
+      return "_" + str
+    return str
