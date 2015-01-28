@@ -77,6 +77,8 @@ Imua::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 
+  Mail.register_interceptor(ProductionMailInterceptor)
+
   # Paperclip
   config.paperclip_defaults = {
     :default_url => "/assets/default-avatar.png",

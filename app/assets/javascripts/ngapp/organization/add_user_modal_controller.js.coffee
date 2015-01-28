@@ -1,7 +1,8 @@
 angular.module 'myApp'
-.controller 'AddUserModalController', ['$scope', '$modalInstance', 'organization', 'new_user', 'UsersService', 'LoadingService',
-  ($scope, $modalInstance, organization, new_user, UsersService, LoadingService) ->
+.controller 'AddUserModalController', ['$scope', '$modalInstance', 'current_user', 'organization', 'new_user', 'UsersService', 'LoadingService',
+  ($scope, $modalInstance, current_user, organization, new_user, UsersService, LoadingService) ->
     $scope.formErrors = [ '**Please fix the errors above**' ]
+    $scope.current_user = current_user
     $scope.user = new_user
     $scope.organization = organization
 

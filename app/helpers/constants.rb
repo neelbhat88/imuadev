@@ -12,6 +12,13 @@ class Constants
     }
   end
 
+  def self.UserStatus
+    return {
+      GHOST: -1, # Users who do not receive emails
+      ACTIVE: 0
+    }
+  end
+
   def self.Modules
     return {
       ACADEMICS: "Academics",
