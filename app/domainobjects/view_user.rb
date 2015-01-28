@@ -3,7 +3,7 @@ class ViewUser
 								:phone, :role, :avatar_url,
 								:organization_id, :time_unit_id, :class_of,
 								:modules_progress, :user_milestones, :relationships,
-								:login_count, :last_login
+								:login_count, :last_login, :status
 
 	def initialize(user, org = nil)
 		@id = user.id
@@ -21,6 +21,7 @@ class ViewUser
 		@class_of = user.class_of.to_i
 		@login_count = user.sign_in_count
 		@last_login = user.current_sign_in_at ? user.current_sign_in_at : "Has not logged in yet"
+		@status = user.status
 
 		@is_student = user.student?
 		@is_mentor = user.mentor?

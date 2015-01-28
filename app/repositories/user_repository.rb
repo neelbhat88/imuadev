@@ -79,6 +79,7 @@ class UserRepository
       u.organization_id = user_obj[:organization_id]
       u.time_unit_id = user_obj[:time_unit_id]
       u.password = password
+      u.status = user_obj[:status]
     end
 
     if user.role == Constants.UserRole[:STUDENT]
