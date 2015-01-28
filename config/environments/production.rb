@@ -1,4 +1,3 @@
-require 'app/helpers/ProductionMailInterceptor'
 Imua::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -77,8 +76,6 @@ Imua::Application.configure do
     password:             ENV['EMAIL_PASSWORD'],
     authentication:       'plain',
     enable_starttls_auto: true  }
-
-  Mail.register_interceptor(ProductionMailInterceptor)
 
   # Paperclip
   config.paperclip_defaults = {
