@@ -126,6 +126,7 @@ angular.module('myApp')
       backdrop: 'static',
       size: 'sm',
       resolve:
+        current_user: () -> $scope.current_user
         organization: () -> $scope.organization
         new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
 

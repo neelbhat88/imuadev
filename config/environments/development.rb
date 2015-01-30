@@ -27,7 +27,7 @@ Imua::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 
-  Mail.register_interceptor(DevelopmentMailInterceptor)
+  #Mail.register_interceptor(DevelopmentMailInterceptor)
 
   # Paperclip
   config.paperclip_defaults = {

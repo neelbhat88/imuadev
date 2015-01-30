@@ -29,6 +29,17 @@
       </select>
     </div>
 
+    <!-- Only for Super Admins to create Ghost Users -->
+    <!-- ToDo: If this is something regular orgs want to create
+          make this accessible to org admins with better dropdown values -->
+    <div ng-if="current_user.is_super_admin"  class="ptm pbs">
+      <label-with-errors label="Status" form="newUserForm" formfield="newUserForm.status"></label-with-errors>
+      <select name="status" required class="form-control" ng-model="user.status">
+        <option value="0">Active</option>
+        <option value="-1">Ghost</option>
+      </select>
+    </div>
+
     <div class="buttonGroup ptl">
 
       <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="newUserForm.$submitted && newUserForm.$invalid">

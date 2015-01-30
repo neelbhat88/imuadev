@@ -16,7 +16,7 @@
           <a ng-href="app#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
-        
+
       </div>
 
       <div class="progressLower--content">
@@ -72,10 +72,12 @@
       <div class="progressLower--header">
         <h4 class="progressLower-title" ng-if="!current_user.is_student">
           <span class="bold">{{student.first_name}}'s</span> {{selected_module.module_title | underscoresToSpaces}}
+          <span class="bold" ng-if="organization.name == 'OneGoal'">progress</span>
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
         <h4 class="progressLower-title" ng-if="current_user.is_student">
           <span class="bold">Your {{selected_module.module_title | underscoresToSpaces}}</span>
+          <span class="bold" ng-if="organization.name == 'OneGoal'">progress</span>
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
       </div>

@@ -247,6 +247,12 @@ class AssignmentService
     return UserAssignment.where(:user_id => userId)
   end
 
+  def get_user_assignment_by_user_id_assignment_id(args)
+    userId = args[:user_id]
+    taskId = args[:task_id]
+    return UserAssignment.where(:user_id => userId, :assignment_id => taskId).first
+  end
+
   def create_user_assignment(userAssignment)
     newUserAssignment = UserAssignment.new do | e |
       e.user_id = userAssignment[:user_id]

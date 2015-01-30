@@ -49,6 +49,23 @@ angular.module('myApp')
         when 'Testing'
           moduleColor = '#9665aa'
           moduleColorBg = '#221b2a'
+        # ONEGOAL_HACK START
+        when '2-year'
+          moduleColor = '#41e6b2'
+          moduleColorBg = '#172924'
+        when '4-year'
+          moduleColor = '#e8be28'
+          moduleColorBg = '#2a271b'
+        when 'Assignments'
+          moduleColor = '#ef6629'
+          moduleColorBg = '#291b16'
+        when 'Financial'
+          moduleColor = '#27aae1'
+          moduleColorBg = '#142229'
+        when 'Campus_Connections'
+          moduleColor = '#9665aa'
+          moduleColorBg = '#221b2a'
+        # ONEGOAL_HACK END
 
       modulePoints = module.points.user
       totalPoints = module.points.total

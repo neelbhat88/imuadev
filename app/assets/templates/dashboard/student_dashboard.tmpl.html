@@ -48,7 +48,7 @@
                 <div class="milestone-item" ng-repeat="milestone in milestones | orderBy: '-points'" ng-if="!milestone.earned">
                   <div class="milestone-item-unstatisfied">
                     <a href="app#/progress/{{student.id}}">
-                      <div class="milestone--point-circle" modulecolor="{{milestone.module}}">
+                      <div class="milestone--point-circle" modulecolor="{{milestone.module | addUnderscoreIfFirstCharIsNum}}">
                         <div class="point-circle--inside">
                           <h5 class="bold">{{milestone.points}}</h5>
                           <p>Points</p>

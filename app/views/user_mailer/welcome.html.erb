@@ -2,7 +2,7 @@
 
 <p>Welcome to Imua! </p>
 
-<p><%= link_to "Click here", login_url %> to log in and update your information and password. Your current password is '<%= @password %>'. </p>
+<p><%= link_to "Click here", app_url + "#/profile/#{@user.id}" %> to log in and update your information and password. Your current password is '<%= @password %>'. </p>
 
 <p>Mahalo,<p>
 
