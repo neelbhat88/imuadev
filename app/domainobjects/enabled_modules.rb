@@ -36,6 +36,7 @@ class EnabledModules
 
 
     Rails.logger.info("******** OneGoalOrg Id: #{ENV["ONEGOAL_ORG_ID"]}")
+    Rails.logger.info("******** Passed in ORG ID: #{orgId}")
     # ONEGOAL_HACK START
     if ENV["ONEGOAL_ORG_ID"] && ENV["ONEGOAL_ORG_ID"].to_i == orgId.to_i
       mod_array = [
