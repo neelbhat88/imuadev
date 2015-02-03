@@ -34,6 +34,8 @@ class EnabledModules
       }
     ]
 
+
+    Rails.logger.info("******** OneGoalOrg Id: #{ENV["ONEGOAL_ORG_ID"]}")
     # ONEGOAL_HACK START
     if ENV["ONEGOAL_ORG_ID"] && ENV["ONEGOAL_ORG_ID"].to_i == orgId.to_i
       mod_array = [
@@ -61,6 +63,7 @@ class EnabledModules
     end
     # ONEGOAL_HACK END
 
+    Rails.logger.info("******** Module Array first element: #{mod_array[0][:title]}")
     return mod_array
   end
 
@@ -80,6 +83,7 @@ class EnabledModules
       mods << mod
     end
 
+    Rails.logger.info("******** First returned module: #{mods[0].title}")
     return ReturnObject.new(:ok, "Submodules for orgId: #{orgId}", mods)
   end
 
