@@ -8,7 +8,7 @@ class ProgressService
     userMilestoneQ = Querier.new(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
     userExpectationQ = Querier.new(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
 
-    conditions[:organization_id] = userQ.pluck(:organization_id)
+    conditions[:organization_id] = userQ.pluck(:organization_id).first
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
@@ -46,7 +46,7 @@ class ProgressService
     userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions.slice(:user_id))
     userQ.set_subQueriers([userMilestoneQ, userExpectationQ, relationshipQ, userAssignmentQ, assignmentQ])
 
-    conditions[:organization_id] = userQ.pluck(:organization_id)
+    conditions[:organization_id] = userQ.pluck(:organization_id).first
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime, :submodule], [:organization_id]).where(conditions)
@@ -78,7 +78,7 @@ class ProgressService
     userQ.set_subQueriers([userMilestoneQ, userClassQ, userExtracurricularActivityDetailQ,
       userServiceHourQ, userTestQ])
 
-    conditions[:organization_id] = userQ.pluck(:organization_id)
+    conditions[:organization_id] = userQ.pluck(:organization_id).first
 
     organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
@@ -86,7 +86,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].to_i)
 
     #ToDo: Super hacky but the Querier doesn't allow me to get the objects I need
     # ** This needs to be changed **
@@ -120,7 +120,7 @@ class ProgressService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].to_i)
 
     return ReturnObject.new(:ok, "Progress for organization_id: #{params[:organization_id]}.", view)
   end
