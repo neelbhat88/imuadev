@@ -1,0 +1,52 @@
+<div class="widget widget--nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Setup</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('admins')" ng-class="{'selected': selected_widget == 'admins'}">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-user"></span></div>
+          <div class="setting-text">Organization Admins</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('expectations')" ng-class="{'selected': selected_widget == 'expectations'}">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-star"></span></div>
+          <div class="setting-text">Student Expectations</div>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('tests')" ng-class="{'selected': selected_widget == 'tests'}">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
+          <div class="setting-text">Tests</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="widget widget--nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Roadmap</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table" ng-repeat="year in roadmap.years" ng-class="{'selected-year': selected_year == year.id}">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(year.id)">
+        <div class="cell--padding">
+          <h6 class="bold">{{year.name}}</h6>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways" ng-repeat="sem in year.semesters" ng-click="selectRoadmap(year.id, sem.id)" ng-class="{'selected-semester': selected_semester == sem.id}">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-time"></span></div>
+          <div class="setting-text">{{sem.name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
