@@ -52,4 +52,18 @@ angular.module('myApp')
   $scope.getWidgetTemplate = (widgetTitle) ->
     'setup/widgets/orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle
 
+  $scope.addOrgAdmin = () ->
+    modalInstance = $modal.open
+      templateUrl: 'organization/add_user_modal.html',
+      controller: 'AddUserModalController',
+      backdrop: 'static',
+      size: 'sm',
+      resolve:
+        current_user: () -> $scope.current_user
+        organization: () -> $scope.organization
+        new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
+
+    modalInstance.result.then (user) ->
+      $scope.organization.orgAdmins.push(user)
+
 ]
