@@ -1,6 +1,7 @@
 class Constants
   def self.UserRole
     return {
+      SYSTEM: -10,
       SUPER_ADMIN: 0,
       ORG_ADMIN: 10,
       SCHOOL_ADMIN: 20,
@@ -8,6 +9,13 @@ class Constants
       MENTOR: 40,
       STUDENT: 50,
       PARENT: 60
+    }
+  end
+
+  def self.UserStatus
+    return {
+      GHOST: -1, # Users who do not receive emails
+      ACTIVE: 0
     }
   end
 
@@ -61,6 +69,10 @@ class Constants
       NEEDS_WORK:  1,
       MEETING:     0
     }
+  end
+
+  def self.ExpectationMailerStatus
+    return ['Meeting', 'Needs Work', 'Not Meeting']
   end
 
   def self.SessionTimeout

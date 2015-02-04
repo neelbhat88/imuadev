@@ -65,6 +65,8 @@ $darkborder: rgb(65, 66, 67);
 .green { color: $green; }
 .red { color: $red; }
 .blue { color: $blue; }
+.orange { color: $orange; }
+.yellow { color: $yellow; }
 
 /* ========================= */
 /*      Category Colors      */
@@ -95,6 +97,13 @@ $colormap: (
   testing: $testing-color,
   extracurricular: $extracurricular-color,
   college_prep: $college_prep-color,
+  // ONEGOAL_HACK START
+  _2-year: $academics-color,
+  _4-year: $service-color,
+  assignments: $testing-color,
+  financial: $extracurricular-color,
+  campus_connections: $college_prep-color,
+  // ONEGOAL_HACK END
   no_category: $boxgrey
 );
 
@@ -104,6 +113,13 @@ $darkcolormap: (
   testing: $testing-color-dark,
   extracurricular: $extracurricular-color-dark,
   college_prep: $college_prep-color-dark,
+  // ONEGOAL_HACK START
+  _2-year: $academics-color-dark,
+  _4-year: $service-color-dark,
+  assignments: $testing-color-dark,
+  financial: $extracurricular-color-dark,
+  campus_connections: $college_prep-color-dark,
+  // ONEGOAL_HACK END
   no_category: $grey
 );
 

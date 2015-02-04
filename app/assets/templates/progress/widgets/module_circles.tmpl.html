@@ -16,17 +16,18 @@
           <div class="module-circle--meta">
             <div class="click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>
             <div class="updated-on subtext" ng-if="mod.last_updated != null">Last updated {{mod.last_updated | fromNow}}</div>
-            <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated == null && current_user.organization_name != 'OneGoal'">Never Updated</div>
           </div>
         </div>
 
         <div class="module-bar cell--padding clear">
-          <div class="module-bar--left">
+          <div class="module-bar--full">
             <h6 class="bold">{{mod.module_title | underscoresToSpaces}}</h6>
-          </div>
-          <div class="module-bar--right">
             <div class="bar-size">
-              <horizontal-module-progress-bar module="mod" parentclass="bar-size"></module-progress-circle>
+              <horizontal-module-progress-bar module="mod" parentclass="bar-size"></horizontal-module-progress-bar>
+            </div>
+            <div class="bar-points">
+              <h7>{{mod.points.user}}/{{mod.points.total}} points</h7>
             </div>
           </div>
         </div>

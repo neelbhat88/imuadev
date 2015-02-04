@@ -17,16 +17,16 @@
       <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments | orderBy:sortIncompleteAssignments" ng-if="!isComplete(assignment)" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
-            <h6 class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
+            <h6 class="bold"><a no-click-propagation href="app#/assignment/{{assignment.id}}">{{assignment.title}}</a></h6>
             <span class="subtext">
               <span ng-if="!isComplete(assignment)">
                 <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
                 <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
                 <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
               </span>
-              <a no-click-propagation href="#/profile/{{user.id}}">
-                <span ng-if="current_user.id == user.id">You </span>
-                <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+              <a no-click-propagation href="app#/profile/{{user.id}}">
+                <span ng-if="current_user.id == assignment.user_id">You </span>
+                <span ng-if="current_user.id != assignment.user_id">{{assignment.user.first_last_initial}} </span>
               </a>
               created this task on {{assignment.created_at | formatMDY}}
             </span>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
-          <h5><span class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+          <h5><span class="bold"><a no-click-propagation href="app#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
           <h6>{{assignment.description}}</h6>
           <span class="subtext">
             <span ng-if="!isComplete(assignment)">
@@ -48,9 +48,9 @@
               <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
               <span class="label label-danger" ng-if="isPastDue(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Past Due</span>
             </span>
-            <a no-click-propagation href="#/profile/{{user.id}}">
-              <span ng-if="current_user.id == user.id">You </span>
-              <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+            <a no-click-propagation href="app#/profile/{{user.id}}">
+              <span ng-if="current_user.id == assignment.user_id">You </span>
+              <span ng-if="current_user.id != assignment.user_id">{{assignment.user.first_last_initial}} </span>
             </a>
             created this task on {{assignment.created_at | formatMDY}}.
             <span ng-if="assignment.due_datetime != null">It's due on {{assignment.due_datetime | formatMDY}}.</span>
@@ -59,7 +59,7 @@
           <div class="clear" ng-if="!isComplete(assignment) && _.where(assignment.user_assignments, {status: 1}).length != 0">
             <div class="expanded--complete">
               <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
-                <a no-click-propagation href="#/user_assignment/{{user_assignment.id}}">
+                <a no-click-propagation href="app#/user_assignment/{{user_assignment.id}}">
                   <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
                 </a>
               </div>
@@ -72,7 +72,7 @@
 
             <div class="expanded--not-complete">
               <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
-                <a no-click-propagation href="#/user_assignment/{{user_assignment.id}}">
+                <a no-click-propagation href="app#/user_assignment/{{user_assignment.id}}">
                   <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
                 </a>
               </div>
@@ -87,21 +87,21 @@
           <div class="expanded--solo" ng-if="_.where(assignment.user_assignments, {status: 1}).length == 0">
             <div class="complete-title red">None of your students have completed the task yet.</div>
             <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 0">
-              <a no-click-propagation href="#/user_assignment/{{user_assignment.id}}">
+              <a no-click-propagation href="app#/user_assignment/{{user_assignment.id}}">
                 <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
               </a>
             </div>
           </div>
 
           <div class="edit-buttons">
-            <a no-click-propagation href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+            <a no-click-propagation href="app#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
           </div>
 
         </div>
       </li>
     </ul>
     <div class="tasks--list--topper">
-      <a no-click-propagation href="#/assignment/-1"><button class="btn btn-default">New Task</button></a>
+      <a no-click-propagation href="app#/assignment/-1"><button class="btn btn-default">New Task</button></a>
     </div>
   </div>
 
@@ -115,14 +115,14 @@
       <li class="tasks--list--item" ng-repeat="assignment in outgoing_assignments | orderBy:sortCompletedAssignments" ng-if="isComplete(assignment)" ng-click="assignment.expanded = !assignment.expanded">
         <div class="clear" ng-hide="assignment.expanded">
           <div class="tasks--list--item--left">
-            <h6><span class="bold"><a no-click-propagation href="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h6>
+            <h6><span class="bold"><a no-click-propagation href="app#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h6>
             <span class="subtext">
               <span class="label label-success">
                 <span class="glyphicon glyphicon-ok-circle"></span> Complete
               </span>
-              <a no-click-propagation href="#/profile/{{user.id}}">
-                <span ng-if="current_user.id == user.id">You </span>
-                <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
+              <a no-click-propagation href="app#/profile/{{user.id}}">
+                <span ng-if="current_user.id == assignment.user_id">You </span>
+                <span ng-if="current_user.id != assignment.user_id">{{assignment.user.first_last_initial}} </span>
               </a>
               created this task on {{assignment.created_at | formatMDY}}
             </span>
@@ -137,13 +137,13 @@
         </div>
 
         <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
-          <h5><span class="bold"><a no-click-propagationhref="#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
+          <h5><span class="bold"><a no-click-propagation href="app#/assignment/{{assignment.id}}">{{assignment.title}}</a></span></h5>
           <h6>{{assignment.description}}</h6>
           <span class="subtext">
             <span class="label label-success">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete
             </span>
-            <a no-click-propagation href="#/profile/{{user.id}}">
+            <a no-click-propagation href="app#/profile/{{user.id}}">
               <span ng-if="current_user.id == user.id">You </span>
               <span ng-if="current_user.id != user.id">{{user.first_last_initial}} </span>
             </a>
@@ -154,14 +154,14 @@
           <div class="expanded--solo" ng-if="isComplete(assignment)">
             <div class="complete-title green">All students have completed this task.</div>
             <div class="tiny-circle-picture" ng-repeat="user_assignment in assignment.user_assignments" ng-if="user_assignment.status == 1">
-              <a no-click-propagation href="#/user_assignment/{{user_assignment.id}}">
+              <a no-click-propagation href="app#/user_assignment/{{user_assignment.id}}">
                 <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="{{user_assignment.user.first_last_initial}}" class="avatar-block__img avatar-block__img--thumbnail" />
               </a>
             </div>
           </div>
 
           <div class="edit-buttons">
-            <a no-click-propagation href="#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
+            <a no-click-propagation href="app#/assignment/{{assignment.id}}"><button class="btn btn-default">View Full Details</button></a>
           </div>
 
         </div>

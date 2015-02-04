@@ -5,8 +5,8 @@ angular.module("myApp")
     $http.get "/api/v1/users/#{userId}/user_class?time_unit=#{time_unit_id}"
 
   @new = (user, time_unit_id) ->
-    name: "New Class",
-    grade: null,
+    name: "",
+    grade_value: null,
     gpa: 0,
     period: null,
     room: null,

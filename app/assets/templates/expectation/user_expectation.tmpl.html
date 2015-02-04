@@ -3,25 +3,26 @@
   <div class="expectation-header">
     <div class="single-col-wrapper">
       <div class="back-link">
-        <h6>
-          <a href="#/expectations/{{student.id}}" >
-            <span ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor"><span class="glyphicon glyphicon-circle-arrow-left"></span> {{student.first_name}}'s Expectations</span>
-            <span ng-if="current_user.role >= CONSTANTS.USER_ROLES.student"><span class="glyphicon glyphicon-circle-arrow-left"></span> My Expectations</span>
-          </a>
-        </h6>
+        <div back-button class="ng-clickable">
+          <h6>
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <span class="ng-clickable-text">Go Back</span>
+          </h6>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="single-col-wrapper expectation-content">
-    <h4 class="bold">
-      {{user_expectation.title}}
-    </h4>
+    <a href="app#/expectation/{{user_expectation.expectation_id}}">
+      <h4 class="bold">{{user_expectation.title}}</h4>
+    </a>
+    <h6>{{user_expectation.description}}</h6>
     <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
       <div class="circle-pictures">
-        <a href="#/profile/{{student.id}}">
+        <a href="app#/profile/{{student.id}}">
           <div class="circle-picture">
             <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
           </div>
@@ -49,15 +50,19 @@
         <span class="glyphicon glyphicon-exclamation-sign"></span> {{student.first_name}}, you are not meeting this expectation.
       </h5>
 
-      <h6 ng-hide="edit_comment" class="ng-clickable" ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)">{{user_expectation.comment}}
-        <span class="glyphicon glyphicon-edit"></span>
+      <h6 ng-hide="edit_comment">{{user_expectation.comment}}
+        <span class="glyphicon glyphicon-edit ng-clickable" ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)"></span>
       </h6>
 
-      <textarea class="comment-edit form-field" ng-model="user_expectation.edit_comment" ng-show="edit_comment">{{user_expectation.comment}}</textarea>
+      <textarea rows="4" cols="40" class="comment-edit form-field" ng-model="user_expectation.edit_comment" ng-show="edit_comment">{{user_expectation.comment}}</textarea>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-ok" ng-click="updateComment()"></span>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-remove" ng-click="cancelCommentEdit()"></span>
 
-      <div ng-if="user_expectation.modified_by_name">Updated {{user_expectation.updated_at | fromNow}} by {{user_expectation.modified_by_name}}</div>
+      <div ng-if="user_expectation_history.length != 1 && user_expectation.modified_by_name">
+        Updated
+        <span title="{{user_expectation.updated_at | formatMDY }}">{{user_expectation.updated_at | fromNow}} </span>
+        by {{user_expectation.modified_by_name}}
+      </div>
       <div class="status-buttons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.mentor">
         <button class="btn btn-default" ng-click="editExpectation()"><span class="glyphicon glyphicon-edit"></span> Change {{student.first_name}}'s Status</button>
       </div>
@@ -67,7 +72,7 @@
       <tr>
         <td class="status-picture large-pic">
           <div class="circle-pictures">
-            <a href="#/profile/{{student.id}}">
+            <a href="app#/profile/{{student.id}}">
               <div class="circle-picture">
                 <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
               </div>
@@ -112,19 +117,27 @@
     </table>
   </div>
 
-  <div class="single-col-wrapper expectation-history" ng-if="user_expectation_history.length != 0">
+  <div class="single-col-wrapper expectation-history" ng-if="user_expectation_history.length != 1">
 
     <h6 class="bold list-header">Previous Updates</h6>
 
-    <table class="status-block history-block" ng-repeat="history in user_expectation_history">
-      <tr>
+    <table class="status-block history-block" ng-repeat="history in user_expectation_history" ng-show="!$first">
+      <tr ng-if="!$last">
         <td class="status-picture expectation-dot">
           <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
         </td>
         <td class="status-message">
           <h6>{{history.modified_by_name}} changed the status of {{student.first_name}}'s expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
           <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
-          <div>{{history.updated_at | fromNow}}</div>
+          <div title="{{history.created_on | formatMDY }}">{{history.created_on | fromNow }}</div>
+        </td>
+      </tr>
+      <tr ng-if="$last">
+        <td class="status-picture expectation-dot">
+          <div class="expectation-history-status" ng-class="getHistoryColor(history.status)"></div>
+        </td>
+        <td class="status-message">
+          <h6>Initial state: <span class="bold">{{getStatusText(history.status)}}</span></h6>
         </td>
       </tr>
     </table>

@@ -33,6 +33,34 @@ class EnabledModules
                         Constants.SubModules[:YES_NO]]
       }
     ]
+
+    # ONEGOAL_HACK START
+    if ENV["ONEGOAL_ORG_ID"] && ENV["ONEGOAL_ORG_ID"].to_i == orgId.to_i
+      mod_array = [
+        {
+          :title => "2-year",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "4-year",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Assignments",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Financial",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        },
+        {
+          :title => "Campus_Connections",
+          :submodules => [Constants.SubModules[:YES_NO]]
+        }
+      ]
+    end
+    # ONEGOAL_HACK END
+
     return mod_array
   end
 

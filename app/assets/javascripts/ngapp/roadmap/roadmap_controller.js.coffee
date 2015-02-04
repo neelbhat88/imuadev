@@ -13,6 +13,8 @@ angular.module('myApp')
     $scope.organization = data.data.organization
     $scope.roadmap = data.data.roadmap
 
+    _.each($scope.roadmap.time_units, (tu) -> tu.expanded = false)
+
     $scope.roadmap.years = [
       {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
       {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },
@@ -97,7 +99,6 @@ angular.module('myApp')
         timeUnit.milestones.push(data.milestone)
 
   $scope.viewMilestone = (timeUnit, milestone) ->
-    # window.location.href = "#/milestone/" + milestone.id
     modalInstance = $modal.open
       templateUrl: 'roadmap/edit_milestone_modal.html',
       controller: 'EditMilestoneModalController',
@@ -105,8 +106,10 @@ angular.module('myApp')
       resolve:
         selectedMilestone: () -> milestone
         timeUnit: () -> timeUnit
-
     modalInstance.result.then () ->
+
+  $scope.viewMilestoneStatus = (milestone) ->
+    window.location.href = "app#/milestone/" + milestone.id
 
   $scope.deleteMilestone = (tu, milestone) ->
     if window.confirm "Are you sure you want to delete this milestone?"
@@ -124,6 +127,7 @@ angular.module('myApp')
       backdrop: 'static',
       size: 'sm',
       resolve:
+        current_user: () -> $scope.current_user
         organization: () -> $scope.organization
         new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
 

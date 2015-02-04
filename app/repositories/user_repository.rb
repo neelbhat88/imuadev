@@ -77,11 +77,12 @@ class UserRepository
       u.phone = user_obj[:phone]
       u.role = user_obj[:role]
       u.organization_id = user_obj[:organization_id]
+      u.time_unit_id = user_obj[:time_unit_id]
       u.password = password
+      u.status = user_obj[:status]
     end
 
     if user.role == Constants.UserRole[:STUDENT]
-      user.time_unit_id = RoadmapRepository.new.get_time_units(user.organization_id)[0].id
       user.class_of = user_obj[:class_of]
     end
 
@@ -91,6 +92,14 @@ class UserRepository
       Background.process do
         UserMailer.welcome(user, password).deliver
         UserMailer.new_user(user, current_user).deliver
+      end
+
+      # Considered making this a background process, but what if background processing
+      # was behind like 5min for whatever reason?
+      if user.role == Constants.UserRole[:STUDENT]
+        # Change this to passing in @current_user when user_repository is updated to
+        # be initialized with current_user
+        UserExpectationService.new(User.SystemUser).create_user_expectations(user.id)
       end
 
       return { :status => :ok, :info => "User created successfully. Email has been sent.", :user => user }
@@ -111,6 +120,40 @@ class UserRepository
     Background.process do
       UserMailer.reset_password(user, new_password).deliver
     end
+  end
+
+  # will require authentication when put into UI
+  def reset_all_students_password(organization_id)
+    Background.process do
+      users = User.where(:role => 50, :organization_id => organization_id)
+      users.each do |u|
+        new_password = generate_password()
+        u.update_attributes(:password => new_password)
+        UserMailer.reset_password(u, new_password).deliver
+      end
+    end
+
+    return { :status => :ok,
+             :info => "Successfully reset all students' passwords"
+           }
+  end
+
+  # will require authentication when put into UI
+  def reset_users_password(user_ids, organization_id)
+    Background.process do
+      user_ids.each do |id|
+        user = User.find(id)
+        if organization_id == user.organization_id
+          new_password = generate_password()
+          user.update_attributes(:password => new_password)
+          UserMailer.reset_password(user, new_password).deliver
+        end
+      end
+    end
+
+    return { :status => :ok,
+             :info => "Successfully reset passwords"
+           }
   end
 
   def delete_user(userId)
@@ -175,6 +218,7 @@ class UserRepository
     end
 
     if relationship.save
+      send_assigned_notification(mentor_id, student_id)
       return ReturnObject.new(:ok, "User #{student_id} successfully assigned to #{mentor_id}", student)
     else
       return ReturnObject.new(:internal_server_error, relationship.errors, nil)
@@ -183,6 +227,7 @@ class UserRepository
 
   def unassign(mentor_id, student_id)
     if Relationship.where(:user_id => student_id, :assigned_to_id => mentor_id).destroy_all()
+      send_unassigned_notification(mentor_id, student_id)
       return ReturnObject.new(:ok, "User #{student_id} successfully unassigned from #{mentor_id}", nil)
     else
       return ReturnObject.new(:internal_server_error, "User #{student_id} could not be unassigned from #{mentor_id}", nil)
@@ -233,5 +278,23 @@ class UserRepository
 
   def are_related?(studentId, mentorId)
     return Relationship.where(:user_id => studentId, :assigned_to_id => mentorId).length > 0
+  end
+
+  def send_assigned_notification(mentorId, studentId)
+    Background.process do
+      mentor = get_user(mentorId)
+      student = get_user(studentId)
+
+      RelationshipMailer.assigned_student_to_mentor(mentor, student).deliver
+    end
+  end
+
+  def send_unassigned_notification(mentorId, studentId)
+    Background.process do
+      mentor = get_user(mentorId)
+      student = get_user(studentId)
+
+      RelationshipMailer.unassigned_student_from_mentor(mentor, student).deliver
+    end
   end
 end

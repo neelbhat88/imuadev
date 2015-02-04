@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta id="version" name="version" content="<%= @appVersion %>" >
+    <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed"/>
     <title>Imua</title>
 
     <%= csrf_meta_tags %>
@@ -21,13 +22,14 @@
     <!--<script type="text/javascript" src="//use.typekit.net/kmx1vmk.js"></script>-->
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-    <base href="/">
+    <base href="/app">
   </head>
   <body ng-controller="AppController">
+    <% if user_signed_in? %>
     <header ng-controller="HeaderController">
       <div class="wrapper clear">
         <div class="imua-logo left">
-          <a href="/">
+          <a href="/app#/">
             <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %>
             <% if current_user.super_admin? %>
               Collective Progress
@@ -45,53 +47,56 @@
             <div class="submenu js-submenu">
               <% if current_user.super_admin? %>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
+                  <a class="js-nav-link" href="app#/sa/organizations">Organizations</a>
                 </div>
               <% end %>
 
               <% if current_user.org_admin? %>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
+                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
+                  <a class="js-nav-link" href="app#/organization/<%= current_user.organization_id %>">Mentors</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
+                  <a class="js-nav-link" href="app#/students/<%= current_user.organization_id %>">Students</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/setup/<%= current_user.organization_id %>">Organization Setup</a>
+                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
+                </div>
+                <div class="submenu__link">
+                  <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
                 </div>
               <% end %>
 
               <% if current_user.mentor? %>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
+                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">My Students</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">Tasks</a>
+                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
+                  <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
                 </div>
               <% end %>
 
               <% if current_user.student? %>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
+                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/progress/<%= current_user.id %>">My Progress</a>
+                  <a class="js-nav-link" href="app#/progress/<%= current_user.id %>">My Progress</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">Expectations</a>
+                  <a class="js-nav-link" href="app#/expectations/<%= current_user.id %>">Expectations</a>
                 </div>
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/user_assignments/<%= current_user.id %>">Tasks</a>
+                  <a class="js-nav-link" href="app#/user_assignments/<%= current_user.id %>">Tasks</a>
                 </div>
               <% end %>
               <div class="submenu__link">
-                <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
+                <a class="js-nav-link" href="app#/profile/<%= current_user.id %>">Profile</a>
               </div>
               <div class="submenu__link">
                 <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
@@ -104,49 +109,52 @@
           <ul>
             <% if current_user.super_admin? %>
               <li>
-                <a class="js-nav-link" href="#/sa/organizations">Organizations</a>
+                <a class="js-nav-link" href="app#/sa/organizations">Organizations</a>
               </li>
             <% end %>
 
             <% if current_user.org_admin? %>
               <li>
-                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
+                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/organization/<%= current_user.organization_id %>">Mentors</a>
+                <a class="js-nav-link" href="app#/organization/<%= current_user.organization_id %>">Mentors</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/students/<%= current_user.organization_id %>">Students</a>
+                <a class="js-nav-link" href="app#/students/<%= current_user.organization_id %>">Students</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/setup/<%= current_user.organization_id %>">Organization Setup</a>
+                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
+              </li>
+              <li>
+                <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
               </li>
             <% end %>
 
             <% if current_user.mentor? %>
               <li>
-                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">My Students</a>
+                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">My Students</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/assignments/<%= current_user.id %>">Tasks</a>
+                <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
+                <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
               </li>
             <% end %>
 
             <% if current_user.student? %>
               <li>
-                <a class="js-nav-link" href="#/dashboard/<%= current_user.id %>">Dashboard</a>
+                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/progress/<%= current_user.id %>">My Progress</a>
+                <a class="js-nav-link" href="app#/progress/<%= current_user.id %>">My Progress</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/expectations/<%= current_user.id %>">Expectations</a>
+                <a class="js-nav-link" href="app#/expectations/<%= current_user.id %>">Expectations</a>
               </li>
               <li>
-                <a class="js-nav-link" href="#/user_assignments/<%= current_user.id %>">Tasks</a>
+                <a class="js-nav-link" href="app#/user_assignments/<%= current_user.id %>">Tasks</a>
               </li>
             <% end %>
 
@@ -161,7 +169,7 @@
               <span class="glyphicon glyphicon-cog"></span>
               <div class="submenu js-submenu">
                 <div class="submenu__link">
-                  <a class="js-nav-link" href="#/profile/<%= current_user.id %>">Profile</a>
+                  <a class="js-nav-link" href="app#/profile/<%= current_user.id %>">Profile</a>
                 </div>
                 <div class="submenu__link">
                   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
@@ -172,6 +180,7 @@
         </nav>
       </div>
     </header>
+    <% end %>
     <div class="mask"></div>
     <div class="alerts-section">
       <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>

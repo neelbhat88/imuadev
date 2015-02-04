@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'AssignmentService', ['$http', ($http) ->
+.service 'AssignmentService', ['$http', '$q', ($http, $q) ->
 
 # "Assignment" is owned by the assigner.
 # "UserAssignment" is owned by the assignee(s).
@@ -9,6 +9,28 @@ angular.module('myApp')
 
   self = this
 
+  @setUserAssignmentStatus = (user_assignment, status) ->
+    new_user_assignment = @newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
+    new_user_assignment.id = user_assignment.id
+    new_user_assignment.status = status
+
+    defer = $q.defer()
+    @saveUserAssignment(new_user_assignment)
+      .success (data) ->
+        user_assignment.status = data.user_assignment.status
+        user_assignment.updated_at = data.user_assignment.updated_at
+        defer.resolve(user_assignment)
+    defer.promise
+
+  @getAssignmentCollection = (assignmentId) ->
+    $http.get "api/v1/assignment/#{assignmentId}/collection"
+
+  @getTaskAssignableUsers = (userId) ->
+    $http.get "/api/v1/users/#{userId}/task_assignable_users"
+
+  @getTaskAssignableUsersTasks = (userId) ->
+    $http.get "/api/v1/users/#{userId}/task_assignable_users_tasks"
+
   @broadcastAssignment = (assignment, userIds) ->
     user_assignments = _.map(userIds, (userId) -> self.newUserAssignment(userId, assignment.id))
     if assignment.id
@@ -17,12 +39,6 @@ angular.module('myApp')
     else
       $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast",
         { assignment: assignment, user_assignments: user_assignments }
-
-  @collectAssignment = (assignmentId) ->
-    $http.get "api/v1/assignment/#{assignmentId}/collect"
-
-  @collectAssignments = (userId) ->
-    $http.get "api/v1/users/#{userId}/assignment/collect"
 
   @collectUserAssignment = (userAssignmentId) ->
     $http.get "api/v1/user_assignment/#{userAssignmentId}/collect"

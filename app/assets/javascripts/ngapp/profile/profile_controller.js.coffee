@@ -11,6 +11,7 @@ angular.module('myApp')
   $scope.editingParentGuardianContacts = false
   $scope.password = {current: "", new: "", confirm: ""}
   $scope.student_mentors = []
+  $scope.errors = [ '**Please fix the errors above**' ]
 
   $scope.editing = () ->
     $scope.editingInfo || $scope.editingPassword
@@ -30,32 +31,40 @@ angular.module('myApp')
     $('.js-upload')[0].value = "" # sort of hacky but it'll do for now
     $scope.user = angular.copy($scope.origUser)
     $scope.editingInfo = false
-    $scope.errors = {}
+    $scope.errors = [ '**Please fix the errors above**' ]
 
   $scope.updateUserInfo = ($event) ->
+    if $scope.user.title == null # hack for title
+      $scope.user.title = ''
+
     fd = new FormData()
     angular.forEach $scope.files, (file) ->
       fd.append('user[avatar]', file)
 
-    LoadingService.buttonStart($event.currentTarget)
+    laddaElement = $(".ladda-button").get(0)
+    LoadingService.buttonStart(laddaElement)
+
     UsersService.updateUserInfoWithPicture($scope.user, fd)
       .success (data) ->
         # ToDo: Success message here
         $scope.user = data.user
 
+
         $scope.files = null
         $('.js-upload')[0].value = "" #sort of hacky but it'll do for now
         $scope.editingInfo = false
         $scope.origUser = angular.copy($scope.user)
-        $scope.errors = {}
+        $scope.addSuccessMessage("Profile info updated successfully!")
 
       .error (data) ->
         $scope.errors = data.info
+        $scope.profileForm.$invalid = true
+        $scope.profileForm.$submitted = true
+        $scope.addErrorMessage("Profile info was not updated")
 
         #ToDo: Error message here
 
       .finally () ->
-        $scope.addSuccessMessage("Profile info updated successfully!")
         LoadingService.buttonStop()
 
   $scope.editUserPassword = () ->

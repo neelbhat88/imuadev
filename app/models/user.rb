@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   					:first_name, :last_name, :phone, :role, :avatar, :organization_id,
-            :time_unit_id, :class_of, :title
+            :time_unit_id, :class_of, :title, :status
   # attr_accessible :title, :body
 
   belongs_to :organization
@@ -32,8 +32,9 @@ class User < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
   has_many :user_assignments, dependent: :destroy
   has_many :user_gpas, dependent: :destroy
+  has_many :comments, dependent: :destroy # TODO - what do we think about this?
 
-  has_attached_file :avatar, styles: {
+  has_attached_file :avatar, :s3_protocol => :https, styles: {
     square: '140x140#',
     medium: '300x300>'
   }
@@ -45,6 +46,17 @@ class User < ActiveRecord::Base
   validates_attachment :avatar,
     :content_type => { :content_type => /\Aimage\/.*\Z/, :message => "You must choose an image file" },
     :size => { :in => 0..2.megabytes, :message => "The file must be less than 2 megabytes in size" }
+
+  def self.SystemUser
+    systemuser = User.new do |u|
+      u.id = -1
+      u.email = "imua+system@myimua.org"
+      u.first_name = "System"
+      u.last_name = "System"
+      u.role = Constants.UserRole[:SYSTEM]
+      u.organization_id = -1
+    end
+  end
 
   def full_name
     return self.first_name + " " + self.last_name
@@ -112,7 +124,7 @@ class UserQuerier < Querier
           d[:avatar_file_name] = Paperclip::Attachment.default_options[:default_url]
         else
           # Hack to generate the s3 user avatar url outside of Paperclip
-          base = "http://s3.amazonaws.com"
+          base = "https://s3.amazonaws.com"
           bucket = Paperclip::Attachment.default_options[:s3_credentials][:bucket]
           klass = "users"
           attachment = "avatars"

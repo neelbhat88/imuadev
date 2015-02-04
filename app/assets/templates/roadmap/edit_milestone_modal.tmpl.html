@@ -1,38 +1,47 @@
 <div class="modal-body">
+  <div class="modal-body__title"><h5>Edit Milestone</h5></div>
 
-  <span class ="edit-milestone__title">
-    <img ng-src={{milestone.icon}}/>{{milestone.title}}
-  </span>
+  <div class="milestone_modules" modulecolor="{{milestone.module | addUnderscoreIfFirstCharIsNum}}">
+  </div>
 
-  <div class="milestone ptl">
-    <div class="pbs">
-      <div class="milestone-description">{{milestone.description}}</div>
+  <div class="milestone_edit phm ptm">
+    <h6>{{milestone.module | underscoresToSpaces}}</h6>
+    <div class="milestone_submodule selected">
+      <div class="milestone_submodule__title bold pbs">{{milestone.title}}</div>
+      <div class="milestone_submodule__description">{{milestone.milestone_description}}</div>
     </div>
 
-    <div class="pbs">
-      <input class="form-field" ng-model="milestone.value" placeholder="Milestone Value">
-    </div>
+    <div class="milestone_submodule__form">
+      <div class="pbs">
+        <div class="milestone-description">{{milestone.description}}</div>
+      </div>
 
-    <div class="milestone_advanced">
-      <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
-      <div class="milestone_advanced__hidden" ng-show="showAdvanced">
-        <div class="pbs">
-          <span class="milestone-weight">Weight:</span>
-        </div>
-        <div class="pbs">
-          <input class="form-field" ng-model="milestone.points" placeholder="Weight">
+      <div class="pbs">
+        <input class="form-control" ng-model="milestone.value" placeholder="Value">
+
+      </div>
+
+      <div class="milestone_advanced">
+        <a class="milestone_advanced__toggle" ng-click="toggleAdvanced()">{{advancedPrefix}} Advanced</a>
+        <div class="milestone_advanced__hidden" ng-show="showAdvanced">
+          <div class="pbs">
+            <span class="milestone-weight">Weight:</span>
+          </div>
+          <div class="pbs">
+            <input class="form-field" ng-model="milestone.points" placeholder="Weight">
+          </div>
         </div>
       </div>
-    </div>
 
-    <ul class="errorText ptm" ng-show="errors">
-      <li ng-repeat="error in errors">{{error}}</li>
-    </ul>
-
-    <div class="buttonGroup pvxl">
-      <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
-      <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
-      <button class="delete" ng-click="delete()">Delete</button>
+      <ul class="errorText ptm" ng-show="errors">
+        <li ng-repeat="error in errors">{{error}}</li>
+      </ul>
     </div>
   </div>
+
+  <div class="buttonGroup pvm">
+    <button type="submit" class="submit" ng-click="save()"><span>Save</span></button>
+    <button class="cancel" ng-click="cancel()"><span>Cancel</span></button>
+  </div>
+
 </div>

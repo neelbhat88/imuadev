@@ -17,60 +17,58 @@
       </ul>
 
       <div class="edit-buttons">
-        <a href="/#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
-        <a href="/#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
+        <a href="/app#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
+        <a href="/app#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
         <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
       </div>
     </div>
 
     <div class="primary-editing" ng-show="editingInfo">
+      <form name="profileForm" imua-form="updateUserInfo($event)" novalidate>
 
-      <ul class="errorText" ng-show="editingInfo && errors" >
-        <li ng-repeat="error in errors">{{error}}</li>
-      </ul>
+        <div ng-if="!current_user.is_student">
+          <span class="form-wrapper half">
+          <label-with-errors label="First Name" form="profileForm" formfield="profileForm.firstName"></label-with-errors>
+          <input name="firstName" class="form-control" ng-model="user.first_name" placeholder="First Name" required>
+          </span>
+          <span class="form-wrapper half">
+          <label-with-errors label="Last Name" form="profileForm" formfield="profileForm.lastName"></label-with-errors>
+            <input name="lastName" class="form-control" ng-model="user.last_name" placeholder="Last Name" required>
+          </span>
+        </div>
 
-      <div ng-if="!current_user.is_student">
-        <span class="form-wrapper half">
-          <label>First Name</label>
-          <input class="form-control" ng-model="user.first_name" placeholder="First Name">
-        </span>
-        <span class="form-wrapper half">
-          <label>Last Name</label>
-          <input class="form-control" ng-model="user.last_name" placeholder="Last Name">
-        </span>
-      </div>
+        <div ng-if="!current_user.is_student && user.is_mentor">
+          <span class="form-wrapper">
+            <label>Title</label>
+            <input class="form-control" ng-model="user.title" placeholder="Title">
+          </span>
+        </div>
 
-      <div ng-if="!current_user.is_student && user.is_mentor">
+        <div class="student-exception" ng-if="current_user.is_student">
+          <h3 class="bold">{{user.first_name}} {{user.last_name}}</h3>
+        </div>
+
+        <div class="form-wrapper">
+          <label>Change Profile Picture</label>
+          <input class="js-upload" type="file" file-input="files" />
+        </div>
+
         <span class="form-wrapper">
-          <label>Title</label>
-          <input class="form-control" ng-model="user.title" placeholder="Title">
+          <label-with-errors label="Email Address" form="profileForm" formfield="profileForm.email"></label-with-errors>
+          <input name="email" type="email" class="form-control" ng-model="user.email" placeholder="Email" autofocus="true" required>
         </span>
-      </div>
+        <span class="form-wrapper">
+          <label>Phone Number</label>
+          <input class="form-control" ng-model="user.phone" placeholder="Phone Number">
+        </span>
 
-      <div class="student-exception" ng-if="current_user.is_student">
-        <h3 class="bold">{{user.first_name}} {{user.last_name}}</h3>
-      </div>
-
-      <div class="form-wrapper">
-        <label>Change Profile Picture</label>
-        <input class="js-upload" type="file" file-input="files" />
-      </div>
-
-      <span class="form-wrapper">
-        <label>Email Address</label>
-        <input class="form-control" ng-model="user.email" placeholder="Email" autofocus="true">
-      </span>
-      <span class="form-wrapper">
-        <label>Phone Number</label>
-        <input class="form-control" ng-model="user.phone" placeholder="Phone Number">
-      </span>
-
-      <div class="edit-buttons">
-        <button ng-click="updateUserInfo($event)" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
-        <button class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></button>
-      </div>
-
+        <div class="edit-buttons">
+          <div ng-repeat="error in errors" class="errorText errorListing" ng-if="profileForm.$submitted && profileForm.$invalid">{{error}}</div>
+          <button type="submit" class="ladda-button submit" data-style="expand-right" data-size="s" data-color="blue"><span class="ladda-label">Save</span></button>
+          <span class="delete" ng-click="cancelUpdateUserInfo()"><span>Cancel</span></span>
+        </div>
+      </form>
     </div>
 
     <div class="primary-editing" ng-show="editingPassword">
@@ -136,7 +134,7 @@
             <div ng-show="editingInfo">
               <span class="form-wrapper">
                 <label>Imua Semester</label>
-                <select ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
+                <select class="form-control" ng-options="time_unit.id as time_unit.name for time_unit in time_units" ng-model="user.time_unit_id"></select>
               </span>
               <span class="form-wrapper">
                 <class-of-dropdown ng-show="editingInfo" model="user"></class-of-dropdown>
@@ -206,7 +204,7 @@
         <div class="module--header">{{user.first_name}}'s <span class="bold">Mentors</span></div>
         <div class="module--content">
           <div class="circle-pictures" ng-repeat="mentor in student_mentors" wait-to-load="loaded_student_mentors">
-            <a ng-href="#/profile/{{mentor.id}}" title="View mentor info">
+            <a ng-href="app#/profile/{{mentor.id}}" title="View mentor info">
               <div class="circle-picture">
                 <img ng-src="{{mentor.square_avatar_url}}">
               </div>

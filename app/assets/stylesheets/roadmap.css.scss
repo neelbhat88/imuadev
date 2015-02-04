@@ -38,6 +38,8 @@
 
 .milestone-title {
   display: inline-block;
+
+
   text-align: left;
   vertical-align: middle;
   font-weight: bold;
@@ -55,13 +57,22 @@
 .year__semester {
 
   .semester__header-title {
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
     background-color: #f0f0f0;
     color: $ink;
     text-align: center;
     font-size: 22px;
     border: 1px solid $lightgrey;
     border-top: none;
+    &:hover {
+      box-shadow: 0px 0px 10px;
+      cursor: pointer;
+    }
+  }
+
+  .semester__header-click_text {
+    @include font-size(1.1);
+    padding-top: 5px;
   }
 
   .semester__header-title--editable {
@@ -86,14 +97,23 @@
     display: inline-block;
     text-align: justify;
 
+    &:hover {
+      border-top: 3px;
+      box-shadow: 0px 0px 10px;
+      cursor: pointer;
+    }
+
     .milestone__title {
       @extend .milestone-title;
+      @include respond-to(500) { display: inherit; width: 100%; }
       width: 50%;
     }
 
     .milestone__info {
       width: 49%;
       display: inline-block;
+      @include respond-to(500) { display: inherit; width: 100%; }
+
       text-align: right;
       vertical-align: middle;
       color: $grey;
@@ -222,7 +242,7 @@
 
 .milestone_advanced
 {
-  padding-left: 5px;
+  padding-top: 10px;
 
   .milestone_advanced__toggle
   {
@@ -231,8 +251,7 @@
 
   .milestone_advanced__hidden
   {
-    padding-top: 5px;
-    padding-left: 20px;
+    padding-top: 10px;
   }
 }
 
@@ -263,13 +282,10 @@
       margin-bottom: 15px;
 
       .expectations-list__item__title {
-        width: 80%;
-        display: inline-block;
       }
 
       .expectations-list__item__icons {
-        width: 15%;
-        display: inline-block;
+        float: right;
       }
 
       .form-field {
@@ -335,4 +351,62 @@
 
 .roadmapContainer, .rightContainer {
   @include respond-to(1200) { float: none; width: 100%;}
+}
+
+// ########################
+// #######  MODAL #########
+// ########################
+.milestone_modules {
+  border-bottom: 2px solid;
+  text-align: center;
+  @each $category, $color in $darkcolormap {
+    &.color--#{$category} {
+      border-bottom-color: $color;
+    }
+  }
+
+  .milestone_module {
+    @extend .bold;
+
+    margin-left: 20px;
+    &:first-of-type { margin-left: 0px; }
+
+    cursor:pointer;
+
+    &:hover {text-decoration: underline;}
+
+    padding: 10px 5px;
+    display: inline-block;
+
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        &.selected { color: $color; }
+      }
+    }
+  }
+}
+
+.milestone_submodule {
+  width: 250px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+
+  &:hover { box-shadow: 0 0 10px; }
+
+  &.selected { box-shadow: 0 0 10px; }
+}
+
+.milestone_edit {
+  .milestone_submodule {
+    width: 100%;
+  }
+}
+
+.milestone_submodule__form {
+  padding: 10px;
 }

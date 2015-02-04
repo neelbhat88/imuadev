@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140925173722) do
+ActiveRecord::Schema.define(:version => 20150128165732) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -21,19 +21,34 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title"
-    t.string   "description"
+    t.text     "title"
+    t.text     "description"
     t.datetime "due_datetime"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "organization_id"
   end
 
   add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"
 
+  create_table "comments", :force => true do |t|
+    t.string   "title",            :limit => 50, :default => ""
+    t.text     "comment"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
-    t.string   "title"
-    t.string   "description"
+    t.text     "title"
+    t.text     "description"
     t.integer  "rank"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -66,11 +81,11 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.string   "value"
     t.string   "icon"
     t.integer  "organization_id"
+    t.datetime "due_datetime"
   end
 
   add_index "milestones", ["organization_id"], :name => "index_milestones_on_organization_id"
   add_index "milestones", ["time_unit_id", "submodule", "module", "value"], :name => "index_milestones_on_time_submod_mod_and_val", :unique => true
-  add_index "milestones", ["time_unit_id"], :name => "IDX_Milestone_TimeUnitId"
 
   create_table "org_tests", :force => true do |t|
     t.integer  "organization_id"
@@ -142,7 +157,6 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
   end
 
   add_index "time_units", ["organization_id"], :name => "index_time_units_on_organization_id"
-  add_index "time_units", ["roadmap_id"], :name => "IDX_TimeUnit_RoadmapId"
 
   create_table "user_assignments", :force => true do |t|
     t.integer  "assignment_id"
@@ -172,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.string   "modified_by_name"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.float    "grade_value"
   end
 
   create_table "user_classes", :force => true do |t|
@@ -189,6 +204,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.string   "subject"
     t.integer  "modified_by_id"
     t.string   "modified_by_name"
+    t.float    "grade_value"
   end
 
   add_index "user_classes", ["user_id", "time_unit_id"], :name => "IDX_UserClass_UserIdTimeUnitId"
@@ -206,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.text     "comment"
+    t.datetime "created_on"
   end
 
   create_table "user_expectations", :force => true do |t|
@@ -223,11 +240,11 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
   add_index "user_expectations", ["user_id"], :name => "index_user_expectations_on_user_id"
 
   create_table "user_extracurricular_activities", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "description"
+    t.text     "description"
   end
 
   add_index "user_extracurricular_activities", ["user_id"], :name => "index_user_extracurricular_activities_on_user_id"
@@ -289,8 +306,8 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.integer  "time_unit_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
-    t.string   "name"
-    t.string   "description"
+    t.text     "name"
+    t.text     "description"
   end
 
   add_index "user_service_hours", ["user_id"], :name => "index_user_service_hours_on_user_id"
@@ -343,6 +360,7 @@ ActiveRecord::Schema.define(:version => 20140925173722) do
     t.integer  "time_unit_id"
     t.integer  "class_of"
     t.string   "title"
+    t.integer  "status",                 :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

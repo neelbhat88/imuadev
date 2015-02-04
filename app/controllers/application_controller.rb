@@ -5,30 +5,11 @@ class ApplicationController < ActionController::Base
 
   before_filter :add_abilities
   before_filter :set_current_company
+  before_filter :check_and_set_version_header
 
   respond_to :html # Without this, POST /sign_in fails - spent hours figuring this out..
                    # after_sign_in_path_for needs to return HTML since its rendering the view
   respond_to :json, :only => [:check_and_set_version_header]
-  before_filter :check_and_set_version_header
-
-  # Overries Devise after sign in
-  def after_sign_in_path_for(resource)
-    # ToDo: Move this into a Keen Provider class
-    Background.process do
-      Keen.publish("user_engagement", {
-                                        :user => current_user,
-                                        :day => DateTime.now.utc.beginning_of_day.iso8601,
-                                        :hour => DateTime.now.utc.beginning_of_hour.iso8601
-                                      }
-                  )
-    end
-
-    return root_path
-  end
-
-  def after_sign_out_path_for(resource_or_scope)
-    login_path
-  end
 
   def student_can_access?(userId)
     if current_user.student? && current_user.id != userId
@@ -52,15 +33,17 @@ class ApplicationController < ActionController::Base
     @appVersion = AppVersionService.new.get_version_number.to_s
     response.headers['AppVersion'] = @appVersion
 
-    # Only check the AppVersion if the header exists
-    if request.headers['AppVersion'] && request.headers['AppVersion'] != @appVersion
+    # Only check the AppVersion if the header exists AND the user has a session
+    if request.headers['AppVersion'] && user_signed_in? && request.headers['AppVersion'] != @appVersion
       Rails.logger.error("Error - AppVersion mismatch! - Current version: #{@appVersion}, Client's Version: #{request.headers['AppVersion']}. UserId: #{current_user.id}")
       render status: 426, json: {}
     end
   end
 
   def set_current_company
-    @current_company = current_user.organization unless current_user.nil?
+    if user_signed_in?
+      @current_company = current_user.organization unless current_user.nil?
+    end
   end
 
   def add_abilities

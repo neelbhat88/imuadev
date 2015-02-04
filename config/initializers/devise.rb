@@ -137,7 +137,12 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
+
+  #Removing this because of an issue where after session expires and you hard refresh,
+  # it hits Warden's authentication error which goes to the FailureApp respond - no idea
+  # why it goes there. This causes it to not go to the angular app which would redirect
+  # to login page with the previous_url query string. 
+  # config.timeout_in = Constants.SessionTimeout
 
   # If true, expires auth token on session timeout.
   # config.expire_auth_token_on_timeout = false

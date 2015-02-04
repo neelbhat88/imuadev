@@ -51,10 +51,13 @@ angular.module('myApp')
         backdrop: 'static',
         size: 'sm',
         resolve:
+          current_user: () -> $scope.current_user
           organization: () -> $scope.organization
           new_user: () -> UsersService.newMentor($scope.organization.id)
 
       modalInstance.result.then (user) ->
         $scope.organization.mentors.push(user)
+        $scope.addSuccessMessage("Email with password has been sent to " + user.email)
+
 
 ]

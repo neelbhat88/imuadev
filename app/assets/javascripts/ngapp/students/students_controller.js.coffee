@@ -50,11 +50,13 @@ angular.module('myApp')
         backdrop: 'static',
         size: 'sm',
         resolve:
+          current_user: () -> $scope.current_user
           organization: () -> $scope.organization
           new_user: () -> UsersService.newStudent($scope.organization.id)
 
       modalInstance.result.then (user) ->
         $scope.organization.students.push(user)
         $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
+        $scope.addSuccessMessage("Email with password has been sent to " + user.email)
 
 ]

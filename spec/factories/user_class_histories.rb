@@ -6,6 +6,7 @@ FactoryGirl.define do
     name "MyString"
     time_unit_id ""
     grade ""
+    grade_value 0.0
     gpa ""
     period ""
     room ""

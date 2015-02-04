@@ -1,7 +1,16 @@
 Imua::Application.routes.draw do
   get "organization/roadmap"
 
-  devise_for :users, :skip => [:registrations]
+  devise_for :users, :skip => [:registrations], :controllers => {:sessions => "api/v1/sessions"}
+
+  # Rails 3 strategy for drying out routes
+  # http://ruby-journal.com/how-to-dry-your-rails-routes/
+  commentable = Proc.new do
+    member do
+      post :comment
+      get :comments
+    end
+  end
 
   namespace :api do
     namespace :v1 do
@@ -14,9 +23,24 @@ Imua::Application.routes.draw do
       #       *NEW WAY OF DOING ROUTES*
       # run foreman run rake routes to see what the routes look like
       # **************************************
+      resources :comment, except: [:index, :new, :create, :edit, :show]
+
       resources :organization, shallow: true do
 
+        member do
+          put 'users/reset_users_password' => 'users#reset_users_password'
+          put 'users/reset_all_students_password' => 'users#reset_all_students_password'
+        end
+
+        resources :expectation, except: [:index, :create, :new, :edit, :show, :update, :destroy] do
+          member do
+            get 'status', to: 'expectation#get_expectation_status' # Show expectation view
+            put 'status', to: 'expectation#put_expectation_status' # Update expectation view
+          end
+        end
+
         resources :users, shallow: true do
+
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
@@ -25,7 +49,9 @@ Imua::Application.routes.draw do
           resources :user_extracurricular_activity_detail, except: [:new, :edit]
 
           resources :assignment, except: [:new, :edit]
-          resources :user_assignment, except: [:new, :edit, :show]
+          resources :user_assignment, except: [:new, :edit, :show] do
+            commentable.call
+          end
 
           resources :user_service_organization, except: [:new, :edit]
           resources :user_service_hour, except: [:new, :edit]
@@ -49,6 +75,9 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users do
         collection do
+          get ':id/task_assignable_users' => 'assignment#get_task_assignable_users'
+          get ':id/task_assignable_users_tasks' => 'assignment#get_task_assignable_users_tasks'
+
           put '/:id/update_password' => 'users#update_password'
 
           put '/:id/time_unit/next' => "users#move_to_next_semester"
@@ -75,10 +104,9 @@ Imua::Application.routes.draw do
         end
       end
 
-      get  'assignment/:id/collect'              => 'assignment#collect'
-      get  'users/:user_id/assignment/collect'   => 'assignment#collect_all'
-      post 'users/:user_id/assignment/broadcast' => 'assignment#broadcast'
-      put  'assignment/:id/broadcast'            => 'assignment#broadcast_update'
+      get  'assignment/:id/collection'      => 'assignment#get_assignment_collection'
+      post 'users/:id/assignment/broadcast' => 'assignment#broadcast'
+      put  'assignment/:id/broadcast'       => 'assignment#broadcast_update'
 
       get 'user_assignment/:id/collect'       => 'user_assignment#collect'
       get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'
@@ -138,7 +166,7 @@ Imua::Application.routes.draw do
   post '/reset_password' => 'static#reset_password'
 
   get '/login' => 'static#login'
-  get '/marketing' => 'static#index'
+  get '/app' => 'static#app'
 
 
   root :to => 'static#index'

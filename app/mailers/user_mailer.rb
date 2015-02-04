@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-	default :from => "imua@hokuscholars.org"
+	default :from => "imua-notification@myimua.org"
 
   def welcome(user, password)
   	@user = user
@@ -26,5 +26,16 @@ class UserMailer < ActionMailer::Base
 		@password = password
 
 		mail(:to => user.email, :subject => "Imua - Reset password request")
+	end
+
+	def test(users)
+		@recipients = users
+
+		emails = []
+		@recipients.each do |r|
+			emails << r.email
+		end
+
+		mail(:to => emails, :subject => "Testing 1... 2... 3...")
 	end
 end

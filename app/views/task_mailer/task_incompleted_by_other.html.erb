@@ -1,0 +1,17 @@
+<p>Hey <%= @assignor.first_name %>,</p>
+
+<p><%= @current_user.full_name %> marked the following task that you assigned to <%= @assignee.full_name %> back to incomplete:</p>
+
+<p>
+  <ul style="list-style-type: none">
+    <li><b>Task Title:</b> <%= @task.title %></li>
+    <li><b>Task Description:</b> <%= @task.description %></li>
+  </ul>
+</p>
+
+<p><%= link_to "Log in", app_url + "#/user_assignment/#{@user_assignment.id}" %>
+  to see more details. </p>
+
+<p>Mahalo,<p>
+
+Imua

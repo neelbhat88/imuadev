@@ -10,7 +10,7 @@
 
     </div>
 
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class=>"form-container") do |f| %>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name, :pu => params[:pu]), :class=>"form-container") do |f| %>
 
       <div class="element">
 

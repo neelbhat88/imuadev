@@ -2,6 +2,7 @@ angular.module('myApp')
 .controller 'OrganizationExpectationController', ['$route', '$scope', 'ExpectationService',
   ($route, $scope, ExpectationService) ->
 
+    $scope.formErrors = [ '** Please fix the errors above **']
     $scope.user = $scope.current_user
     $scope.orgId = $route.current.params.id
     $scope.expectations = []
@@ -16,7 +17,8 @@ angular.module('myApp')
 
     $scope.editExpectation = (index) ->
       $scope.expectations[index].editing = true
-      $scope.expectations[index].new_title = $scope.expectations[index].title;
+      $scope.expectations[index].new_title = $scope.expectations[index].title
+      $scope.expectations[index].new_description = $scope.expectations[index].description
 
     $scope.cancelEditExpectation = (index) ->
       if $scope.expectations[index].id
@@ -29,6 +31,7 @@ angular.module('myApp')
       new_expectation = ExpectationService.newExpectation($scope.orgId)
       new_expectation.id = $scope.expectations[index].id
       new_expectation.title = $scope.expectations[index].new_title
+      new_expectation.description = $scope.expectations[index].new_description
 
       if new_expectation.id && new_expectation.title != $scope.expectations[index].title
         if !window.confirm "This will rename the expectation while maintaining each student's corresponding expectation status. Ok to continue?"
