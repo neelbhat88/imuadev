@@ -68,6 +68,7 @@ angular.module('myApp')
         LoadingService.buttonStop()
 
   $scope.editUserPassword = () ->
+    $scope.errors = []
     $scope.editingPassword = true
 
   $scope.cancelUpdatePassword = () ->
