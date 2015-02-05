@@ -51,10 +51,31 @@
   }
 
   .orgsetup-expectations {
+
     .expectation--editing {
       padding: 20px;
       text-align: left;
     }
+
+  }
+
+  .orgsetup-tests {
+
+    .tests-title {
+      width: 80%;
+      padding: 20px;
+    }
+
+    .tests-type {
+      width: 20%;
+      padding: 20px;
+    }
+
+    .tests--editing {
+      padding: 20px;
+      text-align: left;
+    }
+
   }
 
 }

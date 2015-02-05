@@ -1,4 +1,4 @@
-<div ng-controller="OrgTestController" class="widget orgsetup--tests">
+<div ng-controller="OrgTestController" class="widget orgsetup-tests">
 
   <div class="widget--header">
     <div class="widget--header--left">
@@ -8,35 +8,45 @@
 
   <div class="widget--content" wait-to-load="{{loaded_orgTests}}">
     <div class="widget--content--table table--fixed">
-      <div class="widget--content--cell ng-clickable" ng-class="{'break900': orgTests.length <= 3, 'break1200': orgTests.length == 4, 'breakalways': orgTests.length > 4}" ng-repeat="orgTest in orgTests">
-        <div class="cell--padding">
-          <div ng-hide="orgTest.editing" ng-click="expandTest = !expandTest">
+      <div class="table--cell ng-clickable breakalways" ng-repeat="orgTest in orgTests">
+        <div class="widget--content--table" ng-hide="orgTest.editing" ng-click="expandTest = !expandTest">
+          <div class="table--cell tests-title">
             <h5 class="bold">{{orgTest.title}}</h5>
-            <p>Score Type:</p>
-            <h6>{{orgTest.score_type}}</h6>
-
             <div class="edit-buttons" ng-show="expandTest">
               <button class="btn btn-default" ng-click="editOrgTest($index)">Edit Test</button>
               <button class="btn btn-danger" ng-click="deleteOrgTest($index)"> Delete</span>
             </div>
           </div>
-          <div ng-show="orgTest.editing">
-            <div class="input-forms">
-              <input class="form-control" ng-model="orgTest.new_title" placeholder="Test Title" name="orgTest_title">
-              <select class="form-control" ng-show="orgTest.editing" ng-options="scoreType as scoreType for scoreType in TestScoreTypes" ng-model="orgTest.new_score_type">
+          <div class="table--cell tests-type">
+            <p>Score Type:</p>
+            <h6 class="bold">{{orgTest.score_type}}</h6>
+          </div>
+        </div>
+        <div class="tests--editing" ng-show="orgTest.editing">
+          <form name="testForm" imua-form="saveOrgTest($index)" novalidate>
+            <div class="pbm">
+              <label-with-errors label="Test Title" form="testForm" formfield="testForm.test_title"> </label-with-errors>
+              <input type="text" class="form-control" ng-model="orgTest.new_title" placeholder="Test Title" name="test_title" required />
+            </div>
+
+            <div class="pbm">
+              <label-with-errors label="Test Type" form="testForm" formfield="testForm.test_type"></label-with-errors>
+              <select class="form-control" required ng-options="scoreType as scoreType for scoreType in TestScoreTypes" name="test_type" ng-model="orgTest.new_score_type">
                 <option value="">--- Score Type ---</option>
               </select>
             </div>
-            <div class="edit-buttons">
-              <button class="btn btn-primary" ng-click="saveOrgTest($index)">Save Test</button>
-              <button class="btn btn-danger" ng-click="cancelEditOrgTest($index)">Cancel</span>
-            </div>
-          </div>
 
+            <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>
+
+            <div>
+              <button class="submit" type="submit">Submit</button>
+              <span class="cancel" ng-click="cancelEditOrgTest($index)">Cancel</span>
+            </div>
+          </form>
         </div>
       </div>
 
-      <div class="widget--content--cell ng-clickable" ng-class="{'break900': orgTests.length <= 3, 'break1200': orgTests.length == 4, 'breakalways': orgTests.length > 4}" ng-click="addOrgTest()">
+      <div class="table--cell ng-clickable breakalways" ng-click="addOrgTest()">
         <div class="cell--padding">
           <h4><span class="glyphicon glyphicon-plus-sign"></span></h4>
           <h6 class="bold">Add a Test</h6>
