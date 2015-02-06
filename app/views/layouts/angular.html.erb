@@ -25,12 +25,18 @@
     <base href="/app">
   </head>
   <body ng-controller="AppController">
-    <div id="nav-wrapper">
+    <div id="wrapper">
       <header id="sidebar-wrapper" ng-include="'navbar/navbar.html'"></header>
       <div class="mask"></div>
+
+      <button type="button" id="menuToggle" class="btn btn-default">
+        <span class="glyphicon glyphicon-align-justify"></span>
+      </button>
+
       <div class="alerts-section">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
       </div>
+
       <div id="page-content-wrapper" data-ng-view ng-if="!reload_required"></div>
       <div ng-if="reload_required" style="padding: 30px; text-align: center;">
         <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
@@ -57,6 +63,13 @@
     $(document).ready(function(){
       hideMenu();
 
+      $("#menuToggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
+
+
+
       $('.js-cog').click(function(){
         $('.js-submenu').toggle();
 
@@ -80,7 +93,14 @@
         $('.js-submenu').hide();
         $('.mask').hide();
       }
+      function checkWidth() {
+        if ($(window).width() >= 768) {
+            $('#wrapper').removeClass('toggled');
+        }
+      }
 
+      $(window).resize(checkWidth);
     });
+
   </script>
 </html>

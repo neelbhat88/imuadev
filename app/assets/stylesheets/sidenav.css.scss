@@ -1,4 +1,4 @@
-#nav-wrapper {
+#wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -7,10 +7,13 @@
     font-family: $font-stack;
 }
 
-
+#wrapper.toggled {
+    padding-left: 200px;
+}
 
 #sidebar-wrapper {
     z-index: 1000;
+    position: fixed;
     left: 200px;
     width: 0;
     height: 100%;
@@ -23,14 +26,19 @@
     transition: all 0.5s ease;
 }
 
-
+#wrapper.toggled #sidebar-wrapper {
+    width: 200px;
+}
 
 #page-content-wrapper {
-    padding-top: 30px;
     width: 100%;
     position: absolute;
 }
 
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -200px;
+}
 
 /* Sidebar Styles */
 
@@ -71,6 +79,7 @@
     background: rgba(255,255,255,0.2);
 }
 
+
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
     text-decoration: none;
@@ -95,26 +104,20 @@
     background: none;
 }
 
+#menuToggle {
+    margin: 5px;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+}
+
+
 @media(min-width:768px) {
-    #sidebar-wrapper {
-        z-index: 1000;
-        position: fixed;
-        left: 200px;
-        width: 0;
-        height: 100%;
-        margin-left: -200px;
-        overflow-y: auto;
-        background: #000;
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-    }
-    #nav-wrapper {
+    #wrapper {
         padding-left: 200px;
     }
 
-    #nav-wrapper.toggled {
+    #wrapper.toggled {
         padding-left: 0;
     }
 
@@ -122,21 +125,21 @@
         width: 200px;
     }
 
-    #nav-wrapper.toggled #sidebar-wrapper {
+    #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
 
     #page-content-wrapper {
         position: relative;
-        padding-top: 0px;
     }
 
-    #nav-wrapper.toggled #page-content-wrapper {
+    #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
     }
 
-    #mobile-nav {
-        display: none;
+    #menuToggle {
+      display: none;
     }
+
 }
