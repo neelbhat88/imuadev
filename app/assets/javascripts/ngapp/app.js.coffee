@@ -46,6 +46,9 @@ angular.module('myApp')
 
   $scope.$on "unauthorized", () ->
     window.location.href = "login?pu=" + $location.path()
+
+  $scope.$on "loggedout", () ->
+    window.location.href = "login"
 ]
 
 angular.module('myApp')
