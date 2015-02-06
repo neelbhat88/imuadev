@@ -18,6 +18,10 @@
 //= require angular-rails-templates
 //= require angular-cookie
 //= require salvattore
+//= require rangy-core
+//= require rangy-selectionsaverestore
+//= require textangular
+//= require textangular-sanitize
 //= require spin
 //= require ladda
 //= require d3
