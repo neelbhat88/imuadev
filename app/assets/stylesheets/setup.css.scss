@@ -81,7 +81,6 @@
   .orgsetup-roadmap {
 
     .milestone-description {
-      width: 80%;
       padding: 25px;
       text-align: left;
 
@@ -94,7 +93,7 @@
     }
 
     .milestone-label {
-      width: 15%;
+      width: 20%;
       padding: 20px;
 
       @each $category, $color in $colormap {
