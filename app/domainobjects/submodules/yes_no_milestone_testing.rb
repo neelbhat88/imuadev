@@ -8,6 +8,7 @@ class YesNoMilestoneTesting < CustomMilestone
 
     @icon = "/assets/Testing.jpg"
 
+    @title = "Testing Task"
     @milestone_description = "A generic milestone where you can type a custom testing goal. This milestone is manually completed by the user by clicking a checkbox."
 
   end

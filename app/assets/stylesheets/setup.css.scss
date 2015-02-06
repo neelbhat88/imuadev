@@ -78,4 +78,32 @@
 
   }
 
+  .orgsetup-roadmap {
+
+    .milestone-description {
+      width: 80%;
+      padding: 25px;
+      text-align: left;
+
+      @include font-size(1.8);
+    }
+
+    .milestone-points {
+      width: 5%;
+      padding: 20px;
+    }
+
+    .milestone-label {
+      width: 15%;
+      padding: 20px;
+
+      @each $category, $color in $colormap {
+        &.color--#{$category} {
+          color: $color;
+        }
+      }
+    }
+
+  }
+
 }

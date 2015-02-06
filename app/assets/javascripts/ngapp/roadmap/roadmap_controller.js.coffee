@@ -1,28 +1,28 @@
 angular.module('myApp')
-.controller 'RoadmapController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
-($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
-  $scope.current_user = current_user
+.controller 'RoadmapController', ['$scope', '$modal', '$route', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, RoadmapService, LoadingService, OrganizationService, UsersService) ->
   $scope.loading = true
 
   orgId = $route.current.params.id
 
   $('input, textarea').placeholder()
 
-  OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
-    $scope.organization = data.data.organization
-    $scope.roadmap = data.data.roadmap
+  if !$scope.organization || !$scope.roadmap
+    OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
+      $scope.organization = data.data.organization
+      $scope.roadmap = data.data.roadmap
 
-    _.each($scope.roadmap.time_units, (tu) -> tu.expanded = false)
+      _.each($scope.roadmap.time_units, (tu) -> tu.expanded = false)
 
-    $scope.roadmap.years = [
-      {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
-      {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },
-      {name: "Year 3", semesters: [$scope.roadmap.time_units[4], $scope.roadmap.time_units[5]] },
-      {name: "Year 4", semesters: [$scope.roadmap.time_units[6], $scope.roadmap.time_units[7]] }
-    ]
+      $scope.roadmap.years = [
+        {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
+        {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },
+        {name: "Year 3", semesters: [$scope.roadmap.time_units[4], $scope.roadmap.time_units[5]] },
+        {name: "Year 4", semesters: [$scope.roadmap.time_units[6], $scope.roadmap.time_units[7]] }
+      ]
 
-    $scope.loading = false
-  , (data) -> # Error
+      $scope.loading = false
+    , (data) -> # Error
 
   RoadmapService.getEnabledModules(orgId)
     .success (data) -> # Success
@@ -132,4 +132,5 @@ angular.module('myApp')
 
     modalInstance.result.then (user) ->
       $scope.organization.orgAdmins.push(user)
+
 ]
