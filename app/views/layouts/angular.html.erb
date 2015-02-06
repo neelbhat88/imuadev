@@ -25,171 +25,24 @@
     <base href="/app">
   </head>
   <body ng-controller="AppController">
-    <% if user_signed_in? %>
-    <header ng-controller="HeaderController">
-      <div class="wrapper clear">
-        <div class="imua-logo left">
-          <a href="/app#/">
-            <%= image_tag "logo-blue-small.png", :alt => "IMUA", :height=>'46px', :width=>'46px' %>
-            <% if current_user.super_admin? %>
-              Collective Progress
-            <% else %>
-              <%= current_user.organization.name %>
-            <% end %>
-          </a>
-        </div>
+    <div id="wrapper">
+      <header id="sidebar-wrapper" ng-include="'navbar/navbar.html'"></header>
+      <div class="mask"></div>
 
-        <nav class="nav-collapsed right" role="navigation">
-          <div class="dropdown js-cog">
-            <div class="current-name">
-              Menu <span class="caret"></span>
-            </div>
-            <div class="submenu js-submenu">
-              <% if current_user.super_admin? %>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/sa/organizations">Organizations</a>
-                </div>
-              <% end %>
+      <button type="button" id="menuToggle" class="btn btn-default">
+        <span class="glyphicon glyphicon-align-justify"></span>
+      </button>
 
-              <% if current_user.org_admin? %>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/organization/<%= current_user.organization_id %>">Mentors</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/students/<%= current_user.organization_id %>">Students</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
-                </div>
-              <% end %>
-
-              <% if current_user.mentor? %>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">My Students</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
-                </div>
-              <% end %>
-
-              <% if current_user.student? %>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/progress/<%= current_user.id %>">My Progress</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/expectations/<%= current_user.id %>">Expectations</a>
-                </div>
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/user_assignments/<%= current_user.id %>">Tasks</a>
-                </div>
-              <% end %>
-              <div class="submenu__link">
-                <a class="js-nav-link" href="app#/profile/<%= current_user.id %>">Profile</a>
-              </div>
-              <div class="submenu__link">
-                <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <nav class="nav-expanded right" role="navigation">
-          <ul>
-            <% if current_user.super_admin? %>
-              <li>
-                <a class="js-nav-link" href="app#/sa/organizations">Organizations</a>
-              </li>
-            <% end %>
-
-            <% if current_user.org_admin? %>
-              <li>
-                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/organization/<%= current_user.organization_id %>">Mentors</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/students/<%= current_user.organization_id %>">Students</a>
-              </li>
-              <li>
-                  <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Organization Setup</a>
-              </li>
-            <% end %>
-
-            <% if current_user.mentor? %>
-              <li>
-                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">My Students</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/assignments/<%= current_user.id %>">Tasks</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/roadmap/<%= current_user.organization_id %>">Roadmap</a>
-              </li>
-            <% end %>
-
-            <% if current_user.student? %>
-              <li>
-                <a class="js-nav-link" href="app#/dashboard/<%= current_user.id %>">Dashboard</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/progress/<%= current_user.id %>">My Progress</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/expectations/<%= current_user.id %>">Expectations</a>
-              </li>
-              <li>
-                <a class="js-nav-link" href="app#/user_assignments/<%= current_user.id %>">Tasks</a>
-              </li>
-            <% end %>
-
-            <li class="dropdown cog js-cog">
-	            <div class="current-name">
-  	            <% if current_user.super_admin? %>
-                  Administrator
-                <% else %>
-                  <%= current_user.first_last_initial %>
-                <% end %>
-	            </div>
-              <span class="glyphicon glyphicon-cog"></span>
-              <div class="submenu js-submenu">
-                <div class="submenu__link">
-                  <a class="js-nav-link" href="app#/profile/<%= current_user.id %>">Profile</a>
-                </div>
-                <div class="submenu__link">
-                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </nav>
+      <div class="alerts-section">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
       </div>
-    </header>
-    <% end %>
-    <div class="mask"></div>
-    <div class="alerts-section">
-      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-    </div>
-    <div data-ng-view ng-if="!reload_required"></div>
-    <div ng-if="reload_required" style="padding: 30px; text-align: center;">
-      <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
-      <h5>Please refresh your browser window to get the updates!</h5>
-    </div>
+
+      <div id="page-content-wrapper" data-ng-view ng-if="!reload_required"></div>
+
+      <div ng-if="reload_required" style="padding: 30px; text-align: center;">
+        <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
+        <h5>Please refresh your browser window to get the updates!</h5>
+      </div>
   </body>
 
   <script>
@@ -208,6 +61,13 @@
 
     $(document).ready(function(){
       hideMenu();
+
+      $("#menuToggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
+
+
 
       $('.js-cog').click(function(){
         $('.js-submenu').toggle();
@@ -232,7 +92,13 @@
         $('.js-submenu').hide();
         $('.mask').hide();
       }
+      function checkWidth() {
+        if ($(window).width() >= 768) {
+            $('#wrapper').removeClass('toggled');
+        }
+      }
 
+      $(window).resize(checkWidth);
     });
   </script>
 </html>
