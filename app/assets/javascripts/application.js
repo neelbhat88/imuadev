@@ -21,6 +21,7 @@
 //= require rangy-core
 //= require rangy-selectionsaverestore
 //= require textangular
+//= require textangularsetup
 //= require textangular-sanitize
 //= require spin
 //= require ladda
