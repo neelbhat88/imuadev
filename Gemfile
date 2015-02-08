@@ -82,6 +82,10 @@ gem 'valium'
 # Security checks
 gem "brakeman", :require => false
 
+# Less verbose logging
+gem "lograge"
+gem 'quiet_assets'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
