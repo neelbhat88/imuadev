@@ -63,4 +63,7 @@ Imua::Application.configure do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get('DEBUG')
 
+  # Enable lograge logging
+  config.lograge.enabled = true
+
 end
