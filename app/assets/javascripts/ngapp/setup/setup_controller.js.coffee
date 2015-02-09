@@ -6,9 +6,12 @@ angular.module('myApp')
   $scope.selected_year = null
   $scope.selected_semester = null
   $scope.loading = true
-  $scope.setup_modules = ["Academics", "Service", "Extracurricular", "College_Prep", "Testing"]
 
   orgId = $route.current.params.id
+
+  RoadmapService.getEnabledModules(orgId)
+    .success (data) -> # Success
+      $scope.enabled_modules = data.enabled_modules
 
   OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
     $scope.organization = data.data.organization

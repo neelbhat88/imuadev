@@ -1,36 +1,47 @@
-<div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
-  <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
-    <div ng-repeat="mod in setup_modules">
-      <div class="widget orgsetup-roadmap" modulecolor="{{mod}}">
-        <div class="widget--header">
-          <div class="widget--header--left">
-            <h6 class="bold"><div class="color--dot"></div>{{mod}}</h6>
-          </div>
-          <div class="widget--header--right">
-            <div class="widget--options">
-              <span class="standard--text">{{year.name}}, {{sem.name}}</span>
-              <span class="glyphicon glyphicon-time"></span>
+<div ng-controller="RoadmapController">
+  <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
+    <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
+      <div ng-repeat="mod in enabled_modules">
+        <div class="widget orgsetup-roadmap" modulecolor="{{mod.title}}">
+          <div class="widget--header">
+            <div class="widget--header--left">
+              <h6 class="bold"><div class="color--dot"></div>{{mod.title}}</h6>
+            </div>
+            <div class="widget--header--right">
+              <div class="widget--options">
+                <span class="standard--text">{{year.name}}, {{sem.name}}</span>
+                <span class="glyphicon glyphicon-time"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="widget--content">
-          <div class="widget--content--table">
-            <div class="table--cell breakalways" ng-repeat="milestone in sem.semester.milestones | filter: {module: mod}">
-              <div class="widget--content--table">
+          <div class="widget--content">
+            <div class="widget--content--table">
+              <div class="table--cell breakalways ng-clickable" ng-repeat="milestone in sem.semester.milestones | filter: {module: mod.title}">
+                <div class="widget--content--table">
 
-                <div class="table--cell milestone-description">
-                  <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
-                  <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
-                </div>
+                  <div class="table--cell milestone-description">
+                    <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
+                    <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
+                  </div>
 
-                <div class="table--cell milestone-points">
-                  <div>Points</div>
-                  <div class="bold">{{milestone.points}}</div>
-                </div>
+                  <div class="table--cell milestone-points">
+                    <div>Points</div>
+                    <div class="bold">{{milestone.points}}</div>
+                  </div>
 
-                <div class="table--cell milestone-label" modulecolor="{{mod}}">
-                  <div>{{milestone.title}}</div>
+                  <div class="table--cell milestone-label" modulecolor="{{mod.title}}">
+                    <div>{{milestone.title}}</div>
+                  </div>
+
+                  <div class="table--cell milestone-btns">
+                    <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem.semester, milestone)"></span>
+                    <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem.semester, milestone)"></span>
+                  </div>
                 </div>
+              </div>
+              <div ng-click="addMilestone(sem.semester, mod)" class="ptl breakalways ng-clickable">
+                <div>Add Milestone</div>
+                <div><h5><span class="glyphicon glyphicon-plus-sign"></span></h5></div>
               </div>
             </div>
           </div>

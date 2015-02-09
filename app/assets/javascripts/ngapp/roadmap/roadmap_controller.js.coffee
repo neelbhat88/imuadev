@@ -1,32 +1,6 @@
 angular.module('myApp')
 .controller 'RoadmapController', ['$scope', '$modal', '$route', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
 ($scope, $modal, $route, RoadmapService, LoadingService, OrganizationService, UsersService) ->
-  $scope.loading = true
-
-  orgId = $route.current.params.id
-
-  $('input, textarea').placeholder()
-
-  if !$scope.organization || !$scope.roadmap
-    OrganizationService.getOrganizationWithRoadmap(orgId).then (data) ->
-      $scope.organization = data.data.organization
-      $scope.roadmap = data.data.roadmap
-
-      _.each($scope.roadmap.time_units, (tu) -> tu.expanded = false)
-
-      $scope.roadmap.years = [
-        {name: "Year 1", semesters: [$scope.roadmap.time_units[0], $scope.roadmap.time_units[1]] },
-        {name: "Year 2", semesters: [$scope.roadmap.time_units[2], $scope.roadmap.time_units[3]] },
-        {name: "Year 3", semesters: [$scope.roadmap.time_units[4], $scope.roadmap.time_units[5]] },
-        {name: "Year 4", semesters: [$scope.roadmap.time_units[6], $scope.roadmap.time_units[7]] }
-      ]
-
-      $scope.loading = false
-    , (data) -> # Error
-
-  RoadmapService.getEnabledModules(orgId)
-    .success (data) -> # Success
-      $scope.enabled_modules = data.enabled_modules
 
   $scope.updateRoadmapName = (roadmap) ->
     if !roadmap.newname
@@ -82,14 +56,14 @@ angular.module('myApp')
         $scope.roadmap.time_units.splice(index, 1)
         $scope.addingTimeUnit = false
 
-  $scope.addMilestone = (timeUnit) ->
+  $scope.addMilestone = (timeUnit, selected_module) ->
     modalInstance = $modal.open
       templateUrl: 'roadmap/add_milestone_modal.html',
       controller: 'AddMilestoneModalController',
       backdrop: 'static',
       resolve:
         timeUnit: () -> timeUnit
-        enabledModules: () -> $scope.enabled_modules
+        enabledModules: () -> [selected_module]
 
     # TODO: Fix to be like edit milestone
     modalInstance.result.then (milestone) ->
