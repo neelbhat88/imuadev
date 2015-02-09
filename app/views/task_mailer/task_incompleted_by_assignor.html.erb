@@ -5,7 +5,7 @@
 <p>
   <ul style="list-style-type: none">
     <li><b>Task Title:</b> <%= @task.title %></li>
-    <li><b>Task Description:</b> <%= @task.description %></li>
+    <li><b>Task Description:</b> <%= @task.description.html_safe %></li>
   </ul>
 </p>
 

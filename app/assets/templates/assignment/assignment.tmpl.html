@@ -34,7 +34,7 @@
         </div>
 
           <label><h5>Details:</h5></label>
-          <div text-angular ng-model="assignment.new_description" placeholder="Description"></div>
+          <text-angular ta-toolbar="[['bold','italics','underline'],['undo','redo'],['insertLink']]" ng-model="assignment.new_description" placeholder="Description"></text-angular>
       </div>
 
       <ul class="users-not-completed" ng-if="user_assignments_incomplete.length != 0">
