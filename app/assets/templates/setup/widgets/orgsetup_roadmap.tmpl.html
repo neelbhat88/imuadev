@@ -16,7 +16,8 @@
           </div>
           <div class="widget--content">
             <div class="widget--content--table">
-              <div class="table--cell breakalways ng-clickable" ng-repeat="milestone in sem.semester.milestones | filter: {module: mod.title}">
+              <div class="table--cell breakalways ng-clickable" ng-repeat="milestone in sem.semester.milestones | filter: {module: mod.title}"
+                    ng-click="viewMilestoneStatus(milestone)">
                 <div class="widget--content--table">
 
                   <div class="table--cell milestone-description">
@@ -33,13 +34,13 @@
                     <div>{{milestone.title}}</div>
                   </div>
 
-                  <div class="table--cell milestone-btns">
+                  <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell btns">
                     <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem.semester, milestone)"></span>
                     <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem.semester, milestone)"></span>
                   </div>
                 </div>
               </div>
-              <div ng-click="addMilestone(sem.semester, mod)" class="ptl breakalways ng-clickable">
+              <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" ng-click="addMilestone(sem.semester, mod)" class="ptl breakalways ng-clickable">
                 <div>Add Milestone</div>
                 <div><h5><span class="glyphicon glyphicon-plus-sign"></span></h5></div>
               </div>

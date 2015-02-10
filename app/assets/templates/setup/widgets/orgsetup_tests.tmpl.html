@@ -9,17 +9,19 @@
   <div class="widget--content" wait-to-load="{{loaded_orgTests}}">
     <div class="widget--content--table table--fixed">
       <div class="table--cell ng-clickable breakalways" ng-repeat="orgTest in orgTests">
-        <div class="widget--content--table" ng-hide="orgTest.editing" ng-click="expandTest = !expandTest">
+        <div class="widget--content--table" ng-hide="orgTest.editing">
           <div class="table--cell tests-title">
             <h5 class="bold">{{orgTest.title}}</h5>
-            <div class="edit-buttons" ng-show="expandTest">
-              <button class="btn btn-default" ng-click="editOrgTest($index)">Edit Test</button>
-              <button class="btn btn-danger" ng-click="deleteOrgTest($index)"> Delete</span>
-            </div>
           </div>
+
           <div class="table--cell tests-type">
             <p>Score Type:</p>
             <h6 class="bold">{{orgTest.score_type}}</h6>
+          </div>
+
+          <div class="table--cell btns">
+            <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Test" ng-click="editOrgTest($index)"></span>
+            <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteOrgTest($index)"></span>
           </div>
         </div>
         <div class="tests--editing" ng-show="orgTest.editing">

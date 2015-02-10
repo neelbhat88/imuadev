@@ -92,19 +92,4 @@ angular.module('myApp')
           .success (data) ->
             tu.milestones.splice(index, 1)
           break
-
-  $scope.addOrgAdmin = () ->
-    modalInstance = $modal.open
-      templateUrl: 'organization/add_user_modal.html',
-      controller: 'AddUserModalController',
-      backdrop: 'static',
-      size: 'sm',
-      resolve:
-        current_user: () -> $scope.current_user
-        organization: () -> $scope.organization
-        new_user: () -> UsersService.newOrgAdmin($scope.organization.id)
-
-    modalInstance.result.then (user) ->
-      $scope.organization.orgAdmins.push(user)
-
 ]

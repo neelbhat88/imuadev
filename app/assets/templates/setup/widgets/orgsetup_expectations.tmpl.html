@@ -1,4 +1,4 @@
-<div ng-controller="OrganizationExpectationController" class="widget orgsetup-expectations" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
+<div ng-controller="OrganizationExpectationController" class="widget orgsetup-expectations">
   <div class="widget--header">
     <div class="widget--header--left">
       <h6 class="bold"><div class="color--dot"></div> Student Expectations</h6>
@@ -6,15 +6,17 @@
   </div>
   <div class="widget--content">
     <div class="widget--content--table">
-      <div class="widget--content--cell" ng-repeat="expectation in expectations">
-        <div class="phm table--cell ng-clickable breakalways" ng-click="expandExpectation = !expandExpectation" ng-hide="expectation.editing">
-          <div class="cell--padding">
+      <div class="table--cell breakalways ng-clickable" ng-repeat="expectation in expectations"
+        ng-click="go('/expectation/' + expectation.id)">
+        <div class="widget--content--table" ng-hide="expectation.editing">
+          <div class="table--cell pam">
             <h5 class="bold">{{expectation.title}}</h5>
             <h6>{{expectation.description}}</h6>
-            <div class="edit-buttons" ng-show="expandExpectation">
-              <button class="btn btn-default" ng-click="editExpectation($index)"><span class="glyphicon glyphicon-pencil"></span> Edit Expectation</button>
-              <button class="btn btn-danger" ng-click="deleteExpectation($index)"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-            </div>
+          </div>
+
+          <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell btns">
+            <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Expectation" ng-click="editExpectation($index)"></span>
+            <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Expectation" ng-click="deleteExpectation($index)"></span>
           </div>
         </div>
         <div class="expectation--editing widget--content--cell breakalways" ng-show="expectation.editing">
@@ -32,8 +34,8 @@
             <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>
 
             <div>
-              <button class="submit" type="submit">Submit</button>
-              <span class="cancel" ng-click="cancelEditExpectation($index)">Cancel</span>
+              <button no-click-propagation class="submit" type="submit">Submit</button>
+              <span no-click-propagation class="cancel" ng-click="cancelEditExpectation($index)">Cancel</span>
             </div>
           </form>
         </div>
@@ -62,7 +64,7 @@
         </div> -->
 
       </div>
-      <div class="table--cell ng-clickable breakalways" ng-click="addExpectation()">
+      <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell ng-clickable breakalways" ng-click="addExpectation()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add a Student Expectation</h6>

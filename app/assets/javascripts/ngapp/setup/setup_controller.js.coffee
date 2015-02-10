@@ -2,7 +2,11 @@ angular.module('myApp')
 .controller 'SetupController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
 ($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
   $scope.current_user = current_user
-  $scope.selected_widget = "admins"
+  if current_user.is_org_admin
+    $scope.selected_widget = "admins"
+  else
+    $scope.selected_widget = "expectations"
+
   $scope.selected_year = null
   $scope.selected_semester = null
   $scope.loading = true
