@@ -9,6 +9,7 @@ class ExpectationMailer < ActionMailer::Base
     @status = expectationStatus[user_expectation.status]
     @expectation = expectation
     @comment = user_expectation.comment
+    @user_expectation = user_expectation
     recipients = []
 
     mentors.each do |m|
@@ -28,6 +29,7 @@ class ExpectationMailer < ActionMailer::Base
     @status = expectationStatus[user_expectation.status]
     @expectation = expectation
     @comment = user_expectation.comment
+    @user_expectation = user_expectation
 
     mail(:to => student.email, :subject=>"Expectation: '#{expectation.title}' has been updated")
   end

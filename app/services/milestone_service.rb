@@ -16,7 +16,7 @@ class MilestoneService
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first
-    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id])
+    view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     return ReturnObject.new(:ok, "Status for milestone_id: #{params[:milestone_id]}.", view)
   end

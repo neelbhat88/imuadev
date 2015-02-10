@@ -7,9 +7,6 @@ class Api::V1::SessionsController < Devise::SessionsController
 		sign_in(resource_name, resource)
 		yield resource if block_given?
 
-		# Set cookie with previous URL
-		cookies[:previous_url] = session[:previous_url]
-
 		Background.process do
 	    Keen.publish("user_engagement", {
 	                                      :user => current_user,
@@ -19,7 +16,21 @@ class Api::V1::SessionsController < Devise::SessionsController
 	                )
 	  end
 
-		redirect_to app_path
+		if session[:previous_url]
+			pu = session[:previous_url]
+		end
+
+		# pu should have '/' in it
+		redirect_to app_url + "##{pu}"
+	end
+
+	def destroy
+		warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
+		sign_out
+		render :status => 200,
+					:json => { :success => true,
+											:info => "Logged out",
+										}
 	end
 
 	def show_current_user

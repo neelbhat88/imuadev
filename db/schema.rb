@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150108211028) do
+ActiveRecord::Schema.define(:version => 20150128165732) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -360,6 +360,7 @@ ActiveRecord::Schema.define(:version => 20150108211028) do
     t.integer  "time_unit_id"
     t.integer  "class_of"
     t.string   "title"
+    t.integer  "status",                 :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

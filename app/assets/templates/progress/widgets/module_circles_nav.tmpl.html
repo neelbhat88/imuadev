@@ -33,7 +33,7 @@
           <div class="module-circle--meta">
             <div class="click-to-view">Click to view {{mod.module_title | underscoresToSpaces}}</div>
             <div class="updated-on subtext" ng-if="mod.last_updated != null">Last updated {{mod.last_updated | fromNow}}</div>
-            <div class="updated-on subtext" ng-if="mod.last_updated == null">Never Updated</div>
+            <div class="updated-on subtext" ng-if="mod.last_updated == null && current_user.organization_name != 'OneGoal'">Never Updated</div>
           </div>
         </div>
 

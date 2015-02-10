@@ -27,7 +27,7 @@ Imua::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 
-  Mail.register_interceptor(DevelopmentMailInterceptor)
+  #Mail.register_interceptor(DevelopmentMailInterceptor)
 
   # Paperclip
   config.paperclip_defaults = {
@@ -62,5 +62,8 @@ Imua::Application.configure do
   # Tell Unicorn to log just like WEBbrick and Thin web servers do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get('DEBUG')
+
+  # Enable lograge logging
+  config.lograge.enabled = true
 
 end

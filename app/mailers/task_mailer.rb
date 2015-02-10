@@ -5,6 +5,7 @@ class TaskMailer < ActionMailer::Base
     @assignee = assignee
     @assignor = assignor
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignee.email, :subject=>"You have been assigned a new Task")
   end
@@ -13,6 +14,7 @@ class TaskMailer < ActionMailer::Base
     @assignee = assignee
     @assignor = assignor
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignor.email, :subject=>"A Task you assigned has been completed")
   end
@@ -21,6 +23,7 @@ class TaskMailer < ActionMailer::Base
     @assignee = assignee
     @assignor = assignor
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignee.email, :subject=>"A Task assigned to you has been marked complete")
   end
@@ -29,6 +32,7 @@ class TaskMailer < ActionMailer::Base
     @assignee = assignee
     @assignor = assignor
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignor.email, :subject=>"A Task you assigned has been marked incomplete")
   end
@@ -37,6 +41,7 @@ class TaskMailer < ActionMailer::Base
     @assignee = assignee
     @assignor = assignor
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignee.email, :subject=>"A Task assigned to you has been marked incomplete")
   end
@@ -46,6 +51,7 @@ class TaskMailer < ActionMailer::Base
     @assignor = assignor
     @current_user = current_user
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignor.email, :subject=>"A Task you assigned has been marked complete")
   end
@@ -55,6 +61,7 @@ class TaskMailer < ActionMailer::Base
     @assignor = assignor
     @current_user = current_user
     @task = task
+    @user_assignment = get_user_assignment({user: assignee, task: task})
 
     mail(:to => assignor.email, :subject=>"A Task you assigned has been marked incomplete")
   end
@@ -64,6 +71,7 @@ class TaskMailer < ActionMailer::Base
     @current_user = args[:current_user]
     @task = args[:task]
     @comment = args[:comment]
+    @user_assignment = AssignmentService.new.get_user_assignment(@comment.commentable_id)
 
     emails = []
     @recipients.each do |r|
@@ -71,5 +79,14 @@ class TaskMailer < ActionMailer::Base
     end
 
     mail(:to => emails, :subject => "#{@current_user.full_name} commented on a Task you are involved with")
+  end
+
+  private
+
+  def get_user_assignment(args)
+    assignee = args[:user]
+    task = args[:task]
+
+    return AssignmentService.new.get_user_assignment_by_user_id_assignment_id({user_id: assignee.id, task_id: task.id})
   end
 end

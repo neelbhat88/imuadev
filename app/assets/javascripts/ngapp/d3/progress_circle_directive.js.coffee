@@ -56,6 +56,13 @@ angular.module('myApp')
             when "Extracurricular" then index = 2
             when "College_Prep" then index = 3
             when "Testing" then index = 4
+            # ONEGOAL_HACK START
+            when '2-year' then index = 0
+            when '4-year' then index = 1
+            when 'Assignments' then index = 2
+            when 'Financial' then index = 3
+            when 'Campus_Connections' then index = 4
+            # ONEGOAL_HACK END
 
           data[index] = {name: module.module_title, value: module.points.user}
 

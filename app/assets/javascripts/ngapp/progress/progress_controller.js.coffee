@@ -175,7 +175,13 @@ angular.module('myApp')
             $scope.selected_module = mod
 
   $scope.getModuleTemplate = (modTitle) ->
-    'progress/' + modTitle.toLowerCase() + '_progress.html' if modTitle
+    # ONEGOAL_HACK START
+    if $scope.organization.name == "OneGoal"
+      'progress/college_prep_progress.html'
+    else
+    # ONEGOAL_HACK END
+      'progress/' + modTitle.toLowerCase() + '_progress.html' if modTitle
+
 
   $scope.editable = (user, semester) ->
     user.role != $scope.CONSTANTS.USER_ROLES.student || user.time_unit_id == semester.id
