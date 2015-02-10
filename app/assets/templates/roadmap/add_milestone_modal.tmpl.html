@@ -14,7 +14,9 @@
     <div class="milestone_submodule" ng-repeat="submodule in selected.module.submodules"
         ng-click="selectSubmodule(submodule)"
         ng-class="{selected: selected.submodule.title == submodule.title}">
-      <div class="milestone_submodule__title bold pbs">{{submodule.title}}</div>
+      <div class="milestone_submodule__title bold pbs"
+          modulecolor="{{selected.module.title | addUnderscoreIfFirstCharIsNum}}">
+        {{submodule.title}}</div>
       <div class="milestone_submodule__description">{{submodule.milestone_description}}</div>
     </div>
   </div>
@@ -25,7 +27,9 @@
       <a ng-click="clearSubmoduleSelection()">Back to milestones</a>
     </div>
     <div class="milestone_submodule selected">
-      <div class="milestone_submodule__title bold pbs">{{selected.submodule.title}}</div>
+      <div class="milestone_submodule__title bold pbs"
+            modulecolor="{{selected.module.title | addUnderscoreIfFirstCharIsNum}}">
+        {{selected.submodule.title}}</div>
       <div class="milestone_submodule__description">{{selected.submodule.milestone_description}}</div>
     </div>
 

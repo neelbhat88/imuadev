@@ -2,7 +2,7 @@
   <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
     <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
       <div ng-repeat="mod in enabled_modules">
-        <div class="widget orgsetup-roadmap" modulecolor="{{mod.title}}">
+        <div class="widget orgsetup-roadmap" modulecolor="{{mod.title | addUnderscoreIfFirstCharIsNum}}">
           <div class="widget--header">
             <div class="widget--header--left">
               <h6 class="bold"><div class="color--dot"></div>{{mod.title}}</h6>
@@ -29,7 +29,7 @@
                     <div class="bold">{{milestone.points}}</div>
                   </div>
 
-                  <div class="table--cell milestone-label" modulecolor="{{mod.title}}">
+                  <div class="table--cell milestone-label" modulecolor="{{mod.title | addUnderscoreIfFirstCharIsNum}}">
                     <div>{{milestone.title}}</div>
                   </div>
 

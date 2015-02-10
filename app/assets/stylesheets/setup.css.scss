@@ -111,3 +111,74 @@
   }
 
 }
+
+
+// ########################
+// #######  MODAL #########
+// ########################
+.milestone_modules {
+  border-bottom: 2px solid;
+  text-align: center;
+  @each $category, $color in $darkcolormap {
+    &.color--#{$category} {
+      border-bottom-color: $color;
+    }
+  }
+
+  .milestone_module {
+    @extend .bold;
+
+    margin-left: 20px;
+    &:first-of-type { margin-left: 0px; }
+
+    cursor:pointer;
+
+    &:hover {text-decoration: underline;}
+
+    padding: 10px 5px;
+    display: inline-block;
+
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        &.selected { color: $color; }
+      }
+    }
+  }
+}
+
+.milestone_submodule {
+  width: 250px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+
+  @include transition(0.3);
+
+  .milestone_submodule__title {
+    @each $category, $color in $darkcolormap {
+      &.color--#{$category} {
+        color: $color;
+      }
+    }
+  }
+
+  &:hover {
+    background: white(0.05)
+  }
+
+  &.selected { background: white(0.05) }
+}
+
+.milestone_edit {
+  .milestone_submodule {
+    width: 100%;
+  }
+}
+
+.milestone_submodule__form {
+  padding: 10px;
+}

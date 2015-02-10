@@ -38,14 +38,19 @@ class MilestoneFactory
         name = mod
         case mod
         when "2-year"
+          custom.title = "2-year Task"
           custom.icon = "/assets/Academics.jpg"
         when "4-year"
+          custom.title = "4-year Task"
           custom.icon = "/assets/Service.jpg"
         when "Assignments"
+          custom.title = "Assignments Task"
           custom.icon = "/assets/Extracurricular.jpg"
         when "Financial"
+          custom.title = "Financial Task"
           custom.icon = "/assets/PDU.jpg"
         when "Campus_Connections"
+          custom.title = "Campus Connections Task"
           custom.icon = "/assets/Testing.jpg"
           name = "Campus Connections"
         end

@@ -7,7 +7,9 @@
   <div class="milestone_edit phm ptm">
     <h6>{{milestone.module | underscoresToSpaces}}</h6>
     <div class="milestone_submodule selected">
-      <div class="milestone_submodule__title bold pbs">{{milestone.title}}</div>
+      <div class="milestone_submodule__title bold pbs"
+           modulecolor="{{milestone.module | addUnderscoreIfFirstCharIsNum}}">
+        {{milestone.title}}</div>
       <div class="milestone_submodule__description">{{milestone.milestone_description}}</div>
     </div>
 
