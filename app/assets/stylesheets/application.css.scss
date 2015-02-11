@@ -1,5 +1,6 @@
+@import "bootstrap-glyphicons";
 @import "reset";
-
+@import "textAngular";
 @import "bootstrap";
 @import "font-awesome";
 @import "bootstrap/glyphicons";
@@ -8,7 +9,6 @@
 @import "mixins";
 @import "fonts";
 @import "colors";
-@import "bootstrap-glyphicons";
 
 
 @import "main";
@@ -30,7 +30,7 @@
 @import "tasks";
 @import "test";
 @import "c3";
-@import "textangular";
+
 
 @import "loading_animation";
 @import "overrides";

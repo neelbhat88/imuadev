@@ -24,7 +24,7 @@
     <div class="assignment--left">
       <div class="task-content" ng-hide="assignment.editing">
         <h4><span class="bold">{{assignment.title}}</span></h4>
-        <h6 ng-bind-html="assignment.description"></h6>
+        <h6 class="wysiwyg-output" ng-bind-html="assignment.description"></h6>
       </div>
 
       <div class="task-content" ng-show="assignment.editing">
@@ -34,7 +34,7 @@
         </div>
 
           <label><h5>Details:</h5></label>
-          <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="assignment.new_description" placeholder="Description"></text-angular>
+          <div text-angular name="taskDescription" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="assignment.new_description" placeholder="Description"></div>
       </div>
 
       <ul class="users-not-completed" ng-if="user_assignments_incomplete.length != 0">
