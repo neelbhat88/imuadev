@@ -5,5 +5,9 @@ angular.module('myApp.controllers', [])
     SessionService.getCurrentUser().then(function(user){
       $scope.user = user;
     });
+
+    $scope.logout = function() {
+      SessionService.destroy();
+    }
   }
 ]);
