@@ -42,12 +42,12 @@
   </div>
   <div class="widget--content">
     <div class="widget--content--table" ng-repeat="year in roadmap.years" ng-class="{'selected-year': selected_year == year.id}">
-      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectRoadmap(year.id)">
+      <div class="widget--content--cell ng-clickable breakalways" ng-click="selectWidget('roadmap', {year: year.id})">
         <div class="cell--padding">
           <h6 class="bold">{{year.name}}</h6>
         </div>
       </div>
-      <div class="widget--content--cell ng-clickable breakalways" ng-repeat="sem in year.semesters" ng-click="selectRoadmap(year.id, sem.id)" ng-class="{'selected-semester': selected_semester == sem.id}">
+      <div class="widget--content--cell ng-clickable breakalways" ng-repeat="sem in year.semesters" ng-click="selectWidget('roadmap', {year: year.id, semester: sem.id})" ng-class="{'selected-semester': selected_semester == sem.id}">
         <div class="cell--padding">
           <div class="setting-icon"><span class="glyphicon glyphicon-time"></span></div>
           <div class="setting-text">{{sem.name}}</div>

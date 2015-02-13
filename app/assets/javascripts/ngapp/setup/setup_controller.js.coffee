@@ -1,12 +1,9 @@
 angular.module('myApp')
-.controller 'SetupController', ['$scope', '$modal', '$route', 'current_user', 'RoadmapService', 'LoadingService', 'OrganizationService', 'UsersService',
-($scope, $modal, $route, current_user, RoadmapService, LoadingService, OrganizationService, UsersService) ->
+.controller 'SetupController', ['$scope', '$modal', '$route', '$location', 'current_user', 'RoadmapService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, $location, current_user, RoadmapService, OrganizationService, UsersService) ->
   $scope.current_user = current_user
-  if current_user.is_org_admin
-    $scope.selected_widget = "admins"
-  else
-    $scope.selected_widget = "expectations"
 
+  $scope.selected_widget = null
   $scope.selected_year = null
   $scope.selected_semester = null
   $scope.loading = true
@@ -40,21 +37,31 @@ angular.module('myApp')
       ]}
     ]
 
+    selected_nav = $location.search().selected_nav # Reads query string
+    selected_year = $location.search().year
+    selected_sem = $location.search().semester
+    if selected_nav
+      $scope.selectWidget(selected_nav, {year: selected_year, semester: selected_sem})
+    else
+      if current_user.is_org_admin
+        $scope.selectWidget("admins")
+      else
+        $scope.selectWidget("expectations")
+
     $scope.loading = false
   , (data) -> # Error
 
-  $scope.selectWidget = (widget) ->
-    if $scope.selected_widget != widget
-      $scope.selected_widget = widget
+  $scope.selectWidget = (widget, opts={}) ->
+    $scope.selected_widget = widget
+
+    if widget == "roadmap"
+      $scope.selected_year = opts.year
+      $scope.selected_semester = opts.semester
+    else
       $scope.selected_year = null
       $scope.selected_semester = null
 
-  $scope.selectRoadmap = (year, semester) ->
-    if year != null
-      $scope.selected_year = year
-    if semester != null
-      $scope.selected_semester = semester
-    $scope.selected_widget = "roadmap"
+    $location.search({selected_nav: widget, year: opts.year, semester: opts.semester}) #Sets query string param
 
   $scope.getWidgetTemplate = (widgetTitle) ->
     'setup/widgets/orgsetup_' + widgetTitle.toLowerCase() + '.html' if widgetTitle

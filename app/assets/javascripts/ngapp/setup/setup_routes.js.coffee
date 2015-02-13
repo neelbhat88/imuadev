@@ -3,6 +3,7 @@ angular.module('myApp')
     $routeProvider.when '/setup/:id',
       templateUrl: 'setup/setup.html',
       controller: 'SetupController',
+      reloadOnSearch: false,
       resolve:
         current_user: ['SessionService', (SessionService) ->
           SessionService.getCurrentUser()
