@@ -87,12 +87,8 @@ $panelwrapper: 0 80px;
 
 /* this is for the wysiwyg */
 .ta-editor {
-    min-height: 300px;
-    height: auto;
-    overflow: auto;
-    font-family: inherit;
-    font-size: 100%;
     margin:10px 0;
+
     ul {
        list-style-type: disc;
        list-style-position: inside;

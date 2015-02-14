@@ -196,6 +196,11 @@
   .expectation-content {
     padding: 20px 0;
 
+    .ta-editor {
+      min-height: 100px;
+      height: 150px;
+    }
+    
     .expectation--current-status {
       @include border-radius(20px);
       padding: 30px;
@@ -208,7 +213,11 @@
       .status-buttons {
         margin-top: 10px;
       }
-    // added by Jake
+
+    .inline-head {
+      display: inline-block;
+      margin-right: 5px;
+    }
     .comment-edit {
       color: black;
     }
