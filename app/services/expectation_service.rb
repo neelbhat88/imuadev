@@ -29,11 +29,11 @@ class ExpectationService
   def get_expectation_status(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    expectationQ = Querier.new(Expectation).select([:id, :title, :description]).where(conditions)
-    userExpectationQ = Querier.new(UserExpectation).select([:id, :expectation_id, :status, :user_id]).where(conditions)
+    expectationQ = Querier.factory(Expectation).select([:id, :title, :description]).where(conditions)
+    userExpectationQ = Querier.factory(UserExpectation).select([:id, :expectation_id, :status, :user_id]).where(conditions)
 
     conditions[:user_id] = userExpectationQ.pluck(:user_id)
-    userQ = UserQuerier.new.select([:id, :role, :avatar, :class_of, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ = Querier.factory(User).select([:id, :role, :avatar, :class_of, :first_name, :last_name]).where(conditions.slice(:user_id))
     userQ.set_subQueriers([userExpectationQ])
 
     view = {expectations: expectationQ.view,
@@ -67,7 +67,7 @@ class ExpectationService
     end
 
     if newExpectation.save
-      userQ = UserQuerier.new.select([], [:id]).where({organization_id: newExpectation[:organization_id], role: Constants.UserRole[:STUDENT]})
+      userQ = Querier.factory(User).select([], [:id]).where({organization_id: newExpectation[:organization_id], role: Constants.UserRole[:STUDENT]})
       userQ.pluck(:id).each do |user_id|
         # This is pretty gross/inefficient, but it shouldn't be called very often
         UserExpectationService.new(@current_user).create_user_expectations(user_id)

@@ -8,6 +8,7 @@ class Milestone < ActiveRecord::Base
   belongs_to :organization
 
   has_many :user_milestones, dependent: :destroy
+  has_many :assignments, dependent: :destroy
 
   validates :title, presence: true
   validates :description, presence: true
@@ -19,12 +20,6 @@ class Milestone < ActiveRecord::Base
   validates :time_unit_id, presence: true
   validates :icon, presence: true
   validates :organization_id, presence: true
-end
-
-class MilestoneQuerier < Querier
-  def initialize
-    return super(Milestone)
-  end
 end
 
 class ViewMilestone

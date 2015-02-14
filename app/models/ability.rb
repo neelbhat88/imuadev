@@ -208,7 +208,9 @@ class Ability
                   :get_assignment_collection]
       end
 
-      if user.id == subjectAssignment.user_id
+
+      if subjectAssignment.context == "User" &&
+         user.id == subjectAssignment.context_id
         rules += [:get_assignment,
                   :update_assignment,
                   :destroy_assignment,

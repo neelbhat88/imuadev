@@ -18,22 +18,26 @@
 #
 # Both view and domain objects are accessed as an array of the Querier's
 # klass. It's up to the caller to know whether the view/domain objects
-# should have a ength of 1.
+# should have a length of 1.
 
 class Querier
   attr_accessor :subViewName
 
   # Public
 
+  def self.factory(klass)
+    # Automatically instantiate the child class if it's defined
+    if Object.const_defined?(klass.to_s + "Querier")
+      childKlass = (klass.to_s + "Querier").constantize
+      if Querier.descendants.include?(childKlass)
+        return childKlass.new
+      end
+    end
+    # Default to standard Querier
+    return Querier.new(klass)
+  end
+
   def initialize(klass)
-
-    # TODO - Automatically instantiate child class if already defined
-    # childKlass = (klass.to_s + "Querier").constantize
-    # if Querier.descendants.include?(childKlass)
-    #   Rails.logger.debug("******* child: #{childKlass} *******")
-    #   retClass = childKlass.new(self)
-    # end
-
     @klass = klass
     @subViewName = @klass.name.underscore.pluralize.to_sym
     @foreignKey = @klass.name.foreign_key.to_sym

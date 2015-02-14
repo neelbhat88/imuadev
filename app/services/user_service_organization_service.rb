@@ -4,10 +4,10 @@ class UserServiceOrganizationService
   def get_org_organization_titles(params)
     conditions = params
 
-    userQ = UserQuerier.new.select([]).where(conditions)
+    userQ = Querier.factory(User).select([]).where(conditions)
 
     conditions[:user_id] = userQ.pluck(:id)
-    userServiceOrganizationQ = Querier.new(UserServiceOrganization).select([], [:name]).where(conditions)
+    userServiceOrganizationQ = Querier.factory(UserServiceOrganization).select([], [:name]).where(conditions)
 
     return userServiceOrganizationQ.pluck(:name)
   end
