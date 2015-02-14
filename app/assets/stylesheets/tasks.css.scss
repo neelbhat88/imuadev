@@ -202,6 +202,11 @@
     float: left;
     padding: 20px 40px 40px 0;
 
+    .ta-editor {
+      min-height: 100px;
+      height: 150px;
+    }
+
     .subnav-button {
       margin-top: 5px;
       opacity: 0.3;

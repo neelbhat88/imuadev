@@ -1,12 +1,14 @@
 @import "reset";
-
+@import "textAngular";
 @import "bootstrap";
 @import "bootstrap/glyphicons";
+@import "font-awesome";
 @import "ladda";
 
 @import "mixins";
 @import "fonts";
 @import "colors";
+
 
 @import "main";
 @import "user_circles";
@@ -27,6 +29,7 @@
 @import "tasks";
 @import "test";
 @import "c3";
+
 
 @import "loading_animation";
 @import "overrides";
