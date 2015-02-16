@@ -131,7 +131,9 @@ $panelwrapper: 0 80px;
      list-style-position: inside;
      margin-left: 15px;
   }
-
+  a {
+    text-decoration: underline;
+  }
 }
 /* ===============================================
    Header

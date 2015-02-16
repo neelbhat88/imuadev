@@ -6,12 +6,11 @@
   </div>
   <div class="widget--content">
     <div class="widget--content--table">
-      <div class="table--cell breakalways ng-clickable" ng-repeat="expectation in expectations"
-        ng-click="go('/expectation/' + expectation.id)">
-        <div class="widget--content--table" ng-hide="expectation.editing">
+      <div class="table--cell breakalways" ng-repeat="expectation in expectations">
+        <div class="widget--content--table ng-clickable" ng-hide="expectation.editing" ng-click="go('/expectation/' + expectation.id)">
           <div class="table--cell pam">
             <h5 class="bold">{{expectation.title}}</h5>
-            <h6>{{expectation.description}}</h6>
+            <h6 class="wysiwyg-output" ng-bind-html="expectation.description"></h6>
           </div>
 
           <div ng-if="is_admin" class="table--cell btns">
@@ -27,7 +26,7 @@
             </div>
 
             <div class="pbm">
-              <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>          
+              <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>
               <text-angular rows="4" cols="40"  type="text" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation"></text-angular>
             </div>
 

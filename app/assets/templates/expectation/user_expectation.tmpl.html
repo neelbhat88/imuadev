@@ -17,7 +17,7 @@
     <a href="app#/expectation/{{user_expectation.expectation_id}}">
       <h4 class="bold">{{user_expectation.title}}</h4>
     </a>
-    <h6 ng-bind-html="user_expectation.description"></h6>
+    <h6 class="wysiwyg-output" ng-bind-html="user_expectation.description"></h6>
     <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
