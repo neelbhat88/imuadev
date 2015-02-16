@@ -27,8 +27,8 @@
             </div>
 
             <div class="pbm">
-              <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>
-              <textarea rows="4" cols="40"  type="text" class="form-control" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation" name="description">{{expectation.new_description}}</textarea>
+              <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>          
+              <text-angular rows="4" cols="40"  type="text" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation"></text-angular>
             </div>
 
             <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>

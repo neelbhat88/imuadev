@@ -10,13 +10,13 @@
     <div class="comment-item">
       <div class="comment-item__header" ng-hide="isNewComment(comment)">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
       <div class="comment-item__body">
-        <h6 ng-hide="comment.editing">"{{comment.comment}}""</h6>
+        <h6 ng-hide="comment.editing" class="wysiwyg-output" ng-bind-html="comment.comment"></h6>
 
         <div class="comments-list__item--editing" ng-show="comment.editing">
           <form name="commentsForm" imua-form="saveComment(comment)" novalidate>
             <div class="pbm">
               <label-with-errors form="commentsForm" formfield="commentsForm.comment"></label-with-errors>
-              <textarea class="form-control" ng-model="comment.new_comment" placeholder="Leave a comment" name="comment" required></textarea>
+              <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="comment.new_comment" placeholder="Leave a comment" required></text-angular>
             </div>
 
             <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="commentsForm.$submitted && commentsForm.$invalid">{{error}}</div>
@@ -40,7 +40,7 @@
     <form name="commentsFormNew" imua-form="saveComment()" novalidate>
       <div class="pbm">
         <label-with-errors form="commentsFormNew" formfield="commentsFormNew.comment"></label-with-errors>
-        <textarea rows="4" class="form-control" ng-model="new_comment.comment" placeholder="Leave a comment" name="comment" required></textarea>
+        <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" rows="4" ng-model="new_comment.comment" placeholder="Leave a comment" name="comment" required></text-angular>
       </div>
 
       <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="commentsForm.$submitted && commentsForm.$invalid">{{error}}</div>
