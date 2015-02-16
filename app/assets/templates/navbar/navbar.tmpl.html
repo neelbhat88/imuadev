@@ -27,7 +27,7 @@
         </li>
         <li>
       <li>
-        <a href="#/roadmap/{{ user.organization_id }}">Organization Setup</a>
+        <a href="#/setup/{{ user.organization_id }}">Organization Setup</a>
       </li>
     </div>
 
@@ -38,8 +38,11 @@
       <li>
         <a href="#/assignments/{{ user.id }}">Tasks</a>
       </li>
+      <!-- TODO: Mentors shouldn't go to old roadmap page - Create new page
+            for accessing milestone and expectation view for both
+            admins and mentors to see -->
       <li>
-        <a href="#/roadmap/{{ user.organization_id }}">Roadmap</a>
+        <a href="#/setup/{{ user.organization_id }}">Organization</a>
       </li>
     </div>
 

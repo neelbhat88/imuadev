@@ -98,6 +98,8 @@ GEM
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
     fastercsv (1.5.5)
+    font-awesome-rails (4.3.0.0)
+      railties (>= 3.2, < 5.0)
     haml (4.0.5)
       tilt
     highline (1.6.21)
@@ -256,6 +258,7 @@ DEPENDENCIES
   d3-rails
   devise (~> 3.2.2)
   factory_girl_rails (~> 4.0)
+  font-awesome-rails
   intercom (~> 2.2.1)
   intercom-rails
   jasmine

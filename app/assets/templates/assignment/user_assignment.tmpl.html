@@ -19,7 +19,7 @@
     <div class="assignment--left">
       <div class="task-content">
         <h4><span class="bold">{{user_assignment.title}}</span></h4>
-        <h6>{{user_assignment.description}}</h6>
+        <h6 class="wysiwyg-output" ng-bind-html="user_assignment.description"></h6>
       </div>
       <!-- Open Task Status Block -->
       <table class="status-block" ng-if="!isDueSoon(user_assignment) && !isPastDue(user_assignment) && user_assignment.status != 1">

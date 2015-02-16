@@ -1,0 +1,29 @@
+<div class="widget orgsetup--admins">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Organization Admins</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="table--cell">
+        <div class="cell--padding align-left">
+          <div class="circle-pictures" ng-repeat="orgAdmin in organization.orgAdmins">
+            <a ng-href="#/profile/{{orgAdmin.id}}" title="View Organization Admin info">
+              <div class="circle-picture">
+                <img ng-src="{{orgAdmin.square_avatar_url}}">
+              </div>
+              <h6 ng-if="orgAdmin.id != current_user.id">{{orgAdmin.full_name}}</h6>
+              <h6 ng-if="orgAdmin.id == current_user.id">Me</h6>
+            </a>
+          </div>
+
+          <div class="add-button" ng-click="addOrgAdmin()">
+            <div class="glyphicon glyphicon-plus-sign green"></div>
+            <div>Add Organization Admin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

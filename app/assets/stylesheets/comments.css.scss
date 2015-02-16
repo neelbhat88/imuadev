@@ -19,8 +19,14 @@
     }
   }
 
+  .ta-editor {
+    min-height: 100px;
+    height: 150px;
+  }
+
   .comments-list__item--new,
   .comments-list__item--editing {
+
 
     .button-container {
       text-align: right;

@@ -1,12 +1,14 @@
 @import "reset";
-
+@import "textAngular";
 @import "bootstrap";
 @import "bootstrap/glyphicons";
+@import "font-awesome";
 @import "ladda";
 
 @import "mixins";
 @import "fonts";
 @import "colors";
+
 
 @import "main";
 @import "user_circles";
@@ -16,9 +18,9 @@
 @import "static";
 @import "profile";
 @import "progress";
-@import "roadmap";
 @import "organization";
 @import "students";
+@import "setup";
 @import "mentor";
 @import "sidenav";
 @import "dashboard";
@@ -27,6 +29,7 @@
 @import "tasks";
 @import "test";
 @import "c3";
+
 
 @import "loading_animation";
 @import "overrides";

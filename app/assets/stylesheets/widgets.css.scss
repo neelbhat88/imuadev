@@ -125,7 +125,7 @@ $border-color: black(0.2);
 
       .table--cell {
         display: table-cell;
-        vertical-align: top;
+        vertical-align: middle;
         border-right: 2px solid $border-color;
 
         &:last-child {

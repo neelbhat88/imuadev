@@ -1,0 +1,98 @@
+<div ng-controller="OrganizationExpectationController" class="widget orgsetup-expectations">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Student Expectations</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div class="table--cell breakalways" ng-repeat="expectation in expectations">
+        <div class="widget--content--table ng-clickable" ng-hide="expectation.editing" ng-click="go('/expectation/' + expectation.id)">
+          <div class="table--cell pam">
+            <h5 class="bold">{{expectation.title}}</h5>
+            <h6 class="wysiwyg-output" ng-bind-html="expectation.description"></h6>
+          </div>
+
+          <div ng-if="is_admin" class="table--cell btns">
+            <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Expectation" ng-click="editExpectation($index)"></span>
+            <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Expectation" ng-click="deleteExpectation($index)"></span>
+          </div>
+        </div>
+        <div class="expectation--editing widget--content--cell breakalways" ng-show="expectation.editing">
+          <form name="expectationsForm" imua-form="saveExpectation($index)" novalidate>
+            <div class="pbm">
+              <label-with-errors label="Title" form="expectationsForm" formfield="expectationsForm.title"> </label-with-errors>
+              <input type="text" class="form-control" ng-model="expectation.new_title" placeholder="Expectation Title" name="title" required />
+            </div>
+
+            <div class="pbm">
+              <label-with-errors label="Description" form="expectationsForm" formfield="expectationsForm.description"></label-with-errors>
+              <text-angular rows="4" cols="40"  type="text" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="expectation.new_description" placeholder="Criteria for meeting this Expectation"></text-angular>
+            </div>
+
+            <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>
+
+            <div>
+              <button no-click-propagation class="submit" type="submit">Submit</button>
+              <span no-click-propagation class="cancel" ng-click="cancelEditExpectation($index)">Cancel</span>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="widget--content--cell breakalways">
+          <div class="cell--padding">{{expectation.description}}</div>
+        </div>
+        <div class="widget--content--table table--fixed">
+          <div class="widget--content--cell">
+            <div class="cell--padding">
+              <h4>28</h4>
+              <p>Students Meeting This Expectation</p>
+            </div>
+          </div>
+          <div class="widget--content--cell">
+            <div class="cell--padding">
+              <h4>8</h4>
+              <p>Students Need Work</p>
+            </div>
+          </div>
+          <div class="widget--content--cell">
+            <div class="cell--padding">
+              <h4>11</h4>
+              <p>Students Not Meeting This Expectation</p>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+      <div ng-if="is_admin" class="table--cell ng-clickable breakalways" ng-click="addExpectation()">
+        <div class="cell--padding">
+          <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
+          <h6 class="bold">Add a Student Expectation</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="cell--padding">
+  <div class="expectations-list__item">
+    <div class="expectations-list__item__title">
+      <h5 ng-hide="expectation.editing">{{expectation.title}}</h5>
+      <input ng-show="expectation.editing" class="form-field" ng-model="expectation.new_title" placeholder="Expectation Title" name="expectation_title">
+    </div>
+    <div class="expectations-list__item__icons" ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin">
+      <div ng-hide="expectation.editing">
+        <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editExpectation(\$index)"></span>
+        <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteExpectation(\$index)"></span>
+      </div>
+      <div ng-show="expectation.editing">
+        <span class="editing_icon glyphicon glyphicon-ok prs green" title="Save" ng-click="saveExpectation(\$index)"></span>
+        <span class="editing_icon glyphicon glyphicon-remove red" title="Cancel" ng-click="cancelEditExpectation(\$index)"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-expectation">
+    <div class="add-expectation__button-placeholder" ng-hide="current_user.role < CONSTANTS.USER_ROLES.mentor && !expectations.editing"></div>
+    <button type="submit" class="submit add-expectation__button" ng-show="current_user.role < CONSTANTS.USER_ROLES.mentor && !expectations.editing" ng-click="addExpectation()">Add a Student Expectation</button>
+  </div>
+</div> -->

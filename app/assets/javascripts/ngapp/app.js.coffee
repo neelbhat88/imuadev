@@ -1,7 +1,7 @@
 angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'myApp.directives', 'ui.bootstrap', 'templates',
                           'angulartics', 'angulartics.google.analytics', 'ngMessages',
-                          'ipCookie']
+                          'ipCookie', 'textAngular']
 
 angular.module('myApp')
 .controller 'AppController', ['$rootScope','$scope', '$timeout', '$location', 'CONSTANTS',
