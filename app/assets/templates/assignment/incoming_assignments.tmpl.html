@@ -45,7 +45,7 @@
 
         <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
           <h5 class="bold"><a no-click-propagation href="app#/user_assignment/{{assignment.id}}">{{assignment.title}}</a></h5>
-          <h6>{{assignment.description}}</h6>
+          <h6 class="wysiwyg-output" ng-bind-html="assignment.description"></h6>
           <span class="subtext">
             <span class="label label-primary" ng-if="!isDueSoon(assignment) && !isPastDue(assignment)"><span class="glyphicon glyphicon-record"></span> Open</span>
             <span class="label label-warning" ng-if="isDueSoon(assignment)"><span class="glyphicon glyphicon-exclamation-sign"></span> Due Soon</span>
@@ -110,7 +110,7 @@
 
         <div class="tasks--list--item--expanded" ng-show="assignment.expanded">
           <h5 class="bold"><a no-click-propagation href="app#/user_assignment/{{assignment.id}}">{{assignment.title}}</a></h5>
-          <h6>{{assignment.description}}</h6>
+          <h6 class="wysiwyg-output" ng-bind-html="assignment.description"></h6>
           <span class="subtext">
             <span class="label label-success">
               <span class="glyphicon glyphicon-ok-circle"></span> Complete

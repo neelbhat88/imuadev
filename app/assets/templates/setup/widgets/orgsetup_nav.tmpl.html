@@ -1,0 +1,65 @@
+<div class="orgsetup-nav-widget widget widget--nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold">
+        <div class="color--dot"></div>
+        <span>{{view_obj.setup_widget_title}}</span>
+      </h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table">
+      <div ng-repeat="nav_item in nav_items_for_setup()">
+        <div ng-if="is_admin || nav_item.for_mentors"
+             class="widget--content--cell ng-clickable breakalways"
+             ng-click="selectWidget(nav_item.widget)"
+             ng-class="{'selected': selected_widget == nav_item.widget}">
+          <div class="cell--padding">
+            <div class="setting-icon">
+              <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="setting-text">{{nav_item.title}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="orgsetup-nav-widget widget widget--nav">
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Roadmap</h6>
+    </div>
+  </div>
+  <div class="widget--content">
+    <div class="widget--content--table"
+         ng-repeat="year in roadmap.years"
+         ng-class="{'selected-year': selected_year == year.id}">
+      <div class="widget--content--cell ng-clickable breakalways"
+          ng-click="selectWidget('roadmap', {year: year.id})">
+        <div class="cell--padding">
+          <h6 class="bold">{{year.name}}</h6>
+        </div>
+      </div>
+      <div class="widget--content--cell ng-clickable breakalways"
+           ng-repeat="sem in year.semesters"
+           ng-click="selectWidget('roadmap', {year: year.id, semester: sem.id})"
+           ng-class="{'selected-semester': selected_semester == sem.id}">
+        <div class="cell--padding">
+          <div class="setting-icon"><span class="glyphicon glyphicon-time"></span></div>
+          <div class="setting-text">{{sem.name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pbxl">
+  <select ng-options="nav_item.widget as nav_item.title
+                        for nav_item in sub_nav_items"
+          ng-change="selectWidget(selected_widget)"
+          ng-model="selected_widget"
+          class="orgsetup-nav-dropdown form-control">
+  </select>
+</div>
