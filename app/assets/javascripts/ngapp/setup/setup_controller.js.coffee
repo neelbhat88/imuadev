@@ -1,12 +1,32 @@
 angular.module('myApp')
-.controller 'SetupController', ['$scope', '$modal', '$route', '$location', 'current_user', 'RoadmapService', 'OrganizationService', 'UsersService',
-($scope, $modal, $route, $location, current_user, RoadmapService, OrganizationService, UsersService) ->
+.controller 'SetupController', ['$scope', '$modal', '$route', '$location', 'current_user', 'CONSTANTS', 'RoadmapService', 'OrganizationService', 'UsersService',
+($scope, $modal, $route, $location, current_user, CONSTANTS, RoadmapService, OrganizationService, UsersService) ->
   $scope.current_user = current_user
 
   $scope.selected_widget = null
   $scope.selected_year = null
   $scope.selected_semester = null
   $scope.loading = true
+
+  # Setup role specific stuff
+  $scope.is_admin = (current_user.role <= CONSTANTS.USER_ROLES.org_admin)
+  $scope.view_obj = {
+    setup_widget_title: if $scope.is_admin then "Setup" else "Organization"
+  }
+
+  # TODO: Clean up this nav stuff - tried to make it nice but the mobile
+  # and desktop views are too different for it to be nice. If we have a separate
+  # mobile tmpl then it'll be easier since it'll organize the menu differently
+  $scope.sub_nav_items = [
+    {group: "Setup", title: "Organization Admins", widget: "admins" },
+    {for_mentors: true, group: "Setup", title: "Student Expectations", widget: "expectations" },
+    {group: "Setup", title: "Tests", widget: "tests" },
+    # Used by mobile
+    {for_mentors: true, group: "Roadmap", title: "Roadmap", widget: "roadmap"}
+  ]
+
+  $scope.nav_items_for_setup = () ->
+    return $scope._.where($scope.sub_nav_items, {group: 'Setup'})
 
   orgId = $route.current.params.id
 

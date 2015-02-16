@@ -1,11 +1,11 @@
 <div ng-controller="RoadmapController">
-  <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year">
+  <div ng-repeat="year in roadmap.years" ng-if="year.id == selected_year || selected_year == null">
     <div ng-repeat="sem in year.semesters | filter: {id: selected_semester}">
       <div ng-repeat="mod in enabled_modules">
         <div class="widget orgsetup-roadmap" modulecolor="{{mod.title | addUnderscoreIfFirstCharIsNum}}">
           <div class="widget--header">
             <div class="widget--header--left">
-              <h6 class="bold"><div class="color--dot"></div>{{mod.title}}</h6>
+              <h6 class="bold"><div class="color--dot"></div>{{mod.title | underscoresToSpaces}}</h6>
             </div>
             <div class="widget--header--right">
               <div class="widget--options">
@@ -21,8 +21,8 @@
                 <div class="widget--content--table">
 
                   <div class="table--cell milestone-description">
-                    <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value">{{milestone.description}} {{milestone.value}}</span>
-                    <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value">{{milestone.value}}</span>
+                    <span ng-if="milestone.submodule != 'YesNo'" class="milestone__info__value"><h6>{{milestone.description}} {{milestone.value}}</h6></span>
+                    <span ng-if="milestone.submodule == 'YesNo'" class="milestone__info__value"><h6>{{milestone.value}}</h6></span>
                   </div>
 
                   <div class="table--cell milestone-points">
@@ -34,13 +34,13 @@
                     <div>{{milestone.title}}</div>
                   </div>
 
-                  <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell btns">
+                  <div ng-if="is_admin" class="table--cell btns">
                     <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Milestone" ng-click="viewMilestone(sem.semester, milestone)"></span>
                     <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Milestone" ng-click="deleteMilestone(sem.semester, milestone)"></span>
                   </div>
                 </div>
               </div>
-              <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" ng-click="addMilestone(sem.semester, mod)" class="ptl breakalways ng-clickable">
+              <div ng-if="is_admin" ng-click="addMilestone(sem.semester, mod)" class="ptl breakalways ng-clickable">
                 <div>Add Milestone</div>
                 <div><h5><span class="glyphicon glyphicon-plus-sign"></span></h5></div>
               </div>

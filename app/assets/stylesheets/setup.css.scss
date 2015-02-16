@@ -17,6 +17,12 @@
       margin-right: 2%;
       float: left;
 
+      @include respond-to(1080) {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+      }
+
       .selected {
         background: white(0.1);
       }
@@ -28,11 +34,36 @@
         }
       }
 
+      .orgsetup-nav-widget {
+        display: inherit;
+
+        @include respond-to(1080) {
+          display: none;
+        }
+
+        .widget--header {
+          padding: 15px 25px;
+        }
+      }
+
+      .orgsetup-nav-dropdown {
+        display: none;
+
+        @include respond-to(1080) {
+          display: inherit;
+        }
+      }
+
     }
 
     .orgsetup-pane {
       width: 78%;
       float: left;
+
+      @include respond-to(1080) {
+        float: none;
+        width: 100%;
+      }
 
       .year-name {
         margin-right: 6px;
@@ -83,12 +114,18 @@
       padding: 25px;
       text-align: left;
 
-      @include font-size(1.8);
+      @include respond-to(768) {
+        padding: 15px;
+      }
     }
 
     .milestone-points {
       width: 5%;
       padding: 20px;
+
+      @include respond-to(768) {
+        padding: 10px;
+      }
     }
 
     .milestone-label {
@@ -99,6 +136,10 @@
         &.color--#{$category} {
           color: $color;
         }
+      }
+
+      @include respond-to(768) {
+        padding: 10px;
       }
     }
 

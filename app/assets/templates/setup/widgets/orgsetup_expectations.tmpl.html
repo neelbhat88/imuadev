@@ -14,7 +14,7 @@
             <h6>{{expectation.description}}</h6>
           </div>
 
-          <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell btns">
+          <div ng-if="is_admin" class="table--cell btns">
             <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Expectation" ng-click="editExpectation($index)"></span>
             <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Expectation" ng-click="deleteExpectation($index)"></span>
           </div>
@@ -64,7 +64,7 @@
         </div> -->
 
       </div>
-      <div ng-if="current_user.role <= CONSTANTS.USER_ROLES.org_admin" class="table--cell ng-clickable breakalways" ng-click="addExpectation()">
+      <div ng-if="is_admin" class="table--cell ng-clickable breakalways" ng-click="addExpectation()">
         <div class="cell--padding">
           <h3><span class="glyphicon glyphicon-plus-sign"></span></h3>
           <h6 class="bold">Add a Student Expectation</h6>
