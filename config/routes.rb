@@ -12,6 +12,15 @@ Imua::Application.routes.draw do
     end
   end
 
+  assignment_owner = Proc.new do
+    member do
+      post :assignment
+      put :assignment
+      delete :assignment
+      get :assignments
+    end
+  end
+
   namespace :api do
     namespace :v1 do
 
