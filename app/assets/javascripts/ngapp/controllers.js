@@ -1,13 +1,13 @@
 angular.module('myApp.controllers', [])
 
-.controller('HeaderController', ['$scope', 'SessionService',
-  function($scope, SessionService) {
-    SessionService.getCurrentUser().then(function(user){
-      $scope.user = user;
+.controller('HeaderController', ['$scope', 'Auth',
+  function($scope, Auth) {
+    $scope.$on('devise:logout', function (event, oldCurrentUser) {
+      $('#wrapper').removeClass('toggled');
     });
 
     $scope.logout = function() {
-      SessionService.destroy();
+      Auth.logout();
     }
   }
 ]);

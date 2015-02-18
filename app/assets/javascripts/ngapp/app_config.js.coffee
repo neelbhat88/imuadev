@@ -1,6 +1,6 @@
 angular.module('myApp')
-.config ['$routeProvider', '$httpProvider',
-($routeProvider, $httpProvider) ->
+.config ['$routeProvider', '$httpProvider', 'AuthInterceptProvider',
+($routeProvider, $httpProvider, AuthInterceptProvider) ->
   $routeProvider.when '/',
     templateUrl: 'dashboard/dashboard.html',
     controller: 'DashboardController',
@@ -18,4 +18,6 @@ angular.module('myApp')
   # Install all interceptors here
   ################################
   $httpProvider.interceptors.push('AppVersionInterceptor')
+
+  AuthInterceptProvider.interceptAuth(true)
 ]

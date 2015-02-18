@@ -4,10 +4,6 @@ angular.module('myApp')
     templateUrl: 'profile/profile.html',
     controller: 'ProfileController',
     resolve:
-      current_user: ['SessionService', (SessionService) ->
-        SessionService.getCurrentUser();
-      ]
-
       user_with_contacts: ['$q', '$route', 'UsersService', ($q, $route, UsersService) ->
         defer = $q.defer()
 

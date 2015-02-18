@@ -1,13 +1,14 @@
 angular.module 'myApp', ['ngRoute', 'myApp.controllers',
                           'myApp.directives', 'ui.bootstrap', 'templates',
                           'angulartics', 'angulartics.google.analytics', 'ngMessages',
-                          'ipCookie', 'textAngular']
+                          'ipCookie', 'textAngular', 'Devise']
 
 angular.module('myApp')
 .controller 'AppController', ['$rootScope','$scope', '$timeout', '$location', 'CONSTANTS',
 ($rootScope, $scope, $timeout, $location, CONSTANTS) ->
   $scope.CONSTANTS = CONSTANTS
   $scope._ = _
+  $scope.current_user = null
 
   $scope.alerts = []
 
@@ -44,16 +45,26 @@ angular.module('myApp')
   $scope.$on "clear_alerts", () ->
     $scope.alerts = []
 
-  $scope.$on "unauthorized", () ->
-    window.location.href = "login?pu=" + $location.path()
+  $scope.$on 'devise:login', (event, currentUser) ->
+    $scope.current_user = currentUser.user
 
-  $scope.$on "loggedout", () ->
-    window.location.href = "login"
+  $scope.$on 'devise:new-session', (event, currentUser) ->
+    $scope.current_user = currentUser.user
+
+  $scope.$on 'devise:logout', (event, oldCurrentUser) ->
+    if $location.path() != '/login'
+      $location.path('/login')
+
+  $scope.$on 'devise:unauthorized', (event, xhr, deferred) ->
+    if $location.path() != '/login'
+      $location.path('login')
+
+    deferred.reject(xhr)
 ]
 
 angular.module('myApp')
-.run ['$rootScope', '$location', 'ipCookie', 'SessionService',
-($rootScope, $location, ipCookie, SessionService) ->
+.run ['$rootScope', '$location', 'ipCookie', 'Auth', 'SessionService',
+($rootScope, $location, ipCookie, Auth, SessionService) ->
 
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
 
@@ -61,17 +72,23 @@ angular.module('myApp')
     $rootScope.$broadcast("clear_alerts")
 
     # Always calling getCurrentUser on every change/refresh to make sure current_user is set
-    SessionService.getCurrentUser()
-      .then () ->
-        # If no authorized roles than the route is authorized for everyone
-        if next.data and next.data.authorizedRoles
-          authorizedRoles = next.data.authorizedRoles
+    Auth.currentUser()
+    # .then (user) ->
+    #   # console.log("user already authenticated")
+    # , (error) ->
+    #   # console.log("Failed current user check")
 
-          if !SessionService.isAuthorized(authorizedRoles)
-            $location.path('/')
-            return false
-
-        return true
+    # SessionService.getCurrentUser()
+    #   .then () ->
+    #     # If no authorized roles than the route is authorized for everyone
+    #     if next.data and next.data.authorizedRoles
+    #       authorizedRoles = next.data.authorizedRoles
+    #
+    #       if !SessionService.isAuthorized(authorizedRoles)
+    #         $location.path('/')
+    #         return false
+    #
+    #     return true
 
   $rootScope.$on '$routeChangeError', (event, current, previous, rejection) ->
     $location.path('/')
