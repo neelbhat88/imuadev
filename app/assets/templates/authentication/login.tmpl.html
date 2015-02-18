@@ -10,7 +10,7 @@
 
     </div>
 
-    <form name="loginForm" imua-form="login(user)" novalidate>
+    <form ng-hide="forgot_password" name="loginForm" imua-form="login(user)" novalidate>
 
       <div class="element">
 
@@ -34,11 +34,30 @@
 
     </form>
 
+    <!-- Reset password form -->
+    <form ng-show="forgot_password" name="resetPasswordForm" imua-form="resetPassword(user)" novalidate>
+
+      <div class="element">
+
+        <!-- <label-with-errors label="" form="loginForm" formfield="loginForm.email"></label-with-errors> -->
+        <input ng-model="user.email" autofocus="autofocus" class="form-field" name="email" placeholder="Email" size="30" type="email" value="">
+
+      </div>
+
+      <div class="element">
+
+        <input class="button" name="commit" type="submit" value="Reset Password">
+
+      </div>
+
+    </form>
+
   </div>
 
   <div class="login-links">
 
-    <!-- <a href="/forgot_password">Forgot your password?</a> -->
+    <div ng-hide="forgot_password" class="link" ng-click="forgotPassword()">Forgot your password?</div>
+    <div ng-show="forgot_password" class="link" ng-click="backToLogin()">Back to Log In</div>
 
   </div>
 
