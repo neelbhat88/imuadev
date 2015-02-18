@@ -18,9 +18,9 @@ class AssignmentQuerier < Querier
 
   def filter_attributes(attributes)
     if attributes.include?(:user_id) then attributes -= [:user_id]
-      attributes << :context_id
+      attributes << :assignment_owner_id
     end
-    attributes << :context
+    attributes << :assignment_owner_type
     return super(attributes)
   end
 
@@ -28,8 +28,8 @@ class AssignmentQuerier < Querier
     super(sortBy)
     # Domain object manicuring
     @domain.each do |d|
-      if d.keys.include?(:context_id)
-        d[:user_id] = d[:context_id]
+      if d.keys.include?(:assignment_owner_id)
+        d[:user_id] = d[:assignment_owner_id]
       end
     end
     return @domain
@@ -39,8 +39,8 @@ class AssignmentQuerier < Querier
     super(conditions)
     # Final view object manicuring
     @view.each do |v|
-      if v.keys.include?(:context_id)
-        v[:user_id] = v[:context_id]
+      if v.keys.include?(:assignment_owner_id)
+        v[:user_id] = v[:assignment_owner_id]
       end
     end
     return @view

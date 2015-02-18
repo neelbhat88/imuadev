@@ -209,8 +209,8 @@ class Ability
       end
 
 
-      if subjectAssignment.context == "User" &&
-         user.id == subjectAssignment.context_id
+      if subjectAssignment.assignment_owner_type == "User" &&
+         user.id == subjectAssignment.assignment_owner_id
         rules += [:get_assignment,
                   :update_assignment,
                   :destroy_assignment,
