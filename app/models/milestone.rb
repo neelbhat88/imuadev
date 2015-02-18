@@ -8,7 +8,7 @@ class Milestone < ActiveRecord::Base
   belongs_to :organization
 
   has_many :user_milestones, dependent: :destroy
-  has_many :assignments, dependent: :destroy
+  has_many :assignments, as: :assignment_owner, dependent: :destroy
 
   validates :title, presence: true
   validates :description, presence: true

@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :assignment do
-    user_id      -10
+    context_type "default_context"
+    context_id   -10
     title        "default_title"
     description  "default_description"
     due_datetime DateTime.now

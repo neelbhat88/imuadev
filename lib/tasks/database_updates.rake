@@ -8,7 +8,7 @@ namespace :db_update do
   task :all => [:create_app_version,
                 :organization_id_to_assignments,
                 :reset_default_expectation_descriptions,
-                :user_context_to_assignments]
+                :user_assignment_owner_type_to_assignments]
 
   ########################################
   ########################################
@@ -315,16 +315,16 @@ namespace :db_update do
     end
   end
 
-  desc "Migrate all existing assignments to have context: User"
-  task :user_context_to_assignments => :environment do
-    assignments = Assignment.where(context: nil)
+  desc "Migrate all existing assignments to have assignment_owner_type: User"
+  task :user_assignment_owner_type_to_assignments => :environment do
+    assignments = Assignment.where(assignment_owner_type: nil)
     if assignments.any?
       assignments.each do |a|
-        a.update_attributes(context: "User")
-        puts "Applied context: User to assignment " + a.id.to_s
+        a.update_attributes(assignment_owner_type: "User")
+        puts "Applied assignment_owner_type: User to assignment " + a.id.to_s
       end
     else
-      puts "All Assignments have non-nil context"
+      puts "All Assignments have non-nil assignment_owner_type"
     end
   end
 

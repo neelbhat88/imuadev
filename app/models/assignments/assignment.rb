@@ -1,10 +1,12 @@
 class Assignment < ActiveRecord::Base
-  attr_accessible :type, :type_id, :title, :description, :due_datetime, :organization_id
+  attr_accessible :assignment_owner_type, :assignment_owner_id, :title, :description, :due_datetime, :organization_id
 
   has_many :user_assignments, dependent: :destroy
 
-  validates :type, presence: true
-  validates :type_id, presence: true
+  belongs_to :assignment_owner, polymorphic: true
+
+  validates :assignment_owner_type, presence: true
+  validates :assignment_ownder_id, presence: true
   validates :title, presence: true
   validates :organization_id, presence: true
 end

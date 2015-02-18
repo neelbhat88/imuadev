@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150213232928) do
+ActiveRecord::Schema.define(:version => 20150218183645) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -37,17 +37,17 @@ ActiveRecord::Schema.define(:version => 20150213232928) do
   end
 
   create_table "assignments", :force => true do |t|
-    t.integer  "context_id"
+    t.integer  "assignment_owner_id"
     t.text     "title"
     t.text     "description"
     t.datetime "due_datetime"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "organization_id"
-    t.string   "context"
+    t.string   "assignment_owner_type"
   end
 
-  add_index "assignments", ["context_id"], :name => "index_assignments_on_user_id"
+  add_index "assignments", ["assignment_owner_type", "assignment_owner_id"], :name => "index_assignments_on_owner_type_and_owner_id"
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
