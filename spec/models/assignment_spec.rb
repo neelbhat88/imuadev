@@ -2,8 +2,12 @@ require 'rails_helper'
 
 describe Assignment do
   describe "is invalid" do
-    it "without user_id" do
-      expect(Assignment.new(user_id: nil)).to have(1).errors_on(:user_id)
+    it "without assignment_owner_type" do
+      expect(Assignment.new(assignment_owner_type: nil)).to have(1).errors_on(:assignment_owner_type)
+    end
+
+    it "without assignment_owner_id" do
+      expect(Assignment.new(assignment_owner_id: nil)).to have(1).errors_on(:assignment_owner_id)
     end
 
     it "without title" do

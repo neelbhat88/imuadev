@@ -156,7 +156,8 @@ class AssignmentService
 
   def create_assignment(assignment)
     newAssignment = Assignment.new do | e |
-      e.user_id = assignment[:user_id]
+      e.assignment_owner_type = assignment[:assignment_owner_type]
+      e.assignment_owner_id = assignment[:assignment_owner_id]
       e.title = assignment[:title]
       e.description = assignment[:description]
       e.due_datetime = assignment[:due_datetime]
@@ -167,13 +168,15 @@ class AssignmentService
     end
 
     if newAssignment.save
-      IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.user_id,
-                                                {:task_id => newAssignment.id,
-                                                 :title => newAssignment.title,
-                                                 :description => newAssignment.description
-                                                }
-                                        )
-
+      # For now, skip intercom events for Tasks not owned by a User
+      if newAssignment.assignment_owner_type == "User"
+        IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.assignment_owner_id,
+                                                  {:task_id => newAssignment.id,
+                                                   :title => newAssignment.title,
+                                                   :description => newAssignment.description
+                                                  }
+                                          )
+      end
       return ReturnObject.new(:ok, "Successfully created Assignment, id: #{newAssignment.id}.", newAssignment)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create assignment. Errors: #{newAssignment.errors.inspect}.", nil)
@@ -326,6 +329,11 @@ class AssignmentService
   end
 
   def send_task_complete_email(current_user, assignment, user_assignment)
+    # For now, skip emails for tasks not owned by a User
+    return if assignment.assignment_owner_type != "User"
+
+    assignment[:user_id] = assignment.assignment_owner_id
+
     # Don't send an email for updates to tasks assigned to yourself
     return if current_user.id == assignment.user_id && current_user.id == user_assignment.user_id
 

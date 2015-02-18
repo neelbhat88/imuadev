@@ -64,7 +64,7 @@ describe Api::V1::AssignmentController do
 
       it "returns 403 if a mentor tries to update an Assignment under another User" do
         mod_assignment = attributes_for(:assignment,
-                                         assignment_owner_type: "User", assignment_owner_id: other_assignment.user_id,
+                                         assignment_owner_type: other_assignment.assignment_owner_type, assignment_owner_id: other_assignment.assignment_owner_id,
                                          assignment_id: other_assignment.id)
         put :update, {:id => other_assignment.id, :assignment => mod_assignment}
         expect(response.status).to eq(403)
@@ -77,7 +77,7 @@ describe Api::V1::AssignmentController do
 
         mod_assignment = attributes_for(:assignment,
                                          id: assignment.id + 1, # Check that ignored
-                                         assignment_owner_type: "User", assignment_owner_id: assignment.user_id + 1, # Check that ignored
+                                         assignment_owner_type: assignment.assignment_owner_type, assignment_owner_id: assignment.assignment_owner_id + 1, # Check that ignored
                                          title: new_title,
                                          description: new_desc,
                                          due_datetime: new_due_datetime)
@@ -257,7 +257,7 @@ describe Api::V1::AssignmentController do
 
         mod_assignment = attributes_for(:assignment,
                                          id: assignment1.id + 1, # Check that ignored
-                                         assignment_owner_type: "User", assignment_owner_id: assignment1.user_id + 1, # Check that ignored
+                                         assignment_owner_type: assignment1.assignment_owner_type, assignment_owner_id: assignment1.assignment_owner_id + 1, # Check that ignored
                                          title: new_title,
                                          description: new_desc,
                                          due_datetime: new_due_datetime)
