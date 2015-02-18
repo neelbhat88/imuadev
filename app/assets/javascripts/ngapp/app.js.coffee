@@ -1,4 +1,4 @@
-angular.module 'myApp', ['ngRoute', 'myApp.controllers',
+angular.module 'myApp', ['ngRoute',
                           'myApp.directives', 'ui.bootstrap', 'templates',
                           'angulartics', 'angulartics.google.analytics', 'ngMessages',
                           'ipCookie', 'textAngular', 'Devise']
