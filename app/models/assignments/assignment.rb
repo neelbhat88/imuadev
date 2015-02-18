@@ -6,7 +6,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :assignment_owner, polymorphic: true
 
   validates :assignment_owner_type, presence: true
-  validates :assignment_ownder_id, presence: true
+  validates :assignment_owner_id, presence: true
   validates :title, presence: true
   validates :organization_id, presence: true
 end

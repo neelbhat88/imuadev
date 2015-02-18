@@ -9,18 +9,18 @@ describe Api::V1::AssignmentController do
 
       let(:mentorId) { subject.current_user.id }
 
-      let!(:assignment) { create(:assignment, user_id: mentorId) }
+      let!(:assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: mentorId) }
 
       xit "returns 403 if a mentor tries to see another user's Assignments" do
         otherUserId = mentorId + 1
-        get :index, {:user_id => otherUserId}
+        get :index, {assignment_owner_type: "User", assignment_owner_id: otherUserId}
         expect(response.status).to eq(403)
       end
 
       it "returns 200 if same user" do
-        get :index, {:user_id => mentorId}
+        get :index, {assignment_owner_type: "User", assignment_owner_id: mentorId}
         expect(response.status).to eq(200)
-        expect(json["assignments"][0]["user_id"]).to eq(mentorId)
+        expect(json["assignments"][0]["assignment_owner_id"]).to eq(mentorId)
       end
 
     end
@@ -36,16 +36,16 @@ describe Api::V1::AssignmentController do
       let(:otherUserId) { userId + 1 }
 
       xit "returns 403 if a mentor tries to create an Assignment for another User" do
-        assignment = attributes_for(:assignment, user_id: userId)
-        post :create, {:user_id => otherUserId, :assignment => assignment}
+        assignment = attributes_for(:assignment, assignment_owner_type: "User", assignment_owner_id: userId)
+        post :create, {assignment_owner_type: "User", assignment_owner_id: otherUserId, assignment: assignment}
         expect(response.status).to eq(403)
       end
 
       it "returns 200 if an admin tries to create an Assignment (json has different userId)" do
-        mod_assignment = attributes_for(:assignment, user_id: otherUserId)
-        post :create, {:user_id => userId, :assignment => mod_assignment}
+        mod_assignment = attributes_for(:assignment, assignment_owner_type: "User", assignment_owner_id: otherUserId)
+        post :create, {assignment_owner_type: "User", assignment_owner_id: userId, assignment: mod_assignment}
         expect(response.status).to eq(200)
-        expect(json["assignment"]["user_id"]).to eq(userId)
+        expect(json["assignment"]["assignment_owner_id"]).to eq(userId)
       end
     end
 
@@ -59,12 +59,12 @@ describe Api::V1::AssignmentController do
       let(:userId)      { subject.current_user.id }
       let(:otherUserId) { userId + 1 }
 
-      let!(:assignment)       { create(:assignment, user_id: userId) }
-      let!(:other_assignment) { create(:assignment, user_id: otherUserId) }
+      let!(:assignment)       { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+      let!(:other_assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: otherUserId) }
 
       it "returns 403 if a mentor tries to update an Assignment under another User" do
         mod_assignment = attributes_for(:assignment,
-                                         user_id: other_assignment.user_id,
+                                         assignment_owner_type: "User", assignment_owner_id: other_assignment.user_id,
                                          assignment_id: other_assignment.id)
         put :update, {:id => other_assignment.id, :assignment => mod_assignment}
         expect(response.status).to eq(403)
@@ -77,14 +77,14 @@ describe Api::V1::AssignmentController do
 
         mod_assignment = attributes_for(:assignment,
                                          id: assignment.id + 1, # Check that ignored
-                                         user_id: assignment.user_id + 1, # Check that ignored
+                                         assignment_owner_type: "User", assignment_owner_id: assignment.user_id + 1, # Check that ignored
                                          title: new_title,
                                          description: new_desc,
                                          due_datetime: new_due_datetime)
         put :update, {:id => assignment.id, :assignment => mod_assignment}
         expect(response.status).to eq(200)
         expect(json["assignment"]["id"]).to eq(assignment.id)
-        expect(json["assignment"]["user_id"]).to eq(userId)
+        expect(json["assignment"]["assignment_owner_id"]).to eq(userId)
         expect(json["assignment"]["title"]).to eq(new_title)
         expect(json["assignment"]["description"]).to eq(new_desc)
         expect(DateTime.parse(json["assignment"]["due_datetime"]).strftime("%m/%d/%Y")).to eq(new_due_datetime.strftime("%m/%d/%Y"))
@@ -101,8 +101,8 @@ describe Api::V1::AssignmentController do
       let(:userId)      { subject.current_user.id }
       let(:otherUserId) { userId + 1 }
 
-      let!(:assignment)       { create(:assignment, user_id: userId) }
-      let!(:other_assignment) { create(:assignment, user_id: otherUserId) }
+      let!(:assignment)       { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+      let!(:other_assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: otherUserId) }
 
       it "returns 403 if a mentor tries to delete an Assignment for another User" do
         delete :destroy, {:id => other_assignment.id}
@@ -129,7 +129,7 @@ describe Api::V1::AssignmentController do
       let!(:student3) { create(:student, organization_id: orgId) }
       let!(:student4) { create(:student, organization_id: orgId) }
 
-      let!(:assignment1) { create(:assignment, user_id: userId) }
+      let!(:assignment1) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
       let!(:student1Assignment1) { create(:user_assignment,
                                           assignment_id: assignment1.id,
                                           user_id: student1.id) }
@@ -137,7 +137,7 @@ describe Api::V1::AssignmentController do
                                           assignment_id: assignment1.id,
                                           user_id: student2.id) }
 
-      let!(:assignment2) { create(:assignment, user_id: userId) }
+      let!(:assignment2) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
       let!(:student1Assignment2) { create(:user_assignment,
                                           assignment_id: assignment2.id,
                                           user_id: student1.id) }
@@ -147,7 +147,7 @@ describe Api::V1::AssignmentController do
 
       # Assignment other than own
       let!(:orgAdmin) { create(:org_admin, organization_id: orgId) }
-      let!(:assignment3) { create(:assignment, user_id: orgAdmin.id) }
+      let!(:assignment3) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: orgAdmin.id) }
       let!(:student1Assignment3) { create(:user_assignment,
                                           assignment_id: assignment3.id,
                                           user_id: student1.id) }
@@ -196,7 +196,7 @@ describe Api::V1::AssignmentController do
         due_datetime = DateTime.new(2001,2,3)
 
         assignment = attributes_for(:assignment,
-                                    user_id: userId + 1, # Check that ignored
+                                    assignment_owner_type: "User", assignment_owner_id: userId + 1, # Check that ignored
                                     title: title,
                                     description: desc,
                                     due_datetime: due_datetime)
@@ -240,7 +240,7 @@ describe Api::V1::AssignmentController do
       let!(:student2) { create(:student, organization_id: orgId) }
       let!(:student3) { create(:student, organization_id: orgId) }
 
-      let!(:assignment1) { create(:assignment, user_id: userId) }
+      let!(:assignment1) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
       let!(:student1Assignment1) { create(:user_assignment,
                                           assignment_id: assignment1.id,
                                           user_id: student1.id,
@@ -257,7 +257,7 @@ describe Api::V1::AssignmentController do
 
         mod_assignment = attributes_for(:assignment,
                                          id: assignment1.id + 1, # Check that ignored
-                                         user_id: assignment1.user_id + 1, # Check that ignored
+                                         assignment_owner_type: "User", assignment_owner_id: assignment1.user_id + 1, # Check that ignored
                                          title: new_title,
                                          description: new_desc,
                                          due_datetime: new_due_datetime)
