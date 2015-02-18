@@ -125,6 +125,10 @@
     .service-org-header {
       padding: 20px;
     }
+    .ta-editor {
+      min-height: 100px;
+      height: 150px;
+    }
     .service-hours--meta {
       width: 25%;
       float: left;
@@ -169,7 +173,6 @@
 
       h5 {
         margin: 0;
-        padding-top: 25px;
       }
     }
 
@@ -178,6 +181,10 @@
 
 
   .extracurricularProgressContainer {
+    .ta-editor {
+      min-height: 100px;
+      height: 150px;
+    }
     .extracurricular-activities {
       //EC Widget
 

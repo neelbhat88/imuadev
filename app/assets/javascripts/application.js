@@ -18,6 +18,9 @@
 //= require angular-rails-templates
 //= require angular-cookie
 //= require salvattore
+//= require textAngular-rangy
+//= require textAngular-sanitize
+//= require textAngular
 //= require spin
 //= require ladda
 //= require d3

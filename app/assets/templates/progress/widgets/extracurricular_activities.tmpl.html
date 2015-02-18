@@ -75,8 +75,7 @@
               </div>
 
               <div class="table--cell breakalways" ng-if="user_extracurricular_activity.details[0].description != ''">
-                <div class="cell--padding">
-                  {{user_extracurricular_activity.details[0].description}}
+                <div class="cell--padding wysiwyg-output" ng-bind-html="user_extracurricular_activity.details[0].description">
                 </div>
               </div>
 
@@ -108,7 +107,7 @@
                   <div class="cell-padding">
                     <span class="input-group">
                       <label>Description (Optional)</label>
-                      <textarea class="form-control" ng-model="user_extracurricular_activity.details[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></textarea>
+                      <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="user_extracurricular_activity.details[0].new_description" placeholder="Description (optional)" name="extracurricularEventDescription"></text-angular>
                     </span>
                   </div>
                 </div>
@@ -162,7 +161,7 @@
                   <div class="cell-padding">
                     <span class="input-group">
                       <label>Description (Optional)</label>
-                      <textarea class="form-control" ng-model="new_activity.details[0].description" placeholder="Description (optional)"></textarea>
+                      <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="new_activity.details[0].description" placeholder="Description (optional)"></text-angular>
                     </span>
                   </div>
                 </div>

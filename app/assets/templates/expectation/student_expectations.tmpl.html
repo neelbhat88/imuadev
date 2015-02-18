@@ -96,7 +96,7 @@
             <h2><span class="glyphicon glyphicon-exclamation-sign"></span></h2>
             <h6 class="bold">You are not meeting this expectation!</h6>
           </div>
-          <span ng-if="expectation.user_expectation.comment">{{expectation.user_expectation.comment}}</span>
+          <span ng-if="expectation.user_expectation.comment" class="wysiwyg-output" ng-bind-html="expectation.user_expectation.comment"></span>
           <div class="updated-text" ng-if="expectation.user_expectation.modified_by_name">Last Updated {{expectation.user_expectation.updated_at | fromNow}}</div>
         </div>
       </div>

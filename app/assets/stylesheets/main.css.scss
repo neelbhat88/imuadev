@@ -85,6 +85,56 @@ $panelwrapper: 0 80px;
   margin-bottom: 0;
 }
 
+/* this is for the wysiwyg */
+.ta-editor {
+    margin:10px 0;
+
+    ul {
+       list-style-type: disc;
+       list-style-position: inside;
+    }
+    ol {
+       list-style-type: decimal;
+       list-style-position: inside;
+    }
+    ul ul, ol ul {
+       list-style-type: circle;
+       list-style-position: inside;
+       margin-left: 15px;
+    }
+    ol ol, ul ol {
+       list-style-type: lower-latin;
+       list-style-position: inside;
+       margin-left: 15px;
+    }
+    i {
+      font-style: italic;
+    }
+ }
+
+.wysiwyg-output {
+  ul {
+     list-style-type: disc;
+     list-style-position: inside;
+  }
+  ol {
+     list-style-type: decimal;
+     list-style-position: inside;
+  }
+  ul ul, ol ul {
+     list-style-type: circle;
+     list-style-position: inside;
+     margin-left: 15px;
+  }
+  ol ol, ul ol {
+     list-style-type: lower-latin;
+     list-style-position: inside;
+     margin-left: 15px;
+  }
+  a {
+    text-decoration: underline;
+  }
+}
 /* ===============================================
    Header
    =============================================== */
@@ -455,10 +505,6 @@ button:focus {
   z-index: 5000;
 }
 
-.modal-body {
-  color: $ink;
-}
-
 .displayNone {
   display: none;
 }
@@ -514,7 +560,11 @@ button:focus {
 /* ===============================================
    Modals
 =============================================== */
+
 .modal-body {
+  background-color: $darkgrey;
+  color: white;
+
   .modal-body__title {
     text-align: center;
   }
