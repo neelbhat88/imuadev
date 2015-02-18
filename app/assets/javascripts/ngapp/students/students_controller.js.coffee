@@ -36,6 +36,8 @@ angular.module('myApp')
 
         $scope.loaded_users = true
 
+        console.log($scope.groupedStudents)
+
 
     $scope.fullName = (user) ->
       if user.id == current_user.id
