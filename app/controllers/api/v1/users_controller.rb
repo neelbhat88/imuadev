@@ -1,7 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
+  before_filter :load_services
   respond_to :json
+
+  def load_services( assignmentService = nil )
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new
+  end
 
   # GET /users
   def index
@@ -306,6 +311,42 @@ class Api::V1::UsersController < ApplicationController
     json: {
       info: result[:info]
     }
+  end
+
+  # POST /users/:id/assignment
+  def assignment
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "User"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :create_assignment, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.create(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /users/:id/assignments
+  def assignments
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "User"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :index_assignments, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
 end

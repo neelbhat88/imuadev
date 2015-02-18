@@ -15,8 +15,6 @@ Imua::Application.routes.draw do
   assignment_owner = Proc.new do
     member do
       post :assignment
-      put :assignment
-      delete :assignment
       get :assignments
     end
   end
@@ -33,6 +31,7 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :comment, except: [:index, :new, :create, :edit, :show]
+      resources :assignment, except: [:index, :new, :create, :edit, :show]
 
       resources :organization, shallow: true do
 
@@ -50,6 +49,8 @@ Imua::Application.routes.draw do
 
         resources :users, shallow: true do
 
+          assignment_owner.call
+
           resources :user_class, except: [:new, :edit] do
             get 'history', on: :member # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
           end
@@ -57,7 +58,6 @@ Imua::Application.routes.draw do
           resources :user_extracurricular_activity, except: [:new, :edit]
           resources :user_extracurricular_activity_detail, except: [:new, :edit]
 
-          resources :assignment, except: [:new, :edit]
           resources :user_assignment, except: [:new, :edit, :show] do
             commentable.call
           end

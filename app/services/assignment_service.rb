@@ -154,6 +154,92 @@ class AssignmentService
     return Assignment.where(:user_id => userId)
   end
 
+  def index(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    assignmentQ = Querier.factory(Assignment).select([],[:id]).where(conditions)
+    conditions[:assignment_id] = assignmentQ.pluck(:id)
+
+    ret = get_assignments_view(conditions.slice(:assignment_id))
+    return ReturnObject.new(:ok, "Assignment index for #{params[:assignment_owner_type]} type #{params[:assignment_owner_id]}.", ret)
+  end
+
+  def create(params)
+    conditions = Marshal.load(Marshal.dump(params))
+    owner_object = conditions[:assignment_owner_type].classify.constantize.where(id: conditions[:assignment_owner_id]).first
+    assignment = conditions[:assignment]
+
+    newAssignment = Assignment.new do | e |
+      e.assignment_owner_type = conditions[:assignment_owner_type]
+      e.assignment_owner_id = conditions[:assignment_owner_id]
+      e.title = assignment[:title]
+      e.description = assignment[:description]
+      e.due_datetime = assignment[:due_datetime]
+      e.organization_id = owner_object.organization_id
+    end
+
+    if !newAssignment.valid?
+    end
+
+    if newAssignment.save
+      # For now, skip intercom events for Tasks not owned by a User
+      if newAssignment.assignment_owner_type == "User"
+        IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.assignment_owner_id,
+                                                  {:task_id => newAssignment.id,
+                                                   :title => newAssignment.title,
+                                                   :description => newAssignment.description
+                                                  }
+                                          )
+      end
+
+      ret = get_assignments_view({ assignment_id: newAssignment.id })
+      return ReturnObject.new(:ok, "Successfully created Assignment, id: #{newAssignment.id}.", ret)
+    else
+      return ReturnObject.new(:internal_server_error, "Failed to create assignment. Errors: #{newAssignment.errors.inspect}.", nil)
+    end
+  end
+
+  # Helper methods - not to be called by controller
+private
+  # Should be used by most AssignmentService methods so that the front gets a
+  # consistent and up-to-date list of all the Assignment objects (in case one
+  # was since added/updated).
+  # Called via :assignment_id
+  def get_assignments_view(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    assignmentQ = Querier.factory(Assignment).select([:id, :title, :description, :due_datetime, :created_at, :assignment_owner_type, :assignment_owner_id]).where(conditions)
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :updated_at]).where(conditions)
+
+    conditions[:owner_object_class] = assignmentQ.domain[0][:assignment_owner_type].classify.constantize
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id)).uniq
+    if conditions[:owner_object_class].name == "User"
+      conditions[:user_id] = (conditions[:user_id] + assignmentQ.pluck(:assignment_owner_id)).uniq
+    else
+      conditions[:owner_object_id] = assignmentQ.pluck(:assignment_owner_id).uniq
+    end
+
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+
+    view = {}
+
+    if conditions[:owner_object_class].name == "User"
+      userQ.set_subQueriers([assignmentQ, userAssignmentQ])
+      view = {users: userQ.view}
+    else
+      userQ.set_subQueriers([userAssignmentQ])
+      ownerObjQ = Querier.factory(conditions[:owner_object_class]).where(conditions.slice(:owner_object_id))
+      ownerObjQ.set_subQueriers([assignmentQ])
+      view[:users] = userQ.view
+      view[conditons[:owner_object_class].name.underscore.pluralize.to_sym] = ownerObjQ.view
+    end
+
+    return view
+  end
+
+public
+
   def create_assignment(assignment)
     newAssignment = Assignment.new do | e |
       e.assignment_owner_type = assignment[:assignment_owner_type]

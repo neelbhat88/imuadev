@@ -2,55 +2,6 @@ require 'rails_helper'
 
 describe Api::V1::AssignmentController do
 
-  describe "GET /users/:user_id/assignment" do
-
-    describe "as a mentor" do
-      login_mentor
-
-      let(:mentorId) { subject.current_user.id }
-
-      let!(:assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: mentorId) }
-
-      xit "returns 403 if a mentor tries to see another user's Assignments" do
-        otherUserId = mentorId + 1
-        get :index, {assignment_owner_type: "User", assignment_owner_id: otherUserId}
-        expect(response.status).to eq(403)
-      end
-
-      it "returns 200 if same user" do
-        get :index, {assignment_owner_type: "User", assignment_owner_id: mentorId}
-        expect(response.status).to eq(200)
-        expect(json["assignments"][0]["assignment_owner_id"]).to eq(mentorId)
-      end
-
-    end
-
-  end
-
-  describe "POST /user/:user_id/assignment" do
-
-    describe "as a mentor" do
-      login_mentor
-
-      let(:userId)      { subject.current_user.id }
-      let(:otherUserId) { userId + 1 }
-
-      xit "returns 403 if a mentor tries to create an Assignment for another User" do
-        assignment = attributes_for(:assignment, assignment_owner_type: "User", assignment_owner_id: userId)
-        post :create, {assignment_owner_type: "User", assignment_owner_id: otherUserId, assignment: assignment}
-        expect(response.status).to eq(403)
-      end
-
-      it "returns 200 if an admin tries to create an Assignment (json has different userId)" do
-        mod_assignment = attributes_for(:assignment, assignment_owner_type: "User", assignment_owner_id: otherUserId)
-        post :create, {assignment_owner_type: "User", assignment_owner_id: userId, assignment: mod_assignment}
-        expect(response.status).to eq(200)
-        expect(json["assignment"]["assignment_owner_id"]).to eq(userId)
-      end
-    end
-
-  end
-
   describe "PUT /assignment/:id" do
 
     describe "as a mentor" do
