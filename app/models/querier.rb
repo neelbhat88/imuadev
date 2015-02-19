@@ -107,12 +107,17 @@ class Querier
     return conditions.select { |k,v| @columnNames.include?(k) }
   end
 
+  # Bad hack to support the sub_querier's method for nesting
+  def sub_querier_keys()
+    return @columnNames
+  end
+
   def generate_view(conditions = [])
     @view = []
 
     filterBy = []
     conditions.each do |c|
-      if @columnNames.include?(c.keys.first)
+      if self.sub_querier_keys().include?(c.keys.first)
         filterBy << c.keys.first
       end
     end
