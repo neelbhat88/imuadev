@@ -187,7 +187,7 @@ angular.module('myApp')
       if student.needs_attention
         org.attention_studentIds.push(student.id)
 
-      student.meeting_expectations = _.every(student.user_expectations, (ue) -> ue.status == 0)
+      student.meeting_expectations = assignment.user_expectations.length != 0 && _.every(student.user_expectations, (ue) -> ue.status == 0)
 
     # Perform averaging calculations
     # XXX: not correct for gpa (could include a student in count, but their gpa is 0)
