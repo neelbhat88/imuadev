@@ -56,8 +56,9 @@ angular.module('myApp')
       $location.path('/login')
 
   $scope.$on 'devise:unauthorized', (event, xhr, deferred) ->
+    previous_url = $location.path()
     if $location.path() != '/login'
-      $location.path('login')
+      $location.path('login').search('pu', previous_url)
 
     deferred.reject(xhr)
 ]
@@ -83,23 +84,6 @@ angular.module('myApp')
             return false
 
         return true
-
-    # .then (user) ->
-    #   # console.log("user already authenticated")
-    # , (error) ->
-    #   # console.log("Failed current user check")
-
-    # SessionService.getCurrentUser()
-    #   .then () ->
-    #     # If no authorized roles than the route is authorized for everyone
-    #     if next.data and next.data.authorizedRoles
-    #       authorizedRoles = next.data.authorizedRoles
-    #
-    #       if !SessionService.isAuthorized(authorizedRoles)
-    #         $location.path('/')
-    #         return false
-    #
-    #     return true
 
   $rootScope.$on '$routeChangeError', (event, current, previous, rejection) ->
     $location.path('/')

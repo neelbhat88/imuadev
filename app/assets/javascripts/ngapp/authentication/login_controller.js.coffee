@@ -16,7 +16,14 @@ angular.module('myApp')
     $scope.login = (user) ->
       Auth.login(user).then (user) ->
         $rootScope.hide_nav = false
-        $location.path('/')
+
+        previous_url = $location.search().pu
+        if previous_url
+          $location.path(previous_url)
+          $location.url($location.path()) # Clears the query params
+        else
+          $location.path('/')
+
       , (error) ->
         $scope.addErrorMessage(error.data.error)
 

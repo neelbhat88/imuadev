@@ -163,12 +163,7 @@ Imua::Application.routes.draw do
     end # end :v1
   end # end :api
 
-  get '/forgot_password' => 'static#forgot_password'
-  post '/reset_password' => 'static#reset_password'
-
-  get '/login' => 'static#login'
   get '/app' => 'static#app'
-
 
   root :to => 'static#index'
   # The priority is based upon order of creation:
