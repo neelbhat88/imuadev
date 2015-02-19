@@ -73,6 +73,17 @@ angular.module('myApp')
 
     # Always calling getCurrentUser on every change/refresh to make sure current_user is set
     Auth.currentUser()
+      .then () ->
+        # If no authorized roles than the route is authorized for everyone
+        if next.data and next.data.authorizedRoles
+          authorizedRoles = next.data.authorizedRoles
+
+          if !SessionService.isAuthorized(authorizedRoles)
+            $location.path('/')
+            return false
+
+        return true
+
     # .then (user) ->
     #   # console.log("user already authenticated")
     # , (error) ->
