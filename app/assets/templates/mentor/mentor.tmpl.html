@@ -52,8 +52,11 @@
 
       <h4 class="list-header" ng-hide="all_students.length == assigned_students.length"><span class="bold">Assign Students</span> to {{mentor.first_name}}</h4>
 
+      <h6 class="search-label">Search for Students: </h6>
+      <input class="student-search form-inline" type="text" ng-model="search.name">
+
       <div class="list-container">
-        <div class="circle-pictures assign-student-circles" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)" ng-repeat="student in all_students | orderBy: 'last_name'">
+        <div class="circle-pictures assign-student-circles" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)" ng-repeat="student in all_students | orderBy: 'last_name' | filter: { full_name: search.name }">
             <div class="circle-picture">
               <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
             </div>
