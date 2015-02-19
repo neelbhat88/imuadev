@@ -34,6 +34,9 @@ angular.module('myApp')
 
     $http.put '/api/v1/users/' + user.id + '/update_password', user: user
 
+  @resetPassword = (user) ->
+    $http.post '/api/v1/users/password', user: user
+
   @getAssignedStudents = (userId) ->
     $http.get "/api/v1/users/#{userId}/relationship/students"
 

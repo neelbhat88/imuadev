@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:reset_password]
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
   respond_to :json
@@ -347,6 +347,39 @@ class Api::V1::UsersController < ApplicationController
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+########################
+# Unaunthenticated calls
+########################
+
+  # POST /users/password
+  def reset_password
+    email = params[:user][:email]
+
+    if email.blank?
+      render status: :bad_request,
+      json: {
+        message: "You must enter an email"
+      }
+      return false
+    end
+
+    user = User.find_by_email(email)
+    if user.nil?
+      render status: :bad_request,
+      json: {
+        message: "User does not exist"
+      }
+      return false
+    end
+
+    UserRepository.new.reset_password(user)
+
+    render status: :ok,
+      json: {
+        message: "Password reset successfully! Check your email for your password reset instructions"
+      }
   end
 
 end

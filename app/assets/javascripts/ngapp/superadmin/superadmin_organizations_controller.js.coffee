@@ -1,7 +1,7 @@
 angular.module('myApp')
-.controller 'SuperAdminOrganizationsCtrl', ['$scope', 'current_user', 'OrganizationService',
-  ($scope, current_user, OrganizationService) ->
-    $scope.user = current_user
+.controller 'SuperAdminOrganizationsCtrl', ['$scope', 'OrganizationService',
+  ($scope, OrganizationService) ->
+    $scope.user = $scope.current_user
 
     OrganizationService.all()
       .success (data) ->

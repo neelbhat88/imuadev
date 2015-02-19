@@ -1,10 +1,9 @@
 angular.module('myApp')
-.controller 'ProfileController', ['$scope', 'current_user', 'user_with_contacts', 'UsersService', 'LoadingService',
-($scope, current_user, user_with_contacts, UsersService, LoadingService) ->
+.controller 'ProfileController', ['$scope', 'user_with_contacts', 'UsersService', 'LoadingService',
+($scope, user_with_contacts, UsersService, LoadingService) ->
   $scope.user = user_with_contacts.user
   $scope.contacts = user_with_contacts.contacts
   $scope.time_units = user_with_contacts.time_units
-  $scope.current_user = current_user
   $scope.origUser = angular.copy($scope.user)
   $scope.editingInfo = false
   $scope.editingPassword = false
