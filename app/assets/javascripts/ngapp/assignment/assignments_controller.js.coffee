@@ -135,7 +135,7 @@ angular.module('myApp')
             $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_others
 
     $scope.isComplete = (assignment) ->
-      return assignment.user_assignments.length != 0 && _.every(assignment.user_assignments, (a) -> a.status == 1)
+      return _.every(assignment.user_assignments, (a) -> a.status == 1)
 
     $scope.isPastDue = (assignment) ->
       if !assignment.due_datetime
