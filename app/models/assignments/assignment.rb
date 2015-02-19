@@ -17,6 +17,7 @@ class AssignmentQuerier < Querier
   end
 
   def filter_attributes(attributes)
+    # Assignments should always return these properties
     attributes << :assignment_owner_type unless attributes.include?(:assignment_owner_type)
     attributes << :assignment_owner_id unless attributes.include?(:assignment_owner_id)
     return super(attributes)

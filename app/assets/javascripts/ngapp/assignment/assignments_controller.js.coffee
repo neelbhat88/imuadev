@@ -11,6 +11,7 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
+    # Holy shit what is this.
     $scope.clone = (obj, blacklist = []) ->
       copy = null
 
@@ -159,4 +160,15 @@ angular.module('myApp')
     $scope.sortCompletedAssignments = (assignment) ->
       final_order = _.sortBy($scope.list_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
       return _.indexOf(final_order, assignment)
+
+    $scope.created_by_str = (assignment) ->
+      ret = "Test"
+      switch assignment.assignment_owner_type
+        when "User"
+          ret = assignment.user.first_last_initial
+          if assignment.assignment_owner_id == $scope.current_user.id
+            ret = "Me"
+        when "Milestone"
+          ret = "a Milestone"
+      return ret
 ]
