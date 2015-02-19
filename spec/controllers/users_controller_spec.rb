@@ -180,7 +180,7 @@ describe Api::V1::UsersController do
 
   context "Assignments" do
 
-    describe "GET /users/:user_id/assignment" do
+    describe "GET /users/:id/assignments" do
 
       describe "as a mentor" do
         login_mentor
@@ -205,7 +205,7 @@ describe Api::V1::UsersController do
 
     end
 
-    describe "POST /user/:user_id/assignment" do
+    describe "POST /users/:id/assignment" do
 
       describe "as a mentor" do
         login_mentor
@@ -228,6 +228,108 @@ describe Api::V1::UsersController do
       end
 
     end
+
+    describe "POST /users/:id/create_assignment_broadcast" do
+
+      describe "as a mentor" do
+        login_mentor
+
+        let(:userId) { subject.current_user.id }
+        let(:orgId)  { subject.current_user.organization_id }
+
+        let!(:student1) { create(:student, organization_id: orgId) }
+        let!(:student2) { create(:student, organization_id: orgId) }
+
+        it "returns 200 if a mentor tries broadcasting a new assignment" do
+
+          title = "title"
+          desc = "desc"
+          due_datetime = DateTime.new(2001,2,3)
+
+          assignment = attributes_for(:assignment,
+                                      assignment_owner_type: "User", assignment_owner_id: userId + 1, # Check that ignored
+                                      title: title,
+                                      description: desc,
+                                      due_datetime: due_datetime)
+
+          student1Assignment = attributes_for(:user_assignment,
+                                              user_id: student1.id)
+
+          student2Assignment = attributes_for(:user_assignment,
+                                              user_id: student2.id)
+
+          user_assignments = [student1Assignment, student2Assignment]
+
+          post :create_assignment_broadcast, {:id => userId,
+                                              :assignment => assignment,
+                                              :user_assignments => user_assignments}
+
+          expect(response.status).to eq(200)
+          # expect(json["assignment_collection"]["user_id"]).to eq(userId)
+          # expect(json["assignment_collection"]["title"]).to eq(title)
+          # expect(json["assignment_collection"]["description"]).to eq(desc)
+          # expect(DateTime.parse(json["assignment_collection"]["due_datetime"]).strftime("%m/%d/%Y")).to eq(due_datetime.strftime("%m/%d/%Y"))
+          #
+          # user_assignments = json["assignment_collection"]["user_assignments"]
+          # expect(user_assignments.length).to eq(2)
+          # expect(user_assignments[0]["assignment_id"]).to eq(json["assignment_collection"]["id"])
+          # expect(user_assignments[1]["assignment_id"]).to eq(json["assignment_collection"]["id"])
+        end
+
+      end
+    end
+
+    describe "Assignment collection" do
+      describe "as a mentor" do
+        login_mentor
+
+        let(:userId) { subject.current_user.id }
+        let(:orgId)  { subject.current_user.organization_id }
+
+        let!(:student1) { create(:student, organization_id: orgId) }
+        let!(:student2) { create(:student, organization_id: orgId) }
+        let!(:student3) { create(:student, organization_id: orgId) }
+        let!(:student4) { create(:student, organization_id: orgId) }
+
+        let!(:assignment1) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+        let!(:student1Assignment1) { create(:user_assignment,
+                                            assignment_id: assignment1.id,
+                                            user_id: student1.id) }
+        let!(:student2Assignment1) { create(:user_assignment,
+                                            assignment_id: assignment1.id,
+                                            user_id: student2.id) }
+
+        let!(:assignment2) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+        let!(:student1Assignment2) { create(:user_assignment,
+                                            assignment_id: assignment2.id,
+                                            user_id: student1.id) }
+        let!(:student3Assignment2) { create(:user_assignment,
+                                            assignment_id: assignment2.id,
+                                            user_id: student3.id) }
+
+        # Assignment other than own
+        let!(:orgAdmin) { create(:org_admin, organization_id: orgId) }
+        let!(:assignment3) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: orgAdmin.id) }
+        let!(:student1Assignment3) { create(:user_assignment,
+                                            assignment_id: assignment3.id,
+                                            user_id: student1.id) }
+        let!(:student4Assignment3) { create(:user_assignment,
+                                            assignment_id: assignment3.id,
+                                            user_id: student4.id) }
+
+        describe "GET /users/:id/task_assignable_users_tasks" do
+          it "returns 200 if a mentor tries to collect their task assignable users' tasks" do
+            get :get_task_assignable_users_tasks, {:id => userId}
+            expect(response.status).to eq(200)
+            # expect(json["assignment_collections"].length).to eq(2)
+            # expect(json["assignment_collections"][0]["user_id"]).to eq(userId)
+            # expect(json["assignment_collections"][0]["user_assignments"].length).to eq(2)
+            # expect(json["assignment_collections"][1]["user_assignments"].length).to eq(2)
+          end
+        end
+
+      end # As a mentor
+    end # Assignment collection
 
   end
 end

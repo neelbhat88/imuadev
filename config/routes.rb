@@ -15,7 +15,10 @@ Imua::Application.routes.draw do
   assignment_owner = Proc.new do
     member do
       post :assignment
+      post :create_assignment_broadcast
       get :assignments
+      get :get_task_assignable_users
+      get :get_task_assignable_users_tasks
     end
   end
 
@@ -32,7 +35,13 @@ Imua::Application.routes.draw do
       # run foreman run rake routes to see what the routes look like
       # **************************************
       resources :comment, except: [:index, :new, :create, :edit, :show]
-      resources :assignment, except: [:index, :new, :create, :edit, :show]
+
+      resources :assignment, except: [:index, :new, :create, :edit, :show] do
+        member do
+          get :collection
+          put :broadcast
+        end
+      end
 
       resources :organization, shallow: true do
 
@@ -85,9 +94,6 @@ Imua::Application.routes.draw do
       # **************************************
       resources :users do
         collection do
-          get ':id/task_assignable_users' => 'assignment#get_task_assignable_users'
-          get ':id/task_assignable_users_tasks' => 'assignment#get_task_assignable_users_tasks'
-
           put '/:id/update_password' => 'users#update_password'
 
           put '/:id/time_unit/next' => "users#move_to_next_semester"
@@ -113,10 +119,6 @@ Imua::Application.routes.draw do
           get '/:id/user_expectation_history' => 'user_expectation_history#get_user_expectation_history'
         end
       end
-
-      get  'assignment/:id/collection'      => 'assignment#get_assignment_collection'
-      post 'users/:id/assignment/broadcast' => 'assignment#broadcast'
-      put  'assignment/:id/broadcast'       => 'assignment#broadcast_update'
 
       get 'user_assignment/:id/collect'       => 'user_assignment#collect'
       get 'users/:user_id/user_assignment/collect' => 'user_assignment#collect_all'

@@ -37,7 +37,7 @@ angular.module('myApp')
       $http.put "api/v1/assignment/#{assignment.id}/broadcast",
         { assignment: assignment, user_assignments: user_assignments }
     else
-      $http.post "api/v1/users/#{assignment.user_id}/assignment/broadcast",
+      $http.post "api/v1/users/#{assignment.user_id}/create_assignment_broadcast",
         { assignment: assignment, user_assignments: user_assignments }
 
   @collectUserAssignment = (userAssignmentId) ->

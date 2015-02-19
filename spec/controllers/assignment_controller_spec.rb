@@ -34,11 +34,13 @@ describe Api::V1::AssignmentController do
                                          due_datetime: new_due_datetime)
         put :update, {:id => assignment.id, :assignment => mod_assignment}
         expect(response.status).to eq(200)
-        expect(json["assignment"]["id"]).to eq(assignment.id)
-        expect(json["assignment"]["assignment_owner_id"]).to eq(userId)
-        expect(json["assignment"]["title"]).to eq(new_title)
-        expect(json["assignment"]["description"]).to eq(new_desc)
-        expect(DateTime.parse(json["assignment"]["due_datetime"]).strftime("%m/%d/%Y")).to eq(new_due_datetime.strftime("%m/%d/%Y"))
+        # Note: Assumes no associated user_assignments (otherwise more users will be returned)
+        ret_assignment = json["organization"]["users"][0]["assignments"][0]
+        expect(ret_assignment["id"]).to eq(assignment.id)
+        expect(ret_assignment["assignment_owner_id"]).to eq(userId)
+        expect(ret_assignment["title"]).to eq(new_title)
+        expect(ret_assignment["description"]).to eq(new_desc)
+        expect(DateTime.parse(ret_assignment["due_datetime"]).strftime("%m/%d/%Y")).to eq(new_due_datetime.strftime("%m/%d/%Y"))
       end
     end
 
@@ -108,76 +110,15 @@ describe Api::V1::AssignmentController do
 
       describe "GET /assignment/:id/collection" do
         it "returns 200 if a mentor tries to collect their own assignment" do
-          get :get_assignment_collection, {:id => assignment1.id}
+          get :collection, {:id => assignment1.id}
           expect(response.status).to eq(200)
           # expect(json["assignment_collection"]["id"]).to eq(assignment1.id)
           # expect(json["assignment_collection"]["user_assignments"].length).to eq(2)
         end
       end
 
-      describe "GET /users/:id/task_assignable_users_tasks" do
-        it "returns 200 if a mentor tries to collect all of their own assignments" do
-          get :get_task_assignable_users_tasks, {:id => userId}
-          expect(response.status).to eq(200)
-          # expect(json["assignment_collections"].length).to eq(2)
-          # expect(json["assignment_collections"][0]["user_id"]).to eq(userId)
-          # expect(json["assignment_collections"][0]["user_assignments"].length).to eq(2)
-          # expect(json["assignment_collections"][1]["user_assignments"].length).to eq(2)
-        end
-      end
-
     end # As a mentor
   end # Assignment collection
-
-  describe "POST /users/:user_id/assignment/broadcast" do
-
-    describe "as a mentor" do
-      login_mentor
-
-      let(:userId) { subject.current_user.id }
-      let(:orgId)  { subject.current_user.organization_id }
-
-      let!(:student1) { create(:student, organization_id: orgId) }
-      let!(:student2) { create(:student, organization_id: orgId) }
-
-      it "returns 200 if a mentor tries broadcasting a new assignment" do
-
-        title = "title"
-        desc = "desc"
-        due_datetime = DateTime.new(2001,2,3)
-
-        assignment = attributes_for(:assignment,
-                                    assignment_owner_type: "User", assignment_owner_id: userId + 1, # Check that ignored
-                                    title: title,
-                                    description: desc,
-                                    due_datetime: due_datetime)
-
-        student1Assignment = attributes_for(:user_assignment,
-                                            user_id: student1.id)
-
-        student2Assignment = attributes_for(:user_assignment,
-                                            user_id: student2.id)
-
-        user_assignments = [student1Assignment, student2Assignment]
-
-        post :broadcast, {:id => userId,
-                          :assignment => assignment,
-                          :user_assignments => user_assignments}
-
-        expect(response.status).to eq(200)
-        # expect(json["assignment_collection"]["user_id"]).to eq(userId)
-        # expect(json["assignment_collection"]["title"]).to eq(title)
-        # expect(json["assignment_collection"]["description"]).to eq(desc)
-        # expect(DateTime.parse(json["assignment_collection"]["due_datetime"]).strftime("%m/%d/%Y")).to eq(due_datetime.strftime("%m/%d/%Y"))
-        #
-        # user_assignments = json["assignment_collection"]["user_assignments"]
-        # expect(user_assignments.length).to eq(2)
-        # expect(user_assignments[0]["assignment_id"]).to eq(json["assignment_collection"]["id"])
-        # expect(user_assignments[1]["assignment_id"]).to eq(json["assignment_collection"]["id"])
-      end
-
-    end
-  end
 
   describe "PUT /assignment/:id/broadcast" do
 
@@ -225,9 +166,9 @@ describe Api::V1::AssignmentController do
 
         mod_user_assignments = [mod_student1Assignment1, student3Assignment1]
 
-        put :broadcast_update, {:id => assignment1.id,
-                                :assignment => mod_assignment,
-                                :user_assignments => mod_user_assignments}
+        put :broadcast, {:id => assignment1.id,
+                         :assignment => mod_assignment,
+                         :user_assignments => mod_user_assignments}
 
         expect(response.status).to eq(200)
         # expect(json["assignment_collection"]["id"]).to eq(assignment1.id)
