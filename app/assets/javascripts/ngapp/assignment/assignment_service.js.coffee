@@ -26,10 +26,10 @@ angular.module('myApp')
     $http.get "api/v1/assignment/#{assignmentId}/collection"
 
   @getTaskAssignableUsers = (userId) ->
-    $http.get "/api/v1/users/#{userId}/task_assignable_users"
+    $http.get "/api/v1/users/#{userId}/get_task_assignable_users"
 
   @getTaskAssignableUsersTasks = (userId) ->
-    $http.get "/api/v1/users/#{userId}/task_assignable_users_tasks"
+    $http.get "/api/v1/users/#{userId}/get_task_assignable_users_tasks"
 
   @broadcastAssignment = (assignment, userIds) ->
     user_assignments = _.map(userIds, (userId) -> self.newUserAssignment(userId, assignment.id))
@@ -60,7 +60,7 @@ angular.module('myApp')
     $http.get "api/v1/assignment/#{assignmentId}"
 
   @getAssignments = (userId) ->
-    $http.get "/api/v1/users/#{userId}/assignment"
+    $http.get "/api/v1/users/#{userId}/assignments"
 
   @saveAssignment = (assignment) ->
     if assignment.id

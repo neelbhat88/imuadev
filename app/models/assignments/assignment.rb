@@ -17,32 +17,8 @@ class AssignmentQuerier < Querier
   end
 
   def filter_attributes(attributes)
-    if attributes.include?(:user_id) then attributes -= [:user_id]
-      attributes << :assignment_owner_id
-    end
-    attributes << :assignment_owner_type
+    attributes << :assignment_owner_type unless attributes.include?(:assignment_owner_type)
+    attributes << :assignment_owner_id unless attributes.include?(:assignment_owner_id)
     return super(attributes)
-  end
-
-  def generate_domain(sortBy = [])
-    super(sortBy)
-    # Domain object manicuring
-    @domain.each do |d|
-      if d.keys.include?(:assignment_owner_id)
-        d[:user_id] = d[:assignment_owner_id]
-      end
-    end
-    return @domain
-  end
-
-  def generate_view(conditions = {})
-    super(conditions)
-    # Final view object manicuring
-    @view.each do |v|
-      if v.keys.include?(:assignment_owner_id)
-        v[:user_id] = v[:assignment_owner_id]
-      end
-    end
-    return @view
   end
 end

@@ -127,6 +127,7 @@ class Querier
       # Remove from @domains as its read into the view
       # TODO - SubQuerier view generation won't work if nested more than once
       # TODO - WRITE UNIT TESTS FOR THIS!!
+      # TODO - SubQuerier stuff should be pulled out of Querier altogether
       while !self.domain(filterBy).empty?
         primary_key = conditions.keys[0]
         if conditions.keys.all? {|key| self.domain[0][key] == conditions[key]}
