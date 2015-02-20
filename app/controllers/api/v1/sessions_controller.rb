@@ -18,7 +18,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
 		render status: 200,
 			json: {
-				user: ViewUser.new(current_user)
+				user: ViewUser.new(current_user, current_user.organization)
 			}
 	end
 
