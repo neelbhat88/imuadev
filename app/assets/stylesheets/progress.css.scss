@@ -99,7 +99,9 @@
         .see-more { opacity: 1; }
       }
     }
-
+    .advanced {
+      width: 2%;
+    }
     .expanded-class-info {
       @include respond-to(1200) {
         padding-bottom: 20px;

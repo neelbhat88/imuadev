@@ -40,7 +40,7 @@
 
           <div class="table--cell no-border-right breakalways" ng-repeat="user_class in user_classes">
 
-            <div ng-dblclick="editClass(user_class)" accordion-header class="widget--content--table ng-clickable" ng-hide="user_class.editing">
+            <div accordion-header ng-dblclick="editClass(user_class)" class="widget--content--table ng-clickable" ng-hide="user_class.editing">
 
               <div class="table--cell">
                 <div class="clear">
@@ -71,39 +71,40 @@
                   </div>
                 </div>
               </div>
-
-              <div class="table--cell breakalways" ng-if="user_class.period != null">
-                <div class="cell--padding">
-                  <p>Period</p>
-                  <h5 class="bold">{{user_class.period}}</h5>
+              <div id="fixed-table" class="widget--content--table breakalways">
+                <div class="table--cell advanced break600" ng-if="user_class.period != null">
+                  <div class="cell--padding">
+                    <p>Period</p>
+                    <h5 class="bold">{{user_class.period}}</h5>
+                  </div>
                 </div>
-              </div>
 
-              <div class="table--cell breakalways" ng-if="user_class.room != null">
-                <div class="cell--padding">
-                  <p>Room</p>
-                  <h5 class="bold">{{user_class.room}}</h5>
+                <div class="table--cell advanced break600" ng-if="user_class.room != null">
+                  <div class="cell--padding">
+                    <p>Room</p>
+                    <h5 class="bold">{{user_class.room}}</h5>
+                  </div>
                 </div>
-              </div>
 
-              <div class="table--cell breakalways" ng-if="user_class.credit_hours != 1">
-                <div class="cell--padding">
-                  <p>Credit Hours</p>
-                  <h5 class="bold">{{user_class.credit_hours}}</h5>
+                <div class="table--cell advanced break600" ng-if="user_class.credit_hours != 1">
+                  <div class="cell--padding">
+                    <p>Credit Hours</p>
+                    <h5 class="bold">{{user_class.credit_hours}}</h5>
+                  </div>
                 </div>
-              </div>
 
-              <div class="table--cell breakalways" ng-if="user_class.level != 'Regular'">
-                <div class="cell--padding">
-                  <p>Level</p>
-                  <h5 class="bold">{{user_class.level}}</h5>
+                <div class="table--cell advanced break600" ng-if="user_class.level != 'Regular'">
+                  <div class="cell--padding">
+                    <p>Level</p>
+                    <h5 class="bold">{{user_class.level}}</h5>
+                  </div>
                 </div>
-              </div>
 
-              <div class="table--cell breakalways" ng-if="user_class.subject != null">
-                <div class="cell--padding">
-                  <p>Subject</p>
-                  <h5 class="bold">{{user_class.subject}}</h5>
+                <div class="table--cell advanced break600" ng-if="user_class.subject != null">
+                  <div class="cell--padding">
+                    <p>Subject</p>
+                    <h5 class="bold">{{user_class.subject}}</h5>
+                  </div>
                 </div>
               </div>
 
