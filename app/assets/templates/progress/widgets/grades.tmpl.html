@@ -40,7 +40,7 @@
 
           <div class="table--cell no-border-right breakalways" ng-repeat="user_class in user_classes">
 
-            <div accordion-header class="widget--content--table ng-clickable" ng-hide="user_class.editing">
+            <div ng-dblclick="editClass(user_class)" accordion-header class="widget--content--table ng-clickable" ng-hide="user_class.editing">
 
               <div class="table--cell">
                 <div class="clear">
@@ -120,7 +120,7 @@
               <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
 
                 <div class="widget--content--table breakalways">
-                  <div class="table--cell break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
+                  <div id="edit--grades" class="table--cell break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
                       <label-with-errors label="Class" form="gradesForm" formfield="gradesForm.classname"></label-with-errors>
                       <input autocomplete="off" type="text" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" typeahead="className for className in org_class_titles | filter: $viewValue | limitTo:10" required>
@@ -152,16 +152,26 @@
                         <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="gradeValue" required>
                     </span>
                   </div>
+                  <div id="cell--form" ng-hide="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell">
+                    <div class="input-group advanced--toggle">
+                      <span class="form-control btn btn-sm btn-default">See Advanced</span>
+                    </div>
+                  </div>
+                  <div id="cell--form" ng-show="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell">
+                    <div class="input-group advanced--toggle">
+                      <span class="form-control btn btn-sm btn-default">Hide Advanced</span>
+                    </div>
+                  </div>
 
+                </div>
+
+                <div ng-show="user_class.seeAdvanced" class="widget--content--table breakalways">
                   <div id="cell--form" class="table--cell">
                     <span class="input-group">
                       <label>Credit Hours</label>
                       <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
                     </span>
                   </div>
-                </div>
-
-                <div class="widget--content--table breakalways">
                   <div class="table--cell break600">
                       <span class="input-group">
                           <label>Level</label>
