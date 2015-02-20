@@ -23,7 +23,7 @@ class AssignmentQuerier < Querier
     return super(attributes)
   end
 
-  # Bad hack to support the sub_querier's method for nesting
+  # Bad HACK to support the sub_querier's method for nesting
   def sub_querier_keys()
     ret = @columnNames
     ret << :user_id
@@ -32,11 +32,11 @@ class AssignmentQuerier < Querier
   end
 
   def generate_domain(sortBy = [])
-    # Bad hack to support the sub_querier's method for nesting
+    # Bad HACK to support the sub_querier's method for nesting
     super(sortBy << :assignment_owner_id)
     # Domain object manicuring
     @domain.each do |d|
-      # Bad hack to support the sub_querier's method for nesting
+      # Bad HACK to support the sub_querier's method for nesting
       if d.keys.include?(:assignment_owner_type)
         case d[:assignment_owner_type]
         when "User"
