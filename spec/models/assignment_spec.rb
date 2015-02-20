@@ -22,4 +22,29 @@ describe Assignment do
       expect(Assignment.new(due_datetime: nil)).to have(0).errors_on(:due_datetime)
     end
   end
+
+  describe "dependent destroy behavior" do
+
+    describe "owned by User type" do
+      let!(:assignee) { create(:student) }
+      let!(:assigner) { create(:org_admin) }
+
+      let!(:assignment)     { create(:assignment,
+                                     assignment_owner_type: "User",
+                                     assignment_owner_id: assigner.id) }
+
+      let!(:userAssignment) { create(:user_assignment,
+                                     assignment_id: assignment.id,
+                                     user_id: assignee.id) }
+
+      describe "destroy owner" do
+        subject { lambda { User.destroy(assigner.id) } }
+
+        it { should change { User.count }.by -1 }
+        it { should change { Assignment.count }.by -1 }
+        it { should change { UserAssignment.count }.by -1 }
+      end
+    end
+
+  end
 end
