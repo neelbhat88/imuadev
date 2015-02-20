@@ -314,4 +314,31 @@ namespace :db_update do
     end
   end
 
+  desc "Consolidate subject options"
+  task :consolidate_subject_options => :environment do
+    all_students = User.where(:role => 50)
+    all_students.each do | s |
+      student_classes = UserClass.where(:user_id => s.id)
+      student_classes.each do | c |
+        case c.subject
+          when 'Math - Other', 'Math - Core'
+            new_subject = 'Math'
+          when 'Social Science', 'Laboratory Science'
+            new_subject = 'Science'
+          when 'Elective'
+            new_subject = 'Other'
+          else
+            new_subject = c.subject
+        end
+
+        if c.subject == new_subject
+          puts "No need to update"
+        else
+          c.update_attributes(:subject => new_subject)
+          puts "Updated " + c.name + " subject to " + new_subject.to_s + " for " + s.first_name + " " + s.last_name
+        end
+      end
+    end
+  end
+
 end

@@ -24,13 +24,10 @@ angular.module('myApp')
 
   'CLASS_SUBJECTS':
     english: "English"
-    social_science: "Social Science"
-    lab_science: "Laboratory Science"
+    science: "Science"
     social_studies: "Social Studies"
-    math_core: "Math - Core"
-    math_other: "Math - Other"
+    math: "Math"
     foreign_language: "Foreign Language"
-    elective: "Elective"
     other: "Other"
 
   'EXPECTATION_STATUS':
