@@ -86,13 +86,13 @@ angular.module('myApp')
       user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.user.id})
       AssignmentService.setUserAssignmentStatus(user_assignment, 1)
         .then () ->
-          console.log(user_assignment)
+          # console.log(user_assignment)
 
     $scope.markIncomplete = (assignment) ->
       user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.user.id})
       AssignmentService.setUserAssignmentStatus(user_assignment, 0)
         .then () ->
-          console.log(user_assignment)
+          # console.log(user_assignment)
 
     $scope.incompleteAssignments = () ->
       if !$scope.list_assignments then return
