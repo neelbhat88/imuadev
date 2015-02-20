@@ -279,7 +279,7 @@ public
   end
 
   def collect_user_assignments(userId)
-    return UserAssignment.includes(:assignment => :user).where(:user_id => userId)
+    return UserAssignment.includes(:assignment => :assignment_owner).where(:user_id => userId)
   end
 
   def get_user_assignment(userAssignmentId)
