@@ -1,7 +1,7 @@
 <div class="progress-circle progress-circle--default" ng-class="{'needsAttention': {{student.id | existsInArray: attention_students}}}">
   <a ng-href="app#/progress/{{student.id}}" title="View {{student.first_name}}'s' Progress">
     <div class="circle-size">
-      <progress-circle parentclass="circle-size" identifier="default" student="student"></progress-circle>
+      <progress-circle drawduration="0" parentclass="circle-size" identifier="default" student="student"></progress-circle>
     </div>
   </a>
   <h6 class="bold"><a ng-href="app#/progress/{{student.id}}" title="View {{student.first_name}}'s Progress">{{student.first_last_initial}}</a></h6>

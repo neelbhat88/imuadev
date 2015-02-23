@@ -50,6 +50,7 @@ angular.module('myApp')
     $scope.editClass = (user_class) ->
       $scope.classes.editing = true
       user_class.editing = true
+      user_class.seeAdvanced = false
       # Is there a better way to do this??
       user_class.new_name = user_class.name
       user_class.new_grade = user_class.grade
@@ -112,6 +113,9 @@ angular.module('myApp')
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       $scope.editClass(new_class)
       $scope.user_classes.push(new_class)
+
+    $scope.toggleAdvanced = (user_class) ->
+      user_class.seeAdvanced = !user_class.seeAdvanced
 
     $scope.cancelEdit = (user_class) ->
       if user_class.id
