@@ -37,7 +37,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :create_assignment,
           :create_assignment_broadcast,
           :get_task_assignable_users,
@@ -64,7 +64,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :create_assignment,
           :create_assignment_broadcast,
           :get_task_assignable_users,
@@ -88,7 +88,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks
         ]
@@ -112,7 +112,7 @@ class Ability
               :get_user_assignments,
               :create_user_assignment,
               :get_user_assignment_collections,
-              :get_assignments,
+              :index_assignments,
               :get_task_assignable_users,
               :get_task_assignable_users_tasks
             ]
@@ -126,7 +126,7 @@ class Ability
               :get_user_progress,
               :get_user_assignments,
               :get_user_assignment_collections,
-              :get_assignments,
+              :index_assignments,
               :get_task_assignable_users,
               :get_task_assignable_users_tasks
             ]
@@ -208,7 +208,9 @@ class Ability
                   :get_assignment_collection]
       end
 
-      if user.id == subjectAssignment.user_id
+
+      if subjectAssignment.assignment_owner_type == "User" &&
+         user.id == subjectAssignment.assignment_owner_id
         rules += [:get_assignment,
                   :update_assignment,
                   :destroy_assignment,

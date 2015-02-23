@@ -8,12 +8,6 @@ class TimeUnit < ActiveRecord::Base
   belongs_to :roadmap
 end
 
-class TimeUnitQuerier < Querier
-  def initialize
-    return super(TimeUnit)
-  end
-end
-
 class ViewTimeUnit
   attr_accessor :id, :name, :milestones
 

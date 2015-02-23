@@ -21,7 +21,7 @@ angular.module('myApp')
   # OrganizationWithUsers object. Parses student progress based on the given
   # timeUnitId. If no timeUnitId is given, then it parses student progress
   # based on the student's current time_unit_id.
-  # TODO This needs to be broken down further
+  # TODO This needs to be broken down further. Much Further.
   @parseOrganizationWithUsers = (org, timeUnitId) ->
 
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
@@ -50,7 +50,15 @@ angular.module('myApp')
     # Collect all assignments
     org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
     org.assignments = _.without(org.assignments, undefined)
-    _.each(org.assignments, (a) -> a.user = _.find(org.users, (u) -> a.user_id == u.id); a.user_assignments = [])
+    # Associate to their owner object
+    for a in org.assignments
+      switch a.assignment_owner_type
+        when "User"
+          a.user = _.find(org.users, (u) -> a.assignment_owner_id == u.id)
+        when "Milestone"
+          a.milestone = _.find(org.milestones, (m) -> a.assignment_owner_id == m.id)
+      a.user_assignments = []
+
     # Collect all user_assignments
     org.user_assignments = _.union(_.flatten(_.pluck(org.users, "user_assignments"), true))
     org.user_assignments = _.without(org.user_assignments, undefined)
