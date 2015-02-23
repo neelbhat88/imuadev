@@ -121,13 +121,13 @@
               <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
 
                 <div class="widget--content--table breakalways">
-                  <div id="edit--grades" class="table--cell break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell advanced break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
                       <label-with-errors label="Class" form="gradesForm" formfield="gradesForm.classname"></label-with-errors>
                       <input autocomplete="off" type="text" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" typeahead="className for className in org_class_titles | filter: $viewValue | limitTo:10" required>
                     </span>
                   </div>
-                  <div id="cell--form" class="table--cell"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell advanced"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                    <span class="input-group">
                        <label-with-errors label="Letter Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
                        <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
@@ -147,27 +147,27 @@
                    </span>
                   </div>
 
-                  <div id="cell--form" class="table--cell"  ng-class="{'has-error': gradesForm.gradeValue.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell advanced"  ng-class="{'has-error': gradesForm.gradeValue.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
                         <label-with-errors label="Grade (Value)" form="gradesForm" formfield="gradesForm.gradeValue"></label-with-errors>
                         <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="gradeValue" required>
                     </span>
                   </div>
-                  <div id="cell--form" ng-hide="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell">
+                  <div ng-hide="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell advanced">
                     <div class="input-group advanced--toggle">
                       <span class="form-control btn btn-sm btn-default">See Advanced</span>
                     </div>
                   </div>
-                  <div id="cell--form" ng-show="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell">
+                  <div ng-show="user_class.seeAdvanced" ng-click="toggleAdvanced(user_class)" class="table--cell advanced">
                     <div class="input-group advanced--toggle">
-                      <span class="form-control btn btn-sm btn-default">Hide Advanced</span>
+                      <span class="btn btn-sm btn-default">Hide Advanced</span>
                     </div>
                   </div>
 
                 </div>
 
                 <div ng-show="user_class.seeAdvanced" class="widget--content--table breakalways">
-                  <div id="cell--form" class="table--cell">
+                  <div class="table--cell break600">
                     <span class="input-group">
                       <label>Credit Hours</label>
                       <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
