@@ -5,10 +5,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # Setup tagging capability
+  acts_as_taggable
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   					:first_name, :last_name, :phone, :role, :avatar, :organization_id,
-            :time_unit_id, :class_of, :title, :status
+            :time_unit_id, :class_of, :title, :status, :tag_list
   # attr_accessible :title, :body
 
   belongs_to :organization
