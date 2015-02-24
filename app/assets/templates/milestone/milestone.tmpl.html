@@ -20,6 +20,8 @@
         <h4>{{milestone | printMilestone}}</h4>
       </div>
 
+      <div ng-if="loaded_data && milestoneHasTasks()" ng-include="'milestone/widgets/task_list.html'"><br></div>
+
       <div ng-if="num_students_in_semester == 0">
         <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
         <h5 ng-if="current_user.is_mentor" class="italic">None of your students are currently in {{milestone.time_unit_name}}</h5>

@@ -26,7 +26,7 @@ angular.module('myApp')
         $scope.user_assignments_incomplete = _.filter($scope.user_assignments_incomplete, (ua) -> _.contains(assignable_user_ids, ua.user.id))
 
     if !assignment
-      $scope.assignment = AssignmentService.newAssignment($scope.current_user.id)
+      $scope.assignment = AssignmentService.newAssignment('User', $scope.current_user.id)
       $scope.assignment.editing = true
       $scope.user = $scope.current_user
     else
@@ -46,7 +46,7 @@ angular.module('myApp')
     $('input, textarea').placeholder()
 
     if $scope.current_user.id == $scope.user.id
-      AssignmentService.getTaskAssignableUsers($scope.user.id)
+      AssignmentService.getTaskAssignableUsers('User', $scope.user.id)
         .success (data) ->
           $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
           $scope.assignable_users = $scope.organization.users
@@ -76,7 +76,8 @@ angular.module('myApp')
     $scope.saveAssignment = (index) ->
       new_assignment = AssignmentService.newAssignment($scope.user.id)
       new_assignment.id = $scope.assignment.id
-      new_assignment.user_id = $scope.assignment.user_id
+      new_assignment.assignment_owner_type = $scope.assignment.assignment_owner_type
+      new_assignment.assignment_owner_id = $scope.assignment.assignment_owner_id
       new_assignment.title = $scope.assignment.new_title
       new_assignment.description = $scope.assignment.new_description
       new_assignment.due_datetime = $scope.assignment.new_due_datetime

@@ -12,6 +12,17 @@ angular.module('myApp')
         parseInt($route.current.params.milestone_id, 10)
       ]
 
+      # milestone: ['$q', '$route', 'MilestoneService', 'OrganizationService', ($q, $route, MilestoneService, OrganizationService) ->
+      #   defer = $q.defer()
+      #   MilestoneService.getMilestoneStatus($route.current.params.milestone_id)
+      #     .succeess (data) ->
+      #       organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+      #       defer.resolve(organization.milestones[0])
+      #     .error (data) ->
+      #       defer.reject()
+      #   defer.promise
+      # ]
+
       edit: ['$route', ($route) ->
         $route.current.params.edit
       ]

@@ -9,6 +9,12 @@ angular.module('myApp')
 
   self = this
 
+  @_ownerTypeToRoute = (type) ->
+    switch type
+      when "User" then return "users"
+      when "Milestone" then return "milestone"
+    return type
+
   @setUserAssignmentStatus = (user_assignment, status) ->
     new_user_assignment = @newUserAssignment(user_assignment.user_id, user_assignment.assignment_id)
     new_user_assignment.id = user_assignment.id
@@ -25,11 +31,13 @@ angular.module('myApp')
   @getAssignmentCollection = (assignmentId) ->
     $http.get "api/v1/assignment/#{assignmentId}/collection"
 
-  @getTaskAssignableUsers = (userId) ->
-    $http.get "/api/v1/users/#{userId}/get_task_assignable_users"
+  @getTaskAssignableUsers = (ownerType, ownerId) ->
+    route = self._ownerTypeToRoute(ownerType)
+    $http.get "/api/v1/#{route}/#{ownerId}/get_task_assignable_users"
 
-  @getTaskAssignableUsersTasks = (userId) ->
-    $http.get "/api/v1/users/#{userId}/get_task_assignable_users_tasks"
+  @getTaskAssignableUsersTasks = (ownerType, ownerId) ->
+    route = self._ownerTypeToRoute(ownerType)
+    $http.get "/api/v1/#{route}/#{ownerId}/get_task_assignable_users_tasks"
 
   @broadcastAssignment = (assignment, userIds) ->
     user_assignments = _.map(userIds, (userId) -> self.newUserAssignment(userId, assignment.id))
@@ -37,36 +45,40 @@ angular.module('myApp')
       $http.put "api/v1/assignment/#{assignment.id}/broadcast",
         { assignment: assignment, user_assignments: user_assignments }
     else
-      $http.post "api/v1/users/#{assignment.user_id}/create_assignment_broadcast",
+      route = self._ownerTypeToRoute(assignment.assignment_owner_type)
+      $http.post "api/v1/#{route}/#{assignment.assignment_owner_id}/create_assignment_broadcast",
         { assignment: assignment, user_assignments: user_assignments }
 
   @collectUserAssignment = (userAssignmentId) ->
     $http.get "api/v1/user_assignment/#{userAssignmentId}/collect"
 
   @collectUserAssignments = (userId) ->
-    $http.get "api/v1/users/#{userId}/user_assignment/collect"
+    $http.get "api/v1/#{users}/#{userId}/user_assignment/collect"
 
   ###################################
   ########### ASSIGNMENT ############
   ###################################
 
-  @newAssignment = (userId) ->
-    user_id:          userId,
-    title:            "",
-    description:      "",
-    due_datetime:     null
+  @newAssignment = (ownerType, ownerId) ->
+    assignment_owner_type: ownerType,
+    assignment_owner_id:   ownerId,
+    title:                 "",
+    description:           "",
+    due_datetime:          null
 
   @getAssignment = (assignmentId) ->
     $http.get "api/v1/assignment/#{assignmentId}"
 
-  @getAssignments = (userId) ->
-    $http.get "/api/v1/users/#{userId}/assignments"
+  @getAssignments = (ownerType, ownerId) ->
+    route = self._ownerTypeToRoute(ownerType)
+    $http.get "/api/v1/#{route}/#{ownerId}/assignments"
 
   @saveAssignment = (assignment) ->
     if assignment.id
       $http.put "/api/v1/assignment/#{assignment.id}", {assignment: assignment}
     else
-      $http.post "/api/v1/users/#{assignment.user_id}/assignment", {assignment: assignment}
+      route = self._ownerTypeToRoute(assignment.assignment_owner_type)
+      $http.post "/api/v1/#{route}/#{assignment.assignment_owner_id}/assignment", {assignment: assignment}
 
   @deleteAssignment = (assignmentId) ->
     $http.delete "/api/v1/assignment/#{assignmentId}"

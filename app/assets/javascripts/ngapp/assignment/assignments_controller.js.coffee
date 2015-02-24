@@ -54,7 +54,7 @@ angular.module('myApp')
 
       return copy
 
-    AssignmentService.getTaskAssignableUsersTasks($scope.user.id)
+    AssignmentService.getTaskAssignableUsersTasks('User', $scope.user.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.user = _.find($scope.organization.users, (u) -> u.id == $scope.user.id)

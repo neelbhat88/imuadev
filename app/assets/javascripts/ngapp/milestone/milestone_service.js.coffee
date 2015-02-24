@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'MilestoneService', ['$http', ($http) ->
+.service 'MilestoneService', ['$http', '$q', ($http, $q) ->
   self = this
 
   @newMilestone = (_organization_id, _time_unit_id, _module, _submodule, _title, _description, _icon) ->
@@ -11,9 +11,15 @@ angular.module('myApp')
     description: _description,
     icon: _icon
 
+  @_getMilestoneStatus = (milestoneId) ->
+    $http.get "api/v1/milestone/#{milestoneId}/status"
 
   @getMilestoneStatus = (milestoneId) ->
-    $http.get "api/v1/milestone/#{milestoneId}/status"
+    defer = $q.defer()
+    @_getMilestoneStatus(milestoneId)
+      .success (data) ->
+        defer.resolve(data)
+    defer.promise
 
   @
 ]

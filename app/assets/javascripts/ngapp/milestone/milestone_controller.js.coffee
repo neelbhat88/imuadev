@@ -1,8 +1,9 @@
 angular.module('myApp')
-.controller 'MilestoneController', ['$scope', '$route', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService',
-  ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
+.controller 'MilestoneController', ['$scope', '$route', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
+  ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
 
     $scope.current_user = current_user
+    $scope.new_assignment = AssignmentService.newAssignment('Milestone', milestone_id)
 
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
@@ -20,7 +21,7 @@ angular.module('myApp')
         $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
 
     MilestoneService.getMilestoneStatus(milestone_id)
-      .success (data) ->
+      .then (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.users_total = $scope.organization.students
         $scope.milestone = $scope.organization.milestones[0]
@@ -29,7 +30,10 @@ angular.module('myApp')
         $scope.loaded_data = true
 
     $scope.userMilestonesAreEditable = (milestone) ->
-      return milestone.submodule == "YesNo"
+      return $scope.milestone.submodule == "YesNo"
+
+    $scope.milestoneHasTasks = () ->
+      return $scope.milestone.submodule == "YesNo"
 
     $scope.setUserMilestone = (user) ->
       ProgressService.addUserMilestone(user, $scope.milestone.time_unit_id, $scope.milestone.id)
@@ -44,4 +48,8 @@ angular.module('myApp')
         .success (data) ->
           user.user_milestones = []
           $scope.recalculateCompletion()
+
+    $scope.saveTask = (task) ->
+
+
 ]
