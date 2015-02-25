@@ -35,6 +35,8 @@ angular.module('myApp')
 
         $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
 
+        $scope.class_of_years = [2014,2015,2016,2017,2018,2019,2020]
+
         $scope.loaded_users = true
 
     $scope.fullName = (user) ->
