@@ -61,6 +61,20 @@ angular.module('myApp')
       user_class.new_subject = user_class.subject
       user_class.new_credit_hours = user_class.credit_hours
 
+    $scope.editClassAdvanced = (user_class) ->
+      $scope.classes.editing = true
+      user_class.editing = true
+      user_class.seeAdvanced = true
+      # Is there a better way to do this??
+      user_class.new_name = user_class.name
+      user_class.new_grade = user_class.grade
+      user_class.new_grade_value = user_class.grade_value
+      user_class.new_room = user_class.room
+      user_class.new_period = user_class.period
+      user_class.new_level = user_class.level
+      user_class.new_subject = user_class.subject
+      user_class.new_credit_hours = user_class.credit_hours
+
     $scope.saveClass = (user_class) ->
       if !user_class.new_name || !user_class.new_grade
         return
