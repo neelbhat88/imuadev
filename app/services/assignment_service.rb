@@ -225,10 +225,11 @@ private
   def _get_assignments_view(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    assignmentQ = Querier.factory(Assignment).select([:id, :title, :description, :due_datetime, :created_at, :assignment_owner_type, :assignment_owner_id]).where(conditions)
-    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :updated_at]).where(conditions)
-
+    assignmentQ = Querier.factory(Assignment).select([:id, :title, :description, :due_datetime, :created_at, :assignment_owner_type, :assignment_owner_id], [:organization_id]).where(conditions)
+    conditions[:organization_id] = assignmentQ.pluck(:organization_id)
     conditions[:owner_object_class] = assignmentQ.domain[0][:assignment_owner_type].classify.constantize
+
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :updated_at]).where(conditions)
 
     conditions[:user_id] = (userAssignmentQ.pluck(:user_id)).uniq
     if conditions[:owner_object_class].name == "User"
@@ -246,10 +247,17 @@ private
       view = {users: userQ.view}
     else
       userQ.set_subQueriers([userAssignmentQ])
-      ownerObjQ = Querier.factory(conditions[:owner_object_class]).where(conditions.slice(:owner_object_id))
+      foreign_key = {conditions[:owner_object_class].name.foreign_key.to_sym => conditions[:owner_object_id]}
+      ownerObjQ = Querier.factory(conditions[:owner_object_class]).where(foreign_key)
       ownerObjQ.set_subQueriers([assignmentQ])
       view[:users] = userQ.view
-      view[conditons[:owner_object_class].name.underscore.pluralize.to_sym] = ownerObjQ.view
+      view[conditions[:owner_object_class].name.underscore.pluralize.to_sym] = ownerObjQ.view
+    end
+
+    if conditions[:owner_object_class].name == "Milestone"
+      timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+      view[:time_units] = timeUnitQ.view
+      view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
     end
 
     return view

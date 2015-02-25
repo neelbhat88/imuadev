@@ -23,7 +23,6 @@ angular.module('myApp')
   # based on the student's current time_unit_id.
   # TODO This needs to be broken down further. Much Further.
   @parseOrganizationWithUsers = (org, timeUnitId) ->
-
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
 
     org.students = _.each(_.where(org.users, { role: 50 }), (s) -> s.modules_progress = [] )
@@ -49,7 +48,10 @@ angular.module('myApp')
 
     # Collect all assignments
     org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
+    console.log(org.assignments)
+    org.assignments = org.assignments.concat(_.union(_.flatten(_.pluck(org.milestones, "assignments"))))
     org.assignments = _.without(org.assignments, undefined)
+    console.log(org.assignments)
     # Associate to their owner object
     for a in org.assignments
       switch a.assignment_owner_type

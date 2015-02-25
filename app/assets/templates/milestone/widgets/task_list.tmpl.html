@@ -2,16 +2,16 @@
 
   <div class="task-list" ng-if="loaded_data && milestoneHasTasks()">
     <h6>What's needed to complete this task?</h6>
-    <div class="task-item" ng-repeat="task in milestone.tasks">
-
+    <div class="task-item" ng-repeat="assignment in milestone.assignments">
+      <h5>Task: {{assignment.id}}</h5>
     </div>
 
     <div class="task-content">
       <div class="form-wrapper">
         <label><h6>Task Name:</h6></label>
-        <input class="form-control" ng-model="new_assignment.new_title" placeholder="Title">
+        <input class="form-control" ng-model="new_assignment.title" placeholder="Title">
         <label><h6>Due Date:</h6></label>
-        <imua-datepicker date="new_assignment.new_due_datetime"></imua-datepicker>
+        <imua-datepicker date="new_assignment.due_datetime"></imua-datepicker>
       </div>
 
       <!-- <label><h5>Details:</h5></label>

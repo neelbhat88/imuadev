@@ -13,7 +13,7 @@ class YesNoMilestoneCollegePrep < CustomMilestone
   end
 
   def has_earned?(user, time_unit_id)
-    @earned = MilestoneService.new.has_user_earned_milestone?(user.id, time_unit_id, @id)
+    @earned = MilestoneService.new(nil).has_user_earned_milestone?(user.id, time_unit_id, @id)
   end
 
   def valid?

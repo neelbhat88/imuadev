@@ -12,6 +12,7 @@ class Ability
       when "UserAssignment" then user_assignment_abilities(user, subject)
       when "Expectation" then expectation_abilities(user, subject)
       when "Comment" then comment_abilities(user, subject)
+      when "Milestone" then milestone_abilities(user, subject)
       else []
       end
 
@@ -307,6 +308,30 @@ class Ability
       if user.id == subjectUser.id
         rules += [:update_comment,
                   :destroy_comment]
+      end
+
+      rules.uniq
+    end
+
+    def milestone_abilities(user, subjectMilestone)
+      rules = []
+
+      if user.super_admin?
+        return[:index_assignments,
+               :create_assignment,
+               :create_assignment_broadcast,
+               :get_task_assignable_users,
+               :get_task_assignable_users_tasks]
+      else
+        return [] if user.organization_id != subjectMilestone.organization_id
+      end
+
+      if user.org_admin?
+        rules += [:index_assignments,
+                  :create_assignment,
+                  :create_assignment_broadcast,
+                  :get_task_assignable_users,
+                  :get_task_assignable_users_tasks]
       end
 
       rules.uniq

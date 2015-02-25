@@ -9,7 +9,7 @@ class Api::V1::OrganizationController < ApplicationController
     @organizationRepository = organizationRepo ? organizationRepo : OrganizationRepository.new
     @roadmapRepository = roadmapRepo ? roadmapRepo : RoadmapRepository.new
     @enabledModules = enabledModules ? enabledModules : EnabledModules.new
-    @progressService = progressService ? progressService : ProgressService.new
+    @progressService = progressService ? progressService : ProgressService.new(current_user)
   end
 
   # GET /organization

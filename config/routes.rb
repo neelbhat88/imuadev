@@ -84,6 +84,10 @@ Imua::Application.routes.draw do
           end
         end
 
+        resources :milestone, shallow: true do
+          assignment_owner.call
+        end
+
       end
 
 

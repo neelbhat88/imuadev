@@ -1,5 +1,9 @@
 class MilestoneService
 
+  def initialize(current_user)
+    @current_user = current_user
+  end
+
   def get_milestone_status(params)
     conditions = params
 

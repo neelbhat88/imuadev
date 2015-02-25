@@ -5,8 +5,8 @@ class Api::V1::ProgressController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
   def load_services( progressService=nil, milestoneService=nil, userRepo=nil, orgRepo=nil, userService=nil)
-    @progressService = progressService ? progressService : ProgressService.new
-    @milestoneService = milestoneService ? milestoneService : MilestoneService.new
+    @progressService = progressService ? progressService : ProgressService.new(current_user)
+    @milestoneService = milestoneService ? milestoneService : MilestoneService.new(current_user)
     @userRepository = userRepo ? userRepo : UserRepository.new
     @organizationRepository = orgRepo ? orgRepo : OrganizationRepository.new
   end

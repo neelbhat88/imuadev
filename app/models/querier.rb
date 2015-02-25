@@ -70,6 +70,8 @@ class Querier
       if @domain.nil?
         self.generate_domain(sortBy)
       else
+        Rails.logger.debug("*** sortby: #{sortBy} ***")
+        # Rails.logger.debug("**** |d| d.values_at(*sortBy): #{|d| d.values_at(*sortBy) } ")
         @domain = @domain.sort_by { |d| d.values_at(*sortBy) }
       end
       @sortedBy = sortBy

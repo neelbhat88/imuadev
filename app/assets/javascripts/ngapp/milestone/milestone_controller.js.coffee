@@ -2,6 +2,7 @@ angular.module('myApp')
 .controller 'MilestoneController', ['$scope', '$route', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
   ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
 
+    $scope.milestone_id = milestone_id
     $scope.current_user = current_user
     $scope.new_assignment = AssignmentService.newAssignment('Milestone', milestone_id)
 
@@ -20,7 +21,7 @@ angular.module('myApp')
         $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
         $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
 
-    MilestoneService.getMilestoneStatus(milestone_id)
+    MilestoneService.getMilestoneStatus($scope.milestone_id)
       .then (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.users_total = $scope.organization.students
@@ -49,7 +50,13 @@ angular.module('myApp')
           user.user_milestones = []
           $scope.recalculateCompletion()
 
-    $scope.saveTask = (task) ->
-
+    $scope.saveAssignment = (assignment) ->
+      # Always assign all assignable users
+      AssignmentService.broadcastAssignment(assignment, _.map($scope.users_total, (assignee) -> assignee.id))
+        .success (data) ->
+          organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+          saved_assignment =  organization.assignments[0]
+          saved_assignment.assignees = []
+          _.push($scope.milestone.assignments, saved_assignment)
 
 ]

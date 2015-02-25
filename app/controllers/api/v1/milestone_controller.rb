@@ -3,6 +3,12 @@ class Api::V1::MilestoneController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
   respond_to :json
+  before_filter :load_services
+
+  def load_services ( assignmentService = nil, milestoneService = nil )
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new(current_user)
+    @milestoneService = milestoneService ? milestoneService : MilestoneService.new(current_user)
+  end
 
   # GET /milestone/:id/status
   def get_milestone_status
@@ -15,7 +21,7 @@ class Api::V1::MilestoneController < ApplicationController
     #   return
     # end
 
-    result = MilestoneService.new.get_milestone_status(url_params)
+    result = @milestoneService.get_milestone_status(url_params)
 
     render status: result.status,
       json: Oj.dump({ info: result.info, organization: result.object }, mode: :compat)
@@ -39,7 +45,7 @@ class Api::V1::MilestoneController < ApplicationController
                   :title => title, :description => desc, :value => value, :time_unit_id => tuId,
                   :is_default => is_default, :icon => icon, :organization_id => organizationId }
 
-    result = MilestoneService.new.create_milestone(milestone)
+    result = @milestoneService.create_milestone(milestone)
 
     viewMilestone = ViewMilestone.new(result.object) unless result.object.nil?
     render status: result.status,
@@ -91,5 +97,101 @@ class Api::V1::MilestoneController < ApplicationController
       json: {
         info: "Updated all milestones"
       }
+  end
+
+##############
+# Assignment #
+##############
+
+  # POST /milestone/:id/assignment
+  def assignment
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "Milestone"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :create_assignment, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.create(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # POST /milestone/:id/create_assignment_broadcast
+  def create_assignment_broadcast
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "Milestone"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :create_assignment_broadcast, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.create_broadcast(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /milestone/:id/assignments
+  def assignments
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "Milestone"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :index_assignments, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /milestone/:id/get_task_assignable_users
+  def get_task_assignable_users
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "Milestone"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(current_user, :get_task_assignable_users, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @milestoneService.get_task_assignable_users(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /milestone/:id/get_task_assignable_users_tasks
+  def get_task_assignable_users_tasks
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "Milestone"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(current_user, :get_task_assignable_users_tasks, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @milestoneService.get_task_assignable_users_tasks(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 end
