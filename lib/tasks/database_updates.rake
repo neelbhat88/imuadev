@@ -7,7 +7,8 @@ namespace :db_update do
   desc "All db_updates"
   task :all => [:create_app_version,
                 :organization_id_to_assignments,
-                :reset_default_expectation_descriptions]
+                :reset_default_expectation_descriptions,
+                :consolidate_subject_options]
 
   ########################################
   ########################################
