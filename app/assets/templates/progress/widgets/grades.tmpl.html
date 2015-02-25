@@ -47,6 +47,9 @@
                   <div class="class-name">
                     <h4 class="bold">{{user_class.name}}</h4>
                   </div>
+                  <div class="subtext pbs">
+                    Last updated {{user_class.updated_at | fromNow}}
+                  </div>
                 </div>
                 <div progress-editor class="delete-button pbm" ng-show="class_editor">
                   <button class="btn btn-danger" ng-click="deleteClass(user_class, $event)"><span class="glyphicon glyphicon-trash"></span> Delete </button>
@@ -61,46 +64,41 @@
                 <h4 class="bold">{{user_class.grade}}</h4>
               </div>
 
-            </div>
-
-            <div accordion-body class="widget--content--table widget--pane--cell" ng-hide="user_class.editing">
-              <div class="table--cell breakalways">
-                <div class="cell--padding">
-                  <div class="subtext">
-                    Last updated {{user_class.updated_at | fromNow}}
-                  </div>
-                </div>
+              <div class="table--cell advanced plm">
+                  <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Class" ng-click="editClass(user_class)"></span>
               </div>
-              <div id="fixed-table" class="widget--content--table breakalways">
-                <div class="table--cell advanced break600" ng-if="user_class.period != null">
+            </div>
+            <div accordion-body class="widget--content--table widget--pane--cell" ng-hide="user_class.editing">
+              <div class="widget--content--table breakalways">
+                <div class="table--cell advanced" ng-if="user_class.period != null">
                   <div class="cell--padding">
                     <p>Period</p>
                     <h5 class="bold">{{user_class.period}}</h5>
                   </div>
                 </div>
 
-                <div class="table--cell advanced break600" ng-if="user_class.room != null">
+                <div class="table--cell advanced" ng-if="user_class.room != null">
                   <div class="cell--padding">
                     <p>Room</p>
                     <h5 class="bold">{{user_class.room}}</h5>
                   </div>
                 </div>
 
-                <div class="table--cell advanced break600" ng-if="user_class.credit_hours != 1">
+                <div class="table--cell advanced">
                   <div class="cell--padding">
                     <p>Credit Hours</p>
                     <h5 class="bold">{{user_class.credit_hours}}</h5>
                   </div>
                 </div>
 
-                <div class="table--cell advanced break600" ng-if="user_class.level != 'Regular'">
+                <div class="table--cell advanced">
                   <div class="cell--padding">
                     <p>Level</p>
                     <h5 class="bold">{{user_class.level}}</h5>
                   </div>
                 </div>
 
-                <div class="table--cell advanced break600" ng-if="user_class.subject != null">
+                <div class="table--cell advanced" ng-if="user_class.subject != null">
                   <div class="cell--padding">
                     <p>Subject</p>
                     <h5 class="bold">{{user_class.subject}}</h5>
@@ -110,7 +108,7 @@
 
               <div progress-editor class="table--cell breakalways">
                 <div class="cell--padding">
-                  <button class="btn btn-default btn-sm" ng-click="editClass(user_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{user_class.name}}</button>
+                  <button class="btn btn-default btn-sm" ng-click="editClassAdvanced(user_class)"><span class="glyphicon glyphicon-edit"></span> Edit {{user_class.name}}</button>
                 </div>
               </div>
 
@@ -121,13 +119,13 @@
               <form name="gradesForm" imua-form="saveClass(user_class)" novalidate>
 
                 <div class="widget--content--table breakalways">
-                  <div class="table--cell advanced break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell break600" ng-class="{'has-error': gradesForm.classname.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
                       <label-with-errors label="Class" form="gradesForm" formfield="gradesForm.classname"></label-with-errors>
                       <input autocomplete="off" type="text" class="form-control" ng-model="user_class.new_name" placeholder="Class Name" name="classname" typeahead="className for className in org_class_titles | filter: $viewValue | limitTo:10" required>
                     </span>
                   </div>
-                  <div class="table--cell advanced"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell cell--grades"  ng-class="{'has-error': gradesForm.grade.$invalid && gradesForm.$submitted}">
                    <span class="input-group">
                        <label-with-errors label="Letter Grade" form="gradesForm" formfield="gradesForm.grade"></label-with-errors>
                        <select class="form-control" ng-model="user_class.new_grade" name="grade" required>
@@ -147,7 +145,7 @@
                    </span>
                   </div>
 
-                  <div class="table--cell advanced"  ng-class="{'has-error': gradesForm.gradeValue.$invalid && gradesForm.$submitted}">
+                  <div class="table--cell cell--grades"  ng-class="{'has-error': gradesForm.gradeValue.$invalid && gradesForm.$submitted}">
                     <span class="input-group">
                         <label-with-errors label="Grade (Value)" form="gradesForm" formfield="gradesForm.gradeValue"></label-with-errors>
                         <input type="number" min="0" max="100" class="form-control" placeholder="Grade Value - e.g. 94" ng-model="user_class.new_grade_value" name="gradeValue" required>
@@ -167,19 +165,7 @@
                 </div>
 
                 <div ng-show="user_class.seeAdvanced" class="widget--content--table breakalways">
-                  <div class="table--cell break600">
-                    <span class="input-group">
-                      <label>Credit Hours</label>
-                      <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
-                    </span>
-                  </div>
-                  <div class="table--cell break600">
-                      <span class="input-group">
-                          <label>Level</label>
-                          <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
-                      </span>
-                  </div>
-                  <div class="table--cell break600">
+                  <div class="table--cell advanced break900">
                       <span class="input-group">
                           <label>Subject</label>
                           <select class="form-control" ng-model="user_class.new_subject" ng-options="v as v for (k,v) in CONSTANTS.CLASS_SUBJECTS">
@@ -187,13 +173,25 @@
                           </select>
                       </span>
                   </div>
-                  <div id="cell--form" class="table--cell">
+                  <div class="table--cell advanced">
+                    <span class="input-group">
+                      <label>Credit Hours</label>
+                      <input class="form-control" ng-model="user_class.new_credit_hours" ng-init="user_class.new_credit_hours = 1" placeholder="Credit Hours" name="credithours">
+                    </span>
+                  </div>
+                  <div class="table--cell advanced">
+                      <span class="input-group">
+                          <label>Level</label>
+                          <select class="form-control" ng-model="user_class.new_level" ng-init="user_class.new_level = 'Regular'" ng-options="v as v for (k,v) in CONSTANTS.CLASS_LEVELS"></select>
+                      </span>
+                  </div>
+                  <div class="table--cell advanced">
                       <span class="input-group">
                           <label>Period</label>
                           <input class="form-control" ng-model="user_class.new_period" placeholder="Period (optional)" name="period">
                       </span>
                   </div>
-                  <div id="cell--form" class="table--cell">
+                  <div class="table--cell advanced">
                       <span class="input-group">
                           <label>Room</label>
                           <input class="form-control" ng-model="user_class.new_room" placeholder="Room (optional)" name="room">

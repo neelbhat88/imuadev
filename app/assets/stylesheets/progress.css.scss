@@ -81,6 +81,10 @@
     width: 30%;
   }
 
+  .class-name > h4 {
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+  }
   .academicsProgressContainer {
     .expanded, .editing {
       width: 30%;
@@ -118,6 +122,10 @@
 
     #cell--grades {
       width: 15%;
+    }
+
+    .cell--grades {
+      width: 10%;
     }
 
     #cell--form {
