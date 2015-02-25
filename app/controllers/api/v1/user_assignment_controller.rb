@@ -6,7 +6,7 @@ class Api::V1::UserAssignmentController < ApplicationController
   before_filter :load_services
 
   def load_services( assignmentService = nil, commentService = nil )
-    @assignmentService = assignmentService ? assignmentService : AssignmentService.new
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new(current_user)
     @commentService = commentService ? commentService : CommentService.new(current_user)
   end
   # GET /users/:user_id/user_assignment

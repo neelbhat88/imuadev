@@ -9,12 +9,6 @@ class Organization < ActiveRecord::Base
   has_many :org_tests, dependent: :destroy
 end
 
-class OrganizationQuerier < Querier
-  def initialize
-    return super(Organization)
-  end
-end
-
 class ViewOrganizationWithUsers
   attr_accessor :id, :name, :orgAdmins, :students, :mentors
 

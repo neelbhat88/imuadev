@@ -79,9 +79,9 @@ private
   def get_comments_view(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    commentQ = Querier.new(Comment).select([:id, :comment, :user_id, :created_at, :updated_at]).where(conditions)
+    commentQ = Querier.factory(Comment).select([:id, :comment, :user_id, :created_at, :updated_at]).where(conditions)
     conditions[:user_id] = commentQ.pluck(:user_id)
-    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
     userQ.set_subQueriers([commentQ])
 
     view = { users: userQ.view }

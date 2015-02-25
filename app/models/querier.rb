@@ -18,22 +18,26 @@
 #
 # Both view and domain objects are accessed as an array of the Querier's
 # klass. It's up to the caller to know whether the view/domain objects
-# should have a ength of 1.
+# should have a length of 1.
 
 class Querier
   attr_accessor :subViewName
 
   # Public
 
+  def self.factory(klass)
+    # Automatically instantiate the child class if it's defined
+    if Object.const_defined?(klass.to_s + "Querier")
+      childKlass = (klass.to_s + "Querier").constantize
+      if Querier.descendants.include?(childKlass)
+        return childKlass.new
+      end
+    end
+    # Default to standard Querier
+    return Querier.new(klass)
+  end
+
   def initialize(klass)
-
-    # TODO - Automatically instantiate child class if already defined
-    # childKlass = (klass.to_s + "Querier").constantize
-    # if Querier.descendants.include?(childKlass)
-    #   Rails.logger.debug("******* child: #{childKlass} *******")
-    #   retClass = childKlass.new(self)
-    # end
-
     @klass = klass
     @subViewName = @klass.name.underscore.pluralize.to_sym
     @foreignKey = @klass.name.foreign_key.to_sym
@@ -103,12 +107,17 @@ class Querier
     return conditions.select { |k,v| @columnNames.include?(k) }
   end
 
+  # Bad HACK to support the sub_querier's method for nesting
+  def sub_querier_keys()
+    return @columnNames
+  end
+
   def generate_view(conditions = [])
     @view = []
 
     filterBy = []
     conditions.each do |c|
-      if @columnNames.include?(c.keys.first)
+      if self.sub_querier_keys().include?(c.keys.first)
         filterBy << c.keys.first
       end
     end
@@ -123,6 +132,7 @@ class Querier
       # Remove from @domains as its read into the view
       # TODO - SubQuerier view generation won't work if nested more than once
       # TODO - WRITE UNIT TESTS FOR THIS!!
+      # TODO - SubQuerier stuff should be pulled out of Querier altogether
       while !self.domain(filterBy).empty?
         primary_key = conditions.keys[0]
         if conditions.keys.all? {|key| self.domain[0][key] == conditions[key]}

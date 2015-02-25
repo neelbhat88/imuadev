@@ -3,10 +3,10 @@ class UserClassService
   def get_org_class_titles(params)
     conditions = params
 
-    userQ = UserQuerier.new.select([]).where(conditions)
+    userQ = Querier.factory(User).select([]).where(conditions)
 
     conditions[:user_id] = userQ.pluck(:id)
-    userClassQ = Querier.new(UserClass).select([], [:name]).where(conditions)
+    userClassQ = Querier.factory(UserClass).select([], [:name]).where(conditions)
 
     return userClassQ.pluck(:name)
   end

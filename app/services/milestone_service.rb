@@ -3,16 +3,16 @@ class MilestoneService
   def get_milestone_status(params)
     conditions = params
 
-    milestoneQ = Querier.new(Milestone).select([:id, :title, :description, :value, :module, :submodule, :points, :time_unit_id, :icon, :organization_id, :due_datetime]).where(conditions.slice(:milestone_id))
+    milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :submodule, :points, :time_unit_id, :icon, :organization_id, :due_datetime]).where(conditions.slice(:milestone_id))
     conditions[:organization_id] = milestoneQ.pluck(:organization_id)
     conditions[:time_unit_id] = milestoneQ.pluck(:time_unit_id)
 
-    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
-    userMilestoneQ = Querier.new(UserMilestone).select([], [:user_id]).where(conditions)
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
+    userMilestoneQ = Querier.factory(UserMilestone).select([], [:user_id]).where(conditions)
     userQ.set_subQueriers([userMilestoneQ])
 
-    organizationQ = Querier.new(Organization).select([:name]).where(conditions.slice(:organization_id))
-    timeUnitQ = Querier.new(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
 
     view = organizationQ.view.first

@@ -1,7 +1,13 @@
 class Api::V1::UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:reset_password]
   skip_before_filter :verify_authenticity_token
+  before_filter :load_services
   respond_to :json
+
+  def load_services( assignmentService = nil, userService = nil )
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new(current_user)
+    @userService = userService ? userService : UserService.new(current_user)
+  end
 
   # GET /users
   def index
@@ -306,6 +312,96 @@ class Api::V1::UsersController < ApplicationController
     json: {
       info: result[:info]
     }
+  end
+
+##############
+# Assignment #
+##############
+
+  # POST /users/:id/assignment
+  def assignment
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "User"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :create_assignment, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.create(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # POST /users/:id/create_assignment_broadcast
+  def create_assignment_broadcast
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "User"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :create_assignment_broadcast, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.create_broadcast(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /users/:id/assignments
+  def assignments
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:assignment_owner_id] = params[:id].to_i
+    service_params[:assignment_owner_type] = "User"
+
+    owner_object = service_params[:assignment_owner_type].classify.constantize.where(id: service_params[:assignment_owner_id]).first
+    if !can?(@current_user, :index_assignments, owner_object)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @assignmentService.index(service_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /users/:id/get_task_assignable_users
+  def get_task_assignable_users
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @userService.get_task_assignable_users(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
+  end
+
+  # GET /users/:id/get_task_assignable_users_tasks
+  def get_task_assignable_users_tasks
+    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    url_params[:user_id] = params[:id]
+
+    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
+
+    result = @userService.get_task_assignable_users_tasks(url_params)
+
+    render status: result.status,
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
 ########################
