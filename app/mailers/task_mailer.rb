@@ -71,7 +71,7 @@ class TaskMailer < ActionMailer::Base
     @current_user = args[:current_user]
     @task = args[:task]
     @comment = args[:comment]
-    @user_assignment = AssignmentService.new.get_user_assignment(@comment.commentable_id)
+    @user_assignment = AssignmentService.new(User.SystemUser).get_user_assignment(@comment.commentable_id)
 
     emails = []
     @recipients.each do |r|
@@ -87,6 +87,6 @@ class TaskMailer < ActionMailer::Base
     assignee = args[:user]
     task = args[:task]
 
-    return AssignmentService.new.get_user_assignment_by_user_id_assignment_id({user_id: assignee.id, task_id: task.id})
+    return AssignmentService.new(User.SystemUser).get_user_assignment_by_user_id_assignment_id({user_id: assignee.id, task_id: task.id})
   end
 end
