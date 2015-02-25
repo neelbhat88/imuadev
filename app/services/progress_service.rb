@@ -101,7 +101,7 @@ class ProgressService
   def get_organization_progress(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :tag_list, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
 
     conditions[:user_id] = userQ.pluck(:id)
 

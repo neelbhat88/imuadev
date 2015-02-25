@@ -30,6 +30,10 @@ class UserRepository
     user.last_name = last_name
     user.title = title
     user.phone = phone
+    if user.class_of != class_of
+      user.tag_list.remove(user.class_of)
+      user.tag_list.add(class_of)
+    end
     user.class_of = class_of
     user.time_unit_id = time_unit_id
 
@@ -86,6 +90,7 @@ class UserRepository
 
     if user.role == Constants.UserRole[:STUDENT]
       user.class_of = user_obj[:class_of]
+      user.tag_list.add(user_obj[:class_of])
     end
 
     if user.save

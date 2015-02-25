@@ -5,11 +5,7 @@ namespace :db_update do
   ########################################
   ########################################
   desc "All db_updates"
-  task :all => [:create_app_version,
-                :organization_id_to_assignments,
-                :reset_default_expectation_descriptions,
-                :consolidate_subject_options,
-                :user_assignment_owner_type_to_assignments]
+  task :all => [:add_class_of_tag]
 
   ########################################
   ########################################
@@ -353,6 +349,16 @@ namespace :db_update do
           puts "Updated " + c.name + " subject to " + new_subject.to_s + " for " + s.first_name + " " + s.last_name
         end
       end
+    end
+  end
+
+  desc "Add class_of tag"
+  task :add_class_of_tag => :environment do
+    all_students = User.where(:role => 50)
+    all_students.each do | s |
+      s.tag_list.add(s.class_of)
+      s.save
+      puts "Added class of tag " + s.class_of.to_s + " to " + s.first_name + " " + s.last_name
     end
   end
 

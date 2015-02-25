@@ -205,6 +205,7 @@ class ViewUser2
       @title = user.title unless !user.has_attribute?(:title)
       @phone = user.phone unless !user.has_attribute?(:phone)
       @role = user.role unless !user.has_attribute?(:role)
+      @tag_list = user.tag_list unless !user.has_attribute?(:tag_list)
       @organization_id = user.organization_id unless !user.has_attribute?(:organization_id)
       @square_avatar_url = user.avatar.url(:square) unless !user.has_attribute?(:avatar_file_name)
       @time_unit_id = user.time_unit_id unless !user.has_attribute?(:time_unit_id)
