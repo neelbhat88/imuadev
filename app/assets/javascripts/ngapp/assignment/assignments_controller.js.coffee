@@ -169,6 +169,6 @@ angular.module('myApp')
           if assignment.assignment_owner_id == $scope.current_user.id
             ret = "Me"
         when "Milestone"
-          ret = "a Milestone"
+          ret = "Milestone " + String(assignment.milestone.id)
       return ret
 ]
