@@ -5,7 +5,8 @@ namespace :db_update do
   ########################################
   ########################################
   desc "All db_updates"
-  task :all => [:add_class_of_tag]
+  task :all => [:consolidate_subject_options,
+                :user_assignment_owner_type_to_assignments]
 
   ########################################
   ########################################
