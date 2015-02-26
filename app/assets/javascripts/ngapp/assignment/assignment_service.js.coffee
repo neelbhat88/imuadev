@@ -9,6 +9,32 @@ angular.module('myApp')
 
   self = this
 
+  @parseTaskAssignableUsersTasks = (org) ->
+    for a in org.assignments
+      switch a.assignment_owner_type
+        when "User"
+          a.user = _.find(org.users, (u) -> a.assignment_owner_id == u.id)
+          if a.user.assignments == undefined
+            a.user.assignments = []
+          a.user.assignments.push(a)
+        when "Milestone"
+          a.milestone = _.find(org.milestones, (m) -> a.assignment_owner_id == m.id)
+          if a.milestone.assignments == undefined
+            a.milestone.assignments = []
+          a.milestone.assignments.push(a)
+      a.user_assignments = []
+
+    for ua in org.user_assignments
+      ua.user = _.find(org.users, (u) -> ua.user_id == u.id)
+      if ua.user.user_assignments == undefined
+        ua.user.user_assignments = []
+      ua.user.user_assignments.push(ua)
+      ua.assignment = _.find(org.assignments, (a) -> ua.assignment_id == a.id)
+      ua.assignment.user_assignments.push(ua)
+
+    return org
+
+
   @_ownerTypeToRoute = (type) ->
     switch type
       when "User" then return "users"
