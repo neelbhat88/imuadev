@@ -90,6 +90,9 @@ private
   end
 
   def send_comment_added_email(comment, current_user)
+    return if assignment.assignment_owner_type != "User"
+    assignment[:user_id] = assignment.assignment_owner_id
+
     Background.process do
       # Get list of all users who have commented on the item
       involved_users_ids = Comment.where(:commentable_id => comment.commentable_id,

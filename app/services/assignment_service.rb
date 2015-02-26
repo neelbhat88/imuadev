@@ -362,6 +362,10 @@ public
   # Ideally this will be done by adding the email to a DB table or some
   # sort of queue which a background worker picks up to process and send
   def send_assignment_emails(current_user, assignment, user_assignments)
+    # Workaround to not send emails for assignments owned by a milestone
+    return if assignment.assignment_owner_type != "User"
+    assignment[:user_id] = assignment.assignment_owner_id
+
     Background.process do
       assignor = UserRepository.new.get_user(assignment.user_id)
 
@@ -377,9 +381,8 @@ public
   end
 
   def send_task_complete_email(current_user, assignment, user_assignment)
-    # For now, skip emails for tasks not owned by a User
+    # Workaround to not send emails for assignments owned by a milestone
     return if assignment.assignment_owner_type != "User"
-
     assignment[:user_id] = assignment.assignment_owner_id
 
     # Don't send an email for updates to tasks assigned to yourself
