@@ -4,7 +4,7 @@ class ViewAssignmentCollection
 
   def initialize(assignment, options = {})
     @id = assignment.id
-    @user_id = assignment.user_id
+    @user_id = assignment.assignment_owner_id unless assignment.assignment_owner_type != "User"
     @title = assignment.title
     @description = assignment.description
     @due_datetime = assignment.due_datetime
