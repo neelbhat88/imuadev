@@ -30,9 +30,6 @@ angular.module('myApp')
         $scope.recalculateCompletion()
         $scope.loaded_data = true
 
-    $scope.userMilestonesAreEditable = (milestone) ->
-      return $scope.milestone.submodule == "YesNo"
-
     $scope.milestoneHasTasks = () ->
       return $scope.milestone.submodule == "YesNo"
 

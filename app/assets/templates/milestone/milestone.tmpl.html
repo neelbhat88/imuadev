@@ -37,11 +37,6 @@
             </div>
             <span class="bold">{{user.first_last_initial}}</span>
           </a>
-          <ul class="circle-subnav">
-            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
-              <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
-            </li>
-          </ul>
         </li>
       </ul>
 
@@ -56,12 +51,6 @@
             </div>
             <span class="bold">{{user.first_last_initial}}</span>
           </a>
-          <ul class="circle-subnav">
-            <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
-            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
-              <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
-            </li>
-          </ul>
         </li>
       </ul>
     </div>
