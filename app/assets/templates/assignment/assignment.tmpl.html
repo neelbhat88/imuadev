@@ -56,7 +56,7 @@
               <button class="btn btn-info btn-xs" ng-click="go('/user_assignment/' + user_assignment.id)">View Comments</button>
             </li>
           </ul>
-          <div class="edit-buttons subnav-button" ng-show="assignment.editing">
+          <div class="edit-buttons subnav-button" ng-show="assignment.editing && userAssignmentAllowed()">
             <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
           </div>
         </li>
@@ -82,19 +82,19 @@
               <button class="btn btn-info btn-xs" ng-click="go('/user_assignment/' + user_assignment.id)">View Comments</button>
             </li>
           </ul>
-          <div class="edit-buttons subnav-button" ng-show="assignment.editing">
+          <div class="edit-buttons subnav-button" ng-show="assignment.editing && userAssignmentAllowed()">
             <button class="btn btn-danger btn-xs" ng-click="deleteUserAssignment(assignment, user_assignment)">Remove From<br>Task</button>
           </div>
         </li>
       </ul>
 
       <div class="form-wrapper" ng-show="assignment.editing">
-        <div class="add-button" ng-click="assignment.assigning_users=true" ng-hide="assignment.assigning_users || assignment.assignees.length == assignable_users.length">
+        <div class="add-button" ng-click="assignment.assigning_users=true" ng-hide="assignment.assigning_users || assignment.assignees.length == assignable_users.length || !userAssignmentAllowed()">
           <div class="glyphicon glyphicon-plus-sign"></div>
           <h6 class="bold">Assign Users</h6>
         </div>
 
-        <div class="assigning-students" ng-show="assignment.assigning_users">
+        <div class="assigning-students" ng-show="assignment.assigning_users && userAssignmentAllowed()">
 
           <h5 class="list-header"><span class="bold">Assign Users</span></h5>
 
@@ -140,7 +140,7 @@
               </div>
             </div> <!-- ng-repeat="(group, group_users) in assignable_users" -->
 
-            <div class="add-button" ng-click="assignAllAssignableUsers(assignment)" ng-hide="assignable_users.length == (assignment.assignees.length + user_assignments_completed.length + user_assignments_incomplete.length)">
+            <div class="add-button" ng-click="assignAllAssignableUsers(assignment)" ng-hide="assignable_users.length == (assignment.assignees.length + user_assignments_completed.length + user_assignments_incomplete.length) || !userAssignmentAllowed()">
               <div class="glyphicon glyphicon-plus-sign green"></div>
               <div>Assign All Users</div>
             </div>

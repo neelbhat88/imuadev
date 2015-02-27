@@ -69,10 +69,12 @@ angular.module('myApp')
       if !$scope.assignment.id
         window.history.back()
       else
+        $scope.assignment.assigning_users = false
+        $scope.assignment.assignees = []
         $scope.assignment.editing = false
 
     $scope.saveAssignment = (index) ->
-      new_assignment = AssignmentService.newAssignment($scope.user.id)
+      new_assignment = AssignmentService.newAssignment($scope.owner_type, $scope.owner.id)
       new_assignment.id = $scope.assignment.id
       new_assignment.assignment_owner_type = $scope.assignment.assignment_owner_type
       new_assignment.assignment_owner_id = $scope.assignment.assignment_owner_id
@@ -95,6 +97,9 @@ angular.module('myApp')
         AssignmentService.deleteAssignment($scope.assignment.id)
           .success (data) ->
             window.history.back()
+
+    $scope.userAssignmentAllowed = () ->
+      return $scope.owner_type == "User"
 
     $scope.assignAllAssignableUsers = (assignment) ->
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
