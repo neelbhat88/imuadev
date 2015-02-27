@@ -2,7 +2,7 @@
 
   <div class="task-list" ng-if="loaded_data && milestoneHasTasks()">
     <h6>What's needed to complete this task?</h6>
-    <div class="task-item" ng-repeat="assignment in milestone.assignments">
+    <div class="task-item" ng-repeat="assignment in milestone.assignments" ng-click="viewTask(assignment)">
       <h5>Task: {{assignment.id}}</h5>
     </div>
 

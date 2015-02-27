@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'MilestoneController', ['$scope', '$route', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
-  ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
+.controller 'MilestoneController', ['$scope', '$route', '$location', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
+  ($scope, $route, $location, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
 
     $scope.milestone_id = milestone_id
     $scope.current_user = current_user
@@ -23,7 +23,7 @@ angular.module('myApp')
 
     MilestoneService.getMilestoneStatus($scope.milestone_id)
       .then (data) ->
-        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.organization = MilestoneService.parseMilestoneStatus(data.organization)
         $scope.users_total = $scope.organization.students
         $scope.milestone = $scope.organization.milestones[0]
         $scope.milestone.editing = false
@@ -58,5 +58,15 @@ angular.module('myApp')
           saved_assignment =  organization.assignments[0]
           saved_assignment.assignees = []
           _.push($scope.milestone.assignments, saved_assignment)
+
+    $scope.viewTask  = (assignment) ->
+      # Students go to user_assignment view
+      if $scope.current_user.is_student
+        user_assignment = _.findWhere(assignment.user_assignments, {user_id: $scope.current_user.id})
+        $location.path("/user_assignment/#{user_assignment.id}")
+        $location.url($location.path()) #Do this to remove query string params
+      else
+        $location.path("/assignment/#{assignment.id}")
+        $location.url($location.path()) #Do this to remove query string params
 
 ]

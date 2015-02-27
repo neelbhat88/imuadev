@@ -5,22 +5,38 @@ class MilestoneService
   end
 
   def get_milestone_status(params)
-    conditions = params
+    conditions = Marshal.load(Marshal.dump(params))
 
     milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :submodule, :points, :time_unit_id, :icon, :organization_id, :due_datetime]).where(conditions.slice(:milestone_id))
     conditions[:organization_id] = milestoneQ.pluck(:organization_id)
     conditions[:time_unit_id] = milestoneQ.pluck(:time_unit_id)
 
     userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
-    userMilestoneQ = Querier.factory(UserMilestone).select([], [:user_id]).where(conditions)
-    userQ.set_subQueriers([userMilestoneQ])
+    userMilestoneQ = Querier.factory(UserMilestone).select([:user_id, :milestone_id]).where(conditions)
 
     organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
+
+    # Get any assignments associated with this milestone
+    conditions[:assignment_owner_type] = "Milestone"
+    conditions[:assignment_owner_id] = conditions[:milestone_id]
+    assignmentQ = Querier.factory(Assignment).select([:id, :title, :description, :due_datetime, :created_at]).where(conditions)
+    userAssignmentQ = nil
+    if assignmentQ.domain.length > 0
+      conditions[:assignment_id] = assignmentQ.pluck(:id)
+      userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id]).where(conditions.slice(:assignment_id))
+    end
 
     view = organizationQ.view.first
+    view[:users] = userQ.view
+    view[:time_units] = timeUnitQ.view
+    view[:milestones] = milestoneQ.view
+    view[:user_milestones] = userMilestoneQ.view
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
+    if assignmentQ.domain.length > 0
+      view[:assignments] = assignmentQ.view
+      view[:user_assignments] = userAssignmentQ.view
+    end
 
     return ReturnObject.new(:ok, "Status for milestone_id: #{params[:milestone_id]}.", view)
   end

@@ -48,10 +48,8 @@ angular.module('myApp')
 
     # Collect all assignments
     org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
-    console.log(org.assignments)
     org.assignments = org.assignments.concat(_.union(_.flatten(_.pluck(org.milestones, "assignments"))))
     org.assignments = _.without(org.assignments, undefined)
-    console.log(org.assignments)
     # Associate to their owner object
     for a in org.assignments
       switch a.assignment_owner_type
