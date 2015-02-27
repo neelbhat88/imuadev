@@ -2,9 +2,6 @@ angular.module('myApp')
 .controller 'AssignmentController', ['$scope', '$route', 'current_user', 'assignment', 'edit', 'AssignmentService', 'UsersService', 'OrganizationService',
   ($scope, $route, current_user, assignment, edit, AssignmentService, UsersService, OrganizationService) ->
 
-    $scope.today = new Date().getTime()
-    $scope.two_days_from_now = $scope.today + (1000*60*60*24*2) # Two days from now
-
     $scope.current_user = current_user
 
     $scope.user_assignments_total = []
@@ -135,18 +132,10 @@ angular.module('myApp')
       !this.isPendingAssignment(assignment, user) && !this.isAssigned(assignment, user)
 
     $scope.isPastDue = (assignment) ->
-      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
-      if !due_datetime
-        return false
-      due_date = new Date(due_datetime).getTime()
-      return due_date < $scope.today
+      return AssignmentService.isPastDue(assignment)
 
     $scope.isDueSoon = (assignment) ->
-      due_datetime = if assignment.editing then assignment.new_due_datetime else assignment.due_datetime
-      if !due_datetime
-        return false
-      due_date = new Date(due_datetime).getTime()
-      return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
+      return AssignmentService.isDueSoon(assignment)
 
     $scope.isComplete = (assignment) ->
       return $scope.user_assignments_incomplete.length == 0
