@@ -41,6 +41,17 @@ angular.module('myApp')
     due_date = new Date(assignment.due_datetime).getTime()
     return !self.isPastDue(assignment) && due_date <= two_days_from_now
 
+  @created_by_str = (assignment, current_user) ->
+    ret = "Unknown"
+    switch assignment.assignment_owner_type
+      when "User"
+        ret = assignment.user.first_last_initial
+        if assignment.assignment_owner_id == current_user.id
+          ret = "Me"
+      when "Milestone"
+        ret = "Milestone " + String(assignment.milestone.id)
+    return ret
+
   @parseTaskAssignableUsersTasks = (org) ->
     for a in org.assignments
       switch a.assignment_owner_type

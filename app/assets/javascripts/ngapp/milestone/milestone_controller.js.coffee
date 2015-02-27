@@ -35,6 +35,33 @@ angular.module('myApp')
     $scope.milestoneHasTasks = () ->
       return $scope.milestone.submodule == "YesNo"
 
+    $scope.incompleteAssignments = () ->
+      return AssignmentService.incompleteAssignments($scope.milestone.assignments)
+
+    $scope.completedAssignments = () ->
+      return AssignmentService.completedAssignments($scope.milestone.assignments)
+
+    $scope.isPastDue = (assignment) ->
+      return AssignmentService.isPastDue(assignment)
+
+    $scope.isDueSoon = (assignment) ->
+      return AssignmentService.isDueSoon(assignment)
+
+    $scope.sortIncompleteAssignments = (assignment) ->
+      not_dated = _.filter($scope.milestone.assignments, (a) -> !a.due_datetime)
+      not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
+      dated = _.filter($scope.milestone.assignments, (a) -> a.due_datetime)
+      dated_order = _.sortBy(dated, (a) -> a.due_datetime)
+      final_order = dated_order.concat(not_dated_order)
+      return _.indexOf(final_order, assignment)
+
+    $scope.sortCompletedAssignments = (assignment) ->
+      final_order = _.sortBy($scope.milestone.assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
+      return _.indexOf(final_order, assignment)
+
+    $scope.created_by_str = (assignment) ->
+      return AssignmentService.created_by_str(assignment, $scope.current_user)
+
     $scope.saveAssignment = (assignment) ->
       # Always assign all assignable users
       AssignmentService.broadcastAssignment(assignment, _.map($scope.users_total, (assignee) -> assignee.id))

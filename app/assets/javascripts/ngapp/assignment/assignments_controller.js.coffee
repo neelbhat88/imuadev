@@ -72,6 +72,28 @@ angular.module('myApp')
 
         $scope.loaded_data = true
 
+    $scope.selectNav = (task_list) ->
+      $scope.selected_task_list = task_list
+      $location.search("selected_nav", task_list) #Sets query string param
+
+      switch task_list
+        when $scope.CONSTANTS.TASK_NAV.assigned_to_me
+          # Use only the user's user_assignments
+          assignments = _.map($scope.users_user_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id == $scope.user.id); a)
+          $scope.list_assignments = assignments
+          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_me
+        when $scope.CONSTANTS.TASK_NAV.assigned_by_me
+          $scope.list_assignments = $scope.users_assignments
+          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_by_me
+        when $scope.CONSTANTS.TASK_NAV.assigned_to_others
+          # Don't use any of the user's user_assignments
+          assignments = _.map($scope.student_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id != $scope.user.id); a)
+          $scope.list_assignments = _.filter(assignments, (a) -> a.user_assignments.length > 0)
+          if $scope.current_user.is_org_admin
+            $scope.selected_task_list_title = "All Tasks"
+          else
+            $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_others
+
     $scope.viewTask  = (assignment) ->
       if $scope.selected_task_list == $scope.CONSTANTS.TASK_NAV.assigned_to_me
         # Go To user_assignment view
@@ -100,54 +122,25 @@ angular.module('myApp')
     $scope.completedAssignments = () ->
       return AssignmentService.completedAssignments($scope.list_assignments)
 
-    $scope.selectNav = (task_list) ->
-      $scope.selected_task_list = task_list
-      $location.search("selected_nav", task_list) #Sets query string param
+    $scope.isPastDue = (assignment) ->
+      return AssignmentService.isPastDue(assignment)
 
-      switch task_list
-        when $scope.CONSTANTS.TASK_NAV.assigned_to_me
-          # Use only the user's user_assignments
-          assignments = _.map($scope.users_user_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id == $scope.user.id); a)
-          $scope.list_assignments = assignments
-          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_me
-        when $scope.CONSTANTS.TASK_NAV.assigned_by_me
-          $scope.list_assignments = $scope.users_assignments
-          $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_by_me
-        when $scope.CONSTANTS.TASK_NAV.assigned_to_others
-          # Don't use any of the user's user_assignments
-          assignments = _.map($scope.student_assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> ua.user_id != $scope.user.id); a)
-          $scope.list_assignments = _.filter(assignments, (a) -> a.user_assignments.length > 0)
-          if $scope.current_user.is_org_admin
-            $scope.selected_task_list_title = "All Tasks"
-          else
-            $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_others
+    $scope.isDueSoon = (assignment) ->
+      return AssignmentService.isDueSoon(assignment)
 
-      $scope.isPastDue = (assignment) ->
-        return AssignmentService.isPastDue(assignment)
+    $scope.sortIncompleteAssignments = (assignment) ->
+      not_dated = _.filter($scope.list_assignments, (a) -> !a.due_datetime)
+      not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
+      dated = _.filter($scope.list_assignments, (a) -> a.due_datetime)
+      dated_order = _.sortBy(dated, (a) -> a.due_datetime)
+      final_order = dated_order.concat(not_dated_order)
+      return _.indexOf(final_order, assignment)
 
-      $scope.isDueSoon = (assignment) ->
-        return AssignmentService.isDueSoon(assignment)
-
-      $scope.sortIncompleteAssignments = (assignment) ->
-        not_dated = _.filter($scope.list_assignments, (a) -> !a.due_datetime)
-        not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
-        dated = _.filter($scope.list_assignments, (a) -> a.due_datetime)
-        dated_order = _.sortBy(dated, (a) -> a.due_datetime)
-        final_order = dated_order.concat(not_dated_order)
-        return _.indexOf(final_order, assignment)
-
-      $scope.sortCompletedAssignments = (assignment) ->
-        final_order = _.sortBy($scope.list_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
-        return _.indexOf(final_order, assignment)
+    $scope.sortCompletedAssignments = (assignment) ->
+      final_order = _.sortBy($scope.list_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
+      return _.indexOf(final_order, assignment)
 
     $scope.created_by_str = (assignment) ->
-      ret = "Test"
-      switch assignment.assignment_owner_type
-        when "User"
-          ret = assignment.user.first_last_initial
-          if assignment.assignment_owner_id == $scope.current_user.id
-            ret = "Me"
-        when "Milestone"
-          ret = "Milestone " + String(assignment.milestone.id)
-      return ret
+      return AssignmentService.created_by_str(assignment, $scope.current_user)
+
 ]

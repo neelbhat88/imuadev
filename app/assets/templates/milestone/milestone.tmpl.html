@@ -20,8 +20,24 @@
         <h4>{{milestone | printMilestone}}</h4>
       </div>
 
-      <div ng-if="loaded_data && milestoneHasTasks()" ng-include="'assignment/widgets/assignments_list.html'"></div>
-      <div ng-if="loaded_data && milestoneHasTasks()" ng-include="'milestone/widgets/task_list.html'"><br></div>
+      <div ng-if="loaded_data && milestoneHasTasks()">
+        <div ng-include="'assignment/widgets/assignments_list.html'"></div>
+        <div class="task-adder">
+          <div class="form-wrapper">
+            <label><h6>Task Name:</h6></label>
+            <input class="form-control" ng-model="new_assignment.title" placeholder="Title">
+            <label><h6>Due Date:</h6></label>
+            <imua-datepicker date="new_assignment.due_datetime"></imua-datepicker>
+          </div>
+
+          <!-- <label><h5>Details:</h5></label>
+          <text-angular name="taskDescription" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="assignment.new_description" placeholder="Description"></text-angular> -->
+
+          <div task-editor class="edit-buttons-top">
+            <button class="btn btn-success" ng-click="saveAssignment(new_assignment)"><span class="glyphicon glyphicon-ok"></span> Add Task</button>
+          </div>
+        </div>
+      </div>
 
       <div ng-if="num_students_in_semester == 0">
         <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
