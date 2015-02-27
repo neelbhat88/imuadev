@@ -81,7 +81,8 @@ angular.module('myApp')
 
       modalInstance.result.then (user) ->
         $scope.organization.students.push(user)
-        $scope.students = $scope.organization.students
+        $scope.initialStudentsArray = $scope.organization.students
+        $scope.tagFilter($scope.initialStudentsArray)
         $scope.addSuccessMessage("Email with password has been sent to " + user.email)
 
 ]
