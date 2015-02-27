@@ -28,11 +28,15 @@ angular.module('myApp')
     if !assignment
       $scope.assignment = AssignmentService.newAssignment('User', $scope.current_user.id)
       $scope.assignment.editing = true
+      $scope.owner_type = "User"
       $scope.user = $scope.current_user
     else
       $scope.assignment = assignment
       $scope.assignment.editing = edit
-      $scope.user = $scope.assignment.user
+      $scope.owner_type = $scope.assignment.assignment_owner_type
+      switch $scope.owner_type
+        when "User" then $scope.owner = $scope.assignment.user
+        when "Milestone" then $scope.owner = $scope.assignment.milestone
       $scope.recalculateCompletion()
 
     if $scope.assignment.editing
@@ -45,20 +49,17 @@ angular.module('myApp')
 
     $('input, textarea').placeholder()
 
-    if $scope.current_user.id == $scope.user.id
-      AssignmentService.getTaskAssignableUsers('User', $scope.user.id)
-        .success (data) ->
-          $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-          $scope.assignable_users = $scope.organization.users
+    AssignmentService.getTaskAssignableUsers($scope.owner_type, $scope.owner.id)
+      .success (data) ->
+        $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.assignable_users = $scope.organization.users
 
-          $scope.assignable_user_groups = []
-          $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
-          $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
-          $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
+        $scope.assignable_user_groups = []
+        $scope.assignable_user_groups.push({group_name: "Org Admins", group_users: $scope.organization.orgAdmins})
+        $scope.assignable_user_groups.push({group_name: "Mentors", group_users: $scope.organization.mentors})
+        $scope.assignable_user_groups.push({group_name: "Students", group_users: $scope.organization.students})
 
-          $scope.loaded_assignable_users = true
-    else
-      $scope.loaded_assignable_users = true
+        $scope.loaded_assignable_users = true
 
     $scope.editAssignment = () ->
       $scope.assignment.editing = true

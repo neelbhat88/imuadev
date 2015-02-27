@@ -159,8 +159,8 @@ class Api::V1::MilestoneController < ApplicationController
 
   # GET /milestone/:id/get_task_assignable_users
   def get_task_assignable_users
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_id] = params[:id]
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:milestone_id] = params[:id]
     service_params[:assignment_owner_id] = params[:id].to_i
     service_params[:assignment_owner_type] = "Milestone"
 
@@ -170,7 +170,7 @@ class Api::V1::MilestoneController < ApplicationController
       return
     end
 
-    result = @milestoneService.get_task_assignable_users(url_params)
+    result = @milestoneService.get_task_assignable_users(service_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
@@ -178,8 +178,8 @@ class Api::V1::MilestoneController < ApplicationController
 
   # GET /milestone/:id/get_task_assignable_users_tasks
   def get_task_assignable_users_tasks
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_id] = params[:id]
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:milestone_id] = params[:id]
     service_params[:assignment_owner_id] = params[:id].to_i
     service_params[:assignment_owner_type] = "Milestone"
 
@@ -189,7 +189,7 @@ class Api::V1::MilestoneController < ApplicationController
       return
     end
 
-    result = @milestoneService.get_task_assignable_users_tasks(url_params)
+    result = @milestoneService.get_task_assignable_users_tasks(service_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
