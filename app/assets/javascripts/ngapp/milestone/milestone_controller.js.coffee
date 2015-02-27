@@ -4,7 +4,7 @@ angular.module('myApp')
 
     $scope.milestone_id = milestone_id
     $scope.current_user = current_user
-    $scope.new_assignment = AssignmentService.newAssignment('Milestone', milestone_id)
+    $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
 
     $scope.selected_task_list_title = "What's needed to complete this milestone?"
 
@@ -62,14 +62,18 @@ angular.module('myApp')
     $scope.created_by_str = (assignment) ->
       return AssignmentService.created_by_str(assignment, $scope.current_user)
 
-    $scope.saveAssignment = (assignment) ->
+    $scope.saveNewAssignment = () ->
       # Always assign all assignable users
-      AssignmentService.broadcastAssignment(assignment, _.map($scope.users_total, (assignee) -> assignee.id))
+      AssignmentService.broadcastAssignment($scope.new_assignment, _.map($scope.users_total, (assignee) -> assignee.id))
         .success (data) ->
           organization = OrganizationService.parseOrganizationWithUsers(data.organization)
           saved_assignment =  organization.assignments[0]
           saved_assignment.assignees = []
-          _.push($scope.milestone.assignments, saved_assignment)
+          if $scope.milestone.assignments == undefined
+            $scope.milestone.assignments = []
+          $scope.milestone.assignments.push(saved_assignment)
+          $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
+
 
     $scope.viewTask  = (assignment) ->
       # Students go to user_assignment view
