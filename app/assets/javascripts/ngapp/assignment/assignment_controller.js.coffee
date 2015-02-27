@@ -29,7 +29,7 @@ angular.module('myApp')
       $scope.assignment = AssignmentService.newAssignment('User', $scope.current_user.id)
       $scope.assignment.editing = true
       $scope.owner_type = "User"
-      $scope.user = $scope.current_user
+      $scope.owner = $scope.current_user
     else
       $scope.assignment = assignment
       $scope.assignment.editing = edit
@@ -68,9 +68,9 @@ angular.module('myApp')
       $scope.assignment.new_due_datetime = $scope.assignment.due_datetime
 
     $scope.cancelEditAssignment = () ->
-      # Go back to assignments page if cancelled creating a new task
+      # Go back if cancelled creating a new task
       if !$scope.assignment.id
-        window.location.href = "app#/assignments/" + $scope.user.id
+        window.history.back()
       else
         $scope.assignment.editing = false
 
@@ -97,9 +97,7 @@ angular.module('myApp')
       if window.confirm "Are you sure you want to delete this task?"
         AssignmentService.deleteAssignment($scope.assignment.id)
           .success (data) ->
-            $scope.assignment.editing = false
-            $scope.assignment = null
-            window.location.href = "app#/assignments/" + $scope.user.id
+            window.history.back()
 
     $scope.assignAllAssignableUsers = (assignment) ->
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
