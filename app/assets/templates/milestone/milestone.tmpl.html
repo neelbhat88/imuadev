@@ -20,6 +20,7 @@
         <h4>{{milestone | printMilestone}}</h4>
       </div>
 
+      <div ng-if="loaded_data && milestoneHasTasks()" ng-include="'assignment/widgets/assignments_list.html'"></div>
       <div ng-if="loaded_data && milestoneHasTasks()" ng-include="'milestone/widgets/task_list.html'"><br></div>
 
       <div ng-if="num_students_in_semester == 0">

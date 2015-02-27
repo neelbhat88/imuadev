@@ -9,6 +9,38 @@ angular.module('myApp')
 
   self = this
 
+  today = new Date().getTime()
+  two_days_from_now = today + (1000*60*60*24*2) # Two days from now
+
+  @isComplete = (assignment) ->
+    return _.every(assignment.user_assignments, (a) -> a.status == 1)
+
+  @incompleteAssignments = (assignments) ->
+    if !assignments then return
+    incomplete_list = []
+    for assignment in assignments
+      if !self.isComplete(assignment) then incomplete_list.push(assignment)
+    return incomplete_list
+
+  @completedAssignments = (assignments) ->
+    if !assignments then return
+    complete_list = []
+    for assignment in assignments
+      if self.isComplete(assignment) then complete_list.push(assignment)
+    return complete_list
+
+  @isPastDue = (assignment) ->
+    if !assignment.due_datetime
+      return false
+    due_date = new Date(assignment.due_datetime).getTime()
+    return due_date < today
+
+  @isDueSoon = (assignment) ->
+    if !assignment.due_datetime
+      return false
+    due_date = new Date(assignment.due_datetime).getTime()
+    return !self.isPastDue(assignment) && due_date <= two_days_from_now
+
   @parseTaskAssignableUsersTasks = (org) ->
     for a in org.assignments
       switch a.assignment_owner_type

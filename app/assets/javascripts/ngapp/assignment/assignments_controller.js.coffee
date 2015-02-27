@@ -95,22 +95,10 @@ angular.module('myApp')
           # console.log(user_assignment)
 
     $scope.incompleteAssignments = () ->
-      if !$scope.list_assignments then return
-
-      incomplete_list = []
-      for assignment in $scope.list_assignments
-        if !$scope.isComplete(assignment) then incomplete_list.push(assignment)
-
-      return incomplete_list
+      return AssignmentService.incompleteAssignments($scope.list_assignments)
 
     $scope.completedAssignments = () ->
-      if !$scope.list_assignments then return
-
-      complete_list = []
-      for assignment in $scope.list_assignments
-        if $scope.isComplete(assignment) then complete_list.push(assignment)
-
-      return complete_list
+      return AssignmentService.completedAssignments($scope.list_assignments)
 
     $scope.selectNav = (task_list) ->
       $scope.selected_task_list = task_list
@@ -134,32 +122,23 @@ angular.module('myApp')
           else
             $scope.selected_task_list_title = $scope.CONSTANTS.TASK_NAV.assigned_to_others
 
-    $scope.isComplete = (assignment) ->
-      return _.every(assignment.user_assignments, (a) -> a.status == 1)
+      $scope.isPastDue = (assignment) ->
+        return AssignmentService.isPastDue(assignment)
 
-    $scope.isPastDue = (assignment) ->
-      if !assignment.due_datetime
-        return false
-      due_date = new Date(assignment.due_datetime).getTime()
-      return due_date < $scope.today
+      $scope.isDueSoon = (assignment) ->
+        return AssignmentService.isDueSoon(assignment)
 
-    $scope.isDueSoon = (assignment) ->
-      if !assignment.due_datetime
-        return false
-      due_date = new Date(assignment.due_datetime).getTime()
-      return !this.isPastDue(assignment) && due_date <= $scope.two_days_from_now
+      $scope.sortIncompleteAssignments = (assignment) ->
+        not_dated = _.filter($scope.list_assignments, (a) -> !a.due_datetime)
+        not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
+        dated = _.filter($scope.list_assignments, (a) -> a.due_datetime)
+        dated_order = _.sortBy(dated, (a) -> a.due_datetime)
+        final_order = dated_order.concat(not_dated_order)
+        return _.indexOf(final_order, assignment)
 
-    $scope.sortIncompleteAssignments = (assignment) ->
-      not_dated = _.filter($scope.list_assignments, (a) -> !a.due_datetime)
-      not_dated_order = _.sortBy(not_dated, (a) -> a.created_at).reverse()
-      dated = _.filter($scope.list_assignments, (a) -> a.due_datetime)
-      dated_order = _.sortBy(dated, (a) -> a.due_datetime)
-      final_order = dated_order.concat(not_dated_order)
-      return _.indexOf(final_order, assignment)
-
-    $scope.sortCompletedAssignments = (assignment) ->
-      final_order = _.sortBy($scope.list_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
-      return _.indexOf(final_order, assignment)
+      $scope.sortCompletedAssignments = (assignment) ->
+        final_order = _.sortBy($scope.list_assignments, (a) -> if !a.due_datetime then a.updated_at else a.due_datetime).reverse()
+        return _.indexOf(final_order, assignment)
 
     $scope.created_by_str = (assignment) ->
       ret = "Test"

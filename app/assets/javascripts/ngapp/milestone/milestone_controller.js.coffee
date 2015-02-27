@@ -6,6 +6,8 @@ angular.module('myApp')
     $scope.current_user = current_user
     $scope.new_assignment = AssignmentService.newAssignment('Milestone', milestone_id)
 
+    $scope.selected_task_list_title = "What's needed to complete this milestone?"
+
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
       $scope.users_complete = partition[0]
