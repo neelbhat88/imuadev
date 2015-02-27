@@ -33,20 +33,6 @@ angular.module('myApp')
     $scope.milestoneHasTasks = () ->
       return $scope.milestone.submodule == "YesNo"
 
-    $scope.setUserMilestone = (user) ->
-      ProgressService.addUserMilestone(user, $scope.milestone.time_unit_id, $scope.milestone.id)
-        .success (data) ->
-          if !user.user_milestones
-            user.user_milestones = []
-          user.user_milestones.push({})
-          $scope.recalculateCompletion()
-
-    $scope.unsetUserMilestone = (user) ->
-      ProgressService.deleteUserMilestone(user, $scope.milestone.time_unit_id, $scope.milestone.id)
-        .success (data) ->
-          user.user_milestones = []
-          $scope.recalculateCompletion()
-
     $scope.saveAssignment = (assignment) ->
       # Always assign all assignable users
       AssignmentService.broadcastAssignment(assignment, _.map($scope.users_total, (assignee) -> assignee.id))
