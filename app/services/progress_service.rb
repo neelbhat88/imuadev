@@ -204,6 +204,36 @@ class ProgressService
     return ReturnObject.new(:ok, "Recalculated milestones for user_id: #{user_id}, time_unit_id: #{time_unit_id}, module_title:#{module_title}.", milestones)
   end
 
+  def recalculate_milestones(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    milestoneQ = Querier.factory(Milestone).select([],[:id, :time_unit_id]).where(conditions)
+    userMilestoneQ = Querier.factory(UserMilestone).select([],[:id]).where(conditions.slice(:milestone_id))
+
+    conditions[:time_unit_id] = milestoneQ.pluck(:time_unit_id)
+    users = User.where(conditions)
+    user_milestones = UserMilestone.where(id: userMilestoneQ.pluck(:id))
+
+    db_milestones = Milestone.where(id: milestoneQ.pluck(:id))
+    milestones = MilestoneFactory.get_milestone_objects(db_milestones)
+
+    milestones.each do | m |
+      users.select{|u| u.time_unit_id === m.time_unit_id}.each do | u |
+        earned = m.has_earned?(u, m.time_unit_id)
+        user_has_milestone = user_milestones.select{|um| um.milestone_id === m.id && um.user_id === u.id}.length > 0
+
+        Rails.logger.debug "*****Milestone id: #{m.id}, value: #{m.value} earned? #{earned}"
+        if earned and !user_has_milestone
+          MilestoneService.new(@current_user).add_user_milestone(user_id, time_unit_id, m.id)
+          Rails.logger.debug "*****Milestone added to UserMilestone table"
+        elsif !earned and user_has_milestone
+          MilestoneService.new(@current_user).delete_user_milestone(user_id, time_unit_id, m.id)
+          Rails.logger.debug "*****Milestone deleted from UserMilestone table"
+        end
+      end
+    end
+  end
+
 end
 
 class ModuleProgress
