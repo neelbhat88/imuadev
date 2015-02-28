@@ -193,10 +193,10 @@ class ProgressService
 
       Rails.logger.debug "*****Milestone id: #{m.id}, value: #{m.value} earned? #{earned}"
       if earned and !user_has_milestone
-        MilestoneService.new(current_user).add_user_milestone(user_id, time_unit_id, m.id)
+        MilestoneService.new(@current_user).add_user_milestone(user_id, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone added to UserMilestone table"
       elsif !earned and user_has_milestone
-        MilestoneService.new(current_user).delete_user_milestone(user_id, time_unit_id, m.id)
+        MilestoneService.new(@current_user).delete_user_milestone(user_id, time_unit_id, m.id)
         Rails.logger.debug "*****Milestone deleted from UserMilestone table"
       end
     end
