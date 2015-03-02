@@ -41,6 +41,8 @@ GEM
     activesupport (3.2.19)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts-as-taggable-on (3.4.4)
+      activerecord (>= 3.2, < 5)
     acts_as_commentable (3.0.1)
     addressable (2.3.6)
     angular-rails-templates (0.1.2)
@@ -247,6 +249,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 3.4)
   acts_as_commentable (= 3.0.1)
   angular-rails-templates
   angular-ui-bootstrap-rails

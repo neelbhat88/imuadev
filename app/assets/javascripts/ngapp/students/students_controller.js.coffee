@@ -1,18 +1,24 @@
 angular.module('myApp')
-.controller 'StudentsCtrl', ['$scope', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService'
-  ($scope, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
+.controller 'StudentsCtrl', ['$scope', '$filter', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService'
+  ($scope, $filter, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
 
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
     $scope.attention_students = []
+    $scope.search = {}
+    $scope.search.text = ''
+    $scope.nameArray = []
 
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        $scope.initialStudentsArray = $scope.organization.students
+        $scope.students = $scope.organization.students
+        #for student in students
+        #  $scope.nameArray.push(student.full_name)
 
-        $scope.groupedStudents = $scope.organization.groupedStudents
         $scope.org_milestones = $scope.organization.org_milestones
 
         $scope.active_mentors = $scope.organization.active_mentors
@@ -34,7 +40,27 @@ angular.module('myApp')
 
         $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
 
+        $scope.class_of_years = [2014,2015,2016,2017,2018,2019,2020]
+
         $scope.loaded_users = true
+
+    $scope.tagFilter = (initialStudentsArray) ->
+      studentsReturn = []
+      if $scope.search.text != ''
+        for student in initialStudentsArray
+          tagPass = $filter('filter')(student.tag_list, $scope.search.text).length
+          nameArray = [student.full_name]
+          namePass = $filter('filter')(nameArray, $scope.search.text).length
+          if tagPass > 0 or namePass > 0
+            studentsReturn.push(student)
+      else
+        studentsReturn = initialStudentsArray
+
+      $scope.students = studentsReturn
+
+    $scope.$watch('search.text', () ->
+      $scope.tagFilter($scope.initialStudentsArray)
+    )
 
     $scope.fullName = (user) ->
       if user.id == current_user.id
@@ -55,7 +81,8 @@ angular.module('myApp')
 
       modalInstance.result.then (user) ->
         $scope.organization.students.push(user)
-        $scope.groupedStudents = _.groupBy($scope.organization.students, "class_of")
+        $scope.initialStudentsArray = $scope.organization.students
+        $scope.tagFilter($scope.initialStudentsArray)
         $scope.addSuccessMessage("Email with password has been sent to " + user.email)
 
 ]
