@@ -25,13 +25,15 @@
     <base href="/app">
   </head>
   <body ng-controller="AppController">
-    <div id="wrapper">
-      <header id="sidebar-wrapper" ng-include="'navbar/navbar.html'"></header>
-      <div class="mask"></div>
-
-      <button type="button" id="menuToggle" class="btn btn-default">
-        <span class="glyphicon glyphicon-align-justify"></span>
-      </button>
+    <div id="wrapper" ng-class="{'no-nav': hide_nav}">
+      <!-- Nav -->
+      <div ng-hide="hide_nav">
+        <header id="sidebar-wrapper" ng-include="'navbar/navbar.html'"></header>
+        <button type="button" id="menuToggle" class="btn btn-default">
+          <span class="glyphicon glyphicon-align-justify"></span>
+        </button>
+      </div>
+      <!-- Nav -->
 
       <div class="alerts-section">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -43,6 +45,7 @@
         <h4>Oops! We recenty updated Imua and we noticed you are using an old version.</h4>
         <h5>Please refresh your browser window to get the updates!</h5>
       </div>
+    </div>
   </body>
 
   <script>

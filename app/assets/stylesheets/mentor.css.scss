@@ -165,6 +165,15 @@
 
   .mentor-lower {
     padding: 40px $wrapper-width 0 $wrapper-width;
+    
+    .search-label {
+      display: inline-block;
+    }
+    .student-search {
+      color: #000000;
+      width: 30%;
+      display: inline-block;
+    }
   }
 
 }

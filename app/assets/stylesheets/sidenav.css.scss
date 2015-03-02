@@ -114,7 +114,9 @@
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 200px;
+      padding-left: 200px;
+
+      &.no-nav {padding-left: 0px; }
     }
 
     #wrapper.toggled {

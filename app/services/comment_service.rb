@@ -79,9 +79,9 @@ private
   def get_comments_view(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    commentQ = Querier.new(Comment).select([:id, :comment, :user_id, :created_at, :updated_at]).where(conditions)
+    commentQ = Querier.factory(Comment).select([:id, :comment, :user_id, :created_at, :updated_at]).where(conditions)
     conditions[:user_id] = commentQ.pluck(:user_id)
-    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
     userQ.set_subQueriers([commentQ])
 
     view = { users: userQ.view }
@@ -101,6 +101,10 @@ private
       if comment.commentable_type == "UserAssignment"
         user_assignment = UserAssignment.find(comment.commentable_id)
         assignment = Assignment.find(user_assignment.assignment_id)
+
+        # Workaround to not send emails for assignments owned by a milestone
+        return if assignment.assignment_owner_type != "User"
+        assignment[:user_id] = assignment.assignment_owner_id
 
         assignee_id = user_assignment.user_id
         assignor_id = assignment.user_id

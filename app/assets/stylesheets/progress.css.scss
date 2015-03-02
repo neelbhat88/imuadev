@@ -81,6 +81,10 @@
     width: 30%;
   }
 
+  .class-name > h4 {
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+  }
   .academicsProgressContainer {
     .expanded, .editing {
       width: 30%;
@@ -99,7 +103,9 @@
         .see-more { opacity: 1; }
       }
     }
-
+    .advanced {
+      width: 2%;
+    }
     .expanded-class-info {
       @include respond-to(1200) {
         padding-bottom: 20px;
@@ -110,13 +116,23 @@
       }
 
     }
+    #edit--grades{
+      width: 60%;
+    }
 
     #cell--grades {
       width: 15%;
     }
 
+    .cell--grades {
+      width: 10%;
+    }
+
     #cell--form {
       width: 20%;
+    }
+    .advanced--toggle {
+      padding-top: 30px;
     }
 
   }

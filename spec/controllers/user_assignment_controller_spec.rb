@@ -13,7 +13,7 @@ describe Api::V1::UserAssignmentController do
       let!(:student)  { create(:student, organization_id: orgId) }
       let(:studentId) { subject.current_user.id }
 
-      let!(:assignment)      { create(:assignment, user_id: userId) }
+      let!(:assignment)      { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
       let!(:user_assignment) { create(:user_assignment,
                                        assignment_id: assignment.id,
                                        user_id:       studentId) }
@@ -33,7 +33,7 @@ describe Api::V1::UserAssignmentController do
       let(:adminId) { subject.current_user.id }
       let(:orgId)   { subject.current_user.organization_id }
 
-      let!(:assignment)      { create(:assignment, user_id: adminId) }
+      let!(:assignment)      { create(:assignment, assignment_owner_type: "User", assignment_owner_id: adminId) }
       let!(:student)         { create(:student, organization_id: orgId) }
       let!(:other_student)   { create(:student, organization_id: orgId + 1) }
       let!(:user_assignment) { create(:user_assignment,
@@ -69,8 +69,8 @@ describe Api::V1::UserAssignmentController do
 
       let!(:relationship)  { create(:relationship, user_id: student.id, assigned_to_id: subject.current_user.id) }
 
-      let!(:assignment)       { create(:assignment, user_id: userId) }
-      let!(:other_assignment) { create(:assignment, user_id: userId + 1) }
+      let!(:assignment)       { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+      let!(:other_assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId + 1) }
 
       xit "returns 403 if a mentor tries to create a UserAssignment for an Assignment that's not theirs" do
         user_assignment = attributes_for(:user_assignment,
@@ -113,8 +113,8 @@ describe Api::V1::UserAssignmentController do
       let!(:student)       { create(:student, organization_id: orgId) }
       let!(:other_student) { create(:student, organization_id: otherOrgId) }
 
-      let!(:assignment)       { create(:assignment, user_id: userId) }
-      let!(:other_assignment) { create(:assignment, user_id: userId + 1) }
+      let!(:assignment)       { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId) }
+      let!(:other_assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: userId + 1) }
 
       let!(:user_assignment)       { create(:user_assignment,
                                              assignment_id: assignment.id,
@@ -153,8 +153,7 @@ describe Api::V1::UserAssignmentController do
 
       let(:studentId) { subject.current_user.id }
 
-      let!(:assignment)      { create(:assignment,
-                                       user_id: studentId) }
+      let!(:assignment)      { create(:assignment, assignment_owner_type: "User", assignment_owner_id: studentId) }
       let!(:user_assignment) { create(:user_assignment,
                                        assignment_id: assignment.id,
                                        user_id: studentId) }
@@ -174,8 +173,8 @@ describe Api::V1::UserAssignmentController do
       let!(:student)       { create(:student, organization_id: orgId) }
       let!(:other_student) { create(:student, organization_id: otherOrgId) }
 
-      let!(:assignment)       { create(:assignment, user_id: subject.current_user.id) }
-      let!(:other_assignment) { create(:assignment, user_id: other_student.id) }
+      let!(:assignment)       { create(:assignment, assignment_owner_type: "User", assignment_owner_id: subject.current_user.id) }
+      let!(:other_assignment) { create(:assignment, assignment_owner_type: "User", assignment_owner_id: other_student.id) }
 
       let!(:user_assignment)       { create(:user_assignment,
                                              assignment_id: assignment.id,

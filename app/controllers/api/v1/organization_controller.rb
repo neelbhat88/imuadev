@@ -30,6 +30,12 @@ class Api::V1::OrganizationController < ApplicationController
 
   # POST /organization
   def create
+    if !current_user.super_admin?
+      render status: :forbidden,
+        json: {}
+      return
+    end
+
     name = params[:name]
 
     if name.nil?

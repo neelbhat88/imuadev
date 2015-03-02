@@ -15,16 +15,29 @@ angular.module('myApp')
   () ->
     restrict: 'A'
     link: (scope, elem, attrs) ->
+      delay = 150
+      clicks = 0
+      timer = null
       $(elem).click () ->
-        this_accordion = $(elem).closest('div[imua-accordion]')
-        all_bodies = this_accordion.find('div[accordion-body]')
-        my_body = $(elem).nextAll('div[accordion-body]')
-        scope.show = !my_body.is(":visible")
+        clicks++
+        if clicks == 1
+          timer = setTimeout( () ->
+            this_accordion = $(elem).closest('div[imua-accordion]')
+            all_bodies = this_accordion.find('div[accordion-body]')
+            my_body = $(elem).nextAll('div[accordion-body]')
+            scope.show = !my_body.is(":visible")
 
-        all_bodies.hide()
+            all_bodies.hide()
 
-        if scope.show
-          my_body.show()
+            if scope.show
+              my_body.show()
+
+            clicks = 0
+          , delay)
+        else
+          clearTimeout(timer)
+          clicks = 0
+
 
 ]
 

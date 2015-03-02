@@ -42,11 +42,16 @@
 		</div>
 	</div>
 
+	<div class="students-mid">
+		<h6 class="search-label">Search for Students: </h6>
+		<input class="student-search form-inline form-field" type="text" ng-model="search.name">
+	</div>
+
 	<div class="students-lower">
 		<div ng-repeat="(group, group_students) in groupedStudents">
-			<h5 class="list-header">Class of <span class="bold">{{group}}</span></h5>
+			<h5 ng-hide="search.name" class="list-header">Class of <span class="bold">{{group}}</span></h5>
 			<div class="list-container progress-circle--list">
-				<progress-circle-default ng-repeat="student in group_students | orderBy: 'last_name'"></progress-circle-default>
+				<progress-circle-default ng-repeat="student in group_students | orderBy: 'last_name' | filter: { full_name: search.name }"></progress-circle-default>
 			</div>
     </div>
 

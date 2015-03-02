@@ -16,12 +16,10 @@ class Api::V1::SessionsController < Devise::SessionsController
 	                )
 	  end
 
-		if session[:previous_url]
-			pu = session[:previous_url]
-		end
-
-		# pu should have '/' in it
-		redirect_to app_url + "##{pu}"
+		render status: 200,
+			json: {
+				user: ViewUser.new(current_user, current_user.organization)
+			}
 	end
 
 	def destroy

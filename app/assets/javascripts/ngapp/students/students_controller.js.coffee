@@ -36,7 +36,6 @@ angular.module('myApp')
 
         $scope.loaded_users = true
 
-
     $scope.fullName = (user) ->
       if user.id == current_user.id
         "Me"
