@@ -88,6 +88,9 @@ gem "brakeman", :require => false
 gem "lograge"
 gem 'quiet_assets'
 
+# CORS suppport
+gem 'rack-cors', :require => 'rack/cors'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
