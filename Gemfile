@@ -54,6 +54,7 @@ gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.
 gem 'mail'
 
 gem 'acts_as_commentable', '3.0.1'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 # Images
 gem 'rmagick', '2.13.2'
@@ -84,6 +85,9 @@ gem "brakeman", :require => false
 # Less verbose logging
 gem "lograge"
 gem 'quiet_assets'
+
+# CORS suppport
+gem 'rack-cors', :require => 'rack/cors'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

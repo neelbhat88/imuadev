@@ -102,6 +102,10 @@ private
         user_assignment = UserAssignment.find(comment.commentable_id)
         assignment = Assignment.find(user_assignment.assignment_id)
 
+        # Workaround to not send emails for assignments owned by a milestone
+        return if assignment.assignment_owner_type != "User"
+        assignment[:user_id] = assignment.assignment_owner_id
+
         assignee_id = user_assignment.user_id
         assignor_id = assignment.user_id
 
