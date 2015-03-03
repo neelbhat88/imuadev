@@ -30,6 +30,7 @@
 //= require angular-messages
 //= require moment
 //= require c3
+//= require chart
 //= require angular-devise
 //= require jquery
 //= require jquery_ujs

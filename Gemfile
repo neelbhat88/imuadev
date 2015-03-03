@@ -51,9 +51,6 @@ gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails', "~> 1.3.0"
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
-# Lots of cool JS programming helpers (e.g. _groupBy)
-gem 'underscore-rails'
-
 gem 'mail'
 
 gem 'acts_as_commentable', '3.0.1'

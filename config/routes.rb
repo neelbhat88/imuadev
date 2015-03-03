@@ -1,6 +1,4 @@
 Imua::Application.routes.draw do
-  get "organization/roadmap"
-
   devise_for :users, :skip => [:registrations, :password], :controllers => {:sessions => "api/v1/sessions"}
 
   # Rails 3 strategy for drying out routes
@@ -42,6 +40,9 @@ Imua::Application.routes.draw do
           put :broadcast
         end
       end
+
+      # Put any resources we want for graphing here
+      get '/graph/gpa' => 'graph#gpa'
 
       resources :organization, shallow: true do
 
