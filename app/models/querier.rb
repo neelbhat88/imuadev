@@ -27,7 +27,13 @@ class Querier
 
   def self.factory(klass)
     # Automatically instantiate the child class if it's defined
-    if Object.const_defined?(klass.to_s + "Querier")
+    begin
+      is_defined = Object.const_defined?(klass.to_s + "Querier")
+    rescue NameError => e
+      Rails.logger.debug("Caught NameError for const_defined?(" + klass.to_s + "Querier)")
+    end
+
+    if is_defined
       childKlass = (klass.to_s + "Querier").constantize
       if Querier.descendants.include?(childKlass)
         return childKlass.new
