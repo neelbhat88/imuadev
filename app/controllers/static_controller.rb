@@ -9,7 +9,7 @@ class StaticController < ApplicationController
   end
 
   def login
-    redirect_to "app#/login"
+    redirect_to "/app#/login"
   end
 
 end
