@@ -133,7 +133,6 @@ Imua::Application.routes.draw do
       delete 'parent_guardian_contact/:id' => 'parent_guardian_contact#delete_parent_guardian_contact'
 
       get '/relationship/assigned_students_for_group' => 'users#get_assigned_students_for_group'
-      get '/progress/recalculated_milestones' => 'progress#get_recalculated_milestones'
 
       get '/organization/:id/info_with_roadmap' => 'organization#organization_with_roadmap'
       get '/organization/:id/info_with_users' => 'organization#organization_with_users'

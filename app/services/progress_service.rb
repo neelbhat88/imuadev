@@ -205,6 +205,11 @@ class ProgressService
   end
 
   def recalculate_milestones(params)
+    # We use the Querier here because it's easier to deal with when filtering by
+    # multiple optional attributes. We take the ids from the Querier results and
+    # perform another set of queries for the ActiveRecord objects, so that they're
+    # more easily plugged into the existing MilestoneFactory, etc. routines.
+    
     conditions = Marshal.load(Marshal.dump(params))
 
     milestoneQ = Querier.factory(Milestone).select([],[:id, :time_unit_id]).where(conditions)
