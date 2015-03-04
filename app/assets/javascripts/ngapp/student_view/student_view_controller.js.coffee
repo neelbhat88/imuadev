@@ -17,17 +17,17 @@ angular.module('myApp')
     GraphService.gpa([$scope.student.id], range_ids)
     .success (data) ->
       console.log(data)
-      graph_data = []
+      graph_format = []
       for time_unit in $scope.range
         label = time_unit.name
-        gpa = _.find(data.history, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
+        gpa = _.find(data.gpas, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
 
-        graph_data.push {label: label, gpa: gpa}
+        graph_format.push {label: label, gpa: gpa}
 
-      labels = _.map( graph_data, ((data) -> data.label ))
-      gpas = _.map( graph_data, ((data) -> data.gpa))
-      data = {
-        labels: labels,
+      graph = get_labels_and_data(graph_format)
+
+      graph_data = {
+        labels: graph.labels,
         datasets: [
             {
                 label: "My First dataset",
@@ -37,10 +37,19 @@ angular.module('myApp')
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
-                data: gpas
+                data: graph.data
             }
         ]
       }
-      myNewChart = new Chart(ctx).Line(data, null);
+      myNewChart = new Chart(ctx).Line(graph_data, null);
 
+  get_labels_and_data = (graph_data) ->
+    labels = _.map( graph_data, ((data) -> data.label ))
+    data = _.map( graph_data, ((data) -> data.gpa))
+
+    if graph_data.length == 1 # Only 1 semester of data
+      labels.unshift("")
+      data.unshift(data[0])
+
+    {labels: labels, data: data}
 ]

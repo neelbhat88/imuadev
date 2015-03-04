@@ -20,9 +20,11 @@ class Api::V1::GraphController < ApplicationController
     #   return
     # end
 
-    history = @gpaService.get_users_gpas(user_ids, time_unit_ids)
+    gpas = @gpaService.get_users_gpas(user_ids, time_unit_ids)
+    # ToDo - if more than 1 user make sure the history
+    #     is averaged for all users for each semester
 
     render status: :ok,
-      json: { history: history }
+      json: { gpas: gpas }
   end
 end
