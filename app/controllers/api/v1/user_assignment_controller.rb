@@ -31,17 +31,16 @@ class Api::V1::UserAssignmentController < ApplicationController
   # POST /users/:user_id/user_assignment
   # Creates a UserAssignment for the given User
   def create
-    userId         = params[:user_id].to_i
-    userAssignment = params[:user_assignment]
-
-    userAssignment["user_id"] = userId
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:user_id] = params[:user_id]
+    service_params[:user_assignment][:user_id] = params[:user_id]
 
     if !can?(current_user, :create_user_assignment, User.where(id: params[:user_id]).first)
       render status: :forbidden, json: {}
       return
     end
 
-    result = @assignmentService.create_user_assignment(userAssignment)
+    result = @assignmentService.create_user_assignment(service_params)
 
     render status: result.status,
       json: {
@@ -53,17 +52,16 @@ class Api::V1::UserAssignmentController < ApplicationController
   # PUT /user_assignment/:id
   # Updates a UserAssignment
   def update
-    userAssignmentId = params[:id].to_i
-    userAssignment   = params[:user_assignment]
-
-    userAssignment["id"] = userAssignmentId
+    service_params = params.except(*[:id, :controller, :action]).symbolize_keys
+    service_params[:user_assignment_id] = params[:id]
+    service_params[:user_assignment][:id] = params[:id]
 
     if !can?(current_user, :update_user_assignment, UserAssignment.where(id: params[:id]).first)
       render status: :forbidden, json: {}
       return
     end
 
-    result = @assignmentService.update_user_assignment(current_user, userAssignment)
+    result = @assignmentService.update_user_assignment(service_params)
 
     render status: result.status,
       json: {
