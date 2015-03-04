@@ -17,7 +17,8 @@ class AssignmentService
     unless params[:user_assignments].nil?
       params[:user_assignments].each do |ua|
         ua[:assignment_id] = params[:assignment_id]
-        userAssignmentResult = create_user_assignment(ua)
+        params = { user_assignment: ua, recalculate: false }
+        userAssignmentResult = create_user_assignment(params)
         if userAssignmentResult.status == :ok
           userAssignments << userAssignmentResult.object
         end
@@ -54,7 +55,8 @@ class AssignmentService
       params[:user_assignments].each do |ua|
         ua[:assignment_id] = params[:assignment_id]
         if ua[:id].nil?
-          user_assignment_result = create_user_assignment(ua)
+          params = { user_assignment: ua, recalculate: false }
+          user_assignment_result = create_user_assignment(params)
           if user_assignment_result.status == :ok
             userAssignments << user_assignment_result.object
             newUserAssignments << user_assignment_result.object
@@ -328,11 +330,11 @@ public
     return UserAssignment.where(:user_id => userId, :assignment_id => taskId).first
   end
 
-  def create_user_assignment(userAssignment)
+  def create_user_assignment(params)
     newUserAssignment = UserAssignment.new do | e |
-      e.user_id = userAssignment[:user_id]
-      e.assignment_id = userAssignment[:assignment_id]
-      e.status = userAssignment[:status]
+      e.user_id = params[:user_assignment][:user_id]
+      e.assignment_id = params[:user_assignment][:assignment_id]
+      e.status = params[:user_assignment][:status]
     end
 
     if !newUserAssignment.valid?
@@ -340,14 +342,27 @@ public
     end
 
     if newUserAssignment.save
+
+      # Default, assume we should attempt perform milestone recalculation
+      # TODO - This probs belongs in a MilestonService routine
+      if !params.key?(:recalculate) or params[:recalculate] == true
+        conditions = { assignment_id: newUserAssignment.assignment_id }
+        assignmentQ = Querier.factory(Assignment).select([],[:assignment_owner_type, :assignment_owner_id]).where(conditions)
+        if assignmentQ.domain.first[:assignment_owner_type] == "Milestone"
+          conditions = { milestone_id: assignmentQ.pluck(:assignment_owner_id),
+                         user_id: params[:user_id] }
+          ProgressService.new(@current_user).recalculate_milestones(conditions)
+        end
+      end
+
       return ReturnObject.new(:ok, "Successfully created UserAssignment, id: #{newUserAssignment.id}.", newUserAssignment)
     else
       return ReturnObject.new(:internal_server_error, "Failed to create UserAssignment. Errors: #{newUserAssignment.errors.inspect}.", nil)
     end
   end
 
-  def update_user_assignment(current_user, userAssignment)
-    userAssignmentId = userAssignment[:id]
+  def update_user_assignment(params)
+    userAssignmentId = params[:user_assignment][:id]
 
     dbUserAssignment = get_user_assignment(userAssignmentId)
 
@@ -355,9 +370,20 @@ public
       return ReturnObject.new(:internal_server_error, "Failed to find UserAssignment with id: #{userAssignmentId}.", nil)
     end
 
-    if dbUserAssignment.update_attributes(:status => userAssignment[:status])
+    if dbUserAssignment.update_attributes(:status => params[:user_assignment][:status])
       dbAssignment = _get_assignment(dbUserAssignment.assignment_id)
-      send_task_complete_email(current_user, dbAssignment, dbUserAssignment)
+      send_task_complete_email(@current_user, dbAssignment, dbUserAssignment)
+
+      # Default, assume we should attempt perform milestone recalculation
+      # TODO - This probs belongs in a MilestonService routine
+      if !params.key?(:recalculate) or params[:recalculate] == true
+        if dbAssignment.assignment_owner_type == "Milestone"
+          conditions = { milestone_id: dbAssignment.assignment_owner_id,
+                         user_id: dbUserAssignment.user_id }
+          ProgressService.new(@current_user).recalculate_milestones(conditions)
+        end
+      end
+
       return ReturnObject.new(:ok, "Successfully updated UserAssignment, id: #{dbUserAssignment.id}.", dbUserAssignment)
     else
       return ReturnObject.new(:internal_server_error, "Failed to update UserAssignment, id: #{dbUserAssignment.id}.  Errors: #{dbUserAssignment.errors.inspect}.", nil)
@@ -371,7 +397,19 @@ public
       return ReturnObject.new(:internal_server_error, "Failed to find UserAssignment with id: #{userAssignmentId}.", nil)
     end
 
+    dbAssignment = _get_assignment(dbUserAssignment.assignment_id)
+    userId = dbUserAssignment.user_id
+
     if dbUserAssignment.destroy()
+
+      # Default, assume we should attempt perform milestone recalculation
+      # TODO - This probs belongs in a MilestonService routine
+      if dbAssignment.assignment_owner_type == "Milestone"
+        conditions = { milestone_id: dbAssignment.assignment_owner_id,
+                       user_id: userId }
+        ProgressService.new(@current_user).recalculate_milestones(conditions)
+      end
+
       return ReturnObject.new(:ok, "Successfully deleted UserAssignment, id: #{dbUserAssignment.id}.", nil)
     else
       return ReturnObject.new(:internal_server_error, "Failed to delete UserAssignment, id: #{dbUserAssignment.id}. Errors: #{dbUserAssignment.errors.inspect}.", nil)
