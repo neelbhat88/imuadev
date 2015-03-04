@@ -353,4 +353,14 @@ namespace :db_update do
     end
   end
 
+  desc "Add class_of tag"
+  task :add_class_of_tag => :environment do
+    all_students = User.where(:role => 50)
+    all_students.each do | s |
+      s.tag_list.add('Class Of ' + s.class_of.to_s)
+      s.save
+      puts "Added 'class of " + s.class_of.to_s + "' tag to " + s.first_name + " " + s.last_name
+    end
+  end
+
 end

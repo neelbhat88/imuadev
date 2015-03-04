@@ -44,14 +44,14 @@
 
 	<div class="students-mid">
 		<h6 class="search-label">Search for Students: </h6>
-		<input class="student-search form-inline form-field" type="text" ng-model="search.name">
+		<input placeholder="Enter Student's Name" class="student-search form-inline form-field" type="text" ng-model="search.text">
 	</div>
 
 	<div class="students-lower">
-		<div ng-repeat="(group, group_students) in groupedStudents">
-			<h5 ng-hide="search.name" class="list-header">Class of <span class="bold">{{group}}</span></h5>
+		<div ng-repeat="group in class_of_years">
+			<h5 ng-show="_.findWhere(students, {class_of: group})" class="list-header">Class of <span class="bold">{{group}}</span></h5>
 			<div class="list-container progress-circle--list">
-				<progress-circle-default ng-repeat="student in group_students | orderBy: 'last_name' | filter: { full_name: search.name }"></progress-circle-default>
+				<progress-circle-default ng-repeat="student in students | orderBy: 'last_name' | filter: {class_of: group}"></progress-circle-default>
 			</div>
     </div>
 
