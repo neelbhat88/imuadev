@@ -26,8 +26,8 @@ class AssignmentService
 
     # TODO - This probs belongs in a MilestonService routine
     if assignmentResult.object.assignment_owner_type == "Milestone"
-      params = { milestone_id: assignmentResult.object.assignment_owner_id }
-      ProgressService.new(@current_user).recalculate_milestones(params)
+      conditions = { milestone_id: assignmentResult.object.assignment_owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(conditions)
     end
 
     # Send out emails to all assignees
@@ -79,8 +79,8 @@ class AssignmentService
 
     # TODO - This probs belongs in a MilestonService routine
     if assignmentResult.object.assignment_owner_type == "Milestone"
-      params = { milestone_id: assignmentResult.object.assignment_owner_id }
-      ProgressService.new(@current_user).recalculate_milestones(params)
+      conditions = { milestone_id: assignmentResult.object.assignment_owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(conditions)
     end
 
     # Send out emails to all assignees
@@ -148,8 +148,8 @@ class AssignmentService
 
     # TODO - This probs belongs in a MilestonService routine
     if retObj.status == :ok and do_milestone_recalculation
-      params = { milestone_id: owner_id }
-      ProgressService.new(@current_user).recalculate_milestones(params)
+      conditions = { milestone_id: owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(conditions)
     end
 
     return retObj
