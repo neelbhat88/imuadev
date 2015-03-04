@@ -5,6 +5,9 @@ angular.module('myApp')
   $scope.student = student
 
   Chart.defaults.global.responsive = true
+  chart_options = {
+    bezierCurve: false
+  }
   ctx = $("#myChart").get(0).getContext("2d")
 
   OrganizationService.getTimeUnits($scope.student.organization_id)
@@ -16,40 +19,40 @@ angular.module('myApp')
 
     GraphService.gpa([$scope.student.id], range_ids)
     .success (data) ->
-      console.log(data)
-      graph_format = []
-      for time_unit in $scope.range
-        label = time_unit.name
-        gpa = _.find(data.gpas, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
+      graph = get_labels_and_data($scope.range, data.gpas)
 
-        graph_format.push {label: label, gpa: gpa}
+      graph_data = format_graph_data(graph)
+      myNewChart = new Chart(ctx).Line(graph_data, chart_options);
 
-      graph = get_labels_and_data(graph_format)
+  get_labels_and_data = (time_units, gpas) ->
+    graph_format = {labels: [], data: []}
+    for time_unit in time_units
+      label = time_unit.name
+      gpa = _.find(gpas, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
 
-      graph_data = {
-        labels: graph.labels,
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(65,230,178,0.2)",
-                strokeColor: "rgba(65,230,178,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: graph.data
-            }
-        ]
-      }
-      myNewChart = new Chart(ctx).Line(graph_data, null);
+      graph_format.labels.push label
+      graph_format.data.push gpa
 
-  get_labels_and_data = (graph_data) ->
-    labels = _.map( graph_data, ((data) -> data.label ))
-    data = _.map( graph_data, ((data) -> data.gpa))
+    if graph_format.labels.length == 1 # Only 1 semester of data
+      graph_format.labels.unshift ""
+      graph_format.data.unshift graph_format.data[0]
 
-    if graph_data.length == 1 # Only 1 semester of data
-      labels.unshift("")
-      data.unshift(data[0])
+    graph_format
 
-    {labels: labels, data: data}
+  format_graph_data = (graph) ->
+    graph_data = {
+      labels: graph.labels,
+      datasets: [
+          {
+              label: "GPA History",
+              fillColor: "rgba(65,230,178,0.2)",
+              strokeColor: "rgba(65,230,178,1)",
+              pointColor: "rgba(220,220,220,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: graph.data
+          }
+      ]
+    }
 ]
