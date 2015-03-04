@@ -24,6 +24,12 @@ class AssignmentService
       end
     end
 
+    # TODO - This probs belongs in a MilestonService routine
+    if assignmentResult.object.assignment_owner_type == "Milestone"
+      params = { milestone_id: assignmentResult.object.assignment_owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(params)
+    end
+
     # Send out emails to all assignees
     send_assignment_emails(@current_user, assignmentResult.object, userAssignments)
 
@@ -69,6 +75,12 @@ class AssignmentService
         #   end
         end
       end
+    end
+
+    # TODO - This probs belongs in a MilestonService routine
+    if assignmentResult.object.assignment_owner_type == "Milestone"
+      params = { milestone_id: assignmentResult.object.assignment_owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(params)
     end
 
     # Send out emails to all assignees
@@ -127,7 +139,19 @@ class AssignmentService
 
   # Destroys an assignment
   def destroy(assignmentId)
+    # TODO - This probs belongs in a MilestonService routine
+    dbAssignment = _get_assignment(assignmentId)
+    do_milestone_recalculation = dbAssignment.assignment_owner_type == "Milestone"
+    owner_id = dbAssignment.assignment_owner_id
+
     retObj = _destroy(assignmentId)
+
+    # TODO - This probs belongs in a MilestonService routine
+    if retObj.status == :ok and do_milestone_recalculation
+      params = { milestone_id: owner_id }
+      ProgressService.new(@current_user).recalculate_milestones(params)
+    end
+
     return retObj
   end
 
