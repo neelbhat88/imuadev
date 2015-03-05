@@ -8,4 +8,8 @@ class StaticController < ApplicationController
     render "app", layout: "angular"
   end
 
+  def login
+    redirect_to "/app#/login"
+  end
+
 end
