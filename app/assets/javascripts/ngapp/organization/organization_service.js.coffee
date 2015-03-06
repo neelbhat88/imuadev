@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'OrganizationService', ['$http', '$q', ($http, $q) ->
+.service 'OrganizationService', ['$http', '$q', 'TaggingService', ($http, $q, TaggingService) ->
 
   @all = ()->
     $http.get('/api/v1/organization')
@@ -24,11 +24,10 @@ angular.module('myApp')
   # TODO This needs to be broken down further. Much Further.
   @parseOrganizationWithUsers = (org, timeUnitId) ->
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
-
     org.students = _.each(_.where(org.users, { role: 50 }), (s) -> s.modules_progress = [] )
     org.mentors = _.each(_.where(org.users, { role: 40 }), (m) -> m.modules_progress = [] )
     org.orgAdmins = _.where(org.users, { role: 10 })
-
+    org.students = TaggingService.parseTagsForUsers(org.students, org.tags, org.taggings)
     org.active_students = _.filter(org.students, (student) -> (new Date(student.last_login)).getTime() >= active_user_threshold).length
     org.active_mentors = _.filter(org.mentors, (mentor) -> (new Date(mentor.last_login)).getTime() >= active_user_threshold).length
     org.attention_studentIds = []
