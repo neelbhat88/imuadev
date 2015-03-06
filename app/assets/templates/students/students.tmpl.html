@@ -42,6 +42,20 @@
 		</div>
 	</div>
 
+	<div ng-if="selectedStudents.length == 1" class="single-student-selectbar">
+		<progress-circle notimeout="true" drawduration="0" parentclass="circle-size" identifier="selected" student="singleStudent"></progress-circle>
+		<span>{{singleStudent.full_name}}</span>
+		<span>{{singleStudent.user_points}} out of {{singleStudent.total_points}} Available Points</span>
+		<a href="app#/progress/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Progress</span></a>
+		<a href="app#/expectations/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Expectations</span></a>
+		<span ng-click="clearSelected(selectedStudents)" class="btn btn-default btn-sm">Clear Selection</span>
+
+	</div>
+
+	<div ng-show="selectedStudents.length > 1" class="students-selectbar">
+
+	</div>
+
 	<div class="students-mid">
 		<h6 class="search-label">Search for Students: </h6>
 		<input placeholder="Enter Student's Name" class="student-search form-inline form-field" type="text" ng-model="search.text">
@@ -51,7 +65,7 @@
 		<div ng-repeat="group in class_of_years">
 			<h5 ng-show="_.findWhere(students, {class_of: group})" class="list-header">Class of <span class="bold">{{group}}</span></h5>
 			<div class="list-container progress-circle--list">
-				<progress-circle-default ng-repeat="student in students | orderBy: 'last_name' | filter: {class_of: group}"></progress-circle-default>
+				<progress-circle-select ng-repeat="student in students | orderBy: 'last_name' | filter: {class_of: group}"></progress-circle-select>
 			</div>
     </div>
 

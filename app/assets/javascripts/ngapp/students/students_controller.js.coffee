@@ -8,16 +8,16 @@ angular.module('myApp')
     $scope.search = {}
     $scope.search.text = ''
     $scope.nameArray = []
-
+    $scope.selectedStudents = []
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
+        for student in $scope.organization.students
+          student.is_selected = false
         $scope.initialStudentsArray = $scope.organization.students
         $scope.students = $scope.organization.students
-        #for student in students
-        #  $scope.nameArray.push(student.full_name)
 
         $scope.org_milestones = $scope.organization.org_milestones
 
@@ -39,7 +39,7 @@ angular.module('myApp')
         $scope.average_testsTaken = $scope.organization.average_testsTaken
 
         $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
-
+        # this is temporary and will eventually be parsed by class of tag
         $scope.class_of_years = [2014,2015,2016,2017,2018,2019,2020]
 
         $scope.loaded_users = true
@@ -61,6 +61,35 @@ angular.module('myApp')
     $scope.$watch('search.text', () ->
       $scope.tagFilter($scope.initialStudentsArray)
     )
+
+    $scope.setSelectedClass = (is_selected) ->
+      if is_selected
+        'is-selected'
+      else
+        ''
+
+    $scope.studentSelect = (student) ->
+      if _.findWhere($scope.selectedStudents, { id: student.id })
+        $scope.selectedStudents = _.without($scope.selectedStudents, _.findWhere($scope.selectedStudents, { id: student.id }))
+        student.is_selected = false
+      else
+        $scope.selectedStudents.push(student)
+        student.is_selected = true
+        $scope.singleStudent = $scope.selectedStudents[0]
+        $scope.singleStudent.total_points = 0
+        $scope.singleStudent.user_points = 0
+
+        for mod in $scope.singleStudent.modules_progress
+          $scope.singleStudent.total_points += mod.points.total
+          $scope.singleStudent.user_points += mod.points.user
+
+        console.log($scope.selectedStudents[0])
+
+    $scope.clearSelected = (selectedStudents) ->
+      for student in selectedStudents
+        student.is_selected = false
+
+      $scope.selectedStudents = []
 
     $scope.fullName = (user) ->
       if user.id == current_user.id

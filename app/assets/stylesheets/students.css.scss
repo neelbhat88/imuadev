@@ -73,6 +73,18 @@
     }
   }
 
+  .single-student-selectbar {
+    width: 100%;
+    background: #B8B8B8;
+    padding: 20px 80px;
+  }
+
+  .students-selectbar {
+    width: 100%;
+    background: #B8B8B8;
+    padding: 20px 120px;
+  }
+
   .students-mid, .students-lower {
     padding: 40px $wrapper-width 0 $wrapper-width;
 
@@ -87,6 +99,9 @@
     .list-container {
       margin: 15px 0 5px;
       @include respond-to(900) { text-align: center; }
+    }
+    .is-selected {
+      background-color: #B8B8B8;
     }
   }
 
