@@ -46,9 +46,10 @@ angular.module('myApp')
           org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
 
     # Collect all assignments
-    org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
-    org.assignments = org.assignments.concat(_.union(_.flatten(_.pluck(org.milestones, "assignments"))))
-    org.assignments = _.without(org.assignments, undefined)
+    if typeof org.assignments == 'undefined'
+      org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
+      org.assignments = org.assignments.concat(_.union(_.flatten(_.pluck(org.milestones, "assignments"))))
+      org.assignments = _.without(org.assignments, undefined)
     # Associate to their owner object
     for a in org.assignments
       switch a.assignment_owner_type
@@ -59,8 +60,9 @@ angular.module('myApp')
       a.user_assignments = []
 
     # Collect all user_assignments
-    org.user_assignments = _.union(_.flatten(_.pluck(org.users, "user_assignments"), true))
-    org.user_assignments = _.without(org.user_assignments, undefined)
+    if typeof org.user_assignments == 'undefined'
+      org.user_assignments = _.union(_.flatten(_.pluck(org.users, "user_assignments"), true))
+      org.user_assignments = _.without(org.user_assignments, undefined)
     # Match all user_assignment comments to their users
     _.each(org.user_assignments, (a) -> _.each(a.comments, (c) -> c.user = _.find(org.users, (u) -> c.user_id == u.id)))
 
