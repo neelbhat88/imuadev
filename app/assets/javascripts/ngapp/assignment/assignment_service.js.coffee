@@ -12,6 +12,18 @@ angular.module('myApp')
   today = new Date().getTime()
   two_days_from_now = today + (1000*60*60*24*2) # Two days from now
 
+  @userCanCreateNewTask = (user) ->
+    if user
+      return user.is_mentor || user.is_org_admin
+    else
+      return false
+
+  @userShouldSeeTasksNav = (user) ->
+    if user
+      return user.is_mentor || user.is_org_admin
+    else
+      return false
+
   @isComplete = (assignment) ->
     return _.every(assignment.user_assignments, (a) -> a.status == 1)
 

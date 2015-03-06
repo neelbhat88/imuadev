@@ -143,4 +143,9 @@ angular.module('myApp')
     $scope.created_by_str = (assignment) ->
       return AssignmentService.created_by_str(assignment, $scope.current_user)
 
+    $scope.shouldShowNewTaskButton = () ->
+      return AssignmentService.userCanCreateNewTask($scope.current_user)
+
+    $scope.shouldShowTasksNav = () ->
+      return AssignmentService.userShouldSeeTasksNav($scope.current_user)
 ]
