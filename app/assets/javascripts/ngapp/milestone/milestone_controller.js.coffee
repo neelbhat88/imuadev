@@ -4,11 +4,10 @@ angular.module('myApp')
 
     $scope.milestone_id = milestone_id
     $scope.current_user = current_user
-    $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
 
     $scope.selected_task_list_title = "What's needed to complete this milestone?"
 
-    $scope.recalculateCompletion = () =>
+    $scope.recalculateCompletion = () ->
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
       $scope.users_complete = partition[0]
       $scope.users_incomplete = partition[1]
@@ -23,14 +22,18 @@ angular.module('myApp')
         $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
         $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
 
-    MilestoneService.getMilestoneStatus($scope.milestone_id)
-      .then (data) ->
-        $scope.organization = MilestoneService.parseMilestoneStatus(data.organization)
-        $scope.users_total = $scope.organization.students
-        $scope.milestone = $scope.organization.milestones[0]
-        $scope.milestone.editing = false
-        $scope.recalculateCompletion()
-        $scope.loaded_data = true
+    $scope.loadData = () ->
+      $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
+      MilestoneService.getMilestoneStatus($scope.milestone_id)
+        .then (data) ->
+          $scope.organization = MilestoneService.parseMilestoneStatus(data.organization)
+          $scope.users_total = $scope.organization.students
+          $scope.milestone = $scope.organization.milestones[0]
+          $scope.milestone.editing = false
+          $scope.recalculateCompletion()
+          $scope.loaded_data = true
+
+    $scope.loadData()
 
     $scope.milestoneHasTasks = () ->
       return $scope.milestone.submodule == "YesNo"
@@ -66,14 +69,8 @@ angular.module('myApp')
       # Always assign all assignable users
       AssignmentService.broadcastAssignment($scope.new_assignment, _.map($scope.users_total, (assignee) -> assignee.id))
         .success (data) ->
-          organization = OrganizationService.parseOrganizationWithUsers(data.organization)
-          saved_assignment =  organization.assignments[0]
-          saved_assignment.assignees = []
-          if $scope.milestone.assignments == undefined
-            $scope.milestone.assignments = []
-          $scope.milestone.assignments.push(saved_assignment)
-          $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
-
+          $scope.loaded_data = false
+          $scope.loadData()
 
     $scope.viewTask  = (assignment) ->
       # Students go to user_assignment view
