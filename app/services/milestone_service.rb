@@ -169,58 +169,7 @@ class MilestoneService
   end
 
   def delete_user_milestone(userId, time_unit_id, milestone_id)
-
-    # Convert custom milestones over to assignment usage
     um = UserMilestone.where(user_id: userId, milestone_id: milestone_id)
-    # Check that we're actually deleting a user_milestone
-    if um.length > 0
-      # Check if custom milestone
-      m = Milestone.where(id: milestone_id).first
-      if m and m.submodule == Constants.SubModules[:YES_NO]
-        # Check if already converted to assignments
-        if Assignment.where(assignment_owner_type: "Milestone", assignment_owner_id: m.id).blank?
-          # Convert milestone over to assignments
-
-          # Get all applicable users (everyone in the milestone's time_unit_id)
-          userQ = Querier.factory(User).select([],[:id]).where({ time_unit_id: m.time_unit_id })
-          # Get any applicable user_milestones (any that exist for this milestone)
-          conditions = { user_id: userQ.pluck(:id), milestone_id: m.id }
-          userMilestoneQ = Querier.factory(UserMilestone).select([],[:user_id]).where(conditions)
-
-          # Sort user_milestones by :user_id
-          user_milestones = userMilestoneQ.domain([:user_id])
-          Rails.logger.debug("**** user_milestones: #{user_milestones} ****")
-
-          # Go through each user, in order of id.
-          # If the next user_milestone in line belongs to this user, then
-          # shift out the user_milestone and create a user_assignment with status: 1.
-          # If the next user_milestone in line does not belong to this user,
-          # then create a user_assignment with status: 0.
-          user_assignments = []
-          userQ.domain([:id]).each do |u|
-            if user_milestones.length > 0 && u[:id] == user_milestones[0][:user_id]
-              user_assignments << user_milestones.shift
-              user_assignments.last[:status] = 1
-            else
-              user_assignments << { user_id: u[:id], status: 0 }
-            end
-          end
-
-          assignment = { title: m.value,
-                         description: "",
-                         due_datetime: nil }
-
-          service_params = { assignment_owner_type: "Milestone",
-                             assignment_owner_id: m.id,
-                             assignment: assignment,
-                             user_assignments: user_assignments }
-
-          Rails.logger.debug("**** service_params: #{service_params} ****")
-
-          AssignmentService.new(@current_user).create_broadcast(service_params)
-        end
-      end
-    end
 
     if um.destroy_all()
       return ReturnObject.new(:ok, "Successfully removed User Milestone", nil)
