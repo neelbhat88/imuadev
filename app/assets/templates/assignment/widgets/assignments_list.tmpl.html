@@ -16,6 +16,7 @@
         ng-repeat="assignment in incompleteAssignments() | orderBy:sortIncompleteAssignments"
         ng-click="viewTask(assignment)">
         <div class="widget--content--table ng-clickable">
+          <div class="task-item__category-color table--cell no-border-right" task-item-category-color assignment="assignment"></div>
           <div class="task-item-info table--cell">
             <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
               <input type="checkbox" ng-checked="false" no-click-propagation ng-click="markComplete(assignment)" />
@@ -55,6 +56,7 @@
         ng-repeat="assignment in completedAssignments() | orderBy:sortCompletedAssignments"
         ng-click="viewTask(assignment)">
         <div class="widget--content--table ng-clickable">
+          <div class="task-item__category-color table--cell no-border-right" task-item-category-color assignment="assignment"></div>
           <div class="task-item-info table--cell">
             <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
               <input type="checkbox" ng-checked="true" no-click-propagation ng-click="markIncomplete(assignment)" />
