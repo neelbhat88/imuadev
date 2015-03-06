@@ -84,6 +84,10 @@
       width: 30%;
       display: inline-block;
     }
+    .list-container {
+      margin: 15px 0 5px;
+      @include respond-to(900) { text-align: center; }
+    }
   }
 
 }

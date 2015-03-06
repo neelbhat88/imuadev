@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby "2.1.5"
 gem 'rails', '3.2.19'
 
 # Bundle edge Rails instead:
@@ -57,6 +57,7 @@ gem 'underscore-rails'
 gem 'mail'
 
 gem 'acts_as_commentable', '3.0.1'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 # Images
 gem 'rmagick', '2.13.2'

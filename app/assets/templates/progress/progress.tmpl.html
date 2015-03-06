@@ -68,7 +68,7 @@
 
     </div>
 
-    <div ng-if="selected_module.module_title != null">
+    <div ng-show="selected_module.module_title != null">
       <div class="progressLower--header">
         <h4 class="progressLower-title" ng-if="!current_user.is_student">
           <span class="bold">{{student.first_name}}'s</span> {{selected_module.module_title | underscoresToSpaces}}
