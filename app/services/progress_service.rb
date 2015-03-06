@@ -55,9 +55,10 @@ class ProgressService
     timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime, :submodule], [:organization_id]).where(conditions)
     expectationQ = Querier.factory(Expectation).select([:id, :title], [:organization_id]).where(conditions)
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+    organizationQ.set_subQueriers([userQ, timeUnitQ, expectationQ])
 
     view = organizationQ.view.first
+    view[:milestones] = milestoneQ.view
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
 
     return ReturnObject.new(:ok, "Student dasboard for user_id: #{params[:user_id]}.", view)

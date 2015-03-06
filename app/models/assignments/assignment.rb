@@ -24,28 +24,29 @@ class AssignmentQuerier < Querier
   end
 
   # Bad HACK to support the sub_querier's method for nesting
-  def sub_querier_keys()
-    ret = @columnNames
-    ret << :user_id
-    ret << :milestone_id
-    return ret
-  end
+  # def sub_querier_keys()
+  #   ret = @columnNames
+  #   ret << :user_id
+  #   ret << :milestone_id
+  #   return ret
+  # end
 
   def generate_domain(sortBy = [])
     # Bad HACK to support the sub_querier's method for nesting
-    super(sortBy << :assignment_owner_id)
+    # super(sortBy << :assignment_owner_id)
+    super
     # Domain object manicuring
-    @domain.each do |d|
-      # Bad HACK to support the sub_querier's method for nesting
-      if d.keys.include?(:assignment_owner_type)
-        case d[:assignment_owner_type]
-        when "User"
-          d[:user_id] = d[:assignment_owner_id]
-        when "Milestone"
-          d[:milestone_id] = d[:assignment_owner_id]
-        end
-      end
-    end
+    # @domain.each do |d|
+    #   # Bad HACK to support the sub_querier's method for nesting
+    #   if d.keys.include?(:assignment_owner_type)
+    #     case d[:assignment_owner_type]
+    #     when "User"
+    #       d[:user_id] = d[:assignment_owner_id]
+    #     when "Milestone"
+    #       d[:milestone_id] = d[:assignment_owner_id]
+    #     end
+    #   end
+    # end
     return @domain
   end
 end
