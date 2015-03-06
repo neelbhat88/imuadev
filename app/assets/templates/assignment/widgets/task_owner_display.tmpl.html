@@ -1,0 +1,20 @@
+<span ng-show="assignment.assignment_owner_type == 'User'">
+  <h6>Assigned by</h6>
+  <a href="app#/profile/{{assignment.user.id}}">
+    <div class="tiny-circle-picture">
+      <img ng-src="{{assignment.user.square_avatar_url}}" alt="{{assignment.user.first_name}} {{assignment.user.last_name}}" />
+    </div>
+    <h6 class="bold">{{assignment.user.first_name}} {{assignment.user.last_name}}</h6>
+  </a>
+  <p>on {{assignment.created_at | formatMDY}}</p>
+</span>
+
+<span ng-show="assignment.assignment_owner_type == 'Milestone'">
+  <h6>Part of</h6>
+  <a href="app#/milestone/{{assignment.milestone.id}}">
+    <div class="tiny-circle-picture">
+      <img ng-src="{{assignment.milestone.icon}}"/>
+    </div>
+    <h6 class="bold">{{assignment.milestone.title}}</h6>
+  </a>
+</span>

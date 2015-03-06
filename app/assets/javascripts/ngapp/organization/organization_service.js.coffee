@@ -81,6 +81,7 @@ angular.module('myApp')
       if orgAdmin.user_assignments != undefined
         for user_assignment in orgAdmin.user_assignments
           assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.assignment = assignment
           user_assignment.title = assignment.title
           user_assignment.due_datetime = assignment.due_datetime
           user_assignment.description = assignment.description
@@ -93,6 +94,7 @@ angular.module('myApp')
       if mentor.user_assignments != undefined
         for user_assignment in mentor.user_assignments
           assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.assignment = assignment
           user_assignment.title = assignment.title
           user_assignment.due_datetime = assignment.due_datetime
           user_assignment.description = assignment.description
@@ -140,6 +142,7 @@ angular.module('myApp')
       if student.user_assignments != undefined
         for user_assignment in student.user_assignments
           assignment = _.find(org.assignments, (a) -> user_assignment.assignment_id == a.id)
+          user_assignment.assignment = assignment
           user_assignment.title = assignment.title
           user_assignment.due_datetime = assignment.due_datetime
           user_assignment.description = assignment.description

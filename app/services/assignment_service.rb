@@ -301,13 +301,37 @@ public
     userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :created_at, :updated_at]).where(conditions)
 
     conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
-    assignmentQ = Querier.factory(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
+    assignmentQ = Querier.factory(Assignment).select([:id, :user_id, :title, :description, :due_datetime],[:organization_id]).where(conditions.slice(:assignment_id))
+    conditions[:organization_id] = assignmentQ.pluck(:organization_id)
+    conditions[:owner_object_class] = assignmentQ.domain[0][:assignment_owner_type].classify.constantize
 
-    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id)).uniq
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id)).uniq
+    if conditions[:owner_object_class].name == "User"
+      conditions[:user_id] = (conditions[:user_id] + assignmentQ.pluck(:assignment_owner_id)).uniq
+    else
+      conditions[:owner_object_id] = assignmentQ.pluck(:assignment_owner_id).uniq
+    end
+
     userQ = Querier.factory(User).select([:id, :role, :avatar, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
-    userQ.set_subQueriers([userAssignmentQ, assignmentQ])
+    userQ.set_subQueriers([userAssignmentQ])
 
-    view = {users: userQ.view}
+    view = {}
+
+    if conditions[:owner_object_class].name != "User"
+      foreign_key = {conditions[:owner_object_class].name.foreign_key.to_sym => conditions[:owner_object_id]}
+      ownerObjQ = Querier.factory(conditions[:owner_object_class]).where(foreign_key)
+      view[conditions[:owner_object_class].name.underscore.pluralize.to_sym] = ownerObjQ.view
+    end
+
+    if conditions[:owner_object_class].name == "Milestone"
+      timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+      view[:time_units] = timeUnitQ.view
+      view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
+    end
+
+    view[:users] = userQ.view
+    view[:assignments] = assignmentQ.view
 
     return ReturnObject.new(:ok, "User Assignment collection for user_assignment_id: #{userAssignmentId}", view)
   end

@@ -139,16 +139,7 @@
           <h6>Due by</h6>
           <h5 class="bold">{{user_assignment.due_datetime | formatMDY}}</h5>
         </li>
-        <li>
-          <h6>Created by</h6>
-          <a href="app#/profile/{{assigner.id}}">
-            <div class="tiny-circle-picture">
-              <img ng-src="{{assigner.square_avatar_url}}" alt="{{assigner.first_name}} {{assigner.last_name}}" />
-            </div>
-            <h6 class="bold">{{assigner.first_name}} {{assigner.last_name}}</h6>
-          </a>
-          <p>on {{user_assignment.created_at | formatMDY}}</p>
-        </li>
+        <task-owner-display assignment="user_assignment.assignment" class="ng-clickable"></task-owner-display>
       </ul>
     </div>
   </div>

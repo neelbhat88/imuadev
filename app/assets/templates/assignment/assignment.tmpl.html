@@ -188,16 +188,7 @@
           <h6>Users Assigned</h6>
           <h5 class="bold">{{assignment.user_assignments.length}}</h5>
         </li>
-        <li>
-          <h6>Created by</h6>
-          <a href="app#/profile/{{user.id}}">
-            <div class="tiny-circle-picture">
-              <img ng-src="{{user.square_avatar_url}}" alt="{{user.first_name}} {{user.last_name}}" />
-            </div>
-            <h6 class="bold">{{user.first_name}} {{user.last_name}}</h6>
-          </a>
-          <p>on {{assignment.created_at | formatMDY}}</p>
-        </li>
+        <task-owner-display assignment="assignment" class="ng-clickable"></task-owner-display>
       </ul>
     </div>
   </div>
