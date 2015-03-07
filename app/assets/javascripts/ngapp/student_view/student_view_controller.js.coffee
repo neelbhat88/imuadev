@@ -5,7 +5,7 @@ angular.module('myApp')
   $scope.student = student
   $scope.semester_slider = {
     start: 0,
-    end: 0
+    end: -1 #-1 so graph is only drawn once on ititial load
   }
 
   Chart.defaults.global.responsive = true
@@ -23,27 +23,21 @@ angular.module('myApp')
     $scope.semester_slider.start = 0
     $scope.semester_slider.end = current_timeunit_index
 
-    #_updateGpaGraph(0, current_timeunit_index+1)
-
-  $scope.$watch('semester_slider.start', (newVal, oldVal) ->
+  $scope.$watch 'semester_slider.start', (newVal, oldVal) ->
     return if newVal == oldVal
-    console.log('start changed')
-    console.log(newVal + " from " + oldVal)
+
     start = newVal
     end = $scope.semester_slider.end
-    _updateGpaGraph(start, end)
-  )
+    _drawGpaGraph(start, end)
 
-  $scope.$watch('semester_slider.end', (newVal, oldVal) ->
+  $scope.$watch 'semester_slider.end', (newVal, oldVal) ->
     return if newVal == oldVal
-    console.log('end changed')
-    console.log(newVal + " from " + oldVal)
+
     start = $scope.semester_slider.start
     end = newVal
-    _updateGpaGraph(start, end)
-  )
+    _drawGpaGraph(start, end)
 
-  _updateGpaGraph = (start_index, end_index) ->
+  _drawGpaGraph = (start_index, end_index) ->
     return if !$scope.time_units
 
     range = $scope.time_units.slice(start_index, end_index+1)
