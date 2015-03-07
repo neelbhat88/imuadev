@@ -1,0 +1,12 @@
+.slider-container {
+  width: 400px;
+  padding: 20px;
+  margin: auto;
+
+  .slider-text {
+    padding: 20px 0;
+    text-align: center;
+
+    @include font-size(1.8);
+  }
+}

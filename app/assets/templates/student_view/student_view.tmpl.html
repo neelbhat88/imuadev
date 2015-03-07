@@ -1,4 +1,14 @@
 <div class="studentViewContainer">
+  <div class="page-header">
+    <h4 class="bold">{{student.first_last_initial}}'s GPA History</h4>
+  </div>
+  <div class="slider-container">
+    <div class="slider-text">Showing:
+      <span class="bold">{{time_units[semester_slider.start].name}}</span>
+      <span>through</span> 
+      <span class="bold">{{time_units[semester_slider.end].name}}</span></div>
+    <div slider ng-from="semester_slider.start" ng-to="semester_slider.end" start=0 end=7 step=1 callback='set'></div>
+  </div>
   <div>
     <canvas id="myChart" width="700" height="400"></canvas>
   </div>

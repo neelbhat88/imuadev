@@ -35,5 +35,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder
+//= require jquery.nouislider
+//= require Link
+//= require nouislider
 //= require_tree ../templates
 //= require_tree .

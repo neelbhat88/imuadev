@@ -3,8 +3,13 @@ angular.module('myApp')
 ($route, $scope, current_user, student, GraphService, OrganizationService) ->
   $scope.current_user = current_user
   $scope.student = student
+  $scope.semester_slider = {
+    start: 0,
+    end: 0
+  }
 
   Chart.defaults.global.responsive = true
+  Chart.defaults.global.maintainAspectRatio = false
   chart_options = {
     bezierCurve: false
   }
@@ -14,17 +19,44 @@ angular.module('myApp')
   .success (data) ->
     $scope.time_units = data.org_time_units
     current_timeunit_index = _.findIndex($scope.time_units, {id: $scope.student.time_unit_id})
-    $scope.range = $scope.time_units.splice(0, current_timeunit_index+1) #Include most recent time_unit
-    range_ids = _.map( $scope.range, ((tu) -> tu.id) )
 
+    $scope.semester_slider.start = 0
+    $scope.semester_slider.end = current_timeunit_index
+
+    #_updateGpaGraph(0, current_timeunit_index+1)
+
+  $scope.$watch('semester_slider.start', (newVal, oldVal) ->
+    return if newVal == oldVal
+    console.log('start changed')
+    console.log(newVal + " from " + oldVal)
+    start = newVal
+    end = $scope.semester_slider.end
+    _updateGpaGraph(start, end)
+  )
+
+  $scope.$watch('semester_slider.end', (newVal, oldVal) ->
+    return if newVal == oldVal
+    console.log('end changed')
+    console.log(newVal + " from " + oldVal)
+    start = $scope.semester_slider.start
+    end = newVal
+    _updateGpaGraph(start, end)
+  )
+
+  _updateGpaGraph = (start_index, end_index) ->
+    return if !$scope.time_units
+
+    range = $scope.time_units.slice(start_index, end_index+1)
+    range_ids = _.map( range, ((tu) -> tu.id) )
     GraphService.gpa([$scope.student.id], range_ids)
     .success (data) ->
-      graph = get_labels_and_data($scope.range, data.gpas)
+      graph_data = _getLabelsAndData(range, data.gpas)
 
-      graph_data = format_graph_data(graph)
-      myNewChart = new Chart(ctx).Line(graph_data, chart_options);
+      graph = _formatGraph(graph_data)
+      $scope.myNewChart.destroy() if $scope.myNewChart
+      $scope.myNewChart = new Chart(ctx).Line(graph, chart_options)
 
-  get_labels_and_data = (time_units, gpas) ->
+  _getLabelsAndData = (time_units, gpas) ->
     graph_format = {labels: [], data: []}
     for time_unit in time_units
       label = time_unit.name
@@ -34,14 +66,14 @@ angular.module('myApp')
       graph_format.data.push gpa
 
     if graph_format.labels.length == 1 # Only 1 semester of data
-      graph_format.labels.unshift ""
+      graph_format.labels.unshift graph_format.labels[0]
       graph_format.data.unshift graph_format.data[0]
 
     graph_format
 
-  format_graph_data = (graph) ->
+  _formatGraph = (data) ->
     graph_data = {
-      labels: graph.labels,
+      labels: data.labels,
       datasets: [
           {
               label: "GPA History",
@@ -51,7 +83,7 @@ angular.module('myApp')
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: graph.data
+              data: data.data
           }
       ]
     }
