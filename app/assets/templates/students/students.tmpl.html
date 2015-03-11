@@ -47,13 +47,17 @@
 		<span>{{singleStudent.full_name}}</span>
 		<span>{{singleStudent.user_points}} out of {{singleStudent.total_points}} Available Points</span>
 		<a href="app#/progress/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Progress</span></a>
+		<span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-default btn-sm">Assign New Task</span>
 		<a href="app#/expectations/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Expectations</span></a>
 		<span ng-click="clearSelected(selectedStudents)" class="btn btn-default btn-sm">Clear Selection</span>
-
 	</div>
 
 	<div ng-show="selectedStudents.length > 1" class="students-selectbar">
-
+		<div ng-repeat="student in selectedStudents">
+			<span ng-click="studentSelect(student)" class="btn btn-default btn-xs">{{student.first_last_initial}}  X</span>
+		</div>
+		<span ng-click="manageExpectations(selectedStudents, current_user)" class="btn btn-default btn-sm">Manage Expectations</span>
+		<span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-default btn-sm">Assign New Task</span>
 	</div>
 
 	<div class="students-mid">

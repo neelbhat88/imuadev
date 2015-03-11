@@ -83,8 +83,6 @@ angular.module('myApp')
           $scope.singleStudent.total_points += mod.points.total
           $scope.singleStudent.user_points += mod.points.user
 
-        console.log($scope.selectedStudents[0])
-
     $scope.clearSelected = (selectedStudents) ->
       for student in selectedStudents
         student.is_selected = false
@@ -96,6 +94,32 @@ angular.module('myApp')
         "Me"
       else
         user.first_name + " " + user.last_name
+
+    $scope.addNewTask = (selectedStudents, current_user) ->
+      modalInstance = $modal.open
+        templateUrl: 'students/add_task_modal.html',
+        controller: 'AddTaskModalController',
+        backdrop: 'static',
+        size: 'lg',
+        resolve:
+          selectedStudents: () -> $scope.selectedStudents
+          current_user: () -> $scope.current_user
+
+      modalInstance.result.then () ->
+        $scope.addSuccessMessage("Task has been created!")
+
+    $scope.manageExpectations = (selectedStudents, current_user) ->
+      modalInstance = $modal.open
+        templateUrl: 'students/manage_expectation_modal.html',
+        controller: 'ManageExpectationModalController',
+        backdrop: 'static',
+        size: 'lg',
+        resolve:
+          selectedStudents: () -> $scope.selectedStudents
+          current_user: () -> $scope.current_user
+
+      modalInstance.result.then () ->
+        $scope.addSuccessMessage("Expectation has been modified!")
 
     $scope.addStudent = () ->
       modalInstance = $modal.open

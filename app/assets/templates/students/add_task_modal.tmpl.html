@@ -1,0 +1,18 @@
+<div class="modal-body">
+  <div class="modal-body__title"><h4>Add New Task</h4></div>
+  <label><h6>Task Name:</h6></label>
+  <input class="form-control" ng-model="assignment.new_title" placeholder="Title" autofocus="true">
+
+  <label><h6>Details:</h6></label>
+  <text-angular name="taskDescription" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="assignment.new_description" placeholder="Description"></text-angular>
+
+  <label><h6>Due Date:</h6></label>
+  <imua-datepicker date="assignment.new_due_datetime"></imua-datepicker>
+  <div class="ptl" ng-show="noName">
+    <span class="text-danger">** Please enter the task name **</span>
+  </div>
+  <div class="buttonGroup pvm">
+    <button type="submit" class="submit" ng-click="saveTask()"><span>Save Task</span></button>
+    <span class="cancel" ng-click="cancel()"><span>Cancel</span></span>
+  </div>
+</div>
