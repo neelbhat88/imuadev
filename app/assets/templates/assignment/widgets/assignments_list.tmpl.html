@@ -23,9 +23,6 @@
             </div>
             <div class="task-item__title">
               <div class="title__main"> {{assignment.title}}</div>
-              <div class="title__info">
-                Created {{assignment.created_at | fromNow}} by {{created_by_str(assignment)}}
-              </div>
             </div>
           </div>
           <div ng-if="selected_task_list != CONSTANTS.TASK_NAV.assigned_to_me"
@@ -63,9 +60,6 @@
             </div>
             <div class="task-item__title">
               <div class="title__main"> {{assignment.title}}</div>
-              <div class="title__info">
-                Created {{assignment.created_at | fromNow}} by {{created_by_str(assignment)}}
-              </div>
             </div>
           </div>
           <div ng-if="selected_task_list != CONSTANTS.TASK_NAV.assigned_to_me"
