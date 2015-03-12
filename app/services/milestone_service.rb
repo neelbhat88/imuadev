@@ -12,6 +12,7 @@ class MilestoneService
     conditions[:time_unit_id] = milestoneQ.pluck(:time_unit_id)
 
     userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
+    conditions[:user_id] = userQ.pluck(:id)
     userMilestoneQ = Querier.factory(UserMilestone).select([:user_id, :milestone_id]).where(conditions)
 
     organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
