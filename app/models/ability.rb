@@ -342,7 +342,7 @@ class Ability
                   :get_task_assignable_users]
       end
 
-      if subjectUser.student?
+      if user.student?
         rules += [:get_milestone_status]
       end
 
