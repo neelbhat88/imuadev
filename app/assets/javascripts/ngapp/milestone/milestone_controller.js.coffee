@@ -7,6 +7,9 @@ angular.module('myApp')
 
     $scope.selected_task_list_title = "What's needed to complete this milestone?"
 
+    if $scope.current_user.is_student
+      $scope.selected_task_list = $scope.CONSTANTS.TASK_NAV.assigned_to_me
+
     $scope.recalculateCompletion = () ->
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
       $scope.users_complete = partition[0]
@@ -20,7 +23,10 @@ angular.module('myApp')
       if current_user.is_mentor
         $scope.users_complete = _.filter($scope.users_complete, (u) -> _.contains(current_user.assigned_users, u.id))
         $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
-        $scope.num_students_in_semester = $scope.users_complete.length + $scope.users_incomplete.length
+
+      if current_user.is_student
+        $scope.users_complete = _.filter($scope.users_complete, (u) -> current_user.id == u.id)
+        $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> current_user.id == u.id)
 
     $scope.loadData = () ->
       $scope.new_assignment = AssignmentService.newAssignment('Milestone', $scope.milestone_id)
