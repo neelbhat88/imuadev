@@ -11,3 +11,14 @@ angular.module('myApp')
           $(elem).show()
     )
 ]
+.directive 'milestoneTaskEditor', [() ->
+  restrict: 'A',
+  link: (scope, elem, attrs) ->
+    scope.$watch('milestone', (milestone) ->
+      if milestone
+        if !scope.current_user.is_org_admin
+          $(elem).hide()
+        else
+          $(elem).show()
+    )
+]

@@ -22,7 +22,7 @@
 
       <div ng-if="loaded_data && milestoneHasTasks()">
         <div ng-include="'assignment/widgets/assignments_list.html'"></div>
-        <div class="task-adder">
+        <div milestone-task-editor class="task-adder">
           <div class="form-wrapper">
             <label><h6>Task Name:</h6></label>
             <input class="form-control" ng-model="new_assignment.title" placeholder="Title">
@@ -30,10 +30,7 @@
             <imua-datepicker date="new_assignment.due_datetime"></imua-datepicker>
           </div>
 
-          <!-- <label><h5>Details:</h5></label>
-          <text-angular name="taskDescription" ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="assignment.new_description" placeholder="Description"></text-angular> -->
-
-          <div task-editor class="edit-buttons-top">
+          <div milestone-task-editor class="edit-buttons-top">
             <button class="btn btn-success" ng-click="saveNewAssignment()"><span class="glyphicon glyphicon-ok"></span> Add Task</button>
           </div>
         </div>
