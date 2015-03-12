@@ -3,6 +3,7 @@ angular.module('myApp')
                                         'current_user', 'ExpectationService', 'OrganizationService',
   ($scope, $modalInstance, CONSTANTS, selectedStudents, current_user, ExpectationService, OrganizationService) ->
 
+    $scope.CONSTANTS = CONSTANTS
     $scope.current_user = current_user
     $scope.orgId = $scope.current_user.organization_id
     $scope.selectedStudents = selectedStudents
@@ -29,11 +30,16 @@ angular.module('myApp')
           $scope.users_total = []
           for student in selectedStudents
             $scope.users_total.push(_.findWhere($scope.organization.students, {id: student.id}))
-          console.log($scope.users_total)
           $scope.expectation = $scope.organization.expectations[0]
           $scope.recalculateCompletion()
           $scope.expectation.new_comment = ""
           $scope.expectation.assignees = []
+
+    $scope.saveExpectationStatus = () ->
+      ExpectationService.saveExpectationStatus($scope.expectation.id, $scope.expectation.assignees, $scope.expectation.new_comment)
+        .success (data) ->
+          $scope.recalculateCompletion()
+          $modalInstance.close()
 
     $scope.assignUserExpectationStatus = (user, status) ->
       assignment = _.find($scope.expectation.assignees, (a) -> a.user.id == user.id)
