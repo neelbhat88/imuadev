@@ -23,6 +23,7 @@ angular.module('myApp')
       if current_user.is_mentor
         $scope.users_complete = _.filter($scope.users_complete, (u) -> _.contains(current_user.assigned_users, u.id))
         $scope.users_incomplete = _.filter($scope.users_incomplete, (u) -> _.contains(current_user.assigned_users, u.id))
+        _.each($scope.milestone.assignments, (a) -> a.user_assignments = _.filter(a.user_assignments, (ua) -> _.contains(current_user.assigned_users, ua.user_id)))
 
       if current_user.is_student
         $scope.users_complete = _.filter($scope.users_complete, (u) -> current_user.id == u.id)
