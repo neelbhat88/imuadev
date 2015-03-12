@@ -317,7 +317,8 @@ class Ability
       rules = []
 
       if user.super_admin?
-        return[:index_assignments,
+        return[:get_milestone_status,
+               :index_assignments,
                :create_assignment,
                :create_assignment_broadcast,
                :get_task_assignable_users,
@@ -327,11 +328,22 @@ class Ability
       end
 
       if user.org_admin?
-        rules += [:index_assignments,
+        rules += [:get_milestone_status,
+                  :index_assignments,
                   :create_assignment,
                   :create_assignment_broadcast,
                   :get_task_assignable_users,
                   :get_task_assignable_users_tasks]
+      end
+
+      if user.mentor?
+        rules += [:get_milestone_status,
+                  :index_assignments,
+                  :get_task_assignable_users]
+      end
+
+      elsif subjectUser.student?
+        rules += [:get_milestone_status]
       end
 
       rules.uniq

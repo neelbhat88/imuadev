@@ -14,12 +14,11 @@ class Api::V1::MilestoneController < ApplicationController
   def get_milestone_status
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:milestone_id] = params[:id]
-
-    # TODO - Abilities for Milestone subjectObj?
-    # if !can?(current_user, :get_milestone_status, Milestone.where(id: params[:id]).first)
-    #   render status: :forbidden, json: {}
-    #   return
-    # end
+    
+    if !can?(current_user, :get_milestone_status, Milestone.where(id: params[:id]).first)
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @milestoneService.get_milestone_status(url_params)
 
