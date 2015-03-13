@@ -14,7 +14,7 @@ class Api::V1::MilestoneController < ApplicationController
   def get_milestone_status
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:milestone_id] = params[:id]
-    
+
     if !can?(current_user, :get_milestone_status, Milestone.where(id: params[:id]).first)
       render status: :forbidden, json: {}
       return
@@ -63,7 +63,7 @@ class Api::V1::MilestoneController < ApplicationController
       milestone[:id] = milestoneId
     end
 
-    result = MilestoneService.new.update_milestone(milestone)
+    result = @milestoneService.update_milestone(milestone)
 
     viewMilestone = ViewMilestone.new(result.object) unless result.object.nil?
     render status: result.status,
@@ -77,7 +77,7 @@ class Api::V1::MilestoneController < ApplicationController
   def delete_milestone
     milestoneId = params[:id]
 
-    result = MilestoneService.new.delete_milestone(milestoneId)
+    result = @milestoneService.delete_milestone(milestoneId)
 
     render status: result.status,
       json: {

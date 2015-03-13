@@ -84,7 +84,7 @@ Imua::Application.routes.draw do
           end
         end
 
-        resources :milestone, shallow: true do
+        resources :milestone, except: [:index, :create, :new, :edit, :show, :update, :destroy], shallow: true do
           assignment_owner.call
         end
 
