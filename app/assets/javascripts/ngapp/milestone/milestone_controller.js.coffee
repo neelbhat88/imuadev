@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'MilestoneController', ['$scope', '$route', '$location', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
-  ($scope, $route, $location, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
+.controller 'MilestoneController', ['$scope', '$route', '$modal', '$location', 'current_user', 'milestone_id', 'edit', 'MilestoneService', 'UsersService', 'OrganizationService', 'RoadmapService', 'ProgressService', 'AssignmentService',
+  ($scope, $route, $modal, $location, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService, AssignmentService) ->
 
     $scope.milestone_id = milestone_id
     $scope.current_user = current_user
@@ -72,12 +72,21 @@ angular.module('myApp')
     $scope.created_by_str = (assignment) ->
       return AssignmentService.created_by_str(assignment, $scope.current_user)
 
-    $scope.saveNewAssignment = () ->
-      # Always assign all assignable users
-      AssignmentService.broadcastAssignment($scope.new_assignment, _.map($scope.users_total, (assignee) -> assignee.id))
-        .success (data) ->
-          $scope.loaded_data = false
-          $scope.loadData()
+    $scope.addNewTask = () ->
+      modalInstance = $modal.open
+        templateUrl: 'assignment/add_task_modal.html',
+        controller: 'AddTaskModalController',
+        backdrop: 'static',
+        size: 'lg',
+        resolve:
+          selected_users: () -> $scope.users_total
+          owner_type: () -> "Milestone"
+          owner_id: () -> $scope.milestone_id
+
+      modalInstance.result.then () ->
+        $scope.addSuccessMessage("Task created!")
+        $scope.loaded_data = false
+        $scope.loadData()
 
     $scope.viewTask  = (assignment) ->
       # Students go to user_assignment view
