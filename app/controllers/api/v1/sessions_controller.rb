@@ -1,7 +1,8 @@
 class Api::V1::SessionsController < Devise::SessionsController
 	respond_to :json
 	skip_before_filter :verify_authenticity_token
-	
+	before_filter :authenticate_token, only: [:show_current_user]
+
 	# POST /user/sign_in
 	# This is called when we log the user in with their
 	# email and password AS WELL AS by the angular-devise
@@ -61,12 +62,14 @@ class Api::V1::SessionsController < Devise::SessionsController
 	end
 
 	def show_current_user
-		status = :unauthorized
-		user = nil
+		user_auth_token = request.headers["X-API-TOKEN"]
+		email = request.headers["X-API-EMAIL"]
 
-		if user_signed_in?
+		user = email && User.find_by_email(email)
+
+		if user
 			status = :ok
-			user = ViewUser.new(current_user, current_user.organization)
+			user = ViewUser.new(user, user.organization)
 		end
 
 		render status: status,
