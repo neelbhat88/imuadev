@@ -1,7 +1,7 @@
 class Api::V1::UserExtracurricularActivityController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_token
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
   def load_services( userExtracurricularActivityService=nil, userRepo=nil)

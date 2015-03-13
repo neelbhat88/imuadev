@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_filter :authenticate_user!, except: [:reset_password]
+  before_filter :authenticate_token, except: [:reset_password]
   skip_before_filter :verify_authenticity_token
   before_filter :load_services
   respond_to :json

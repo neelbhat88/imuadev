@@ -1,6 +1,6 @@
 class Api::V1::MilestoneController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_token
   skip_before_filter :verify_authenticity_token
   respond_to :json
 
