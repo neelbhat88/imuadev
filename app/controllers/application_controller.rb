@@ -27,6 +27,27 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  def authenticate_token
+    user_email = request.headers["X-API-EMAIL"]
+    user_auth_token = request.headers["X-API-TOKEN"]
+
+    user = user_email && User.find_by_email(user_email)
+    Rails.logger.debug("****** Authenticating token....")
+    Rails.logger.debug("****** User #{user.email}....")
+    Rails.logger.debug("****** Token #{user_auth_token}....")
+    Rails.logger.debug("****** DB Token #{user.access_token.token_value}....")
+    # We use Devise.secure_compare to compare the token
+    # in the database with the token given in the params, mitigating
+    # timing attacks.
+    if user && user.access_token && Devise.secure_compare(user.access_token.token_value, user_auth_token)
+      sign_in(user, store: false)
+      Rails.logger.debug("********* Current User is #{current_user.email}")
+    else
+      render status: 401, json: {}
+      return false
+    end
+  end
+
   protected
 
   def check_and_set_version_header
@@ -58,6 +79,5 @@ class ApplicationController < ActionController::Base
   def can?(object, action, subject)
     abilities.allowed?(object, action, subject)
   end
-
 
 end

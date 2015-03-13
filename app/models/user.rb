@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   validates :organization_id, presence: true
 
+  has_one :access_token, dependent: :destroy
+
   has_many :user_classes, dependent: :destroy
   has_many :user_expectations, dependent: :destroy
   has_many :relationships, dependent: :destroy

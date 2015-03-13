@@ -29,6 +29,7 @@ angular.module('myApp')
 
   $scope.addErrorMessage = (msg) ->
     $scope.clearAlerts()
+
     message = { type: 'danger', msg: msg}
     $scope.alerts.unshift(message)
 
@@ -45,11 +46,15 @@ angular.module('myApp')
   $scope.$on "clear_alerts", () ->
     $scope.alerts = []
 
-  $scope.$on 'devise:login', (event, currentUser) ->
-    $scope.current_user = currentUser.user
+  $scope.$on 'devise:login', (event, response) ->
+    $scope.current_user = response.user
+    localStorage.setItem("access_token", response.access_token)
+    localStorage.setItem("email", response.user.email)
 
-  $scope.$on 'devise:new-session', (event, currentUser) ->
-    $scope.current_user = currentUser.user
+  $scope.$on 'devise:new-session', (event, response) ->
+    $scope.current_user = response.user
+    localStorage.setItem("access_token", response.access_token)
+    localStorage.setItem("email", response.user.email)
 
   $scope.$on 'devise:logout', (event, oldCurrentUser) ->
     if $location.path() != '/login'
