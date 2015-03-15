@@ -176,6 +176,7 @@ Imua::Application.routes.draw do
   end # end :api
 
   get '/app' => 'static#app'
+  get '/login' => 'static#login'
 
   root :to => 'static#index'
   # The priority is based upon order of creation:
