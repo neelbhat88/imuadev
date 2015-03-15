@@ -10,6 +10,11 @@ angular.module('myApp')
 
   Chart.defaults.global.responsive = true
   Chart.defaults.global.maintainAspectRatio = false
+  Chart.defaults.global.scaleOverride = true
+  Chart.defaults.global.scaleSteps = 4
+  Chart.defaults.global.scaleStepWidth = 1
+  Chart.defaults.global.scaleStartValue = 0
+
   chart_options = {
     bezierCurve: false
   }
