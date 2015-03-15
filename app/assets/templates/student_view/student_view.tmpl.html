@@ -4,9 +4,12 @@
   </div>
   <div class="slider-container">
     <div class="slider-text">Showing:
-      <span class="bold">{{time_units[semester_slider.start].name}}</span>
-      <span>through</span> 
-      <span class="bold">{{time_units[semester_slider.end].name}}</span></div>
+      <span class="semester-text">{{time_units[semester_slider.start].name}}</span>
+      <span ng-if="time_units[semester_slider.start] != time_units[semester_slider.end]">
+        <span>through</span>
+        <span class="semester-text">{{time_units[semester_slider.end].name}}</span></div>
+      </span>
+
     <div slider ng-from="semester_slider.start" ng-to="semester_slider.end" start=0 end=7 step=1 callback='set'></div>
   </div>
   <div>
