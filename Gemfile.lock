@@ -180,7 +180,7 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    rmagick (2.13.2)
+    rmagick (2.13.4)
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.0.2)
@@ -279,7 +279,7 @@ DEPENDENCIES
   rack-cors
   rack-timeout
   rails (= 3.2.19)
-  rmagick (= 2.13.2)
+  rmagick (= 2.13.4)
   rspec-collection_matchers
   rspec-rails (~> 3.0.0)
   sass-rails (~> 3.2.3)

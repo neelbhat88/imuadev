@@ -57,7 +57,7 @@ gem 'acts_as_commentable', '3.0.1'
 gem 'acts-as-taggable-on', '~> 3.4'
 
 # Images
-gem 'rmagick', '2.13.2'
+gem 'rmagick', '2.13.4'
 gem 'paperclip'
 gem 'aws-sdk'
 
