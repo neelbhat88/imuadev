@@ -48,15 +48,18 @@ angular.module('myApp')
 
   $scope.$on 'devise:login', (event, response) ->
     $scope.current_user = response.user
-    localStorage.setItem("access_token", response.access_token)
-    localStorage.setItem("email", response.user.email)
+    localStorage.setItem("imua_access_token", response.access_token)
+    localStorage.setItem("imua_email", response.user.email)
 
   $scope.$on 'devise:new-session', (event, response) ->
     $scope.current_user = response.user
-    localStorage.setItem("access_token", response.access_token)
-    localStorage.setItem("email", response.user.email)
+    localStorage.setItem("imua_access_token", response.access_token)
+    localStorage.setItem("imua_email", response.user.email)
 
   $scope.$on 'devise:logout', (event, oldCurrentUser) ->
+    localStorage.removeItem("imua_access_token")
+    localStorage.removeItem("imua_email")
+
     if $location.path() != '/login'
       $location.path('/login')
 

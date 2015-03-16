@@ -31,17 +31,18 @@ class ApplicationController < ActionController::Base
     user_email = request.headers["X-API-EMAIL"]
     user_auth_token = request.headers["X-API-TOKEN"]
 
+    Rails.logger.debug("*********** email #{user_email}")
+    Rails.logger.debug("*********** token #{user_auth_token}")
+
     user = user_email && User.find_by_email(user_email)
-    Rails.logger.debug("****** Authenticating token....")
-    Rails.logger.debug("****** User #{user.email}....")
-    Rails.logger.debug("****** Token #{user_auth_token}....")
-    Rails.logger.debug("****** DB Token #{user.access_token.token_value}....")
+
+    Rails.logger.debug("*********** user token value #{user.access_token.token_value}")
+
     # We use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
     if user && user.access_token && Devise.secure_compare(user.access_token.token_value, user_auth_token)
-      sign_in(user, store: false)
-      Rails.logger.debug("********* Current User is #{current_user.email}")
+      #sign_in(user, store: false)
     else
       render status: 401, json: {}
       return false

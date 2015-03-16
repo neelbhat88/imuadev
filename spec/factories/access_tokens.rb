@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :access_token do
-    user_id 1
+    user_id -1
     token_value "MyText"
   end
 end

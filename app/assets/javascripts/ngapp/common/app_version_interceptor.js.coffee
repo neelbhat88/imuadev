@@ -4,8 +4,8 @@ angular.module('myApp')
 
   @request = (config) ->
     config.headers['AppVersion'] = _appVersion
-    config.headers['X-API-EMAIL'] = localStorage.getItem("email")
-    config.headers['X-API-TOKEN'] = localStorage.getItem("access_token")
+    config.headers['X-API-EMAIL'] = localStorage.getItem("imua_email")
+    config.headers['X-API-TOKEN'] = localStorage.getItem("imua_access_token")
     config
 
   @response = (response) ->
