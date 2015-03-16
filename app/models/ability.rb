@@ -12,6 +12,7 @@ class Ability
       when "UserAssignment" then user_assignment_abilities(user, subject)
       when "Expectation" then expectation_abilities(user, subject)
       when "Comment" then comment_abilities(user, subject)
+      when "GpaHistoryAuthorization" then gpa_history_abilities(user, subject)
       else []
       end
 
@@ -310,6 +311,38 @@ class Ability
       end
 
       rules.uniq
+    end
+
+    def gpa_history_abilities(user, gpa_history_authorization)
+      user_ids = gpa_history_authorization.user_ids
+
+      if user.super_admin?
+        return [:get_gpa_history]
+      end
+
+      if user.student? # Students can only see their own
+        return [] if user_ids.length > 1
+
+        if user.id == user_ids[0]
+          return [:get_gpa_history]
+        else
+          return []
+        end
+      end
+
+      subject_users = User.where(id: user_ids)
+      non_org_users = subject_users.select {|u| u.organization_id != user.organization_id}
+      return [] if non_org_users.length > 0
+
+      if user.mentor?
+        student_ids = UserRepository.new.get_assigned_student_ids(user.id)
+
+        intersection = student_ids & user_ids
+
+        return [] if intersection.length != user_ids.length
+      end
+
+      return [:get_gpa_history]
     end
 
   end
