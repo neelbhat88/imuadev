@@ -7,6 +7,7 @@ angular.module('myApp')
     start: 0,
     end: -1 #-1 so graph is only drawn once on ititial load
   }
+  $scope.no_data = true
 
   Chart.defaults.global.responsive = true
   Chart.defaults.global.maintainAspectRatio = false
@@ -49,6 +50,11 @@ angular.module('myApp')
     range_ids = _.map( range, ((tu) -> tu.id) )
     GraphService.gpa([$scope.student.id], range_ids)
     .success (data) ->
+      if data.gpas == null || data.gpas.length == 0
+        $scope.no_data = true
+        return
+
+      $scope.no_data = false
       graph_data = _getLabelsAndData(range, data.gpas)
 
       graph = _formatGraph(graph_data)
@@ -57,16 +63,23 @@ angular.module('myApp')
 
   _getLabelsAndData = (time_units, gpas) ->
     graph_format = {labels: [], data: []}
-    for time_unit in time_units
-      label = time_unit.name
-      gpa = _.find(gpas, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
 
-      graph_format.labels.push label
-      graph_format.data.push gpa
+    if time_units.length == 1
+      for gpa in gpas
+        graph_format.labels.push moment(gpa.created_at).format('MM/DD/YYYY')
+        graph_format.data.push gpa.regular_unweighted
 
-    if graph_format.labels.length == 1 # Only 1 semester of data
-      graph_format.labels.unshift graph_format.labels[0]
-      graph_format.data.unshift graph_format.data[0]
+      # If only 1 data point then make it a straight line
+      if graph_format.data.length == 1
+        graph_format.labels.unshift graph_format.labels[0]
+        graph_format.data.unshift graph_format.data[0]
+    else
+      for time_unit in time_units
+        label = time_unit.name
+        gpa = _.find(gpas, ((gpa)-> gpa.time_unit_id == time_unit.id)).regular_unweighted
+
+        graph_format.labels.push label
+        graph_format.data.push gpa
 
     graph_format
 

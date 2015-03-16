@@ -6,8 +6,9 @@ class Api::V1::GraphController < ApplicationController
 
   before_filter :load_services
 
-  def load_services( gpaService = nil )
+  def load_services( gpaService = nil, gpaHistoryService = nil )
     @gpaService = gpaService ? gpaService : UserGpaService.new
+    @gpaHistoryService = gpaHistoryService ? gpaHistoryService : UserGpaHistoryService.new
   end
 
   def gpa
@@ -20,9 +21,13 @@ class Api::V1::GraphController < ApplicationController
     #   return
     # end
 
-    gpas = @gpaService.get_users_gpas(user_ids, time_unit_ids)
-    # ToDo - if more than 1 user make sure the history
-    #     is averaged for all users for each semester
+    if user_ids.length == 1 && time_unit_ids.length == 1
+      gpas = @gpaHistoryService.get_user_gpa_history(user_ids[0], time_unit_ids[0], true)
+    else
+      gpas = @gpaService.get_users_gpas(user_ids, time_unit_ids)
+      # ToDo - if more than 1 user make sure the history
+      #     is averaged for all users for each semester
+    end
 
     render status: :ok,
       json: { gpas: gpas }

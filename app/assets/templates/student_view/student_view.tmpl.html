@@ -1,6 +1,7 @@
 <div class="studentViewContainer">
   <div class="page-header">
-    <h4 class="bold">{{student.first_last_initial}}'s GPA History</h4>
+    <h4 class="bold" ng-if="current_user.is_student">Your GPA History</h4>
+    <h4 class="bold" ng-if="!current_user.is_student">{{student.first_last_initial}}'s GPA History</h4>    
   </div>
   <div class="slider-container">
     <div class="slider-text">Showing:
@@ -12,6 +13,11 @@
 
     <div slider ng-from="semester_slider.start" ng-to="semester_slider.end" start=0 end=7 step=1 callback='set'></div>
   </div>
+
+  <div class="paxl" ng-show="no_data">
+    <h5 class="italic">No GPA History for the given time frame</h5>
+  </div>
+
   <div>
     <canvas id="myChart" width="700" height="400"></canvas>
   </div>
