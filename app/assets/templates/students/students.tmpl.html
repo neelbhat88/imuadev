@@ -67,7 +67,9 @@
 
 	<div class="students-lower">
 		<div ng-repeat="group in class_of_years">
-			<h5 ng-show="_.findWhere(students, {class_of: group})" class="list-header">Class of <span class="bold">{{group}}</span></h5>
+			<h5 ng-show="_.findWhere(students, {class_of: group})" class="list-header">Class of <span class="bold">{{group}}</span>
+				<span class="subtext"><input ng-show="_.findWhere(students, {class_of: group})" type="checkbox" ng-click="selectClassOf(group)" ng-model="classOfSelect.selected[group]"> Select All</span>
+			</h5>
 			<div class="list-container progress-circle--list">
 				<progress-circle-select ng-repeat="student in students | orderBy: 'last_name' | filter: {class_of: group}"></progress-circle-select>
 			</div>

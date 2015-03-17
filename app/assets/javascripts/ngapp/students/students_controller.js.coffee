@@ -9,6 +9,8 @@ angular.module('myApp')
     $scope.search.text = ''
     $scope.nameArray = []
     $scope.selectedStudents = []
+    $scope.classOfSelect = {}
+    $scope.classOfSelect.selected = []
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
@@ -67,6 +69,20 @@ angular.module('myApp')
         'is-selected'
       else
         ''
+
+    $scope.selectClassOf = (groupYear) ->
+      if $scope.classOfSelect.selected[groupYear]
+        for student in $scope.students
+          unless _.findWhere($scope.selectedStudents, { id: student.id })
+            if student.class_of == groupYear
+              student.is_selected = true
+              $scope.selectedStudents.push(student)
+      else
+        for student in $scope.selectedStudents
+          if student.class_of == groupYear
+            student.is_selected = false
+        $scope.selectedStudents = _.filter($scope.selectedStudents, (student) -> student.class_of != groupYear)
+
 
     $scope.studentSelect = (student) ->
       if _.findWhere($scope.selectedStudents, { id: student.id })
