@@ -1,11 +1,7 @@
 .assignmentsContainer {
 
   .assignments-header {
-    width: 100%;
-    background: $grey;
-    text-align: center;
-    padding: 20px;
-    margin: 0;
+    @extend .page-header;
 
     @include respond-to(900) {
       padding: 20px 70px;

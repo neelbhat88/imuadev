@@ -7,6 +7,13 @@
             <h6 class="bold" ng-if="current_user.is_student"><div class="color--dot"></div> Your GPA</h6>
             <h6 class="bold" ng-if="!current_user.is_student"><div class="color--dot"></div> {{student.first_name}}'s GPA</h6>
           </div>
+
+          <div class="widget--header--right">
+            <div>
+              <span ng-click="go('/student_view/' + student.id)" class="link">View GPA History</span>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </div>
+          </div>
         </div>
         <div class="widget--content">
           <div class="widget--content--table">
