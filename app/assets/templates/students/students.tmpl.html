@@ -1,4 +1,47 @@
 <div class="studentsContainer" wait-to-load="{{loaded_users}}">
+	<div ng-if="selectedStudents.length == 1" class="single-student-selectbar">
+		<div class="student-info">
+			<div class="student-info__picture">
+				<progress-circle drawduration="0" width="100" identifier="selected" student="singleStudent"></progress-circle>
+			</div>
+			<div class="student-info__text">
+				<div class="name">{{singleStudent.full_name}}</div>
+				<div class="points"><span class="bold">{{singleStudent.user_points}}</span> out of {{singleStudent.total_points}} Available Points</div>
+				<div class="login-info" ng-if="singleStudent.last_login == 'Has not logged in yet'">Last Login: {{singleStudent.last_login}}</div>
+		    <div class="login-info" ng-if="singleStudent.last_login != 'Has not logged in yet'">Last Login: {{singleStudent.last_login | formatMDY}}</div>
+		    <div class="login-info">Login Count: {{singleStudent.login_count}}</div>
+			</div>
+		</div>
+
+		<div class="actions">
+			<span ng-click="go('/progress/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-home mrs"></span>View {{singleStudent.first_name}}'s Progress</span>
+			<span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+			<span ng-click="go('/expectations/' +  singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-list mrs"></span>View {{singleStudent.first_name}}'s Expectations</span>
+			<span ng-click="go('/profile/' + {{student.id}})" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-user mrs"></span>View Profile</span>
+		</div>
+
+		<div ng-click="clearSelected(selectedStudents)" class="clear-selection glyphicon glyphicon-remove" title="Clear Selection"></div>
+	</div>
+
+	<div ng-show="selectedStudents.length > 1" class="students-selectbar">
+		<div class="pbm select-header">
+			<span class="bold text">Selected Students: </span>
+		</div>
+		<div class="token-container">
+			<div ng-repeat="student in selectedStudents" class="student-token">
+				<div ng-click="studentSelect(student)" class="btn btn-default btn-sm">
+					<span class="student-name">{{student.first_last_initial}}</span>
+					<span class="token-remove glyphicon glyphicon-remove"></span>
+				</div>
+			</div>
+		</div>
+		<div class="actions">
+			<span ng-click="manageExpectations(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
+			<span ng-click="addNewTask(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+		</div>
+
+		<div ng-click="clearSelected(selectedStudents)" class="clear-selection glyphicon glyphicon-remove" title="Clear Selection"></div>
+	</div>
 
 	<div class="students-header">
 		<ul class="student-stats clear">
@@ -40,24 +83,6 @@
 				<progress-circle-needs-attention ng-repeat="student in attention_students"></progress-circle-needs-attention>
 			</div>
 		</div>
-	</div>
-
-	<div ng-if="selectedStudents.length == 1" class="single-student-selectbar">
-		<progress-circle notimeout="true" drawduration="0" parentclass="circle-size" identifier="selected" student="singleStudent"></progress-circle>
-		<span>{{singleStudent.full_name}}</span>
-		<span>{{singleStudent.user_points}} out of {{singleStudent.total_points}} Available Points</span>
-		<a href="app#/progress/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Progress</span></a>
-		<span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-default btn-sm">Assign New Task</span>
-		<a href="app#/expectations/{{singleStudent.id}}"><span class="btn btn-default btn-sm">View {{singleStudent.first_name}}'s Expectations</span></a>
-		<span ng-click="clearSelected(selectedStudents)" class="btn btn-default btn-sm">Clear Selection</span>
-	</div>
-
-	<div ng-show="selectedStudents.length > 1" class="students-selectbar">
-		<div ng-repeat="student in selectedStudents">
-			<span ng-click="studentSelect(student)" class="btn btn-default btn-xs">{{student.first_last_initial}}  X</span>
-		</div>
-		<span ng-click="manageExpectations(selectedStudents, current_user)" class="btn btn-default btn-sm">Manage Expectations</span>
-		<span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-default btn-sm">Assign New Task</span>
 	</div>
 
 	<div class="students-mid">
