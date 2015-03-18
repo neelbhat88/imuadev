@@ -83,6 +83,11 @@ angular.module('myApp')
             student.is_selected = false
         $scope.selectedStudents = _.filter($scope.selectedStudents, (student) -> student.class_of != groupYear)
 
+    $scope.$watch('selectedStudents', () ->
+      for year in $scope.class_of_years
+        if !_.findWhere($scope.selectedStudents, {class_of: year})
+          $scope.classOfSelect.selected[year] = false
+    )
 
     $scope.studentSelect = (student) ->
       if _.findWhere($scope.selectedStudents, { id: student.id })
