@@ -106,6 +106,7 @@ GEM
       tilt
     highline (1.6.21)
     hike (1.2.3)
+    hodel_3000_compliant_logger (0.1.1)
     i18n (0.6.11)
     intercom (2.2.1)
       json
@@ -140,6 +141,9 @@ GEM
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    oink (0.10.1)
+      activerecord
+      hodel_3000_compliant_logger
     oj (2.10.2)
     orm_adapter (0.5.0)
     paperclip (4.1.1)
@@ -272,6 +276,7 @@ DEPENDENCIES
   lograge
   mail
   newrelic_rpm
+  oink
   oj
   paperclip
   pg
