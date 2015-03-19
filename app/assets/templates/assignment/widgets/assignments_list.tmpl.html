@@ -18,7 +18,7 @@
         <div class="widget--content--table ng-clickable">
           <div class="task-item-info table--cell">
             <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
-              <input type="checkbox" no-click-propagation ng-click="markComplete(assignment)" />
+              <input type="checkbox" ng-checked="false" no-click-propagation ng-click="markComplete(assignment)" />
             </div>
             <div class="task-item__title">
               <div class="title__main"> {{assignment.title}}</div>
@@ -59,14 +59,12 @@
         <div class="widget--content--table ng-clickable">
           <div class="task-item-info table--cell">
             <div ng-if="selected_task_list == CONSTANTS.TASK_NAV.assigned_to_me" class="task-item__check-box">
-              <input type="checkbox" no-click-propagation ng-click="markIncomplete(assignment)" />
+              <input type="checkbox" ng-checked="true" no-click-propagation ng-click="markIncomplete(assignment)" />
             </div>
             <div class="task-item__title">
               <div class="title__main"> {{assignment.title}}</div>
               <div class="title__info">
-                Created {{assignment.created_at | fromNow}} by
-                <span ng-if="assignment.user.id != current_user.id">{{assignment.user.first_last_initial}}</span>
-                <span ng-if="assignment.user.id == current_user.id">Me</span>
+                Created {{assignment.created_at | fromNow}} by {{created_by_str(assignment)}}
               </div>
             </div>
           </div>

@@ -11,10 +11,12 @@
     <div class="progressLowerDefault" ng-if="selected_module.module_title == null">
 
       <div class='progressLower--header'>
+
         <h4 class="progressLower-title">
-          <a ng-href="#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
+          <a ng-href="app#/profile/{{student.id}}" class="bold">{{student.first_last_initial}}'s</a> Progress
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
+
       </div>
 
       <div class="progressLower--content">
@@ -36,7 +38,7 @@
 
                   <div class="points points-circle progressCircle-big--container">
                     <div class="big-progress-circle">
-                      <a ng-href="#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
+                      <a ng-href="app#/profile/{{student.id}}" alt="View {{student.first_name}}'s Profile">
                         <div class="big-circle-size">
                           <progress-circle parentclass="big-circle-size" student="student_with_modules_progress" identifier="big" ng-if="student_with_modules_progress"></progress-circle>
                         </div>
@@ -50,7 +52,7 @@
                   </div>
 
                   <div class="temp-buttons">
-                    <a href="#/expectations/{{student.id}}"><button class="btn btn-primary btn-lg">See {{student.first_name}}'s Expectations</button></a>
+                    <a href="app#/expectations/{{student.id}}"><button class="btn btn-primary btn-lg">See {{student.first_name}}'s Expectations</button></a>
                   </div>
 
                 </div>
@@ -66,14 +68,16 @@
 
     </div>
 
-    <div ng-if="selected_module.module_title != null">
+    <div ng-show="selected_module.module_title != null">
       <div class="progressLower--header">
         <h4 class="progressLower-title" ng-if="!current_user.is_student">
           <span class="bold">{{student.first_name}}'s</span> {{selected_module.module_title | underscoresToSpaces}}
+          <span class="bold" ng-if="organization.name == 'OneGoal'">progress</span>
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
         <h4 class="progressLower-title" ng-if="current_user.is_student">
           <span class="bold">Your {{selected_module.module_title | underscoresToSpaces}}</span>
+          <span class="bold" ng-if="organization.name == 'OneGoal'">progress</span>
           <select ng-options="sem.name for sem in semesters" ng-model="new_selected_semester" ng-change="selectSemester(new_selected_semester)"></select>
         </h4>
       </div>

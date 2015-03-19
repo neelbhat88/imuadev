@@ -1,18 +1,15 @@
-class YesNoMilestoneService < ImuaMilestone
+class YesNoMilestoneService < CustomMilestone
 
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:SERVICE]
-      @submodule = Constants.SubModules[:YES_NO]
+    @module = Constants.Modules[:SERVICE]
+    @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Service Goal"
-      @description = "Description:"
-      @value = "Give Back"
-      @icon = "/assets/Service.jpg"
-    end
+    @icon = "/assets/Service.jpg"
 
+    @title = "Service Task"
+    @milestone_description = "A generic milestone where you can type a custom service goal. This milestone is manually completed by the user by clicking a checkbox."
   end
 
   def has_earned?(user, time_unit_id)

@@ -1,0 +1,58 @@
+<div class="comments-content" wait-to-load="{{loaded_comments}}">
+  <div style="border-bottom: 1px solid;"></div>
+
+  <div class="comments-list clear" ng-repeat="comment in comments | orderBy: 'created_at'">
+
+    <div class="comment-avatar tiny-circle-picture left">
+      <img ng-src="{{comment.user.square_avatar_url}}" alt="{{comment.user.first_name}} {{comment.user.last_name}}" />
+    </div>
+
+    <div class="comment-item">
+      <div class="comment-item__header" ng-hide="isNewComment(comment)">{{comment.user.first_last_initial}} commented on this {{comment.created_at | fromNow}}</div>
+      <div class="comment-item__body">
+        <h6 ng-hide="comment.editing" class="wysiwyg-output" ng-bind-html="comment.comment"></h6>
+
+        <div class="comments-list__item--editing" ng-show="comment.editing">
+          <form name="commentsForm" imua-form="saveComment(comment)" novalidate>
+            <div class="pbm">
+              <label-with-errors form="commentsForm" formfield="commentsForm.comment"></label-with-errors>
+              <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="comment.new_comment" placeholder="Leave a comment" required></text-angular>
+            </div>
+
+            <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="commentsForm.$submitted && commentsForm.$invalid">{{error}}</div>
+
+            <div class="button-container">
+              <span class="cancel" ng-click="cancelEditComment(comment)">Cancel</span>
+              <button class="submit" type="submit">Update Comment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="comment-item__icons" ng-hide="comment.editing">
+        <span class="glyphicon glyphicon-pencil prs" title="Edit" ng-click="editComment(comment)" ng-if="canEditComment(comment)"></span>
+        <span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteComment(comment)" ng-if="canDeleteComment(comment)"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="comments-list__item--new">
+    <form name="commentsFormNew" imua-form="saveComment()" novalidate>
+      <div class="pbm">
+        <label-with-errors form="commentsFormNew" formfield="commentsFormNew.comment"></label-with-errors>
+        <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" rows="4" ng-model="new_comment.comment" placeholder="Leave a comment" name="comment" required></text-angular>
+      </div>
+
+      <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="commentsForm.$submitted && commentsForm.$invalid">{{error}}</div>
+
+      <div class="button-container">
+        <button class="submit" type="submit">Comment</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- <div class="edit-buttons-top" ng-hide="editingNewComment()">
+    <br>
+    <button class="btn btn-default" ng-click="addNewComment()">Add a Comment</button>
+  </div> -->
+</div>

@@ -5,7 +5,8 @@ angular.module('myApp')
     student: '=',
     width: '=',
     parentclass: '@',
-    identifier: '@'
+    identifier: '@',
+    drawduration: '@'
   }
   link: (scope, element, attrs) ->
     $timeout( () ->
@@ -15,6 +16,11 @@ angular.module('myApp')
       else
         width = scope.width
         height = width
+
+      if scope.drawduration?
+        drawDuration = parseInt(scope.drawduration)
+      else
+        drawDuration = 800
 
       chart = d3.select(element[0])
         .attr("id", scope.student.id + "_" + scope.identifier)
@@ -56,6 +62,13 @@ angular.module('myApp')
             when "Extracurricular" then index = 2
             when "College_Prep" then index = 3
             when "Testing" then index = 4
+            # ONEGOAL_HACK START
+            when '2-year' then index = 0
+            when '4-year' then index = 1
+            when 'Assignments' then index = 2
+            when 'Financial' then index = 3
+            when 'Campus_Connections' then index = 4
+            # ONEGOAL_HACK END
 
           data[index] = {name: module.module_title, value: module.points.user}
 
@@ -116,7 +129,7 @@ angular.module('myApp')
         g.append("path")
           .attr("fill", (d, i) -> color(i))
           .transition()
-            .duration(800)
+            .duration(drawDuration)
             .attrTween("d", tweenPie)
 
       scope.$watch('student', () ->

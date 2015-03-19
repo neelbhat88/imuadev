@@ -8,12 +8,6 @@ class TimeUnit < ActiveRecord::Base
   belongs_to :roadmap
 end
 
-class TimeUnitQuerier < Querier
-  def initialize
-    return super(TimeUnit)
-  end
-end
-
 class ViewTimeUnit
   attr_accessor :id, :name, :milestones
 
@@ -21,10 +15,7 @@ class ViewTimeUnit
     @id = time_unit.id
     @name = time_unit.name
 
-    @milestones = []
-    time_unit.milestones.each do | m |
-      @milestones << ViewMilestone.new(m)
-    end
+    @milestones = MilestoneFactory.get_milestone_objects(time_unit.milestones)
   end
 end
 

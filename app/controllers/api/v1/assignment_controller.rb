@@ -6,58 +6,7 @@ class Api::V1::AssignmentController < ApplicationController
   before_filter :load_services
 
   def load_services( assignmentService = nil )
-    @assignmentService = assignmentService ? assignmentService : AssignmentService.new
-  end
-
-  # GET /users/:user_id/assignment
-  # Returns all Assignments for the given User
-  def index
-    userId = params[:user_id]
-
-    if !can?(current_user, :get_assignments, User.where(id: params[:user_id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.get_assignments(userId)
-
-    render status: :ok,
-      json: { info: "assignments", assignments: result }
-  end
-
-  # GET /assignment/:id
-  # Returns the Assignment
-  def show
-    assignmentId = params[:id]
-
-    if !can?(current_user, :get_assignment, Assignment.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.get_assignment(assignmentId)
-
-    render status: :ok,
-      json: { info: "assignment", assignments: result }
-  end
-
-  # POST /users/:user_id/assignment
-  # Creates an Assignment for the given User
-  def create
-    userId     = params[:user_id].to_i
-    assignment = params[:assignment]
-
-    assignment["user_id"] = userId
-
-    if !can?(current_user, :create_assignment, User.where(id: params[:user_id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.create_assignment(assignment)
-
-    render status: result.status,
-      json: { info: result.info, assignment: result.object }
+    @assignmentService = assignmentService ? assignmentService : AssignmentService.new(current_user)
   end
 
   # PUT /assignment/:id
@@ -73,10 +22,10 @@ class Api::V1::AssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.update_assignment(assignment)
+    result = @assignmentService.update(assignment)
 
     render status: result.status,
-      json: { info: result.info, assignment: result.object }
+      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
   end
 
   # DELETE /assignment/:id
@@ -89,15 +38,15 @@ class Api::V1::AssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.destroy_assignment(assignmentId)
+    result = @assignmentService.destroy(assignmentId)
 
     render status: result.status,
-      json: { info: result.info }
+      json: Oj.dump( { info: result.info }, mode: :compat)
   end
 
   # GET /assignment/:id/collection
   # Returns the Assignment with its collection of UserAssignments
-  def get_assignment_collection
+  def collection
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:assignment_id] = params[:id]
 
@@ -106,25 +55,7 @@ class Api::V1::AssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.get_assignment_collection(url_params)
-
-    render status: result.status,
-      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
-  end
-
-  # POST /users/:id/assignment/broadcast
-  # Creates an Assignment and its collection of User Assignments
-  def broadcast
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_id] = params[:id]
-
-    # TODO Fix to incorporate authorizations for creating all the user_assignments
-    if !can?(current_user, :create_assignment_broadcast, User.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.broadcast(current_user, url_params)
+    result = @assignmentService.get_collection(url_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
@@ -132,7 +63,7 @@ class Api::V1::AssignmentController < ApplicationController
 
   # PUT /assignment/:id/broadcast
   # Updates an Assignment and its collection of UserAssignments
-  def broadcast_update
+  def broadcast
     url_params = params.except(*[:id, :controller, :action]).symbolize_keys
     url_params[:assignment_id] = params[:id]
 
@@ -142,39 +73,7 @@ class Api::V1::AssignmentController < ApplicationController
       return
     end
 
-    result = @assignmentService.broadcast_update(current_user, url_params)
-
-    render status: result.status,
-      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
-  end
-
-  # GET /users/:id/task_assignable_users
-  def get_task_assignable_users
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_id] = params[:id]
-
-    if !can?(current_user, :get_task_assignable_users, User.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.get_task_assignable_users(url_params)
-
-    render status: result.status,
-      json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)
-  end
-
-  # GET /users/:id/task_assignable_users_tasks
-  def get_task_assignable_users_tasks
-    url_params = params.except(*[:id, :controller, :action]).symbolize_keys
-    url_params[:user_id] = params[:id]
-
-    if !can?(current_user, :get_task_assignable_users_tasks, User.where(id: params[:id]).first)
-      render status: :forbidden, json: {}
-      return
-    end
-
-    result = @assignmentService.get_task_assignable_users_tasks(url_params)
+    result = @assignmentService.update_broadcast(url_params)
 
     render status: result.status,
       json: Oj.dump( { info: result.info, organization: result.object }, mode: :compat)

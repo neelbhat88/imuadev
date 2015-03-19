@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141119240409) do
+ActiveRecord::Schema.define(:version => 20150224203030) do
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -20,16 +20,31 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
   end
 
   create_table "assignments", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "assignment_owner_id"
     t.text     "title"
     t.text     "description"
     t.datetime "due_datetime"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "organization_id"
+    t.string   "assignment_owner_type"
   end
 
-  add_index "assignments", ["user_id"], :name => "index_assignments_on_user_id"
+  add_index "assignments", ["assignment_owner_type", "assignment_owner_id"], :name => "index_assignments_on_owner_type_and_owner_id"
+
+  create_table "comments", :force => true do |t|
+    t.string   "title",            :limit => 50, :default => ""
+    t.text     "comment"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "expectations", :force => true do |t|
     t.integer  "organization_id"
@@ -67,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
     t.string   "value"
     t.string   "icon"
     t.integer  "organization_id"
+    t.datetime "due_datetime"
   end
 
   add_index "milestones", ["organization_id"], :name => "index_milestones_on_organization_id"
@@ -132,6 +148,26 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string  "name"
+    t.integer "taggings_count", :default => 0
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "time_units", :force => true do |t|
     t.string   "name"
@@ -345,6 +381,7 @@ ActiveRecord::Schema.define(:version => 20141119240409) do
     t.integer  "time_unit_id"
     t.integer  "class_of"
     t.string   "title"
+    t.integer  "status",                 :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

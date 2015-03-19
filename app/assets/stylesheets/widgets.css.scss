@@ -125,7 +125,7 @@ $border-color: black(0.2);
 
       .table--cell {
         display: table-cell;
-        vertical-align: top;
+        vertical-align: middle;
         border-right: 2px solid $border-color;
 
         &:last-child {
@@ -134,7 +134,7 @@ $border-color: black(0.2);
 
         .cell--padding {
           height: 100%;
-          padding: 20px 0;
+          padding: 10px 5px;
 
           .widget--buttons {
             padding: 20px 5px;
@@ -206,11 +206,11 @@ $border-color: black(0.2);
     }
 
     .input-group {
-      padding: 20px;
+      padding: 10px;
     }
 
     .datepicker-label {
-      padding: 0 20px;
+      padding: 0 10px;
     }
 
     .border-top { border-top: 2px solid $border-color; }

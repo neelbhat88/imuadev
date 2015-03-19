@@ -1,0 +1,83 @@
+.login-wrapper {
+  text-align: center;
+  padding: 60px;
+
+  .login-form {
+
+    max-width: 500px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+
+    .logo {
+
+      width: 60%;
+      max-width: 250px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+
+      img {
+
+        width: 100%;
+        height: auto;
+
+      }
+
+    }
+
+    .form-field {
+
+      font-size: 14px;
+      background: #ebebeb;
+      margin-bottom: 15px;
+      width: 90%;
+      max-width: 250px;
+      @include border-radius(10px);
+
+      &:focus {
+        background: #ffffff;
+      }
+
+    }
+
+    .button {
+
+      @include font-size(1.4);
+      padding:5px 40px;
+      background:#ccc;
+      border:0 none;
+      cursor:pointer;
+      @include border-radius(10px);
+
+      &:hover { background: #ffffff; }
+    }
+
+  }
+
+  .login-links {
+    width: 100%;
+    padding-bottom: 20px;
+    color: #909090;
+    @include font-size(1.2);
+
+    a {
+
+      color: #666666;
+
+      &:hover {
+
+        color: white;
+
+      }
+
+    }
+  }
+
+  .blog-link {
+    color: white;
+
+    a {
+      color: $blue;
+    }
+  }
+
+}

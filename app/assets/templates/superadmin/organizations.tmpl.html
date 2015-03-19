@@ -1,11 +1,11 @@
-<div class="organizationsContainer paxl">
+<div class="organizationsContainer paxl" wait-to-load="{{organizations}}">
   <h4 ng-show="organizations.length == 0">No organizations created. Use the REST API to create one</h4>
 
   <li ng-repeat="org in organizations">
     {{org.name}} |
-    <a ng-href="#/roadmap/{{org.id}}">Org Setup</a> |
-    <a ng-href="#/organization/{{org.id}}">Mentors</a> |
-    <a ng-href="#/students/{{org.id}}">Students</a>
+    <a ng-href="app#/setup/{{org.id}}">Org Setup</a> |
+    <a ng-href="app#/organization/{{org.id}}">Mentors</a> |
+    <a ng-href="app#/students/{{org.id}}">Students</a>
   </li>
 
   <div style="padding-top: 20px;">

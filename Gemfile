@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby "2.1.2"
 gem 'rails', '3.2.19'
 
 # Bundle edge Rails instead:
@@ -36,6 +36,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "font-awesome-rails"
+
 gem 'jquery-rails'
 # gem 'jquery-ui-rails'
 gem 'jquery-placeholder-rails'
@@ -49,13 +51,13 @@ gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails', "~> 1.3.0"
 gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
 
-# Lots of cool JS programming helpers (e.g. _groupBy)
-gem 'underscore-rails'
-
 gem 'mail'
 
+gem 'acts_as_commentable', '3.0.1'
+gem 'acts-as-taggable-on', '~> 3.4'
+
 # Images
-gem 'rmagick', '2.13.2'
+gem 'rmagick', '2.13.4'
 gem 'paperclip'
 gem 'aws-sdk'
 
@@ -79,6 +81,13 @@ gem 'valium'
 
 # Security checks
 gem "brakeman", :require => false
+
+# Less verbose logging
+gem "lograge"
+gem 'quiet_assets'
+
+# CORS suppport
+gem 'rack-cors', :require => 'rack/cors'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,36 +1,22 @@
 class AssignmentService
 
-  # Called via :assignment_id
-  def get_assignment_collection(params)
-    conditions = Marshal.load(Marshal.dump(params))
-
-    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime, :created_at]).where(conditions)
-    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id]).where(conditions)
-
-    conditions[:user_id] = (assignmentQ.pluck(:user_id) + userAssignmentQ.pluck(:user_id)).uniq
-    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
-    userQ.set_subQueriers([assignmentQ, userAssignmentQ])
-
-    view = {users: userQ.view}
-
-    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", view)
+  def initialize(current_user)
+    @current_user = current_user
   end
 
-  # Called via :user_id
-  # Contains "assignment" and "user_assignments" parameter objects
-  def broadcast(current_user, params)
-    conditions = Marshal.load(Marshal.dump(params))
-
-    conditions[:assignment][:user_id] = conditions[:user_id].to_i
-    assignmentResult = create_assignment(conditions[:assignment])
+  # Creates an assignment with all associated user_assignments, all at once.
+  # Expected to be called via :assignment_owner_type + :assignment_owner_id,
+  # with :assignment and :user_assignments parameters
+  def create_broadcast(params)
+    assignmentResult = _create(params)
     return assignmentResult unless assignmentResult.status == :ok
 
-    conditions[:assignment_id] = assignmentResult.object.id
+    params[:assignment_id] = assignmentResult.object.id
 
     userAssignments = []
-    unless conditions[:user_assignments].nil?
-      conditions[:user_assignments].each do |ua|
-        ua[:assignment_id] = conditions[:assignment_id]
+    unless params[:user_assignments].nil?
+      params[:user_assignments].each do |ua|
+        ua[:assignment_id] = params[:assignment_id]
         userAssignmentResult = create_user_assignment(ua)
         if userAssignmentResult.status == :ok
           userAssignments << userAssignmentResult.object
@@ -39,28 +25,28 @@ class AssignmentService
     end
 
     # Send out emails to all assignees
-    send_assignment_emails(current_user, assignmentResult.object, userAssignments)
+    send_assignment_emails(@current_user, assignmentResult.object, userAssignments)
 
     # TODO What if a userAssignment operation fails?
-    return get_assignment_collection(conditions.slice(:assignment_id))
+    ret = _get_assignments_view(params.slice(:assignment_id))
+    return ReturnObject.new(:ok, "Created Assignment broadcast for assignment_id: #{params[:assignment_id]}.", ret)
   end
 
+  # Updates an assignment and any of its associated user_assignments, all at once.
   # Called via :assignment_id
   # Contains "assignment" and "user_assignments" parameter objects
-  def broadcast_update(current_user, params)
-    conditions = Marshal.load(Marshal.dump(params))
-
-    conditions[:assignment][:id] = conditions[:assignment_id].to_i
-    assignmentResult = update_assignment(conditions[:assignment])
+  def update_broadcast(params)
+    params[:assignment][:id] = params[:assignment_id].to_i
+    assignmentResult = _update(params[:assignment])
     return assignmentResult unless assignmentResult.status == :ok
 
-    conditions[:assignment_id] = assignmentResult.object.id
+    params[:assignment_id] = assignmentResult.object.id
 
     userAssignments = []
     newUserAssignments = []
-    unless conditions[:user_assignments].nil?
-      conditions[:user_assignments].each do |ua|
-        ua[:assignment_id] = conditions[:assignment_id]
+    unless params[:user_assignments].nil?
+      params[:user_assignments].each do |ua|
+        ua[:assignment_id] = params[:assignment_id]
         if ua[:id].nil?
           user_assignment_result = create_user_assignment(ua)
           if user_assignment_result.status == :ok
@@ -75,7 +61,7 @@ class AssignmentService
         # send out all the emails at once after its done just like the send_assignment_emails()
         # is doing it.
         # else
-        #   user_assignment_result = update_user_assignment(current_user, ua)
+        #   user_assignment_result = update_user_assignment(@current_user, ua)
         #
         #   if user_assignment_result.status == :ok
         #     userAssignments << user_assignment_result.object
@@ -86,93 +72,110 @@ class AssignmentService
     end
 
     # Send out emails to all assignees
-    send_assignment_emails(current_user, assignmentResult.object, newUserAssignments)
+    send_assignment_emails(@current_user, assignmentResult.object, newUserAssignments)
 
     # TODO What if a userAssignment operation fails?
-    return get_assignment_collection(conditions.slice(:assignment_id))
-  end
-
-  # Called via :user_id
-  def get_task_assignable_users(params)
-    conditions = Marshal.load(Marshal.dump(params))
-
-    userQ = UserQuerier.new.select([], [:role, :organization_id]).where(conditions.slice(:user_id))
-    conditions[:organization_id] = userQ.domain[0][:organization_id]
-
-    if userQ.domain[0][:role] == Constants.UserRole[:ORG_ADMIN]
-      userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions.slice(:organization_id))
-    else
-      conditions[:assigned_to_id] = conditions[:user_id]
-      relationshipQ = Querier.new(Relationship).select([], [:user_id]).where(conditions.slice(:assigned_to_id))
-      conditions[:user_id] = (relationshipQ.pluck(:user_id) << params[:user_id].to_s).uniq
-      userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
-    end
-
-    view = {users: userQ.view}
-
-    return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
-  end
-
-  # Called via :user_id
-  def get_task_assignable_users_tasks(params)
-    conditions = Marshal.load(Marshal.dump(params))
-
-    userQ = UserQuerier.new.select([], [:role, :organization_id]).where(conditions.slice(:user_id))
-    conditions[:organization_id] = userQ.domain[0][:organization_id]
-
-    if userQ.domain[0][:role] == Constants.UserRole[:ORG_ADMIN]
-      userQ = UserQuerier.new.select([]).where(conditions.slice(:organization_id))
-      conditions[:user_id] = (userQ.pluck(:id) << params[:user_id].to_s).uniq
-    else
-      conditions[:assigned_to_id] = conditions[:user_id]
-      relationshipQ = Querier.new(Relationship).select([], [:user_id]).where(conditions.slice(:assigned_to_id))
-      conditions[:user_id] = (relationshipQ.pluck(:user_id) << params[:user_id].to_s).uniq
-    end
-
-    userAssignmentQ = Querier.new(UserAssignment).select([:id, :assignment_id, :status, :user_id]).where(conditions)
-    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
-    assignmentQ = Querier.new(Assignment).select([:id, :user_id, :title, :description, :due_datetime, :created_at]).where(conditions.slice(:assignment_id))
-    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id) << params[:user_id].to_s).uniq
-
-    userQ = UserQuerier.new.select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name], [:organization_id]).where(conditions)
-    userQ.set_subQueriers([userAssignmentQ, assignmentQ])
-
-    view = {users: userQ.view}
-
-    return ReturnObject.new(:ok, "Task assignable users for user_id: #{params[:user_id]}.", view)
+    ret = _get_assignments_view(params.slice(:assignment_id))
+    return ReturnObject.new(:ok, "Updated Assignment broadcast for assignment_id: #{params[:assignment_id]}.", ret)
   end
 
   ###################################
   ########### ASSIGNMENT ############
   ###################################
 
-  def get_assignment(assignmentId)
+  # Gets an assignment with all its associated user_assignments, users, etc.
+  # Expected to be called via :assignment_id
+  def get_collection(params)
+    ret = _get_assignments_view(params)
+    return ReturnObject.new(:ok, "Assignment collection for assignment_id: #{params[:assignment_id]}.", ret)
+  end
+
+  # Gets all assignments owned by the object specified by owner_type and id,
+  # with all their associated user_assignments, users, etc.
+  # Expected to be called via :assignment_owner_type + :assignment_owner_id
+  def index(params)
+    retObj = _index(params)
+    return retObj unless retObj.status == :ok
+
+    params[:assignment_id] = retObj.object
+    retObj.object = _get_assignments_view(params)
+    return retObj
+  end
+
+  # Creates an assignment
+  # Expected to be called via :assignment_owner_type + :assignment_owner_id,
+  # with an :assignment parameter
+  def create(params)
+    retObj = _create(params)
+    return retObj unless retObj.status == :ok
+
+    params[:assignment_id] = retObj.object.id
+    retObj.object = _get_assignments_view(params)
+    return retObj
+  end
+
+
+  # Updates an assignment
+  def update(assignment)
+    retObj = _update(assignment)
+    return retObj unless retObj.status == :ok
+
+    params = { assignment_id: retObj.object.id }
+    retObj.object = _get_assignments_view(params)
+    return retObj
+  end
+
+  # Destroys an assignment
+  def destroy(assignmentId)
+    retObj = _destroy(assignmentId)
+    return retObj
+  end
+
+# Helper methods - not to be called by controller, prefixed by underscore
+private
+
+  def _get_assignment(assignmentId)
     return Assignment.find(assignmentId)
   end
 
-  def get_assignments(userId)
-    return Assignment.where(:user_id => userId)
+  # Returns array of Assignment indices
+  def _index(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    assignmentQ = Querier.factory(Assignment).select([],[:id]).where(conditions)
+    ret = assignmentQ.pluck(:id)
+
+    return ReturnObject.new(:ok, "Assignments for type #{params[:assignment_owner_type]}, id #{params[:assignment_owner_id]}.", ret)
   end
 
-  def create_assignment(assignment)
+  # Returns newly created ActiveRecord Assignment object
+  def _create(params)
+    conditions = Marshal.load(Marshal.dump(params))
+    owner_object = conditions[:assignment_owner_type].classify.constantize.where(id: conditions[:assignment_owner_id]).first
+    assignment = conditions[:assignment]
+
     newAssignment = Assignment.new do | e |
-      e.user_id = assignment[:user_id]
+      e.assignment_owner_type = conditions[:assignment_owner_type]
+      e.assignment_owner_id = conditions[:assignment_owner_id]
       e.title = assignment[:title]
       e.description = assignment[:description]
       e.due_datetime = assignment[:due_datetime]
-      e.organization_id = User.where(id: assignment[:user_id]).first.organization_id
+      e.organization_id = owner_object.organization_id
     end
 
     if !newAssignment.valid?
     end
 
     if newAssignment.save
-      IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.user_id,
-                                                {:task_id => newAssignment.id,
-                                                 :title => newAssignment.title,
-                                                 :description => newAssignment.description
-                                                }
-                                        )
+      # For now, skip intercom events for Tasks not owned by a User
+      if newAssignment.assignment_owner_type == "User"
+        IntercomProvider.new.create_event(AnalyticsEventProvider.events[:created_task], newAssignment.assignment_owner_id,
+                                                  {:task_id => newAssignment.id,
+                                                   :title => newAssignment.title,
+                                                   :description => newAssignment.description
+                                                  }
+                                          )
+      end
 
       return ReturnObject.new(:ok, "Successfully created Assignment, id: #{newAssignment.id}.", newAssignment)
     else
@@ -180,10 +183,11 @@ class AssignmentService
     end
   end
 
-  def update_assignment(assignment)
+  # Returns newly updated ActiveRecord Assignment object
+  def _update(assignment)
     assignmentId = assignment[:id]
 
-    dbAssignment = get_assignment(assignmentId)
+    dbAssignment = _get_assignment(assignmentId)
 
     if dbAssignment.nil?
       return ReturnObject.new(:internal_server_error, "Failed to find Assignment with id: #{assignmentId}.", nil)
@@ -198,9 +202,9 @@ class AssignmentService
     end
   end
 
-  def destroy_assignment(assignmentId)
-
-    dbAssignment = get_assignment(assignmentId)
+  # Does not return any sort of object, just a message
+  def _destroy(assignmentId)
+    dbAssignment = _get_assignment(assignmentId)
 
     if dbAssignment.nil?
       return ReturnObject.new(:internal_server_error, "Failed to find Assignment with id: #{assignmentId}.", nil)
@@ -213,16 +217,69 @@ class AssignmentService
     end
   end
 
+  # Should be returned by most public AssignmentService methods so that the
+  # front gets a consistent and up-to-date list of all the Assignment objects
+  # (in case one was since added/updated).
+  # Expects :assignment_id to be given (may be an array)
+  # Returns a nested hash of hashes/arrays that fits under "organization"
+  def _get_assignments_view(params)
+    conditions = Marshal.load(Marshal.dump(params))
+
+    assignmentQ = Querier.factory(Assignment).select([:id, :title, :description, :due_datetime, :created_at, :assignment_owner_type, :assignment_owner_id]).where(conditions)
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :updated_at]).where(conditions)
+
+    conditions[:owner_object_class] = assignmentQ.domain[0][:assignment_owner_type].classify.constantize
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id)).uniq
+    if conditions[:owner_object_class].name == "User"
+      conditions[:user_id] = (conditions[:user_id] + assignmentQ.pluck(:assignment_owner_id)).uniq
+    else
+      conditions[:owner_object_id] = assignmentQ.pluck(:assignment_owner_id).uniq
+    end
+
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+
+    view = {}
+
+    if conditions[:owner_object_class].name == "User"
+      userQ.set_subQueriers([assignmentQ, userAssignmentQ])
+      view = {users: userQ.view}
+    else
+      userQ.set_subQueriers([userAssignmentQ])
+      ownerObjQ = Querier.factory(conditions[:owner_object_class]).where(conditions.slice(:owner_object_id))
+      ownerObjQ.set_subQueriers([assignmentQ])
+      view[:users] = userQ.view
+      view[conditons[:owner_object_class].name.underscore.pluralize.to_sym] = ownerObjQ.view
+    end
+
+    return view
+  end
+
+public
   ############################################
   ############# USER ASSIGNMENT ##############
   ############################################
 
   def collect_user_assignment(userAssignmentId)
-    return UserAssignment.includes(:assignment => :user).find(userAssignmentId)
+    conditions = {}
+    conditions[:user_assignment_id] = userAssignmentId
+
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status, :user_id, :created_at, :updated_at]).where(conditions)
+
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.factory(Assignment).select([:id, :user_id, :title, :description, :due_datetime]).where(conditions.slice(:assignment_id))
+
+    conditions[:user_id] = (userAssignmentQ.pluck(:user_id) + assignmentQ.pluck(:user_id)).uniq
+    userQ = Querier.factory(User).select([:id, :role, :avatar, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
+    userQ.set_subQueriers([userAssignmentQ, assignmentQ])
+
+    view = {users: userQ.view}
+
+    return ReturnObject.new(:ok, "User Assignment collection for user_assignment_id: #{userAssignmentId}", view)
   end
 
   def collect_user_assignments(userId)
-    return UserAssignment.includes(:assignment => :user).where(:user_id => userId)
+    return UserAssignment.includes(:assignment => :assignment_owner).where(:user_id => userId)
   end
 
   def get_user_assignment(userAssignmentId)
@@ -231,6 +288,12 @@ class AssignmentService
 
   def get_user_assignments(userId)
     return UserAssignment.where(:user_id => userId)
+  end
+
+  def get_user_assignment_by_user_id_assignment_id(args)
+    userId = args[:user_id]
+    taskId = args[:task_id]
+    return UserAssignment.where(:user_id => userId, :assignment_id => taskId).first
   end
 
   def create_user_assignment(userAssignment)
@@ -261,7 +324,7 @@ class AssignmentService
     end
 
     if dbUserAssignment.update_attributes(:status => userAssignment[:status])
-      dbAssignment = get_assignment(dbUserAssignment.assignment_id)
+      dbAssignment = _get_assignment(dbUserAssignment.assignment_id)
       send_task_complete_email(current_user, dbAssignment, dbUserAssignment)
       return ReturnObject.new(:ok, "Successfully updated UserAssignment, id: #{dbUserAssignment.id}.", dbUserAssignment)
     else
@@ -291,6 +354,10 @@ class AssignmentService
   # Ideally this will be done by adding the email to a DB table or some
   # sort of queue which a background worker picks up to process and send
   def send_assignment_emails(current_user, assignment, user_assignments)
+    # Workaround to not send emails for assignments owned by a milestone
+    return if assignment.assignment_owner_type != "User"
+    assignment[:user_id] = assignment.assignment_owner_id
+
     Background.process do
       assignor = UserRepository.new.get_user(assignment.user_id)
 
@@ -306,6 +373,10 @@ class AssignmentService
   end
 
   def send_task_complete_email(current_user, assignment, user_assignment)
+    # Workaround to not send emails for assignments owned by a milestone
+    return if assignment.assignment_owner_type != "User"
+    assignment[:user_id] = assignment.assignment_owner_id
+
     # Don't send an email for updates to tasks assigned to yourself
     return if current_user.id == assignment.user_id && current_user.id == user_assignment.user_id
 

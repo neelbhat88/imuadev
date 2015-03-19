@@ -1,0 +1,13 @@
+<p>Aloha!</p>
+
+<p><%= @current_user.full_name %> added a comment to the task titled:
+  "<%= @task.title %>". </p>
+
+<p>The comment says: "<%= @comment.comment.html_safe %>"</p>
+
+<p><%= link_to "Log in", app_url + "#/user_assignment/#{@user_assignment.id}" %>
+  to view the task and reply to the comment. </p>
+
+<p>Mahalo,<p>
+
+Imua

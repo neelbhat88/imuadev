@@ -1,5 +1,16 @@
 class UserClassService
 
+  def get_org_class_titles(params)
+    conditions = params
+
+    userQ = Querier.factory(User).select([]).where(conditions)
+
+    conditions[:user_id] = userQ.pluck(:id)
+    userClassQ = Querier.factory(UserClass).select([], [:name]).where(conditions)
+
+    return userClassQ.pluck(:name)
+  end
+
   def get_user_classes(userId, time_unit_id)
     if time_unit_id == 0
       return UserClass.where(:user_id => userId).order(:id)
@@ -36,7 +47,7 @@ class UserClassService
     new_class = UserClass.new do | u |
       u.user_id = userId
       u.name = user_class[:name]
-      u.grade = get_grade(user_class[:grade_value])
+      u.grade = user_class[:grade]
       u.grade_value = user_class[:grade_value]
       u.gpa = get_gpa(u.grade)
       u.time_unit_id = user_class[:time_unit_id]
@@ -63,9 +74,9 @@ class UserClassService
     db_class = UserClass.find(class_id)
 
     if db_class.update_attributes(:name => user_class[:name],
-                                  :grade => get_grade(user_class[:grade_value]),
+                                  :grade => user_class[:grade],
                                   :grade_value => user_class[:grade_value],
-                                  :gpa => get_gpa(get_grade(user_class[:grade_value])),
+                                  :gpa => get_gpa(user_class[:grade]),
                                   :period => user_class[:period],
                                   :room => user_class[:room],
                                   :credit_hours => user_class[:credit_hours],
@@ -133,6 +144,7 @@ class UserClassService
 
   # TODO I'm thinking we can eventually pass in a scale object that will have
   # an upper and lower bounds for each grade, then set the ranges using that
+  # XXX this is being left over to be used as a standard grade scale
   private
   def get_grade(grade_value)
     case grade_value

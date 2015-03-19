@@ -1,0 +1,17 @@
+.slider-container {
+  width: 420px;
+  padding: 20px;
+  margin: auto;
+
+  .slider-text {
+    padding: 20px 0;
+    text-align: center;
+
+    .semester-text {
+      font-weight: bold;
+      @include font-size(2.2);
+    }
+
+    @include font-size(1.6);
+  }
+}

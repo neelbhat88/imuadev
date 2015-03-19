@@ -1,6 +1,6 @@
 angular.module('myApp')
-.factory('SessionService', ['$http', '$q',
-  function($http, $q) {
+.factory('SessionService', ['$http', '$q', '$rootScope',
+  function($http, $q, $rootScope) {
 
     var service = {
 
@@ -19,16 +19,11 @@ angular.module('myApp')
       },
 
       getCurrentUser: function(){
-        if (service.isAuthenticated()) {
-          return $q.when(service._currentUser);
-        }
-        else {
           return $http.get('/api/v1/current_user').then(function(resp){
             service._currentUser = resp.data.user;
 
             return service._currentUser;
-          });
-        }
+          }, function(err) {console.log("Error")});
 
       },
 

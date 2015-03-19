@@ -8,6 +8,7 @@ angular.module('myApp')
     $scope.current_user = current_user
     $scope.user_assignment = user_assignment
     $scope.assigner = $scope.user_assignment.assigner
+    $scope.loaded = true
 
     $('input, textarea').placeholder()
 

@@ -15,12 +15,23 @@ module Imua
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # Allow all HTTP calls from a any origin
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options], :expose => ['Set-Cookie']
+      end
+    end
+
+
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/repositories)
     config.autoload_paths += %W(#{config.root}/app/domainobjects)
     config.autoload_paths += %W(#{config.root}/app/domainobjects/submodules)
+    config.autoload_paths += %W(#{config.root}/app/models/assignments)
+    config.autoload_paths += %W(#{config.root}/app/helpers/authorizations)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

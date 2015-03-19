@@ -18,10 +18,10 @@
 
       <div class="task-content">
         <h4 class="bold">{{expectation.title}}</h4>
-        <h6>{{expectation.description}}</h6>
+        <h6 class="wysiwyg-output" ng-bind-html="expectation.description"></h6>
         <div class="expectation--comment-box" ng-show="expectation.assigning">
           <h6 class="bold">Why are you changing these students' statuses?</h6>
-          <textarea ng-model="expectation.new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+          <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="expectation.new_comment" rows="4" placeholder="Leave a Comment"></text-angular>
         </div>
       </div>
 
@@ -29,7 +29,7 @@
         <h6 class="bold red" ng-if="users_not_meeting.length == 1">{{users_not_meeting.length}} student is not meeting this expectation</h6>
         <h6 class="bold red" ng-if="users_not_meeting.length != 1">{{users_not_meeting.length}} students are not meeting this expectation</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_not_meeting | orderBy: 'last_name'">
-          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -47,7 +47,7 @@
         <h6 class="bold yellow" ng-if="users_need_work.length == 1">{{users_need_work.length}} student needs to work on this expectation</h6>
         <h6 class="bold yellow" ng-if="users_need_work.length != 1">{{users_need_work.length}} students need to work on this expectation</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_need_work | orderBy: 'last_name'">
-          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>
@@ -66,7 +66,7 @@
         <h6 class="bold green" ng-if="users_meeting.length != 1 && users_meeting.length != 0">{{users_meeting.length}} students are meeting this expectation</h6>
         <h6 class="bold green" ng-if="users_meeting.length != 0 && users_meeting.length == 0">Nice! All students are meeting this expectation.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_meeting | orderBy: 'last_name'">
-          <a href="#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
+          <a href="app#/user/{{user.id}}/user_expectation/{{user.user_expectations[0].id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user.square_avatar_url}}"/>
             </div>

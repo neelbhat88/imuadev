@@ -1,11 +1,7 @@
 .assignmentsContainer {
 
   .assignments-header {
-    width: 100%;
-    background: $grey;
-    text-align: center;
-    padding: 20px;
-    margin: 0;
+    @extend .page-header;
 
     @include respond-to(900) {
       padding: 20px 70px;
@@ -201,6 +197,11 @@
     width: 80%;
     float: left;
     padding: 20px 40px 40px 0;
+
+    .ta-editor {
+      min-height: 100px;
+      height: 150px;
+    }
 
     .subnav-button {
       margin-top: 5px;

@@ -5,10 +5,11 @@
 
 <% if @comment %>
 <p> <%= @modifier.full_name %> left the following comment: </p>
-<p>"<%= @comment %>"</p>
+<p>"<%= @comment.html_safe %>"</p>
 <% end %>
 
-<p><%= link_to "Log in", login_url %> to view this update. </p>
+<p><%= link_to "Log in", app_url + "#/user/#{@student.id}/user_expectation/#{@user_expectation.id}" %>
+  to view this update. </p>
 
 <p>Mahalo,<p>
 

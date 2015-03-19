@@ -75,6 +75,19 @@
 
   .students-mid, .students-lower {
     padding: 40px $wrapper-width 0 $wrapper-width;
+
+    .search-label {
+      display: inline-block;
+    }
+    .student-search {
+      color: #000000;
+      width: 30%;
+      display: inline-block;
+    }
+    .list-container {
+      margin: 15px 0 5px;
+      @include respond-to(900) { text-align: center; }
+    }
   }
 
 }

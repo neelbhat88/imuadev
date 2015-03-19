@@ -4,10 +4,10 @@ class UserExtracurricularActivityService
   def get_org_activity_titles(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    userQ = UserQuerier.new.select([]).where(conditions)
+    userQ = Querier.factory(User).select([]).where(conditions)
 
     conditions[:user_id] = userQ.pluck(:id)
-    userExtracurricularActivityQ = Querier.new(UserExtracurricularActivity).select([], [:name]).where(conditions)
+    userExtracurricularActivityQ = Querier.factory(UserExtracurricularActivity).select([], [:name]).where(conditions)
 
     return userExtracurricularActivityQ.pluck(:name)
   end

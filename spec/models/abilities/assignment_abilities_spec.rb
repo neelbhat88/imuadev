@@ -39,7 +39,7 @@ describe Ability do
   it "allows mentors to only view if not same user" do
     orgAdmin = build(:org_admin, organization_id: 1, id: 1)
     user = build(:mentor, organization_id: 1, id: 2)
-    assignment = build(:assignment, organization_id: 1, user_id: orgAdmin.id)
+    assignment = build(:assignment, organization_id: 1, assignment_owner_type: "User", assignment_owner_id: orgAdmin.id)
 
     abilities = Ability.assignment_abilities(user, assignment)
 
@@ -49,7 +49,7 @@ describe Ability do
 
   it "allows all actions if same user" do
     user = build(:user, id: 1)
-    assignment = build(:assignment, user_id: 1)
+    assignment = build(:assignment, assignment_owner_type: "User", assignment_owner_id: 1)
 
     abilities = Ability.assignment_abilities(user, assignment)
 
@@ -62,7 +62,7 @@ describe Ability do
 
   it "doesn't allow any action if student and not same user" do
     user = build(:student, id: 1)
-    assignment = build(:assignment, user_id: 3)
+    assignment = build(:assignment, assignment_owner_type: "User", assignment_owner_id: 3)
 
     abilities = Ability.assignment_abilities(user, assignment)
 

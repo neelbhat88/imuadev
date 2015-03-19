@@ -1,9 +1,9 @@
 class ViewUser
 	attr_accessor :id, :email, :first_name, :last_name, :full_name, :first_last_initial, :title,
-								:phone, :role, :avatar_url,
+								:phone, :role, :avatar_url, :tag_list,
 								:organization_id, :time_unit_id, :class_of,
 								:modules_progress, :user_milestones, :relationships,
-								:login_count, :last_login
+								:login_count, :last_login, :status
 
 	def initialize(user, org = nil)
 		@id = user.id
@@ -17,10 +17,12 @@ class ViewUser
 		@role = user.role
 		@organization_id = user.organization_id
 		@square_avatar_url = user.avatar.url(:square)
+		@tag_list = user.tag_list
 		@time_unit_id = user.time_unit_id
 		@class_of = user.class_of.to_i
 		@login_count = user.sign_in_count
 		@last_login = user.current_sign_in_at ? user.current_sign_in_at : "Has not logged in yet"
+		@status = user.status
 
 		@is_student = user.student?
 		@is_mentor = user.mentor?

@@ -5,10 +5,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # Setup tagging capability
+  acts_as_taggable
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   					:first_name, :last_name, :phone, :role, :avatar, :organization_id,
-            :time_unit_id, :class_of, :title
+            :time_unit_id, :class_of, :title, :status, :tag_list
   # attr_accessible :title, :body
 
   belongs_to :organization
@@ -29,9 +32,10 @@ class User < ActiveRecord::Base
   has_many :user_service_hours, dependent: :destroy
   has_many :parent_guardian_contacts, dependent: :destroy
   has_many :user_milestones, dependent: :destroy
-  has_many :assignments, dependent: :destroy
+  has_many :assignments, as: :assignment_owner, dependent: :destroy
   has_many :user_assignments, dependent: :destroy
   has_many :user_gpas, dependent: :destroy
+  has_many :comments, dependent: :destroy # TODO - what do we think about this?
 
   has_attached_file :avatar, :s3_protocol => :https, styles: {
     square: '140x140#',
@@ -201,6 +205,7 @@ class ViewUser2
       @title = user.title unless !user.has_attribute?(:title)
       @phone = user.phone unless !user.has_attribute?(:phone)
       @role = user.role unless !user.has_attribute?(:role)
+      @tag_list = user.tag_list unless !user.has_attribute?(:tag_list)
       @organization_id = user.organization_id unless !user.has_attribute?(:organization_id)
       @square_avatar_url = user.avatar.url(:square) unless !user.has_attribute?(:avatar_file_name)
       @time_unit_id = user.time_unit_id unless !user.has_attribute?(:time_unit_id)

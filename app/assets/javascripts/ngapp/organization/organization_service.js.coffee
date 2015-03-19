@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'OrganizationService', ['$http', '$q', ($http, $q) ->
+.service 'OrganizationService', ['$http', '$q', 'TaggingService', ($http, $q, TaggingService) ->
 
   @all = ()->
     $http.get('/api/v1/organization')
@@ -21,15 +21,14 @@ angular.module('myApp')
   # OrganizationWithUsers object. Parses student progress based on the given
   # timeUnitId. If no timeUnitId is given, then it parses student progress
   # based on the student's current time_unit_id.
-  # TODO This needs to be broken down further
+  # TODO This needs to be broken down further. Much Further.
   @parseOrganizationWithUsers = (org, timeUnitId) ->
 
     active_user_threshold = (new Date()).getTime() - (1000*60*60*24*7) # One week ago
-
     org.students = _.each(_.where(org.users, { role: 50 }), (s) -> s.modules_progress = [] )
     org.mentors = _.each(_.where(org.users, { role: 40 }), (m) -> m.modules_progress = [] )
     org.orgAdmins = _.where(org.users, { role: 10 })
-
+    org.students = TaggingService.parseTagsForUsers(org.students, org.tags, org.taggings)
     org.active_students = _.filter(org.students, (student) -> (new Date(student.last_login)).getTime() >= active_user_threshold).length
     org.active_mentors = _.filter(org.mentors, (mentor) -> (new Date(mentor.last_login)).getTime() >= active_user_threshold).length
     org.attention_studentIds = []
@@ -48,9 +47,22 @@ angular.module('myApp')
           org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
 
     # Collect all assignments
-    org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments"), true))
-    if !org.assignments[0] then org.assignments = []
-    _.each(org.assignments, (a) -> a.user = _.find(org.users, (u) -> a.user_id == u.id); a.user_assignments = [])
+    org.assignments = _.union(_.flatten(_.pluck(org.users, "assignments")))
+    org.assignments = _.without(org.assignments, undefined)
+    # Associate to their owner object
+    for a in org.assignments
+      switch a.assignment_owner_type
+        when "User"
+          a.user = _.find(org.users, (u) -> a.assignment_owner_id == u.id)
+        when "Milestone"
+          a.milestone = _.find(org.milestones, (m) -> a.assignment_owner_id == m.id)
+      a.user_assignments = []
+
+    # Collect all user_assignments
+    org.user_assignments = _.union(_.flatten(_.pluck(org.users, "user_assignments"), true))
+    org.user_assignments = _.without(org.user_assignments, undefined)
+    # Match all user_assignment comments to their users
+    _.each(org.user_assignments, (a) -> _.each(a.comments, (c) -> c.user = _.find(org.users, (u) -> c.user_id == u.id)))
 
     org.total_gpa = org.semester_gpa = 0
     org.total_serviceHours = org.semester_serviceHours = 0

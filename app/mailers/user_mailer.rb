@@ -27,4 +27,15 @@ class UserMailer < ActionMailer::Base
 
 		mail(:to => user.email, :subject => "Imua - Reset password request")
 	end
+
+	def test(users)
+		@recipients = users
+
+		emails = []
+		@recipients.each do |r|
+			emails << r.email
+		end
+
+		mail(:to => emails, :subject => "Testing 1... 2... 3...")
+	end
 end

@@ -16,7 +16,11 @@
 //= require angular-mocks
 //= require angular-ui-bootstrap-tpls
 //= require angular-rails-templates
+//= require angular-cookie
 //= require salvattore
+//= require textAngular-rangy
+//= require textAngular-sanitize
+//= require textAngular
 //= require spin
 //= require ladda
 //= require d3
@@ -26,8 +30,13 @@
 //= require angular-messages
 //= require moment
 //= require c3
+//= require chart
+//= require angular-devise
 //= require jquery
 //= require jquery_ujs
 //= require jquery-placeholder
+//= require jquery.nouislider
+//= require Link
+//= require nouislider
 //= require_tree ../templates
 //= require_tree .

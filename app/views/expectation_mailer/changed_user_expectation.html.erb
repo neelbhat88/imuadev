@@ -1,14 +1,15 @@
-<p>Greetings!</p>
+<p>Aloha!</p>
 
 <p>The expectation "<%= @expectation.title %>" for <%= @student.full_name %>
   has been updated to '<%= @status %>' by <%= @modifier.full_name %>. </p>
 
 <% if @comment %>
 <p> <%= @modifier.full_name %> stated: </p>
-<p>"<%= @comment %>"</p>
+<p>"<%= @comment.html_safe %>"</p>
 <% end %>
 
-<p><%= link_to "Log in", login_url %> to view this update. </p>
+<p><%= link_to "Log in", app_url + "#/user/#{@student.id}/user_expectation/#{@user_expectation.id}" %>
+  to view this update. </p>
 
 <p>Mahalo,<p>
 

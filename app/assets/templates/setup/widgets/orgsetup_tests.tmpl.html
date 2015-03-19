@@ -1,0 +1,61 @@
+<div ng-controller="OrgTestController" class="widget orgsetup-tests">
+
+  <div class="widget--header">
+    <div class="widget--header--left">
+      <h6 class="bold"><div class="color--dot"></div> Tests</h6>
+    </div>
+  </div>
+
+  <div class="widget--content" wait-to-load="{{loaded_orgTests}}">
+    <div class="widget--content--table table--fixed">
+      <div class="table--cell ng-clickable breakalways" ng-repeat="orgTest in orgTests">
+        <div class="widget--content--table" ng-hide="orgTest.editing">
+          <div class="table--cell tests-title">
+            <h5 class="bold">{{orgTest.title}}</h5>
+          </div>
+
+          <div class="table--cell tests-type">
+            <p>Score Type:</p>
+            <h6 class="bold">{{orgTest.score_type}}</h6>
+          </div>
+
+          <div class="table--cell btns">
+            <span no-click-propagation class="mrm glyphicon glyphicon-pencil" title="Edit Test" ng-click="editOrgTest($index)"></span>
+            <span no-click-propagation class="glyphicon glyphicon-trash" title="Delete Test" ng-click="deleteOrgTest($index)"></span>
+          </div>
+        </div>
+        <div class="tests--editing" ng-show="orgTest.editing">
+          <form name="testForm" imua-form="saveOrgTest($index)" novalidate>
+            <div class="pbm">
+              <label-with-errors label="Test Title" form="testForm" formfield="testForm.test_title"> </label-with-errors>
+              <input type="text" class="form-control" ng-model="orgTest.new_title" placeholder="Test Title" name="test_title" required />
+            </div>
+
+            <div class="pbm">
+              <label-with-errors label="Test Type" form="testForm" formfield="testForm.test_type"></label-with-errors>
+              <select class="form-control" required ng-options="scoreType as scoreType for scoreType in TestScoreTypes" name="test_type" ng-model="orgTest.new_score_type">
+                <option value="">--- Score Type ---</option>
+              </select>
+            </div>
+
+            <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="expectationsForm.$submitted && expectationsForm.$invalid">{{error}}</div>
+
+            <div>
+              <button class="submit" type="submit">Submit</button>
+              <span class="cancel" ng-click="cancelEditOrgTest($index)">Cancel</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="table--cell ng-clickable breakalways" ng-click="addOrgTest()">
+        <div class="cell--padding">
+          <h4><span class="glyphicon glyphicon-plus-sign"></span></h4>
+          <h6 class="bold">Add a Test</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

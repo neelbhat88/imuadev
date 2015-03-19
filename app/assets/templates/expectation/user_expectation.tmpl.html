@@ -14,15 +14,15 @@
   </div>
 
   <div class="single-col-wrapper expectation-content">
-    <a href="#/expectation/{{user_expectation.expectation_id}}">
+    <a href="app#/expectation/{{user_expectation.expectation_id}}">
       <h4 class="bold">{{user_expectation.title}}</h4>
     </a>
-    <h6>{{user_expectation.description}}</h6>
+    <h6 class="wysiwyg-output" ng-bind-html="user_expectation.description"></h6>
     <div class="expectation--current-status" ng-hide="editing" ng-class="{'bad': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.not_meeting,
                                                                          'warn': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.needs_work,
                                                                          'good': user_expectation.status == CONSTANTS.EXPECTATION_STATUS.meeting}">
       <div class="circle-pictures">
-        <a href="#/profile/{{student.id}}">
+        <a href="app#/profile/{{student.id}}">
           <div class="circle-picture">
             <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
           </div>
@@ -50,11 +50,10 @@
         <span class="glyphicon glyphicon-exclamation-sign"></span> {{student.first_name}}, you are not meeting this expectation.
       </h5>
 
-      <h6 ng-hide="edit_comment">{{user_expectation.comment}}
-        <span class="glyphicon glyphicon-edit ng-clickable" ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)"></span>
-      </h6>
+      <h6 class="inline-head wysiwyg-output" ng-hide="edit_comment" ng-bind-html="user_expectation.comment"></h6>
+      <span ng-hide="edit_comment" class="glyphicon glyphicon-edit ng-clickable " ng-click="editComment()" ng-if="user_expectation.comment && (current_user.is_mentor || current_user.is_org_admin)"></span>
 
-      <textarea rows="4" cols="40" class="comment-edit form-field" ng-model="user_expectation.edit_comment" ng-show="edit_comment">{{user_expectation.comment}}</textarea>
+      <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" rows="4" cols="40" ng-model="user_expectation.edit_comment" ng-show="edit_comment"></text-angular>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-ok" ng-click="updateComment()"></span>
       <span ng-show="edit_comment" class="ng-clickable glyphicon glyphicon-remove" ng-click="cancelCommentEdit()"></span>
 
@@ -72,7 +71,7 @@
       <tr>
         <td class="status-picture large-pic">
           <div class="circle-pictures">
-            <a href="#/profile/{{student.id}}">
+            <a href="app#/profile/{{student.id}}">
               <div class="circle-picture">
                 <img ng-src="{{student.square_avatar_url}}" alt="{{student.first_last_name}}" />
               </div>
@@ -106,7 +105,7 @@
           </div>
           <div class="expectation--comment-box">
             <h6 class="bold">Why are you changing {{student.first_name}}'s status?</h6>
-            <textarea ng-model="user_expectation.new_comment" class="form-control" rows="4" placeholder="Leave a Comment"></textarea>
+            <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="user_expectation.new_comment" rows="4" placeholder="Leave a Comment"></text-angular>
           </div>
           <div class="status-buttons buttonGroup">
             <button class="btn btn-success" ng-click="updateExpectation()"><span class="glyphicon glyphicon-ok"></span> Save {{student.first_name}}'s Status</button>
@@ -128,7 +127,7 @@
         </td>
         <td class="status-message">
           <h6>{{history.modified_by_name}} changed the status of {{student.first_name}}'s expectation to <span class="bold">{{getStatusText(history.status)}}</span> <span ng-if="history.comment">and left a comment:</span></h6>
-          <p class="history-comment" ng-if="history.comment">"{{history.comment}}"</p>
+          <p class="history-comment wysiwyg-output" ng-if="history.comment" ng-bind-html="history.comment"></p>
           <div title="{{history.created_on | formatMDY }}">{{history.created_on | fromNow }}</div>
         </td>
       </tr>

@@ -19,15 +19,13 @@ Imua::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
+    address:              'smtp.mandrillapp.com',
     port:                 587,
-    domain:               'hokuscholars.org',
-    user_name:            ENV['EMAIL_USERNAME'],
-    password:             ENV['EMAIL_PASSWORD'],
+    domain:               'myimua.org',
+    user_name:            ENV['MANDRILL_USERNAME'],
+    password:             ENV['MANDRILL_APIKEY'],
     authentication:       'plain',
     enable_starttls_auto: true  }
-
-  Mail.register_interceptor(DevelopmentMailInterceptor)
 
   # Paperclip
   config.paperclip_defaults = {
@@ -62,5 +60,8 @@ Imua::Application.configure do
   # Tell Unicorn to log just like WEBbrick and Thin web servers do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get('DEBUG')
+
+  # Enable lograge logging
+  config.lograge.enabled = true
 
 end

@@ -85,6 +85,59 @@ $panelwrapper: 0 80px;
   margin-bottom: 0;
 }
 
+/* this is for the wysiwyg */
+.ta-editor {
+    margin:10px 0;
+
+    ul {
+       list-style-type: disc;
+       list-style-position: inside;
+    }
+    ol {
+       list-style-type: decimal;
+       list-style-position: inside;
+    }
+    ul ul, ol ul {
+       list-style-type: circle;
+       list-style-position: inside;
+       margin-left: 15px;
+    }
+    ol ol, ul ol {
+       list-style-type: lower-latin;
+       list-style-position: inside;
+       margin-left: 15px;
+    }
+    i {
+      font-style: italic;
+    }
+ }
+
+.wysiwyg-output {
+  ul {
+     list-style-type: disc;
+     list-style-position: inside;
+  }
+  ol {
+     list-style-type: decimal;
+     list-style-position: inside;
+  }
+  ul ul, ol ul {
+     list-style-type: circle;
+     list-style-position: inside;
+     margin-left: 15px;
+  }
+  ol ol, ul ol {
+     list-style-type: lower-latin;
+     list-style-position: inside;
+     margin-left: 15px;
+  }
+  a {
+    text-decoration: underline;
+  }
+  i {
+    font-style: italic;
+  }
+}
 /* ===============================================
    Header
    =============================================== */
@@ -447,16 +500,18 @@ button:focus {
 .errorText { color: $red; }
 .errorMessage { padding-left: 10px; }
 .errorListing { padding-bottom: 10px; }
+
+.link {
+  cursor: pointer;
+
+  &:hover { text-decoration: underline; }
+}
 /* ===============================================
    Misc
    =============================================== */
 
 .dropdown-menu {
   z-index: 5000;
-}
-
-.modal-body {
-  color: $ink;
 }
 
 .displayNone {
@@ -509,4 +564,17 @@ button:focus {
   border-bottom: 10px solid transparent;
 
   border-right:10px solid blue;
+}
+
+/* ===============================================
+   Modals
+=============================================== */
+
+.modal-body {
+  background-color: $darkgrey;
+  color: white;
+
+  .modal-body__title {
+    text-align: center;
+  }
 }

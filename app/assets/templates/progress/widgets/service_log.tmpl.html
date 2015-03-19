@@ -58,7 +58,7 @@
                     <span class="input-group">
                       <h4>Who was the service for?</h4>
                       <label-with-errors label="Organization Name" form="editOrganizationForm" formfield="editOrganizationForm.orgName"></label-with-errors>
-                      <input type="text" required name="orgName" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
+                      <input autocomplete="off" type="text" required name="orgName" no-click-propagation focus-me="edit_new_service_organization_focus_trigger" ng-model="user_service_organization.new_name" typeahead="orgName for orgName in org_current_organization_list | filter: $viewValue | limitTo:8" class="form-control" placeholder="Organization Name">
                     </span>
                     <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="editOrganizationForm.$submitted && editOrganizationForm.$invalid">
                     {{error}}</div>
@@ -80,7 +80,7 @@
                 <div class="table--cell clear breakalways">
                   <div ng-hide="service_org_hour.editing">
                     <div class="cell--padding log--details">
-                      <h6>{{service_org_hour.description}}</h6>
+                      <h6 class="wysiwyg-output" ng-bind-html="service_org_hour.description"></h6>
                       <p>Completed on {{service_org_hour.date | formatMDY}}</p>
                       <div progress-editor class="small-edit-button">
                         <button class="btn btn-default btn-xs" ng-click="editHour(service_org_hour)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
@@ -100,7 +100,7 @@
                       <span class="input-group">
                         <label ng-show="current_user.is_student">What type of service did you do?</label>
                         <label ng-show="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                        <textarea class="form-control" ng-model="service_org_hour.new_description" placeholder="Description" name="serviceEventDescription"></textarea>
+                        <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="service_org_hour.new_description" placeholder="Description"></text-angular>
                       </span>
                       <form-datepicker class="full-width" form="editHourForm" label="When did you do it?" date="service_org_hour.new_date"></form-datepicker>
                       <span class="input-group">
@@ -156,7 +156,7 @@
                         <span class="input-group pbs">
                           <label ng-if="current_user.is_student">What type of service did you do?</label>
                           <label ng-if="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                          <textarea class="form-control" ng-model="user_service_hour.description" placeholder="Description" name="serviceEventDescription"></textarea>
+                          <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="user_service_hour.description" placeholder="Description"></text-angular>
                         </span>
                         <form-datepicker form="serviceForm" label="When did you do it?" date="user_service_hour.date"></form-datepicker>
                         <span class="input-group">

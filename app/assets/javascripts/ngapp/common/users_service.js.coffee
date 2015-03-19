@@ -34,6 +34,9 @@ angular.module('myApp')
 
     $http.put '/api/v1/users/' + user.id + '/update_password', user: user
 
+  @resetPassword = (user) ->
+    $http.post '/api/v1/users/password', user: user
+
   @getAssignedStudents = (userId) ->
     $http.get "/api/v1/users/#{userId}/relationship/students"
 
@@ -69,6 +72,7 @@ angular.module('myApp')
     role: CONSTANTS.USER_ROLES.org_admin
     organization_id: orgId
     is_org_admin: true
+    status: 0
 
   @newMentor = (orgId) ->
     email: ""
@@ -79,6 +83,7 @@ angular.module('myApp')
     role: CONSTANTS.USER_ROLES.mentor
     organization_id: orgId
     is_mentor: true
+    status: 0
 
   @newStudent = (orgId) ->
     email: ""
@@ -89,6 +94,7 @@ angular.module('myApp')
     organization_id: orgId
     class_of: 0
     is_student: true
+    status: 0
 
   @newParentGuardianContact = (userId) ->
     id: null

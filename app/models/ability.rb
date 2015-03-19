@@ -11,6 +11,8 @@ class Ability
       when "Assignment" then assignment_abilities(user, subject)
       when "UserAssignment" then user_assignment_abilities(user, subject)
       when "Expectation" then expectation_abilities(user, subject)
+      when "Comment" then comment_abilities(user, subject)
+      when "GpaHistoryAuthorization" then gpa_history_abilities(user, subject)
       else []
       end
 
@@ -36,7 +38,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :create_assignment,
           :create_assignment_broadcast,
           :get_task_assignable_users,
@@ -63,7 +65,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :create_assignment,
           :create_assignment_broadcast,
           :get_task_assignable_users,
@@ -87,7 +89,7 @@ class Ability
           :get_user_assignments,
           :create_user_assignment,
           :get_user_assignment_collections,
-          :get_assignments,
+          :index_assignments,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks
         ]
@@ -111,7 +113,7 @@ class Ability
               :get_user_assignments,
               :create_user_assignment,
               :get_user_assignment_collections,
-              :get_assignments,
+              :index_assignments,
               :get_task_assignable_users,
               :get_task_assignable_users_tasks
             ]
@@ -125,7 +127,7 @@ class Ability
               :get_user_progress,
               :get_user_assignments,
               :get_user_assignment_collections,
-              :get_assignments,
+              :index_assignments,
               :get_task_assignable_users,
               :get_task_assignable_users_tasks
             ]
@@ -207,7 +209,9 @@ class Ability
                   :get_assignment_collection]
       end
 
-      if user.id == subjectAssignment.user_id
+
+      if subjectAssignment.assignment_owner_type == "User" &&
+         user.id == subjectAssignment.assignment_owner_id
         rules += [:get_assignment,
                   :update_assignment,
                   :destroy_assignment,
@@ -225,7 +229,9 @@ class Ability
       if user.super_admin?
         return[:update_user_assignment,
                :destroy_user_assignment,
-               :get_user_assignment_collection]
+               :get_user_assignment_collection,
+               :index_comments,
+               :create_comment]
       else
         subjectUser = User.where(id: subjectUserAssignment.user_id).first
         return [] if user.organization_id != subjectUser.organization_id
@@ -234,7 +240,9 @@ class Ability
       if user.org_admin?
         rules += [:update_user_assignment,
                   :destroy_user_assignment,
-                  :get_user_assignment_collection]
+                  :get_user_assignment_collection,
+                  :index_comments,
+                  :create_comment]
       end
 
       if user.mentor?
@@ -242,7 +250,9 @@ class Ability
         if related
           rules += [:update_user_assignment,
                     :destroy_user_assignment,
-                    :get_user_assignment_collection]
+                    :get_user_assignment_collection,
+                    :index_comments,
+                    :create_comment]
         elsif subjectUser.student?
           rules += [:get_user_assignment_collection]
         end
@@ -250,7 +260,9 @@ class Ability
 
       if user.id == subjectUser.id
         rules += [:update_user_assignment,
-                  :get_user_assignment_collection]
+                  :get_user_assignment_collection,
+                  :index_comments,
+                  :create_comment]
       end
 
       rules.uniq
@@ -279,6 +291,58 @@ class Ability
       end
 
       rules.uniq
+    end
+
+    def comment_abilities(user, subjectComment)
+      rules = []
+      subjectUser = nil
+
+      if user.super_admin?
+        return [:update_comment,
+                :destroy_comment]
+      else
+        subjectUser = User.where(id: subjectComment.user_id).first
+        return [] if user.organization_id != subjectUser.organization_id
+      end
+
+      if user.id == subjectUser.id
+        rules += [:update_comment,
+                  :destroy_comment]
+      end
+
+      rules.uniq
+    end
+
+    def gpa_history_abilities(user, gpa_history_authorization)
+      user_ids = gpa_history_authorization.user_ids
+
+      if user.super_admin?
+        return [:get_gpa_history]
+      end
+
+      if user.student? # Students can only see their own
+        return [] if user_ids.length > 1
+
+        if user.id == user_ids[0]
+          return [:get_gpa_history]
+        else
+          return []
+        end
+      end
+
+      subject_users = User.where(id: user_ids)
+      non_org_users = subject_users.select {|u| u.organization_id != user.organization_id}
+      return [] if non_org_users.length > 0
+
+      if user.mentor?
+        student_ids = UserRepository.new.get_assigned_student_ids(user.id)
+
+        intersection = student_ids & user_ids
+
+        return [] if intersection.length != user_ids.length
+      end
+
+      return [:get_gpa_history]
     end
 
   end

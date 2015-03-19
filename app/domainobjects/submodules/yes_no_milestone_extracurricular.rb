@@ -1,18 +1,15 @@
-class YesNoMilestoneExtracurricular < ImuaMilestone
+class YesNoMilestoneExtracurricular < CustomMilestone
 
   def initialize(milestone=nil)
     super
 
-    if milestone.nil?
-      @module = Constants.Modules[:EXTRACURRICULAR]
-      @submodule = Constants.SubModules[:YES_NO]
+    @module = Constants.Modules[:EXTRACURRICULAR]
+    @submodule = Constants.SubModules[:YES_NO]
 
-      @title = "Extracurricular Goal"
-      @description = "Description:"
-      @value = "Get Involved"
-      @icon = "/assets/Extracurricular.jpg"
-    end
+    @icon = "/assets/Extracurricular.jpg"
 
+    @title = "Extracurricular Task"
+    @milestone_description = "A generic milestone where you can type a custom extracurricular goal. This milestone is manually completed by the user by clicking a checkbox."
   end
 
   def has_earned?(user, time_unit_id)

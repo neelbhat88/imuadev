@@ -3,7 +3,7 @@
   <div class="mentor-header">
 
     <div class="mentor--pic">
-      <a href="#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><img ng-src="{{mentor.square_avatar_url}}" alt="{{mentor.first_name}}'s Profile Picture"></a>
+      <a href="app#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><img ng-src="{{mentor.square_avatar_url}}" alt="{{mentor.first_name}}'s Profile Picture"></a>
     </div>
 
     <div class="mentor--primary-info">
@@ -11,7 +11,7 @@
       <h3 class="bold">{{mentor.first_name}} {{mentor.last_name}}</h3>
       <h5>{{mentor.title}}</h5>
       <div class="view-profile-button">
-        <a href="#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><button class="btn submit">View Full Profile</button></a>
+        <a href="app#/profile/{{mentor.id}}" alt="View {{mentor.first_name}}'s full profile"><button class="btn submit">View Full Profile</button></a>
       </div>
 
     </div>
@@ -52,8 +52,11 @@
 
       <h4 class="list-header" ng-hide="all_students.length == assigned_students.length"><span class="bold">Assign Students</span> to {{mentor.first_name}}</h4>
 
+      <h6 class="search-label">Search for Students: </h6>
+      <input class="student-search form-inline form-field" type="text" ng-model="search.name">
+
       <div class="list-container">
-        <div class="circle-pictures assign-student-circles" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)" ng-repeat="student in all_students | orderBy: 'last_name'">
+        <div class="circle-pictures assign-student-circles" ng-class="{ assigned: isAssigned(student)}" ng-click="assign(student)" ng-repeat="student in all_students | orderBy: 'last_name' | filter: { full_name: search.name }">
             <div class="circle-picture">
               <img ng-src="{{student.square_avatar_url}}" alt="Avatar" class="avatar-block__img avatar-block__img--thumbnail" />
             </div>
