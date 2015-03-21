@@ -13,6 +13,19 @@
 			    <div class="login-info">Login Count: {{singleStudent.login_count}}</div>
 				</div>
 			</div>
+			<div class="module-circle-container mll">
+				<div class="module-circles" ng-repeat="mod in singleStudent.modules_progress">
+					<div class="module-circle">
+						<span class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</span>
+						<div class="circle-size">
+							<module-progress-circle textcolor="black" module="mod" width="80"></module-progress-circle>
+						</div>
+						<div class="module-circle--meta">
+							<div class="click-to-view">Click to view</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="actions">
 				<span ng-click="go('/progress/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-home mrs"></span>View {{singleStudent.first_name}}'s Progress</span>
@@ -89,7 +102,13 @@
 	<div class="students-mid mtl">
 		<h6 class="search-label">Search for Students: </h6>
 		<input placeholder="Enter Student's Name" class="student-search form-inline form-field" type="text" ng-model="search.text">
+		<div class="selection-toggle">
+			<span ng-hide="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-default">Enter Selection Mode</span>
+			<span ng-show="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-danger">Exit Selection Mode</span>
+		</div>
 	</div>
+
+
 
 	<div class="students-lower">
 		<div ng-repeat="group in class_of_years">

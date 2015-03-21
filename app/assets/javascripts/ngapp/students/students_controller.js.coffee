@@ -11,6 +11,7 @@ angular.module('myApp')
     $scope.selectedStudents = []
     $scope.classOfSelect = {}
     $scope.classOfSelect.selected = []
+    $scope.selectionMode = false
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
@@ -89,11 +90,29 @@ angular.module('myApp')
           $scope.classOfSelect.selected[year] = false
     )
 
+    $scope.toggleSelectionMode = () ->
+      $scope.selectionMode = !$scope.selectionMode
+
     $scope.studentSelect = (student) ->
-      if _.findWhere($scope.selectedStudents, { id: student.id })
-        $scope.selectedStudents = _.without($scope.selectedStudents, _.findWhere($scope.selectedStudents, { id: student.id }))
-        student.is_selected = false
+      if $scope.selectionMode
+        if _.findWhere($scope.selectedStudents, { id: student.id })
+          $scope.selectedStudents = _.without($scope.selectedStudents, _.findWhere($scope.selectedStudents, { id: student.id }))
+          student.is_selected = false
+        else
+          $scope.selectedStudents.push(student)
+          student.is_selected = true
+          $scope.singleStudent = $scope.selectedStudents[0]
+          $scope.singleStudent.total_points = 0
+          $scope.singleStudent.user_points = 0
+
+          for mod in $scope.singleStudent.modules_progress
+            $scope.singleStudent.total_points += mod.points.total
+            $scope.singleStudent.user_points += mod.points.user
       else
+        for oldStudent in $scope.selectedStudents
+          oldStudent.is_selected = false
+        console.log(student)
+        $scope.selectedStudents = []
         $scope.selectedStudents.push(student)
         student.is_selected = true
         $scope.singleStudent = $scope.selectedStudents[0]
@@ -103,6 +122,7 @@ angular.module('myApp')
         for mod in $scope.singleStudent.modules_progress
           $scope.singleStudent.total_points += mod.points.total
           $scope.singleStudent.user_points += mod.points.user
+
 
     $scope.clearSelected = (selectedStudents) ->
       for student in selectedStudents

@@ -77,11 +77,14 @@
     width: 100%;
     background: white;
     border: 1px solid $teal;
-    padding: 20px 80px;
+    padding: 10px 80px;
     color: $ink;
+    display: inline-block;
 
     .student-info {
-      text-align: center;
+      text-align: left;
+      display: inline-block;
+      float: left;
 
       .student-info__picture {
         display: inline-block;
@@ -120,7 +123,34 @@
         }
       }
     }
+    .module-circle-container {
+      display: inline-block;
+
+      .module-circles {
+        text-align: center;
+        display: inline-block;
+        color: $ink;
+
+        .circle-size {
+          width: 90px;
+          margin: 0 auto;
+        }
+
+        .module-circle__title {
+          @include font-size(1.2);
+        }
+
+        .module-circle--meta {
+          @include font-size(1.0);
+          margin: 0;
+        }
+
+      }
+    }
+
   }
+
+
 
   .students-selectbar {
     width: 100%;
@@ -180,6 +210,10 @@
   .students-mid, .students-lower {
     padding: 40px $wrapper-width 0 $wrapper-width;
 
+    .selection-toggle {
+      display: inline-block;
+      float: right;
+    }
     .search-label {
       display: inline-block;
     }
