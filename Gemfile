@@ -89,6 +89,9 @@ gem 'quiet_assets'
 # CORS suppport
 gem 'rack-cors', :require => 'rack/cors'
 
+# Tracking memory issues
+gem 'oink'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
