@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
+  # skip_before_filter :verify_authenticity_token
 
   helper_method :abilities, :can?
 
   before_filter :add_abilities
   before_filter :set_current_company
   before_filter :check_and_set_version_header
+  before_filter :authenticate_token
 
   respond_to :html # Without this, POST /sign_in fails - spent hours figuring this out..
                    # after_sign_in_path_for needs to return HTML since its rendering the view

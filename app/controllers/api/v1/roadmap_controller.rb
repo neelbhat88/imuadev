@@ -1,7 +1,4 @@
 class Api::V1::RoadmapController < ApplicationController
-
-  before_filter :authenticate_token
-  skip_before_filter :verify_authenticity_token
   respond_to :json
 
   # POST /roadmap

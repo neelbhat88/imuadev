@@ -1,4 +1,5 @@
 class StaticController < ApplicationController
+  skip_before_filter :authenticate_token
 
   def index
     render "index"

@@ -1,7 +1,7 @@
 class Api::V1::SessionsController < Devise::SessionsController
 	respond_to :json
-	skip_before_filter :verify_authenticity_token
-	before_filter :authenticate_token, only: [:show_current_user]
+
+	skip_before_filter :authenticate_token, only: [:create, :destroy]
 
 	# POST /user/sign_in
 	# This is called when we log the user in with their

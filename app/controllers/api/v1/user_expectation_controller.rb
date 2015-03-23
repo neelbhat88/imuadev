@@ -1,9 +1,6 @@
 class Api::V1::UserExpectationController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_token
-  skip_before_filter :verify_authenticity_token
-
   # GET /users/:user_id/user_expectation
   def index
     userId = params[:user_id]
