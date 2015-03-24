@@ -131,6 +131,9 @@
         display: inline-block;
         color: $ink;
 
+        .module-circle {
+          cursor: pointer;
+        }
         .circle-size {
           width: 90px;
           margin: 0 auto;

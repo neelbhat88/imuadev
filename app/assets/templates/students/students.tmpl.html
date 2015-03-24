@@ -15,7 +15,7 @@
 			</div>
 			<div class="module-circle-container mll">
 				<div class="module-circles" ng-repeat="mod in singleStudent.modules_progress">
-					<div class="module-circle">
+					<div class="module-circle" ng-click="selectModule(singleStudent, mod)">
 						<span class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</span>
 						<div class="circle-size">
 							<module-progress-circle textcolor="black" module="mod" width="80"></module-progress-circle>

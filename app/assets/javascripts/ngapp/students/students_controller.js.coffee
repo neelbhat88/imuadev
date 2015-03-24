@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentsCtrl', ['$scope', '$filter', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService'
-  ($scope, $filter, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService) ->
+.controller 'StudentsCtrl', ['$scope', '$filter', '$location', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService', 'ModuleService'
+  ($scope, $filter, $location, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService, ModuleService) ->
 
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
@@ -111,7 +111,6 @@ angular.module('myApp')
       else
         for oldStudent in $scope.selectedStudents
           oldStudent.is_selected = false
-        console.log(student)
         $scope.selectedStudents = []
         $scope.selectedStudents.push(student)
         student.is_selected = true
@@ -135,6 +134,10 @@ angular.module('myApp')
         "Me"
       else
         user.first_name + " " + user.last_name
+
+    $scope.selectModule = (student, mod) ->
+      ModuleService.selectModule(mod)
+      $location.path('/progress/' + student.id)
 
     $scope.addNewTask = (selectedStudents, current_user) ->
       modalInstance = $modal.open

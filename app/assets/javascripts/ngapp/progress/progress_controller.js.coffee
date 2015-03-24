@@ -1,8 +1,9 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService', 'ExpectationService', 'UsersService',
-($route, $scope, current_user, student, OrganizationService, ProgressService, ExpectationService, UsersService) ->
+.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService', 'ExpectationService', 'UsersService', 'ModuleService'
+($route, $scope, current_user, student, OrganizationService, ProgressService, ExpectationService, UsersService, ModuleService) ->
   $scope.modules_progress = []
-  $scope.selected_module = null
+  $scope.selected_module = ModuleService.selectedModule
+  ModuleService.selectModule(null)
   $scope.semesters = []
   $scope.selected_semester = null
   $scope.current_user = current_user
@@ -86,6 +87,8 @@ angular.module('myApp')
           tu.name = "This Semester"
           $scope.selected_semester = $scope.semesters[$scope.semesters.length - 1]
           $scope.new_selected_semester = $scope.selected_semester
+          $scope.module_selected_semester = $scope.selected_semester
+
 
   ExpectationService.getUserExpectations($scope.student)
     .success (data) ->
@@ -103,6 +106,7 @@ angular.module('myApp')
       $scope.milestones = UsersService.determineEarnedMilestones(module_org_milestones, module_user_milestones)
       $scope.loaded_milestones = true
       $scope.new_selected_semester = $scope.selected_semester
+      $scope.module_selected_semester = $scope.selected_semester
 
   $scope.$watch 'selected_module', () ->
     if $scope.selected_semester && $scope.selected_module && !$scope.loaded_milestones
@@ -168,6 +172,8 @@ angular.module('myApp')
         $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
         modulePointsWithLastUpdated($scope.student_with_modules_progress, $scope.modules_progress)
         $scope.selected_semester = sem
+        $scope.module_selected_semester = sem
+        $scope.new_selected_semester = sem
         # Keep the selected module consistent with the previous
         for mod in $scope.modules_progress
           if $scope.selected_module &&
