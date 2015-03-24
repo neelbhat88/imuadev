@@ -19,7 +19,7 @@ module Imua
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options], :expose => ['Set-Cookie']
       end
     end
 
@@ -31,6 +31,7 @@ module Imua
     config.autoload_paths += %W(#{config.root}/app/domainobjects)
     config.autoload_paths += %W(#{config.root}/app/domainobjects/submodules)
     config.autoload_paths += %W(#{config.root}/app/models/assignments)
+    config.autoload_paths += %W(#{config.root}/app/helpers/authorizations)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

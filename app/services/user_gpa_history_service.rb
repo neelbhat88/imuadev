@@ -14,8 +14,23 @@ class UserGpaHistoryService
 
   end
 
-  def get_user_gpa_history(userId, time_unit_id)
-    return UserGpaHistory.where(:user_id => userId, :time_unit_id => time_unit_id)
+  def get_user_gpa_history(userId, time_unit_id, one_data_point_per_day=false)
+    history = UserGpaHistory.where(:user_id => userId, :time_unit_id => time_unit_id).order("created_at ASC")
+
+    if !one_data_point_per_day
+      return history
+    end
+
+    history_hash = history.group_by {|h| h.created_at.to_date}
+
+    final_history = []
+    history_hash.each do |date, gpas|
+      gpas.sort_by {|g| g.created_at}.reverse # Sort gpas by created_at DESC
+      final_history.push(gpas[0])
+    end
+
+    final_history
+
   end
 
 end
