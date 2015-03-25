@@ -4,9 +4,14 @@ angular.module('myApp')
   scope: {
     module: '=',
     width: '=',
+    textcolor: '@',
     parentclass: '@'
   }
   link: (scope, element, attrs) ->
+    if scope.textcolor
+      textColor = scope.textcolor
+    else
+      textColor = 'white'
     if scope.parentclass
       width = $('.' + scope.parentclass).outerWidth()
       height = width
@@ -114,7 +119,7 @@ angular.module('myApp')
       d3.select("#g_" + module.module_title).append("text")
         .attr("dy", (.035 * width) + "px")
         .attr("class", "value")
-        .attr("fill", "white")
+        .attr("fill", textColor)
         .attr("font-size", (.177 * width))
         .style("text-anchor", "middle")
         .text( (d) ->
@@ -124,7 +129,7 @@ angular.module('myApp')
       d3.select("#g_" + module.module_title).append("text")
         .attr("dy", (.145 * width) + "px")
         .attr("class", "text")
-        .attr("fill", "white")
+        .attr("fill", textColor)
         .attr("font-size", (.0824 * width))
         .style("text-anchor", "middle")
         .text( (d) ->
