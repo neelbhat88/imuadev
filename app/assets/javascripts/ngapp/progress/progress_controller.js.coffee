@@ -1,8 +1,9 @@
 angular.module('myApp')
-.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService', 'ExpectationService', 'UsersService',
-($route, $scope, current_user, student, OrganizationService, ProgressService, ExpectationService, UsersService) ->
+.controller 'ProgressController', ['$route', '$scope', 'current_user', 'student', 'OrganizationService', 'ProgressService', 'ExpectationService', 'UsersService', 'ModuleService'
+($route, $scope, current_user, student, OrganizationService, ProgressService, ExpectationService, UsersService, ModuleService) ->
   $scope.modules_progress = []
-  $scope.selected_module = null
+  $scope.selected_module = ModuleService.selectedModule
+  ModuleService.selectModule(null)
   $scope.semesters = []
   $scope.selected_semester = null
   $scope.current_user = current_user
@@ -168,6 +169,7 @@ angular.module('myApp')
         $scope.modules_progress = $scope.student_with_modules_progress.modules_progress
         modulePointsWithLastUpdated($scope.student_with_modules_progress, $scope.modules_progress)
         $scope.selected_semester = sem
+        $scope.new_selected_semester = sem
         # Keep the selected module consistent with the previous
         for mod in $scope.modules_progress
           if $scope.selected_module &&

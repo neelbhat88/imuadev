@@ -1,0 +1,70 @@
+/* ===============================================
+   Modals
+=============================================== */
+
+.modal-body {
+  background-color: $darkgrey;
+  color: white;
+  .ta-editor {
+    min-height: 100px;
+    height: 150px;
+  }
+  .modal-body__title {
+    text-align: center;
+  }
+}
+
+
+.expectation-modal-container {
+
+  .subnav-button {
+    margin-top: 5px;
+    opacity: 0.3;
+    &.selected {
+      opacity: 1;
+    }
+    &:hover { opacity: 1; }
+  }
+
+  .assigning-buttons {
+
+    .hidden-button {
+      display: none;
+    }
+
+    &:hover {
+      .showing-button {
+        display: none;
+      }
+      .hidden-button {
+        display: inline-block;
+      }
+    }
+
+  }
+
+  .not-assigned {
+    opacity: 0.4;
+
+    &:hover {
+      opacity: 1;
+
+      .assigning-buttons {
+        .showing-button {
+          display: none;
+        }
+        .hidden-button {
+          display: inline-block;
+        }
+      }
+
+    }
+
+  }
+
+  .complete-buttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+}
