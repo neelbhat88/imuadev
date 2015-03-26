@@ -1,6 +1,6 @@
 <div class="studentsContainer" wait-to-load="{{loaded_users}}">
 
-		<div sticky ng-if="selectedStudents.length == 1" class="single-student-selectbar">
+		<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length == 1" class="single-student-selectbar">
 			<div class="student-info">
 				<div class="student-info__picture">
 					<progress-circle drawduration="0" width="100" identifier="selected" student="singleStudent"></progress-circle>
@@ -37,13 +37,13 @@
 			<div ng-click="clearSelected(selectedStudents)" class="clear-selection glyphicon glyphicon-remove" title="Clear Selection"></div>
 		</div>
 
-		<div sticky ng-if="selectedStudents.length > 1" class="students-selectbar">
+		<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length > 1" class="students-selectbar">
 			<div class="pbm select-header">
 				<span class="bold text">Selected Students: </span>
 			</div>
 			<div class="token-container">
 				<div ng-repeat="student in selectedStudents" class="student-token">
-					<div ng-click="studentSelect(student)" class="btn btn-default btn-sm">
+					<div ng-click="removeStudentFromSelectBar(student)" class="btn btn-default btn-sm">
 						<span class="student-name">{{student.first_last_initial}}</span>
 						<span class="token-remove glyphicon glyphicon-remove"></span>
 					</div>
@@ -102,6 +102,7 @@
 	<div class="students-mid mtl">
 		<h6 class="search-label">Search for Students: </h6>
 		<input placeholder="Enter Student's Name" class="student-search form-inline form-field" type="text" ng-model="search.text">
+		<span class="btn btn-info btn-sm" ng-click="selectAll()">Select All</span>
 		<div class="selection-toggle">
 			<span ng-hide="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-default">Enter Selection Mode</span>
 			<span ng-show="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-danger">Exit Selection Mode</span>
