@@ -93,6 +93,17 @@ angular.module('myApp')
     $scope.toggleSelectionMode = () ->
       $scope.selectionMode = !$scope.selectionMode
 
+    $scope.removeStudentFromSelectBar = (student) ->
+      if _.findWhere($scope.selectedStudents, { id: student.id })
+        $scope.selectedStudents = _.without($scope.selectedStudents, _.findWhere($scope.selectedStudents, { id: student.id }))
+        student.is_selected = false
+
+    $scope.selectAll = () ->
+      for student in $scope.students
+        if !_.findWhere($scope.selectedStudents, { id: student.id })
+          $scope.selectedStudents.push(student)
+
+
     $scope.studentSelect = (student) ->
       if $scope.selectionMode
         if _.findWhere($scope.selectedStudents, { id: student.id })
