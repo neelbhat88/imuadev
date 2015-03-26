@@ -8,6 +8,8 @@ angular.module('myApp')
     $scope.class_editor = false
     $scope.last_updated_gpa = null
     $scope.org_class_titles = {}
+    $scope.gpaOverride = {}
+    $scope.gpaOverride.editing = false
     $scope.formErrors = [ '**Please fix the errors above**' ]
 
 
@@ -130,6 +132,24 @@ angular.module('myApp')
 
     $scope.toggleAdvanced = (user_class) ->
       user_class.seeAdvanced = !user_class.seeAdvanced
+
+    $scope.editGpa = () ->
+      $scope.gpaOverride.editing = true
+
+    $scope.cancelGpaEdit = () ->
+      $scope.gpaOverride.editing = false
+
+    $scope.overrideGpa = () ->
+      $scope.gpaOverride.time_unit_id = $scope.selected_semester.id
+      UserClassService.saveGpaOverride($scope.gpaOverride, $scope.student.id)
+        .success (data) ->
+          $scope.gpa = data.user_gpa.regular_unweighted.toFixed(2)
+          $scope.gpaOverride.editing = false
+          $scope.refreshPoints()
+          $scope.$emit('just_updated', 'Academics')
+          $scope.last_updated_gpa = new Date()
+          $scope.addSuccessMessage("GPA updated successfully")
+
 
     $scope.cancelEdit = (user_class) ->
       if user_class.id

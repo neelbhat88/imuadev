@@ -76,7 +76,7 @@ Imua::Application.routes.draw do
           resources :user_service_organization, except: [:new, :edit]
           resources :user_service_hour, except: [:new, :edit]
 
-          resources :user_gpa, except: [:new, :edit, :destroy]
+          resources :user_gpa, except: [:index, :new, :edit, :show, :update, :destroy]
 
           resources :user_expectation, except: [:new, :edit, :create, :destroy] do
             # see http://guides.rubyonrails.org/routing.html#adding-more-restful-actions

@@ -19,7 +19,13 @@
           <div class="widget--content--table">
             <div class="table--cell">
               <div class="cell--padding">
-                <h1 class="bold">{{gpa}}</h1>
+                <h1  ng-hide="gpaOverride.editing" class="gpa--value bold">{{gpa}}</h1>
+                <div ng-show="!current_user.is_student && user_classes.length == 0 && !gpaOverride.editing" ng-click="editGpa()" class="showing--icon glyphicon glyphicon-edit"></div>
+                <input ng-show="gpaOverride.editing" type="number" class="form-control gpa--input" placeholder="GPA Value" ng-model="gpaOverride.value" name="gpaValue">
+                <div class="mtl" ng-show="gpaOverride.editing">
+                  <span ng-click="overrideGpa()" class="submit">Confirm</span>
+                  <span ng-click="cancelGpaEdit()" class="cancel">Cancel</span>
+                </div>
                 <h5>GPA</h5>
                 <div class="subtext">As of {{last_updated_gpa | fromNow}}</div>
               </div>

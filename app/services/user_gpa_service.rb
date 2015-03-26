@@ -17,7 +17,7 @@ class UserGpaService
       end
 
       return (totalGpa / totalClassCredits).round(2)
-    elsif gpaOverride
+    elsif !gpaOverride.nil?
       return gpaOverride.to_f
     else
       return 0
@@ -63,6 +63,7 @@ class UserGpaService
 
   def create_override_gpa(userId, time_unit_id, gpaOverride)
     override_gpa = calculate_gpa(userId, time_unit_id, gpaOverride)
+
     return ReturnObject.new(:ok, "Manual GPA entered", override_gpa)
   end
 

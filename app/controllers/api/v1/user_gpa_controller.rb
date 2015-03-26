@@ -1,4 +1,4 @@
-class Api::V1::UserClassController < ApplicationController
+class Api::V1::UserGpaController < ApplicationController
   respond_to :json
 
   before_filter :authenticate_user!
@@ -19,9 +19,11 @@ class Api::V1::UserClassController < ApplicationController
   # POST /users/:user_id/user_gpa
   def create
     userId = params[:user_id]
-    new_gpa = params[:user_gpa]
+    user_gpa = params[:user_gpa]
+    time_unit_id = user_gpa[:time_unit_id]
+    new_gpa = user_gpa[:value]
 
-    result = @userGpaService.create_override_gpa(current_user, userId, new_gpa)
+    result = @userGpaService.create_override_gpa(userId, time_unit_id, new_gpa)
 
     render status: result.status,
       json: {
