@@ -173,12 +173,12 @@
 
 .progress-circle--default {
   width: 160px;
-  .circle-size { width: 75%; }
-
+  margin: 0px 5px;
+  
   @include respond-to(900) { width: 130px; }
 
   @include respond-to(600) {
-    width: 32%;
+    width: 100px;
     .circle-nav {
       display: none;
     }
