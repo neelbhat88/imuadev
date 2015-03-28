@@ -100,9 +100,20 @@ angular.module('myApp')
 
     $scope.selectAll = () ->
       for student in $scope.students
-        if !_.findWhere($scope.selectedStudents, { id: student.id })
+        if $scope.selectedStudents.length != 0
+          if !_.findWhere($scope.selectedStudents, { id: student.id }) or $scope.selectedStudents.length == 0
+            student.is_selected = true
+            $scope.selectedStudents.push(student)
+        else if $scope.selectedStudents.length == 0
           $scope.selectedStudents.push(student)
+          student.is_selected = true
+          $scope.singleStudent = $scope.selectedStudents[0]
+          $scope.singleStudent.total_points = 0
+          $scope.singleStudent.user_points = 0
 
+          for mod in $scope.singleStudent.modules_progress
+            $scope.singleStudent.total_points += mod.points.total
+            $scope.singleStudent.user_points += mod.points.user
 
     $scope.studentSelect = (student) ->
       if $scope.selectionMode
