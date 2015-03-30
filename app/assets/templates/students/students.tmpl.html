@@ -3,7 +3,7 @@
 		<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length == 1" class="single-student-selectbar">
 			<div class="student-info">
 				<div class="student-info__picture">
-					<progress-circle drawduration="0" width="100" identifier="selected" student="singleStudent"></progress-circle>
+					<progress-circle-selector width="100" identifier="selected" student="singleStudent"></progress-circle-selector>
 				</div>
 				<div class="student-info__text">
 					<div class="name">{{singleStudent.full_name}}</div>
@@ -104,7 +104,7 @@
 		<input placeholder="Enter Student's Name" class="student-search form-inline form-field" type="text" ng-model="search.text">
 		<span class="btn btn-info btn-sm" ng-click="selectAll()">Select All</span>
 		<div class="selection-toggle">
-			<span ng-hide="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-default">Enter Selection Mode</span>
+			<span ng-hide="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-default">Select Multiple</span>
 			<span ng-show="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-danger">Exit Selection Mode</span>
 		</div>
 	</div>
