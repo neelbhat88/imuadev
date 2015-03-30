@@ -565,16 +565,3 @@ button:focus {
 
   border-right:10px solid blue;
 }
-
-/* ===============================================
-   Modals
-=============================================== */
-
-.modal-body {
-  background-color: $darkgrey;
-  color: white;
-
-  .modal-body__title {
-    text-align: center;
-  }
-}
