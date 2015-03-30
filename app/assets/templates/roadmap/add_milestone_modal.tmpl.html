@@ -39,8 +39,8 @@
       </div>
 
       <div class="pbs">
-        <input class="form-control" ng-model="selected.submodule.value" placeholder="Value">
-
+        <input class="form-control" ng-model="selected.submodule.value" placeholder="Title" ng-show="selected.submodule.submodule=='YesNo'">
+        <input class="form-control" ng-model="selected.submodule.value" placeholder="Value" ng-hide="selected.submodule.submodule=='YesNo'">
       </div>
 
       <div class="milestone_advanced">
