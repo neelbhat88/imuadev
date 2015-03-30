@@ -146,6 +146,5 @@ angular.module('myApp')
       if $scope.selected_widget != widget
         $scope.selected_widget = widget
         $scope.selected_year = null
-        $scope.selected_semester = null
 
 ]
