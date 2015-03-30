@@ -1,0 +1,8 @@
+<div ng-show="current_user.is_org_admin || current_user.is_mentor">
+  <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
+  <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
+</div>
+
+<div ng-show="current_user.is_student">
+  <h6 class="bold red" ng-if="users_incomplete.length == 1">You have not completed this milestone</h6>
+</div>

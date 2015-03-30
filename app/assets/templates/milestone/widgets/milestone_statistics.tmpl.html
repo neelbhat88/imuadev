@@ -1,0 +1,19 @@
+<ul>
+  <li class="column-title">
+    <h5 class="bold">Milestone Info</h5>
+  </li>
+  <li>
+    <h6 class="bold">{{milestone.title}}</h6>
+  </li>
+  <li>
+    <h6>{{milestone.time_unit_name}}</h6>
+  </li>
+  <li>
+    <h6>Students currently in {{milestone.time_unit_name}}</h6>
+    <h5 class="bold">{{users_total.length}}</h5>
+    <div ng-show="current_user.is_org_admin || current_user.is_mentor ||
+                  (current_user.is_student && {{percent_complete > 50}})">
+      <h6>({{percent_complete}}% Complete)</h6>
+    </div>
+  </li>
+</ul>
