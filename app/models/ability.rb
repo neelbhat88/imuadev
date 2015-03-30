@@ -314,7 +314,6 @@ class Ability
       rules.uniq
     end
 
-<<<<<<< HEAD
     def milestone_abilities(user, subjectMilestone)
       rules = []
 
@@ -349,7 +348,8 @@ class Ability
       end
 
       rules.uniq
-=======
+    end
+
     def gpa_history_abilities(user, gpa_history_authorization)
       user_ids = gpa_history_authorization.user_ids
 
@@ -380,7 +380,6 @@ class Ability
       end
 
       return [:get_gpa_history]
->>>>>>> master
     end
 
   end
