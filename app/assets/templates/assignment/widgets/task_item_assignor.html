@@ -1,0 +1,15 @@
+<span ng-show="assignment.assignment_owner_type == 'User'">
+  <div class="title__info">Assigned by
+    <a href="app#/profile/{{assignment.user.id}}">
+      {{assignment.user.first_last_initial}}
+    </a>
+  </div>
+</span>
+
+<span ng-show="assignment.assignment_owner_type == 'Milestone'">
+  <div class="title__info">Part of milestone:
+    <a href="app#/milestone/{{assignment.milestone.id}}">
+      {{assignment.milestone.value}}
+    </a>
+  </div>
+</span>
