@@ -3,7 +3,7 @@
 		<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length == 1" class="single-student-selectbar">
 			<div class="student-info">
 				<div class="student-info__picture">
-					<progress-circle drawduration="0" width="100" identifier="selected" student="singleStudent"></progress-circle>
+					<progress-circle-selector width="100" identifier="selected" student="singleStudent"></progress-circle-selector>
 				</div>
 				<div class="student-info__text">
 					<div class="name">{{singleStudent.full_name}}</div>
