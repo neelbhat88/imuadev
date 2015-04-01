@@ -42,7 +42,7 @@
         <h6 class="bold red" ng-if="user_assignments_incomplete.length == 1">{{user_assignments_incomplete.length}} user has not completed this task</h6>
         <h6 class="bold red" ng-if="user_assignments_incomplete.length != 1">{{user_assignments_incomplete.length}} users have not completed this task</h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in user_assignments_incomplete | orderBy: 'user.last_name'">
-          <a href="app#/user_assignment/{{user_assignment.id}}">
+          <a href="app#/progress/{{user_assignment.user.id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
             </div>
@@ -67,7 +67,7 @@
         <h6 class="bold green" ng-if="user_assignments_completed.length != 1 && user_assignments_incomplete.length != 0">{{user_assignments_completed.length}} users have completed this task</h6>
         <h6 class="bold green" ng-if="user_assignments_completed.length != 0 && user_assignments_incomplete.length == 0">Nice! All assigned users have completed this task.</h6>
         <li class="medium-circle-pictures" ng-repeat="user_assignment in user_assignments_completed | orderBy: 'updated_at'">
-          <a href="app#/user_assignment/{{user_assignment.id}}">
+          <a href="app#/progress/{{user_assignment.user.id}}">
             <div class="medium-circle-picture">
               <img ng-src="{{user_assignment.user.square_avatar_url}}" alt="Last updated: {{user_assignment.updated_at | formatMDY}}" />
             </div>
