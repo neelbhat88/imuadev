@@ -24,7 +24,8 @@ class Api::V1::UserGpaController < ApplicationController
     new_gpa = user_gpa[:value]
 
     user = @userRepository.get_user(userId)
-    if !can?(current_user, :override_gpa, user)
+
+    if !can?(current_user, :gpa_override, user)
       render status: :forbidden,
         json: {}
       return

@@ -62,7 +62,8 @@ describe Ability do
                                           :create_assignment,
                                           :create_assignment_broadcast,
                                           :get_task_assignable_users,
-                                          :get_task_assignable_users_tasks
+                                          :get_task_assignable_users_tasks,
+                                          :gpa_override
                                         )
   end
 
@@ -91,7 +92,8 @@ describe Ability do
                                           :create_assignment,
                                           :create_assignment_broadcast,
                                           :get_task_assignable_users,
-                                          :get_task_assignable_users_tasks
+                                          :get_task_assignable_users_tasks,
+                                          :gpa_override
                                         )
   end
 
@@ -118,7 +120,8 @@ describe Ability do
                                           :get_user_assignment_collections,
                                           :index_assignments,
                                           :get_task_assignable_users,
-                                          :get_task_assignable_users_tasks
+                                          :get_task_assignable_users_tasks,
+                                          :gpa_override
                                         )
   end
 
@@ -164,7 +167,8 @@ describe Ability do
                                             :get_user_assignment_collections,
                                             :index_assignments,
                                             :get_task_assignable_users,
-                                            :get_task_assignable_users_tasks
+                                            :get_task_assignable_users_tasks,
+                                            :override_gpa
                                           )
     end
 

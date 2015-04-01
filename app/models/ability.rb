@@ -43,7 +43,7 @@ class Ability
           :create_assignment_broadcast,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks,
-          :override_gpa
+          :gpa_override
         ]
       else
         return [] if user.organization_id != subjectUser.organization_id
@@ -71,7 +71,6 @@ class Ability
           :create_assignment_broadcast,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks,
-          :override_gpa
         ]
 
       elsif user.org_admin?
@@ -94,7 +93,7 @@ class Ability
           :index_assignments,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks,
-          :override_gpa
+          :gpa_override
         ]
 
       elsif user.mentor?
@@ -119,7 +118,7 @@ class Ability
               :index_assignments,
               :get_task_assignable_users,
               :get_task_assignable_users_tasks,
-              :override_gpa
+              :gpa_override
             ]
           else # students not assigned to this mentor (read-only)
             rules += [
