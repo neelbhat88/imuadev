@@ -41,6 +41,7 @@ angular.module('myApp')
             for user_extracurricular_activity in $scope.user_extracurricular_activities
               user_extracurricular_activity.details = []
               user_extracurricular_activity.non_current_details = []
+              console.log(detail)
               for detail in data.user_extracurricular_details
                 if user_extracurricular_activity.id == detail.user_extracurricular_activity_id
                   if detail.time_unit_id == $scope.selected_semester.id
