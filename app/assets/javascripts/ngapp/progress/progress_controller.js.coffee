@@ -145,6 +145,9 @@ angular.module('myApp')
         for mod in $scope.student_with_modules_progress.modules_progress
           selected_mod_progress.points = mod.points if mod.module_title == $scope.selected_module.module_title
 
+        modulePointsWithLastUpdated($scope.student_with_modules_progress, $scope.modules_progress)
+
+
   refreshOverallProgress = () ->
     ProgressService.getOverallProgress($scope.student)
       .success (data) ->
