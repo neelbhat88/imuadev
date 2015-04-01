@@ -168,7 +168,7 @@ describe Ability do
                                             :index_assignments,
                                             :get_task_assignable_users,
                                             :get_task_assignable_users_tasks,
-                                            :override_gpa
+                                            :gpa_override
                                           )
     end
 
