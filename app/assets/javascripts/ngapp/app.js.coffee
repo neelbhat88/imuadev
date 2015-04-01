@@ -39,6 +39,9 @@ angular.module('myApp')
   $scope.go = (path) ->
     $location.path(path)
 
+  $scope.isUndefined = (something) ->
+    (typeof something == 'undefined')
+
   $scope.$on "update_required", () ->
     $scope.reload_required = true
 
