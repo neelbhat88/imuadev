@@ -23,6 +23,13 @@ class Api::V1::UserGpaController < ApplicationController
     time_unit_id = user_gpa[:time_unit_id]
     new_gpa = user_gpa[:value]
 
+    user = @userRepository.get_user(userId)
+    if !can?(current_user, :override_gpa, user)
+      render status: :forbidden,
+        json: {}
+      return
+    end
+
     result = @userGpaService.create_override_gpa(userId, time_unit_id, new_gpa)
 
     render status: result.status,
