@@ -126,6 +126,8 @@ angular.module('myApp')
       $event.stopPropagation()
 
     $scope.addClass = () ->
+      if $scope.user_classes.length == 0 && $scope.gpa > 0
+        alert('Entering class data will clear the current GPA.')
       $scope.classes.editing = true
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       $scope.editClass(new_class)
