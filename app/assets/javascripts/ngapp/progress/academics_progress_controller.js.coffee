@@ -124,6 +124,7 @@ angular.module('myApp')
       $event.stopPropagation()
 
     $scope.addClass = () ->
+      $scope.classes.editing = true
       new_class = UserClassService.new($scope.student, $scope.selected_semester.id)
       $scope.editClass(new_class)
       $scope.user_classes.push(new_class)
@@ -135,7 +136,7 @@ angular.module('myApp')
       if user_class.id
         user_class.editing = false
       else
-        $scope.user_classes = removeClass($scope.user_classes, user_class)
+        $scope.user_classes.pop()
 
       $scope.classes.editing = false
 
