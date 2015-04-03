@@ -98,9 +98,9 @@
                   <div progress-editor class="cell--padding" ng-show="service_org_hour.editing">
                     <form imua-form="saveHour(service_org_hour)" name="editHourForm" novalidate>
                       <span class="input-group">
-                        <label ng-show="current_user.is_student">What type of service did you do?</label>
-                        <label ng-show="!current_user.is_student">What type of service did {{student.first_name}} do?</label>
-                        <text-angular ta-toolbar="[['bold','italics','underline'],['ol','ul','insertLink']]" ng-model="service_org_hour.new_description" placeholder="Description"></text-angular>
+                        <label-with-errors ng-if="current_user.is_student" label="What type of service did you do?" form="editHourForm" formfield="editHourForm.serviceEventDescription"></label-with-errors>
+                        <label-with-errors ng-if="!current_user.is_student" label="What type of service did {{student.first_name}} do?" form="editHourForm" formfield="editHourForm.serviceEventDescription"></label-with-errors>
+                        <textarea class="form-control" required name="serviceEventDescription" ng-model="service_org_hour.new_description" placeholder="Description"></textarea>
                       </span>
                       <form-datepicker class="full-width" form="editHourForm" label="When did you do it?" date="service_org_hour.new_date"></form-datepicker>
                       <span class="input-group">

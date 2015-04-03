@@ -66,7 +66,8 @@ angular.module('myApp')
       return service_organization.name
 
     $scope.serviceHourIsSavable = (service_hour) ->
-      return service_hour.hours &&
+      return service_hour.description &&
+             service_hour.hours &&
              service_hour.date
 
     $scope.newServiceEntryIsSavable = () ->
