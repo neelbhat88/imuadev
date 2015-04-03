@@ -95,6 +95,18 @@
     }
 
     .table--cell {
+      .showing--icon, .gpa--value {
+        display: inline-block;
+      }
+      .showing--icon {
+        cursor: pointer;
+      }
+      .gpa--input {
+        width: 20%;
+        position: relative;
+        display: block;
+        margin : 0 auto;
+      }
       .see-more {
         opacity: 0;
         @include transition(0.3);

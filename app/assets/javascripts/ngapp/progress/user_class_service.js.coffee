@@ -26,5 +26,8 @@ angular.module("myApp")
   @delete = (user_class) ->
     return $http.delete "/api/v1/user_class/#{user_class.id}"
 
+  @saveGpaOverride = (user_gpa, student_id) ->
+    return $http.post "/api/v1/users/#{student_id}/user_gpa", {user_gpa: user_gpa}
+
   @
 ]
