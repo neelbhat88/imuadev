@@ -6,13 +6,10 @@ class Api::V1::UserGpaController < ApplicationController
 
   before_filter :load_services
 
-  def load_services( userClassService=nil, userRepo=nil, userClassHistoryService=nil,
-                     userGpaService=nil, userGpaHistoryService=nil )
-    @userClassService = userClassService ? userClassService : UserClassService.new
+  def load_services( userRepo=nil, userClassHistoryService=nil,
+                     userGpaService=nil )
     @userRepository = userRepo ? userRepo : UserRepository.new
-    @userClassHistoryService = userClassHistoryService ? userClassHistoryService : UserClassHistoryService.new
     @userGpaService = userGpaService ? userGpaService : UserGpaService.new
-    @userGpaHistoryService = userGpaHistoryService ? userGpaHistoryService :
       UserGpaHistoryService.new
   end
 
