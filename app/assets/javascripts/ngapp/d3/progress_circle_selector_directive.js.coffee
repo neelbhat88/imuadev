@@ -131,7 +131,11 @@ angular.module('myApp')
           .duration(drawDuration)
           .attrTween("d", tweenPie)
 
-    scope.$watch('student', () ->
+    scope.$watchGroup(['student.id', 'student.square_avatar_url'], () ->
+      scope.render(scope.student)
+    )
+
+    scope.$watch('student.modules_progress', () ->
       scope.render(scope.student)
     , true)
 

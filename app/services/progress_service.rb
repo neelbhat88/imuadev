@@ -11,11 +11,15 @@ class ProgressService
     conditions[:time_unit_id] = userQ.pluck(:time_unit_id)
     userMilestoneQ = Querier.factory(UserMilestone).select([:milestone_id, :module, :time_unit_id, :id], [:user_id]).where(conditions)
     userExpectationQ = Querier.factory(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
+    userAssignmentQ = Querier.factory(UserAssignment).select([:status, :id, :assignment_id], [:user_id]).where(conditions)
+
+    conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
+    assignmentQ = Querier.factory(Assignment).select([:title, :due_datetime, :description, :id, :user_id], [:organization_id]).where(conditions.except(:user_id))
 
     conditions[:organization_id] = userQ.pluck(:organization_id).first
     organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
     timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
+    milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime, :submodule], [:organization_id]).where(conditions)
     expectationQ = Querier.factory(Expectation).select([:id, :title], [:organization_id]).where(conditions)
 
     if userExpectationQ.domain.length != expectationQ.domain.length
@@ -26,8 +30,8 @@ class ProgressService
       userExpectationQ = Querier.factory(UserExpectation).select([:expectation_id, :status, :id, :comment, :updated_at, :modified_by_id, :modified_by_name], [:user_id]).where(conditions)
     end
 
-    userQ.set_subQueriers([userMilestoneQ, userExpectationQ])
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+    userQ.set_subQueriers([userMilestoneQ, userExpectationQ, userAssignmentQ])
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ, assignmentQ])
 
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].first.to_i)
@@ -44,7 +48,7 @@ class ProgressService
     userAssignmentQ = Querier.factory(UserAssignment).select([:status, :id, :assignment_id], [:user_id]).where(conditions)
 
     conditions[:assignment_id] = userAssignmentQ.pluck(:assignment_id)
-    assignmentQ = Querier.factory(Assignment).select([:title, :due_datetime, :description, :id, :user_id]).where(conditions.except(:user_id))
+    assignmentQ = Querier.factory(Assignment).select([:title, :due_datetime, :description, :id, :user_id], [:organization_id]).where(conditions.except(:user_id))
 
     conditions[:user_id] = (assignmentQ.pluck(:user_id) + relationshipQ.pluck(:assigned_to_id) << params[:user_id].to_s).uniq
     userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions.slice(:user_id))
@@ -55,7 +59,7 @@ class ProgressService
     timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
     milestoneQ = Querier.factory(Milestone).select([:id, :title, :description, :value, :module, :points, :time_unit_id, :due_datetime, :submodule], [:organization_id]).where(conditions)
     expectationQ = Querier.factory(Expectation).select([:id, :title], [:organization_id]).where(conditions)
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ])
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, expectationQ, assignmentQ])
 
     view = organizationQ.view.first
     view[:assignments] = assignmentQ.view
@@ -75,20 +79,27 @@ class ProgressService
     end
 
     userQ = Querier.factory(User).select([:role, :time_unit_id, :avatar], [:organization_id]).where(conditions.slice(:user_id))
+
+    conditions[:organization_id] = userQ.pluck(:organization_id).first
+    organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.factory(Milestone).where(conditions.slice(:organization_id, :time_unit_id))
+
+    conditions[:assignment_owner_type] = "Milestone"
+    conditions[:assignment_owner_id] = milestoneQ.pluck(:id)
+    assignmentQ = Querier.factory(Assignment).select([:id, :assignment_owner_type, :assignment_owner_id], [:organization_id]).where(conditions)
+    conditions[:assignment_id] = assignmentQ.pluck(:id)
+
     userMilestoneQ = Querier.factory(UserMilestone).where(conditions.except(:module))
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status], [:user_id]).where(conditions)
     userClassQ = Querier.factory(UserClass).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
     userExtracurricularActivityDetailQ = Querier.factory(UserExtracurricularActivityDetail).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
     userServiceHourQ = Querier.factory(UserServiceHour).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
     userTestQ = Querier.factory(UserTest).select([:updated_at, :time_unit_id], [:user_id]).where(conditions)
     userQ.set_subQueriers([userMilestoneQ, userClassQ, userExtracurricularActivityDetailQ,
-      userServiceHourQ, userTestQ])
+      userServiceHourQ, userTestQ, userAssignmentQ])
 
-    conditions[:organization_id] = userQ.pluck(:organization_id).first
-
-    organizationQ = Querier.factory(Organization).select([:name]).where(conditions.slice(:organization_id))
-    timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.factory(Milestone).where(conditions.slice(:organization_id, :time_unit_id))
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, assignmentQ])
 
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].to_i)
@@ -106,11 +117,20 @@ class ProgressService
   def get_organization_progress(params)
     conditions = Marshal.load(Marshal.dump(params))
 
-    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
+    organizationQ = Querier.factory(Organization).select([:name, :id]).where(conditions.slice(:organization_id))
+    timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
+    milestoneQ = Querier.factory(Milestone).select([:id, :module, :points, :time_unit_id, :due_datetime, :submodule], [:organization_id]).where(conditions)
 
+    conditions[:assignment_owner_type] = "Milestone"
+    conditions[:assignment_owner_id] = milestoneQ.pluck(:id)
+    assignmentQ = Querier.factory(Assignment).select([:id, :assignment_owner_type, :assignment_owner_id], [:organization_id]).where(conditions)
+    conditions[:assignment_id] = assignmentQ.pluck(:id)
+
+    userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name, :sign_in_count, :current_sign_in_at], [:organization_id]).where(conditions)
     conditions[:user_id] = userQ.pluck(:id)
 
     userMilestoneQ = Querier.factory(UserMilestone).select([:milestone_id, :module, :time_unit_id], [:user_id]).where(conditions)
+    userAssignmentQ = Querier.factory(UserAssignment).select([:id, :assignment_id, :status], [:user_id]).where(conditions)
     relationshipQ = Querier.factory(Relationship).select([:user_id, :assigned_to_id]).where(conditions)
     userExpectationQ = Querier.factory(UserExpectation).select([:status], [:user_id]).where(conditions)
     userGpaQ = Querier.factory(UserGpa).select([:core_unweighted, :core_weighted, :regular_unweighted, :regular_weighted, :time_unit_id], [:user_id]).where(conditions)
@@ -124,12 +144,8 @@ class ProgressService
     conditions[:tag_id] = taggingQ.pluck(:tag_id)
     tagQ = Querier.factory(ActsAsTaggableOn::Tag).select([:id, :name]).where(conditions)
 
-    userQ.set_subQueriers([userMilestoneQ, relationshipQ, userExpectationQ, userGpaQ, userExtracurricularActivityDetailQ, userServiceHourQ, userTestQ], :time_unit_id)
-
-    organizationQ = Querier.factory(Organization).select([:name, :id]).where(conditions.slice(:organization_id))
-    timeUnitQ = Querier.factory(TimeUnit).select([:name, :id], [:organization_id]).where(conditions.slice(:organization_id))
-    milestoneQ = Querier.factory(Milestone).select([:id, :module, :points, :time_unit_id, :due_datetime], [:organization_id]).where(conditions)
-    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ])
+    userQ.set_subQueriers([userMilestoneQ, relationshipQ, userExpectationQ, userGpaQ, userExtracurricularActivityDetailQ, userServiceHourQ, userTestQ, userAssignmentQ], :time_unit_id)
+    organizationQ.set_subQueriers([userQ, timeUnitQ, milestoneQ, assignmentQ])
 
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].to_i)

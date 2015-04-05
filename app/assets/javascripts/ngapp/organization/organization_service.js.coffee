@@ -115,29 +115,6 @@ angular.module('myApp')
             mentor.studentIds = []
           mentor.studentIds.push(student.id)
 
-      # Calculate progress for each module
-      for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
-        new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
-                                points: { user: 0, total: org_milestones_by_module.totalPoints } }
-        for user_milestone in _.where(student.user_milestones, { time_unit_id: time_unit_id, module: module_title } )
-          org_milestone = _.findWhere(org_milestones_by_module, { id: user_milestone.milestone_id } )
-          if org_milestone
-            new_module_progress.points.user += org_milestone.points
-          else
-            console.log("Error: user_milestone has no matching org_milestone.", user_milestone, org_milestones_by_module, org.org_milestones)
-        student.modules_progress.push(new_module_progress)
-        # Apply module_progress to the student's mentors
-        for mentor in student.mentors
-          mentor_module_progress = _.findWhere(mentor.modules_progress, { module_title: new_module_progress.module_title } )
-          if mentor_module_progress != undefined
-            mentor_module_progress.points.user += new_module_progress.points.user
-            mentor_module_progress.points.total += new_module_progress.points.total
-          else
-            new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
-                                           points: { user: new_module_progress.points.user,\
-                                                     total: new_module_progress.points.total } }
-            mentor.modules_progress.push(new_mentor_module_progress)
-
       # Match user_assignments to their assignment
       if student.user_assignments != undefined
         for user_assignment in student.user_assignments
@@ -149,6 +126,42 @@ angular.module('myApp')
           user_assignment.assigner = assignment.user
           user_assignment.user = student
           assignment.user_assignments.push(user_assignment)
+
+      # Calculate progress for each module
+      for module_title, org_milestones_by_module of org.org_milestones[time_unit_id]
+        new_module_progress = { module_title: module_title, time_unit_id: time_unit_id,\
+                                points: { user: 0, total: org_milestones_by_module.totalPoints } }
+
+        for milestone in org_milestones_by_module
+          if milestone.submodule == "YesNo"
+            user_assignments = _.filter(student.user_assignments, (ua) -> ua.assignment.assignment_owner_type == "Milestone" &&\
+                                                                          ua.assignment.assignment_owner_id == milestone.id)
+            if user_assignments.length > 0
+              num_tasks_complete = _.where(user_assignments, { status: 1 }).length
+              if num_tasks_complete == user_assignments.length
+                new_module_progress.points.user += milestone.points
+              else
+                numDecimals = 1
+                new_module_progress.points.user += Math.round(Math.pow(10, numDecimals) * (num_tasks_complete * (milestone.points / user_assignments.length))) / Math.pow(10, numDecimals)
+            else
+              console.log("Warning: user's user_assignments not found for custom milestone.", student, milestone)
+          else
+            user_milestone = _.findWhere(student.user_milestones, { milestone_id: milestone.id } )
+            if user_milestone != undefined
+              new_module_progress.points.user += milestone.points
+        student.modules_progress.push(new_module_progress)
+
+        # Apply module_progress to the student's mentors
+        for mentor in student.mentors
+          mentor_module_progress = _.findWhere(mentor.modules_progress, { module_title: new_module_progress.module_title } )
+          if mentor_module_progress != undefined
+            mentor_module_progress.points.user += new_module_progress.points.user
+            mentor_module_progress.points.total += new_module_progress.points.total
+          else
+            new_mentor_module_progress = { module_title: module_title, time_unit_id: null,\
+                                           points: { user: new_module_progress.points.user,\
+                                                     total: new_module_progress.points.total } }
+            mentor.modules_progress.push(new_mentor_module_progress)
 
       # Add up student's gpa
       # TODO This isn't the correct way to calculate gpa
