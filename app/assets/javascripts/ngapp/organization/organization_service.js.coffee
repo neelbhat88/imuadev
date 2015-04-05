@@ -33,6 +33,7 @@ angular.module('myApp')
     org.attention_studentIds = []
 
     _.each(org.milestones, (m) -> m.time_unit_name = _.find(org.time_units, (tu) -> tu.id == m.time_unit_id).name)
+    _.each(_.where(org.milestones, { submodule: "YesNo" }), (m) -> m.assignments = [])
     org.org_milestones = {}
     # Sort org_milestones by time_unit_id and module_title, while tallying up total points
     for time_unit_id in _.pluck(org.time_units, "id")
@@ -57,6 +58,7 @@ angular.module('myApp')
           a.user = _.find(org.users, (u) -> a.assignment_owner_id == u.id)
         when "Milestone"
           a.milestone = _.find(org.milestones, (m) -> a.assignment_owner_id == m.id)
+          a.milestone.assignments.push(a)
       a.user_assignments = []
 
     # Collect all user_assignments
@@ -143,8 +145,10 @@ angular.module('myApp')
               else
                 numDecimals = 1
                 new_module_progress.points.user += Math.round(Math.pow(10, numDecimals) * (num_tasks_complete * (milestone.points / user_assignments.length))) / Math.pow(10, numDecimals)
+            else if milestone.assignments.length > 0
+              console.log("Error calculating modules progess: user's user_assignments not found for custom milestone.", student, milestone)
             else
-              console.log("Warning: user's user_assignments not found for custom milestone.", student, milestone)
+              console.log("Warning: No associated assignments for custom milestone.", milestone)
           else
             user_milestone = _.findWhere(student.user_milestones, { milestone_id: milestone.id } )
             if user_milestone != undefined
