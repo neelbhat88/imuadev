@@ -36,7 +36,7 @@
         <div ng-include="'milestone/widgets/milestone_incompletion_message.html'"></div>
         <div class="list-container progress-circle--list">
           <span ng-repeat="user in users_incomplete | orderBy: ['student_with_modules_progress.modules_progress[0].points.user', 'last_name']">
-            <progress-circle-milestone user="user"></progress-circle-milestone>
+            <progress-circle-milestone student="user.student_with_modules_progress"></progress-circle-milestone>
           </span>
         </div>
       </ul>
@@ -45,7 +45,7 @@
         <div ng-include="'milestone/widgets/milestone_completion_message.html'"></div>
         <div class="list-container progress-circle--list">
           <span ng-repeat="user in users_complete | orderBy: 'last_name'"></progress-circle-milestone>
-            <progress-circle-milestone user="user"></progress-circle-milestone>
+            <progress-circle-milestone student="user.student_with_modules_progress"></progress-circle-milestone>
           </span>
         </div>
       </ul>
