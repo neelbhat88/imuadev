@@ -267,6 +267,7 @@ private
     userQ = Querier.factory(User).select([:id, :role, :time_unit_id, :avatar, :class_of, :title, :first_name, :last_name]).where(conditions.slice(:user_id))
 
     view = {}
+    view[:assignments] = assignmentQ.view
 
     if conditions[:owner_object_class].name == "User"
       userQ.set_subQueriers([assignmentQ, userAssignmentQ])
