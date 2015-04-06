@@ -13,7 +13,6 @@ angular.module('myApp')
   $scope.just_updated = ''
   $scope.loaded_milestones = false
   $scope.loaded_module_milestones = false
-  $scope.loaded_milestones = false
 
   $scope.$on 'just_updated', (event, module) ->
     $scope.just_updated = module
@@ -181,7 +180,7 @@ angular.module('myApp')
 
   $scope.getModuleTemplate = (modTitle) ->
     # ONEGOAL_HACK START
-    if $scope.organization.name == "OneGoal"
+    if $scope.organization && $scope.organization.name == "OneGoal"
       'progress/college_prep_progress.html'
     else
     # ONEGOAL_HACK END

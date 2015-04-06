@@ -5,7 +5,8 @@ angular.module('myApp')
     module: '=',
     width: '=',
     textcolor: '@',
-    parentclass: '@'
+    parentclass: '@',
+    identifier: '@',
   }
   link: (scope, element, attrs) ->
     if scope.textcolor
@@ -25,9 +26,9 @@ angular.module('myApp')
       .attr("height", height)
       .attr("viewBox", "0 0 " + width + " " + height)
       .attr("preserveAspectRatio", "xMidYMid")
-      .attr("id", scope.module.module_title)
+      .attr("id", scope.module.module_title + "_" + scope.identifier)
       .append("g")
-      .attr("id", "g_" + scope.module.module_title)
+      .attr("id", "g_" + scope.module.module_title + "_" + scope.identifier)
       .attr("class", "module-circle__points")
       .attr("transform", "translate(" + ((width/2)) + "," + ((height/2)) + ")")
 
@@ -116,7 +117,7 @@ angular.module('myApp')
           .attrTween("d", tweenPie)
       #  .each( (d) -> this._current = d ) # stores current angles
 
-      d3.select("#g_" + module.module_title).append("text")
+      d3.select("#g_" + module.module_title + "_" + scope.identifier).append("text")
         .attr("dy", (.035 * width) + "px")
         .attr("class", "value")
         .attr("fill", textColor)
@@ -126,7 +127,7 @@ angular.module('myApp')
           modulePoints + "/" + totalPoints
         )
 
-      d3.select("#g_" + module.module_title).append("text")
+      d3.select("#g_" + module.module_title + "_" + scope.identifier).append("text")
         .attr("dy", (.145 * width) + "px")
         .attr("class", "text")
         .attr("fill", textColor)
@@ -140,7 +141,7 @@ angular.module('myApp')
       scope.render(scope.module)
     , true)
 
-    chartSelect = $("#" + scope.module.module_title)
+    chartSelect = $("#" + scope.module.module_title + "_" + scope.identifier)
 
     resizeParent = () ->
       if scope.parentclass

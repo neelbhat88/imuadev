@@ -11,13 +11,14 @@ angular.module('myApp')
       $scope.selected_task_list = $scope.CONSTANTS.TASK_NAV.assigned_to_me
 
     $scope.recalculateCompletion = () ->
-      _.each($scope.users_total, (u) -> u.student_with_modules_progress = { id: u.id,\
-                                                                            first_name: u.first_name,\
-                                                                            first_last_initial: u.first_last_initial,\
-                                                                            modules_progress: [{ module_title: $scope.milestone.module,\
-                                                                                                 points: { user: _.where(u.user_assignments, { status: 1 }).length,\
-                                                                                                           total: u.user_assignments.length } }],\
-                                                                            square_avatar_url: u.square_avatar_url })
+      if $scope.milestone.submodule == "YesNo"
+        _.each($scope.users_total, (u) -> u.student_with_modules_progress = { id: u.id,\
+                                                                              first_name: u.first_name,\
+                                                                              first_last_initial: u.first_last_initial,\
+                                                                              modules_progress: [{ module_title: $scope.milestone.module,\
+                                                                                                   points: { user: _.where(u.user_assignments, { status: 1 }).length,\
+                                                                                                             total: if u.user_assignments then u.user_assignments.length else 0 } }],\
+                                                                              square_avatar_url: u.square_avatar_url })
 
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
       $scope.users_complete = partition[0]

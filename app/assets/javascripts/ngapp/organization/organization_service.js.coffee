@@ -45,6 +45,8 @@ angular.module('myApp')
         org.org_milestones[time_unit_id.toString()][module_title].totalPoints = 0
         for org_milestone in org_milestones_by_module
           org.org_milestones[time_unit_id.toString()][module_title].totalPoints += org_milestone.points
+          org_milestone.progress = { module_title: module_title,\
+                                     points: { user: 0, total: org_milestone.points, remaining: org_milestone.points } }
 
     # Collect all assignments
     if typeof org.assignments == 'undefined'
@@ -142,9 +144,14 @@ angular.module('myApp')
               num_tasks_complete = _.where(user_assignments, { status: 1 }).length
               if num_tasks_complete == user_assignments.length
                 new_module_progress.points.user += milestone.points
+                milestone.progress.points.user += milestone.points
+                milestone.progress.points.remaining -= milestone.points
               else
                 numDecimals = 1
-                new_module_progress.points.user += Math.round(Math.pow(10, numDecimals) * (num_tasks_complete * (milestone.points / user_assignments.length))) / Math.pow(10, numDecimals)
+                pointsDelta = Math.round(Math.pow(10, numDecimals) * (num_tasks_complete * (milestone.points / user_assignments.length))) / Math.pow(10, numDecimals)
+                new_module_progress.points.user += pointsDelta
+                milestone.progress.points.user += pointsDelta
+                milestone.progress.points.remaining -= pointsDelta
             else if milestone.assignments.length > 0
               console.log("Error calculating modules progess: user's user_assignments not found for custom milestone.", student, milestone)
             else
@@ -153,6 +160,8 @@ angular.module('myApp')
             user_milestone = _.findWhere(student.user_milestones, { milestone_id: milestone.id } )
             if user_milestone != undefined
               new_module_progress.points.user += milestone.points
+              milestone.progress.points.user += milestone.points
+              milestone.progress.points.remaining -= milestone.points
         student.modules_progress.push(new_module_progress)
 
         # Apply module_progress to the student's mentors

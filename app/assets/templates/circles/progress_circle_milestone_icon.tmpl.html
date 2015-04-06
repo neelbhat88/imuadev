@@ -1,0 +1,8 @@
+<div class="progress-circle progress-circle--default">
+  <a ng-href="app#/milestone/{{milestone.id}}" title="View Milestone: {{milestone | printMilestone}}">
+    <div class="circle-size">
+      <module-progress-circle drawduration="0" width="100" identifier="milestone_{{milestone.id}}" module="milestone.progress"></module-progress-circle>
+    </div>
+    <h6>{{milestone | printMilestone}}</h6>
+  </a>
+</div>
