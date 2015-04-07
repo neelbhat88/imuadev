@@ -5,7 +5,7 @@ class UserGpaService
 #  def calculate_regular_weighted
 #  end
 
-  def calculate_regular_unweighted(userId, time_unit_id)
+  def calculate_regular_unweighted(userId, time_unit_id, gpaOverride=nil)
     classes = UserClassService.new.get_user_classes(userId, time_unit_id)
 
     if !classes.empty?
@@ -17,6 +17,8 @@ class UserGpaService
       end
 
       return (totalGpa / totalClassCredits).round(2)
+    elsif !gpaOverride.nil?
+      return gpaOverride.to_f
     else
       return 0
     end
@@ -29,10 +31,10 @@ class UserGpaService
 #  def calculate_core_unweighted
 #  end
 
-  def calculate_gpa(userId, time_unit_id)
+  def calculate_gpa(userId, time_unit_id, gpaOverride=nil)
     db_gpa = UserGpa.where(:user_id => userId, :time_unit_id => time_unit_id).first
 
-    regular_unweighted = calculate_regular_unweighted(userId, time_unit_id)
+    regular_unweighted = calculate_regular_unweighted(userId, time_unit_id, gpaOverride)
 
     if db_gpa
       db_gpa.update_attributes(
@@ -57,6 +59,12 @@ class UserGpaService
       return new_user_gpa
     end
 
+  end
+
+  def create_override_gpa(userId, time_unit_id, gpaOverride)
+    override_gpa = calculate_gpa(userId, time_unit_id, gpaOverride)
+
+    return ReturnObject.new(:ok, "Manual GPA entered", override_gpa)
   end
 
   def get_user_gpa(userId, time_unit_id)
