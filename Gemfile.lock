@@ -92,7 +92,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
-    eventmachine (1.0.7)
+    eventmachine (1.0.3)
     execjs (2.0.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -264,6 +264,7 @@ DEPENDENCIES
   coffee-rails
   d3-rails
   devise (~> 3.2.2)
+  eventmachine (= 1.0.3)
   factory_girl_rails (~> 4.0)
   font-awesome-rails
   intercom (~> 2.2.1)
