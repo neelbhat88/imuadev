@@ -51,10 +51,11 @@ angular.module('myApp')
       studentsReturn = []
       if $scope.search.text != ''
         for student in initialStudentsArray
-          tagPass = $filter('filter')(student.tag_list, $scope.search.text).length
+          #tagPass = $filter('filter')(student.tag_list, $scope.search.text).length
           nameArray = [student.full_name]
           namePass = $filter('filter')(nameArray, $scope.search.text).length
-          if tagPass > 0 or namePass > 0
+          #if tagPass > 0 or namePass > 0
+          if namePass > 0
             studentsReturn.push(student)
       else
         studentsReturn = initialStudentsArray

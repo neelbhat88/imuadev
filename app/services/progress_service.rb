@@ -115,9 +115,9 @@ class ProgressService
 
     conditions[:taggable_id] = conditions[:user_id]
     conditions[:taggable_type] = "User"
-    taggingQ = Querier.factory(ActsAsTaggableOn::Tagging).select([:tag_id, :taggable_type, :taggable_id]).where(conditions)
-    conditions[:tag_id] = taggingQ.pluck(:tag_id)
-    tagQ = Querier.factory(ActsAsTaggableOn::Tag).select([:id, :name]).where(conditions)
+    #taggingQ = Querier.factory(ActsAsTaggableOn::Tagging).select([:tag_id, :taggable_type, :taggable_id]).where(conditions)
+    #conditions[:tag_id] = taggingQ.pluck(:tag_id)
+    #tagQ = Querier.factory(ActsAsTaggableOn::Tag).select([:id, :name]).where(conditions)
 
     userQ.set_subQueriers([userMilestoneQ, relationshipQ, userExpectationQ, userGpaQ, userExtracurricularActivityDetailQ, userServiceHourQ, userTestQ], :time_unit_id)
 
@@ -128,8 +128,8 @@ class ProgressService
 
     view = organizationQ.view.first
     view[:enabled_modules] = EnabledModules.new.get_enabled_module_titles(conditions[:organization_id].to_i)
-    view[:taggings] = taggingQ.view
-    view[:tags] = tagQ.view
+    #view[:taggings] = taggingQ.view
+    #view[:tags] = tagQ.view
 
 
     return ReturnObject.new(:ok, "Progress for organization_id: #{params[:organization_id]}.", view)
