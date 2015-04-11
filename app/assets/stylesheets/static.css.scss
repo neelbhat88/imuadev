@@ -4,7 +4,7 @@ html {
 
     &.static-pages {
       background-color: $darkgrey;
-      background: image-url("bg.jpg") no-repeat top center fixed;
+      background: image-url("https://imuaproduction.s3.amazonaws.com/images/bg.jpg") no-repeat top center fixed;
       @include bgcover();
       text-align: center;
       @include font-size(2.0);

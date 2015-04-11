@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby "2.1.2"
 gem 'rails', '3.2.19'
 
 # Bundle edge Rails instead:
@@ -9,13 +8,6 @@ gem 'pg'
 gem 'thin'
 gem 'unicorn'
 gem "rack-timeout"
-
-# Setting this to 1.0.3 to see if this affected the
-# memory leak. This commit: https://github.com/neelbhat88/imuadev/pull/780/files
-# updated eventmachine when upgrading to ruby 2.1.5. Downgrading in the next
-# commit did not change eventmachine so setting this manually here
-# This is more of a shot in the dark. We can remove this if it doens't work
-gem 'eventmachine', '1.0.3'
 
 group :development do
   #gem 'debugger'
