@@ -9,7 +9,7 @@ class DepthActivitiesMilestone < ImuaMilestone
 
     @title = "Be Committed"
     @description = "Number of semesters to be previously involved in a single activity:"
-    @icon = "/assets/Extracurricular.jpg"
+    @icon = "https://imuaproduction.s3.amazonaws.com/images/Extracurricular.jpg"
 
     @milestone_description = "A milestone to set a requirement to be involved in a single Extracurricular activity for a certain number of semesters to demonstrate commitment. This milestone is automatically triggered by the system when a user is involved in the same activity for the number of semesters specified."
 

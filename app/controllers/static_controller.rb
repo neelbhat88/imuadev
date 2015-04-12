@@ -1,5 +1,6 @@
 class StaticController < ApplicationController
-
+  respond_to :json, only: [:ping]
+  
   def index
     render "index"
   end
@@ -10,6 +11,10 @@ class StaticController < ApplicationController
 
   def login
     redirect_to "/app#/login"
+  end
+
+  def ping
+    render status: 200, json: {ping: "pong"}
   end
 
 end
