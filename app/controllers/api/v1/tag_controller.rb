@@ -11,15 +11,23 @@ class Api::V1::TagController < ApplicationController
   end
 
   def index
+    orgId = params[:id].to_i
+
+    result = @tagService.get_org_tags(orgId)
+
+    render status: result.status
+      json: {
+        info: result.info,
+        tags: result.object
+      }
+  end
+
+  def add_users_tags
 
   end
 
-  def create
+  def delete_users_tags
+
   end
 
-  def update
-  end
-
-  def destroy
-  end
 end

@@ -11,9 +11,21 @@ class Api::V1::UserTagController < ApplicationController
   end
 
   def index
-    
+    userId = params[:id].to_i
+
+    result = @tagService.get_user_tags(userId)
+
+    render status: result.status
+      json: {
+        info: result.info,
+        tags: result.object
+      }
+  end
+
+  def create
   end
 
   def destroy
   end
+
 end

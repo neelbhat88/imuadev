@@ -1,6 +1,8 @@
 class Organization < ActiveRecord::Base
   attr_accessible :name
 
+  acts_as_tagger
+
   has_many :users, dependent: :destroy
   has_many :expectations, dependent: :destroy
   has_one :roadmap, dependent: :destroy
