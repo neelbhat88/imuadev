@@ -1,5 +1,5 @@
 angular.module('myApp')
-.service 'TaggingService', [() ->
+.service 'TaggingService', ['$http', ($http) ->
   @parseTagsForUsers = (users, tags, taggings) ->
     for user in users
       user.tag_list = []
@@ -11,5 +11,9 @@ angular.module('myApp')
             userTags.push(tag.name)
       user.tag_list = userTags
     users
+
+  @saveTagMultipleUsers = (orgId, users, tag) ->
+    return $http.post "/api/v1/tag/#{orgId}/multiple", {users: users, tag: tag}
+
   @
 ]

@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'StudentsCtrl', ['$scope', '$filter', '$location', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService', 'ModuleService'
-  ($scope, $filter, $location, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService, ModuleService) ->
+.controller 'StudentsCtrl', ['$scope', '$filter', '$location', '$modal', '$route', 'current_user', 'UsersService', 'ProgressService', 'ExpectationService', 'OrganizationService', 'ModuleService', 'TaggingService'
+  ($scope, $filter, $location, $modal, $route, current_user, UsersService, ProgressService, ExpectationService, OrganizationService, ModuleService, TaggingService) ->
 
     $scope.current_user = current_user
     $scope.current_organization = $scope.current_user.organization_name
@@ -12,6 +12,7 @@ angular.module('myApp')
     $scope.classOfSelect = {}
     $scope.classOfSelect.selected = []
     $scope.selectionMode = false
+    $scope.tag = {}
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
@@ -85,9 +86,10 @@ angular.module('myApp')
         $scope.selectedStudents = _.filter($scope.selectedStudents, (student) -> student.class_of != groupYear)
 
     $scope.$watch('selectedStudents', () ->
-      for year in $scope.class_of_years
-        if !_.findWhere($scope.selectedStudents, {class_of: year})
-          $scope.classOfSelect.selected[year] = false
+      if $scope.class_of_years?
+        for year in $scope.class_of_years
+          if !_.findWhere($scope.selectedStudents, {class_of: year})
+            $scope.classOfSelect.selected[year] = false
     )
 
     $scope.toggleSelectionMode = () ->
@@ -148,7 +150,7 @@ angular.module('myApp')
     $scope.clearSelected = (selectedStudents) ->
       for student in selectedStudents
         student.is_selected = false
-
+      $scope.tag = {}
       $scope.selectedStudents = []
 
     $scope.fullName = (user) ->
@@ -160,6 +162,20 @@ angular.module('myApp')
     $scope.selectModule = (student, mod) ->
       ModuleService.selectModule(mod)
       $location.path('/progress/' + student.id)
+
+    $scope.addTag = () ->
+      $scope.tag.editing = true
+
+    $scope.saveTag = () ->
+      TaggingService.saveTagMultipleUsers($scope.organization.id, $scope.selectedStudents, $scope.tag.name)
+        .success (data) ->
+          $scope.addSuccessMessage(data.tag + " tag as been added!")
+          $scope.tag.editing = false
+          $scope.tag.name = ''
+
+    $scope.cancelTag = () ->
+      $scope.tag.editing = false
+      $scope.tag.name = ''
 
     $scope.addNewTask = (selectedStudents, current_user) ->
       modalInstance = $modal.open

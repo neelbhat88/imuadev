@@ -60,8 +60,8 @@ Imua::Application.routes.draw do
 
         resources :tag, except: [:create, :destroy, :new, :edit, :show, :update, :destroy] do
           member do
-            post   'multiple', to: 'tag#add_users_tags'
-            delete 'multiple', to: 'tag#delete_users_tags'
+            post   'multiple', to: 'tag#add_users_tag'
+            delete 'multiple', to: 'tag#delete_users_tag'
           end
         end
 
@@ -93,7 +93,7 @@ Imua::Application.routes.draw do
             end
           end
 
-          resources :user_tag, except: [:new, :edit, :show, :update, :destroy] do
+          resources :user_tag, except: [:new, :edit, :show, :update]
 
         end
 
