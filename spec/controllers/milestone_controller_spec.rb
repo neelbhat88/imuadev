@@ -41,7 +41,7 @@ describe Api::V1::MilestoneController do
       expect(jsonMilestone["value"]).to eq(milestone.value)
       expect(jsonMilestone["title"]).to eq("Good Grades")
       expect(jsonMilestone["description"]).to eq("Minimum GPA:")
-      expect(jsonMilestone["icon"]).to eq("/assets/Academics.jpg")
+      expect(jsonMilestone["icon"]).to eq("https://imuaproduction.s3.amazonaws.com/images/Academics.jpg")
     end
 
     it "sets time_unit_id in database correctly" do

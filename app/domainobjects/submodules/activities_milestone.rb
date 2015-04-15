@@ -9,7 +9,7 @@ class ActivitiesMilestone < ImuaMilestone
 
     @title = "Get Involved"
     @description = "Minimum number of activities this semester:"
-    @icon = "/assets/Extracurricular.jpg"
+    @icon = "https://imuaproduction.s3.amazonaws.com/images/Extracurricular.jpg"
     @milestone_description = "A milestone to set a Extracurricular involvement
                               requirement. This milestone is automatically triggered
                               by the system when a user is involved in the number of

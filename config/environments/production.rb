@@ -79,7 +79,7 @@ Imua::Application.configure do
 
   # Paperclip
   config.paperclip_defaults = {
-    :default_url => "/assets/default-avatar.png",
+    :default_url => "https://imuaproduction.s3.amazonaws.com/images/default-avatar.png",
     :storage => :s3,
     :s3_credentials => {
       :bucket => ENV['AWS_BUCKET'],

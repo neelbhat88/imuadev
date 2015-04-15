@@ -177,6 +177,7 @@ Imua::Application.routes.draw do
     end # end :v1
   end # end :api
 
+  get '/ping' => 'static#ping'
   get '/app' => 'static#app'
   get '/login' => 'static#login'
 
