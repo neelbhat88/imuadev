@@ -4,4 +4,5 @@ module RequestHelpers
       @json ||= JSON.parse(response.body)
     end
   end
+
 end

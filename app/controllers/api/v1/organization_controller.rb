@@ -1,8 +1,6 @@
 class Api::V1::OrganizationController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
-  skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
   def load_services( organizationRepo=nil, roadmapRepo=nil, enabledModules=nil, progressService = nil )
