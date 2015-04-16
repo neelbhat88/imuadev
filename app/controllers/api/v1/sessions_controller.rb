@@ -62,20 +62,10 @@ class Api::V1::SessionsController < Devise::SessionsController
 	end
 
 	def show_current_user
-		user_auth_token = request.headers["X-API-TOKEN"]
-		email = request.headers["X-API-EMAIL"]
-
-		user = email && User.find_by_email(email)
-
-		if user
-			status = :ok
-			user = ViewUser.new(user, user.organization)
-		end
-
-		render status: status,
+		render status: :ok,
 			json: {
 				info: "Current User",
-				user: user
+				user: ViewUser.new(current_user, current_user.organization)
 			}
 	end
 
