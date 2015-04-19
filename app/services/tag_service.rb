@@ -22,8 +22,10 @@ class TagService
   def create_user_tag(userId, tag)
     user = User.find(userId)
     org = Organization.find(user.organization_id)
+    tags = user.tags_from(org)
+    tags = tags << tag
 
-    org.tag(user, :with => tag, :on => :tags)
+    org.tag(user, :with => tags, :on => :tags)
 
     return ReturnObject.new(:ok, "Created tag for #{user.first_name} #{user.last_name}", tag)
   end
@@ -32,7 +34,9 @@ class TagService
     org = Organization.find(orgId)
     users.each do |u|
       user = User.find(u[:id])
-      org.tag(user, :with => tag, :on => :tags)
+      tags = user.tags_from(org)
+      tags = tags << tag
+      org.tag(user, :with => tags, :on => :tags)
     end
 
     return ReturnObject.new(:ok, "Created tag for users", tag)

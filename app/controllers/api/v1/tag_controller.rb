@@ -1,8 +1,6 @@
 class Api::V1::TagController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
-  skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
   def load_services( userRepo = nil, tagService = nil )
@@ -31,7 +29,8 @@ class Api::V1::TagController < ApplicationController
 
     render status: result.status,
     json: {
-      info: result.info
+      info: result.info,
+      tag: result.object
     }
   end
 

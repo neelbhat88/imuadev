@@ -215,6 +215,17 @@
         </div>
       </div>
 
+      <div class="module" modulecolor="no_category" ng-if="user.is_student">
+        <div class="module--header">{{user.first_name}}'s <span class="bold">Tags</span></div>
+        <div class="module--content">
+          <ul>
+            <li ng-repeat="tag in tags" class="tag-display">
+              {{tag}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div> <!-- /.module-container -->
   </div>
 </div>

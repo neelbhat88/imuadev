@@ -1,8 +1,6 @@
 class Api::V1::UserTagController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
-  skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
   def load_services( userRepo = nil, tagService = nil )
@@ -11,7 +9,7 @@ class Api::V1::UserTagController < ApplicationController
   end
 
   def index
-    userId = params[:id].to_i
+    userId = params[:user_id].to_i
 
     result = @tagService.get_user_tags(userId)
 
@@ -23,7 +21,7 @@ class Api::V1::UserTagController < ApplicationController
   end
 
   def create
-    userId = params[:id].to_i
+    userId = params[:user_id].to_i
     tag = params[:tag]
 
     result = @tagService.create_user_tag(userId, tag)

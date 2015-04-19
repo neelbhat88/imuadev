@@ -11,6 +11,11 @@ angular.module('myApp')
   $scope.password = {current: "", new: "", confirm: ""}
   $scope.student_mentors = []
   $scope.errors = [ '**Please fix the errors above**' ]
+  $scope.tags = []
+
+  UsersService.getUserTags($scope.user.id)
+    .success (data) ->
+      $scope.tags = data.tags
 
   $scope.editing = () ->
     $scope.editingInfo || $scope.editingPassword

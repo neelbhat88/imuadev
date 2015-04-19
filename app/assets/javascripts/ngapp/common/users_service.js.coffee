@@ -7,8 +7,17 @@ angular.module('myApp')
   @getUser = (userId) ->
     $http.get "/api/v1/users/#{userId}"
 
+  @getUserTags = (userId) ->
+    $http.get "/api/v1/users/#{userId}/user_tag"
+
   @addUser = (user) ->
     $http.post '/api/v1/users', { user: user }
+
+  @addTag = (userId, tag) ->
+    $http.post "api/v1/users/#{userId}/user_tag", tag: tag
+
+  @removeTag = (userId, tag) ->
+    $http.delete "api/v1/user_tag/#{userId}", tag: tag
 
   @updateUserInfoWithPicture = (user, formData) ->
     formData.append("user[email]", user.email)
