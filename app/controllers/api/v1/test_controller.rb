@@ -1,8 +1,6 @@
 class Api::V1::TestController < ApplicationController
   respond_to :json
 
-  before_filter :authenticate_user!
-  skip_before_filter :verify_authenticity_token
   before_filter :load_services
 
   def load_services( testService = nil )

@@ -1,6 +1,8 @@
 class StaticController < ApplicationController
+  skip_before_filter :authenticate_token
+
   respond_to :json, only: [:ping]
-  
+
   def index
     render "index"
   end
