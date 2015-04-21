@@ -15,5 +15,8 @@ angular.module('myApp')
   @saveTagMultipleUsers = (orgId, users, tag) ->
     return $http.post "/api/v1/tag/#{orgId}/multiple", {users: users, tag: tag}
 
+  @saveTagSingleUser = (userId, tag) ->
+    return $http.post "/api/v1/users/#{userId}/user_tag", {tag: tag}
+
   @
 ]

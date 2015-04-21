@@ -29,7 +29,7 @@ class Api::V1::UserTagController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        tags: result.object
+        tag: result.object
       }
   end
 
@@ -42,7 +42,7 @@ class Api::V1::UserTagController < ApplicationController
     render status: result.status,
       json: {
         info: result.info,
-        tags: result.object
+        tag: result.object
       }
   end
 

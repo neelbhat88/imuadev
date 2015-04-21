@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'ProfileController', ['$scope', 'user_with_contacts', 'UsersService', 'LoadingService',
-($scope, user_with_contacts, UsersService, LoadingService) ->
+.controller 'ProfileController', ['$scope', 'user_with_contacts', 'UsersService', 'LoadingService', 'TaggingService',
+($scope, user_with_contacts, UsersService, LoadingService, TaggingService) ->
   $scope.user = user_with_contacts.user
   $scope.contacts = user_with_contacts.contacts
   $scope.time_units = user_with_contacts.time_units
@@ -12,6 +12,8 @@ angular.module('myApp')
   $scope.student_mentors = []
   $scope.errors = [ '**Please fix the errors above**' ]
   $scope.tags = []
+  $scope.tag = {}
+  $scope.tag.editing = false
 
   UsersService.getUserTags($scope.user.id)
     .success (data) ->
@@ -29,6 +31,21 @@ angular.module('myApp')
 
   $scope.editUserInfo = () ->
     $scope.editingInfo = true
+
+  $scope.addTag = () ->
+    $scope.tag.editing = true
+
+  $scope.saveTag = () ->
+    TaggingService.saveTagSingleUser($scope.user.id, $scope.tag.name)
+      .success (data) ->
+        $scope.addSuccessMessage(data.tag + " tag as been added!")
+        $scope.tags.push(data.tag)
+        $scope.tag.editing = false
+        $scope.tag.name = ''
+
+  $scope.cancelTag = () ->
+    $scope.tag.editing = false
+    $scope.tag.name = ''
 
   $scope.cancelUpdateUserInfo = () ->
     $scope.files = null
