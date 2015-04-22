@@ -15,7 +15,7 @@ angular.module('myApp')
   $scope.tag = {}
   $scope.tag.editing = false
 
-  UsersService.getUserTags($scope.user.id)
+  TaggingService.getUserTags($scope.user.id)
     .success (data) ->
       $scope.tags = data.tags
 

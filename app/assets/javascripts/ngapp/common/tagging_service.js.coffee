@@ -12,6 +12,9 @@ angular.module('myApp')
       user.tag_list = userTags
     users
 
+  @getUserTags = (userId) ->
+    $http.get "/api/v1/users/#{userId}/user_tag"
+
   @getOrgTags = (orgId) ->
     return $http.get "/api/v1/organization/#{orgId}/tag"
 
