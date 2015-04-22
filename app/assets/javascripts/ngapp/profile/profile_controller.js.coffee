@@ -35,6 +35,14 @@ angular.module('myApp')
   $scope.addTag = () ->
     $scope.tag.editing = true
 
+  $scope.deleteTag = (tag) ->
+    verifyTagDelete = confirm('This will remove ' + tag + ' tag from user')
+    if verifyTagDelete
+      TaggingService.removeTagSingleUser($scope.user.id, tag)
+        .success (data) ->
+          $scope.addSuccessMessage(tag + " tag has been deleted!")
+          $scope.tags = data.tags
+
   $scope.saveTag = () ->
     TaggingService.saveTagSingleUser($scope.user.id, $scope.tag.name)
       .success (data) ->

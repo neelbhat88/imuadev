@@ -36,13 +36,12 @@ class Api::V1::UserTagController < ApplicationController
   def destroy
     userId = params[:id].to_i
     tag = params[:tag]
-
     result = @tagService.remove_user_tag(userId, tag)
 
     render status: result.status,
       json: {
         info: result.info,
-        tag: result.object
+        tags: result.object
       }
   end
 

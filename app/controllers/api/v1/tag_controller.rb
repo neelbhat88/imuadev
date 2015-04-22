@@ -9,7 +9,7 @@ class Api::V1::TagController < ApplicationController
   end
 
   def index
-    orgId = params[:id].to_i
+    orgId = params[:organization_id].to_i
 
     result = @tagService.get_org_tags(orgId)
 
@@ -30,7 +30,7 @@ class Api::V1::TagController < ApplicationController
     render status: result.status,
     json: {
       info: result.info,
-      tag: result.object
+      tags: result.object
     }
   end
 

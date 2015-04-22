@@ -48,7 +48,8 @@ class TagService
 
     user.tags_from(org).remove(tag)
     if user.save
-      return ReturnObject.new(:ok, "Removed #{tag} from #{user.first_name}", tag)
+      tags = user.tags_from(org)
+      return ReturnObject.new(:ok, "Removed #{tag} from #{user.first_name}", tags)
     else
       return ReturnObject.new(:internal_server_error, "Failed to delete #{tag} for #{user.first_name}", nil)
     end

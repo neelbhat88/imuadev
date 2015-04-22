@@ -12,11 +12,18 @@ angular.module('myApp')
       user.tag_list = userTags
     users
 
+  @getOrgTags = (orgId) ->
+    return $http.get "/api/v1/organization/#{orgId}/tag"
+
   @saveTagMultipleUsers = (orgId, users, tag) ->
     return $http.post "/api/v1/tag/#{orgId}/multiple", {users: users, tag: tag}
 
   @saveTagSingleUser = (userId, tag) ->
     return $http.post "/api/v1/users/#{userId}/user_tag", {tag: tag}
+
+  @removeTagSingleUser = (userId, tag) ->
+    return $http.delete "/api/v1/user_tag/#{userId}?tag=#{tag}"
+
 
   @
 ]

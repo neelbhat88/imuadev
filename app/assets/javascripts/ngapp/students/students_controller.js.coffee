@@ -13,6 +13,7 @@ angular.module('myApp')
     $scope.classOfSelect.selected = []
     $scope.selectionMode = false
     $scope.tag = {}
+    $scope.orgTags = {}
     $('input, textarea').placeholder()
 
     OrganizationService.getOrganizationWithUsers($route.current.params.id)
@@ -47,6 +48,10 @@ angular.module('myApp')
         $scope.class_of_years = [2014,2015,2016,2017,2018,2019,2020]
 
         $scope.loaded_users = true
+
+        TaggingService.getOrgTags($scope.organization.id)
+          .success (data) ->
+            $scope.orgTags = data.tags
 
     $scope.tagFilter = (initialStudentsArray) ->
       studentsReturn = []

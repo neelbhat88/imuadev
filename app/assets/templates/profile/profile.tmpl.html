@@ -219,7 +219,7 @@
         <div class="module--header">{{user.first_name}}'s <span class="bold">Tags</span></div>
         <div class="module--content">
           <div ng-repeat="tag in tags" class="tag-remove">
-            <div ng-click="removeTag(tag)" class="btn btn-default btn-sm">
+            <div ng-click="deleteTag(tag)" class="btn btn-default btn-sm">
               <span class="tag-name">{{tag}}</span>
               <span class="tag-remove glyphicon glyphicon-remove"></span>
             </div>
