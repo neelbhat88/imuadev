@@ -11,7 +11,9 @@ describe Ability do
                                          :read_org_tests,
                                          :manage_org_tests,
                                          :get_organization_progress,
-                                         :reset_passwords)
+                                         :reset_passwords,
+                                         :edit_tags,
+                                         :read_tags)
   end
 
   it "doesn't allow any action if not in same organization" do
@@ -33,7 +35,9 @@ describe Ability do
                                          :read_org_tests,
                                          :manage_org_tests,
                                          :get_organization_progress,
-                                         :reset_passwords)
+                                         :reset_passwords,
+                                         :edit_tags,
+                                         :read_tags)
   end
 
   it "allows mentor actions" do
@@ -42,7 +46,8 @@ describe Ability do
 
     abilities = Ability.organization_abilities(user, org)
 
-    expect(abilities).to contain_exactly(:read_org_tests)
+    expect(abilities).to contain_exactly(:read_org_tests,
+                                         :read_tags)
   end
 
   it "allows student actions" do
