@@ -111,4 +111,17 @@
       margin-bottom: 0;
     }
   }
+  .tag-remove {
+    display: inline-block;
+  }
+
+  .glyphicon-ok {
+    color: green;
+  }
+  .glyphicon-remove {
+    color: red;
+  }
+  .tag-input {
+    margin-top: 40px;
+  }
 }

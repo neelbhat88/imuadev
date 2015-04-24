@@ -215,6 +215,32 @@
         </div>
       </div>
 
+      <div class="module" modulecolor="no_category" ng-if="user.is_student && !current_user.is_student">
+        <div class="module--header">{{user.first_name}}'s <span class="bold">Tags</span></div>
+        <div class="module--content">
+          <div ng-if="!current_user.is_mentor" ng-repeat="tag in tags" class="tag-remove pls pts">
+            <div ng-click="deleteTag(tag)" class="btn btn-default btn-sm">
+              <span class="tag-name">{{tag}}</span>
+              <span class="glyphicon glyphicon-remove"></span>
+            </div>
+          </div>
+          <div ng-if="current_user.is_mentor" ng-repeat="tag in tags" class="tag-remove pls pts">
+            <div class="btn btn-default btn-sm">
+              <span class="tag-name">{{tag}}</span>
+            </div>
+          </div>
+          <div ng-hide="tag.editing" ng-if="!current_user.is_student && !current_user.is_mentor">
+            <div class="edit-buttons" ng-hide="editingInfo">
+              <button class="submit" ng-if="editable()" ng-click="addTag()">Add Tag</button>
+            </div>
+          </div>
+          <div ng-show="tag.editing" ng-if="!current_user.is_student && !current_user.is_mentor">
+            <input class="form-field tag-input" ng-model="tag.name">
+            <span ng-click="saveTag()" class="glyphicon glyphicon-ok"></span>
+            <span ng-click="cancelTag()" class="glyphicon glyphicon-remove"></span>
+          </div>
+        </div>
+
     </div> <!-- /.module-container -->
   </div>
 </div>

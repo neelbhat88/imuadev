@@ -58,6 +58,13 @@ Imua::Application.routes.draw do
           end
         end
 
+        resources :tag, except: [:create, :destroy, :new, :edit, :show, :update, :destroy] do
+          member do
+            post   'multiple', to: 'tag#add_users_tag'
+            delete 'multiple', to: 'tag#delete_users_tag'
+          end
+        end
+
         resources :users, shallow: true do
 
           assignment_owner.call
@@ -85,6 +92,9 @@ Imua::Application.routes.draw do
               put 'comment'
             end
           end
+
+          resources :user_tag, except: [:new, :edit, :show, :update]
+
         end
 
       end
