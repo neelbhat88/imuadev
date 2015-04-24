@@ -199,8 +199,6 @@ angular.module('myApp')
     # XXX: not correct for gpa (could include a student in count, but their gpa is 0)
     num_students = org.students.length
     if num_students > 0
-      console.log(org.gpa_student_count)
-      console.log(num_students)
       org.average_gpa = (org.semester_gpa / (num_students - org.gpa_student_count)).toFixed(2)
       org.average_serviceHours = (org.semester_serviceHours / num_students).toFixed(2)
       org.average_ecActivities = (org.semester_ecActivities / num_students).toFixed(2)

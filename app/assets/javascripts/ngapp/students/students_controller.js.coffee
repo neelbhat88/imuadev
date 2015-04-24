@@ -106,6 +106,7 @@ angular.module('myApp')
         student.is_selected = false
 
     $scope.selectAll = () ->
+      $scope.selectionMode = true
       for student in $scope.students
         if $scope.selectedStudents.length != 0
           if !_.findWhere($scope.selectedStudents, { id: student.id }) or $scope.selectedStudents.length == 0
