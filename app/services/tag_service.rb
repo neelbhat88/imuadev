@@ -32,6 +32,7 @@ class TagService
 
   def create_users_tag(orgId, users, tag)
     org = Organization.find(orgId)
+    
     users.each do |u|
       user = User.find(u[:id])
       tags = user.tags_from(org)

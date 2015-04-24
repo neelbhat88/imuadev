@@ -10,6 +10,12 @@ class Api::V1::UserTagController < ApplicationController
 
   def index
     userId = params[:user_id].to_i
+    user = User.find(userId)
+
+    if !can?(current_user, :read_tags, Organization.find(user.organization_id))
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @tagService.get_user_tags(userId)
 
@@ -23,6 +29,12 @@ class Api::V1::UserTagController < ApplicationController
   def create
     userId = params[:user_id].to_i
     tag = params[:tag]
+    user = User.find(userId)
+
+    if !can?(current_user, :edit_tags, Organization.find(user.organization_id))
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @tagService.create_user_tag(userId, tag)
 
@@ -36,6 +48,13 @@ class Api::V1::UserTagController < ApplicationController
   def destroy
     userId = params[:id].to_i
     tag = params[:tag]
+    user = User.find(userId)
+
+    if !can?(current_user, :edit_tags, Organization.find(user.organization_id))
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @tagService.remove_user_tag(userId, tag)
 
     render status: result.status,

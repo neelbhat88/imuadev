@@ -11,6 +11,11 @@ class Api::V1::TagController < ApplicationController
   def index
     orgId = params[:organization_id].to_i
 
+    if !can?(current_user, :read_tags, Organization.find(orgId))
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @tagService.get_org_tags(orgId)
 
     render status: result.status,
@@ -25,6 +30,11 @@ class Api::V1::TagController < ApplicationController
     users = params[:users]
     tag = params[:tag]
 
+    if !can?(current_user, :edit_tags, Organization.find(orgId))
+      render status: :forbidden, json: {}
+      return
+    end
+
     result = @tagService.create_users_tag(orgId, users, tag)
 
     render status: result.status,
@@ -38,6 +48,11 @@ class Api::V1::TagController < ApplicationController
     orgId = params[:id].to_i
     users = params[:users]
     tag = params[:tag]
+
+    if !can?(current_user, :edit_tags, Organization.find(orgId))
+      render status: :forbidden, json: {}
+      return
+    end
 
     result = @tagService.remove_users_tag(orgId, users, tag)
 
