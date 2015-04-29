@@ -40,7 +40,7 @@ class Api::V1::TagController < ApplicationController
     render status: result.status,
     json: {
       info: result.info,
-      tags: result.object
+      tag: result.object
     }
   end
 
