@@ -1,0 +1,185 @@
+.single-student-selectbar {
+  width: 100%;
+  background: white;
+  border: 1px solid $teal;
+  padding: 10px 80px;
+  color: $ink;
+  display: inline-block;
+  z-index: 1;
+
+  .tagging {
+    .glyphicon-ok {
+      color: green;
+    }
+    .glyphicon-remove {
+      color: red;
+    }
+  }
+
+  .student-info {
+    text-align: left;
+    display: inline-block;
+    float: left;
+
+    .student-info__picture {
+      display: inline-block;
+      vertical-align: middle;
+      padding-right: 15px;
+
+      @include respond-to(768) {
+        display: inherit;
+        padding-right: 0px;
+        text-align: center;
+      }
+    }
+
+    .student-info__text {
+      display: inline-block;
+      vertical-align: middle;
+
+      @include respond-to(768) {
+        display: inherit;
+        text-align: center;
+      }
+
+      .name {
+        @include font-size(2.4);
+        padding-bottom: 10px;
+      }
+
+      .points {
+        @include font-size(1.8);
+        padding-bottom: 10px;
+      }
+
+      .login-info {
+        @include font-size(1.2);
+        padding-bottom: 5px;
+      }
+    }
+  }
+  .module-circle-container {
+    display: inline-block;
+
+    .module-circles {
+      text-align: center;
+      display: inline-block;
+      color: $ink;
+
+      .module-circle {
+        cursor: pointer;
+      }
+      .circle-size {
+        width: 90px;
+        margin: 0 auto;
+      }
+
+      .module-circle__title {
+        @include font-size(1.2);
+      }
+
+      .module-circle--meta {
+        @include font-size(1.0);
+        margin: 0;
+      }
+
+    }
+  }
+
+}
+
+
+
+.students-selectbar {
+  width: 100%;
+  background: white;
+  border: 1px solid $teal;
+  padding: 20px 120px;
+  @include respond-to(768) {padding: 20px;}
+  @include respond-to(992) {padding: 20px 40px;}
+
+  .tagging {
+    .glyphicon-ok {
+      cursor: pointer;
+      color: green;
+    }
+    .glyphicon-remove {
+      cursor: pointer;
+      color: red;
+    }
+  }
+
+  color: $ink;
+
+  .select-header {
+
+    .text { @include font-size(1.6); }
+
+    .link { color: $blue; text-decoration: underline; }
+
+  }
+
+  .student-token {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid $teal;
+
+    .student-name {
+      display:inline-block;
+    }
+
+    .token-remove {
+      display: inline-block;
+      vertical-align: text-top;
+      color: red;
+      margin-left: 5px;
+    }
+  }
+}
+
+.actions {
+  text-align: center;
+  padding-top: 20px;
+
+  .btn-action {
+    background-color: darkgrey(0.7);
+    color: white;
+  }
+}
+
+.clear-selection {
+  color: $lightgrey;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  @include font-size(1.8);
+  cursor: pointer;
+}
+
+.students-mid, .students-lower {
+  padding: 40px $wrapper-width 0 $wrapper-width;
+
+  .selection-toggle {
+    display: inline-block;
+    float: right;
+  }
+  .search-label {
+    display: inline-block;
+  }
+  .student-search {
+    color: #000000;
+    width: 30%;
+    display: inline-block;
+  }
+  .list-container {
+    margin: 15px 0 5px;
+    @include respond-to(900) { text-align: center; }
+  }
+  .is-selected {
+    background-color: white;
+    border: 1px solid $teal;
+    padding: 10px 0;
+    border-radius: 10px;
+  }
+}
