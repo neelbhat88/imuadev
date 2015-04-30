@@ -124,4 +124,13 @@
   .tag-input {
     margin-top: 40px;
   }
+  .module--tags {
+    float: left;
+    margin-left: 20px;
+
+    @include respond-to(800) {
+      margin-left: 0px;
+    }
+  }
+
 }

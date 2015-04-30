@@ -215,7 +215,7 @@
         </div>
       </div>
 
-      <div class="module" modulecolor="no_category" ng-if="user.is_student && !current_user.is_student">
+      <div class="module module--tags" modulecolor="no_category" ng-if="user.is_student && !current_user.is_student">
         <div class="module--header">{{user.first_name}}'s <span class="bold">Tags</span></div>
         <div class="module--content">
           <div ng-if="!current_user.is_mentor" ng-repeat="tag in tags" class="tag-remove pls pts">
@@ -240,6 +240,7 @@
             <span ng-click="cancelTag()" class="glyphicon glyphicon-remove"></span>
           </div>
         </div>
+      </div>
 
     </div> <!-- /.module-container -->
   </div>
