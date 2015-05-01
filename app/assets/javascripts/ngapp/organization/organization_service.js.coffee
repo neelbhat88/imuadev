@@ -65,6 +65,7 @@ angular.module('myApp')
     _.each(org.user_assignments, (a) -> _.each(a.comments, (c) -> c.user = _.find(org.users, (u) -> c.user_id == u.id)))
 
     org.total_gpa = org.semester_gpa = 0
+    org.gpa_student_count = 0
     org.total_serviceHours = org.semester_serviceHours = 0
     org.total_ecActivities = org.semester_ecActivities = 0
     org.total_testsTaken = org.semester_testsTaken = 0
@@ -154,7 +155,13 @@ angular.module('myApp')
         student.total_gpa /= student.user_gpas.length
       semester_gpa = _.findWhere(student.user_gpas, {time_unit_id: time_unit_id})
       if semester_gpa
-        student.semester_gpa = semester_gpa.regular_unweighted
+        if semester_gpa.regular_unweighted > 0
+          student.semester_gpa = semester_gpa.regular_unweighted
+        else
+          org.gpa_student_count += 1
+      else
+        org.gpa_student_count += 1
+
       org.total_gpa += student.total_gpa
       org.semester_gpa += student.semester_gpa
 
@@ -192,7 +199,7 @@ angular.module('myApp')
     # XXX: not correct for gpa (could include a student in count, but their gpa is 0)
     num_students = org.students.length
     if num_students > 0
-      org.average_gpa = (org.semester_gpa / num_students).toFixed(2)
+      org.average_gpa = (org.semester_gpa / (num_students - org.gpa_student_count)).toFixed(2)
       org.average_serviceHours = (org.semester_serviceHours / num_students).toFixed(2)
       org.average_ecActivities = (org.semester_ecActivities / num_students).toFixed(2)
       org.average_testsTaken = (org.semester_testsTaken / num_students).toFixed(2)

@@ -13,6 +13,7 @@ class Ability
       when "Expectation" then expectation_abilities(user, subject)
       when "Comment" then comment_abilities(user, subject)
       when "GpaHistoryAuthorization" then gpa_history_abilities(user, subject)
+      when "Tagging" then tagging_abilities(user, subject)
       else []
       end
 
@@ -162,7 +163,9 @@ class Ability
                 :read_org_tests,
                 :manage_org_tests,
                 :get_organization_progress,
-                :reset_passwords]
+                :reset_passwords,
+                :read_tags,
+                :edit_tags]
       else
         return [] if user.organization_id != subjectOrg.id
       end
@@ -172,11 +175,14 @@ class Ability
                   :read_org_tests,
                   :manage_org_tests,
                   :get_organization_progress,
-                  :reset_passwords]
+                  :reset_passwords,
+                  :read_tags,
+                  :edit_tags]
       end
 
       if user.mentor?
-        rules += [:read_org_tests]
+        rules += [:read_org_tests,
+                  :read_tags]
       end
 
       if user.student?
