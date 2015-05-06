@@ -103,6 +103,9 @@ angular.module('myApp')
       all_assignable_user_ids = _.difference(_.pluck($scope.assignable_users, 'id'), _.pluck($scope.assignment.user_assignments, 'user_id'))
       assignment.assignees = _.filter($scope.assignable_users, (user) -> _.contains(all_assignable_user_ids, user.id))
 
+    $scope.unassignAllUsers = (assignment) ->
+      assignment.assignees = []
+
     $scope.assignAssignee = (user, assignment) ->
       assignment.assignees.push(user)
 
