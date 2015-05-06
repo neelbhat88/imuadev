@@ -10,6 +10,9 @@ angular.module('myApp')
   @addUser = (user) ->
     $http.post '/api/v1/users', { user: user }
 
+  @delete = (user_id) ->
+    $http.delete  "/api/v1/users/#{user_id}"
+
   @updateUserInfoWithPicture = (user, formData) ->
     formData.append("user[email]", user.email)
     formData.append("user[first_name]", user.first_name)

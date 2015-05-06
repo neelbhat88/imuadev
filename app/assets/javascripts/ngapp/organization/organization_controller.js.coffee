@@ -44,6 +44,15 @@ angular.module('myApp')
       else
         user.first_name + " " + user.last_name
 
+    $scope.remove_user = (user) ->
+      if window.confirm "Are you sure you want to delete #{user.full_name}? **This will permananetly delete the user and ALL of
+                          their associated data.**"
+        UsersService.delete(user.id)
+          .success (data) ->
+            $scope.addSuccessMessage("User deleted successfully")
+            idx = $scope._.findIndex($scope.organization.mentors, ((item)-> item.id == user.id))
+            $scope.organization.mentors.splice(idx, 1)
+
     $scope.addMentor = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',

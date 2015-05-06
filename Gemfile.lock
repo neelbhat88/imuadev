@@ -215,6 +215,7 @@ GEM
       tilt (~> 1.3)
     sexp_processor (4.4.4)
     six (0.2.0)
+    slack-notifier (1.2.0)
     slim (2.1.0)
       temple (~> 0.6.9)
       tilt (>= 1.3.3, < 2.1)
@@ -289,6 +290,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0.0)
   sass-rails (~> 3.2.3)
   six
+  slack-notifier
   thin
   uglifier (>= 1.0.3)
   unicorn

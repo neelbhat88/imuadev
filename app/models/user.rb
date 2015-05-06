@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :assignments, as: :assignment_owner, dependent: :destroy
   has_many :user_assignments, dependent: :destroy
   has_many :user_gpas, dependent: :destroy
+  has_many :access_tokens, dependent: :destroy
   has_many :comments, dependent: :destroy # TODO - what do we think about this?
 
   has_attached_file :avatar, :s3_protocol => :https, styles: {
