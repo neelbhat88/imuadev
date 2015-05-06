@@ -106,17 +106,17 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    # Temporary security check
-    if !current_user.super_admin?
-      render status: :unauthorized,
-        json: {
-          into: "This user is not allowed to perform this action."
-        }
+    user_id = params[:id]
 
+    user = User.find(user_id)
+
+    if !can?(current_user, :delete_user, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    result = UserRepository.new.delete_user(params[:id])
+    result = UserRepository.new.delete_user(user)
 
     render status: result[:status],
     json: {

@@ -158,8 +158,14 @@ class UserRepository
            }
   end
 
-  def delete_user(userId)
-    if User.find(userId).destroy
+  def delete_user(user)
+    if User.find(user.id).destroy
+      if user.mentor?
+        Relationship.where(assigned_to_id: user.id).destroy_all
+      elsif user.student?
+        Relationship.where(user_id: user.id).destroy_all
+      end
+      
       return { :status => :ok, :info => "User deleted successfully" }
     else
       return { :status => :internal_server_error, :info => "Failed to delete user." }
