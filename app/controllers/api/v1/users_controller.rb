@@ -61,6 +61,10 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.create_user(user, current_user)
 
+    Background.process do
+      SlackNotifier.new.user_created(current_user, result[:user])
+    end
+
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
     render status: result[:status],
     json: {
@@ -117,6 +121,10 @@ class Api::V1::UsersController < ApplicationController
     end
 
     result = UserRepository.new.delete_user(user)
+
+    Background.process do
+      SlackNotifier.new.user_deleted(current_user, user)
+    end
 
     render status: result[:status],
     json: {

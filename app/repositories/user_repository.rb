@@ -165,7 +165,7 @@ class UserRepository
       elsif user.student?
         Relationship.where(user_id: user.id).destroy_all
       end
-      
+
       return { :status => :ok, :info => "User deleted successfully" }
     else
       return { :status => :internal_server_error, :info => "Failed to delete user." }
