@@ -17,10 +17,13 @@
       </ul>
 
       <div class="edit-buttons">
-        <a href="/app#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="submit">See {{user.first_name}}'s Progress</button></a>
-        <a href="/app#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn submit">{{user.first_name}}'s Students</button></a>
+        <a href="/app#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="btn btn-primary">See {{user.first_name}}'s Progress</button></a>
+        <a href="/app#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn btn-primary">{{user.first_name}}'s Students</button></a>
         <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>
+        <button class="btn btn-default"
+                  ng-if="current_user.is_org_admin && current_user.id != user.id"
+                  ng-click="resetUserPassword()">Reset Password</button>
       </div>
     </div>
 
@@ -81,8 +84,8 @@
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
 
-      <input type="password" class="form-control" ng-model="password.current" placeholder="Current Password" name="current" required>
-      <input type="password" class="form-control" ng-model="password.new" placeholder="New Password" name="new" required>
+      <input type="password" class="form-control mbm" ng-model="password.current" placeholder="Current Password" name="current" required>
+      <input type="password" class="form-control mbm" ng-model="password.new" placeholder="New Password" name="new" required>
       <input type="password" class="form-control" ng-model="password.confirm" placeholder="Confirm New Password" name="confirm" required>
 
       <div class="edit-buttons">

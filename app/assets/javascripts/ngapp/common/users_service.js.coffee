@@ -37,6 +37,11 @@ angular.module('myApp')
 
     $http.put '/api/v1/users/' + user.id + '/update_password', user: user
 
+  # Authenticated
+  @resetUserPassword = (org_id, user_ids) ->
+    $http.put "/api/v1/organization/#{org_id}/users/reset_users_password", {user_ids: user_ids}
+
+  # Unauthenticated - only use this for login page
   @resetPassword = (user) ->
     $http.post '/api/v1/users/password', user: user
 
