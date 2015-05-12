@@ -10,5 +10,6 @@
     <li><a ng-href="app#/profile/{{mentor.id}}" title="View {{mentor.first_name}}'s Profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
     <li class="extra-info" ng-if="mentor.last_login == 'Has not logged in yet'">Last Login: {{mentor.last_login}}</li>
     <li class="extra-info" ng-if="mentor.last_login != 'Has not logged in yet'">Last Login: {{mentor.last_login | formatMDY}}</li>
+    <li class="extra-info"><span class="remove glyphicon glyphicon-remove" title="Delete User" ng-click="remove_user(mentor)"></span></li>
   </ul>
 </div>

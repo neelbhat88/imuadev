@@ -10,5 +10,6 @@
     <li class="extra-info" ng-if="student.last_login == 'Has not logged in yet'">Last Login: {{student.last_login}}</li>
     <li class="extra-info" ng-if="student.last_login != 'Has not logged in yet'">Last Login: {{student.last_login | formatMDY}}</li>
     <li class="extra-info">Login Count: {{student.login_count}}</li>
+    <li class="extra-info"><span class="remove glyphicon glyphicon-remove" title="Delete User" ng-click="remove_user(student)"></span></li>
   </ul>
 </div>

@@ -61,6 +61,10 @@ class Api::V1::UsersController < ApplicationController
 
     result = UserRepository.new.create_user(user, current_user)
 
+    Background.process do
+      SlackNotifier.new.user_created(current_user, result[:user])
+    end
+
     viewUser = ViewUser.new(result[:user]) unless result[:user].nil?
     render status: result[:status],
     json: {
@@ -106,17 +110,21 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    # Temporary security check
-    if !current_user.super_admin?
-      render status: :unauthorized,
-        json: {
-          into: "This user is not allowed to perform this action."
-        }
+    user_id = params[:id]
 
+    user = User.find(user_id)
+
+    if !can?(current_user, :delete_user, user)
+      render status: :forbidden,
+        json: {}
       return
     end
 
-    result = UserRepository.new.delete_user(params[:id])
+    result = UserRepository.new.delete_user(user)
+
+    Background.process do
+      SlackNotifier.new.user_deleted(current_user, user)
+    end
 
     render status: result[:status],
     json: {
