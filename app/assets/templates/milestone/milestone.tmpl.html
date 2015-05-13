@@ -1,5 +1,6 @@
+<student-selector currentuser="current_user"></student-selector>
+
 <div class="taskContainer" wait-to-load="{{loaded_data}}">
-  <student-selector currentuser="current_user" selectedstudents="selectedStudents"></student-selector>
   <div class="task-header clear">
     <div class="single-col-wrapper">
       <div class="back-link">
@@ -24,26 +25,32 @@
         <h5 ng-if="current_user.is_org_admin" class="italic">There are no students currently in {{milestone.time_unit_name}}</h5>
         <h5 ng-if="current_user.is_mentor" class="italic">None of your students are currently in {{milestone.time_unit_name}}</h5>
       </div>
-
+      <div class="selection-toggle">
+        <span ng-hide="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-default">Select Multiple</span>
+        <span ng-show="selectionMode" ng-click="toggleSelectionMode()" class="btn btn-danger">Exit Selection Mode</span>
+      </div>
       <ul class="users-not-completed" ng-if="users_incomplete.length != 0">
-        <h6 class="bold red" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
-        <h6 class="bold red" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
-        <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
-          <div class="medium-circle-picture">
-            <img ng-src="{{user.square_avatar_url}}"/>
-          </div>
-          <span class="bold">{{user.first_last_initial}}</span>
-          <ul class="circle-subnav">
-            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
-              <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
-            </li>
-          </ul>
-        </li>
+        <h6 class="bold red heading-inline" ng-if="users_incomplete.length == 1">{{users_incomplete.length}} student has not completed this milestone</h6>
+        <h6 class="bold red heading-inline" ng-if="users_incomplete.length != 1">{{users_incomplete.length}} students have not completed this milestone</h6>
+        <span class="subtext select-group"><input type="checkbox" ng-click="selectGroup(users_incomplete, groupSelected.incomplete)" ng-model="groupSelected.incomplete"> Select All</span>
+        <div>
+          <li class="medium-circle-pictures" ng-repeat="user in users_incomplete | orderBy: 'last_name'">
+            <div ng-click="studentSelect(user)" class="medium-circle-picture" ng-class="setSelectedClass(user.is_selected)">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+            <ul class="circle-subnav">
+              <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+                <button type="button" class="btn btn-success btn-xs" ng-click="setUserMilestone(user)">Mark Complete</button>
+              </li>
+            </ul>
+          </li>
+        </div>
       </ul>
 
       <ul class="users-completed" ng-if="users_complete.length != 0">
-        <h6 class="bold green" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
-        <h6 class="bold green" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
+        <h6 class="bold green heading-inline" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
+        <h6 class="bold green heading-inline" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
         <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
         <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
           <div class="medium-circle-picture">
