@@ -29,6 +29,12 @@ angular.module('myApp')
   $scope.editablePassword = () ->
     $scope.current_user.id == $scope.user.id
 
+  $scope.resetUserPassword = () ->
+    if window.confirm "This will reset the user's password and send them an email with the new password. Are you sure you want to do this?"
+      UsersService.resetUserPassword($scope.user.organization_id, [$scope.user.id])
+        .success (data) ->
+          $scope.addSuccessMessage("Password reset successful. An email with a new password has been sent to the user.")
+
   $scope.editUserInfo = () ->
     $scope.editingInfo = true
 

@@ -10,6 +10,9 @@ angular.module('myApp')
   @addUser = (user) ->
     $http.post '/api/v1/users', { user: user }
 
+  @delete = (user_id) ->
+    $http.delete  "/api/v1/users/#{user_id}"
+
   @updateUserInfoWithPicture = (user, formData) ->
     formData.append("user[email]", user.email)
     formData.append("user[first_name]", user.first_name)
@@ -34,6 +37,11 @@ angular.module('myApp')
 
     $http.put '/api/v1/users/' + user.id + '/update_password', user: user
 
+  # Authenticated
+  @resetUserPassword = (org_id, user_ids) ->
+    $http.put "/api/v1/organization/#{org_id}/users/reset_users_password", {user_ids: user_ids}
+
+  # Unauthenticated - only use this for login page
   @resetPassword = (user) ->
     $http.post '/api/v1/users/password', user: user
 

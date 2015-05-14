@@ -96,7 +96,16 @@
 
         <div class="assigning-students" ng-show="assignment.assigning_users">
 
-          <h5 class="list-header"><span class="bold">Assign Users</span></h5>
+          <h5 class="list-header"><span class="bold">Assign Users</span>
+            <button class="btn btn-primary btn-xs mlxl" ng-click="assignAllAssignableUsers(assignment)" ng-hide="assignable_users.length == (assignment.assignees.length + user_assignments_completed.length + user_assignments_incomplete.length)">
+              <span class="glyphicon glyphicon-plus"></span> Assign All Users
+            </button>
+
+            <button class="btn btn-primary btn-xs mlxl" ng-click="unassignAllUsers(assignment)" ng-show="assignable_users.length == (assignment.assignees.length + user_assignments_completed.length + user_assignments_incomplete.length)">
+              <span class="glyphicon glyphicon-minus"></span> Unassign All Users
+            </button>
+          </h5>
+
 
           <div class="list-container">
 
@@ -139,11 +148,6 @@
 
               </div>
             </div> <!-- ng-repeat="(group, group_users) in assignable_users" -->
-
-            <div class="add-button" ng-click="assignAllAssignableUsers(assignment)" ng-hide="assignable_users.length == (assignment.assignees.length + user_assignments_completed.length + user_assignments_incomplete.length)">
-              <div class="glyphicon glyphicon-plus-sign green"></div>
-              <div>Assign All Users</div>
-            </div>
 
           </div>
 

@@ -92,6 +92,8 @@ gem 'rack-cors', :require => 'rack/cors'
 # Tracking memory issues
 gem 'oink'
 
+gem 'slack-notifier'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

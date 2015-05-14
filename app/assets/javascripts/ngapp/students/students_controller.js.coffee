@@ -211,6 +211,15 @@ angular.module('myApp')
       modalInstance.result.then () ->
         $scope.addSuccessMessage("Expectation has been modified!")
 
+    $scope.remove_user = (user) ->
+      if window.confirm "Are you sure you want to delete #{user.full_name}? **This will permananetly delete the user and ALL of
+                          their associated data.**"
+        UsersService.delete(user.id)
+          .success (data) ->
+            $scope.addSuccessMessage("User deleted successfully")
+            idx = $scope._.findIndex($scope.students, ((item)-> item.id == user.id))
+            $scope.students.splice(idx, 1)
+
     $scope.addStudent = () ->
       modalInstance = $modal.open
         templateUrl: 'organization/add_user_modal.html',

@@ -19,6 +19,11 @@
   }
   .extra-info {
     opacity: 0.4;
+
+    .remove {
+      color: red;
+      cursor: pointer;
+    }
   }
 
 }
@@ -159,6 +164,11 @@
     }
     .extra-info {
       opacity: 0.4;
+
+      .remove {
+        color: red;
+        cursor: pointer;
+      }
     }
 
   }
@@ -174,7 +184,7 @@
 .progress-circle--default {
   width: 160px;
   margin: 0px 5px;
-  
+
   @include respond-to(900) { width: 130px; }
 
   @include respond-to(600) {
