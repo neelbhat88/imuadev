@@ -98,9 +98,9 @@ angular.module('myApp')
     $scope.saveTag = () ->
       TaggingService.saveTagMultipleUsers($scope.current_user.organization_id, $scope.selectedStudents, $scope.tag.name)
         .success (data) ->
-          $scope.addSuccessMessage("\"" + data.tags + "\"" + " tag has been added!")
+          $scope.addSuccessMessage("\"" + data.tag + "\"" + " tag has been added!")
           for student in $scope.selectedStudents
-            student.tag_list.push(data.tags)
+            student.tag_list.push(data.tag)
           $scope.tag.editing = false
           $scope.tag.name = ''
 
