@@ -1,4 +1,4 @@
-<student-selector currentuser="current_user"></student-selector>
+<student-selector></student-selector>
 
 <div class="taskContainer" wait-to-load="{{loaded_data}}">
   <div class="task-header clear">
@@ -52,18 +52,21 @@
         <h6 class="bold green heading-inline" ng-if="users_complete.length == 1 && users_incomplete.length != 0">{{users_complete.length}} student has completed this milestone</h6>
         <h6 class="bold green heading-inline" ng-if="users_complete.length != 1 && users_incomplete.length != 0">{{users_complete.length}} students have completed this milestone</h6>
         <h6 class="bold green" ng-if="users_complete.length != 0 && users_incomplete.length == 0">Nice! All students have completed this milestone.</h6>
-        <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
-          <div class="medium-circle-picture">
-            <img ng-src="{{user.square_avatar_url}}"/>
-          </div>
-          <span class="bold">{{user.first_last_initial}}</span>
-          <ul class="circle-subnav">
-            <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
-            <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
-              <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
-            </li>
-          </ul>
-        </li>
+        <span class="subtext select-group"><input type="checkbox" ng-click="selectGroup(users_complete, groupSelected.complete)" ng-model="groupSelected.complete"> Select All</span>
+        <div>
+          <li class="medium-circle-pictures" ng-repeat="user in users_complete | orderBy: 'last_name'">
+            <div ng-click="studentSelect(user)" ng-class="setSelectedClass(user.is_selected)" class="medium-circle-picture">
+              <img ng-src="{{user.square_avatar_url}}"/>
+            </div>
+            <span class="bold">{{user.first_last_initial}}</span>
+            <ul class="circle-subnav">
+              <!-- <li>Completed: {{user.completed_at | formatMDY}}</li> -->
+              <li class="subnav-button" ng-show="userMilestonesAreEditable(milestone)">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="unsetUserMilestone(user)">Mark<br>Incomplete</button>
+              </li>
+            </ul>
+          </li>
+        </div>
       </ul>
     </div>
 

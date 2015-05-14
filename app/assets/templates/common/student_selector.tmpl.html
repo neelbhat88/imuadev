@@ -27,8 +27,8 @@
 
   <div class="actions">
     <span ng-click="go('/progress/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-home mrs"></span>View {{singleStudent.first_name}}'s Progress</span>
-    <span ng-click="addNewTask(selectedStudents, currentuser)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
-    <span ng-click="manageExpectations(selectedStudents, currentuser)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
+    <span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+    <span ng-click="manageExpectations(selectedStudents, current_user)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
     <span ng-click="go('/profile/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-user mrs"></span>View Profile</span>
     <span ng-hide="tag.editing" ng-click="addTag()" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-tag mrs"></span>Add Tag</span>
     <span class="tagging" ng-show="tag.editing">
@@ -54,8 +54,8 @@
     </div>
   </div>
   <div class="actions">
-    <span ng-click="manageExpectations(selectedStudents, currentuser)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
-    <span ng-click="addNewTask(selectedStudents, currentuser)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+    <span ng-click="manageExpectations(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
+    <span ng-click="addNewTask(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
     <span ng-hide="tag.editing" ng-click="addTag()" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-tag mrs"></span>Add Tag</span>
     <span class="tagging" ng-show="tag.editing">
       <input class="form-field" ng-model="tag.name">

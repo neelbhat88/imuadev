@@ -49,28 +49,22 @@ angular.module('myApp')
           user.user_milestones = []
           $scope.recalculateCompletion()
 
-    $scope.setSelectedClass = (is_selected) ->
-      if is_selected
-        'is-selected-photo'
-      else
-        ''
-
-    $scope.studentSelect = (student) ->
-      student.is_selected = !student.is_selected
-      $scope.$broadcast("studentSelect", student)
-
-    $scope.toggleSelectionMode = () ->
-      $scope.selectionMode = !$scope.selectionMode
-      $scope.$broadcast("toggleSelectionMode")
-
-    $scope.selectGroup = (students, groupIsSelected) ->
-      args = {}
-      args.students = students
-      for student in students
-        student.is_selected = groupIsSelected
-      args.groupIsSelected = groupIsSelected
-      $scope.$broadcast("selectGroup", args)
-
+#    $scope.studentSelect = (student) ->
+#      student.is_selected = !student.is_selected
+#      $scope.$broadcast("studentSelect", student)
+#
+#    $scope.toggleSelectionMode = () ->
+#      $scope.selectionMode = !$scope.selectionMode
+#      $scope.$broadcast("toggleSelectionMode")
+#
+#    $scope.selectGroup = (students, groupIsSelected) ->
+#      args = {}
+#      args.students = students
+#      for student in students
+#        student.is_selected = groupIsSelected
+#      args.groupIsSelected = groupIsSelected
+#      $scope.$broadcast("selectGroup", args)
+#
     $scope.$on("clearSelected", (event) ->
       $scope.groupSelected.incomplete = false
       $scope.groupSelected.complete = false
