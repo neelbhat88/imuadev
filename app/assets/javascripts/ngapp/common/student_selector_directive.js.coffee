@@ -1,3 +1,8 @@
+# Insert this at the top of your html for the page
+# You will have to call the methods within this directive in the
+# parent controller's template. Clearing a selection currently
+# requires an emit, which means you'll have to have an $on in the parent controller
+
 angular.module('myApp')
 .directive 'studentSelector', ['$location', 'ModuleService', '$modal', 'TaggingService', ($location, ModuleService, $modal, TaggingService) ->
   restrict: 'E'
