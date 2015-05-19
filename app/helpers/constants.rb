@@ -82,4 +82,13 @@ class Constants
       return 15.minutes
     end
   end
+
+  def self.NoteType
+    return {
+      GENERAL: 0,
+      IN_PERSON_MEETING: 1,
+      PHONE_CALL: 2,
+      TEXT_MESSAGE: 3
+    }
+  end
 end

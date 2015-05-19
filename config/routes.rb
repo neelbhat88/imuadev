@@ -95,6 +95,8 @@ Imua::Application.routes.draw do
 
           resources :user_tag, except: [:new, :edit, :show, :update]
 
+          resources :note, except: [:new, :edit]
+
         end
 
       end
