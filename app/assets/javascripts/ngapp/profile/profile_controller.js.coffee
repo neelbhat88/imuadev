@@ -1,6 +1,6 @@
 angular.module('myApp')
-.controller 'ProfileController', ['$scope', 'user_with_contacts', 'UsersService', 'LoadingService', 'TaggingService',
-($scope, user_with_contacts, UsersService, LoadingService, TaggingService) ->
+.controller 'ProfileController', ['$scope', 'user_with_contacts', 'UsersService', 'LoadingService', 'TaggingService', '$modal',
+($scope, user_with_contacts, UsersService, LoadingService, TaggingService, $modal) ->
   $scope.user = user_with_contacts.user
   $scope.contacts = user_with_contacts.contacts
   $scope.time_units = user_with_contacts.time_units
@@ -181,5 +181,19 @@ angular.module('myApp')
     .success (data) ->
       $scope.student_mentors = data.mentors
       $scope.loaded_student_mentors = true
+
+  $scope.openNoteModal = () ->
+    modalInstance = $modal.open
+      templateUrl: 'note/note_modal.html',
+      controller: 'NoteModalController',
+      backdrop: 'static',
+      size: 'lg',
+      resolve:
+        user: () -> $scope.user
+        current_user: () -> $scope.current_user
+        organization_with_users: () -> null
+
+    modalInstance.result.then () ->
+      $scope.addSuccessMessage("Task has been created!")
 
 ]

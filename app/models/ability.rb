@@ -13,7 +13,6 @@ class Ability
       when "Expectation" then expectation_abilities(user, subject)
       when "Comment" then comment_abilities(user, subject)
       when "GpaHistoryAuthorization" then gpa_history_abilities(user, subject)
-      when "Tagging" then tagging_abilities(user, subject)
       else []
       end
 
@@ -73,6 +72,7 @@ class Ability
           :create_assignment_broadcast,
           :get_task_assignable_users,
           :get_task_assignable_users_tasks,
+          :note_edit_delete
         ]
 
       elsif user.org_admin?

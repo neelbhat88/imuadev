@@ -39,3 +39,9 @@ angular.module('myApp')
     assigned_to_me: "Tasks Assigned to Me"
     assigned_by_me: "Tasks I've Assigned to Others"
     assigned_to_others: "Tasks Assigned to My Students"
+
+  'NOTE_TYPE':
+    general:           0
+    in_person_meeting: 1
+    phone_call:        2
+    text_message:      3

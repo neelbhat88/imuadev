@@ -18,6 +18,7 @@
 
       <div class="edit-buttons">
         <a href="/app#/progress/{{user.id}}" ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress"><button class="btn btn-primary">See {{user.first_name}}'s Progress</button></a>
+        <button ng-if="!current_user.is_student && user.is_student" alt="See {{user.first_name}}'s Progress" class="btn btn-info" ng-click="openNoteModal()">See {{user.first_name}}'s Notes</button>
         <a href="/app#/mentor/{{user.id}}" ng-if="!current_user.is_student && !current_user.is_mentor" ng-show="user.is_mentor" alt="See {{user.first_name}}'s Students"><button class="btn btn-primary">{{user.first_name}}'s Students</button></a>
         <button class="btn btn-default" ng-if="editable()" ng-click="editUserInfo()">Edit Profile</button>
         <button class="btn btn-default" ng-if="editablePassword()" ng-click="editUserPassword()">Change Password</button>

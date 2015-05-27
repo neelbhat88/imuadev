@@ -11,7 +11,7 @@ class Api::V1::NoteController < ApplicationController
   # GET /users/:user_id/note
   def index
     userId = params[:user_id].to_i
-    user = @userRepository.get_user(userId)
+    user = @userRepo.get_user(userId)
 
     if !can?(current_user, :note_read_create, user)
       render status: :forbidden,
@@ -32,7 +32,7 @@ class Api::V1::NoteController < ApplicationController
   def create
     userId = params[:user_id].to_i
     note = params[:note]
-    user = @userRepository.get_user(userId)
+    user = @userRepo.get_user(userId)
 
     if !can?(current_user, :note_read_create, user)
       render status: :forbidden,
@@ -52,9 +52,12 @@ class Api::V1::NoteController < ApplicationController
 
   # PUT /note/:id
   def update
+    noteId = params[:id]
     note = params[:note]
+    db_note = Note.find(noteId)
+    user = @userRepo.get_user(db_note.created_by)
 
-    if (note[:created_by].to_i != current_user.id)
+    if !can?(current_user, :note_edit_delete, user)
       render status: :forbidden,
         json: {}
       return
@@ -74,8 +77,10 @@ class Api::V1::NoteController < ApplicationController
   def destroy
     noteId = params[:id].to_i
     note = params[:note]
+    db_note = Note.find(noteId)
+    user = @userRepo.get_user(db_note.created_by)
 
-    if (note[:created_by].to_i != current_user.id)
+    if !can?(current_user, :note_edit_delete, user)
       render status: :forbidden,
         json: {}
       return

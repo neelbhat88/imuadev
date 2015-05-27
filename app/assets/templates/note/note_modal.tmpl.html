@@ -1,0 +1,17 @@
+<div class="modal-body" wait-to-load="{{organization}}">
+  <div class="modal-body__title"><h4>Notes</h4></div>
+  <div class="widget">
+    <div class="widget--content">
+      <div class="widget--content--table">
+        <div class="table--cell breakalways" ng-repeat="note in notes">
+          <div class="widget--content--table ng-clickable">
+            <div class="table--cell">{{note.date}}</div>
+            <div class="table--cell">{{note.message}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
