@@ -1,0 +1,68 @@
+<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length == 1" class="single-student-selectbar">
+  <div class="student-info">
+    <div class="student-info__picture">
+      <progress-circle-selector width="100" identifier="selected" student="singleStudent"></progress-circle-selector>
+    </div>
+    <div class="student-info__text">
+      <div class="name">{{singleStudent.full_name}}</div>
+      <div class="points"><span class="bold">{{singleStudent.user_points}}</span> out of {{singleStudent.total_points}} Available Points</div>
+      <div class="login-info" ng-if="singleStudent.last_login == 'Has not logged in yet'">Last Login: {{singleStudent.last_login}}</div>
+      <div class="login-info" ng-if="singleStudent.last_login != 'Has not logged in yet'">Last Login: {{singleStudent.last_login | formatMDY}}</div>
+      <div class="login-info">Login Count: {{singleStudent.login_count}}</div>
+    </div>
+  </div>
+  <div class="module-circle-container mll">
+    <div class="module-circles" ng-repeat="mod in singleStudent.modules_progress">
+      <div class="module-circle" ng-click="selectModule(singleStudent, mod)">
+        <span class="module-circle__title bold">{{mod.module_title | underscoresToSpaces}}</span>
+        <div class="circle-size">
+          <module-progress-circle textcolor="black" module="mod" width="80"></module-progress-circle>
+        </div>
+        <div class="module-circle--meta">
+          <div class="click-to-view">Click to view</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <span ng-click="go('/progress/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-home mrs"></span>View {{singleStudent.first_name}}'s Progress</span>
+    <span ng-click="addNewTask(selectedStudents, current_user)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+    <span ng-click="manageExpectations(selectedStudents, current_user)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
+    <span ng-click="go('/profile/' + singleStudent.id)" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-user mrs"></span>View Profile</span>
+    <span ng-hide="tag.editing" ng-click="addTag()" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-tag mrs"></span>Add Tag</span>
+    <span class="tagging" ng-show="tag.editing">
+      <input autocomplete="off"  class="form-field" ng-model="tag.name"  typeahead="tagName for tagName in orgTags | filter: $viewValue | limitTo:10">
+      <span ng-click="saveTag()" class="glyphicon glyphicon-ok"></span>
+      <span ng-click="cancelTag()" class="glyphicon glyphicon-remove"></span>
+    </span>
+  </div>
+
+  <div ng-click="clearSelected(selectedStudents)" class="clear-selection glyphicon glyphicon-remove" title="Clear Selection"></div>
+</div>
+
+<div sticky media-query="min-width: 768px" ng-if="selectedStudents.length > 1" class="students-selectbar">
+  <div class="pbm select-header">
+    <span class="bold text">Selected Students: </span>
+  </div>
+  <div class="token-container">
+    <div ng-repeat="student in selectedStudents" class="student-token">
+      <div ng-click="removeStudentFromSelectBar(student)" class="btn btn-default btn-sm">
+        <span class="student-name">{{student.first_last_initial}}</span>
+        <span class="token-remove glyphicon glyphicon-remove"></span>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <span ng-click="manageExpectations(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-list mrs"></span>Manage Expectations</span>
+    <span ng-click="addNewTask(selectedStudents, current_user)" class="btn-action btn btn-sm"><span class="glyphicon glyphicon-pushpin mrs"></span>Assign New Task</span>
+    <span ng-hide="tag.editing" ng-click="addTag()" class="btn btn-action btn-sm"><span class="glyphicon glyphicon-tag mrs"></span>Add Tag</span>
+    <span class="tagging" ng-show="tag.editing">
+      <input class="form-field" ng-model="tag.name">
+      <span ng-click="saveTag()" class="glyphicon glyphicon-ok"></span>
+      <span ng-click="cancelTag()" class="glyphicon glyphicon-remove"></span>
+    </span>
+  </div>
+
+  <div ng-click="clearSelected(selectedStudents)" class="clear-selection glyphicon glyphicon-remove" title="Clear Selection"></div>
+</div>

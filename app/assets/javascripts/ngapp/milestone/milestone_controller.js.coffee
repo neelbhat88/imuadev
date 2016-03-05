@@ -3,6 +3,8 @@ angular.module('myApp')
   ($scope, $route, current_user, milestone_id, edit, MilestoneService, UsersService, OrganizationService, RoadmapService, ProgressService) ->
 
     $scope.current_user = current_user
+    $scope.selectionMode = false
+    $scope.groupSelected = {}
 
     $scope.recalculateCompletion = () =>
       partition = _.partition($scope.users_total, (u) -> u.user_milestones and u.user_milestones.length > 0)
@@ -23,6 +25,8 @@ angular.module('myApp')
       .success (data) ->
         $scope.organization = OrganizationService.parseOrganizationWithUsers(data.organization)
         $scope.users_total = $scope.organization.students
+        for student in $scope.users_total
+          student.is_selected = false
         $scope.milestone = $scope.organization.milestones[0]
         $scope.milestone.editing = false
         $scope.recalculateCompletion()
@@ -44,4 +48,11 @@ angular.module('myApp')
         .success (data) ->
           user.user_milestones = []
           $scope.recalculateCompletion()
+
+    $scope.$on("clearSelected", (event) ->
+      $scope.groupSelected.incomplete = false
+      $scope.groupSelected.complete = false
+    )
+
+
 ]

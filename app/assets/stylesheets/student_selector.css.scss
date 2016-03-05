@@ -1,114 +1,3 @@
-.studentsContainer {
-
-  background: $darkgrey;
-  color: white;
-
-  .students-header {
-    width: 100%;
-    background: $grey;
-    padding: 20px 120px;
-
-    .student-stats {
-      margin: 0;
-
-      li {
-        display: inline-block;
-        padding: 20px 0;
-        margin-right: 100px;
-
-        @include respond-to(1600) { margin-right: 80px; }
-        @include respond-to(1400) { vertical-align: middle; }
-        @include respond-to(1200) { margin-right: 40px; }
-        @include respond-to(900) {
-          display: block;
-          width: 100%;
-          padding: 0;
-          text-align: center;
-        }
-
-        &:last-of-type {
-          margin-right: 0;
-        }
-
-        .stat-wrapper {
-          margin: 0 auto;
-          .count, .descript {
-            display: inline-block;
-            @include respond-to(1400) {
-              display: block;
-              text-align: center;
-            }
-            @include respond-to(900) {
-              display: inline-block;
-              text-align: left;
-            }
-          }
-
-          .count {
-            margin-right: 15px;
-            @include respond-to(1400) { margin-right: 0; }
-            @include respond-to(900) { margin-right: 8px; }
-          }
-
-          .descript {
-            padding-top: 17px;
-            color: $lightgrey;
-            @include respond-to(1400) { padding-top: 0; }
-            @include respond-to(900) { padding-top: 12px; }
-          }
-        }
-
-        .temp-clickable {
-          &:hover {
-            cursor: pointer;
-
-            .descript {
-              text-decoration: underline;
-            }
-
-          }
-        }
-
-      }
-    }
-  }
-
-  .students-mid, .students-lower {
-    padding: 40px $wrapper-width 0 $wrapper-width;
-
-    .selection-toggle {
-      display: inline-block;
-      float: right;
-    }
-    .search-label {
-      display: inline-block;
-    }
-    .student-search {
-      color: #000000;
-      width: 30%;
-      display: inline-block;
-    }
-    .list-container {
-      margin: 15px 0 5px;
-      @include respond-to(900) { text-align: center; }
-    }
-    .is-selected {
-      background-color: white;
-      border: 1px solid $teal;
-      padding: 10px 0;
-      border-radius: 10px;
-    }
-  }
-
-}
-
-.is-selected-photo {
-  background-color: white;
-  border: 1px solid $teal;
-  padding: 10px 10px 20px;
-  border-radius: 10px;
-}
-
 .single-student-selectbar {
   width: 100%;
   background: white;
@@ -208,7 +97,6 @@
   padding: 20px 120px;
   @include respond-to(768) {padding: 20px;}
   @include respond-to(992) {padding: 20px 40px;}
-  z-index: 1;
 
   .tagging {
     .glyphicon-ok {
@@ -250,10 +138,6 @@
   }
 }
 
-.select-group {
-  display: inline-block;
-}
-
 .actions {
   text-align: center;
   padding-top: 20px;
@@ -271,4 +155,31 @@
   right: 20px;
   @include font-size(1.8);
   cursor: pointer;
+}
+
+.students-mid, .students-lower {
+  padding: 40px $wrapper-width 0 $wrapper-width;
+
+  .selection-toggle {
+    display: inline-block;
+    float: right;
+  }
+  .search-label {
+    display: inline-block;
+  }
+  .student-search {
+    color: #000000;
+    width: 30%;
+    display: inline-block;
+  }
+  .list-container {
+    margin: 15px 0 5px;
+    @include respond-to(900) { text-align: center; }
+  }
+  .is-selected {
+    background-color: white;
+    border: 1px solid $teal;
+    padding: 10px 0;
+    border-radius: 10px;
+  }
 }
