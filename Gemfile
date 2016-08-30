@@ -49,7 +49,7 @@ gem 'newrelic_rpm'
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
 gem 'angularjs-rails', "~> 1.3.0"
-gem 'angular_rails_csrf', :git=>'https://github.com/jsanders/angular_rails_csrf.git'
+gem 'angular_rails_csrf'
 
 gem 'mail'
 
@@ -66,7 +66,7 @@ gem 'devise', "~> 3.2.2"
 # Authorization
 gem "six"
 
-gem "ladda-rails", :git => "git://github.com/Promptus/ladda-rails.git"
+gem "ladda-rails"
 
 gem "d3-rails"
 
