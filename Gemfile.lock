@@ -1,16 +1,3 @@
-GIT
-  remote: git://github.com/Promptus/ladda-rails.git
-  revision: 6e2e4401a9c38a3c6f10118b262ef8c8c3ae969d
-  specs:
-    ladda-rails (0.9.2)
-
-GIT
-  remote: https://github.com/jsanders/angular_rails_csrf.git
-  revision: 7dba0e6e1c1f00adadbde5bbbfb0b46002bd39ad
-  specs:
-    angular_rails_csrf (1.0.1)
-      rails (>= 3, < 5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -50,6 +37,8 @@ GEM
       sprockets
       tilt
     angular-ui-bootstrap-rails (0.11.2)
+    angular_rails_csrf (1.0.4)
+      rails (>= 3, < 5)
     angularjs-rails (1.3.0)
     arel (3.0.3)
     aws-sdk (1.40.0)
@@ -128,6 +117,7 @@ GEM
       addressable (~> 2.3.5)
       multi_json (~> 1.3)
     kgio (2.9.2)
+    ladda-rails (0.9.7)
     lograge (0.3.1)
       actionpack (>= 3)
       activesupport (>= 3)
@@ -257,7 +247,7 @@ DEPENDENCIES
   acts_as_commentable (= 3.0.1)
   angular-rails-templates
   angular-ui-bootstrap-rails
-  angular_rails_csrf!
+  angular_rails_csrf
   angularjs-rails (~> 1.3.0)
   aws-sdk
   bootstrap-sass (~> 3.1.1)
@@ -273,7 +263,7 @@ DEPENDENCIES
   jquery-placeholder-rails
   jquery-rails
   keen
-  ladda-rails!
+  ladda-rails
   lograge
   mail
   newrelic_rpm
