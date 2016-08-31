@@ -6,4 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Create super admin
 User.create(email: "superadmin@gmail.com", first_name: "Super", last_name: "Admin", role: 0, password: "myimua", status: 0, organization_id: 0)
+
+# Create AppVersion
+AppVersion.create(version_number: 1)
