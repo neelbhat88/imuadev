@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    build: .
+    image: neelbhat88/imua
     env_file:
       - '.env'
     volumes:
