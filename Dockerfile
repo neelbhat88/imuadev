@@ -9,7 +9,7 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresq
 ENV RAILS_ROOT /imua
 
 # Create application home. App server will need the pids dir so just create everything in one shot
-# RUN mkdir -p $RAILS_ROOT/tmp/pids
+RUN mkdir -p $RAILS_ROOT/tmp/pids
 
 # Set our working directory inside the image
 WORKDIR $RAILS_ROOT
@@ -21,13 +21,11 @@ COPY Gemfile Gemfile
 
 COPY Gemfile.lock Gemfile.lock
 
-ENV BUNDLE_PATH /bundle
-
 # Prevent bundler warnings; ensure that the bundler version executed is >= that which created Gemfile.lock
 RUN gem install bundler
 
 # Finish establishing our Ruby environment
-# RUN bundle install
+RUN bundle install
 
 # Copy the Rails application into place
 COPY . .
