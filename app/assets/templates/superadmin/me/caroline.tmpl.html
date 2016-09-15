@@ -1,0 +1,20 @@
+<html ng-app="myApp">
+  <body class="me-page" ng-controller="SuperAdminCarolineCtrl">
+    <div>
+      <h4 ng-click="setCurrentFilter(null)">Hello it's Caroline</h4>
+      <div>
+        <input class="" style="color:black" ng-model="searchText">
+        <ul>
+          <li ng-repeat="type in types">
+            <a class="btn btn-primary" ng-click="setCurrentFilter(type)">{{type.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <ol>
+        <li ng-repeat="data in dataset | filter:searchText | filter:{type:currentFilter.name} | filter:{id:routeParams}">
+          <h6>{{data.text}}</h6>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>
