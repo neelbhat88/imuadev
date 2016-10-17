@@ -1,27 +1,27 @@
 angular.module('myApp')
-.controller 'SuperAdminCarolineCtrl', ['$scope', '$routeParams'
-  ($scope, $routeParams) ->
-    $scope.currentFilter = null
-    $scope.user = $scope.current_user
-    $scope.routeParams = $routeParams.num
-
-    setCurrentFilter = (type) ->
-      $scope.currentFilter = type
-      return
-
-    $scope.setCurrentFilter = setCurrentFilter
+.controller 'SuperAdminCarolineCtrl', ['$scope', '$routeParams', 'AnswerService',
+  ($scope, $routeParams, AnswerService) ->
 
     $scope.types = [
       {"id": 0, "name": "question"},
       {"id": 1, "name": "answer"}
     ]
 
+    $scope.answers = []
+
+    AnswerService.all()
+      .success (data) ->
+        $scope.answers = data.answers
+
+      .error (data) ->
+        $scope.errors = []
+        $scope.errors = data.info
+
     $scope.dataset = [
       {"id": 1, "type": "question", "text": "1q. What one thing are you hoping to get most out of this project?"},
 
       {"id": 1, "type": "answer", "text": "1a. I hope to become more experienced with developing a project as a team
-    as well as learn some practical skills with Ruby, Rails, AngularJS, etc.
-    outside of a strictly-learning environment."},
+    as well as learn some practical skills with Ruby, Rails, AngularJS, etc. outside of a strictly-learning environment."},
 
       {"id": 2, "type": "question", "text": "2q. What is one of your current skills/strengths (doesn't have to be a
       technical skill) you are hoping to further strengthen through this project?"},
@@ -69,6 +69,17 @@ angular.module('myApp')
 
       {"id": 8, "type": "answer", "text": "8a. I'd probably be better than everyone at Apples to Apples or speed
   scrabble. Also, I doubt someone else would be able to play Presto from
-  Vivaldi's Concerto for Violin in A minor on the spot :)"} ]
+  Vivaldi's Concerto for Violin in A minor on the spot :)"}
+    ]
+
+    $scope.currentFilter = null
+    $scope.user = $scope.current_user
+    $scope.routeParams = $routeParams.num
+
+    setCurrentFilter = (type) ->
+      $scope.currentFilter = type
+    return
+
+    $scope.setCurrentFilter = setCurrentFilter
 
 ]

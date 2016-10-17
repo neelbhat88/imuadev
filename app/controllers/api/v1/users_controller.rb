@@ -1,7 +1,8 @@
 class Api::V1::UsersController < ApplicationController
   respond_to :json
 
-  skip_before_filter :authenticate_token, only: [:reset_password]
+  skip_before_filter :authenticate_token
+  #skip_before_filter :authenticate_token, only: [:reset_password]
   before_filter :load_services
 
   def load_services( assignmentService = nil, userService = nil )
@@ -13,9 +14,7 @@ class Api::V1::UsersController < ApplicationController
   def index
     render status: 200,
       json: {
-        success: true,
-        info: "User",
-        user: "Index on User"
+        answers: Question.order(:qnumber).all
       }
   end
 

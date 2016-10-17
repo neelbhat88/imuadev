@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150309202329) do
+ActiveRecord::Schema.define(:version => 20160926182131) do
 
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(:version => 20150309202329) do
 
   add_index "access_tokens", ["token_value"], :name => "index_access_tokens_on_token_value"
   add_index "access_tokens", ["user_id"], :name => "index_access_tokens_on_user_id"
+
+  create_table "answers", :force => true do |t|
+    t.integer  "qnum"
+    t.string   "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "app_versions", :force => true do |t|
     t.integer  "version_number"
@@ -128,6 +135,13 @@ ActiveRecord::Schema.define(:version => 20150309202329) do
 
   add_index "parent_guardian_contacts", ["user_id"], :name => "index_parent_guardian_contacts_on_user_id"
 
+  create_table "questions", :force => true do |t|
+    t.string   "datatype"
+    t.string   "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "relationships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to_id"
@@ -168,6 +182,12 @@ ActiveRecord::Schema.define(:version => 20150309202329) do
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
+
+  create_table "temps", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "time_units", :force => true do |t|
     t.string   "name"
