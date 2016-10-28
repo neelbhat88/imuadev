@@ -184,6 +184,8 @@ Imua::Application.routes.draw do
       put    '/organization/:id/expectations/:expectation_id' => 'expectation#update_expectation'
       delete '/organization/:id/expectations/:expectation_id' => 'expectation#delete_expectation'
 
+      get '/answers' => 'answers#index'
+
     end # end :v1
   end # end :api
 

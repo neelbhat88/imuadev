@@ -9,7 +9,8 @@
   </li>
 
   <div style="padding-top: 20px;">
+    <label>Enter the New Organization Name:</label>
     <input class="form-control" ng-model="newOrg.name" style="width: 250px;"/>
-    <button type="submit" class="submit" ng-click="addOrganization(newOrg.name)">Add Organization</button>
+    <button type="submit" class="submit" ng-show="newOrg.name" ng-click="addOrganization(newOrg.name)">Add Organization</button>
   </div>
 </div>
