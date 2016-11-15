@@ -36,8 +36,8 @@ class Api::V1::OrganizationController < ApplicationController
 
     name = params[:name]
 
-    if name.nil?
-      render stauts: 200,
+    if name.nil? || name == ""
+      render status: :forbidden,
           json: {
             success: false,
             info: "Must provide an organization name"
@@ -48,7 +48,7 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = @organizationRepository.create_organization({:name => name})
 
-    render stauts: 200,
+    render status: result[:status],
       json: {
         success: result[:success],
         info: result[:info],
@@ -77,7 +77,7 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = @organizationRepository.delete_organization(orgId)
 
-    render stauts: 200,
+    render status: 200,
       json: {
         success: result[:success],
         info: result[:info]

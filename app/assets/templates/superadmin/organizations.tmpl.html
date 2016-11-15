@@ -1,15 +1,22 @@
 <div class="organizationsContainer paxl" wait-to-load="{{organizations}}">
-  <h4 ng-show="organizations.length == 0">No organizations created. Use the REST API to create one</h4>
+  <form name="newOrg.form" ng-controller="SuperAdminOrganizationsCtrl" class="form form--org" novalidate>
 
-  <li ng-repeat="org in organizations">
-    {{org.name}} |
-    <a ng-href="app#/setup/{{org.id}}">Org Setup</a> |
-    <a ng-href="app#/organization/{{org.id}}">Mentors</a> |
-    <a ng-href="app#/students/{{org.id}}">Students</a>
-  </li>
+    <h4 ng-show="organizations.length == 0">No organizations created. Use the REST API to create one</h4>
 
-  <div style="padding-top: 20px;">
-    <input class="form-control" ng-model="newOrg.name" style="width: 250px;"/>
-    <button type="submit" class="submit" ng-click="addOrganization(newOrg.name)">Add Organization</button>
-  </div>
+    <li ng-repeat="org in organizations track by $index">
+      {{org.name}} |
+      <a ng-href="app#/setup/{{org.id}}">Org Setup</a> |
+      <a ng-href="app#/organization/{{org.id}}">Mentors</a> |
+      <a ng-href="app#/students/{{org.id}}">Students</a>
+    </li>
+
+    <div style="padding-top: 20px;">
+      <input class="form-control" ng-model="newOrg.name" name="organization" placeholder="New Organization Name" style="width: 250px;">
+      <button type="submit" class="submit" ng-click="addOrganization(newOrg.name)">Add Organization</button>
+
+      <div ng-repeat="error in formErrors" class="errorText errorListing" ng-if="newOrg.form.$submitted && newOrg.form.$invalid">
+        {{error}}
+      </div>
+    </div>
+  </form>
 </div>
