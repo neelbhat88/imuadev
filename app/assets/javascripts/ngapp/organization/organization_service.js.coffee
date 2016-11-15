@@ -14,7 +14,7 @@ angular.module('myApp')
     $http.get('/api/v1/organization/' + orgId + '/time_units')
 
   @addOrganization = (name) ->
-      $http.post('/api/v1/organization', {name: name})
+    $http.post('/api/v1/organization', {name: name})
 
 
   # Performs all the front end calculations by parsing through the raw
