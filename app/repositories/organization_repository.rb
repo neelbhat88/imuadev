@@ -14,7 +14,7 @@ class OrganizationRepository
     name = opts[:name]
 
     if Organization.where(:name => name).length != 0
-      return { status: :forbidden, :success => false, :info => "Organization with the name #{name} already exists" }
+      return { status: :bad_request, :success => false, :info => "Organization with the name #{name} already exists" }
     end
 
     organization = Organization.new
