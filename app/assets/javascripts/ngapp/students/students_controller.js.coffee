@@ -45,7 +45,7 @@ angular.module('myApp')
 
         $scope.attention_students = _.where($scope.organization.students, { needs_attention: true })
         # this is temporary and will eventually be parsed by class of tag
-        $scope.class_of_years = [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
+        $scope.class_of_years = [2014,2015,2016,2017,2018,2019]
 
         $scope.loaded_users = true
 
