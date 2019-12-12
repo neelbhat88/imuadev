@@ -36,8 +36,8 @@ class Api::V1::OrganizationController < ApplicationController
 
     name = params[:name]
 
-    if name.nil?
-      render stauts: 200,
+    if name.blank?
+      render status: :bad_request,
           json: {
             success: false,
             info: "Must provide an organization name"
@@ -48,12 +48,21 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = @organizationRepository.create_organization({:name => name})
 
-    render stauts: 200,
-      json: {
-        success: result[:success],
-        info: result[:info],
-        organization: result[:organization]
-      }
+    if result[:success] == false
+      render status: :bad_request,
+        json: {
+          success: result[:success],
+          info: result[:info],
+          organization: result[:organization]
+        }
+    else
+      render status: :ok,
+        json: {
+          success: result[:success],
+          info: result[:info],
+          organization: result[:organization]
+        }
+    end
   end
 
   # PUT /organization/:id
@@ -63,12 +72,21 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = @organizationRepository.update_organization({:id => orgId, :name => name})
 
-    render status: 200,
+    if result[:success] == false
+      render status: :bad_request,
       json: {
         success: result[:success],
         info: result[:info],
         organization: result[:organization]
       }
+    else
+      render status: :ok,
+        json: {
+          success: result[:success],
+          info: result[:info],
+          organization: result[:organization]
+        }
+    end
   end
 
   # DELETE /organization/:id
@@ -77,11 +95,19 @@ class Api::V1::OrganizationController < ApplicationController
 
     result = @organizationRepository.delete_organization(orgId)
 
-    render stauts: 200,
-      json: {
-        success: result[:success],
-        info: result[:info]
-      }
+    if result[:success] == false
+      render status: :bad_request,
+        json: {
+          success: result[:success],
+          info: result[:info]
+        }
+    else
+      render status: :ok,
+        json: {
+          success: result[:success],
+          info: result[:info]
+        }
+    end
   end
 
   # GET /organization/:id/info_with_roadmap
